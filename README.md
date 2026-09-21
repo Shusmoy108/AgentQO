@@ -19,7 +19,9 @@ This repository has two layers:
    residency follows `V_KV`; speculative branches stop when `I_b(t)` is low.
 
 TRAIL (ICLR 2025) is a reference for *how* to evaluate a cheap recycled-embedding
-predictor. It is not the optimizer. The GPU/vLLM hook is still a stub.
+predictor. It is not the optimizer. The default path is the CPU simulator
+(`MockBackend`). An optional **vLLM HTTP client** is ready for Ask 1 (one GPU);
+embeddings are placeholders until a TRAIL-style hook exists — do not use it for H2.
 
 ## Scientific protocol (read this)
 
@@ -44,6 +46,14 @@ python scripts/run_demo.py --quick
 python scripts/run_agentqo.py --n-jobs 8 --n-gpus 2
 ```
 
+Optional vLLM smoke (needs a live server; exits cleanly if unreachable):
+
+```bash
+# On a GPU box:
+#   vllm serve meta-llama/Meta-Llama-3-8B-Instruct --port 8000
+VLLM_BASE_URL=http://localhost:8000 python scripts/run_vllm_smoke.py
+```
+
 Measurement suite (CPU, no GPU):
 
 ```bash
@@ -58,7 +68,7 @@ python scripts/run_h4_agenticonq.py --n-batches 500
 ```
 agentqo/
   workflows/          DAG + library (math, multi-hop QA, self-consistency, refinement)
-  backends/           ModelBackend protocol; vLLM stub for the GPU phase
+  backends/           ModelBackend protocol; MockBackend + vLLM HTTP client (Ask 1)
   simulator/          Quality channel, MockBackend, multi-GPU interaction model
   executor.py         Run with overrides + descendant-only recompute
   labeling/           Fault-injection EC labels + per-task observations
@@ -67,8 +77,8 @@ agentqo/
   runtime/            Joint logical/physical serving optimizer (proposal §V)
   experiments/        Suite, leakage-free splits, runtime scoring
   metrics/            Ranking, quality–cost, figures, CSV
-scripts/              One script per hypothesis + run_agentqo.py
-tests/                DAG, executor, quality-channel, AgentIconq, runtime
+scripts/              Hypotheses + run_agentqo.py + run_vllm_smoke.py
+tests/                DAG, executor, quality-channel, AgentIconq, runtime, vLLM HTTP
 data/                 gitignored artifacts
 ```
 

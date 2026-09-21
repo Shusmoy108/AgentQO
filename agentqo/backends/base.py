@@ -7,7 +7,7 @@ Defines:
 
 The backend abstraction enables:
 - MockBackend for simulation (fills from quality channel)
-- VLLMBackend for real model serving (later)
+- VLLMHTTPBackend for a live OpenAI-compatible vLLM server (Ask 1)
 - Swapping backends without changing AgentQO logic
 """
 
@@ -65,7 +65,7 @@ class ModelBackend(Protocol):
     
     Implementations:
     - MockBackend: Simulates execution using quality channel
-    - VLLMBackend: Runs actual LLM inference (future)
+    - VLLMHTTPBackend: Calls a vLLM OpenAI-compatible HTTP API
     """
     
     def execute_node(
