@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentqo"
+version = "0.1.0"
+description = "Value-Aware LLM Workflow Scheduling through Epistemic Criticality"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    {name = "Shusmoy Chowdhury"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "numpy>=1.21.0",
+    "scipy>=1.7.0",
+    "scikit-learn>=1.0.0",
+    "tqdm>=4.60.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0.0",
+    "pytest-cov>=2.0.0",
+]
+ml = [
+    "torch>=1.9.0",
+]
+viz = [
+    "matplotlib>=3.4.0",
+]
+all = [
+    "torch>=1.9.0",
+    "matplotlib>=3.4.0",
+    "pytest>=6.0.0",
+]
+
+[project.scripts]
+agentqo-demo = "scripts.run_demo:main"
+agentqo-h1 = "scripts.run_h1_labeling:main"
+agentqo-h2 = "scripts.run_h2_predictor:main"
+agentqo-h3 = "scripts.run_h3_allocation:main"
+agentqo-h4 = "scripts.run_h4_agenticonq:main"
+agentqo-runtime = "scripts.run_agentqo:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agentqo*"]
