@@ -29,7 +29,7 @@ from agentqo.experiments.dataset import (
 from agentqo.experiments.suite import SuiteMember, default_suite
 from agentqo.labeling.ec_labeler import ECLabeler, LabelingResult
 from agentqo.metrics.figures import save_h2_ranking_figure
-from agentqo.metrics.io import write_csv, write_json
+from agentqo.metrics.io import append_results_entry, write_csv, write_json
 from agentqo.metrics.report import generate_h2_report
 from agentqo.predictors.ec_predictor import (
     ConfidenceBaseline,
@@ -60,12 +60,15 @@ def _ensure_labels(
     num_tasks: int,
     embedding_dim: int,
     seed: int,
+    embedding_signal: str = "hidden",
 ) -> Dict[str, LabelingResult]:
     if labeling is not None:
         return labeling
     out: Dict[str, LabelingResult] = {}
     for member in members:
-        backend = MockBackend(member.task_model, embedding_dim=embedding_dim)
+        backend = MockBackend(
+            member.task_model, embedding_dim=embedding_dim, embedding_signal=embedding_signal,
+        )
         labeler = ECLabeler(backend, member.task_model)
         print(f"  labeling {member.workflow.name} for H2...")
         out[member.workflow.name] = labeler.label_workflow(
@@ -87,6 +90,7 @@ def run_h2_experiment(
     quick: bool = False,
     suite: Optional[List[SuiteMember]] = None,
     labeling_results: Optional[Dict[str, LabelingResult]] = None,
+    embedding_signal: str = "hidden",
 ) -> H2Artifacts:
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -98,7 +102,7 @@ def run_h2_experiment(
     print("=" * 60)
 
     labeling = _ensure_labels(
-        members, labeling_results, num_tasks, embedding_dim, base_seed
+        members, labeling_results, num_tasks, embedding_dim, base_seed, embedding_signal,
     )
     labels_map, observations = labeling_results_to_maps(labeling)
     extractor = FeatureExtractor(embedding_dim)
@@ -119,6 +123,11 @@ def run_h2_experiment(
         X_st_te, _, _ = matrix_from_samples(test, "structure")
         X_cf_tr, _, _ = matrix_from_samples(train, "confidence")
         X_cf_te, _, _ = matrix_from_samples(test, "confidence")
+        # Control: structure + same-width Gaussian noise, same GBT. Any AgentQO
+        # gain that this also gets is not information from the embedding.
+        noise_rng = np.random.default_rng(base_seed)
+        X_sn_tr = np.hstack([X_st_tr, noise_rng.standard_normal((len(X_st_tr), embedding_dim))])
+        X_sn_te = np.hstack([X_st_te, noise_rng.standard_normal((len(X_st_te), embedding_dim))])
 
         metrics = {
             "AgentQO": _eval_view(
@@ -135,6 +144,11 @@ def run_h2_experiment(
                 "Confidence-Only",
                 ConfidenceBaseline(),
                 X_cf_tr, y_tr, X_cf_te, y_te,
+            ),
+            "Structure+Noise": _eval_view(
+                "Structure+Noise",
+                GBTECPredictor(n_estimators=80, max_depth=3, random_state=base_seed),
+                X_sn_tr, y_tr, X_sn_te, y_te,
             ),
         }
         fold_summaries.append(metrics)
@@ -169,7 +183,7 @@ def run_h2_experiment(
         ] or [0.0]))},
         r2=0.0,
         overhead_ms=_mean_metrics(name)["overhead_ms"],
-    ) for name in ["AgentQO", "Structure-Only", "Confidence-Only"]}
+    ) for name in ["AgentQO", "Structure-Only", "Confidence-Only", "Structure+Noise"]}
 
     analysis = analyze_h2_results(averaged)
     analysis["best_model"] = "AgentQO"
@@ -179,6 +193,10 @@ def run_h2_experiment(
         >= averaged["Structure-Only"].spearman_corr - 0.02
     )
     analysis["detailed_metrics"] = {k: v.to_dict() for k, v in averaged.items()}
+    # Reported next to the gate, not part of it (thresholds are pre-registered).
+    analysis["beats_noise_control"] = (
+        averaged["AgentQO"].spearman_corr > averaged["Structure+Noise"].spearman_corr
+    )
     analysis["n_samples"] = len(samples)
     analysis["n_folds"] = len(fold_summaries)
 
@@ -207,6 +225,7 @@ def run_h2_experiment(
             "num_tasks": num_tasks,
             "embedding_dim": embedding_dim,
             "base_seed": base_seed,
+            "embedding_signal": embedding_signal,
         },
     })
     save_h2_ranking_figure(
@@ -232,6 +251,8 @@ def main() -> None:
     parser.add_argument("--output-dir", type=str, default="data/h2")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--quick", action="store_true")
+    parser.add_argument("--embedding-signal", choices=["hidden", "none"], default="hidden",
+                        help="'none' = pure-noise mock embeddings (WP0.4 circularity check)")
     args = parser.parse_args()
     artifacts = run_h2_experiment(
         num_tasks=args.num_tasks,
@@ -239,6 +260,22 @@ def main() -> None:
         output_dir=args.output_dir,
         base_seed=args.seed,
         quick=args.quick,
+        embedding_signal=args.embedding_signal,
+    )
+    m = artifacts.analysis["detailed_metrics"]
+    append_results_entry(
+        "S-CIRC" if args.embedding_signal == "none" else "S-H2",
+        {"embedding_signal": args.embedding_signal, "num_tasks": args.num_tasks,
+         "quick": args.quick, "seed": args.seed},
+        "mean LOWO Spearman: " + ", ".join(
+            f"{k} {v['spearman_corr']:.3f}" for k, v in m.items()
+        ) + f"; H2 holds: {artifacts.analysis.get('h2_holds')}"
+        + f"; beats Structure+Noise control: {artifacts.analysis.get('beats_noise_control')}",
+        str(Path(args.output_dir) / "h2_spearman.png"),
+        "With noise embeddings, AgentQO should fall to about structure-only. If it does, "
+        "the sim H2 gain comes from the embedding signal and real hidden states must carry it."
+        if args.embedding_signal == "none" else
+        "Mock embeddings carry hidden importance by construction; compare with S-CIRC.",
     )
     sys.exit(0 if artifacts.analysis.get("h2_holds") else 1)
 

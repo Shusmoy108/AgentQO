@@ -151,6 +151,8 @@ class Workflow:
     name: str
     nodes: Dict[str, NodeSpec] = field(default_factory=dict)
     description: str = ""
+    # Priority list: the first *executed* node here holds the final answer.
+    answer_nodes: List[str] = field(default_factory=list)
     
     # Cached computed properties (invalidated on modification)
     _topo_order: Optional[List[str]] = field(default=None, repr=False)
@@ -483,10 +485,11 @@ class WorkflowBuilder:
         """Convenience method to add a formatter node."""
         return self.add_node(node_id, NodeRole.FORMATTER, inputs, **kwargs)
     
-    def build(self) -> Workflow:
+    def build(self, answer_nodes: Optional[List[str]] = None) -> Workflow:
         """Build and return the workflow."""
         return Workflow(
             name=self.name,
             nodes=self._nodes,
             description=self.description,
+            answer_nodes=[n for n in (answer_nodes or []) if n in self._nodes],
         )

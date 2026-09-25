@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import abc
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 import numpy as np
 
@@ -388,6 +388,7 @@ def compute_quality_cost_curve(
     num_runs: int = 50,
     base_seed: int = 42,
     oracle_ec_scores: Optional[Dict[str, float]] = None,
+    raw_out: Optional[Dict[str, List[Tuple[float, np.ndarray]]]] = None,
 ) -> Dict[str, List[Tuple[float, float]]]:
     """Compute quality-vs-cost curves for different policies.
     
@@ -400,7 +401,10 @@ def compute_quality_cost_curve(
         budget_fractions: Budget levels as fractions of all-small cost
         num_runs: Number of runs per budget level
         base_seed: Random seed
-        
+        raw_out: If given, filled with policy -> [(cost, per-task qualities)].
+            Every policy and budget sees the same ``num_runs`` tasks (paired
+            design), so index i of every array is the same task.
+
     Returns:
         Dictionary mapping policy name to list of (cost, quality) points
     """
@@ -409,6 +413,11 @@ def compute_quality_cost_curve(
     
     executor = WorkflowExecutor(backend, task_model)
     rng = np.random.default_rng(base_seed)
+    task_seeds = [int(rng.integers(0, 2**31)) for _ in range(num_runs)]
+    tasks = [
+        task_model.generate_task(workflow, np.random.default_rng(ts))
+        for ts in task_seeds
+    ]
     
     # Compute base cost (all small)
     base_cost = len(workflow.nodes) * SMALL_FIDELITY.cost
@@ -449,24 +458,97 @@ def compute_quality_cost_curve(
         for policy_name, allocation in allocations.items():
             if curves[policy_name] and curves[policy_name][-1][0] == allocation.budget_used:
                 continue
-            qualities = []
-            for run_idx in range(num_runs):
-                task_seed = int(rng.integers(0, 2**31))
-                task = task_model.generate_task(workflow, np.random.default_rng(task_seed))
-                
-                record = executor.run_workflow(
+            qualities = np.asarray([
+                executor.run_workflow(
                     workflow=workflow,
                     task=task,
                     fidelity_plan=allocation.fidelity_plan,
                     seed=task_seed,
+                ).final_quality
+                for task, task_seed in zip(tasks, task_seeds)
+            ], dtype=np.float64)
+            curves[policy_name].append((allocation.budget_used, float(qualities.mean())))
+            if raw_out is not None:
+                raw_out.setdefault(policy_name, []).append(
+                    (allocation.budget_used, qualities)
                 )
-                
-                qualities.append(record.final_quality)
-            
-            avg_quality = np.mean(qualities)
-            curves[policy_name].append((allocation.budget_used, avg_quality))
-    
+
     return curves
+
+
+def bootstrap_auc(
+    raw: Dict[str, List[Tuple[float, np.ndarray]]],
+    pairs: Sequence[Tuple[str, str]] = (
+        ("AgentQO", "Confidence"),
+        ("AgentQO", "Uniform"),
+        ("Oracle-EC", "Confidence"),
+        ("Oracle-EC", "Uniform"),
+        ("Oracle-EC", "AgentQO"),
+    ),
+    n_bootstrap: int = 1000,
+    seed: int = 0,
+) -> Dict[str, Any]:
+    """Paired bootstrap over tasks for AUC and AUC differences.
+
+    ``raw`` comes from ``compute_quality_cost_curve(raw_out=...)``. Tasks are
+    shared across policies and budgets, so one resample of task indices is
+    applied to every curve.
+    """
+    from agentqo.metrics.quality_cost import compute_area_under_curve
+
+    def aucs(idx: Optional[np.ndarray]) -> Dict[str, float]:
+        return {
+            name: compute_area_under_curve([
+                (c, float((q if idx is None else q[idx]).mean())) for c, q in pts
+            ])
+            for name, pts in raw.items()
+        }
+
+    n = len(next(iter(raw.values()))[0][1])
+    point = aucs(None)
+    rng = np.random.default_rng(seed)
+    boots = [aucs(rng.integers(0, n, size=n)) for _ in range(n_bootstrap)]
+
+    def ci(values: List[float]) -> Tuple[float, float]:
+        return float(np.percentile(values, 2.5)), float(np.percentile(values, 97.5))
+
+    out: Dict[str, Any] = {
+        "n_tasks": n,
+        "auc": {
+            name: {"auc": point[name], "ci": ci([b[name] for b in boots])}
+            for name in raw
+        },
+        "diff": {},
+    }
+    for a, b in pairs:
+        if a in raw and b in raw:
+            lo, hi = ci([bb[a] - bb[b] for bb in boots])
+            out["diff"][f"{a} - {b}"] = {
+                "diff": point[a] - point[b],
+                "ci": (lo, hi),
+                "excludes_zero": lo > 0 or hi < 0,
+            }
+    return out
+
+
+def h3_bottleneck(boot: Dict[str, Any]) -> str:
+    """Section 9 reading: is the predictor or the allocator the bottleneck?"""
+
+    def wins(a: str) -> Optional[bool]:
+        d = boot["diff"]
+        keys = [f"{a} - Confidence", f"{a} - Uniform"]
+        if not all(k in d for k in keys):
+            return None
+        return all(d[k]["diff"] > 0 and d[k]["excludes_zero"] for k in keys)
+
+    predicted, oracle = wins("AgentQO"), wins("Oracle-EC")
+    if predicted:
+        return "none: predicted EC beats confidence and uniform (CI excludes 0)"
+    if oracle is None:
+        return "unknown: no oracle curve"
+    if oracle:
+        return "predictor: oracle EC wins, predicted EC does not"
+    return "allocator: oracle EC also fails to beat both baselines"
 
 
 def analyze_h3_results(

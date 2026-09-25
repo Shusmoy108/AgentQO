@@ -553,7 +553,10 @@ class AgentQODatabase:
         return {
             "forced_correctness": overrides.forced_correctness,
             "skip_nodes": list(overrides.skip_nodes),
-            "force_outputs": overrides.force_outputs,
+            "force_outputs": {
+                k: getattr(v, "output", v) for k, v in overrides.force_outputs.items()
+            },
+            "skip_forced_execution": overrides.skip_forced_execution,
         }
     
     def get_statistics(self) -> Dict[str, int]:

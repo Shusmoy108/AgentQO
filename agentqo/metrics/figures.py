@@ -90,7 +90,10 @@ def save_h2_ranking_figure(
 def save_h3_quality_cost_figure(
     curves: Mapping[str, Sequence[Tuple[float, float]]],
     output_path: Path,
+    raw: Optional[Mapping[str, Sequence[Tuple[float, np.ndarray]]]] = None,
+    title: str = "H3: value-aware allocation",
 ) -> Path:
+    """Quality vs cost; with ``raw`` per-task qualities, adds 95% CI bands."""
     plt = _pyplot()
     fig, ax = plt.subplots(figsize=(6.8, 4.2))
     style = {
@@ -106,10 +109,15 @@ def save_h3_quality_cost_figure(
         xs = [p[0] for p in points]
         ys = [p[1] for p in points]
         color, marker = style.get(name, (None, "o"))
-        ax.plot(xs, ys, marker=marker, label=name, color=color, linewidth=2)
+        line, = ax.plot(xs, ys, marker=marker, label=name, color=color, linewidth=2)
+        if raw and raw.get(name):
+            half = [1.96 * q.std(ddof=1) / np.sqrt(len(q)) if len(q) > 1 else 0.0
+                    for _, q in raw[name]]
+            ax.fill_between(xs, np.subtract(ys, half), np.add(ys, half),
+                            color=line.get_color(), alpha=0.15, linewidth=0)
     ax.set_xlabel("GPU cost")
     ax.set_ylabel("Task quality")
-    ax.set_title("H3: value-aware allocation")
+    ax.set_title(title)
     ax.legend(frameon=False)
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)

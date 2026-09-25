@@ -95,7 +95,7 @@ def create_math_reasoning_workflow(
             fidelities=fidelities,
         )
     
-    return builder.build()
+    return builder.build(answer_nodes=["verifier", "aggregator"])
 
 
 def create_multihop_qa_workflow(
@@ -166,7 +166,7 @@ def create_multihop_qa_workflow(
             fidelities=fidelities,
         )
     
-    return builder.build()
+    return builder.build(answer_nodes=["verifier", "aggregator"])
 
 
 def create_self_consistency_workflow(
@@ -211,7 +211,7 @@ def create_self_consistency_workflow(
         description="Select best answer via majority voting",
         fidelities=fidelities,
     )
-    return builder.build()
+    return builder.build(answer_nodes=["aggregator"])
 
 
 def create_complex_workflow(
@@ -303,7 +303,7 @@ def create_complex_workflow(
         fidelities=fidelities,
     )
     
-    return builder.build()
+    return builder.build(answer_nodes=["formatter", "verifier", "aggregator"])
 
 
 def create_refinement_workflow(
@@ -349,4 +349,4 @@ def create_refinement_workflow(
         description="Emit refined answer",
         fidelities=fidelities,
     )
-    return builder.build()
+    return builder.build(answer_nodes=["aggregator"])

@@ -65,6 +65,8 @@ class ServeReport:
     quality_per_gpu_hour: float
     edits_used: Dict[str, int]
     policy: str
+    qualities: List[float] = field(default_factory=list)
+    completions: List[float] = field(default_factory=list)
 
 
 class AgentQO:
@@ -146,8 +148,6 @@ class AgentQO:
             (r.finish_time or self.cluster.now) - r.arrival_time for r in records
         ]
         gpu_hours = sum(r.gpu_time for r in records) / 3600.0
-        # Keep units as GPU-seconds in the ratio so the number is readable.
-        gpu_sec = sum(r.gpu_time for r in records)
         edits: Dict[str, int] = {}
         for rec in records:
             for name in rec.edits:
@@ -158,10 +158,14 @@ class AgentQO:
             makespan=self.cluster.now,
             mean_quality=mean_q,
             mean_completion=float(np.mean(completions)) if completions else 0.0,
-            gpu_hours=gpu_sec,
-            quality_per_gpu_hour=mean_q / max(gpu_sec, 1e-6),
+            gpu_hours=gpu_hours,
+            # Total quality delivered per (simulated) GPU-hour: the sim analogue
+            # of correct answers per GPU-hour.
+            quality_per_gpu_hour=float(sum(qualities)) / max(gpu_hours, 1e-9),
             edits_used=edits,
             policy=self.name,
+            qualities=[float(q) for q in qualities],
+            completions=[float(c) for c in completions],
         )
 
     def _has_running(self) -> bool:
@@ -287,7 +291,7 @@ class AgentQO:
             node=node,
             inputs=inputs,
             fidelity=fid,
-            task_context={"task": inst.task, "workflow": inst.workflow},
+            task_context={"task": inst.task, "workflow": inst.workflow, "results": inst.completed},
             rng=rng,
         )
         prompt = 80 + 40 * inst.workflow.get_depth(node_id)

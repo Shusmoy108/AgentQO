@@ -15,21 +15,29 @@ are these measured quantities, never the simulator's hidden importance.
 from __future__ import annotations
 
 import logging
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict, List, Optional, Tuple
+from zlib import crc32
 
 import numpy as np
 from tqdm import tqdm
 
 from agentqo.backends.base import ModelBackend, NodeResult
 from agentqo.database import AgentQODatabase
+from agentqo.backends.vllm_http import _output_as_text
 from agentqo.executor import (
     ExecutionOverrides,
     FidelityPlan,
+    RunRecord,
     WorkflowExecutor,
+    verify_partial_recompute_invariant,
 )
+from agentqo.labeling.corruptions import CorruptionMaker, rewrite_prompt
+from agentqo.labeling.p_err import estimate_p_err
+from agentqo.tasks.real_task_model import answer_node
 from agentqo.simulator.task_model import TaskInstance, TaskModel
-from agentqo.workflows.dag import NodeRole, Workflow
+from agentqo.workflows.dag import LARGE_FIDELITY, SMALL_FIDELITY, NodeRole, Workflow
 
 logger = logging.getLogger("agentqo.labeling")
 
@@ -87,6 +95,9 @@ class LabelingResult:
     observations: List[NodeObservation]
     num_tasks: int
     seed: int
+    # Substitute mode only: per (task, node) substitution chains and per-task traces.
+    records: List[Dict[str, Any]] = field(default_factory=list)
+    traces: List[Dict[str, Any]] = field(default_factory=list)
 
 
 def compute_bootstrap_ci(
@@ -112,18 +123,41 @@ def compute_bootstrap_ci(
 
 
 class ECLabeler:
-    """Fault-inject every node, with descendant-only recompute."""
+    """Fault-inject every node, with descendant-only recompute.
+
+    ``mode="flag"`` pins a correctness bit (simulator only: with a real LLM
+    descendants would still read the same text). ``mode="substitute"``
+    replaces the node's *output text* with a reference (good side) or with
+    corruptions (bad side) and recomputes descendants on that text.
+    """
 
     def __init__(
         self,
         backend: ModelBackend,
         task_model: TaskModel,
         db: Optional[AgentQODatabase] = None,
+        mode: str = "flag",
+        n_corruptions: int = 3,
+        k_samples: int = 5,
+        max_workers: int = 32,
     ) -> None:
+        from agentqo.simulator.task_model import MockBackend
+
+        if mode not in ("flag", "substitute"):
+            raise ValueError(f"mode must be 'flag' or 'substitute', got {mode}")
+        if mode == "flag" and not isinstance(backend, MockBackend):
+            raise ValueError(
+                "flag mode only changes a correctness bit, so with a real backend descendants "
+                "still see the same text; use mode='substitute'"
+            )
         self.backend = backend
         self.task_model = task_model
         self.executor = WorkflowExecutor(backend, task_model)
         self.db = db
+        self.mode = mode
+        self.n_corruptions = n_corruptions
+        self.k_samples = k_samples
+        self.max_workers = max_workers
 
     def label_workflow(
         self,
@@ -134,7 +168,13 @@ class ECLabeler:
         use_partial_recompute: bool = True,
         show_progress: bool = True,
     ) -> LabelingResult:
-        rng = np.random.default_rng(base_seed)
+        if self.mode == "substitute":
+            return self._label_substitute(workflow, num_tasks, fidelity_plan, base_seed, show_progress)
+        # Mix the workflow name into the seed. With a bare base_seed, every
+        # workflow saw the same task seeds, so task i (difficulty, RNG stream,
+        # embedding noise) was shared across workflows and leaked across
+        # leave-one-workflow-out folds.
+        rng = np.random.default_rng([base_seed, crc32(workflow.name.encode())])
         node_ids = list(workflow.nodes.keys())
         qualities_correct: Dict[str, List[float]] = {nid: [] for nid in node_ids}
         qualities_incorrect: Dict[str, List[float]] = {nid: [] for nid in node_ids}
@@ -212,6 +252,194 @@ class ECLabeler:
             num_tasks=num_tasks,
             seed=base_seed,
         )
+
+    def _label_substitute(
+        self,
+        workflow: Workflow,
+        num_tasks: int,
+        fidelity_plan: Optional[FidelityPlan],
+        base_seed: int,
+        show_progress: bool,
+    ) -> LabelingResult:
+        """Two phases on a thread pool: all baselines, then per-task labeling.
+
+        Baselines come first so "swap from another task" donors are fixed
+        regardless of thread timing. Within a task, work is sequential.
+        """
+        rng = np.random.default_rng([base_seed, crc32(workflow.name.encode())])
+        tasks = [
+            self.task_model.generate_task(workflow, np.random.default_rng(int(rng.integers(0, 2**31))))
+            for _ in range(num_tasks)
+        ]
+        with ThreadPoolExecutor(max_workers=self.max_workers) as pool:
+            baselines = list(pool.map(
+                lambda t: self.executor.run_workflow(workflow, t, fidelity_plan=fidelity_plan, seed=0),
+                tasks,
+            ))
+            jobs = pool.map(
+                lambda i: self._label_task_substitute(workflow, tasks, baselines, i, fidelity_plan),
+                range(num_tasks),
+            )
+            if show_progress:
+                jobs = tqdm(jobs, total=num_tasks, desc=f"Labeling {workflow.name}", leave=False)
+            per_task = list(jobs)
+
+        node_ids = list(workflow.nodes.keys())
+        q_plus: Dict[str, List[float]] = {nid: [] for nid in node_ids}
+        q_minus: Dict[str, List[float]] = {nid: [] for nid in node_ids}
+        p_err_sum: Dict[str, float] = {nid: 0.0 for nid in node_ids}
+        observations: List[NodeObservation] = []
+        records: List[Dict[str, Any]] = []
+        traces: List[Dict[str, Any]] = []
+        for task, base, out in zip(tasks, baselines, per_task):
+            traces.append(out["trace"])
+            for rec in out["records"]:
+                nid = rec["node_id"]
+                q_plus[nid].append(rec["q_plus"])
+                q_minus[nid].append(rec["q_minus"])
+                p_err_sum[nid] += rec["p_err"]
+                result = base.node_results[nid]
+                observations.append(NodeObservation(
+                    workflow_name=workflow.name,
+                    node_id=nid,
+                    task_id=task.task_id,
+                    consequence=rec["consequence"],
+                    baseline_correct=rec["baseline_agrees"],
+                    confidence=float(result.confidence),
+                    embedding=np.array(result.embedding, copy=True),
+                    cost=float(result.cost),
+                    fidelity_used=result.fidelity_used,
+                ))
+                records.append(rec)
+        labels = self._aggregate_labels(
+            workflow, node_ids, q_plus, q_minus, p_err_sum, num_tasks, rng,
+        )
+        return LabelingResult(
+            workflow_name=workflow.name,
+            labels=labels,
+            observations=observations,
+            num_tasks=num_tasks,
+            seed=base_seed,
+            records=records,
+            traces=traces,
+        )
+
+    def _label_task_substitute(
+        self,
+        workflow: Workflow,
+        tasks: List[TaskInstance],
+        baselines: List[RunRecord],
+        i: int,
+        fidelity_plan: Optional[FidelityPlan],
+    ) -> Dict[str, Any]:
+        task, base = tasks[i], baselines[i]
+        extract = self.task_model.extract
+
+        def run_node(nid: str, fidelity, **extra) -> NodeResult:
+            node = workflow.nodes[nid]
+            inputs = {x: base.node_results[x] for x in node.inputs if x in base.node_results}
+            ctx = {"task": task, "workflow": workflow, "results": base.node_results, **extra}
+            return self.backend.execute_node(node, inputs, fidelity, ctx)
+
+        def substituted(nid: str, output: Any) -> RunRecord:
+            return self.executor.run_with_partial_recompute(
+                workflow, task, base.node_results, {nid},
+                ExecutionOverrides(force_outputs={nid: output}),
+                fidelity_plan=fidelity_plan, seed=0,
+            )
+
+        def final_key(rec: RunRecord) -> Optional[str]:
+            a = answer_node(workflow, rec.node_results)
+            return extract(_output_as_text(rec.node_results[a].output)) if a else None
+
+        def descendants_text(nid: str, rec: RunRecord) -> Dict[str, str]:
+            return {d: _output_as_text(rec.node_results[d].output)
+                    for d in workflow.get_descendants(nid) if d in rec.node_results}
+
+        def donor(nid: str, c: int) -> Optional[str]:
+            j = (i + 1 + c) % len(baselines)
+            res = baselines[j].node_results.get(nid) if j != i else None
+            return _output_as_text(res.output) if res is not None else None
+
+        records = []
+        for nid in workflow.topological_order:
+            if nid not in base.node_results:
+                continue
+            role = workflow.nodes[nid].role
+            reference = run_node(nid, LARGE_FIDELITY, temperature=0.0)
+            ref_text = _output_as_text(reference.output)
+            plus = substituted(nid, reference)
+            ref_final = final_key(plus)
+
+            def sample(temp: float, idx: int, nid=nid) -> NodeResult:
+                return run_node(nid, SMALL_FIDELITY, temperature=temp, sample_index=idx)
+
+            def rewrite(text: str, c: int, nid=nid) -> str:
+                return _output_as_text(run_node(
+                    nid, SMALL_FIDELITY, temperature=0.7, sample_index=2000 + c,
+                    prompt_fn=lambda *_: rewrite_prompt(text), code_fn=lambda *_: None,
+                ).output)
+
+            maker = CorruptionMaker(extract, sample, lambda c, nid=nid: donor(nid, c), rewrite)
+            corruptions = maker.make(role, ref_text, self.n_corruptions)
+            minus_runs = [substituted(nid, c.text) for c in corruptions]
+            q_p = float(plus.final_quality)
+            q_m = float(np.mean([r.final_quality for r in minus_runs]))
+
+            ref_key = None if role == NodeRole.PLANNER else extract(ref_text)
+            p = estimate_p_err(
+                keyed=ref_key is not None,
+                k=self.k_samples,
+                sample_key=lambda idx: extract(_output_as_text(sample(0.7, idx).output)),
+                sample_final_key=lambda idx: final_key(substituted(nid, sample(0.7, idx))),
+                reference_key=ref_key,
+                reference_final_key=ref_final,
+            )
+            base_text = _output_as_text(base.node_results[nid].output)
+            agrees = (extract(base_text) == ref_key) if ref_key is not None else (final_key(base) == ref_final)
+            violations = []
+            for rec in [plus, *minus_runs]:
+                violations += verify_partial_recompute_invariant(base, rec, {nid}, workflow)[1]
+            records.append({
+                "task_id": task.task_id,
+                "node_id": nid,
+                "role": role.value,
+                "reference": ref_text,
+                "reference_key": ref_key,
+                "final_key_plus": ref_final,
+                "q_plus": q_p,
+                "q_minus": q_m,
+                "consequence": q_p - q_m,
+                "p_err": p,
+                "baseline_agrees": bool(agrees),
+                "descendants_plus": descendants_text(nid, plus),
+                "corruptions": [
+                    {**c.to_dict(), "quality": float(r.final_quality), "final_key": final_key(r),
+                     "final_differs": final_key(r) != ref_final, "descendants": descendants_text(nid, r)}
+                    for c, r in zip(corruptions, minus_runs)
+                ],
+                "invariant_violations": violations,
+            })
+        trace = {
+            "task_id": task.task_id,
+            "gold": task.ground_truth,
+            "problem": task.metadata.get("problem"),
+            "final_quality": float(base.final_quality),
+            "final_key": final_key(base),
+            "nodes": {
+                nid: {
+                    "prompt": r.metadata.get("prompt"),
+                    "output": _output_as_text(r.output),
+                    "key": extract(_output_as_text(r.output)),
+                    "confidence": r.confidence,
+                    "fidelity": r.fidelity_used,
+                    **{k: r.metadata.get(k) for k in
+                       ("prompt_tokens", "completion_tokens", "latency_s", "cache_hit", "code_node")},
+                }
+                for nid, r in base.node_results.items()
+            },
+        }
+        return {"records": records, "trace": trace}
 
     def _forced_quality(
         self,

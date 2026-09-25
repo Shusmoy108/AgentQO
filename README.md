@@ -54,6 +54,17 @@ Optional vLLM smoke (needs a live server; exits cleanly if unreachable):
 VLLM_BASE_URL=http://localhost:8000 python scripts/run_vllm_smoke.py
 ```
 
+Phase A hardening (see `AgentQO_RealModel_Test_Plan.md`; results go to `RESULTS.md`):
+
+```bash
+python scripts/run_h3_allocation.py --num-runs 30 --oracle          # WP0.1 oracle bound + CIs
+python scripts/run_agentqo.py --ec-source predicted --seeds 5 --loads low,med,high   # WP0.2/0.3
+python scripts/run_h2_predictor.py --embedding-signal none --output-dir data/h2_noise  # WP0.4
+python scripts/run_real_pipeline.py --backend fake --n-tasks 10     # WP7 dry run (GSM8K, fake server)
+python scripts/run_real_pipeline.py --backend fake --n-tasks 10 --probe hf \
+    --probe-model trl-internal-testing/tiny-Qwen2ForCausalLM-2.5   # dry run incl. H2/H3
+```
+
 Measurement suite (CPU, no GPU):
 
 ```bash

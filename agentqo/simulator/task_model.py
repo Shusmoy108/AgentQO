@@ -506,9 +506,15 @@ class MockBackend:
         embedding_dim: int = 256,
         confidence_noise: float = 0.15,
         embedding_signal_strength: float = 0.7,
+        embedding_signal: str = "hidden",
     ) -> None:
+        """``embedding_signal="none"`` emits pure-noise embeddings: the WP0.4
+        circularity check that H2's embedding gain is not free."""
         if embedding_dim < 48:
             raise ValueError("embedding_dim must be >= 48 to hold EC signals")
+        if embedding_signal not in ("hidden", "none"):
+            raise ValueError(f"embedding_signal must be 'hidden' or 'none', got {embedding_signal}")
+        self.embedding_signal = embedding_signal
         self.task_model = task_model
         self._embedding_dim = embedding_dim
         self.confidence_noise = confidence_noise
@@ -578,6 +584,8 @@ class MockBackend:
         rng: np.random.Generator,
     ) -> np.ndarray:
         embedding = rng.standard_normal(self._embedding_dim).astype(np.float32)
+        if self.embedding_signal == "none":
+            return embedding / float(np.linalg.norm(embedding) + 1e-8)
         importance = task.node_importance.get(node.node_id, 0.5)
         difficulty = task.node_difficulties.get(node.node_id, 0.5)
         s = self.embedding_signal_strength
@@ -600,6 +608,7 @@ class MockBackend:
             "embedding_dim": self._embedding_dim,
             "confidence_noise": self.confidence_noise,
             "embedding_signal_strength": self.embedding_signal_strength,
+            "embedding_signal": self.embedding_signal,
         }
 
 

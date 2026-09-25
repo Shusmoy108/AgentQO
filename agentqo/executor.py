@@ -49,11 +49,15 @@ class ExecutionOverrides:
     Attributes:
         forced_correctness: Mapping from node_id to forced correctness value
         skip_nodes: Set of optional node_ids to skip
-        force_outputs: Mapping from node_id to forced output value
+        force_outputs: Mapping from node_id to forced output value (a
+            NodeResult is used as-is; anything else becomes the output)
+        skip_forced_execution: If True, a forced-output node is not executed
+            at all (no wasted backend call before the output is replaced)
     """
     forced_correctness: Dict[str, bool] = field(default_factory=dict)
     skip_nodes: Set[str] = field(default_factory=set)
     force_outputs: Dict[str, Any] = field(default_factory=dict)
+    skip_forced_execution: bool = True
 
 
 @dataclass
@@ -156,6 +160,7 @@ class WorkflowExecutor:
         task_context = {
             "task": task,
             "workflow": workflow,
+            "results": node_results,
         }
         
         for node_id in workflow.topological_order:
@@ -186,16 +191,7 @@ class WorkflowExecutor:
             # Get fidelity for this node
             fidelity = fidelity_plan.get_fidelity(node)
             
-            # Execute node
-            result = self.backend.execute_node(
-                node=node,
-                inputs=input_results,
-                fidelity=fidelity,
-                task_context=task_context,
-                rng=rng,
-            )
-            
-            result = _apply_overrides(result, node_id, overrides)
+            result = self._execute(node, input_results, fidelity, task_context, rng, overrides)
             node_results[node_id] = result
             total_cost += result.cost
         
@@ -222,6 +218,27 @@ class WorkflowExecutor:
             },
         )
     
+    def _execute(
+        self,
+        node: NodeSpec,
+        inputs: Dict[str, NodeResult],
+        fidelity: Fidelity,
+        task_context: Dict[str, Any],
+        rng: np.random.Generator,
+        overrides: ExecutionOverrides,
+    ) -> NodeResult:
+        nid = node.node_id
+        if overrides.skip_forced_execution and nid in overrides.force_outputs:
+            return _forced_result(node, overrides, self.backend)
+        result = self.backend.execute_node(
+            node=node,
+            inputs=inputs,
+            fidelity=fidelity,
+            task_context=task_context,
+            rng=rng,
+        )
+        return _apply_overrides(result, nid, overrides)
+
     def run_with_partial_recompute(
         self,
         workflow: Workflow,
@@ -280,6 +297,7 @@ class WorkflowExecutor:
         task_context = {
             "task": task,
             "workflow": workflow,
+            "results": node_results,
         }
         
         for node_id in workflow.topological_order:
@@ -327,15 +345,7 @@ class WorkflowExecutor:
                 
                 fidelity = fidelity_plan.get_fidelity(node)
                 
-                result = self.backend.execute_node(
-                    node=node,
-                    inputs=input_results,
-                    fidelity=fidelity,
-                    task_context=task_context,
-                    rng=rng,
-                )
-                
-                result = _apply_overrides(result, node_id, overrides)
+                result = self._execute(node, input_results, fidelity, task_context, rng, overrides)
                 node_results[node_id] = result
                 total_cost += result.cost
         
@@ -447,6 +457,29 @@ def _apply_overrides(
         return result
     updates["metadata"] = meta
     return replace(result, **updates)
+
+
+def _forced_result(node: NodeSpec, overrides: ExecutionOverrides, backend: Any) -> NodeResult:
+    """Result for a forced node that was never executed."""
+    nid = node.node_id
+    value = overrides.force_outputs[nid]
+    if isinstance(value, NodeResult):
+        result = replace(value, node_id=nid, metadata={**value.metadata, "output_forced": True})
+    else:
+        result = NodeResult(
+            node_id=nid,
+            output=value,
+            correctness=False,
+            confidence=0.5,
+            embedding=np.zeros(int(getattr(backend, "embedding_dim", 1)), dtype=np.float32),
+            cost=0.0,
+            fidelity_used="forced",
+            metadata={"output_forced": True},
+        )
+    if nid in overrides.forced_correctness:
+        result = replace(result, correctness=overrides.forced_correctness[nid],
+                         metadata={**result.metadata, "correctness_forced": True})
+    return result
 
 
 def _skippable(node: NodeSpec) -> bool:
