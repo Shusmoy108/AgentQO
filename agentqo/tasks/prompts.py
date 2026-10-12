@@ -140,6 +140,10 @@ def build_prompt(node: "NodeSpec", inputs: Dict[str, "NodeResult"], task_context
 def code_output(node: "NodeSpec", inputs: Dict[str, "NodeResult"], task_context: Dict[str, Any]) -> Optional[str]:
     """Self-consistency aggregator = majority vote in code, not an LLM call."""
     workflow: "Workflow" = task_context["workflow"]
+    if node.role == NodeRole.VERIFIER and os.environ.get("AGENTQO_VERIFIER") == "passthrough":
+        upstream = next(iter(inputs.values()), None)
+        key = extract_gsm8k_number(_output_as_text(upstream.output)) if upstream else None
+        return f"VERDICT: passthrough\n#### {key}"
     if node.role != NodeRole.AGGREGATOR or not workflow.get_speculative_groups():
         return None
     votes = [extract_gsm8k_number(_output_as_text(r.output)) for r in inputs.values()]

@@ -153,3 +153,17 @@
 - Figure: data/ollama/h1_n30_fairtie/h1/<workflow>/h1_consequence.png
 - Interpretation: Ollama 4-bit models on the Mac: debugging evidence only, not a reported result.
 - Changes made since last run and why: 
+
+### LOCAL 2026-10-11
+- Config: backend=ollama, n_tasks=30, split=dev, workflows=math, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 FAIL range 0.233 cv 0.559 key-change 0.9833333333333333; H2 not run; H3 not run
+- Figure: data/ollama/h1_math_judge/h1/<workflow>/h1_consequence.png
+- Interpretation: Ollama 4-bit models on the Mac: debugging evidence only, not a reported result.
+- Changes made since last run and why: 
+
+### LOCAL 2026-10-11
+- Config: backend=ollama, n_tasks=30, split=dev, workflows=math, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 PASS range 0.283 cv 0.326 key-change 0.9833333333333333; H2 not run; H3 not run
+- Figure: data/ollama/h1_math_passthrough/h1/<workflow>/h1_consequence.png
+- Interpretation: Ollama 4-bit models on the Mac: debugging evidence only, not a reported result.
+- Changes made since last run and why: 
