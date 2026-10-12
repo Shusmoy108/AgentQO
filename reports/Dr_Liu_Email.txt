@@ -1,0 +1,20 @@
+Subject: AgentQO update: first real-model results
+
+Dear Dr. Liu,
+
+I wanted to share a progress update on AgentQO. Before using the Chameleon allocation, I ran the first real-model experiments on my laptop (Qwen2.5 1.5B and 7B via Ollama, GSM8K, two multi-agent workflows). A short summary and the full reports are attached.
+
+The main results:
+
+1. Criticality varies strongly across agents, but not by graph position. In a math workflow, a verifier that re-reads the problem and can rewrite the answer becomes the most critical agent, while the planner's errors stop mattering. Replacing the verifier with a code passthrough, on identical cached model outputs, makes every upstream agent critical again and restores the structural ordering. Structure predicts criticality only when no agent can repair upstream errors.
+
+2. Spending by criticality works at the level of upgrade sets. In a pre-registered test on 100 problems not used to measure criticality, upgrading the two most critical agents recovered 52% of the full upgrade's accuracy gain for 40% of the extra cost, and beat the structurally chosen pair at equal cost by 26 points (95% CI [+14, +38]; 34 problems won, 8 lost).
+
+3. Three findings changed the design. Where errors hurt most is not where a bigger model helps most: upgrade value rises along the chain while error consequence falls. Upgrades interact strongly, so allocation should be a joint choice over sets rather than a per-agent ranking. And a noisy repair step cancelled every upgrade, so turning a step off can matter more than a bigger model, which supports the joint logical and physical direction.
+
+These are pilot results with small quantized models. I would like to repeat the strongest experiments at scale on Chameleon with vLLM, and I have a setup plan ready.
+
+Would you have time for a short meeting next week to go over the results and the Chameleon plan?
+
+Best regards,
+Shusmoy

@@ -17,11 +17,11 @@ I ran three experiments on a five-agent math workflow, using a 1.5B model as the
 2. **With the verifier replaced by a passthrough, EC-guided upgrades worked.** On the problems where EC was measured, upgrading the two highest-EC agents recovered **69% of the full upgrade's gain for 40% of its extra cost**, and the EC ranking matched the ranking of single-agent gains exactly (Spearman +1.00).
 3. **On 30 new problems, the set-level result held, the node-level ranking did not.** The EC-chosen pair again recovered **62% of the gain for 40% of the cost**, and it **beat the structurally chosen pair at equal cost by 26.7 points (95% CI [+6.7, +46.7]; 10 wins, 2 losses)**. But the ranking of single upgrades scrambled (Spearman −0.35), and the gains turned out to interact: the planner upgrade alone slightly hurt, while the planner and aggregator together gave more than the sum of their parts.
 
+4. **A pre-registered 100-problem replication confirmed the set-level result.** The EC pair beat the structural pair by **26 points (95% CI [+14, +38]; 34 wins, 8 losses)** and recovered **52% of the full gain for 40% of the extra cost**. With 100 problems, the single-upgrade gains also became precise enough to reveal a clear pattern: the value of upgrading an agent **rises along the chain** (planner −0.07, step 1 −0.04, step 2 +0.08, step 3 +0.09, aggregator +0.15), the reverse of the order in which the agents' *errors* matter.
+
 The resulting claim:
 
-> **On unseen problems, measured criticality chooses a better set of upgrades than graph structure at equal cost. But upgrades interact, so allocation should select sets of agents jointly rather than rank agents one at a time, and a noisy repair step can cancel any upgrade, which calls for a logical change to the workflow rather than a bigger model.**
-
-A 100-problem replication is running overnight to confirm the set-level result (Section 9).
+> **On unseen problems, measured criticality chooses a better set of upgrades than graph structure at equal cost. But where errors hurt most is not where a bigger model helps most, upgrades interact strongly, and a noisy repair step can cancel any upgrade. Allocation should therefore estimate the value of each upgrade in its role and select sets of upgrades jointly, and it should be able to change the workflow itself, not only its models.**
 
 ---
 
@@ -230,10 +230,11 @@ The pair is worth four times the sum of its parts. A better plan seems to help o
 
 | Claim | Evidence | Status |
 |---|---|---|
-| Spending by EC gets most of the gain for a fraction of the cost | 69% of gain for 40% of cost in-sample; 62% for 40% on new problems | **Supported, replicated** |
-| EC chooses a better upgrade set than structure at equal cost | +0.267 [+0.067, +0.467], 10 wins vs. 2 losses, on new problems | **Supported (n = 30, confirmation running)** |
-| EC ranks single-agent upgrades correctly | Spearman +1.00 in-sample, −0.35 on new problems | **Not supported** |
-| Single-agent upgrades add up | Strong interactions in both directions | **Not supported** |
+| Spending by EC gets most of the gain for a fraction of the cost | 69% of gain for 40% of cost in-sample; 62% for 40% on 30 new problems; **52% for 40% on 100 new problems** | **Supported, replicated twice** |
+| EC chooses a better upgrade set than structure at equal cost | +0.267 [+0.067, +0.467] at n = 30; **+0.260 [+0.140, +0.380], 34 wins vs. 8 losses, at n = 100** | **Supported, pre-registered confirmation passed** |
+| EC ranks single-agent upgrades correctly | Spearman +1.00 in-sample, −0.35 (n = 30) and −0.26 (n = 100) on new problems | **Not supported** |
+| Upgrade value follows error consequence | Upgrade gains rise along the chain while consequence falls along it (Section 9.3) | **Not supported; roughly reversed** |
+| Single-agent upgrades add up | Planner −0.07 and aggregator +0.15 alone, +0.23 together (n = 100) | **Not supported; strong interactions** |
 | A bigger model at the most critical agent always helps | The 7B verifier did not help; the small verifier cancelled every upstream gain | **Not supported** |
 
 ---
@@ -242,7 +243,7 @@ The pair is worth four times the sum of its parts. A better plan seems to help o
 
 Three lessons go straight into the proposal.
 
-**Allocate by error reduction, not by error rate.** H1's EC multiplies consequence by the small model's error rate. What determines whether an upgrade pays is consequence multiplied by **how much the upgrade reduces error in that role**, and whether downstream agents keep the improvement. The verifier is the clearest example: highest EC, yet upgrading it bought nothing. The allocator needs per-role estimates of the upgrade's effect, not only the current error rate.
+**Allocate by error reduction, not by error rate.** H1's EC multiplies consequence by the small model's error rate. What determines whether an upgrade pays is consequence multiplied by **how much the upgrade reduces error in that role**, and whether downstream agents keep the improvement. Two results make this concrete. The verifier had the highest EC, yet upgrading it bought nothing. And in the passthrough workflow, the planner's errors matter most while upgrading the planner alone slightly hurts; upgrade value instead rises toward the end of the chain (Section 9.3). The allocator needs per-role estimates of the upgrade's effect, not only the current error rate.
 
 **Choose sets, not rankings.** Because upgrades interact, a greedy "upgrade the top-k agents" rule is fragile. The allocator should evaluate candidate sets of upgrades jointly. This is exactly the joint optimization AgentQO's runtime was designed for, and H3 now provides a real-model reason for it.
 
@@ -252,7 +253,7 @@ Three lessons go straight into the proposal.
 
 ## 8. Limitations
 
-- **Thirty problems per run.** Enough to detect the all-large gain and the set-level comparison, not enough to rank single upgrades reliably. This is the main reason for the overnight run.
+- **Sample size.** Experiments 1 to 3 used 30 problems each, which was enough for the set-level comparison but not for ranking single upgrades. The 100-problem confirmation resolves the main comparison and the single-upgrade pattern, but per-agent intervals are still around ±0.08.
 - **One workflow, one task family.** A five-agent GSM8K chain. The interaction pattern and the noisy-verifier effect may look different with other workflows or tasks.
 - **Small, quantized models.** Ollama serves 4-bit 1.5B and 7B models. Larger models may change both the size of the gains and the verifier's behavior.
 - **A simple cost model.** Cost units count calls at a fixed 1:4 ratio and ignore token lengths and real latency. The ratio roughly reflects the size difference, but real GPU cost would need measured timings.
@@ -262,30 +263,89 @@ Three lessons go straight into the proposal.
 
 ---
 
-## 9. Running now: the 100-problem confirmation
+## 9. Confirmation at 100 problems
 
-Tonight's run repeats experiment 3 on **100 eval problems** (the first 30 are the ones above). With 100 problems, intervals shrink to roughly ±0.10, enough to confirm or refute the set-level result and to see whether any node-level ranking is stable.
+### 9.1 Design and pre-registered criteria
 
-Criteria, fixed before the results come in:
+I repeated experiment 3 on **100 eval problems** (the first 30 are the problems from Section 5), with the same configuration: verifier passthrough, EC taken from the dev-split H1 run, and both `ec_top2` and `struct_top2` fixed in advance. Before the results came in, I wrote down three criteria:
 
 - **Primary:** `ec_top2 − struct_top2` stays positive with a 95% interval excluding zero.
 - **Secondary:** `ec_top2` recovers at least half of the all-large gain at 40% of the extra cost.
 - **Exploratory:** the Spearman correlation between EC and single-agent gains, reported whatever it is.
 
-```bash
-AGENTQO_VERIFIER=passthrough caffeinate -i -s python3 scripts/run_real_h3.py --backend ollama \
-  --split eval --n-tasks 100 \
-  --h1-summary data/ollama/h1_math_passthrough/h1/math_reasoning_s3_ver/h1_summary.json \
-  --cache data/cache/ollama.sqlite --output-dir data/ollama/h3_math_passthrough_eval100 \
-  2>&1 | tee logs/22_h3_eval100.txt
-```
+The diagnostic confirmed the passthrough worked in every plan (0 of 100 answers changed by the verifier). The run made 1,851 new model calls.
+
+### 9.2 Results (eval problems, n = 100)
+
+| Plan | Accuracy | Gain vs. all-small [95% CI] | Share of gain | Share of cost |
+|---|---|---|---|---|
+| all_large | 0.760 | **+0.440 [+0.320, +0.550]** | 100% | 100% |
+| **ec_top2 (planner + aggregator)** | **0.550** | **+0.230 [+0.110, +0.350]** | **52%** | **40%** |
+| only_aggregator | 0.470 | +0.150 [+0.070, +0.230] | 34% | 20% |
+| only_step_3 | 0.410 | +0.090 [+0.020, +0.160] | 20% | 20% |
+| only_step_2 | 0.400 | +0.080 [+0.010, +0.160] | 18% | 20% |
+| all_small | 0.320 | (baseline) | 0% | 0% |
+| only_verifier | 0.320 | 0 (code) | 0% | 0% |
+| **struct_top2 (planner + step 1)** | **0.290** | **−0.030 [−0.140, +0.080]** | **−7%** | **40%** |
+| only_step_1 | 0.280 | −0.040 [−0.130, +0.050] | −9% | 20% |
+| only_planner | 0.250 | −0.070 [−0.180, +0.030] | −16% | 20% |
+
+Paired comparison at equal cost:
+
+| Comparison | Difference | 95% CI | Problems won / lost |
+|---|---|---|---|
+| ec_top2 − struct_top2 | **+0.260** | **[+0.140, +0.380]** | **34 / 8** |
+
+| Criterion | Result | Verdict |
+|---|---|---|
+| Primary | +0.260, interval [+0.140, +0.380] | **Pass** |
+| Secondary | 52% of the gain for 40% of the extra cost | **Pass** |
+| Exploratory | Spearman −0.26 (p = 0.62) | Single ranking not supported |
+
+The gap between the two pairs is essentially the same size as at 30 problems (+0.26 versus +0.27), and the interval is now about half as wide. On the 42 problems where the two plans disagreed, the EC plan won 34. **The set-level result is confirmed.**
+
+### 9.3 Upgrade value rises along the chain
+
+With 100 problems, the single-upgrade gains are precise enough to show a clean pattern:
+
+| Agent upgraded alone | Position | Gain [95% CI] | Consequence of its errors (H1 passthrough) |
+|---|---|---|---|
+| planner | 1st | −0.07 [−0.18, +0.03] | +0.333 (highest) |
+| step 1 | 2nd | −0.04 [−0.13, +0.05] | +0.283 |
+| step 2 | 3rd | **+0.08 [+0.01, +0.16]** | +0.200 |
+| step 3 | 4th | **+0.09 [+0.02, +0.16]** | +0.183 |
+| aggregator | 5th | **+0.15 [+0.07, +0.23]** | +0.467 |
+
+Among the four chain agents (planner and steps), the consequence of errors falls along the chain while the value of an upgrade rises along it. The two quantities run in nearly opposite directions. The aggregator is high on both, which is why including it made the EC pair work.
+
+I see two plausible explanations, both testable:
+
+- **Agents that see the original problem can partly re-solve it.** The aggregator receives the problem along with the step results, so a 7B aggregator can recover from weak upstream work. It is a mild version of the repair mechanism behind the verifier finding in H1.
+- **Capability mismatch.** A 7B planner may write plans that 1.5B steps cannot follow well, which would explain why upgrading the planner alone slightly lowers accuracy.
+
+This is the clearest evidence so far for the first design lesson in Section 7: **where errors hurt most is not where a bigger model helps most.**
+
+### 9.4 The interaction replicated
+
+| Upgrade | Gain (n = 100) |
+|---|---|
+| planner alone | −0.07 |
+| aggregator alone | +0.15 |
+| sum of the two | +0.08 |
+| **planner and aggregator together** | **+0.23** |
+
+The same super-additive pattern appeared in the 30-problem eval run. The 7B planner pays off only when a 7B aggregator is there to use its plan. The EC pair won mainly because it included the aggregator, with the planner then adding value through the interaction. The structural pair combined two upgrades that each do nothing alone, and gained nothing.
+
+### 9.5 A cost note
+
+Upgrading only the aggregator recovers 34% of the gain for 20% of the extra cost, about as efficient per unit cost as the EC pair (52% for 40%). If the budget allows only one upgrade, the aggregator is the right choice here. A joint allocator should find this automatically, which a per-agent EC ranking would not (it ranks the planner first).
 
 ---
 
 ## 10. Next steps
 
-1. **Read the 100-problem results** against the criteria above and update this report.
-2. **Estimate the effect of each upgrade directly.** Measure how much the 7B model reduces each agent's error in its role, and test whether consequence × error reduction predicts single-agent gains better than EC.
+1. **Estimate the effect of each upgrade directly.** Measure how much the 7B model reduces each agent's error in its role, and test whether consequence × error reduction predicts the single-agent gains in Section 9.3 better than EC does.
+2. **Test the two explanations for Section 9.3.** Give the aggregator the step results without the original problem (does its upgrade value drop?), and pair a 7B planner with 7B steps (does the planner upgrade stop hurting?).
 3. **Test sets, not just pairs.** Run a small sweep over upgrade sets at fixed budgets (for example, all pairs) to see how large the interactions are and whether a simple joint search beats both greedy EC and structure.
 4. **Repeat with the verifier gated rather than removed.** For example, let the verifier override only when it is confident, and check whether that keeps its fixes while avoiding its breaks.
 5. **Broaden.** Add the complex and multi-hop QA workflows, which also supply the labeled data H2 needs.
@@ -302,9 +362,9 @@ All runs use `--backend ollama --cache data/cache/ollama.sqlite --n-tasks 30`.
 | 1. Verifier on (dev) | `--plans all_large,only_verifier,only_planner,ec_top2 --h1-summary data/ollama/h1_n30/.../h1_summary.json` | `logs/19_h3_math.txt` | `data/ollama/h3_math` |
 | 2. Passthrough (dev) | `AGENTQO_VERIFIER=passthrough --h1-summary data/ollama/h1_math_passthrough/.../h1_summary.json` | `logs/20_h3_passthrough.txt` | `data/ollama/h3_math_passthrough` |
 | 3. Passthrough (eval) | same as 2, plus `--split eval` | `logs/21_h3_passthrough_eval.txt` | `data/ollama/h3_math_passthrough_eval` |
-| Confirmation (eval, 100) | same as 3, `--n-tasks 100` | `logs/22_h3_eval100.txt` | `data/ollama/h3_math_passthrough_eval100` |
+| 4. Confirmation (eval, 100) | same as 3, `--n-tasks 100` | `logs/22_h3_eval100.txt` | `data/ollama/h3_math_passthrough_eval100` |
 
-The paired comparison in Section 5.4 was computed from `h3_traces.json` with a 5,000-sample paired bootstrap over problems.
+The paired comparisons in Sections 5.4 and 9.2 were computed from `h3_traces.json` with a 5,000-sample paired bootstrap over problems.
 
 ## Appendix B: cost units per plan
 
