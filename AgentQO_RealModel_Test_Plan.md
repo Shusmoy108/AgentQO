@@ -435,8 +435,8 @@ for free, so Chameleon hours are spent only on production runs.
 Setup (MacBook Pro 2023, 18 GB unified memory):
 
 ```bash
-ollama pull qwen2.5:1.5b
-ollama pull qwen2.5:7b
+ollama pull qwen2.5:1.5b-instruct
+ollama pull qwen2.5:7b-instruct
 # keep both models loaded and allow concurrent requests
 export OLLAMA_MAX_LOADED_MODELS=2
 export OLLAMA_NUM_PARALLEL=4
@@ -449,7 +449,7 @@ about 3 to 4 GB. That fits in 18 GB with room for the OS. If memory is tight,
 drop `OLLAMA_NUM_PARALLEL` to 2.
 
 Code: create `agentqo/backends/ollama_backend.py` implementing `ModelBackend`.
-- Endpoints: `small -> qwen2.5:1.5b`, `large -> qwen2.5:7b` on
+- Endpoints: `small -> qwen2.5:1.5b-instruct`, `large -> qwen2.5:7b-instruct` on
   `http://localhost:11434`.
 - Confidence needs token logprobs. Ollama's documentation lists logprobs and
   `seed` as supported on the OpenAI-compatible `/v1/chat/completions`, but a
@@ -493,6 +493,114 @@ What the Mac numbers mean, and what they do not:
 - Generations from the Mac are not reused on Chameleon (different model builds,
   different cache keys). What carries over is the code, prompts, corruption
   settings, and validated configuration.
+
+#### How to test with Ollama (step by step)
+
+**0. Prerequisites.** Install Ollama (`brew install ollama`), pull the two
+models from the setup block above, and use the project virtualenv
+(`.venv/bin/python`, or `source .venv/bin/activate`). Confirm the tags:
+
+```bash
+ollama list          # must show qwen2.5:1.5b-instruct and qwen2.5:7b-instruct
+```
+
+The backend looks models up by exact tag. To use other tags (for example an
+8-bit 7B), set `OLLAMA_SMALL_MODEL` / `OLLAMA_LARGE_MODEL`; `OLLAMA_URL`
+overrides `http://localhost:11434`. A different quantization gets a different
+cache key automatically (the model digest is part of it).
+
+**1. Start the server with the right settings.** `OLLAMA_NUM_PARALLEL` and
+`OLLAMA_MAX_LOADED_MODELS` only apply to a server started from a shell that has
+them. If Ollama runs as a Homebrew service or the menu-bar app, stop it first
+(`brew services stop ollama`) and run `ollama serve` in its own terminal as in
+the setup block. The server log prints `OLLAMA_NUM_PARALLEL:4` on startup.
+Batching gives only about 1.15x on the Apple GPU, so 2 is fine if memory is
+tight.
+
+**2. Unit tests (no server needed, seconds).**
+
+```bash
+.venv/bin/python -m pytest tests/test_ollama_backend.py tests/test_vllm_backend.py -q
+```
+
+**3. M1 smoke (about 1 minute).**
+
+```bash
+.venv/bin/python scripts/run_real_pipeline.py --backend ollama --n-tasks 5 --stage smoke
+```
+
+Pass: 10 lines (5 `small`, 5 `large`), each with `conf_src=logprobs`,
+`cache_hit_on_rerun=True`, `same_text=True`, and non-zero token counts. Run it a
+second time: every line should return instantly (all cached).
+
+**4. M2 and M4: validation on 20 dev tasks (hours on a cold cache).**
+
+```bash
+.venv/bin/python scripts/validate_pipeline.py --backend ollama --n-tasks 20 | tee data/validate_ollama.log
+```
+
+Output goes to `data/validate/ollama/`. The script labels the tasks (served
+from the cache if the pipeline already ran them), then prints one line per check:
+- `PASS`/`FAIL`: V1, V2, V4 (this is M4: at least 90% of corruptions change the
+  key), V5, V6, V7, and the M3 extraction rate. The exit code is 1 if any fail.
+- `READ`: V3 writes `v3_extraction_audit.csv`. Fill the `correct` column by hand
+  (at least 98% must be correct). V9 writes `v9_spot_check.json` with 10
+  substitution chains to read end to end.
+- `INFO`: V8 (label stability) counts as pass/fail only at 200 or more tasks.
+
+`validation.json` records every result plus the backend info (model digests,
+whether the native `/api/chat` fallback was used, how many prompt-token counts
+were patched).
+
+**5. M3: extraction on 50 tasks.**
+
+```bash
+.venv/bin/python scripts/validate_pipeline.py --backend ollama --n-tasks 50 --workflows math
+```
+
+Pass: the `M3 extraction` line shows at least 95%.
+
+**6. M5 mini H1 (30 dev tasks, math workflow).**
+
+```bash
+.venv/bin/python scripts/run_real_pipeline.py --backend ollama --n-tasks 30 --split dev \
+    --workflows math --stage h1
+```
+
+Pass: in the per-node lines, planner and aggregator consequence are above the
+formatter's (or the verifier's, since the math workflow has no formatter). Details
+are in `data/real/ollama/h1/math_reasoning_s3_ver/` (`role_summary.csv`,
+`absorption.csv`, `h1_consequence.png`).
+
+**7. M6 end to end (30 dev tasks, overnight).**
+
+```bash
+.venv/bin/python scripts/run_real_pipeline.py --backend ollama --n-tasks 30 --split dev \
+    --probe hf | tee data/m6_ollama.log
+```
+
+`--probe hf` is required: with placeholder embeddings, H2 and H3 are skipped.
+The probe runs `Qwen/Qwen2.5-1.5B-Instruct` on `mps` next to Ollama. Pass:
+`data/real/ollama/` contains `h1/`, `h2/`, `h3/`, and `pipeline_summary.json`,
+and `RESULTS.md` has a new `LOCAL` entry.
+
+**Order and cache reuse.** All runs use the same split, seed, and cache
+(`data/cache/generations.sqlite`), and the M2 to M5 tasks are the first tasks of
+the dev split. Running M6 first (overnight) serves most of M2, M4, and M5 from
+the cache. A few calls are still new: corruptions that borrow text from another
+task depend on how many tasks are in the run, and M3 needs 20 more tasks.
+Check `HTTP calls:` in the pipeline output, or `new HTTP calls=0` on the V6 line.
+
+**When something fails.**
+
+| Symptom | Cause and fix |
+|---|---|
+| `Cannot reach Ollama at ...` | Server not running: start `ollama serve` |
+| `Ollama has no model '...'` | Tag mismatch: `ollama pull <tag>`, or set `OLLAMA_SMALL_MODEL` / `OLLAMA_LARGE_MODEL` |
+| `MissingLogprobsError` | Over 5% of calls had no logprobs on both endpoints. Upgrade Ollama. `--allow-missing-logprobs` is for debugging only: confidence becomes constant |
+| Very slow, or swapping | Lower `OLLAMA_NUM_PARALLEL` to 2 and `--workers` to 8; close other GPU apps |
+| V4 below 90% | Corruptions are too weak: strengthen them (tweak priority 1 in Section 13.3) before trusting any consequence |
+| V6 shows new HTTP calls | Something in the prompt or seed is not deterministic: diff two `traces/` files |
 
 Rough throughput to plan around (measure it in M1): a labeling task is about 110
 to 120 calls, mostly on the small model. Expect minutes per task on the Mac, so
@@ -1066,7 +1174,7 @@ python scripts/run_agentqo.py --ec-source predicted --seeds 5 --loads low,med,hi
 python scripts/run_h2_predictor.py --embedding-signal none
 python scripts/run_real_pipeline.py --backend fake --n-tasks 10
 
-# Phase A2 (Mac, Ollama running with qwen2.5:1.5b and qwen2.5:7b)
+# Phase A2 (Mac, Ollama running with qwen2.5:1.5b-instruct and qwen2.5:7b-instruct; see "How to test with Ollama")
 python scripts/run_real_pipeline.py --backend ollama --n-tasks 5 --stage smoke
 python scripts/validate_pipeline.py --backend ollama --n-tasks 20
 python scripts/run_real_pipeline.py --backend ollama --n-tasks 30 --split dev

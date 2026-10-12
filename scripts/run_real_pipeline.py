@@ -61,8 +61,16 @@ def build_backend(args, problems):
 
         # Per-node error rates; about 50% / 20% final-answer error for small / large.
         request_fn = FakeServer(problems, {config.small_model: 0.10, config.large_model: 0.03})
-    text = VLLMHTTPBackend(config, request_fn=request_fn, prompt_fn=build_prompt,
-                           code_fn=code_output, cache=GenerationCache(args.cache))
+    if args.backend == "ollama":
+        from agentqo.backends.ollama_backend import OllamaBackend, ollama_config
+
+        cfg = ollama_config(temperature=0.0, sampler_temperature=0.7, max_tokens=args.max_tokens,
+                            allow_missing_logprobs=args.allow_missing_logprobs)
+        text = OllamaBackend(cfg, prompt_fn=build_prompt, code_fn=code_output,
+                             cache=GenerationCache(args.cache))
+    else:
+        text = VLLMHTTPBackend(config, request_fn=request_fn, prompt_fn=build_prompt,
+                               code_fn=code_output, cache=GenerationCache(args.cache))
     return CompositeBackend(text, make_probe(args))
 
 
@@ -155,7 +163,9 @@ def write_h1_artifacts(out: Path, member: SuiteMember, res: LabelingResult) -> d
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--backend", choices=["fake", "vllm"], default="fake")
+    ap.add_argument("--config", default=None,
+                    help="YAML of flag values (e.g. configs/phase_b.yaml); explicit flags win")
+    ap.add_argument("--backend", choices=["fake", "ollama", "vllm"], default="fake")
     ap.add_argument("--n-tasks", type=int, default=10)
     ap.add_argument("--split", choices=["dev", "eval", "all"], default="dev")
     ap.add_argument("--workflows", default="math,sc,complex")
@@ -176,6 +186,15 @@ def main() -> None:
     ap.add_argument("--max-tokens", type=int, default=512)
     ap.add_argument("--h3-runs", type=int, default=None, help="tasks per H3 budget (default n-tasks)")
     ap.add_argument("--seed", type=int, default=42)
+    pre, _ = ap.parse_known_args()
+    if pre.config:
+        import yaml
+
+        cfg = yaml.safe_load(Path(pre.config).read_text()) or {}
+        unknown = set(cfg) - {a.dest for a in ap._actions}
+        if unknown:
+            ap.error(f"unknown keys in {pre.config}: {sorted(unknown)}")
+        ap.set_defaults(**cfg)
     args = ap.parse_args()
 
     out = Path(args.output_dir or f"data/real/{args.backend}")
@@ -234,7 +253,7 @@ def main() -> None:
 
     write_json(out / "pipeline_summary.json", {"h1": h1, "h2": h2, "h3": h3})
     append_results_entry(
-        {"fake": "DRY", "vllm": "R-H1"}[args.backend],
+        {"fake": "DRY", "ollama": "LOCAL", "vllm": "R-H1"}[args.backend],
         {"backend": args.backend, "n_tasks": len(problems), "split": args.split,
          "workflows": args.workflows, "probe": args.probe, "C": args.corruptions, "K": args.k},
         "; ".join(f"{wf}: H1 {'PASS' if s['h1_holds'] else 'FAIL'} range {s['range']:.3f} cv {s['cv']:.3f} "
@@ -242,7 +261,9 @@ def main() -> None:
         + (f"; H2 holds {h2.get('h2_holds')}" if h2 else "; H2 not run")
         + (f"; H3 holds on any {h3.get('h3_holds_any')}" if h3 else "; H3 not run"),
         str(out / "h1" / "<workflow>" / "h1_consequence.png"),
-        "Fake server: tests the pipeline only, never a result." if args.backend == "fake" else "",
+        {"fake": "Fake server: tests the pipeline only, never a result.",
+         "ollama": "Ollama 4-bit models on the Mac: debugging evidence only, not a reported result."
+         }.get(args.backend, ""),
     )
     print(f"\nArtifacts in {out}")
 
@@ -259,9 +280,11 @@ def run_smoke(backend, member, problems) -> None:
             ctx = {"task": task, "workflow": wf, "results": {}}
             r1 = backend.execute_node(node, {}, fid, ctx)
             r2 = backend.execute_node(node, {}, fid, ctx)
+            same = r1.output["text"] == r2.output["text"]
             print(f"{fid.name:<6} {task.task_id:<16} conf_src={r1.metadata['confidence_source']:<8} "
-                  f"cache_hit_on_rerun={r2.metadata['cache_hit']} "
-                  f"text={r1.output['text'][:60]!r}")
+                  f"cache_hit_on_rerun={r2.metadata['cache_hit']} same_text={same} "
+                  f"latency={r1.metadata['latency_s']:.2f}s tokens={r1.metadata['prompt_tokens']}+"
+                  f"{r1.metadata['completion_tokens']} text={r1.output['text'][:50]!r}")
         member.task_model.reset()
 
 

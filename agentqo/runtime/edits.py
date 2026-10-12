@@ -69,7 +69,7 @@ def candidate_edits(
 
     for node_id in skipped:
         node = workflow.nodes.get(node_id)
-        if node is not None and node.optional:
+        if node is not None and node.optional and node_id not in cancelled:
             edits.append(Edit(kind="admit_optional", node_id=node_id))
 
     verifiers = [
@@ -151,8 +151,9 @@ def apply_edit(
             ordered = sorted(node_ids)
             for i, nid in enumerate(ordered):
                 if i < edit.k:
-                    skipped.discard(nid)
-                    cancelled.discard(nid)
+                    # Never revive a branch that was cancelled or stopped.
+                    if nid not in cancelled:
+                        skipped.discard(nid)
                 elif workflow.nodes[nid].optional:
                     skipped.add(nid)
         return

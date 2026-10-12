@@ -19,12 +19,20 @@ def expected_quality(
     adds nothing. Skipped required work and skipped verifiers subtract.
     This is the runtime estimator in eq. (6), not the quality channel.
     """
+    # Normalize EC to sum to 1 over the workflow. The caller passes EC
+    # max-normalized to [0, 1]; summing those can exceed 1, and the old
+    # clip to [0, 1] then made Q̂ flat, so quality-reducing edits (like
+    # skipping the verifier) looked free. With sum-normalization Q̂ stays
+    # below the large-model yield and every edit moves it in proportion
+    # to the EC of the node it touches.
+    total = sum(max(float(ec.get(n, 0.0)), 0.0) for n in workflow.nodes)
+    scale = 1.0 / total if total > 0 else 0.0
     quality = 0.0
     for node_id, node in workflow.nodes.items():
-        ec_v = float(ec.get(node_id, 0.0))
+        ec_v = max(float(ec.get(node_id, 0.0)), 0.0) * scale
         if node_id in skipped:
             if node.role == NodeRole.VERIFIER:
-                quality -= 0.40 * sum(ec.get(inp, 0.0) for inp in node.inputs)
+                quality -= 0.40 * scale * sum(max(float(ec.get(inp, 0.0)), 0.0) for inp in node.inputs)
             elif not node.optional:
                 quality -= ec_v
             continue

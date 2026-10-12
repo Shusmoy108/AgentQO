@@ -19,8 +19,8 @@ from agentqo.backends.base import NodeResult
 from agentqo.executor import WorkflowExecutor, _skippable
 from agentqo.runtime.cluster import Cluster, KVRegion, RunningCall
 from agentqo.runtime.edits import Edit, apply_edit
-from agentqo.runtime.optimizer import Decision, JointOptimizer, OptimizerConfig
-from agentqo.runtime.scores import branch_index, kv_value, speculative_delta_q
+from agentqo.runtime.optimizer import Decision, JointOptimizer, OptimizerConfig, edit_lock_key
+from agentqo.runtime.scores import branch_index, expected_quality, kv_value, speculative_delta_q
 from agentqo.simulator.interaction_model import CallSpec
 from agentqo.simulator.task_model import TaskInstance, TaskModel
 from agentqo.workflows.dag import Fidelity, NodeRole, Workflow, SMALL_FIDELITY
@@ -53,6 +53,10 @@ class WorkflowRuntime:
     gpu_time: float = 0.0
     wasted_speculative: float = 0.0
     decisions: List[Decision] = field(default_factory=list)
+    # Edit targets already touched in this episode (hysteresis), and the
+    # Q̂ floor edits may not cross.
+    locked: Set[str] = field(default_factory=set)
+    q_floor: Optional[float] = None
 
 
 @dataclass
@@ -86,7 +90,9 @@ class AgentQO:
         enable_stopping: bool = True,
         config: Optional[OptimizerConfig] = None,
         kappa: float = 1.0,
-        stop_threshold: float = 0.02,
+        # Was 0.02. With remain fixed at 32 that stopped almost every
+        # optional branch, which removed votes and saved no time in the sim.
+        stop_threshold: float = 0.002,
         name: str = "AgentQO",
     ) -> None:
         self.backend = backend
@@ -184,6 +190,8 @@ class AgentQO:
                 for nid, node in arrival.workflow.nodes.items()
             },
         )
+        q0 = expected_quality(inst.workflow, inst.ec, inst.skipped, inst.fidelities)
+        inst.q_floor = q0 - self.optimizer.config.quality_floor_drop
         self._instances[workflow_id] = inst
         return inst
 
@@ -229,6 +237,8 @@ class AgentQO:
             ec=inst.ec,
             ready_nodes=ready,
             prefix_id=inst.workflow_id,
+            locked=inst.locked,
+            q_floor=inst.q_floor,
         )
         if not self.enable_edits:
             decision.edit = Edit(kind="noop")
@@ -239,6 +249,7 @@ class AgentQO:
         )
         if decision.edit.kind != "noop":
             inst.edits.append(decision.edit.describe())
+            inst.locked.add(edit_lock_key(decision.edit))
         inst.decisions.append(decision)
 
         if self.enable_kv:
@@ -352,9 +363,12 @@ class AgentQO:
     def _maybe_stop_branches(self, inst: WorkflowRuntime) -> None:
         groups = inst.workflow.get_speculative_groups()
         for node_ids in groups.values():
+            # Observable signal only: a finished branch counts as "likely
+            # correct" when its own confidence is at least 0.5. Ground-truth
+            # correctness is never read at runtime.
             done_ok = sum(
                 1 for nid in node_ids
-                if nid in inst.completed and inst.completed[nid].correctness
+                if nid in inst.completed and inst.completed[nid].confidence >= 0.5
             )
             running = [nid for nid in node_ids if nid in inst.active]
             if not running:
@@ -377,6 +391,7 @@ class AgentQO:
                     inst.active.pop(nid, None)
                     inst.cancelled.add(nid)
                     inst.skipped.add(nid)
+                    inst.locked.add(nid)
                     inst.edits.append(f"stop({nid})")
 
     def _maybe_evict(self, gpu_id: int) -> None:

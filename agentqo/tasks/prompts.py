@@ -8,8 +8,8 @@ substituted ancestor output reaches every descendant.
 """
 
 from __future__ import annotations
-
 from collections import Counter
+from zlib import crc32
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 from agentqo.backends.vllm_http import _output_as_text
@@ -137,5 +137,12 @@ def code_output(node: "NodeSpec", inputs: Dict[str, "NodeResult"], task_context:
     counts = Counter(v for v in votes if v is not None)
     if not counts:
         return "VOTE: no extractable answers"
-    winner, n = counts.most_common(1)[0]  # ties go to the first answer seen
+
+    top = max(counts.values())
+    tied = [a for a, c in counts.items() if c == top]
+    # Break ties by a hash of the answer value, not by sampler order, so no
+    # sampler is privileged. Deterministic, so caching and reruns still match.
+    winner = min(tied, key=lambda a: crc32(str(a).encode()))
+    n = top
+    #winner, n = counts.most_common(1)[0]  # ties go to the first answer seen
     return f"VOTE: {dict(counts)} ({n}/{len(votes)})\n#### {winner}"

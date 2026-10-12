@@ -90,3 +90,66 @@
 - Figure: data/real/fake_hfprobe/h1/<workflow>/h1_consequence.png
 - Interpretation: Fake server: tests the pipeline only, never a result.
 - Changes made since last run and why: 
+
+### S-H3 2026-10-11
+- Config: num_runs=30, quick=False, seed=42, oracle=True, label_tasks=30
+- Result: H3 holds on 1/1 held-out workflows. AUC diffs (95% paired bootstrap CI): complex_r2_s2_ver: AgentQO - Confidence +1.554 [+0.844, +2.226]; AgentQO - Uniform +1.461 [+0.570, +2.356]; Oracle-EC - Confidence +1.914 [+1.061, +2.869]; Oracle-EC - Uniform +1.821 [+0.741, +2.933]; Oracle-EC - AgentQO +0.360 [-0.210, +0.941]; bottleneck = none: predicted EC beats confidence and uniform (CI excludes 0)
+- Figure: data/laptop/h3/h3_quality_cost_<workflow>.png
+- Interpretation: Bottleneck per workflow as listed. 'predictor' means oracle EC wins but predicted EC does not, so improve H2 before touching the allocator; 'allocator' means even oracle EC loses, so check fidelity gap and budget granularity.
+- Changes made since last run and why: 
+
+### DRY 2026-10-11
+- Config: backend=fake, n_tasks=10, split=dev, workflows=math,sc,complex, probe=placeholder, C=3, K=5
+- Result: math_reasoning_s3_ver: H1 FAIL range 0.600 cv 0.462 key-change 1.0; self_consistency_k3: H1 PASS range 0.833 cv 0.759 key-change 1.0; complex_r2_s2_ver: H1 FAIL range 0.767 cv 0.629 key-change 1.0; H2 not run; H3 not run
+- Figure: data/laptop/real_fake/h1/<workflow>/h1_consequence.png
+- Interpretation: Fake server: tests the pipeline only, never a result.
+- Changes made since last run and why: 
+
+### S-RT 2026-10-11
+- Config: ec_source=structure, seeds=5, loads=low,med,high, n_jobs=8, n_gpus=2
+- Result: AgentQO Q/GPU-hour above FCFS (paired CI excludes 0) in 6/12 cells; quality below FCFS (CI excludes 0) in 9/12 cells. Table: data/laptop/rt_structure/agentqo_runtime_summary.csv
+- Figure: data/laptop/rt_structure/agentqo_pareto.png
+- Interpretation: Simulated clock and GPU cost; efficiency wins that come with a quality loss are not wins under the WP15 criterion (accuracy within 2 points of FCFS).
+- Changes made since last run and why: 
+
+### S-CIRC 2026-10-11
+- Config: embedding_signal=none, num_tasks=40, quick=False, seed=42
+- Result: mean LOWO Spearman: AgentQO 0.333, Structure-Only 0.384, Confidence-Only -0.002, Structure+Noise 0.330; H2 holds: False; beats Structure+Noise control: True
+- Figure: data/laptop/h2_noise/h2_spearman.png
+- Interpretation: With noise embeddings, AgentQO should fall to about structure-only. If it does, the sim H2 gain comes from the embedding signal and real hidden states must carry it.
+- Changes made since last run and why: 
+
+### S-RT 2026-10-11
+- Config: ec_source=predicted, seeds=5, loads=low,med,high, n_jobs=8, n_gpus=2
+- Result: AgentQO Q/GPU-hour above FCFS (paired CI excludes 0) in 6/12 cells; quality below FCFS (CI excludes 0) in 9/12 cells. Table: data/laptop/rt_predicted/agentqo_runtime_summary.csv
+- Figure: data/laptop/rt_predicted/agentqo_pareto.png
+- Interpretation: Simulated clock and GPU cost; efficiency wins that come with a quality loss are not wins under the WP15 criterion (accuracy within 2 points of FCFS).
+- Changes made since last run and why: 
+
+### S-RT 2026-10-11
+- Config: ec_source=oracle, seeds=5, loads=low,med,high, n_jobs=8, n_gpus=2
+- Result: AgentQO Q/GPU-hour above FCFS (paired CI excludes 0) in 6/12 cells; quality below FCFS (CI excludes 0) in 9/12 cells. Table: data/laptop/rt_oracle/agentqo_runtime_summary.csv
+- Figure: data/laptop/rt_oracle/agentqo_pareto.png
+- Interpretation: Simulated clock and GPU cost; efficiency wins that come with a quality loss are not wins under the WP15 criterion (accuracy within 2 points of FCFS).
+- Changes made since last run and why: 
+
+### LOCAL 2026-10-11
+- Config: backend=ollama, n_tasks=10, split=dev, workflows=math,sc, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 FAIL range 0.450 cv 0.943 key-change 0.97; self_consistency_k3: H1 PASS range 0.650 cv 0.773 key-change 1.0; H2 not run; H3 not run
+- Figure: data/ollama/h1/h1/<workflow>/h1_consequence.png
+- Interpretation: Ollama 4-bit models on the Mac: debugging evidence only, not a reported result.
+- Changes made since last run and why: 
+
+### LOCAL 2026-10-11
+- Config: backend=ollama, n_tasks=30, split=dev, workflows=math,sc, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 FAIL range 0.383 cv 1.280 key-change 0.9833333333333333; self_consistency_k3: H1 PASS range 0.383 cv 0.418 key-change 1.0; H2 not run; H3 not run
+- Figure: data/ollama/h1_n30/h1/<workflow>/h1_consequence.png
+- Interpretation: Ollama 4-bit models on the Mac: debugging evidence only, not a reported result.
+- Changes made since last run and why: 
+
+### LOCAL 2026-10-11
+- Config: backend=ollama, n_tasks=30, split=dev, workflows=sc, probe=placeholder, C=2, K=3
+- Result: self_consistency_k3: H1 PASS range 0.267 cv 0.255 key-change 1.0; H2 not run; H3 not run
+- Figure: data/ollama/h1_n30_fairtie/h1/<workflow>/h1_consequence.png
+- Interpretation: Ollama 4-bit models on the Mac: debugging evidence only, not a reported result.
+- Changes made since last run and why: 

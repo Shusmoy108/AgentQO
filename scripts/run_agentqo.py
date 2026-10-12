@@ -10,6 +10,7 @@ EC scores given to the runtime come from ``--ec-source``:
 - ``predicted``: the H2 predictor, trained on suite workflows *other than*
   the runtime workflow (leave-one-workflow-out)
 - ``oracle``: fault-injection labels of the runtime workflow (upper bound)
+- ``shuffled``: oracle values permuted across nodes (control)
 Every source is max-normalized to [0, 1] so the optimizer's lambdas see the
 same scale regardless of source.
 """
@@ -128,6 +129,13 @@ def ec_scores_for(
             n_probes=8, view="agentqo", seed=seed + 7,
         )
         return _normalize(scores), trained_on
+    if source == "shuffled":
+        # Control: oracle EC values randomly reassigned to nodes. If the
+        # optimizer uses EC, this should do worse than oracle.
+        oracle, _ = ec_scores_for(workflow, "oracle", seed, n_label_tasks)
+        ids = list(oracle)
+        vals = np.random.default_rng(seed + 11).permutation([oracle[i] for i in ids])
+        return {i: float(v) for i, v in zip(ids, vals)}, set()
     raise ValueError(f"unknown ec source {source}")
 
 
@@ -315,7 +323,7 @@ def main() -> None:
     parser.add_argument("--n-gpus", type=int, default=2)
     parser.add_argument("--output-dir", type=str, default="data/agentqo")
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--ec-source", choices=["structure", "predicted", "oracle"],
+    parser.add_argument("--ec-source", choices=["structure", "predicted", "oracle", "shuffled"],
                         default="predicted")
     parser.add_argument("--seeds", type=int, default=1, help="number of seeds")
     parser.add_argument("--loads", type=str, default="med",

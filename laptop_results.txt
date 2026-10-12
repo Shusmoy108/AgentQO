@@ -1,0 +1,231 @@
+shusmoychowdhury@Mac AgentQO % python -m pytest tests/q
+zsh: command not found: python
+shusmoychowdhury@Mac AgentQO % python3 -m pytest tests/q
+============================================== test session starts ===============================================
+platform darwin -- Python 3.12.1, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.12/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/shusmoychowdhury/AgentQO
+configfile: pyproject.toml
+plugins: anyio-4.12.1
+collected 0 items                                                                                                
+
+============================================= no tests ran in 0.00s ==============================================
+ERROR: file or directory not found: tests/q
+
+shusmoychowdhury@Mac AgentQO % python3 -m pytest tests/ -q
+============================================== test session starts ===============================================
+platform darwin -- Python 3.12.1, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/shusmoychowdhury/AgentQO
+configfile: pyproject.toml
+plugins: anyio-4.12.1
+collected 115 items                                                                                              
+
+tests/test_agenticonq.py ....                                                                              [  3%]
+tests/test_agentqo_runtime.py .........                                                                    [ 11%]
+tests/test_answers.py .........................                                                            [ 33%]
+tests/test_cache.py ....                                                                                   [ 36%]
+tests/test_dag.py ......................                                                                   [ 55%]
+tests/test_executor_overrides.py .........                                                                 [ 63%]
+tests/test_fault_injection.py ........                                                                     [ 70%]
+tests/test_label_seeds.py .                                                                                [ 71%]
+tests/test_no_leakage.py ..                                                                                [ 73%]
+tests/test_ollama_backend.py ......                                                                        [ 78%]
+tests/test_probe.py ..                                                                                     [ 80%]
+tests/test_quality_channel.py ......                                                                       [ 85%]
+tests/test_runtime_ec_source.py ..                                                                         [ 86%]
+tests/test_substitution.py .......                                                                         [ 93%]
+tests/test_vllm_backend.py ........                                                                        [100%]
+
+============================================== 115 passed in 22.28s ==============================================
+shusmoychowdhury@Mac AgentQO % python3 scripts/run_demo.py --quick
+======================================================================
+AgentQO PROTOTYPE  (H1 → H2 → H3, H4 simulator)
+======================================================================
+============================================================
+H1 EXPERIMENT: Epistemic Criticality Labeling
+============================================================
+Tasks per workflow: 16
+Workflows: 4
+
+
+--- Math 3-step (math_reasoning_s3_ver) ---
+  H1 holds: YES                                                                                                   
+  range=0.5180  cv=0.6849
+  high: ['planner', 'step_1', 'step_2']
+  low:  ['step_3', 'aggregator', 'verifier']
+  smoke test: PASS ['critical=0.580 vs verifier=0.062']
+
+--- QA 3-researcher (multihop_qa_r3_ver) ---
+  H1 holds: YES                                                                                                   
+  range=0.2768  cv=0.3505
+  high: ['planner', 'researcher_2', 'researcher_1']
+  low:  ['aggregator', 'researcher_3', 'verifier']
+  smoke test: PASS ['critical=0.359 vs verifier=0.082']
+
+--- Self-consistency k=3 (self_consistency_k3) ---
+  H1 holds: YES                                                                                                   
+  range=0.5146  cv=0.8874
+  high: ['prompt_encoder', 'aggregator', 'sampler_3']
+  low:  ['sampler_1', 'sampler_2']
+  smoke test: PASS ['insufficient roles for smoke test; skipped']
+
+--- Complex + formatter (complex_r2_s2_ver) ---
+  H1 holds: YES                                                                                                   
+  range=0.4156  cv=0.8982
+  high: ['planner', 'aggregator', 'step_2_1']
+  low:  ['step_2_2', 'step_1_1', 'formatter']
+  smoke test: PASS ['critical=0.416 vs formatter=0.000']
+
+============================================================
+H1 EXPERIMENT REPORT: Epistemic Criticality Distribution
+============================================================
+
+H1 HOLDS: YES ✓
+
+Evidence:
+  - Consequence range: 0.5180
+    (threshold: 0.1000)
+  - Coefficient of variation: 0.6849
+    (threshold: 0.2000)
+
+Consequence Distribution Statistics:
+  - Mean: 0.2512
+  - Std: 0.1720
+  - Min: 0.0622
+  - Max: 0.5803
+
+Correlations with Structural Features:
+  - Depth: -0.9475
+  - Fan-out: 0.4911
+  - Downstream reach: 0.9475
+
+High Criticality Nodes:
+  - planner
+  - step_1
+  - step_2
+
+Low Criticality Nodes:
+  - step_3
+  - aggregator
+  - verifier
+
+============================================================
+Artifacts written to data/demo/h1
+============================================================
+H2 EXPERIMENT: EC Prediction (leave-one-workflow-out)
+============================================================
+Samples: 432  workflows: 4
+
+Model                  Spearman        MAE        P@3
+----------------------------------------------------
+AgentQO                  0.2955     0.0565     0.0833
+Structure-Only           0.3758     0.0545     0.0000
+Confidence-Only          0.0128     0.0589     0.0000
+Structure+Noise          0.3061     0.0558     0.0000
+
+H2 HOLDS: NO
+subset invariant (AgentQO >= structure): NO
+
+============================================================
+H2 EXPERIMENT REPORT: EC Prediction
+============================================================
+
+H2 HOLDS: NO ✗
+
+Best Model: AgentQO
+Spearman Correlation: 0.2955
+Prediction Overhead: 0.43 ms
+
+Comparison with Baselines:
+  - Beats Confidence-Only: YES
+    (margin: 0.2827)
+  - At least Structure-Only: NO
+    (margin: -0.0803)
+
+Detailed Metrics by Model:
+--------------------------------------------------
+Model                  Spearman        MAE       RMSE
+--------------------------------------------------
+AgentQO                  0.2955     0.0565     0.0716
+Structure-Only           0.3758     0.0545     0.0691
+Confidence-Only          0.0128     0.0589     0.0742
+Structure+Noise          0.3061     0.0558     0.0708
+--------------------------------------------------
+
+============================================================
+Artifacts written to data/demo/h2
+============================================================
+H3 EXPERIMENT: Value-Aware Allocation (predicted EC)
+============================================================
+
+--- Complex + formatter ---
+  predicted EC: {'step_2_1': 0.0759, 'step_1_1': 0.0786, 'aggregator': 0.0489, 'step_1_2': 0.0807, 'researcher_1': 0.1136, 'step_2_2': 0.0575, 'verifier': 0.0334, 'formatter': 0.0279, 'planner': 0.1145, 'researcher_2': 0.1017}
+  H3 holds: YES
+  beats confidence 83%  uniform 83%
+  AUC AgentQO     12.954  [9.834, 15.713]
+  AUC Oracle-EC   13.225  [9.994, 15.890]
+  AUC Confidence  11.586  [7.976, 14.986]
+  AUC Uniform     11.633  [8.333, 14.896]
+  AUC All-Small   0.000  [0.000, 0.000]
+  AgentQO - Confidence     +1.368  [+0.249, +2.640]
+  AgentQO - Uniform        +1.321  [-0.395, +3.714]
+  Oracle-EC - Confidence   +1.639  [+0.037, +3.765]
+  Oracle-EC - Uniform      +1.592  [-0.952, +4.712]
+  Oracle-EC - AgentQO      +0.271  [-1.006, +2.098]
+  bottleneck: allocator: oracle EC also fails to beat both baselines
+
+============================================================
+H3 EXPERIMENT REPORT: Value-Aware Allocation
+============================================================
+
+H3 HOLDS: YES ✓
+
+Comparison Summary:
+  - Beats Confidence at 83.3% of cost levels
+  - Beats Uniform at 83.3% of cost levels
+
+Area Under Curve (AUC):
+  - AgentQO: 12.9540
+  - Confidence: 11.5860
+  - Uniform: 11.6327
+
+AUC Improvement:
+  - vs Confidence: 11.81%
+  - vs Uniform: 11.36%
+
+Quality at Each Cost Level:
+------------------------------------------------------------
+    Cost    AgentQO Confidence    Uniform     Winner
+------------------------------------------------------------
+   10.00     0.5281     0.5281     0.5281           
+   13.00     0.6396     0.5487     0.5548    AgentQO
+   16.00     0.7179     0.5489     0.6239    AgentQO
+   19.00     0.7364     0.6603     0.6603    AgentQO
+   25.00     0.7870     0.7440     0.7232    AgentQO
+   28.00     0.8226     0.7877     0.7188    AgentQO
+------------------------------------------------------------
+
+============================================================
+Artifacts written to data/demo/h3
+============================================================
+H4 EXPERIMENT: AgentIconq two-sided cost (simulator)
+============================================================
+
+Model                 Own MAE      Own Q    Imp MAE     Sign
+------------------------------------------------------------
+AgentIconq              3.385      1.051      2.138    0.821
+Single-call             6.722      1.122      5.709    0.147
+Naive-additive         35.455      1.327     22.623    0.665
+
+H4 HOLDS: YES
+Artifacts written to data/demo/h4
+
+Hypothesis                                   Result
+------------------------------------------------------------
+H1  EC varies across nodes                   PASS
+H2  EC predicted on unseen workflows         FAIL
+H3  predicted-EC allocation wins             PASS
+H4  two-sided cost (simulator)               PASS
+
+Artifacts: data/demo
+shusmoychowdhury@Mac AgentQO % 

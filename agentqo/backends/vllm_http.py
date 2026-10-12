@@ -219,8 +219,9 @@ class VLLMHTTPBackend:
         )
 
     def _request(self, payload: Dict[str, Any], fidelity: "Fidelity") -> tuple[Dict[str, Any], float, bool]:
+        key = self._cache_payload(payload)
         if self.cache is not None:
-            hit = self.cache.get(payload)
+            hit = self.cache.get(key)
             if hit is not None:
                 return hit[0], hit[1], True
         t0 = time.perf_counter()
@@ -242,8 +243,12 @@ class VLLMHTTPBackend:
         with self._stats_lock:
             self.n_http_calls += 1
         if self.cache is not None:
-            self.cache.put(payload, data, latency)
+            self.cache.put(key, data, latency)
         return data, latency, False
+
+    def _cache_payload(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        """What the cache is keyed on; subclasses add e.g. a model digest."""
+        return payload
 
     def _record_call(self, has_logprobs: bool) -> None:
         with self._stats_lock:
