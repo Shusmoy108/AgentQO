@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections import Counter
 from zlib import crc32
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
-
+import os
 from agentqo.backends.vllm_http import _output_as_text
 from agentqo.tasks.answers import extract_gsm8k_number
 from agentqo.workflows.dag import NodeRole
@@ -55,6 +55,12 @@ Proposed solution:
 {proposed}
 Check the solution. If it is wrong, correct it.
 Write "VERDICT: correct" or "VERDICT: incorrect", then end with "#### <number>"."""
+
+VERIFIER_JUDGE = """Problem: {problem}
+Proposed solution:
+{proposed}
+Check the solution. Do not solve the problem yourself and do not change the answer.
+Write "VERDICT: correct" or "VERDICT: incorrect", then repeat the proposed final answer exactly, ending with "#### <number>"."""
 
 SAMPLER = """Solve this math word problem step by step.
 Problem: {problem}
@@ -118,8 +124,11 @@ def build_prompt(node: "NodeSpec", inputs: Dict[str, "NodeResult"], task_context
         return BRANCH.format(problem=problem, plan=plan, prior=prior, branch=branch)
     if role == NodeRole.AGGREGATOR:
         return AGGREGATOR.format(problem=problem, steps=_results_block(results, list(node.inputs)))
+    # if role == NodeRole.VERIFIER:
+    #     return VERIFIER.format(problem=problem, proposed=_results_block(results, list(node.inputs)))
     if role == NodeRole.VERIFIER:
-        return VERIFIER.format(problem=problem, proposed=_results_block(results, list(node.inputs)))
+        tmpl = VERIFIER_JUDGE if os.environ.get("AGENTQO_VERIFIER") == "judge" else VERIFIER
+        return tmpl.format(problem=problem, proposed=_results_block(results, list(node.inputs)))
     if role == NodeRole.SAMPLER:
         notes = _results_block(results, list(node.inputs))
         return SAMPLER_WITH_CONTEXT.format(problem=problem, notes=notes) if node.inputs else SAMPLER.format(problem=problem)
