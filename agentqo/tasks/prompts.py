@@ -62,6 +62,12 @@ Proposed solution:
 Check the solution. Do not solve the problem yourself and do not change the answer.
 Write "VERDICT: correct" or "VERDICT: incorrect", then repeat the proposed final answer exactly, ending with "#### <number>"."""
 
+# Same inputs as VERIFIER; only the instruction differs (AGENTQO_VERIFIER=cautious).
+VERIFIER_CAUTIOUS = """Problem: {problem}
+Proposed solution:
+{proposed}
+You are checking another agent's answer to a math problem. Re-read the problem and recompute the answer yourself. Only change the answer if you find a specific arithmetic or reading mistake, and name the mistake in one sentence. If you cannot point to a specific mistake, repeat the original answer exactly. End with: Final answer: <number>"""
+
 SAMPLER = """Solve this math word problem step by step.
 Problem: {problem}
 End with "#### <number>"."""
@@ -127,7 +133,8 @@ def build_prompt(node: "NodeSpec", inputs: Dict[str, "NodeResult"], task_context
     # if role == NodeRole.VERIFIER:
     #     return VERIFIER.format(problem=problem, proposed=_results_block(results, list(node.inputs)))
     if role == NodeRole.VERIFIER:
-        tmpl = VERIFIER_JUDGE if os.environ.get("AGENTQO_VERIFIER") == "judge" else VERIFIER
+        mode = os.environ.get("AGENTQO_VERIFIER")
+        tmpl = {"judge": VERIFIER_JUDGE, "cautious": VERIFIER_CAUTIOUS}.get(mode, VERIFIER)
         return tmpl.format(problem=problem, proposed=_results_block(results, list(node.inputs)))
     if role == NodeRole.SAMPLER:
         notes = _results_block(results, list(node.inputs))
