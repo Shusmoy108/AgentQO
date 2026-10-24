@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-268",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Compute the cost for newspaper ads: $5 per ad * 50 ads = $250.\nRESULT: $250",
+  "reference_key": "250",
+  "final_key_plus": "1375",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Compute the cost for television ads: $75 per ad * 15 ads = $1125.\nRESULT: $1125",
+    "step_3": "3. Sum the costs of newspaper and television ads to get the total expenditure: $250 (newspaper) + $1125 (television) = $1375.\n\nRESULT: $1375",
+    "verifier": "VERDICT: passthrough\n#### 1375",
+    "aggregator": "1375\n#### 1375"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "251",
+      "reference_key": "250",
+      "key_differs": true,
+      "text": "1. Compute the cost for newspaper ads: $5 per ad * 50 ads = $250.\nRESULT: 251",
+      "quality": 1.0,
+      "final_key": "1375",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Compute the cost for television ads: $75 per ad * 15 ads = $1125.\nRESULT: 1125",
+        "step_3": "3. Sum the costs of newspaper and television ads to get the total expenditure: $250 (newspaper) + $1125 (television) = $1375.\n\nRESULT: 1375",
+        "verifier": "VERDICT: passthrough\n#### 1375",
+        "aggregator": "1375\n#### 1375"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1375",
+      "reference_key": "250",
+      "key_differs": true,
+      "text": "RESULT: $250\n\nPLAN:\n1. Calculate the total cost for newspaper ads: $5 per ad * 50 ads = $250.\n2. Calculate the total cost for television ads: $75 per ad * 15 ads = $1125.\n3. Add the costs of newspaper and television ads to find the total expenditure: $250 (newspaper) + $1125 (television) = $1375.",
+      "quality": 1.0,
+      "final_key": "1375",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $75 per ad * 15 ads = $1125.",
+        "step_3": "step_3: RESULT: $250 (newspaper) + $1125 (television) = $1375.\nEND: $1375.",
+        "verifier": "VERDICT: passthrough\n#### 1375",
+        "aggregator": "step_3: RESULT: $250 (newspaper) + $1125 (television) = $1375.\nEND: $1375.\n#### 1375"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

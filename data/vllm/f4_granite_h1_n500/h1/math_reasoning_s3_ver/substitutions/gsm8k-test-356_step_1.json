@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-356",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. The cost of toy cars is 6 cars * $2/car = $12.\nRESULT: $12",
+  "reference_key": "12",
+  "final_key_plus": "38",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: The cost of teddy bears is 5 bears * $1/bear = $5.\nRESULT: $5",
+    "step_3": "3. The total amount Dean had is $28 (initial) + $10 (extra) = $38.\nRESULT: $38",
+    "verifier": "VERDICT: passthrough\n#### 38",
+    "aggregator": "3. The total amount Dean had is $28 (initial) + $10 (extra) = $38.\n\n#### 38"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "13",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "1. The cost of toy cars is 6 cars * $2/car = $12.\nRESULT: 13",
+      "quality": 0.0,
+      "final_key": "38",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. The cost of teddy bears is 5 bears * $1/bear = $5.\nRESULT: 28",
+        "step_3": "3. Add initial amount and extra money: $28 + $10 = $38.\nRESULT: 38",
+        "verifier": "VERDICT: passthrough\n#### 38",
+        "aggregator": "step_3: 3. Add initial amount and extra money: $28 + $10 = $38.\nRESULT: 38\n#### 38"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "45",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 45 eggs.",
+      "quality": 1.0,
+      "final_key": "21",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $12 (for toy cars) + $5 (for teddy bears) = $17.\n\nRESULT: $17.",
+        "step_3": "step_3: RESULT: $38 (initial amount + extra money) - $17 (total cost of toys) = $21.\n\nRESULT: $21.",
+        "verifier": "VERDICT: passthrough\n#### 21",
+        "aggregator": "step_3: RESULT: $38 (initial amount + extra money) - $17 (total cost of toys) = $21.\n\n#### $21."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

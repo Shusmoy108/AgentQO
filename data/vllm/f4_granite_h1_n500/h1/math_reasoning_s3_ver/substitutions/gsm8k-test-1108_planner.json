@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1108",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. First, calculate the total cost before the coupon was applied by adding the cost of the pots and the garden soil: $19 (pots) + $26 (soil) = $45.\n2. Next, subtract the value of the coupon from the total cost to find out how much my mom actually spent: $45 (total cost) - $7 (coupon) = $38.\n3. The final step is to confirm the answer, which is the amount my mom spent at the gardening shop after the coupon was applied: $38.",
+  "reference_key": null,
+  "final_key_plus": "38",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: $45",
+    "verifier": "VERDICT: passthrough\n#### 38",
+    "step_2": "step_2: RESULT: $45 - $7 = $38",
+    "step_3": "step_3: RESULT: $38",
+    "aggregator": "step_3: RESULT: $38\n\n#### 38"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of movie tickets Deepa has seen: 9 movies * 3 viewings each = 27 tickets.\n2. Determine the total amount spent on tickets: $216.\n3. Compute the average price per ticket by dividing the total amount spent by the total number of tickets: $216 / 27 tickets \u2248 $8.00 per ticket.",
+      "quality": 0.0,
+      "final_key": "19",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. My mom bought 1 set of pots and 1 sack of garden soil.\n2. The total cost before the coupon is $19 (pots) + $26 (soil) = $45.\n3. After applying the $7 coupon, the final amount spent is $45 - $7 = $38.\n\nRESULT: 38",
+        "verifier": "VERDICT: passthrough\n#### 19",
+        "step_2": "2. The final amount spent after applying the coupon is $38.\n\nRESULT: 38",
+        "step_3": "3. The average price per item (pot or soil) is $38 / 2 = $19.\n\nRESULT: 19",
+        "aggregator": "19\n#### 19"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initially, compute the overall expense prior to the coupon's usage by summing the cost of the pots and the garden soil: $19 (pots) + $26 (soil) = $45.\n2. Subsequently, deduct the coupon's worth from the total expense to ascertain the actual amount my mom paid: $45 (total expense) - $7 (coupon) = $38.\n3. Ultimately, verify the outcome, denoting the precise amount my mom expended at the gardening store post-coupon application: $38.\n\n[Error:]\n1. Initially, compute the overall expense prior to the coupon's usage by summing the cost of the pots and the garden soil: $19 (pots) + $26 (soil) = $45.\n2. Subsequently, deduct the coupon's worth from the total expense to ascertain the amount my mom paid before the coupon: $45 (total expense) - $7 (coupon) = $38.\n3. Ultimately, verify the outcome, denoting the precise amount my mom expended at the gardening store pre-coupon application: $38.",
+      "quality": 1.0,
+      "final_key": "38",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $45",
+        "verifier": "VERDICT: passthrough\n#### 38",
+        "step_2": "step_2: RESULT: $45 - $7 = $38\n\nRESULT: $38",
+        "step_3": "step_3: RESULT: $38\n\nRESULT: $38",
+        "aggregator": "My mom spent $38 at the gardening shop. #### 38"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

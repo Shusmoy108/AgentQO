@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-879",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the cost of the manicure by taking 1/4 of the cost of the hair service.\n2. Calculate the cost of the pedicure by taking 3/4 of the cost of the manicure.\n3. Add the cost of the hair service, manicure, and pedicure to find the total amount spent at the spa.",
+  "reference_key": null,
+  "final_key_plus": "575",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. The cost of the manicure is 1/4 of the hair service cost.\nCalculation: $400 * (1/4) = $100\n\nRESULT: $100",
+    "verifier": "VERDICT: passthrough\n#### 575",
+    "step_2": "step_2: 2. The cost of the pedicure is 3/4 of the manicure cost.\nCalculation: $100 * (3/4) = $75\n\nRESULT: $75",
+    "step_3": "step_3: 3. The total amount spent at the spa is the sum of the hair service, manicure, and pedicure costs.\nCalculation: $400 + $100 + $75\n\nRESULT: $575",
+    "aggregator": "3. The total amount spent at the spa is the sum of the hair service, manicure, and pedicure costs.\nCalculation: $400 + $100 + $75\n\nRESULT: $575\n#### 575"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate Steve's daily tomato consumption: Since Steve eats 6 tomatoes per day, we'll use this number for his daily consumption.\n\n2. Determine Steve's total weekly tomato consumption: As Steve eats 6 tomatoes per day, his total weekly consumption would be 6 tomatoes/day * 7 days/week = 42 tomatoes/week.\n\n3. Calculate the number of vines needed: Given that a vine can produce 3 tomatoes per week, we divide Steve's total weekly consumption by the number of tomatoes one vine can produce in a week. So, 42 tomatoes/week \u00f7 3 tomatoes/vine/week = 14 vines.\n\nPLAN:\n1. Identify Steve's daily tomato intake (6 tomatoes).\n2. Compute Steve's weekly tomato consumption (42 tomatoes).\n3. Divide Steve's weekly consumption by the number of tomatoes one vine can produce per week (14 vines).",
+      "quality": 0.0,
+      "final_key": "1100",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 6 tomatoes/day",
+        "verifier": "VERDICT: passthrough\n#### 1100",
+        "step_2": "step_2: RESULT: 42 tomatoes/week\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 42 tomatoes/week \u00f7 3 tomatoes/vine/week = 14 vines\n\nRESULT: 14 vines",
+        "aggregator": "RESULT: 400 (hair) + 400 (manicure) + 300 (pedicure) = 1100\n#### 1100"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the cost of the manicure by multiplying 1/4 with the cost of the hair service.\n2. Determine the cost of the pedicure by multiplying 3/4 with the cost of the manicure.\n3. Sum up the cost of the hair service, manicure, and pedicure to determine the total amount spent at the spa.",
+      "quality": 1.0,
+      "final_key": "575",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. The cost of the manicure is calculated as follows: $400 * (1/4) = $100.\n\nRESULT: $100",
+        "verifier": "VERDICT: passthrough\n#### 575",
+        "step_2": "step_2: 2. The cost of the pedicure is calculated as follows: $100 * (3/4) = $75.\n\nRESULT: $75",
+        "step_3": "step_3: 3. The total amount spent at the spa is the sum of the cost of the hair service, manicure, and pedicure: $400 + $100 + $75 = $575.\n\nRESULT: $575",
+        "aggregator": "3. The total amount spent at the spa is the sum of the cost of the hair service, manicure, and pedicure: $400 + $100 + $75 = $575.\n\n#### $575"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-810",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "RESULT: Every month, the number of students doubles.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+  "reference_key": "3",
+  "final_key_plus": "50",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: 3 doubling periods (April to May)\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "verifier": "VERDICT: passthrough\n#### 50",
+    "aggregator": "RESULT: 10 students (initial count) + 10 (doubled in April) + 10 (doubled in May) + 10 (doubled in June) + 10 (doubled in July) = 50 students.\n\n#### 50"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "70",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "step_2: RESULT: Every month, the number of students doubles = More students at the end than at the start\n\nCarry out step 3, showing the calculation briefly.\n\nstep_3: RESULT: There are 3 doubling periods from April to May = 4 months considered (January to May)\n\nNow, carry out step 4, showing the calculations briefly.\n\nstep_4: RESULT: In 3 doubling periods (April to May), total increase = 10 * 2^3 = 80 students\n\nFinally, calculate the additional students beyond the initial count in step 5.\n\nstep_5: RESULT: Additional students = 80 (total increase) - 10 (initial count) = 70 students\n\nRESULT: 70 additional students would have joined by the end of May, above and beyond the number of students already on campus at the beginning of the year.",
+      "quality": 0.0,
+      "final_key": "150",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: There are 3 doubling periods from April to May = 4 months considered (January to May)",
+        "verifier": "VERDICT: passthrough\n#### 150",
+        "aggregator": "step_3: RESULT: There are 3 doubling periods from April to May = 4 months considered (January to May)\n\nTo find the additional students by the end of May, we calculate the growth for each of these 4 months.\n\n1. January to February: 10 students * 2 = 20 students\n2. February to March: 20 students * 2 = 40 students\n3. March to April: 40 students * 2 = 80 students\n4. April to May: 80 students * 2 = 160 students\n\nAdditional students by the end of May = 160 - 10 = 150 students\n\n#### 150"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "step_2: RESULT: Every month, the students' number doubles, and this doubling occurs at the end of each month.\nEnd with \"RESULT: The doubling frequency is established.\"",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 3 doubling periods (April to May)\n\nRESULT: 3",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "3 additional students would have joined by the end of May, above and beyond the number of students already on campus at the beginning of the year.\n\n#### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

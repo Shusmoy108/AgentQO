@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1095",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 30 miles/hour. The second train is traveling at half the speed of the first train, which is 60 miles/hour, so its speed is 60 miles/hour \u00f7 2 = 30 miles/hour.",
+  "reference_key": "30",
+  "final_key_plus": "270",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: The first train covers 60 miles/hour \u00d7 3 hours = 180 miles in 3 hours. The second train covers 30 miles/hour \u00d7 3 hours = 90 miles in 3 hours. Therefore, the total distance between the two trains after 3 hours is 180 miles + 90 miles = 270 miles.\n\nRESULT: 270 miles.",
+    "step_3": "RESULT: 270 miles.",
+    "verifier": "VERDICT: passthrough\n#### 270",
+    "aggregator": "step_3: RESULT: 270 miles.\n#### 270"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "30",
+      "reference_key": "30",
+      "key_differs": false,
+      "text": "RESULT: 31 miles/hour. The second train is traveling at half the speed of the first train, which is 60 miles/hour, so its speed is 60 miles/hour \u00f7 2 = 30 miles/hour.",
+      "quality": 1.0,
+      "final_key": "270",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 270 miles. The first train covers 60 miles/hour \u00d7 3 hours = 180 miles in 3 hours. The second train covers 30 miles/hour \u00d7 3 hours = 90 miles in 3 hours. Therefore, the total distance between the two trains after 3 hours is 180 miles + 90 miles = 270 miles.",
+        "step_3": "step_3: RESULT: 270 miles. The total distance between the two trains after 3 hours is the sum of the distances covered by both trains, which is 180 miles (first train) + 90 miles (second train) = 270 miles.",
+        "verifier": "VERDICT: passthrough\n#### 270",
+        "aggregator": "Final answer: 270 miles. #### 270"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "Result: 30 miles/hour.\n\nThe speed of the second train is calculated by dividing its distance traveled per hour (60 miles) by 2.",
+      "quality": 1.0,
+      "final_key": "270",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Result: 180 miles + 90 miles = 270 miles.\n\nThe first train covers 180 miles in 3 hours, and the second train covers 90 miles in the same time. Therefore, the total distance between the two trains after 3 hours is 270 miles.\n\nRESULT: 270 miles.",
+        "step_3": "RESULT: 270 miles.",
+        "verifier": "VERDICT: passthrough\n#### 270",
+        "aggregator": "step_3: RESULT: 270 miles.\n#### 270"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1313",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $20",
+  "reference_key": "20",
+  "final_key_plus": "21.6",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $80 + $1000 = $1080\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $1080 / 50 = $21.60\n\nRESULT: $21.60",
+    "verifier": "VERDICT: passthrough\n#### 21.6",
+    "aggregator": "$21.60\n#### 21.60"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULT: 21",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 1080",
+        "step_3": "step_3: RESULT: $21.60",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: To find the selling price of each watermelon, we first calculate the total profit made by the vendor.\n\nTotal profit = Total cost price * Profit percentage\nTotal profit = $80 * 25%\nTotal profit = $80 * 0.25\nTotal profit = $20\n\nNow, we add the total profit to the total cost price to get the selling price.\n\nSelling price = Total cost price + Total profit\nSelling price = $80 + $20\nSelling price = $100\n\nFinally, to find the price per watermelon, we divide the total selling price by the number of watermelons.\n\nPrice per watermelon = Selling price / Number of watermelons\nPrice per watermelon = $100 / 50\nPrice per watermelon = $2\n\n#### $2"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "25",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULTS: The vendor made a total profit of $1000 from selling all 50 watermelons at a 25% profit margin.\nEND.",
+      "quality": 0.0,
+      "final_key": "21.6",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: The total selling price for all 50 watermelons is $1080.\nEND.",
+        "step_3": "step_3: RESULT: The selling price per watermelon is $21.60.\nEND.",
+        "verifier": "VERDICT: passthrough\n#### 21.6",
+        "aggregator": "step_3: RESULT: The selling price per watermelon is $21.60.\n#### 21.60"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

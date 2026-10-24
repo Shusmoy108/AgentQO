@@ -94,3 +94,37 @@ calls with completion_tokens >= max_tokens or finish_reason == "length", divided
 === 2026-10-24T15:25:19Z  F3 servers (HF_HOME=/dev/shm/hf), same commands as F2 ===
 VM-A: vllm serve ibm-granite/granite-3.1-2b-instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
 VM-B: vllm serve ibm-granite/granite-3.1-8b-instruct --host 0.0.0.0 --port 8002 --max-model-len 4096 --gpu-memory-utilization 0.85
+=== 2026-10-24T15:44:42Z  F4 (branch f4 from lastrun 8dc861b), logged before any F4 run ===
+Step 0, problem sets. dev_eval_split takes a 300-problem working set (load_gsm8k(n=300, seed=0) from the
+GSM8K test set) and splits it into dev = 100 and eval = 200, so "--n-tasks 500 on the dev split" yields only 100
+problems, not a superset. New option --split label / --split valid (run_real_pipeline.load_problems, also accepted
+by run_real_h3; defaults unchanged): the extra problems are GSM8K test rows outside the working set, in the order of
+numpy default_rng(1).permutation; LABEL = the 100 dev problems (same order as C7/F3a) + the first 400 extra;
+VALID = the next 100 extra. The raw rows are read directly, so data/tasks/gsm8k_ids.json is not rewritten (md5
+f8a0d122... before and after).
+Sizes: EVAL 200 (identical to C9), LABEL 500 (first 100 identical to C7/F3a), VALID 100. Overlaps: LABEL&EVAL 0,
+VALID&EVAL 0, LABEL&VALID 0, duplicates 0.
+First 5 EVAL : gsm8k-test-994, gsm8k-test-1304, gsm8k-test-1025, gsm8k-test-985, gsm8k-test-889
+First 5 LABEL: gsm8k-test-159, gsm8k-test-1282, gsm8k-test-586, gsm8k-test-547, gsm8k-test-1164
+LABEL[100:105]: gsm8k-test-95, gsm8k-test-91, gsm8k-test-845, gsm8k-test-881, gsm8k-test-362
+First 5 VALID: gsm8k-test-435, gsm8k-test-243, gsm8k-test-38, gsm8k-test-47, gsm8k-test-365
+Other code (run_real_h3, defaults unchanged): --name-tag 500 exposes the ec/qplus top-k plans also as
+ec500_topk / qplus500_topk; --custom-plan NAME:n1+n2 runs a plan that upgrades exactly those nodes (for VALID runs).
+Definitions fixed before any F4 run:
+- Label-size curve (F4a): for n in 100..500 (nested LABEL prefixes): per LLM node Q+ - baseline, consequence and
+  EC, each with a 95% bootstrap CI over problems (2000 resamples, numpy default_rng(0)); consequence/EC
+  recomputed per prefix from the per-problem substitution records (EC = mean consequence x mean p_err);
+  ranks by Q+ and EC; Spearman of each node score with the F3b single-node gains (only_X, LLM nodes); paired
+  bootstrap CI of Q+(planner) - Q+(aggregator).
+- Plan-level selector (F4c/F4d): candidates for budget k are the distinct node sets of the listed rule plans; the
+  pick is the highest VALID accuracy, ties to lower cost, then alphabetical by plan label. Shortfall = best
+  candidate EVAL accuracy - pick EVAL accuracy. Cheaper version: the 2 candidates with the highest summed
+  Q+ - baseline (n = 500) over their nodes, then the same rule on VALID.
+- F4d: a candidate node set counts only if an EVAL result exists for that exact node set in that setting
+  (from any plan, including only_X); missing ones are listed and excluded. Settings with EVAL data:
+  math/passthrough (h3_eval_n200, c12, c13), math/cautious (c14c, e1), complex/cautious (e2b),
+  complex/passthrough (f1b). Qwen VALID runs use max_tokens 256 and data/cache/vllm.sqlite as in C9/E2.
+=== 2026-10-24T15:44:53Z  F4 Granite servers, same commands as F3 ===
+VM-A: vllm serve ibm-granite/granite-3.1-2b-instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+VM-B: vllm serve ibm-granite/granite-3.1-8b-instruct --host 0.0.0.0 --port 8002 --max-model-len 4096 --gpu-memory-utilization 0.85
+=== 2026-10-24T16:01:04Z  F4d: Granite servers stopped; Qwen servers started as in C9/E2: VM-A via serve.sh start8001 (vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25), VM-B: vllm serve Qwen/Qwen2.5-7B-Instruct --host 0.0.0.0 --port 8002 --max-model-len 4096 --gpu-memory-utilization 0.85. F4c finished 15:59 UTC (< 17:00), so F4d runs.

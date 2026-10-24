@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-306",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 40",
+  "reference_key": "40",
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 20\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: (1/2) * 20 = 10",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "aggregator": "step_3: RESULT: (1/2) * 20 = 10\n\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "41",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "RESULT: 41",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 20\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 10",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "step_3: RESULT: 10\n\n#### 10"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "RESULT: 40 loaves\n\nPlan:\n1. Calculate the number of loaves sold in the morning:\n   - Two-thirds of 60 loaves = (2/3) * 60 = 40 loaves\n\n2. Determine the remaining loaves after morning sales:\n   - Remaining loaves = Total loaves - Morning sales = 60 - 40 = 20 loaves\n\n3. Calculate the afternoon sales:\n   - Since half of the remaining loaves is sold equally in the afternoon and evening,\n   - Afternoon sales = (1/2) * 20 = 10 loaves\n\nEND OF PLAN.",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Determine the remaining loaves after morning sales:\n   - Remaining loaves = Total loaves - Morning sales = 60 - 40 = 20 loaves\n\nRESULT: 20 loaves",
+        "step_3": "3. Calculate the afternoon sales:\n   - Afternoon sales = (1/2) * 20 = 10 loaves\n\nRESULT: 10 loaves",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "10 loaves\n#### 10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

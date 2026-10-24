@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1023",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of sandwiches eaten by the man and his wife per day by adding their individual consumption: 5 (man's sandwiches) + 4 (wife's sandwiches) = 9 sandwiches per day.\n2. Add the son's sandwich consumption to find the total daily consumption for the family: 9 (man and wife's sandwiches) + 2 (son's sandwiches) = 11 sandwiches per day.\n3. Multiply the total daily consumption by the number of days in a week to find the weekly consumption: 11 (daily consumption) * 7 (days in a week) = 77 sandwiches per week.",
+  "reference_key": null,
+  "final_key_plus": "77",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. The man and his wife together eat 5 + 4 = 9 sandwiches per day.\n\nRESULT: 9",
+    "verifier": "VERDICT: passthrough\n#### 77",
+    "step_2": "step_2: 2. Adding the son's sandwich consumption to the total for the man and wife, we get 9 (man and wife's sandwiches) + 2 (son's sandwiches) = 11 sandwiches per day for the family.\n\nRESULT: 11",
+    "step_3": "step_3: 3. Multiplying the total daily consumption by the number of days in a week, we get 11 (daily consumption) * 7 (days in a week) = 77 sandwiches per week.\n\nRESULT: 77",
+    "aggregator": "77\n#### 77"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total calories in one bag of chips: 250 calories/serving * 5 servings = 1250 calories.\n2. Determine the remaining calories allowed for the day after consuming 1800 calories: 2000 calories - 1800 calories = 200 calories.\n3. Find out how many grams of chips can be consumed with the remaining 200 calories: 200 calories / 250 calories/serving = 0.8 servings.\n4. Convert the remaining servings to grams: 0.8 servings * 300g/serving = 240g.\n\nPLAN:\n1. Compute total calories in one bag.\n2. Calculate remaining calories for the day.\n3. Determine grams of chips that can be consumed with the remaining calories.\n4. Convert the remaining servings to grams.",
+      "quality": 1.0,
+      "final_key": "77",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Total calories in one bag of chips: 250 calories/serving * 5 servings = 1250 calories.\n\nRESULT: 1250",
+        "verifier": "VERDICT: passthrough\n#### 77",
+        "step_2": "step_2: 2. Remaining calories for the day: 1800 calories (from meals) + 200 calories (remaining) = 2000 calories.\n\nRESULT: 2000",
+        "step_3": "3. step_3: 3. Grams of chips that can be consumed with the remaining calories: 200 calories / 250 calories/serving = 0.8 servings.\n\nRESULT: 0.8",
+        "aggregator": "1. First, calculate the total sandwiches eaten by the family in one day:\n5 (man) + 4 (wife) + 2 (son) = 11 sandwiches per day.\n\n2. Next, calculate the total sandwiches eaten in one week:\n11 sandwiches/day * 7 days/week = 77 sandwiches per week.\n\n#### 77"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the combined sandwich intake of the man and his wife daily: 5 (man's sandwiches) + 4 (wife's sandwiches) = 9 sandwiches per day.\n2. Include the son's sandwich intake to derive the family's daily total: 9 (man and wife's sandwiches) + 2 (son's sandwiches) = 11 sandwiches per day.\n3. Determine the weekly sandwich consumption by multiplying the daily total by the number of days in a week: 11 (daily consumption) * 7 (days in a week) = 77 sandwiches per week.\n\nError:\nIn step 1, the man's individual consumption is incorrectly listed as 5 sandwiches instead of 6. This would slightly alter the calculation for the family's daily consumption, resulting in 10 sandwiches per day (5 + 5 instead of 9), and thus a weekly consumption of 70 sandwiches (10 * 7).",
+      "quality": 0.0,
+      "final_key": "84",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Correct the man's daily sandwich intake from 5 to 6.\n2. Calculate the combined sandwich intake of the man and his wife daily: 6 (man's sandwiches) + 4 (wife's sandwiches) = 10 sandwiches per day.\n\nRESULT: 10",
+        "verifier": "VERDICT: passthrough\n#### 84",
+        "step_2": "step_2: 2. Include the son's sandwich intake to derive the family's daily total: 10 (man and wife's sandwiches) + 2 (son's sandwiches) = 12 sandwiches per day.\n\nRESULT: 12",
+        "step_3": "3. Determine the weekly sandwich consumption by multiplying the daily total by the number of days in a week: 12 (daily consumption) * 7 (days in a week) = 84 sandwiches per week.\n\nRESULT: 84",
+        "aggregator": "84\n#### 84"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

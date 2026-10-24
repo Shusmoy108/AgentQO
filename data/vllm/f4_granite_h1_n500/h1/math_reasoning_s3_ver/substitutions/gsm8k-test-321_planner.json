@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-321",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the cost of the magazine by dividing the cost of the book by 2.\n2. Determine the cost of the pen by subtracting $1 from the cost of the magazine.\n3. State the final answer.",
+  "reference_key": null,
+  "final_key_plus": "1",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. The cost of the magazine is calculated by dividing the cost of the book by 2.\n   Magazine cost = Book cost / 2\n   Magazine cost = $4 / 2\n   Magazine cost = $2\n\nRESULT: $2",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "step_2": "step_2: 2. The cost of the pen is determined by subtracting $1 from the cost of the magazine.\n   Pen cost = Magazine cost - $1\n   Pen cost = $2 - $1\n   Pen cost = $1\n\nRESULT: $1",
+    "step_3": "RESULT: $1",
+    "aggregator": "step_3: RESULT: $1\n\n#### 1"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the additional time for heating the oil to 400 degrees:\n   Additional time = 20 minutes * 40% = 8 minutes.\n   So, the total time to heat up to 400 degrees is 20 minutes + 8 minutes = 28 minutes.\n\n2. Determine the total time for heating and cooking:\n   Let's denote the time to cook chicken as 'x' minutes.\n   According to the problem, the total time for heating and cooking is 5 minutes less than the time to heat up to 400 degrees.\n   So, the total time is 28 minutes + 5 minutes = 33 minutes.\n\n3. Find the total time from starting the oil to cooking chicken:\n   The total time for heating the oil to 400 degrees is 28 minutes.\n   Therefore, the total time from starting the oil to cooking chicken is 28 minutes + x minutes = 33 minutes.\n   Solving for 'x', we get x = 33 minutes - 28 minutes = 5 minutes.\n\nPLAN: Calculate additional heating time, determine total time for heating and cooking, and find the total time from starting the oil to cooking chicken.",
+      "quality": 0.0,
+      "final_key": "33",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 8 minutes.",
+        "verifier": "VERDICT: passthrough\n#### 33",
+        "step_2": "step_2: RESULT: 5 minutes.\n\nThe total time from starting the oil to cooking chicken is 28 minutes (additional heating time) + 5 minutes (cooking time) = 33 minutes.",
+        "step_3": "step_3: RESULT: 28 minutes (additional heating time) + 5 minutes (cooking time) = 33 minutes.\n\nRESULT: 33 minutes.",
+        "aggregator": "33 minutes.\n#### 33"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the magazine cost by halving the book cost.\n2. Identify the pen cost by adding $1 to the magazine cost.\n3. Present the final answer.",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Magazine cost = Book cost / 2\nMagazine cost = $4 / 2\nMagazine cost = $2\n\nRESULT: $2",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: 2. Pen cost = Magazine cost + $1\nPen cost = $2 + $1\nPen cost = $3\n\nRESULT: $3",
+        "step_3": "step_3: 3. Pen cost = $2 + $1\nPen cost = $3\n\nRESULT: $3",
+        "aggregator": "Pen cost = $2 + $1\nPen cost = $3\n#### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

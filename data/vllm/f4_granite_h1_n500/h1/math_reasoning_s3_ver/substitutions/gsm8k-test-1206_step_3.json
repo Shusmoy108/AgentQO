@@ -1,0 +1,48 @@
+{
+  "task_id": "gsm8k-test-1206",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "step_3: step_3: RESULT: $40,000",
+  "reference_key": "40000",
+  "final_key_plus": "40000",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 40000",
+    "aggregator": "step_3: John's loan amount is 40% of his home's worth, which is $250,000. So, the loan amount is 0.40 * $250,000 = $100,000.\n\nstep_4: John uses 60% of his loan to pay off his debts. Therefore, the amount used for debt payment is 0.60 * $100,000 = $60,000.\n\nstep_5: To find out how much money John has leftover after paying his debts, we subtract the amount used for debt payment from the loan amount. So, $100,000 - $60,000 = $40,000.\n\n#### $40,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "40001",
+      "reference_key": "40000",
+      "key_differs": true,
+      "text": "step_3: step_3: RESULT: 40001",
+      "quality": 0.0,
+      "final_key": "40001",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 40001",
+        "aggregator": "step_3: John's loan amount is 40% of his home's worth, which is 0.40 * $250,000 = $100,000.\n\nstep_4: John uses 60% of his loan to pay off debts, which is 0.60 * $100,000 = $60,000.\n\nstep_5: To find out how much money John has leftover after paying debts, subtract the amount used for debt from the loan amount.\n\nFinal answer: $100,000 - $60,000 = $40,001.\n\n#### $40001"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "260",
+      "reference_key": "40000",
+      "key_differs": true,
+      "text": "step_3: Total sheep = Toulouse + Charleston + Seattle\nRESULT: 260",
+      "quality": 1.0,
+      "final_key": "40000",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 40000",
+        "aggregator": "step_2: Total loan amount = 40% of $250,000\nRESULT: $100,000\n\nstep_3: John uses 60% of the loan to pay off debts\nRESULT: $60,000\n\nstep_4: Leftover money after paying debts = Total loan amount - Debt payment\nRESULT: $100,000 - $60,000 = $40,000\n\n#### $40,000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

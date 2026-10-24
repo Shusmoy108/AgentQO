@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-555",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate John's weekly earnings by multiplying his hourly wage by the number of hours he works per day, then by the number of days he works per week.\n2. Determine the number of weeks required to save $80 by dividing the total amount he wants to save by his weekly earnings.\n3. Ensure the result is a whole number, as John cannot work a fraction of a week. If the result is not a whole number, round up to the nearest whole number, as he needs to work an additional week to reach his savings goal.",
+  "reference_key": null,
+  "final_key_plus": "3",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. John's weekly earnings = $2/hour * 5 hours/day * 4 days/week = $40/week.\n\nRESULT: 40",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "step_2": "step_2: 2. Number of weeks required to save $80 = $80 / $40/week = 2 weeks.\n\nRESULT: 2",
+    "step_3": "3. Since 2 weeks is less than 2, John will need to work an additional week to reach his savings goal of $80.\n\nRESULT: 3",
+    "aggregator": "3\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total amount Sally should have in her bank account after a full week's wage of $300: $200 (initial balance) + $300 (full wage) = $500.\n2. Determine the difference between the actual balance and the expected balance after a full week's wage: $420 (actual balance) - $500 (expected balance) = -$80.\n3. Since the result is negative, it indicates that $80 was withheld from Sally's wage, meaning her actual balance is $80 less than what it should have been.",
+      "quality": 0.0,
+      "final_key": "0.4",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $300",
+        "verifier": "VERDICT: passthrough\n#### 0.4",
+        "step_2": "step_2: RESULT: $420 (actual balance) - $500 (expected balance) = -$80\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $80 (withheld amount)\n\nRESULT: 1",
+        "aggregator": "step_1: Calculate daily earnings\nDaily earnings = $2/hour * 5 hours = $10\n\nstep_2: Calculate weekly earnings\nWeekly earnings = $10/hour * 4 hours/day * 5 days/week = $200\n\nstep_3: Determine the number of weeks needed to save $80\nWeeks needed = $80 / $200 = 0.4\n\nFinal answer: It will take John 0.4 weeks to save $80.\n#### 0.4"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute John's weekly earnings by multiplying his hourly wage by the total hours he works in a day, then by the total weeks he works in a month.\n2. Estimate the number of months it will take for John to accumulate $80 by dividing the desired savings by his monthly earnings.\n3. Validate the outcome as a whole number, as John can't work a fraction of a month. In case the result isn't a whole number, round up to the next whole number, as he will need to extend his work months to meet his savings aim.",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. John earns $2 per hour and works 5 hours a day. So, his daily earnings are $2 * 5 = $10.\n\nRESULT: $10",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "step_2": "step_2: 2. John works 4 days a week, so his weekly earnings are $10 * 4 = $40.\n\nRESULT: $40",
+        "step_3": "step_3: 3. To find out how many weeks it will take John to save $80, we divide his desired savings by his weekly earnings: $80 / $40 = 2 weeks.\n\nRESULT: 2",
+        "aggregator": "2 weeks. #### 2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

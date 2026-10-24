@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-23",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. RESULT: 8 centimeters (2 cm/hour * 4 hours)",
+  "reference_key": "4",
+  "final_key_plus": "8",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "3. RESULT: The initial length of the candle was reduced by 8 centimeters due to melting, so the final length of the candle after 4 hours is 0 centimeters (initial length) - 8 centimeters = -8 centimeters. This negative value indicates the candle has melted completely.",
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "aggregator": "3. RESULT: The candle will be 8 centimeters shorter after burning from 1:00 PM to 5:00 PM. #### 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4",
+      "reference_key": "4",
+      "key_differs": false,
+      "text": "2. RESULT: 5 centimeters (2 cm/hour * 4 hours)",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "3. RESULT: The initial length of the candle was reduced by 5 centimeters due to melting, making the final length 1 cm (initial length - 5 centimeters).\n\nRESULT: 1 centimeter",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "3 centimeters\n#### 3"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "0",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "step_2: 2. RESULT: 2 cm/hour * 4 hours = 8 centimeters\nEND: The candle will be 8 centimeters shorter after burning from 1:00 PM to 5:00 PM.",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: 3. RESULT: Initial length - 8 centimeters = Final length\n\nEND: The candle will be 8 centimeters shorter after burning from 1:00 PM to 5:00 PM.",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "The candle will be 8 centimeters shorter after burning from 1:00 PM to 5:00 PM.\n#### 8"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

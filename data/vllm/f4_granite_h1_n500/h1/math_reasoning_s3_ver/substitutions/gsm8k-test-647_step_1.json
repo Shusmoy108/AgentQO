@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-647",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 4 feet per hour.",
+  "reference_key": "4",
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 2 feet per hour.\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 6 hours (for soil) + 4 hours (for clay) = 10 hours.\nRESULT: 10 hours.",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "aggregator": "10 hours. #### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "5",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "RESULT: 5 feet per hour.",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 2 feet per hour.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 6 hours for soil + 4 hours for clay = 10 hours total.\nRESULT: 10",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "step_3: RESULT: 6 hours for soil + 4 hours for clay = 10 hours total.\n\n#### 10"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "2 feet per hour is the estimated digging rate through clay. The calculation for soil remains the same: 4 feet per hour.\n\nRESULTS: 4 ft/hour (soil) and 2 ft/hour (clay).",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: To find the total time for clay, divide the depth of clay by the digging rate through clay.\n\n8 feet (clay) \u00f7 2 feet per hour (clay rate) = 4 hours.\n\nRESULT: 4",
+        "step_3": "step_3: To find the total time for soil, divide the depth of soil by the digging rate through soil.\n\n24 feet (soil) \u00f7 4 feet per hour (soil rate) = 6 hours.\n\nRESULT: 6",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "aggregator": "6\n#### 6"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

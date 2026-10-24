@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-41",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the distance Polly can throw the javelin while holding the gemstone: 400 feet (normal distance) multiplied by 3 (times farther) equals 1200 feet.\n2. Subtract the dragon's flame range from the javelin's maximum range: 1200 feet (javelin's maximum range) minus 1000 feet (dragon's flame range) equals 200 feet.\n3. This 200 feet is the distance outside the dragon's flame range where Polly can stand and still hit the dragon with the javelin.",
+  "reference_key": null,
+  "final_key_plus": "200",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1200 feet (400 feet * 3)\n\nRESULT: 1200 feet",
+    "verifier": "VERDICT: passthrough\n#### 200",
+    "step_2": "step_2: 1200 feet (javelin's maximum range) - 1000 feet (dragon's flame range) = 200 feet\n\nRESULT: 200 feet",
+    "step_3": "RESULT: 200 feet",
+    "aggregator": "step_3: RESULT: 200 feet\n\n#### 200"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the initial cost of pomegranates on Tuesday before the voucher:\n   - Clara bought 20 pomegranates at $20 each, so the initial cost is 20 * $20 = $400.\n\n2. Apply the voucher discount to the initial cost on Tuesday:\n   - Clara got $2 off, so the cost after voucher is $400 - $2 = $398.\n\n3. Calculate the final cost for Sheila on the second day after applying the store discount:\n   - The price per pomegranate is $30, and Sheila bought 20, so the total cost is 20 * $30 = $600.\n   - The store offers a 10% discount on the total cost, so the discount amount is 10% of $600 = 0.10 * $600 = $60.\n   - The final cost for Sheila is $600 - $60 = $540.\n\n4. Find the difference between the final prices paid on the two days:\n   - The difference is $540 (Sheila's final price) - $398 (Clara's final price after voucher) = $142.\n\nPLAN:\n1. Compute initial cost on Tuesday.\n2. Apply voucher discount to the initial cost.\n3. Calculate Sheila's final price after store discount.\n4. Determine the price difference between Clara and Sheila.",
+      "quality": 0.0,
+      "final_key": "540",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $400",
+        "verifier": "VERDICT: passthrough\n#### 540",
+        "step_2": "step_2: RESULT: $398",
+        "step_3": "step_3: RESULT: $540\n\nEnd with \"RESULT: <number>\".",
+        "aggregator": "step_3: RESULT: 400 + (3 * 100) = 540\n\n#### 540"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the distance Polly can throw the javelin with the gemstone: 400 feet (standard throw) multiplied by 3 (three times further) equals 1200 feet.\n2. Deduct the dragon's flame range from the javelin's maximum range: 1200 feet (javelin's maximum range) minus 1000 feet (dragon's flame range) equals 200 feet.\n3. This 200 feet signifies the distance beyond the dragon's flame range where Polly can position herself and still ensure the javelin hits the dragon.",
+      "quality": 1.0,
+      "final_key": "200",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 1200",
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "step_2": "step_2: RESULT: 1200 - 1000 = 200",
+        "step_3": "step_3: RESULT: 200 feet",
+        "aggregator": "step_3: RESULT: 200 feet\n\n#### 200"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

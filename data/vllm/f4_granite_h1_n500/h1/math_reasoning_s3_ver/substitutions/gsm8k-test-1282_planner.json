@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1282",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of hot dogs needed for the party: John has 4 hot dogs left over, and each of the 20 guests will eat 2 hot dogs. So, the total number of hot dogs needed is 20 guests * 2 hot dogs/guest + 4 left over hot dogs = 44 hot dogs.\n2. Determine the number of packs of hot dogs required: Each pack contains 6 hot dogs. Therefore, the number of packs needed is 44 hot dogs / 6 hot dogs/pack = 7.33 packs. Since John can't buy a fraction of a pack, he'll need to buy 8 packs.\n3. Calculate the total cost: Each pack costs $2, so the total cost will be 8 packs * $2/pack = $16.",
+  "reference_key": null,
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 44 hot dogs needed.",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "step_2": "step_2: RESULT: 8 packs required.",
+    "step_3": "step_3: RESULT: $16.",
+    "aggregator": "step_1: Calculate total hot dogs needed.\nJohn invited 20 people, and each will eat 2 hot dogs. So, total hot dogs needed = 20 * 2 = 40 hot dogs.\n\nstep_2: Add hot dogs from previous party.\nJohn has 4 hot dogs left over from a previous party.\n\nstep_3: Calculate remaining hot dogs needed.\nRemaining hot dogs needed = Total hot dogs needed - Hot dogs from previous party = 40 - 4 = 36 hot dogs.\n\nstep_4: Calculate packs needed.\nEach pack contains 6 hot dogs. So, packs needed = Remaining hot dogs needed / 6 = 36 / 6 = 6 packs.\n\nstep_5: Calculate total cost.\nCost per pack = $2.\nTotal cost = Cost per pack * Packs needed = $2 * 6 = $12.\n\n#### $12"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total calories burned during aerobics: 2 hours * 500 calories/hour = 1000 calories.\n2. Calculate the total calories burned during running: 1 hour * 600 calories/hour = 600 calories.\n3. Sum the total calories burned from both activities: 1000 calories (aerobics) + 600 calories (running) = 1600 calories.\n4. Determine the total ml of water Hannah needs to drink by dividing the total calories by 200 (since 100 ml per 200 calories): 1600 calories / 200 calories/100 ml = 8 liters.\n\nPLAN:\n1. Compute calories from aerobics (1000 calories).\n2. Compute calories from running (600 calories).\n3. Sum calories from both activities (1600 calories).\n4. Calculate total water intake (8 liters).",
+      "quality": 0.0,
+      "final_key": "14",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calories from aerobics: 2 hours * 500 calories/hour = 1000 calories.\n\nRESULT: 1000",
+        "verifier": "VERDICT: passthrough\n#### 14",
+        "step_2": "step_2: 2. Calories from running: 1 hour * 600 calories/hour = 600 calories.\n\nRESULT: 600",
+        "step_3": "3. Sum calories from both activities (1600 calories).\n\nRESULT: 1600",
+        "aggregator": "step_2: Calculate total hot dogs needed.\nTotal hot dogs needed = (Number of guests * Hot dogs per guest) + Hot dogs leftover\nTotal hot dogs needed = (20 * 2) + 4\nTotal hot dogs needed = 44\n\nstep_3: Determine packs of hot dogs required.\nPacks of hot dogs required = Total hot dogs needed / Hot dogs per pack\nPacks of hot dogs required = 44 / 6\nPacks of hot dogs required = 7 with a remainder of 2\n\nstep_4: Calculate total cost.\nTotal cost = Packs of hot dogs required * Cost per pack\nTotal cost = 7 * $2\nTotal cost = $14\n\n#### $14"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of hot dogs needed for the party: John has 4 hot dogs left over, and each of the 20 guests will eat 2 hot dogs. So, the total number of hot dogs needed is 20 guests * 2 hot dogs/guest + 4 left over hot dogs = 44 hot dogs.\n2. Determine the number of packs of hot dogs required: Each pack contains 6 hot dogs. Therefore, the number of packs needed is 44 hot dogs / 6 hot dogs/pack = 7.33 packs. Since John can't buy a fraction of a pack, he'll need to buy 7 packs.\n3. Calculate the total cost: Each pack costs $2, so the total cost will be 7 packs * $2/pack = $14.",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 44 hot dogs needed.",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "step_2": "step_2: RESULT: 7 packs required.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $14.00.",
+        "aggregator": "step_1: Calculate total hot dogs needed.\nJohn invited 20 people, and each will eat 2 hot dogs. So, total hot dogs needed = 20 * 2 = 40 hot dogs.\n\nstep_2: Subtract hot dogs already available.\nJohn has 4 hot dogs left over. So, hot dogs needed = 40 - 4 = 36 hot dogs.\n\nstep_3: Calculate the number of packs needed.\nEach pack contains 6 hot dogs. So, packs needed = 36 / 6 = 6 packs.\n\nstep_4: Calculate the total cost.\nEach pack costs $2. So, total cost = 6 * $2 = $12.\n\n#### $12.00"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

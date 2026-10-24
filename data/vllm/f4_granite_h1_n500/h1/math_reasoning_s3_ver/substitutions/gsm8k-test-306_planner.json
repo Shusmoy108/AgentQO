@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-306",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of loaves sold in the morning: Two-thirds of 60 loaves are sold in the morning, so 60 * (2/3) = 40 loaves are sold in the morning.\n2. Determine the remaining loaves after the morning sales: Subtract the morning sales from the total production, 60 - 40 = 20 loaves remain.\n3. Calculate the number of loaves sold in the afternoon: Half of the remaining loaves are sold in the afternoon, so 20 / 2 = 10 loaves are sold in the afternoon.\n\nThe final answer is that 10 loaves of bread are sold in the afternoon.",
+  "reference_key": null,
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 40",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "step_2": "step_2: RESULT: 20\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 10",
+    "aggregator": "step_3: RESULT: 10\n\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, determine the number of candies Robert has. Since John has twice as many candies as Robert and John has 54 candies, we can find Robert's candies by dividing John's count by 2: Robert = 54 / 2 = 27 candies.\n\n2. Next, calculate the number of candies James has. James has 6 more candies than Robert, so: James = Robert + 6 = 27 + 6 = 33 candies.\n\n3. Finally, find out how many more candies John has than James. John has 54 candies and James has 33 candies, so the difference is: John - James = 54 - 33 = 21 candies.\n\nPLAN:\n1. Calculate Robert's candies (27).\n2. Calculate James's candies (33).\n3. Determine the difference in candies between John and James (21).",
+      "quality": 0.0,
+      "final_key": "21",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 27",
+        "verifier": "VERDICT: passthrough\n#### 21",
+        "step_2": "step_2: RESULT: 33\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 54 - 33 = 21\n\nRESULT: 21",
+        "aggregator": "21 loaves of bread are sold in the afternoon.\n#### 21"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate the number of loaves sold in the morning: Three-fourths of 60 loaves are sold in the morning, so 60 * (3/4) = 45 loaves are sold in the morning.\n2. Assess the leftover loaves following morning sales: Subtract the morning sales from the total production, 60 - 45 = 15 loaves stay.\n3. Compute the number of loaves sold in the afternoon: Three-fourths of the leftover loaves are sold in the afternoon, so 15 * (3/4) = 11.25 loaves are sold in the afternoon.\n\nThe final answer is that 11.25 loaves of bread are sold in the afternoon.",
+      "quality": 0.0,
+      "final_key": "11.25",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 45 loaves",
+        "verifier": "VERDICT: passthrough\n#### 11.25",
+        "step_2": "step_2: RESULT: 15 loaves\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 15 * (3/4) = 11.25 loaves\n\nRESULT: 11.25 loaves",
+        "aggregator": "11.25 loaves\n#### 11.25"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

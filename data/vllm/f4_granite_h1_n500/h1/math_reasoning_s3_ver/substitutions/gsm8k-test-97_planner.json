@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-97",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Determine the volume of tomatoes in one can: Since each can contains three tomatoes and they lose half their volume when cooked, each can contributes 16/2 = 8 ounces of sauce.\n2. Calculate the number of cans used: Freda's sauce is 32 ounces, so she used 32/8 = 4 cans of tomatoes.\n3. Find the total number of tomatoes: Since each can contains three tomatoes, Freda used 4 cans * 3 tomatoes/can = 12 tomatoes.\n\nFinal answer: Freda used 12 tomatoes.",
+  "reference_key": null,
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Each can contributes 16/2 = 8 ounces of sauce.\n\nRESULT: 8",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "step_2": "step_2: 2. Calculate the number of cans used: Freda's sauce is 32 ounces, so she used 32/8 = 4 cans of tomatoes.\n\nRESULT: 4",
+    "step_3": "step_3: 3. Find the total number of tomatoes: Since each can contains three tomatoes, Freda used 4 cans * 3 tomatoes/can = 12 tomatoes.\n\nRESULT: 12",
+    "aggregator": "12 tomatoes. #### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Convert the length of the flower bed from feet to inches to match the growth width of the flowers.\n   - 111 feet * 12 inches/foot = 1332 inches\n\n2. Calculate the number of spaces needed for the flowers, considering the 1.5-foot spacing between them.\n   - (1332 inches / 12 inches per flower) - 17 (flowers already owned) = 108 spaces\n\n3. Determine the total cost of the flowers, including the cost per plant and the number of spaces to be filled.\n   - 108 spaces * $6 per plant = $648\n\nPLAN: The total cost for Pat to fill her flower bed with the remaining spaces will be $648.",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Convert the length of the flower bed from feet to inches:\n   - 111 feet * 12 inches/foot = 1332 inches\n\nRESULT: 1332",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "step_2": "step_2: Calculate the number of spaces needed for the flowers, considering the 1.5-foot spacing between them.\n   - (1332 inches / 12 inches per flower) - 17 (flowers already owned) = 108 spaces\n\nRESULT: 108",
+        "step_3": "step_3: Determine the total cost of the flowers, including the cost per plant and the number of spaces to be filled.\n   - 108 spaces * $6 per plant = $648\n\nRESULT: $648",
+        "aggregator": "step_4: Calculate the volume of tomatoes before cooking.\n- 32 ounces of sauce * 2 (since they lose half their volume) = 64 ounces of tomatoes.\n\nstep_5: Determine the number of tomatoes used.\n- 64 ounces of tomatoes / 16 ounces per tomato = 4 tomatoes.\n\nEach can contains 3 tomatoes, so:\n- 4 tomatoes / 3 tomatoes per can = 1.33 cans.\n\nSince Freda can't use a fraction of a can, she used 2 full cans.\n\nFinal answer: Freda used 2 * 3 = 6 tomatoes.\n\n#### 6"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the volume of tomatoes in one can: Given that each can holds three tomatoes and they reduce by two-thirds of their volume during cooking, each can yields 8 ounces of sauce.\n2. Estimate the number of cans employed: Freda's sauce totals 32 ounces, implying she utilized 32/8 = 4 cans of tomatoes.\n3. Ascertain the total count of tomatoes: With each can containing three tomatoes, Freda used 4 cans * 3 tomatoes/can = 12 tomatoes.\n\nFinal answer: Freda used 12 tomatoes. [Note: The subtle error is in step 1, where the volume loss is described as \"half\" instead of \"two-thirds.\" This changes the conclusion slightly.]",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 8 ounces",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "step_2": "step_2: RESULT: 4 cans\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 12 tomatoes\n\nEND: RESULT: 12",
+        "aggregator": "12 tomatoes\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

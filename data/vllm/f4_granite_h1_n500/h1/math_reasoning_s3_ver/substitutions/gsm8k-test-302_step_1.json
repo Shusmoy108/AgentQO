@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-302",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $25",
+  "reference_key": "25",
+  "final_key_plus": "15",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $35\n\nCarry out step 3. Show the final calculation.\n\nEND: RESULT: $15",
+    "step_3": "RESULT: $15",
+    "verifier": "VERDICT: passthrough\n#### 15",
+    "aggregator": "step_3: RESULT: $15\n\nAnnika has $15 left after spending half of her $50 on food and snacks, and an additional $10 for rides.\n\n#### 15"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "26",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "RESULT: 26",
+      "quality": 1.0,
+      "final_key": "15",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $35 (25 + 10)\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $15 (50 - 35)",
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "aggregator": "step_3: RESULT: $15 (50 - 35)\n\n#### $15"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "40",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "RESULT: 40 hot dogs needed.",
+      "quality": 1.0,
+      "final_key": "15",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $35 (total spent on food, snacks, and rides)",
+        "step_3": "step_3: RESULT: $15 (remaining amount)",
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "aggregator": "step_3: RESULT: $15 (remaining amount)\n\n#### 15"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

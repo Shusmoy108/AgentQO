@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1050",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total distance Bernice has driven by multiplying the distance she drove each day by the number of days she drove.\n2. Subtract the total distance Bernice has driven from the total distance between San Diego and New York City to find out how many kilometers she still needs to drive.\n3. Ensure the result is a positive number, as Bernice cannot drive a negative distance.",
+  "reference_key": null,
+  "final_key_plus": "435",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 1520 kilometers (325 km/day * 4 days)",
+    "verifier": "VERDICT: passthrough\n#### 435",
+    "step_2": "step_2: RESULT: 1955 km (total distance) - 1520 km (distance already driven) = 435 kilometers\n\nRESULT: 435 kilometers",
+    "step_3": "step_3: RESULT: 435 kilometers (435 is a positive number, confirming Bernice still needs to drive 435 kilometers to reach New York City from San Diego.)\n\nRESULT: 435 kilometers",
+    "aggregator": "435 kilometers\n#### 435"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of girls in the choir: 50% of 52 members equals 26 girls.\n2. Determine the number of girls who couldn't make it to the performance: Half of the girls, which is 26 / 2 = 13 girls.\n3. Add the number of girls who performed and the teachers who joined: 26 (girls) + 3 (teachers) = 29 people sang in the performance.",
+      "quality": 1.0,
+      "final_key": "655",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "26 girls.\n\nRESULT: 26",
+        "verifier": "VERDICT: passthrough\n#### 655",
+        "step_2": "step_2: 13 girls couldn't make it.\n\nRESULT: 13",
+        "step_3": "step_3: 26 (girls) + 3 (teachers) = 29 people sang in the performance.\n\nRESULT: 29",
+        "aggregator": "1955 - (325 * 4) = 1955 - 1300 = 655 kilometers\n#### 655"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total miles Bernice has journeyed by multiplying the miles she traveled daily by the days she was on the road.\n2. Deduct the total miles Bernice has covered from the total miles between San Diego and New York City to ascertain the remaining distance she must traverse.\n3. Confirm the result is not zero, as Bernice cannot traverse a zero-mile distance.",
+      "quality": 0.0,
+      "final_key": "455",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 1500 kilometers (325 km/day * 4 days)",
+        "verifier": "VERDICT: passthrough\n#### 455",
+        "step_2": "step_2: RESULT: 1955 km (1955 km - 1500 km)\n\nRESULT: 455 kilometers",
+        "step_3": "step_3: RESULT: 455 kilometers (1955 km - 1500 km)\n\nRESULT: 455 kilometers",
+        "aggregator": "455 kilometers\n#### 455"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

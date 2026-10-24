@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-492",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $8",
+  "reference_key": "8",
+  "final_key_plus": "32",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $8 * 3 = $24\n\nCarry out step 3.\n\nEND: RESULT: $32",
+    "step_3": "RESULT: $32",
+    "verifier": "VERDICT: passthrough\n#### 32",
+    "aggregator": "step_3: RESULT: $32\n\nSally spends $32 in total. #### 32"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "9",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "RESULT: 9",
+      "quality": 1.0,
+      "final_key": "32",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $24 (3 * $8)",
+        "step_3": "step_3: RESULT: $32 (8 + 24)",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "aggregator": "step_3: RESULT: $32 (8 + 24)\n\n#### 32"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "32",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "RESULT: $8\n\nPLAN:\n1. Identify the cost of the small pizza.\n   - Small pizza cost = $8\n\n2. Calculate the cost of the family-size pizza, which is 3 times the small pizza's cost.\n    - Family-size pizza cost = 3 * $8 = $24\n\n3. Sum the costs of both pizzas to find the total amount spent.\n    - Total spent = $8 (small pizza) + $24 (family-size pizza) = $32\n\nEND\n\nRESULT: $32",
+      "quality": 1.0,
+      "final_key": "32",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "RESULT: $24",
+        "step_3": "RESULT: $32",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "aggregator": "step_3: RESULT: $32\n\nSally spends $32 in total. #### 32"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

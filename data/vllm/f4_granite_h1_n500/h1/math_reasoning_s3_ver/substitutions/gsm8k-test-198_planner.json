@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-198",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of cards Elaine collected in the first month: 20 (initial cards) * 3 = 60 cards.\n2. Calculate the number of cards Elaine collected in the second month: 60 (first month) - 20 = 40 cards.\n3. Calculate the total number of cards collected in the first and second months: 60 (first month) + 40 (second month) = 100 cards.\n4. Calculate the number of cards Elaine collected in the third month: 100 (first and second months combined) * 2 = 200 cards.\n5. Calculate the total number of cards Elaine has now: 20 (initial cards) + 60 (first month) + 40 (second month) + 200 (third month) = 320 cards.\n\nFinal Answer: Elaine has 320 Pokemon cards in total now.",
+  "reference_key": null,
+  "final_key_plus": "300",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 60",
+    "verifier": "VERDICT: passthrough\n#### 300",
+    "step_2": "step_2: RESULT: 40",
+    "step_3": "step_3: RESULT: 100\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "aggregator": "step_4: RESULT: (3 * 20) + (3 * 20 - 20) + (2 * (3 * 20 + (3 * 20 - 20)))\n\nCalculation:\n(3 * 20) = 60 (first month collection)\n(3 * 20 - 20) = 40 (second month collection)\n(2 * (3 * 20 + (3 * 20 - 20))) = 2 * (60 + 40) = 2 * 100 = 200 (third month collection)\n\nTotal cards = 60 + 40 + 200 = 300\n\nRESULT: 300\n#### 300"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total bananas eaten by the first monkey per day: 10 bananas.\n2. Determine the number of bananas eaten by the second monkey per day: 10 bananas (first monkey's intake) + 4 bananas.\n3. Find out the bananas eaten by the third monkey per day: Total bananas - (First monkey's intake + Second monkey's intake).\n\nPLAN:\n1. Compute: 10 bananas (first monkey's daily intake).\n2. Compute: 10 bananas + 4 bananas (second monkey's additional intake).\n3. Compute: 315 bananas (total) - (10 bananas + 14 bananas) (first and second monkeys' intake).",
+      "quality": 0.0,
+      "final_key": "290",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. RESULT: 10 bananas (first monkey's daily intake).",
+        "verifier": "VERDICT: passthrough\n#### 290",
+        "step_2": "2. RESULT: 14 bananas (second monkey's additional intake).\n\nNow, let's proceed to step 3.\n\n3. RESULT: 315 bananas (total) - (10 bananas + 14 bananas) = 291 bananas.\n\nSo, the third monkey eats 291 bananas per day.",
+        "step_3": "RESULT: 291 bananas.",
+        "aggregator": "step_1: Elaine collected three times the initial number of cards in the first month.\n3 * 20 = 60 cards\n\nstep_2: In the second month, she collected 20 fewer cards than the first month.\n60 - 20 = 40 cards\n\nstep_3: In the third month, she collected twice the combined number of cards from the first and second months.\n(60 + 40) * 2 = 290 cards\n\nFinal answer: Elaine now has 290 Pokemon cards in total.\n#### 290"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate the number of cards Elaine gathered in the initial month: 20 (initial cards) * 3 = 60 cards.\n2. Estimate the number of cards Elaine amassed in the subsequent month: 60 (first month) - 20 = 40 cards.\n3. Estimate the cumulative number of cards collected in the initial and subsequent months: 60 (first month) + 40 (second month) = 100 cards.\n4. Estimate the number of cards Elaine acquired in the concluding month: 100 (first and second months combined) * 2 = 200 cards.\n5. Estimate the total number of cards Elaine possesses today: 20 (initial cards) + 60 (first month) + 40 (second month) + 200 (concluding month) = 320 cards.\n\nFinal Answer: Elaine boasts approximately 320 Pokemon cards in her collection right now.",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 60",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "step_2": "step_2: RESULT: 40",
+        "step_3": "step_3: RESULT: 100\n\nFinal Answer: Elaine has 100 cards from the first and second months combined.",
+        "aggregator": "step_3: RESULT: 100\n\nFinal Answer: Elaine has 100 cards from the first and second months combined.\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

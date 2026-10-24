@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1214",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Calculate the daily diaper changes per child (5 diapers/day).\n\nRESULT: 5",
+  "reference_key": "5",
+  "final_key_plus": "7.5",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Determine the diaper changes managed by Jordan's wife (2.5 diapers/day).\n\nRESULT: 2.5",
+    "step_3": "step_3: 3. Calculate the diapers Jordan changes (7.5 diapers/day).\n\nRESULT: 7.5",
+    "verifier": "VERDICT: passthrough\n#### 7.5",
+    "aggregator": "step_3: 3. Calculate the diapers Jordan changes (7.5 diapers/day).\n\nRESULT: 7.5\n#### 7.5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "1. Calculate the daily diaper changes per child (5 diapers/day).\n\nRESULT: 6",
+      "quality": 0.0,
+      "final_key": "7.5",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Determine the diaper changes managed by Jordan's wife (2.5 diapers/day).\n\nRESULT: 2.5",
+        "step_3": "step_3: 3. Calculate the diapers Jordan changes (7.5 diapers/day).\n\nRESULT: 7.5",
+        "verifier": "VERDICT: passthrough\n#### 7.5",
+        "aggregator": "step_3: 3. Calculate the diapers Jordan changes (7.5 diapers/day).\n\nRESULT: 7.5\n#### 7.5"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "5 diapers/child/day * 2 children = 10 diapers/day\n\nRESULT: 10 diapers/day",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 10 diapers/day * 0.5 (handled by wife) = 5 diapers/day\n\nRESULT: 5 diapers/day",
+        "step_3": "step_3: 10 diapers/day - 5 diapers/day (handled by wife) = 5 diapers/day\n\nRESULT: 5 diapers/day",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "5 diapers/day\n#### 5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

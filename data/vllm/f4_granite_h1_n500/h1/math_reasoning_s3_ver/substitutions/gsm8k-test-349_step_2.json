@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-349",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: 2. Monthly treat and medicine cost = $20 (treats) + $100 (medicine) = $120\n\nRESULT: $120",
+  "reference_key": "120",
+  "final_key_plus": "1440",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: 3. Annual total expenditure = $120 (monthly) * 12 (months) = $1440\n\nRESULT: $1440",
+    "verifier": "VERDICT: passthrough\n#### 1440",
+    "aggregator": "step_3: Annual total expenditure = $120 (monthly) * 12 (months) = $1440\n\n#### $1440"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "121",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "step_2: 2. Monthly treat and medicine cost = $20 (treats) + $100 (medicine) = $120\n\nRESULT: 121",
+      "quality": 0.0,
+      "final_key": "1440",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: 3. Annual total expenditure = $120 (treats and medicine) * 12 (months) = $1440\n\nRESULT: 1440",
+        "verifier": "VERDICT: passthrough\n#### 1440",
+        "aggregator": "1440\n#### 1440"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "640",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "2. For the monthly cost of treats and medicine:\nResult: $120\n\nNow proceed to step 3.\n\nPROCEED TO STEP 3.\n\nresult: $120 + $520 = $640\n\nEND WITH PROMPT.",
+      "quality": 1.0,
+      "final_key": "2640",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: $640",
+        "verifier": "VERDICT: passthrough\n#### 2640",
+        "aggregator": "step_1: Calculate weekly food cost\nFood cost per week = $25\n\nstep_2: Calculate monthly food cost\nSince there are 4 weeks in a month,\nMonthly food cost = Weekly food cost * 4\nMonthly food cost = $25 * 4 = $100\n\nstep_3: Calculate total monthly expenses\nTotal monthly expenses = Cost of treats + Cost of medicine + Monthly food cost\nTotal monthly expenses = $20 + $100 + $100 = $220\n\nstep_4: Calculate annual expenses\nAnnual expenses = Total monthly expenses * 12 (months in a year)\nAnnual expenses = $220 * 12 = $2640\n\n#### 2640\n\nThis is the total amount Madeline spends on her dog in a year."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

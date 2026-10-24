@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-107",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Sum the hours watched from Monday to Thursday:\n   - Monday and Tuesday: 1 hour/night * 2 nights = 2 hours\n   - Thursday: 1 hour episode + 0.5 hours (30-minute show) = 1.5 hours\n   - Total from Monday to Thursday: 2 hours + 1.5 hours = 3.5 hours\n\nRESULT: 3.5",
+  "reference_key": "3.5",
+  "final_key_plus": "7",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Find out the hours watched on Friday.\n   - Total hours for the week: 7 hours\n   - Hours from Monday to Thursday: 3.5 hours\n   - Remaining hours on Friday: 7 hours - 3.5 hours = 3.5 hours\n\nRESULT: 3.5",
+    "step_3": "step_3: 3. Calculate the number of 30-minute episodes watched on Wednesday:\n   - Wednesday's show duration: 30 minutes\n   - Number of episodes watched on Wednesday: 3.5 hours / 0.5 hours per episode = 7 episodes\n\nRESULT: 7",
+    "verifier": "VERDICT: passthrough\n#### 7",
+    "aggregator": "7"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4.5",
+      "reference_key": "3.5",
+      "key_differs": true,
+      "text": "1. Sum the hours watched from Monday to Thursday:\n   - Monday and Tuesday: 1 hour/night * 2 nights = 2 hours\n   - Thursday: 1 hour episode + 0.5 hours (30-minute show) = 1.5 hours\n   - Total from Monday to Thursday: 2 hours + 1.5 hours = 3.5 hours\n\nRESULT: 4.5",
+      "quality": 0.0,
+      "final_key": "7",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Determine the remaining hours watched on Friday.\n   - Total hours for the week: 7 hours\n   - Hours from Monday to Thursday: 3.5 hours\n   - Remaining hours on Friday: 7 hours - 3.5 hours = 3.5 hours\n\nRESULT: 3.5",
+        "step_3": "3. Calculate the number of 30-minute episodes watched on Wednesday:\n   - Wednesday's show duration: 30 minutes\n   - Number of episodes watched on Wednesday: 3.5 hours / 0.5 hours per episode = 7 episodes\n\nRESULT: 7",
+        "verifier": "VERDICT: passthrough\n#### 7",
+        "aggregator": "7\n#### 7"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2.5",
+      "reference_key": "3.5",
+      "key_differs": true,
+      "text": "MONDAY TO THURSDAY (1 hour/night): 2 hours (Wednesday and Thursday) + 0.5 hours (Thursday) = 2.5 hours\n\nRESULT: 2.5 hours",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: FRIDAY (2 1-hour episodes): 2 episodes * 1 hour/episode = 2 hours\n\nRESULT: 3.5 hours (remaining hours for Friday) - 2 hours (Friday) = 1.5 hours\n\nNow, proceed to step 3.\n\nstep_3: WEDNESDAY (30-minute episodes): 1.5 hours / 0.5 hours per episode = 3 episodes\n\nRESULT: 3 episodes",
+        "step_3": "RESULT: 3 episodes",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_3: To find out how many 30-minute episodes Frankie watched on Wednesday, we first need to calculate the total hours he watched from Monday to Thursday.\n\nMonday and Tuesday: 1 hour/episode * 2 episodes = 2 hours\nThursday: 1 hour/episode * 1 episode + 30 minutes/episode * 1 episode = 1.5 hours\n\nTotal from Monday to Thursday: 2 hours + 1.5 hours = 3.5 hours\n\nSince he watched a total of 7 hours over the week, the remaining hours for Wednesday are:\n\n7 hours - 3.5 hours = 3.5 hours\n\nNow, we know each episode on Wednesday is 30 minutes long, so to find out how many 30-minute episodes he watched, we divide the remaining hours by the duration of each episode:\n\n3.5 hours / 0.5 hours per episode = 7 episodes\n\nHowever, this result includes both 30-minute and 1-hour episodes. Since we've already accounted for 2 hours on Monday and Tuesday, and 1.5 hours on Thursday, we need to subtract these from the total to find out how many 30-minute episodes were watched on Wednesday:\n\n7 episodes - 2 episodes (Monday and Tuesday) - 1.5 episodes (Thursday) = 3.5 episodes\n\nSince Frankie can't watch half an episode, we round down to the nearest whole number, which is 3 episodes.\n\n#### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

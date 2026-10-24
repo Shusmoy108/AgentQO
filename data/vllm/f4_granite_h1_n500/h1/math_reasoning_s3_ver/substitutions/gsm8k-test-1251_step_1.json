@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1251",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 10 minutes (for the second and third sides each).",
+  "reference_key": "10",
+  "final_key_plus": "30",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 2.5 minutes (for the fourth and fifth sides each).\n\nFinal Result: 30 minutes.",
+    "step_3": "step_3: RESULT: 5 + 10 + 10 + 2.5 + 2.5 = 30 minutes.\n\nRESULT: 30 minutes.",
+    "verifier": "VERDICT: passthrough\n#### 30",
+    "aggregator": "30 minutes.\n#### 30"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 11 minutes (for the second and third sides each).",
+      "quality": 1.0,
+      "final_key": "30",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 6 minutes (for the fourth and fifth sides each).\n\nRESULT: 30 minutes.",
+        "step_3": "step_3: RESULT: 30 minutes (sum of all sides).\n\nRESULT: 30 minutes.",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "aggregator": "30 minutes.\n#### 30"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "30",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 10 minutes\n\nCarry out step 2.\n\n(time for fourth and fifth sides)\n1st side: 5 minutes\n2nd side: 10 minutes\n3rd side: 10 minutes\n4th side: 2.5 minutes\n5th side: 2.5 minutes\n\nAdd these times to find the total:\n5 + 10 + 10 + 2.5 + 2.5 = 30 minutes.\n\nFinal result:\nThe Rubik's cube takes 30 minutes in total.",
+      "quality": 0.0,
+      "final_key": "35",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2.5 minutes (for the fourth side) + 2.5 minutes (for the fifth side) = 5 minutes.\n\nRESULT: 5 minutes.",
+        "step_3": "step_3: 5 (for the first side) + 10 (for the second side) + 10 (for the third side) + 5 (for the fourth side) + 5 (for the fifth side) = 35 minutes.\n\nRESULT: 35 minutes.",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "aggregator": "35 minutes. #### 35"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

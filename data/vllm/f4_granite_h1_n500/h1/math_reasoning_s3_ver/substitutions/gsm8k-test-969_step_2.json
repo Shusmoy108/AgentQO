@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-969",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. RESULT: $300 (The price of each subsequent phone is half of the original price, so $600 / 2 = $300)",
+  "reference_key": "300",
+  "final_key_plus": "3000",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: 3. RESULT: 4 phones (John, 2 kids, 1 wife)\n\nRESULT: 4",
+    "verifier": "VERDICT: passthrough\n#### 3000",
+    "aggregator": "step_3: 3. RESULT: 4 phones (John, 2 kids, 1 wife)\n\nTo calculate the total cost, we first determine the number of phones John buys at full price and the number at half price.\n\n- John buys 1 phone at full price.\n- His 2 kids each buy 1 phone at full price, so that's 2 phones.\n- His wife buys 1 phone at full price.\n\nThat's a total of 1 (John) + 2 (kids) + 1 (wife) = 4 phones at full price.\n\nThe remaining 2 phones are bought at half price.\n\n- 1 phone at half price.\n- 1 phone at half price.\n\nSo, 2 (half price) + 2 (full price) = 4 phones in total.\n\nThe cost for the full-priced phones is 4 * $600 = $2400.\nThe cost for the half-priced phones is 2 * ($600 / 2) = $600.\n\nTotal cost = $2400 + $600 = $3000.\n\n#### 3000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "300",
+      "reference_key": "300",
+      "key_differs": false,
+      "text": "2. RESULT: 301 (The price of each subsequent phone is half of the original price, so $600 / 2 = $300)",
+      "quality": 1.0,
+      "final_key": "1800",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: 3. RESULT: 4 phones in total (1 for John, 2 for kids, 1 for wife)\n\nRESULT: 4",
+        "verifier": "VERDICT: passthrough\n#### 1800",
+        "aggregator": "step_3: 4\n\nJohn bought 4 phones in total. The first two phones are at full price, and the remaining two are half price.\n\nStep 2: Calculate the cost of the first two phones at full price.\nstep_2: 2. RESULT: 2 * $600 = $1200\n\nStep 3: Calculate the cost of the last two phones at half price.\nstep_3: 2. RESULT: 2 * ($600 / 2) = $600\n\nStep 4: Sum up the total cost of all phones.\nstep_4: 4. RESULT: $1200 + $600 = $1800\n\n#### 1800"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "900",
+      "reference_key": "300",
+      "key_differs": true,
+      "text": "step_2: 2. -\nCalculation: $600 / 2 = $300\nRESULT: $900",
+      "quality": 1.0,
+      "final_key": "1800",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: 3. -\nCalculation: 1 (John) + 2 (kids) + 1 (wife) = 4 phones\nRESULT: 4",
+        "verifier": "VERDICT: passthrough\n#### 1800",
+        "aggregator": "step_3: 3. -\nCalculation: 1 (John) + 2 (kids) + 1 (wife) = 4 phones\nRESULT: 4\n\nJohn bought 4 phones in total. The first two phones are at full price, and the remaining two are half price.\n\nFull price for 2 phones: 2 * $600 = $1200\nHalf price for 2 phones: 2 * ($600 / 2) = $600\n\nTotal cost: $1200 + $600 = $1800\n\n#### 1800"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

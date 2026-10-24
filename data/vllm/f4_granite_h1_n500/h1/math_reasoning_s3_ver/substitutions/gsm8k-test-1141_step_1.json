@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1141",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 90 eggs",
+  "reference_key": "90",
+  "final_key_plus": "20",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 150 eggs\nCarry out step 3 only. Show the final calculation.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 240 eggs \u00f7 12 eggs/dozen = 20 dozens\n\nRESULT: 20 dozens",
+    "verifier": "VERDICT: passthrough\n#### 20",
+    "aggregator": "20 dozens\n#### 20"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "91",
+      "reference_key": "90",
+      "key_differs": true,
+      "text": "RESULT: 91 eggs",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 150 eggs\nCarry out step 3 only. Show the final calculation.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 240 eggs\n\nTo find the number of dozens, divide the total eggs by 12:\n\n240 eggs \u00f7 12 eggs/dozen = 20 dozens\n\nRESULT: 20 dozens",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "aggregator": "20 dozens\n#### 20"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "30",
+      "reference_key": "90",
+      "key_differs": true,
+      "text": "RESULT: Chester eats 90 eggs in the first 30 days.",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: Chester eats 150 eggs in the next 30 days.\nCarry out step 3 only. Show the final calculation.\nEND: RESULT: 20 dozens",
+        "step_3": "RESULT: 20 dozens",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "aggregator": "step_1: Calculate total eggs eaten in first 30 days.\nChester eats 3 eggs a day for 30 days, so he consumes 3 * 30 = 90 eggs.\n\nstep_2: Calculate total eggs eaten in next 30 days.\nHe then increases his consumption to 5 eggs a day for another 30 days, so he eats 5 * 30 = 150 eggs.\n\nstep_3: Calculate total eggs eaten over 60 days.\nAdding the eggs from both periods, Chester eats 90 + 150 = 240 eggs in 60 days.\n\nstep_4: Convert total eggs to dozens.\nSince 1 dozen equals 12 eggs, we divide the total number of eggs by 12.\n240 eggs \u00f7 12 eggs/dozen = 20 dozens.\n\n#### 20"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

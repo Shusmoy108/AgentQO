@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1079",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the price Mr. Rogers bought the watch for: 75% of $2000.\n2. Calculate the price Mr. Rogers sold the watch to his friend for: 120% of the price he bought it for.\n3. Calculate the percentage discount Mr. Roger's friend obtained from the original price by comparing the friend's purchase price to the original price.\n\nOutput:\n1. Mr. Rogers bought the watch for 75% of $2000, which is $1500.\n2. Mr. Rogers sold the watch to his friend for 120% of $1500, which is $1800.\n3. The percentage discount Mr. Roger's friend obtained from the original price is calculated as follows: (1 - $1800/$2000) * 100 = 10%.",
+  "reference_key": null,
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Mr. Rogers bought the watch for 75% of $2000, which is $1500.\n\nRESULT: 1500",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "step_2": "step_2: 2. Mr. Rogers sold the watch to his friend for 120% of $1500, which is $1800.\n\nRESULT: 1800",
+    "step_3": "step_3: 3. The percentage discount Mr. Roger's friend obtained from the original price is calculated as follows: (1 - $1800/$2000) * 100 = 10%.\n\nRESULT: 10%",
+    "aggregator": "10%\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the temperature change when the air conditioner is on low for 3 hours: 2 degrees/hour * 3 hours = 6 degrees cooler.\n2. Calculate the temperature change when the air conditioner is on high for 4 hours: 3 degrees/hour * 4 hours = 12 degrees cooler.\n3. Calculate the total temperature change after 7 hours (3 hours low + 4 hours high): 6 degrees (low) + 12 degrees (high) = 18 degrees cooler.\n4. Since the room warms up by 2 degrees an hour when not running the air conditioner, the room temperature would have increased by 2 degrees/hour * 2 hours (off time) = 4 degrees.\n5. Determine the final temperature: Starting temperature - 18 degrees cooler (from steps 1 and 2) - 4 degrees warmer (from step 4) = Final temperature - 22 degrees lower than the starting temperature.",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the temperature change when the air conditioner is on low for 3 hours: 2 degrees/hour * 3 hours = 6 degrees cooler.\n\nRESULT: 6",
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "step_2": "step_2: 2. Calculate the temperature change when the air conditioner is on high for 4 hours: 3 degrees/hour * 4 hours = 12 degrees cooler.\n\nRESULT: 12",
+        "step_3": "3. Calculate the total temperature change after 7 hours (3 hours low + 4 hours high): 6 degrees (low) + 12 degrees (high) = 18 degrees cooler.\n\nRESULT: 18",
+        "aggregator": "18\n#### 18"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Mr. Rogers bought the watch for 75% of $2000, which is $1500.\n2. Mr. Rogers sold the watch to his friend for 120% of $1500, which is $1800.\n3. The percentage discount Mr. Roger's friend obtained from the original price is calculated as follows: (1 - $1800/$2000) * 100 = 12%.",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Mr. Rogers bought the watch for 75% of $2000, which is $1500.\n\nRESULT: 1500",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "step_2": "step_2: 2. Mr. Rogers sold the watch to his friend for 120% of $1500, which is $1800.\n\nRESULT: 1800",
+        "step_3": "3. The percentage discount Mr. Roger's friend obtained from the original price is calculated as follows: (1 - $1800/$2000) * 100 = 12%.\n\nRESULT: 12",
+        "aggregator": "12\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

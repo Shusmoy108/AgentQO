@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-914",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 3000 miles",
+  "reference_key": "3000",
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 3 tune-ups",
+    "step_3": "step_3: RESULT: Jon will need 3 tune-ups for his car in a 30-day month, as he exceeds the 1000-mile threshold after driving 3000 miles.\n\nRESULT: 3",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "aggregator": "RESULT: 3\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3001",
+      "reference_key": "3000",
+      "key_differs": true,
+      "text": "RESULT: 3001 miles",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 3001 miles / 1000 miles/tune-up = 3 tune-ups\n\nRESULT: 3",
+        "step_3": "step_3: Jon will need 3 tune-ups for his car in a 30-day month, as he exceeds the 1000-mile threshold after driving 3001 miles.\n\nRESULT: 3",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "3\n#### 3"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "30",
+      "reference_key": "3000",
+      "key_differs": true,
+      "text": "RESULT: 3000 miles\n\nNext step is to calculate how many tune-ups Jon needs based on the car's requirement.\n\nStep 2:\nJon's car needs a tune-up every 1000 miles. To find out how many tune-ups are needed for 3000 miles, divide the total miles by the mileage for one tune-up: 3000 miles / 1000 miles/tune-up = 3 tune-ups.\n\nEnd with \"Result verified.\"\n\nRESULT: 3 tune-ups\n\nAll steps are completed. Jon needs 3 tune-ups for his car in a 30-day month.",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "RESULT: 3",
+        "step_3": "Result: 3",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_2: Calculate total miles driven in a month.\nJon drives 100 miles a day for 30 days, so:\n100 miles/day * 30 days = 3000 miles\n\nstep_3: Determine the number of tune-ups needed.\nJon's car needs a tune-up every 1000 miles. With 3000 miles driven in a month, he will need:\n3000 miles / 1000 miles/tune-up = 3 tune-ups\n\n#### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

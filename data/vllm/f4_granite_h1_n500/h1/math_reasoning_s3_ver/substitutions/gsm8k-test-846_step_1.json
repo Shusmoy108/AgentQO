@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-846",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 10 minutes",
+  "reference_key": "10",
+  "final_key_plus": "6",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 10 minutes (group performance) + 10 minutes (intermission) = 20 minutes.\n\nEND: 20 minutes.",
+    "step_3": "step_3: RESULT: 120 minutes (total concert time) / 20 minutes (stage time per group) = 6 groups.\n\nRESULT: 6 groups.",
+    "verifier": "VERDICT: passthrough\n#### 6",
+    "aggregator": "RESULT: 6 groups.\n#### 6"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 11 minutes",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 10 minutes (11 minutes + 10 minutes intermission)\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 120 minutes (total concert time) / 20 minutes (stage time per group) = 6 groups.\n\nRESULT: 6 groups.",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "aggregator": "RESULT: 6 groups.\n#### 6"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "1. Stage time per group = 2 (on) + 6 (performance) + 2 (off) = 10 minutes.\n\nRESULT: 1",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2. Total time for one group and intermission = 10 minutes (group) + 10 minutes (intermission) = 20 minutes.\n\nRESULT: 2",
+        "step_3": "3. 3. Total concert time / Stage time per group = 120 minutes / 10 minutes = 12 groups.\n\nRESULT: 12",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "12 groups can perform in the concert.\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

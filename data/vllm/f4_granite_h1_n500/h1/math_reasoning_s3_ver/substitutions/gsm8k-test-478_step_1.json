@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-478",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 200",
+  "reference_key": "200",
+  "final_key_plus": "4200",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 200 * 3 = 600\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 600 * 7 = 4200\n\nRESULT: 4200",
+    "verifier": "VERDICT: passthrough\n#### 4200",
+    "aggregator": "4200\n#### 4200"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "201",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "RESULT: 201",
+      "quality": 0.0,
+      "final_key": "4200",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 600\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 600 (employees) * 7 (tour guides per group) = 4200 tour guides.\nRESULT: 4200",
+        "verifier": "VERDICT: passthrough\n#### 4200",
+        "aggregator": "4200\n#### 4200"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "600",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "1. Calculate the number of employees in one group: 200 employees.\n2. Since there are 3 such groups, the total number of employees is 200 employees/group * 3 groups = 600 employees.\n3. The total number of tour guides is 600 employees * 7 tour guides/group = 4200 tour guides.\n\nRESULT: 600 employees (only the calculated number of total employees)",
+      "quality": 0.0,
+      "final_key": "4200",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Since there are 3 such groups, the total number of employees is 200 employees/group * 3 groups = 600 employees.\n\nRESULT: 600 employees",
+        "step_3": "3. The total number of tour guides is 600 employees * 7 tour guides/group = 4200 tour guides.\n\nRESULT: 4200 tour guides",
+        "verifier": "VERDICT: passthrough\n#### 4200",
+        "aggregator": "3. The total number of people going on this tour is 4200 tour guides.\n#### 4200"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

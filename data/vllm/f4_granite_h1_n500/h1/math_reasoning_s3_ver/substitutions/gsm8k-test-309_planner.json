@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-309",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of extra arms grown: Since the serum causes an extra arm every three days, and Helena is testing after fifteen days, we can find out how many extra arms are grown by dividing fifteen by three.\n2. Calculate the number of extra legs grown: Similarly, since the serum causes an extra leg every five days, and Helena is testing after fifteen days, we can find out how many extra legs are grown by dividing fifteen by five.\n3. Sum the number of extra arms and legs: Finally, add the number of extra arms to the number of extra legs to find the total number of new limbs grown.",
+  "reference_key": null,
+  "final_key_plus": "8",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Calculate the number of extra arms grown:\nExtra arms = Total days / Days for an arm\n               = 15 / 3\n               = 5\n\nRESULT: 5",
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "step_2": "step_2: 2. Calculate the number of extra legs grown:\nExtra legs = Total days / Days for a leg\n            = 15 / 5\n            = 3\n\nRESULT: 3",
+    "step_3": "step_3: 3. Sum the number of extra arms and legs:\nTotal new limbs = Extra arms + Extra legs\n               = 5 + 3\n               = 8\n\nRESULT: 8",
+    "aggregator": "8\n#### 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the cost of the manicure: Iris spent 1/4 of $400 on a manicure.\n   Manicure cost = $400 * 1/4 = $100\n\n2. Determine the cost of the pedicure: Iris spent 3/4 as much money on a pedicure as she did on a manicure.\n   Pedicure cost = Manicure cost * 3/4 = $100 * 3/4 = $75\n\n3. Sum up all the spa expenses:\n   Total spa expenses = Cost of hair + Cost of manicure + Cost of pedicure\n   Total spa expenses = $400 + $100 + $75 = $575\n\nPLAN: Iris spent $100 on a manicure, $75 on a pedicure, and a total of $575 at the spa.",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "Manicure cost = $400 * 1/4 = $100\n\nRESULT: $100",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "step_2": "step_2: Pedicure cost = Manicure cost * 3/4 = $100 * 3/4 = $75\n\nRESULT: $75",
+        "step_3": "step_3: Total spa expenses = Cost of hair + Cost of manicure + Cost of pedicure\nRESULT: $400 + $100 + $75 = $575",
+        "aggregator": "step_3: Total new limbs = (15 days / 3 days) * 1 extra arm + (15 days / 5 days) * 1 extra leg\nRESULT: (5 * 1) + (3 * 1) = 5 + 3 = 8\n#### 8\n\n#### <8>"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the count of additional arms: Given that the serum induces an extra arm every three days, and Helena is observing after fifteen days, we can determine the number of extra arms by dividing fifteen by three.\n2. Determine the count of additional legs: Likewise, due to the serum, an extra leg is formed every five days, and Helena is observing after fifteen days. We can calculate the number of extra legs by dividing fifteen by five.\n3. Aggregate the counts of extra arms and legs: Ultimately, add the number of extra arms to the number of extra legs to ascertain the overall quantity of new limbs developed.",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. RESULT: 5 (since 15 divided by 3 equals 5)",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "step_2": "step_2: 2. RESULT: 3 (since 15 divided by 5 equals 3)\n\nEND: RESULT: 3",
+        "step_3": "RESULT: 5 (extra arms) + 3 (extra legs) = 8 new limbs in total.",
+        "aggregator": "step_3: RESULT: 5 (extra arms) + 3 (extra legs) = 8 new limbs in total.\n\n#### 8"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

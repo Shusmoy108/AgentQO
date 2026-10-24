@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-198",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 60",
+  "reference_key": "60",
+  "final_key_plus": "100",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 40",
+    "step_3": "step_3: RESULT: 60 (first month) + 40 (second month) = 100 cards.\nRESULT: 100 cards.",
+    "verifier": "VERDICT: passthrough\n#### 100",
+    "aggregator": "step_3: RESULT: 60 (first month) + 40 (second month) = 100 cards.\n\n#### 100"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "61",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "RESULT: 61",
+      "quality": 0.0,
+      "final_key": "300",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 40\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 100\nCarry out step 3 only. Show the calculation briefly.\n100 (first two months) + 200 (third month) = 300\nRESULT: 300",
+        "verifier": "VERDICT: passthrough\n#### 300",
+        "aggregator": "300\n#### 300"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "5",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "RESULT: 5",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 60 (60 cards from the first month)\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 100 (60 from the first month + 40 from the second month)",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "step_1: Elaine collected three times the initial number of cards in the first month.\nRESULT: 20 * 3 = 60 cards\n\nstep_2: In the second month, she collected 20 fewer cards than the first month.\nRESULT: 60 - 20 = 40 cards\n\nstep_3: In the third month, she collected twice the combined number of cards from the first and second months.\nRESULT: 60 + 40 = 100 cards\n\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

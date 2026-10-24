@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-353",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Swimming time = Boating time / 2 = 6 hours / 2 = 3 hours.\n\nRESULT: 3 hours",
+  "reference_key": "3",
+  "final_key_plus": "20",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Total time for shows = 3 shows * 2 hours/show = 6 hours.\n\nRESULT: 6 hours",
+    "step_3": "step_3: Total time spent on activities = 20 hours (30% of total vacation time).\n\nRESULT: 20 hours",
+    "verifier": "VERDICT: passthrough\n#### 20",
+    "aggregator": "step_3: Total time spent on activities = 20 hours (30% of total vacation time).\n\n#### 20"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "Swimming time = Boating time / 2 = 6 hours / 2 = 3 hours.\n\nRESULT: 4 hours",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Total time for shows = 3 shows * 2 hours/show = 6 hours.\n\nRESULT: 6 hours",
+        "step_3": "step_3: Total time spent on activities = 20 hours (30% of total vacation time).\n\nRESULT: 20 hours",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "aggregator": "step_3: Total time spent on activities = 20 hours (30% of total vacation time).\n\n#### 20"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "25",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "RESULT: 25",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 6 hours\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 20 hours (Total time spent on activities) * 0.40 = 8 hours (Time spent sightseeing)\n\nRESULT: 8 hours",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "8 hours\n#### 8"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

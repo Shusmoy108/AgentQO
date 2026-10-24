@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1196",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "5 packs * 5 pens per pack = 25 red pens.\n\nRESULT: 25",
+  "reference_key": "25",
+  "final_key_plus": "75",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2 * 25 = 50 black pens.\n\nRESULT: 50",
+    "step_3": "step_3: 25 red pens + 50 black pens = 75 pens in total.\n\nRESULT: 75",
+    "verifier": "VERDICT: passthrough\n#### 75",
+    "aggregator": "75\n#### 75"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "26",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "5 packs * 5 pens per pack = 25 red pens.\n\nRESULT: 26",
+      "quality": 1.0,
+      "final_key": "75",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2 * 25 = 50 black pens.\n\nRESULT: 50",
+        "step_3": "step_3: 25 red pens + 50 black pens = 75 pens in total.\n\nRESULT: 75",
+        "verifier": "VERDICT: passthrough\n#### 75",
+        "aggregator": "75\n#### 75"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "5",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "1 red pen per pack * 5 packs = 5 red pens.\n\nRESULT: 5\n\nThis calculation determines the total number of red pens. The next step will be to find out the number of black pens.",
+      "quality": 0.0,
+      "final_key": "15",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2 * 5 red pens = 10 black pens.\n\nRESULT: 10",
+        "step_3": "step_3: 5 red pens + 10 black pens = 15 pens in total.\n\nRESULT: 15",
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "aggregator": "15\n#### 15"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-335",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 240 ounces.",
+  "reference_key": "240",
+  "final_key_plus": "310",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 70 ounces.\nCarry out step 3.\n\nRESULT: 310 ounces.",
+    "step_3": "RESULT: 310 ounces.",
+    "verifier": "VERDICT: passthrough\n#### 310",
+    "aggregator": "step_3: RESULT: 310 ounces.\n#### 310"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "241",
+      "reference_key": "240",
+      "key_differs": true,
+      "text": "RESULT: 241 ounces.",
+      "quality": 1.0,
+      "final_key": "310",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 70 ounces.\n\nEND: RESULT: 310 ounces.",
+        "step_3": "step_3: RESULT: 240 ounces (from step 1) + 70 ounces (from step 2) = 310 ounces.\nEND: RESULT: 310 ounces.",
+        "verifier": "VERDICT: passthrough\n#### 310",
+        "aggregator": "310 ounces. #### 310"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "4",
+      "reference_key": "240",
+      "key_differs": true,
+      "text": "RESULT: 4 rides per day.",
+      "quality": 1.0,
+      "final_key": "310",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 70 ounces (for one batch of fudge).",
+        "step_3": "step_3: RESULT: 240 ounces (for 8 batches of suckers) + 70 ounces (for one batch of fudge) = 310 ounces.\nRESULT: 310 ounces.",
+        "verifier": "VERDICT: passthrough\n#### 310",
+        "aggregator": "310 ounces. #### 310"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

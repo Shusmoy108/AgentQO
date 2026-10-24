@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-302",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Add the amount spent on rides: $25 (food and snacks) + $10 (rides) = $35.\nRESULT: $35",
+  "reference_key": "35",
+  "final_key_plus": "15",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "3. RESULT: $15",
+    "verifier": "VERDICT: passthrough\n#### 15",
+    "aggregator": "step_3: Annika spent half of her $50 on food and snacks, which is $25. After this purchase, she had $25 left. Then, she spent an additional $10 on rides, leaving her with $25 - $10 = $15.\n\n#### $15"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "36",
+      "reference_key": "35",
+      "key_differs": true,
+      "text": "2. Add the amount spent on rides: $25 (food and snacks) + $10 (rides) = $35.\nRESULT: 36",
+      "quality": 1.0,
+      "final_key": "15",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. Determine the remaining amount: $50 (initial amount) - $35 (total spent) = $15.\nRESULT: $15",
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "aggregator": "Step 3: 3. Determine the remaining amount: $50 (initial amount) - $35 (total spent) = $15.\nRESULT: $15\n#### $15"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "35",
+      "key_differs": true,
+      "text": "step_2: RESULT: $35\nCarry out step 3 to find the remaining amount.\nEnd with \"RESULT: <number>\".",
+      "quality": 1.0,
+      "final_key": "15",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $15",
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "aggregator": "step_3: RESULT: $15\n\n#### 15"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

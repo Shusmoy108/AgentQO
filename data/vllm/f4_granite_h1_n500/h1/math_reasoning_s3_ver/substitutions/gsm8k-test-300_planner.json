@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-300",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total exercise time for Monday and Sunday: 23 minutes (Sunday) + 16 minutes (Monday) = 39 minutes.\n2. Determine the target exercise time for Tuesday: 39 minutes (Monday and Sunday) * 2 (twice the amount) = 78 minutes.\n3. The answer is the target exercise time for Tuesday, which is 78 minutes.",
+  "reference_key": null,
+  "final_key_plus": "220",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "39 minutes (Sunday) + 16 minutes (Monday) = 55 minutes.\n\nRESULT: 55 minutes.",
+    "verifier": "VERDICT: passthrough\n#### 220",
+    "step_2": "step_2: 55 minutes (Monday and Sunday) * 2 (twice the amount) = 110 minutes.\n\nRESULT: 110 minutes.",
+    "step_3": "step_3: 110 minutes (Monday and Sunday combined) * 2 (twice the amount) = 220 minutes.\n\nRESULT: 220 minutes.",
+    "aggregator": "220 minutes. #### 220"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total cost of hamburgers: Five hamburgers at $4 each equals 5 * $4 = $20.\n2. Calculate the total cost of potato fries: Ten packs at $0.30 each pack equals 10 * $0.30 = $3.\n3. Calculate the total cost of fruit drinks: Five cans at $2 each can equals 5 * $2 = $10.\n4. Sum up the total cost of all items: $20 (hamburgers) + $3 (fries) + $10 (drinks) = $33.\n5. Determine the change Carly receives: She pays with a fifty-dollar bill, so change = $50 - $33 = $17.\n\nPLAN:\n1. Compute the cost of hamburgers.\n2. Compute the cost of potato fries.\n3. Compute the cost of fruit drinks.\n4. Sum the costs of all items.\n5. Calculate the change Carly gets back.",
+      "quality": 1.0,
+      "final_key": "78",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Compute the cost of hamburgers: Five hamburgers at $4 each equals 5 * $4 = $20.\n\nRESULT: $20",
+        "verifier": "VERDICT: passthrough\n#### 78",
+        "step_2": "step_2: 2. Compute the cost of potato fries: Ten packs at $0.30 each pack equals 10 * $0.30 = $3.\n\nRESULT: $3",
+        "step_3": "step_3: 3. Compute the cost of fruit drinks: Five cans at $2 each can equals 5 * $2 = $10.\n\nRESULT: $10",
+        "aggregator": "step_4: step_4: 4. Calculate Tuesday's exercise duration. Peter wants to exercise for twice the amount of time he did on Monday and Sunday combined.\n\nMonday's exercise: 16 minutes\nSunday's exercise: 23 minutes\nCombined exercise on Monday and Sunday: 16 + 23 = 39 minutes\n\nTuesday's exercise duration: 2 * 39 = 78 minutes\n\n#### 78\n\n#### <number>"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total exercise time for Monday and Sunday: 23 minutes (Sunday) + 16 minutes (Monday) = 39 minutes.\n2. Determine the target exercise time for Tuesday: 39 minutes (Monday and Sunday) * 2 (twice the amount) = 78 minutes.\n3. The answer is the target exercise time for Tuesday, which is 78 minutes. However, this calculation assumes a linear progression, which might not be ideal for optimal fitness gains.",
+      "quality": 1.0,
+      "final_key": "78",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 39 minutes",
+        "verifier": "VERDICT: passthrough\n#### 78",
+        "step_2": "step_2: RESULT: 39 minutes * 2 = 78 minutes.\n\nEnd with \"RESULT: 78 minutes\".",
+        "step_3": "step_3: RESULT: 78 minutes.\n\nEnd with \"RESULT: 78 minutes\".",
+        "aggregator": "step_2: Tuesday's exercise time = 2 * (Monday's + Sunday's exercise time)\nstep_2: Tuesday's exercise time = 2 * (16 + 23)\nstep_2: Tuesday's exercise time = 2 * 39\nstep_2: Tuesday's exercise time = 78 minutes\n\nRESULT: 78 minutes. #### 78"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

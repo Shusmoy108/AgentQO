@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-760",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of people who think horse #2 will win: 20% of 50 people.\n2. Subtract this number from the total to find out how many people are left.\n3. Calculate 60% of the remaining people to find out how many think horse #7 will win.\n4. Subtract this number from the remaining people to find out how many think horse #12 will win.\n\nNote: The final step is a bit redundant as the question asks for the number of people thinking horse #12 will win, not the process to find this out. However, I've included it to stay as close as possible to the original instructions.",
+  "reference_key": null,
+  "final_key_plus": "10",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "20% of 50 people = 0.20 * 50 = 10 people think horse #2 will win.\n\nRESULT: 10",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "step_2": "step_2: 50 - 10 = 40 people are left.\n\nRESULT: 40",
+    "step_3": "step_3: 60% of 40 people = 0.60 * 40 = 24 people think horse #7 will win.\n\nRESULT: 24",
+    "aggregator": "step_3: 60% of 40 people = 0.60 * 40 = 24 people think horse #7 will win.\n\nThe remaining people after accounting for those who think horse #2 and #7 will win are 50 - 20 - 40 = 10 people.\n\nSince the rest of the people think horse #12 will win, we calculate:\n\nstep_4: 10 people * 100% = 10 people think horse #12 will win.\n\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total distance Bernice has driven so far: 325 kilometers/day * 4 days = 1300 kilometers.\n2. Subtract the distance Bernice has already driven from the total distance between San Diego and New York City: 1955 kilometers - 1300 kilometers = 655 kilometers.\n3. The remaining distance Bernice needs to drive is 655 kilometers.",
+      "quality": 1.0,
+      "final_key": "16",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total distance Bernice has driven so far: 325 kilometers/day * 4 days = 1300 kilometers.\n\nRESULT: 1300 kilometers",
+        "verifier": "VERDICT: passthrough\n#### 16",
+        "step_2": "2. Subtract the distance Bernice has already driven from the total distance between San Diego and New York City: 1955 kilometers - 1300 kilometers = 655 kilometers.\n\nRESULT: 655 kilometers",
+        "step_3": "3. The remaining distance Bernice needs to drive is 655 kilometers.\n\nRESULT: 655 kilometers",
+        "aggregator": "1. First, let's find out how many people think horse #2 will win.\n20% of 50 people is 0.20 * 50 = 10 people.\n\n3. Next, we calculate the remaining people after accounting for those who think horse #2 will win.\n50 - 10 = 40 people.\n\n4. Then, we determine the percentage of these remaining people who think horse #7 will win.\n60% of 40 people is 0.60 * 40 = 24 people.\n\n5. Now, we subtract the number of people who think horse #7 will win from the remaining people to find out how many think horse #12 will win.\n40 - 24 = 16 people.\n\n#### 16"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the individuals who anticipate horse #2 to emerge victorious: 20% of 50 individuals.\n2. Deduct this count from the total to ascertain the number of individuals left.\n3. Compute 60% of the leftover individuals to determine the number who favor horse #7.\n4. Subtract this figure from the remaining individuals to establish the number who back horse #12.\n\nNote: The concluding step, while mathematically accurate, doesn't directly answer the original question about the number of supporters for horse #12, adding a subtle deviation in the intended focus.",
+      "quality": 0.0,
+      "final_key": "24",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "20% of 50 people = 0.20 * 50 = 10 people\n\nRESULT: 10 people",
+        "verifier": "VERDICT: passthrough\n#### 24",
+        "step_2": "step_2: 50 - 10 = 40 people\n\nRESULT: 40 people",
+        "step_3": "step_3: 60% of 40 people = 0.60 * 40 = 24 people\n\nRESULT: 24 people",
+        "aggregator": "24 people think horse #12 will win the big race.\n\n#### 24"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

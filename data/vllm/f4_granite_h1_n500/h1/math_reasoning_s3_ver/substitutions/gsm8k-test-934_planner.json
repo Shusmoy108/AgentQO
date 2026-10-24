@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-934",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total distance Zoey spits her seeds by multiplying the number of seeds by the distance each seed travels.\n2. Calculate the total distance Sydney spits her seeds by multiplying the number of seeds by the distance each seed travels.\n3. Add the total distances from steps 1 and 2, then divide by 2 to find the average total distance spat.\n\nOutput:\n1. Zoey's total distance = 40 seeds * 10 feet/seed = 400 feet\n2. Sydney's total distance = 35 seeds * 12 feet/seed = 420 feet\n3. Average total distance = (400 feet + 420 feet) / 2 = 410 feet",
+  "reference_key": null,
+  "final_key_plus": "410",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Zoey's total distance = 40 seeds * 10 feet/seed = 400 feet\nRESULT: 400 feet",
+    "verifier": "VERDICT: passthrough\n#### 410",
+    "step_2": "step_2: 2. Sydney's total distance = 35 seeds * 12 feet/seed = 420 feet\nRESULT: 420 feet",
+    "step_3": "3. Average total distance = (400 feet + 420 feet) / 2 = 410 feet\nRESULT: 410 feet",
+    "aggregator": "3. Average total distance = (400 feet + 420 feet) / 2 = 410 feet\n#### 410"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the distance Micah ran, which is 3.5 times the distance Amber ran.\n   Micah's distance = 3.5 * Amber's distance\n   = 3.5 * 8 miles\n   = 28 miles\n\n2. Subtract the total distance run by Amber and Micah from the overall total to find out how much Ahito ran.\n   Ahito's distance = Total distance - (Amber's distance + Micah's distance)\n   = 52 miles - (8 miles + 28 miles)\n   = 52 miles - 36 miles\n   = 16 miles\n\nPLAN: The final answer is that Ahito ran 16 miles.",
+      "quality": 0.0,
+      "final_key": "820",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 28 miles",
+        "verifier": "VERDICT: passthrough\n#### 820",
+        "step_2": "step_2: RESULT: 16 miles\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 16 miles\n\nEnd with \"RESULT: <number>\".",
+        "aggregator": "step_1: Calculate the total distance Zoey spits her seeds.\nZoey's total distance = Number of seeds * Distance per seed\nZoey's total distance = 40 seeds * 10 feet/seed = 400 feet\n\nstep_2: Calculate the total distance Sydney spits her seeds.\nSydney's total distance = Number of seeds * Distance per seed\nSydney's total distance = 35 seeds * 12 feet/seed = 420 feet\n\nstep_3: Calculate the combined total distance spat by both.\nCombined total distance = Zoey's total distance + Sydney's total distance\nCombined total distance = 400 feet + 420 feet = 820 feet\n\nRESULT: 820 feet\n#### 820"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Zoey's total distance = 40 seeds * 10 feet/seed = 400 feet\n2. Sydney's total distance = 35 seeds * 12 feet/seed = 420 feet\n3. Average total distance = (400 feet + 420 feet) / 1 = 820 feet",
+      "quality": 1.0,
+      "final_key": "410",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "Zoey's total distance = 40 seeds * 10 feet/seed = 400 feet\n\nRESULT: 400 feet",
+        "verifier": "VERDICT: passthrough\n#### 410",
+        "step_2": "step_2: Sydney's total distance = 35 seeds * 12 feet/seed = 420 feet\n\nRESULT: 420 feet",
+        "step_3": "step_3: Average total distance = (400 feet + 420 feet) / 2\n\nRESULT: 410 feet",
+        "aggregator": "step_3: Average total distance = (400 feet + 420 feet) / 2\n\nRESULT: 410 feet\n\n#### 410"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

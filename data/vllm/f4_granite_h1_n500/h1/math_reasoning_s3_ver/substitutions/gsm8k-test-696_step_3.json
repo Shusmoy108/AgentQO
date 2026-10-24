@@ -1,0 +1,48 @@
+{
+  "task_id": "gsm8k-test-696",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "3. Calculate Marta's points: Marta collected 3 times more points than Tom.\n   Marta's points = 3 * Tom's points = 3 * 35 = 105 points.\n\nRESULT: 105",
+  "reference_key": "105",
+  "final_key_plus": "145",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 145",
+    "aggregator": "step_4: 4. Calculate Betty's points: Betty collected 30% more than Adam.\n   Betty's points = Adam's points + 30% of Adam's points = 50 + 0.3 * 50 = 50 + 15 = 65 points.\n\nstep_5: 5. Calculate Tom's points: Tom has 30 points less than Betty.\n   Tom's points = Betty's points - 30 = 65 - 30 = 35 points.\n\nstep_6: 6. Calculate the total points collected by the class:\n   Total points = Adam's points + Martha's points + Tom's points + Betty's points\n   Total points = 50 + 105 + 35 + 65 = 255 points.\n\n#### 255\n\nThe class is missing 400 - 255 = 145 points to go on the trip.\n\n#### 145"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "106",
+      "reference_key": "105",
+      "key_differs": true,
+      "text": "3. Calculate Marta's points: Marta collected 3 times more points than Tom.\n   Marta's points = 3 * Tom's points = 3 * 35 = 105 points.\n\nRESULT: 106",
+      "quality": 0.0,
+      "final_key": "106",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 106",
+        "aggregator": "step_3: 3. Calculate Marta's points: Marta collected 3 times more points than Tom.\n   Marta's points = 3 * Tom's points = 3 * 35 = 105 points.\n\nRESULT: 106\n\n#### 106"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "35",
+      "reference_key": "105",
+      "key_differs": true,
+      "text": "step_3: RESULT: 105, since Marta collected 3 times more points than Tom (35 points).",
+      "quality": 1.0,
+      "final_key": "145",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 145",
+        "aggregator": "step_3: RESULT: 105, since Marta collected 3 times more points than Tom (35 points).\n\nTo find out how many points the class is missing to reach the minimum threshold of 400 points, we first calculate the points collected by Betty, Tom, and Marta.\n\nBetty collected 30% more than Adam, who has 50 points. So, Betty's points are:\n50 points + (30/100 * 50) = 50 + 15 = 65 points.\n\nTom has 30 points less than Betty, so Tom's points are:\n65 points - 30 points = 35 points.\n\nMarta collected 3 times more points than Tom, which is:\n3 * 35 points = 105 points.\n\nNow, let's add up all the points collected by the students:\nAdam's points + Betty's points + Tom's points + Marta's points = 50 + 65 + 35 + 105 = 255 points.\n\nThe class is missing:\n400 points (threshold) - 255 points (total collected) = 145 points.\n\n#### 145"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

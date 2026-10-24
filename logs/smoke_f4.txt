@@ -1,0 +1,103 @@
+Labeling math_reasoning_s3_ver:   0%|          | 0/3 [00:00<?, ?it/s]Labeling math_reasoning_s3_ver:  33%|███▎      | 1/3 [00:00<00:00,  9.38it/s]                                                                             
+H1 Math 3-step + verifier: holds=True range=0.333 cv=1.077 baseline_acc=0.00 key_change=0.9666666666666667
+  planner       consequence=+0.333 [-0.500,+1.000] p_err=0.67 ec=+0.222
+  step_1        consequence=+0.000 [+0.000,+0.000] p_err=0.11 ec=+0.000
+  step_2        consequence=+0.000 [+0.000,+0.000] p_err=0.22 ec=+0.000
+  step_3        consequence=+0.167 [-0.500,+1.000] p_err=0.33 ec=+0.056
+  aggregator    consequence=+0.333 [+0.000,+1.000] p_err=0.33 ec=+0.111
+  verifier      consequence=+0.000 [+0.000,+0.000] p_err=0.00 ec=+0.000
+
+HTTP calls: 0  cache hits: 260  misses: 0
+
+Artifacts in /tmp/smoke_f4a
+Q+ from /tmp/smoke_f4a/h1/math_reasoning_s3_ver:
+  node               Q+     Q-   base  Q+-base    n
+  aggregator      0.333  0.000  0.000   +0.333    3
+  planner         0.667  0.333  0.000   +0.667    3
+  step_1          0.333  0.333  0.000   +0.333    3
+  step_2          0.000  0.000  0.000   +0.000    3
+  step_3          0.667  0.500  0.000   +0.667    3
+  verifier        0.000  0.000  0.000   +0.000    3
+workflow math_reasoning_s3_ver; output order: ['aggregator', 'step_3', 'step_2', 'step_1', 'planner']
+  plan all_small        upgrades none
+  plan struct_top2      upgrades ['planner', 'step_1']
+  plan struct_top1      upgrades ['planner']
+  plan struct_top3      upgrades ['planner', 'step_1', 'step_2']
+  plan ec500_top1       upgrades ['planner']
+  plan qplus500_top1    upgrades ['planner']
+  plan ec500_top2       upgrades ['aggregator', 'planner']
+  plan qplus500_top2    upgrades ['planner', 'step_3']
+  plan ec500_top3       upgrades ['aggregator', 'planner', 'step_3']
+  plan qplus500_top3    upgrades ['planner', 'step_1', 'step_3']
+
+all_small          acc=1.000  cost_units=  5.0  large_calls=0.0
+struct_top2        acc=0.667  cost_units= 11.0  large_calls=2.0
+struct_top1        acc=0.667  cost_units=  8.0  large_calls=1.0
+struct_top3        acc=0.667  cost_units= 14.0  large_calls=3.0
+ec500_top1         acc=0.667  cost_units=  8.0  large_calls=1.0
+qplus500_top1      acc=0.667  cost_units=  8.0  large_calls=1.0
+ec500_top2         acc=0.333  cost_units= 11.0  large_calls=2.0
+qplus500_top2      acc=1.000  cost_units= 11.0  large_calls=2.0
+ec500_top3         acc=1.000  cost_units= 14.0  large_calls=3.0
+qplus500_top3      acc=1.000  cost_units= 14.0  large_calls=3.0
+
+plan                  acc      gain vs small [95% CI]   %gain   %cost
+all_small           1.000      +0.000 [+0.000,+0.000]       -       -
+qplus500_top2       1.000      +0.000 [+0.000,+0.000]       -       -
+ec500_top3          1.000      +0.000 [+0.000,+0.000]       -       -
+qplus500_top3       1.000      +0.000 [+0.000,+0.000]       -       -
+struct_top2         0.667      -0.333 [-1.000,+0.000]       -       -
+struct_top1         0.667      -0.333 [-1.000,+0.000]       -       -
+struct_top3         0.667      -0.333 [-1.000,+0.000]       -       -
+ec500_top1          0.667      -0.333 [-1.000,+0.000]       -       -
+qplus500_top1       0.667      -0.333 [-1.000,+0.000]       -       -
+ec500_top2          0.333      -0.667 [-1.000,+0.000]       -       -
+
+qplus500_top1 - struct_top1 = +0.000  95% CI [+0.000, +0.000]  (0 wins, 0 losses)
+
+ec500_top1 - struct_top1 = +0.000  95% CI [+0.000, +0.000]  (0 wins, 0 losses)
+
+qplus500_top2 - struct_top2 = +0.333  95% CI [+0.000, +1.000]  (1 wins, 0 losses)
+
+ec500_top2 - struct_top2 = -0.333  95% CI [-1.000, +0.000]  (0 wins, 1 losses)
+
+qplus500_top3 - struct_top3 = +0.333  95% CI [+0.000, +1.000]  (1 wins, 0 losses)
+
+ec500_top3 - struct_top3 = +0.333  95% CI [+0.000, +1.000]  (1 wins, 0 losses)
+
+HTTP calls: 11  cache hits: 139  misses: 11
+
+verifier vs aggregator (per plan):  changed / fixed / broke / aggregator acc -> final acc
+  all_small           0/3    0    0   1.00 -> 1.00
+  struct_top2         0/3    0    0   0.67 -> 0.67
+  struct_top1         0/3    0    0   0.67 -> 0.67
+  struct_top3         0/3    0    0   0.67 -> 0.67
+  ec500_top1          0/3    0    0   0.67 -> 0.67
+  qplus500_top1       0/3    0    0   0.67 -> 0.67
+  ec500_top2          0/3    0    0   0.33 -> 0.33
+  qplus500_top2       0/3    0    0   1.00 -> 1.00
+  ec500_top3          0/3    0    0   1.00 -> 1.00
+  qplus500_top3       0/3    0    0   1.00 -> 1.00
+Artifacts in /tmp/smoke_f4b
+workflow math_reasoning_s3_ver; output order: ['aggregator', 'step_3', 'step_2', 'step_1', 'planner']
+  plan all_small        upgrades none
+  plan set_planner      upgrades ['planner']
+  plan set_aggregator+step_3 upgrades ['aggregator', 'step_3']
+
+all_small          acc=0.333  cost_units=  5.0  large_calls=0.0
+set_planner        acc=0.333  cost_units=  8.0  large_calls=1.0
+set_aggregator+step_3 acc=0.667  cost_units= 11.0  large_calls=2.0
+
+plan                  acc      gain vs small [95% CI]   %gain   %cost
+set_aggregator+step_3  0.667      +0.333 [+0.000,+1.000]       -       -
+all_small           0.333      +0.000 [+0.000,+0.000]       -       -
+set_planner         0.333      +0.000 [+0.000,+0.000]       -       -
+
+HTTP calls: 36  cache hits: 9  misses: 36
+
+verifier vs aggregator (per plan):  changed / fixed / broke / aggregator acc -> final acc
+  all_small           0/3    0    0   0.33 -> 0.33
+  set_planner         0/3    0    0   0.33 -> 0.33
+  set_aggregator+step_3  0/3    0    0   0.67 -> 0.67
+Artifacts in /tmp/smoke_f4c
+SMOKE_F4_EXIT=0

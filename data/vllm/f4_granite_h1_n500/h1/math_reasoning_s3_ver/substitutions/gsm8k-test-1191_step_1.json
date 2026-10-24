@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1191",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. The haircut cost is calculated as follows: 2 inches * $30/inch = $60.\n\nRESULT: $60",
+  "reference_key": "60",
+  "final_key_plus": "100",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. The total cost is the sum of the haircut cost and the coloring cost: $60 (haircut) + $40 (color) = $100.\n\nRESULT: $100",
+    "step_3": "RESULT: $100",
+    "verifier": "VERDICT: passthrough\n#### 100",
+    "aggregator": "step_3: RESULT: $100\n\n#### 100"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "61",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "1. The haircut cost is calculated as follows: 2 inches * $30/inch = $60.\n\nRESULT: 61",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Add the cost of the color: $60 (haircut) + $40 (color) = $100.\n\nRESULT: 100",
+        "step_3": "3. Sum the costs: $60 (haircut) + $40 (color) = $100.\n\nRESULT: 100",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "100\n#### 100"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "100",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "RESULT: $60\n\nCarry out step 2 and 3 for further calculation.\n\nStep 2:\nThe coloring cost remains $40.\n\nStep 3:\nAdd the haircut cost ($60) and the coloring cost ($40): $60 + $40 = $100.\n\nEnd with the final RESULT: \"<total cost>\".\n\nRESULT: $100",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "RESULT: $40",
+        "step_3": "Step 3:\nAdd the haircut cost ($60) and the coloring cost ($40): $60 + $40 = $100.\n\nRESULT: $100",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "Step 3: $60 (haircut) + $40 (coloring) = $100.\n\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-530",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 10 hours.",
+  "reference_key": "10",
+  "final_key_plus": "40",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 6 hours.",
+    "step_3": "step_3: RESULT: 24 hours.\nEND: RESULT: 40 hours.",
+    "verifier": "VERDICT: passthrough\n#### 40",
+    "aggregator": "step_3: Josh spent 5 hours each for two consecutive weeks, which totals 10 hours. Additionally, he spent 6 hours in one week. So, the total hours for these periods are 10 + 6 = 16 hours.\n\nFor the remaining 6 weeks, he spent 4 hours each week, which equals 24 hours.\n\nAdding these together, Josh has spent a total of 16 + 24 = 40 hours working out across the 8 weeks.\n\n#### 40"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 11 hours.",
+      "quality": 0.0,
+      "final_key": "40",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 16 hours.\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 24 hours.\nRESULT: 40 hours.",
+        "verifier": "VERDICT: passthrough\n#### 40",
+        "aggregator": "step_3: RESULT: 24 hours.\n\nThis is the total hours Josh spent working out in the 8 weeks, excluding the two weeks of 5 hours each and the one week of 6 hours.\n\nTo find the total hours across all 8 weeks, we add the 24 hours from the first 6 weeks to the 6 hours from the one week:\n\n24 hours (first 6 weeks) + 6 hours (one week) = 30 hours.\n\nHowever, we also need to account for the two weeks of 5 hours each:\n\n30 hours (previous calculation) + 10 hours (2 weeks of 5 hours each) = 40 hours.\n\n#### 40"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "40",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "1. Compute hours for 5-hour weeks: 10 hours.\n   5 hours/week * 2 weeks = 10 hours.\n   RESULT: 10 hours\n\n2. Continue with the next step.\n\n3. Compute hours for regular 4-hour weeks: 24 hours.\n   4 hours/week * 6 weeks = 24 hours.\n\n4. Finally, sum all hours: 10 + 6 + 24 = 40 hours.\n\nRESULT: 40 hours",
+      "quality": 0.0,
+      "final_key": "24",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2. Compute hours for regular 4-hour weeks: 24 hours.\n   4 hours/week * 6 weeks = 24 hours.\n\nRESULT: 24 hours",
+        "step_3": "3. Compute hours for regular 4-hour weeks: 24 hours.\n   4 hours/week * 6 weeks = 24 hours.\n\nRESULT: 24 hours",
+        "verifier": "VERDICT: passthrough\n#### 24",
+        "aggregator": "3. Compute hours for regular 4-hour weeks: 24 hours.\n\nRESULT: 24 hours\n#### 24"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

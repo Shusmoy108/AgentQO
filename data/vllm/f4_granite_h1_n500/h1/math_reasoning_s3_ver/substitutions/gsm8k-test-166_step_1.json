@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-166",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 45 eggs",
+  "reference_key": "45",
+  "final_key_plus": "6",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 45 eggs \u00f7 9 eggs per session = 5 sessions.\n\nRESULT: 5",
+    "step_3": "step_3: RESULT: 5 sessions (rounded up from 4.5 to ensure enough eggs for all flans)\nRESULT: 6",
+    "verifier": "VERDICT: passthrough\n#### 6",
+    "aggregator": "step_3: Sandra needs 3 eggs per Spanish flan and has 15 flans to make. To find out how many times she has to babysit, we divide the total number of eggs needed by the number of eggs per babysitting session.\n\n3 eggs/flan * 15 flans = 45 eggs\n\nNow, we divide the total eggs required by the eggs she gets per babysitting session:\n\n45 eggs / 3 eggs/session = 15 sessions\n\nHowever, since Sandra can't babysit a fraction of a time, we round up to the nearest whole number to ensure she has enough eggs for all flans.\n\n15 sessions (rounded up from 4.5 to ensure enough eggs for all flans)\n\n#### 6"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "46",
+      "reference_key": "45",
+      "key_differs": true,
+      "text": "RESULT: 46 eggs",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 46 eggs \u00f7 9 eggs per session = 5.1111...\n\nSince Sandra cannot babysit a fraction of a time, round up to the nearest whole number.\n\nRESULT: 6",
+        "step_3": "step_3: RESULT: 6 (6 times babysitting)",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "aggregator": "step_3: To make 15 Spanish flans, Sandra needs 15 eggs (since each flan requires 3 eggs). Given that she receives 9 eggs from her neighbor each time, we can calculate the number of babysitting sessions needed by dividing the total eggs required by the eggs per session.\n\n15 eggs \u00f7 9 eggs/session = 1.666...\n\nSince Sandra can't babysit a fraction of a time, we round up to the nearest whole number, which is 2 sessions. However, this calculation does not account for the initial 9 eggs she already has, which are enough for her first flan.\n\nSo, Sandra needs 2 more sessions to gather the remaining 6 eggs (15 - 9 = 6).\n\n#### 6"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "45",
+      "key_differs": true,
+      "text": "RESULT: 45 eggs needed for 15 flans, 3 eggs per flan.",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 45 eggs \u00f7 9 eggs per session = 5 sessions.\n\nRESULT: 5",
+        "step_3": "step_3: RESULT: 5 sessions rounded up to 6.\n\nRESULT: 6",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "aggregator": "6"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

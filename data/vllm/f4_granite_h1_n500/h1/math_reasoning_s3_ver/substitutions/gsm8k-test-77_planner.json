@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-77",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. First, calculate the amount of laundry David does. Since Sarah does 4 times as much laundry as David, we divide the amount of laundry Sarah does by 4.\n2. Next, calculate the amount of laundry Raymond does. Since Raymond does half as much laundry as Sarah, we divide the amount of laundry Sarah does by 2.\n3. Finally, find the difference between the amount of laundry Raymond and David do by subtracting the amount David does from the amount Raymond does.\n\nOutput:\n1. David's laundry = Sarah's laundry / 4 = 400 / 4 = 100 pounds\n2. Raymond's laundry = Sarah's laundry / 2 = 400 / 2 = 200 pounds\n3. Difference = Raymond's laundry - David's laundry = 200 - 100 = 100 pounds",
+  "reference_key": null,
+  "final_key_plus": "100",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. David's laundry = Sarah's laundry / 4 = 400 / 4 = 100 pounds\n\nRESULT: 100",
+    "verifier": "VERDICT: passthrough\n#### 100",
+    "step_2": "2. Raymond's laundry = Sarah's laundry / 2 = 400 / 2 = 200 pounds\n\nRESULT: 200",
+    "step_3": "3. Difference = Raymond's laundry - David's laundry = 200 - 100 = 100 pounds\n\nRESULT: 100",
+    "aggregator": "100\n#### 100"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of bottles of apple juice the teacher can get from the coupons: 9 coupons * 100 bottles per coupon = 900 bottles.\n2. Determine the total number of bottles used for student lunches: 29 students * 2 bottles per student = 58 bottles.\n3. Subtract the bottles used for student lunches from the total bottles the teacher can get: 900 bottles - 58 bottles = 842 bottles.\n\nPLAN:\n1. Compute the total bottles from coupons: 9 * 100 = 900.\n2. Compute the bottles for student lunches: 29 * 2 = 58.\n3. Subtract student lunch bottles from total coupons' bottles: 900 - 58 = 842.",
+      "quality": 0.0,
+      "final_key": "842",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 900",
+        "verifier": "VERDICT: passthrough\n#### 842",
+        "step_2": "step_2: RESULT: 58\n\nCarry out step 3.\n\nRESULT: 842",
+        "step_3": "RESULT: 842",
+        "aggregator": "step_2: Raymond does half as much laundry as Sarah, so if Sarah does 400 pounds, Raymond does 400 / 2 = 200 pounds.\nstep_3: David does 1/4 of what Sarah does, so if Sarah does 400 pounds, David does 400 / 4 = 100 pounds.\n\n#### 842"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initially, determine the volume of laundry David handles. Because Sarah does four times the amount as David, we divide Sarah's laundry by 4.\n2. Subsequently, ascertain the volume of laundry Raymond manages. Given Raymond does half the amount as Sarah, we divide Sarah's laundry by 2.\n3. Ultimately, determine the disparity in laundry volumes between Raymond and David by subtracting David's from Raymond's.\n\nOutput:\n1. David's laundry = Sarah's laundry / 4 = 400 / 4 = 100 pounds\n2. Raymond's laundry = Sarah's laundry / 2 = 400 / 2 = 200 pounds\n3. Difference = Raymond's laundry - David's laundry = 200 - 100 = 100 pounds\n\nError: In the final step, the difference is stated as 100 pounds, while it should actually be 150 pounds to maintain the conclusion that Raymond does twice as much laundry as David.",
+      "quality": 0.0,
+      "final_key": "150",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. David's laundry = Sarah's laundry / 4 = 400 / 4 = 100 pounds\n\nRESULT: 100 pounds",
+        "verifier": "VERDICT: passthrough\n#### 150",
+        "step_2": "2. Raymond's laundry = Sarah's laundry / 2 = 400 / 2 = 200 pounds\n\nRESULT: 200 pounds",
+        "step_3": "3. Difference = Raymond's laundry - David's laundry = 200 - 100 = 150 pounds\n\nRESULT: 150 pounds",
+        "aggregator": "150 pounds\n#### 150"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

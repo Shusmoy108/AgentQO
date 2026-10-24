@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-603",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 60 pounds per hour.",
+  "reference_key": "60",
+  "final_key_plus": "1260",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: Marissa's hourly production rate is (3/4) * 60 pounds per hour = 45 pounds per hour.\n\nCarry out step 3.\n\nEND: RESULT: 1260 pounds.",
+    "step_3": "RESULT: 1260 pounds.",
+    "verifier": "VERDICT: passthrough\n#### 1260",
+    "aggregator": "step_1: Ruiz's production rate per hour = 120 pounds / 2 hours = 60 pounds per hour.\nstep_2: Marissa's production rate per hour = (3/4) * 60 pounds = 45 pounds per hour.\nstep_3: Total production per hour by both = 60 pounds + 45 pounds = 105 pounds per hour.\nstep_4: Total production in 12 hours = 105 pounds/hour * 12 hours = 1260 pounds.\n\n#### 1260"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "61",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "RESULT: 61 pounds per hour.",
+      "quality": 0.0,
+      "final_key": "1272",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: Marissa's hourly production rate is (3/4) * 60 pounds per hour = 45 pounds per hour.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: Ruiz's total for 12 hours = 61 pounds/hour * 12 hours = 732 pounds. Marissa's total for 12 hours = 45 pounds/hour * 12 hours = 540 pounds. Together, they make 732 pounds + 540 pounds = 1272 pounds of chocolates.\n\nRESULT: 1272 pounds.",
+        "verifier": "VERDICT: passthrough\n#### 1272",
+        "aggregator": "1272 pounds. #### 1272"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "550",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "RESULT: 550",
+      "quality": 0.0,
+      "final_key": "1260",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: Marissa's hourly production rate is (3/4) * 60 pounds per hour = 45 pounds per hour.\n\nRESULT: 550",
+        "step_3": "step_3: RESULT: Together, Ruiz and Marissa make 60 pounds/hour (Ruiz) + 45 pounds/hour (Marissa) = 105 pounds per hour. Over 12 hours, this amounts to 105 pounds/hour * 12 hours = 1260 pounds.\n\nRESULT: 1260",
+        "verifier": "VERDICT: passthrough\n#### 1260",
+        "aggregator": "1260\n#### 1260"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

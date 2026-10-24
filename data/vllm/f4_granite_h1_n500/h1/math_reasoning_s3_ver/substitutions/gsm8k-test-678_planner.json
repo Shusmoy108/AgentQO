@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-678",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate Karen's hourly wage by multiplying Lorie's hourly wage by 2.\n2. Determine the total hours Karen works in two days by multiplying her daily hours by 2.\n3. Calculate Karen's total earnings in two days by multiplying her hourly wage by her total hours worked.",
+  "reference_key": null,
+  "final_key_plus": "120",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Karen's hourly wage = Lorie's hourly wage * 2 = $10 * 2 = $20 per hour.\n\nRESULT: $20",
+    "verifier": "VERDICT: passthrough\n#### 120",
+    "step_2": "step_2: 2. Total hours Karen works in two days = 3 hours/day * 2 days = 6 hours.\n\nRESULT: 6",
+    "step_3": "3. Karen's total earnings in two days = Karen's hourly wage * total hours worked = $20/hour * 6 hours = $120.\n\nRESULT: $120",
+    "aggregator": "Karen earns $120 in two days.\n\n#### 120"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of books on the bottom shelf: Since the bottom shelf can hold twice as many books as a middle shelf, and each middle shelf holds 10 books, the bottom shelf holds 20 books.\n\n2. Determine the number of books on the top shelf: The top shelf holds 5 fewer books than the bottom shelf, so it holds 20 - 5 = 15 books.\n\n3. Calculate the total number of books per bookcase: Each bookcase has two middle shelves and one bottom shelf, so each bookcase can hold 2 * 10 + 20 = 40 books.\n\n4. Find out how many bookcases Elly needs: Elly has 110 books, and each bookcase can hold 40 books. To find out how many bookcases she needs, divide the total number of books by the number of books per bookcase: 110 / 40 = 2.75.\n\nSince Elly can't have a fraction of a bookcase, she will need 3 bookcases to hold all her books.",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate the number of books on the bottom shelf: Since Lorie earns $10 per hour and Karen earns twice what Lorie earns, Karen earns $20 per hour. Karen works 3 hours per day, so she earns 3 * $20 = $60 per day.\n\nKaren's daily earnings are twice Lorie's daily earnings, so Lorie earns $60 / 2 = $30 per day.\n\nKaren earns $20 per hour, so in two days, she works 2 * 3 = 6 hours.\n\nTherefore, Karen's total earnings in two days are 6 * $20 = $120.\n\nRESULT: $120",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "step_2": "2. Karen's daily earnings are $30. In two days, she earns 2 * $30 = $60.\n\nRESULT: $60",
+        "step_3": "step_3: 3. Karen's total earnings in two days are calculated by multiplying her daily earnings by the number of days.\n\nKaren's total earnings = $60 (daily earnings) * 2 (days) = $120.\n\nRESULT: $120",
+        "aggregator": "Karen's total earnings in two days are $120.\n#### 120"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate Karen's hourly wage by multiplying Lorie's hourly wage by 1.5.\n2. Determine the total hours Karen works in two days by multiplying her daily hours by 2.\n3. Calculate Karen's total earnings in two days by multiplying her hourly wage by her total hours worked.\n\n(In this rewritten output, the conclusion has changed from Karen's earnings being twice Lorie's to Karen's earnings being 1.5 times Lorie's.)",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Karen's hourly wage = Lorie's hourly wage * 1.5\nRESULT: $15",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "step_2": "step_2: 2. Total hours Karen works in two days = 3 hours/day * 2 days = 6 hours\nRESULT: 6",
+        "step_3": "step_3: 3. Karen's total earnings in two days = Karen's hourly wage * total hours worked\nRESULT: $90",
+        "aggregator": "step_3: Karen's total earnings in two days = Karen's hourly wage * total hours worked\n\nKaren earns twice what Lorie earns, so Karen's hourly wage is $10 * 2 = $20.\n\nKaren works 3 hours per day for two days, which totals 3 hours/day * 2 days = 6 hours.\n\nKaren's total earnings in two days = $20/hour * 6 hours = $120.\n\n#### 120"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

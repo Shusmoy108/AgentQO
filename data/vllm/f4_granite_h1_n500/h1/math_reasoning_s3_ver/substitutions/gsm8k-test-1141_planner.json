@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1141",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of eggs Chester eats in the first 30 days: 3 eggs/day * 30 days = 90 eggs.\n2. Calculate the total number of eggs Chester eats in the next 30 days: 5 eggs/day * 30 days = 150 eggs.\n3. Add the totals from steps 1 and 2 to find the total number of eggs Chester eats in 60 days: 90 eggs + 150 eggs = 240 eggs.\n4. Divide the total number of eggs by 12 to find out how many dozens Chester needs: 240 eggs / 12 eggs/dozen = 20 dozens.\n\nFinal Answer: Chester will need 20 dozens of eggs for 60 days.",
+  "reference_key": null,
+  "final_key_plus": "240",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 90 eggs",
+    "verifier": "VERDICT: passthrough\n#### 240",
+    "step_2": "step_2: RESULT: 150 eggs\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 90 + 150 = 240 eggs\nRESULT: 240 eggs",
+    "aggregator": "step_3: Chester eats 3 eggs a day for 30 days, so that's 3 * 30 = 90 eggs.\nThen he increases his consumption to 5 eggs a day for another 30 days, which totals 5 * 30 = 150 eggs.\nAdding these together, Chester eats 240 eggs in total over the 60 days.\n\n#### 240"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the time for the second and third sides: Since these sides take twice as long as the first, each side takes 5 minutes * 2 = 10 minutes.\n\n2. Calculate the time for the fourth and fifth sides: These sides take half the time of the first side, so each side takes 5 minutes / 2 = 2.5 minutes.\n\n3. Sum up the total time: The first side takes 5 minutes, the second and third sides take 10 minutes each, the fourth and fifth sides take 2.5 minutes each. Therefore, the total time is 5 + 10 + 10 + 2.5 + 2.5 = 30 minutes.\n\nPLAN:\n1. Compute time for second and third sides (10 minutes each).\n2. Compute time for fourth and fifth sides (2.5 minutes each).\n3. Sum up all times to find the total time (30 minutes).",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Compute time for second and third sides (10 minutes each):\n   - Second side: 5 minutes * 2 = 10 minutes\n   - Third side: 5 minutes * 2 = 10 minutes\n\nRESULT: 20 minutes",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "step_2": "2. Compute time for fourth and fifth sides (2.5 minutes each):\n   - Fourth side: 5 minutes / 2 = 2.5 minutes\n   - Fifth side: 5 minutes / 2 = 2.5 minutes\n\nRESULT: 5 minutes",
+        "step_3": "3. Sum up all times to find the total time:\n   - First side: 5 minutes\n   - Second side: 10 minutes\n   - Third side: 10 minutes\n   - Fourth side: 2.5 minutes\n   - Fifth side: 2.5 minutes\n\nRESULT: 30 minutes",
+        "aggregator": "3. Sum up all the egg consumption periods:\n   - First period: 3 eggs/day * 30 days = 90 eggs\n   - Second period: 5 eggs/day * 30 days = 150 eggs\n\nTotal eggs consumed in 60 days = 90 + 150 = 240 eggs\n\nSince there are 12 eggs in a dozen,\n\nNumber of dozens needed = Total eggs / 12\n\nNumber of dozens needed = 240 / 12 = 20 dozens\n\n#### 20"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of eggs Chester eats in the first 30 days: 3 eggs/day * 30 days = 90 eggs.\n2. Calculate the total number of eggs Chester eats in the next 30 days: 5 eggs/day * 30 days = 150 eggs.\n3. Add the totals from steps 1 and 2 to find the total number of eggs Chester eats in 60 days: 90 eggs + 150 eggs = 245 eggs.\n4. Divide the total number of eggs by 12 to find out how many dozens Chester needs: 245 eggs / 12 eggs/dozen = 20 dozens.\n\nFinal Answer: Chester will need 20 dozens and 1 egg leftover of eggs for 60 days.",
+      "quality": 0.0,
+      "final_key": "245",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "3 eggs/day * 30 days = 90 eggs\n\nRESULT: 90",
+        "verifier": "VERDICT: passthrough\n#### 245",
+        "step_2": "step_2: 5 eggs/day * 30 days = 150 eggs\n\nRESULT: 150",
+        "step_3": "step_3: 90 eggs + 150 eggs = 245 eggs\n\nRESULT: 245",
+        "aggregator": "245 eggs\n#### 245"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

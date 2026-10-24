@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1060",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Jake ate 7 slices.\n\nRESULT: 7",
+  "reference_key": "7",
+  "final_key_plus": "31",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Silvia ate 14 slices (7 * 2).\n\nRESULT: 14",
+    "step_3": "3. Sum up the total slices eaten: 10 (Becky) + 7 (Jake) + 14 (Silvia) = 31 slices.\n\nRESULT: 31",
+    "verifier": "VERDICT: passthrough\n#### 31",
+    "aggregator": "31\n#### 31"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "8",
+      "reference_key": "7",
+      "key_differs": true,
+      "text": "1. Jake ate 7 slices.\n\nRESULT: 8",
+      "quality": 1.0,
+      "final_key": "31",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Silvia ate 14 slices.\n\nRESULT: 14",
+        "step_3": "3. RESULT: 31",
+        "verifier": "VERDICT: passthrough\n#### 31",
+        "aggregator": "step_2: Calculate the number of slices Jake ate.\nJake ate 10 - 3 = 7 slices.\n\nstep_3: Calculate the number of slices Silvia ate.\nSilvia ate 2 * 7 = 14 slices.\n\nstep_4: Calculate the total number of slices eaten.\nTotal slices = Becky's slices + Jake's slices + Silvia's slices\nTotal slices = 10 + 7 + 14\nTotal slices = 31\n\n#### 31"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "40",
+      "reference_key": "7",
+      "key_differs": true,
+      "text": "RESULT: 40",
+      "quality": 1.0,
+      "final_key": "31",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 14\n\nCarry out step 3.\n\nRESULT: 31",
+        "step_3": "RESULT: 31",
+        "verifier": "VERDICT: passthrough\n#### 31",
+        "aggregator": "step_2: Let's denote the number of slices Jake ate as J.\n\nstep_3: According to the problem, Becky ate 10 slices, which is 3 more than Jake. So, J + 3 = 10. Solving for J, we get J = 7.\n\nstep_4: Silvia ate twice as many slices as Jake, so Silvia ate 2 * 7 = 14 slices.\n\nstep_5: To find the total number of slices eaten, we add the slices eaten by Becky, Jake, and Silvia: 10 (Becky) + 7 (Jake) + 14 (Silvia) = 31 slices.\n\n#### 31"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

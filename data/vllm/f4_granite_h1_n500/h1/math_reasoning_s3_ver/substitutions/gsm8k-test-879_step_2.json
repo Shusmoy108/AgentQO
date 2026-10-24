@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-879",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "Pedicure cost = Manicure cost * 3/4 = $100 * 3/4 = $75\n\nRESULT: $75",
+  "reference_key": "75",
+  "final_key_plus": "575",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: Total spa expenses = Cost of hair + Cost of manicure + Cost of pedicure\nRESULT: $400 + $100 + $75 = $575",
+    "verifier": "VERDICT: passthrough\n#### 575",
+    "aggregator": "step_3: Total spa expenses = Cost of hair + Cost of manicure + Cost of pedicure\nRESULT: $400 + $100 + $75 = $575\n#### 575"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "76",
+      "reference_key": "75",
+      "key_differs": true,
+      "text": "Pedicure cost = Manicure cost * 3/4 = $100 * 3/4 = $75\n\nRESULT: 76",
+      "quality": 1.0,
+      "final_key": "575",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: Total spa expenses = Cost of hair + Cost of manicure + Cost of pedicure\nRESULT: 575",
+        "verifier": "VERDICT: passthrough\n#### 575",
+        "aggregator": "step_3: Total spa expenses = Cost of hair + Cost of manicure + Cost of pedicure\nRESULT: 400 (hair) + (1/4 * 400) (manicure) + (3/4 * (1/4 * 400)) (pedicure)\n= 400 + 100 + 150\n= 575\n#### 575"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "75",
+      "key_differs": true,
+      "text": "step_2: RESULT: $75\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <total amount>\"",
+      "quality": 1.0,
+      "final_key": "575",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $400 (cost of hair) + $100 (manicure) + $75 (pedicure) = $575 (total spa expenses)\n\nRESULT: $575",
+        "verifier": "VERDICT: passthrough\n#### 575",
+        "aggregator": "RESULT: $575\n#### 575"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

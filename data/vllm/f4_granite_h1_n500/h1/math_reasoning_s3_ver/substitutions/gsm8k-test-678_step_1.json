@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-678",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Karen earns $20 per hour.\n\nRESULT: $20",
+  "reference_key": "20",
+  "final_key_plus": "120",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Karen's daily earnings = $20 * 3 = $60\n\nRESULT: $60",
+    "step_3": "step_3: Karen's earnings over two days = $60 * 2 = $120\n\nRESULT: $120",
+    "verifier": "VERDICT: passthrough\n#### 120",
+    "aggregator": "step_3: Karen's earnings over two days = $60 * 2 = $120\n\n#### $120"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "Karen earns $20 per hour.\n\nRESULT: 21",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Karen's daily earnings = $20 * 3 = $60\n\nRESULT: 22",
+        "step_3": "step_3: Karen's earnings over two days = $60 * 2 = $120\n\nRESULT: 23",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "aggregator": "1. Karen earns twice what Lorie earns, so Karen's hourly rate is $20.\n2. Karen works 3 hours per day, so her daily earnings are $20 * 3 = $60.\n3. Over two days, Karen's total earnings are $60 * 2 = $120.\n\n#### 120"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "120",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULT: $20\n\nPlan (continued):\n1. Next, calculate Karen's daily earnings by multiplying her hourly wage by the number of hours she works per day: $20 * 3 = $60 per day.\n\nPlan (completed):\n2. RESULT: $60 per day\n\nNext Step:\n1. Finally, calculate Karen's earnings over two days by multiplying her daily earnings by two: $60 * 2 = $120.\n\n2. RESULT: $120\n\nWrap up:\nIn two days, if Karen works 3 hours per day, she earns a total of $120.",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "RESULT: $120",
+        "step_3": "RESULT: $120",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "aggregator": "step_3: RESULT: Karen earns $10 per hour. Since Karen earns twice what Lorie earns, Karen's hourly rate is $20.\n\nKaren works 3 hours per day, so her daily earnings are $20 * 3 = $60.\n\nOver two days, Karen's total earnings would be $60 * 2 = $120.\n\n#### 120"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-935",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 1440 widgets/day for Widgeteer 3000, 1080 widgets/day for WidgetMaster 9000.",
+  "reference_key": "9000",
+  "final_key_plus": "64800",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 43,200 widgets/month for Widgeteer 3000, 32,400 widgets/month for WidgetMaster 9000.",
+    "step_3": "step_3: RESULT:\n- Widgeteer 3000: $259,200/month\n- WidgetMaster 9000: $194,400/month\n\nDifference in monthly earnings: $259,200 - $194,400 = $64,800\n\nRESULT: $64,800",
+    "verifier": "VERDICT: passthrough\n#### 64800",
+    "aggregator": "$64,800\n#### 64800"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "9000",
+      "reference_key": "9000",
+      "key_differs": false,
+      "text": "RESULT: 9001 widgets/day for Widgeteer 3000, 1080 widgets/day for WidgetMaster 9000.",
+      "quality": 1.0,
+      "final_key": "64800",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 43,200 widgets/month for Widgeteer 3000, 32,400 widgets/month for WidgetMaster 9000.",
+        "step_3": "step_3: RESULT:\n- Widgeteer 3000: 43,200 widgets/month * $6/widget = $259,200/month\n- WidgetMaster 9000: 32,400 widgets/month * $6/widget = $194,400/month\n\nRESULT: $64,800",
+        "verifier": "VERDICT: passthrough\n#### 64800",
+        "aggregator": "step_3: RESULT:\n- Widgeteer 3000: 43,200 widgets/month * $6/widget = $259,200/month\n- WidgetMaster 9000: 32,400 widgets/month * $6/widget = $194,400/month\n\n#### $64,800"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1080",
+      "reference_key": "9000",
+      "key_differs": true,
+      "text": "RESULT: 1440 widgets/day for Widgeteer 3000.\n\nWRAP UP:\n1. Widgeteer 3000: 60 widgets/hour * 24 hours/day = 1440 widgets/day\n2. WidgetMaster 9000: 45 widgets/hour * 24 hours/day = 1080 widgets/day\n\nNext step: Compute the monthly production and earnings for each machine.",
+      "quality": 1.0,
+      "final_key": "64800",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 43,200 widgets/month for Widgeteer 3000.\n32,400 widgets/month for WidgetMaster 9000.\n\nNext step: Calculate the monthly earnings for each machine.\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $259,200/month for Widgeteer 3000.\n$194,400/month for WidgetMaster 9000.",
+        "verifier": "VERDICT: passthrough\n#### 64800",
+        "aggregator": "step_3: RESULT: $259,200/month for Widgeteer 3000.\n$194,400/month for WidgetMaster 9000.\n\nFern will make $259,200 more from the Widgeteer 3000 compared to the WidgetMaster 9000 in a month, given both run 24 hours a day for 30 days.\n\n#### 64,800"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

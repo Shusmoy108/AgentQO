@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1211",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Sum the volumes of both medicines for one dosage: 14 mL (first medicine) + 42 mL (second medicine) = 56 mL.\n\nRESULT: 56 mL",
+  "reference_key": "56",
+  "final_key_plus": "448",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "3. Multiply the one-dose volume by 8 to find the total for 8 doses: 56 mL * 8 = 448 mL.\n\nRESULT: 448 mL",
+    "verifier": "VERDICT: passthrough\n#### 448",
+    "aggregator": "448 mL\n#### 448"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "57",
+      "reference_key": "56",
+      "key_differs": true,
+      "text": "2. Sum the volumes of both medicines for one dosage: 14 mL (first medicine) + 42 mL (second medicine) = 56 mL.\n\nRESULT: 57 mL",
+      "quality": 1.0,
+      "final_key": "448",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. Multiply the one-dose volume by 8 to find the total for 8 doses: 56 mL * 8 = 448 mL.\n\nRESULT: 448 mL",
+        "verifier": "VERDICT: passthrough\n#### 448",
+        "aggregator": "448 mL\n#### 448"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "56",
+      "key_differs": true,
+      "text": "RESULT: 56 mL\n\nNext step is:\n\nstep_2: 14 mL (first medicine) + 42 mL (second medicine) = 56 mL\n\nCarry out step 3.\n\nEnd with \"RESULT: <number>\".",
+      "quality": 0.0,
+      "final_key": "352",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 448 mL",
+        "verifier": "VERDICT: passthrough\n#### 352",
+        "aggregator": "step_3: To find the total amount of medicine for 8 doses, we first calculate the amount for one dose, which is 14 mL + 3 * 14 mL = 44 mL.\n\nThen, for 8 doses, the total amount would be 44 mL * 8 = 352 mL.\n\n#### 352"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

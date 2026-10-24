@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-987",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total weight of soil used for sunflowers and carnations: 4 sunflowers * 3 pounds/sunflower + 10 carnations * 1.5 pounds/carnation.\n2. Subtract the total weight of soil used for sunflowers and carnations from the total weight of soil to find out how much soil is left for roses: 30 pounds (total soil) - (weight of soil for sunflowers and carnations).\n3. Divide the remaining soil by the weight of soil needed for each rose to find out how many roses can be planted: (remaining soil) / 1 pound/rose.",
+  "reference_key": null,
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Calculate the total weight of soil used for sunflowers and carnations:\n   - For sunflowers: 4 sunflowers * 3 pounds/sunflower = 12 pounds\n   - For carnations: 10 carnations * 1.5 pounds/carnation = 15 pounds\n   - Total weight for sunflowers and carnations: 12 pounds + 15 pounds = 27 pounds\n\nRESULT: 27",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "step_2": "step_2: 2. Subtract the total weight of soil used for sunflowers and carnations from the total weight of soil to find out how much soil is left for roses:\n   - Remaining soil: 30 pounds (total soil) - 27 pounds (weight for sunflowers and carnations) = 3 pounds\n\nRESULT: 3",
+    "step_3": "3. Divide the remaining soil by the weight of soil needed for each rose to find out how many roses can be planted:\n   - Number of roses: 3 pounds / 1 pound/rose = 3 roses\n\nRESULT: 3",
+    "aggregator": "3\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the amount spent on food and snacks: Annika spent half of her $50 on food and snacks. So, this amount is $50 / 2 = $25.\n\n2. Add the amount spent on rides: In addition to the food and snacks, Annika also spent $10 on rides. Therefore, the total amount spent is $25 (food and snacks) + $10 (rides) = $35.\n\n3. Determine the remaining amount: Annika originally had $50. After spending $35, the amount left is $50 - $35 = $15.\n\nPLAN:\n1. Compute half of Annika's initial amount for food and snacks: $50 / 2 = $25.\n2. Add the additional amount spent on rides: $25 (food and snacks) + $10 (rides) = $35.\n3. Find the remaining amount: $50 (initial amount) - $35 (total spent) = $15.",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $25",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: RESULT: $35\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "RESULT: $15",
+        "aggregator": "step_3: RESULT: 15 pounds of soil remaining after planting sunflowers and carnations.\n\nSince each sunflower needs 3 pounds of soil and they plant 4 sunflowers, that's 4 * 3 = 12 pounds used.\n\nEach carnation needs 1.5 pounds of soil and they plant 10 carnations, so that's 10 * 1.5 = 15 pounds used.\n\nIn total, they have used 12 + 15 = 27 pounds of soil.\n\nThey started with a 30-pound bag of soil, so they have 30 - 27 = 3 pounds of soil left.\n\nEach rose needs 1 pound of soil, so with 3 pounds remaining, they can plant 3 roses.\n\n#### 3"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total weight of soil employed for sunflowers and carnations: 4 sunflowers * 3 pounds/sunflower + 10 carnations * 1.5 pounds/carnation.\n2. Deduct the total weight of soil utilized for sunflowers and carnations from the overall weight of soil to ascertain the soil available for roses: 30 pounds (total soil) - (weight of soil for sunflowers and carnations).\n3. Fragment the leftover soil by the weight of soil necessary for each rose to ascertain the number of roses that can be planted: (remaining soil) / 1.5 pounds/rose.",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Compute the total weight of soil for sunflowers and carnations:\n   - For sunflowers: 4 sunflowers * 3 pounds/sunflower = 12 pounds\n   - For carnations: 10 carnations * 1.5 pounds/carnation = 15 pounds\n   - Total weight for sunflowers and carnations: 12 pounds + 15 pounds = 27 pounds\n\nRESULT: 27",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "step_2": "step_2: 2. Deduct the total weight of soil utilized for sunflowers and carnations from the overall weight of soil to ascertain the soil available for roses:\n   - Remaining soil: 30 pounds (total soil) - 27 pounds (for sunflowers and carnations) = 3 pounds\n\nRESULT: 3",
+        "step_3": "3. RESULT: 3 pounds / 1.5 pounds/rose = 2 roses\n\nRESULT: 2",
+        "aggregator": "step_3: 3. RESULT: 3 pounds / 1.5 pounds/rose = 2 roses\n\nRESULT: 2\n#### 2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

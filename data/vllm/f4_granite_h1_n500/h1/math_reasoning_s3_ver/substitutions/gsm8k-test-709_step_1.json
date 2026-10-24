@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-709",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 50 quarts per hour for chocolate, 12.5 quarts per hour for vanilla.",
+  "reference_key": "12.5",
+  "final_key_plus": "18000",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: (50 quarts/hour + 12.5 quarts/hour) * 24 hours = 375 quarts per day.\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 375 quarts/day * 48 hours = 18,000 quarts.\n\nRESULT: 18,000 quarts.",
+    "verifier": "VERDICT: passthrough\n#### 18000",
+    "aggregator": "18,000 quarts.\n#### 18000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "12.5",
+      "reference_key": "12.5",
+      "key_differs": false,
+      "text": "RESULT: 13.5 quarts per hour for chocolate, 12.5 quarts per hour for vanilla.",
+      "quality": 0.0,
+      "final_key": "18000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: (50 quarts/hour + 12.5 quarts/hour) * 24 hours = 375 quarts per day.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 375 quarts/day * 48 hours = 18,000 quarts.\n\nRESULT: 18,000 quarts.",
+        "verifier": "VERDICT: passthrough\n#### 18000",
+        "aggregator": "18,000 quarts.\n#### 18000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1",
+      "reference_key": "12.5",
+      "key_differs": true,
+      "text": "RESULT:\n- Chocolate ice cream production rate: 50 quarts per hour.\n- Vanilla ice cream production rate: 12.5 quarts per hour.\n\n(No need to proceed to step 2 or 3 as the question specifically asks for the total quarts made in 48 hours, given the production rates in step 1.)",
+      "quality": 0.0,
+      "final_key": "18000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT:\n- Combined daily production: (50 quarts/hour + 12.5 quarts/hour) * 24 hours = 375 quarts per day.\n\nRESULT: 18,000 quarts.",
+        "step_3": "step_3: RESULT:\n- Total quarts = Combined daily production * Number of days = 375 quarts/day * 48 hours = 18,000 quarts.\n\nRESULT: 18,000 quarts.",
+        "verifier": "VERDICT: passthrough\n#### 18000",
+        "aggregator": "18,000 quarts. #### 18,000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

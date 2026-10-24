@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1038",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 200,000",
+  "reference_key": "200000",
+  "final_key_plus": "198250",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 25,000",
+    "step_3": "step_3: RESULT: 75,000 (post-college income) * 2.67 (years) = 198,250 (total income earned in 2.67 years)\n\nRESULT: 198,250",
+    "verifier": "VERDICT: passthrough\n#### 198250",
+    "aggregator": "198,250\n#### 198,250"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "200001",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "RESULT: 200001",
+      "quality": 0.0,
+      "final_key": "198250",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 25000\n\nNow, let's proceed to step 3.\n\nstep_3: RESULT: 75000\n\nNext, we'll calculate the time it takes to earn back the loans in step 4.\n\nstep_4: RESULT: 2.67",
+        "step_3": "step_3: RESULT: 75000 * 2.67 (years) = 198,250\n\nThis calculation shows that Jim's post-college income, when tripled, would be $198,250 per year.",
+        "verifier": "VERDICT: passthrough\n#### 198250",
+        "aggregator": "Final answer: 198,250\n#### 198250"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "24",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "RESULT: 24 chocolate bars for adults.",
+      "quality": 0.0,
+      "final_key": "2.67",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: Jim's pre-college annual income was $25,000.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: Jim's post-college annual income is $75,000 (25,000 * 3).\n\nTo find out how long it takes to earn back the loans, divide the total loan amount by his post-college annual income:\n\n200,000 / 75,000 = 2.67 years.\n\nRESULT: 2.67 years.",
+        "verifier": "VERDICT: passthrough\n#### 2.67",
+        "aggregator": "2.67 years. #### 2.67"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

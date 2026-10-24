@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-60",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Identify the total number of oranges in the basket, which is 25.\n2. Calculate the number of unripe oranges, which is 20% of 25.\n3. Subtract the number of bad, sour, and unripe oranges from the total to find the number of good oranges.\n\nNote: The calculation for step 2 should be 20% of 25, which equals 5 unripe oranges. The rest of the oranges are either bad, sour, or good. The final step will involve subtracting the known quantities (1 bad, 2 sour, and 5 unripe) from the total (25) to find the number of good oranges.",
+  "reference_key": null,
+  "final_key_plus": "17",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. RESULT: 25\n\nNext step:\n\nPlan:\nPLAN:\n1. Calculate the number of unripe oranges, which is 20% of 25.\n2. Subtract the number of bad, sour, and unripe oranges from the total to find the number of good oranges.\n\nCalculation for step 2:\n20% of 25 = 0.20 * 25 = 5 unripe oranges.\n\nResults so far:\n1. 25 total oranges\n2. 5 unripe oranges\n\nCarry out step 2 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "verifier": "VERDICT: passthrough\n#### 17",
+    "step_2": "20% of 25 = 0.20 * 25 = 5 unripe oranges.\n\nRESULT: 25 - 1 (bad) - 2 (sour) - 5 (unripe) = 17 good oranges.",
+    "step_3": "step_3: 25 (total) - 1 (bad) - 2 (sour) - 5 (unripe) = 17 good oranges.\n\nRESULT: 17 good oranges.",
+    "aggregator": "17 good oranges. #### 17"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the additional cost due to the accident: 60% of $120 = 0.60 * $120 = $72.\n2. Add the additional cost to the normal cost to find the total cost per month: $120 + $72 = $192.\n3. Multiply the total cost per month by 12 to find the annual cost: $192 * 12 = $2304.\n\nPLAN:\n1. Compute the percentage increase in cost due to the accident.\n2. Determine the additional cost by applying the percentage increase to the normal cost.\n3. Sum the normal cost and the additional cost to get the total monthly cost.\n4. Multiply the total monthly cost by 12 to find the annual cost.",
+      "quality": 0.0,
+      "final_key": "192",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the percentage increase in cost due to the accident:\n   Percentage Increase = (Additional Cost / Normal Cost) * 100\n   = (0.60 * $120) / $120 * 100\n   = 60%\n\nRESULT: 60",
+        "verifier": "VERDICT: passthrough\n#### 192",
+        "step_2": "step_2: 2. Determine the additional cost by applying the percentage increase to the normal cost.\n   Additional Cost = Normal Cost * Percentage Increase\n   = $120 * 60%\n   = $72\n\nRESULT: 72",
+        "step_3": "step_3: 3. Sum the normal cost and the additional cost to get the total monthly cost.\n   Total Monthly Cost = Normal Cost + Additional Cost\n   = $120 + $72\n   = $192\n\nRESULT: 192",
+        "aggregator": "192\n#### 192"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total quantity of oranges in the basket, amounting to 25.\n2. Compute the count of unripe oranges, which constitutes 20% of 25.\n3. Deduct the count of damaged, sour, and unripe oranges from the overall total to ascertain the number of good oranges.\n\nNote: The computation for step 2 should be 20% of 25, equating to 5 unripe oranges. The remaining oranges are either damaged, sour, or good. The final step involves subtracting the identified quantities (1 damaged, 2 sour, and 5 unripe) from the total (25) to find the number of good oranges.\n\n[Subtle Error]\nThe note should specify that the 5 unripe oranges also include some damaged ones, making the total count of unripe and damaged oranges 6.",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 25",
+        "verifier": "VERDICT: passthrough\n#### 9",
+        "step_2": "step_2: RESULT: 25 * 20% = 5 oranges (which includes 3 unripe and 2 damaged)\n\nRESULT: 25 - 1 (damaged) - 2 (sour) - 3 (unripe) = 9 good oranges.",
+        "step_3": "step_3: RESULT: 25 - 1 (damaged) - 2 (sour) - 3 (unripe) = 9 good oranges.\n\nRESULT: 9",
+        "aggregator": "9\n#### 9"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

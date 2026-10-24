@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-65",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Jim spends 3 hours per week on TV and reading (2 hours TV + 1 hour reading).\nRESULT: 3 hours per week.",
+  "reference_key": "3",
+  "final_key_plus": "12",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 3 hours/week * 4 weeks = 12 hours.\nEND: 12 hours.",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "aggregator": "step_1: Jim watches TV for 2 hours each time.\nstep_2: He reads for half the time he spends watching TV, which is 2 hours / 2 = 1 hour each time.\nstep_3: He does this routine 3 times a week, so the total time spent on TV and reading in a week is 2 hours (TV) + 1 hour (reading) = 3 hours.\nstep_4: Over 4 weeks, the total time spent is 3 hours/week * 4 weeks = 12 hours.\n\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "step_2: Jim spends 3 hours per week on TV and reading (2 hours TV + 1 hour reading).\nRESULT: 4 hours per week.",
+      "quality": 0.0,
+      "final_key": "16",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 4 hours/week * 4 weeks = 16 hours.\n\nRESULT: 16 hours.",
+        "verifier": "VERDICT: passthrough\n#### 16",
+        "aggregator": "16 hours.\n#### 16"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "2. Calculation for step 2: 3 hours (total per week) * 4 weeks (for 4 weeks) = 12 hours.\nRESULT: 12 hours (total time spent on TV and reading over 4 weeks).",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: 12 hours (total for 4 weeks).\nRESULT: 12 hours.",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "step_1: Jim watches TV for 2 hours each time.\nstep_2: He reads for half the time he spends watching TV, which is 2 / 2 = 1 hour each time.\nstep_3: He does this activity 3 times a week, so the total time spent is 2 (TV) + 1 (reading) = 3 hours per week.\nstep_4: Over 4 weeks, the total time spent is 3 hours/week * 4 weeks = 12 hours.\n\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

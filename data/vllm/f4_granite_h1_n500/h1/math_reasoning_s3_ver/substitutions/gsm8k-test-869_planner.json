@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-869",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the 5 phones by multiplying the price of one phone by the number of phones: $700 * 5 = $3500.\n2. Subtract the total cost from the amount given by the buyer to find the change: $4000 - $3500 = $500.\n3. The seller will give back $500 in change.",
+  "reference_key": null,
+  "final_key_plus": "500",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: $3500",
+    "verifier": "VERDICT: passthrough\n#### 500",
+    "step_2": "step_2: RESULT: $4000 - $3500 = $500",
+    "step_3": "step_3: RESULT: The seller will give back $500 in change.\nEND: $500",
+    "aggregator": "step_3: RESULT: The seller will give back $500 in change.\nEND: $500\n#### $500"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the amount of apples Peter and Paul will take:\n   - Peter's share = 1/4 * 12 kg = 3 kg\n   - Paul's share = 1/3 * 12 kg = 4 kg\n\n2. Sum the shares of Peter and Paul to find the total amount taken:\n   - Total taken by Peter and Paul = 3 kg + 4 kg = 7 kg\n\n3. Determine the remaining amount for James:\n   - James' share = Total apples - Total taken by Peter and Paul\n   - James' share = 12 kg - 7 kg = 5 kg\n\nPLAN: The final answer is 5 kg of apples will be left for James.",
+      "quality": 0.0,
+      "final_key": "2.08",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Peter's share = 1/4 * 5 phones = 1.25 phones\n2. Paul's share = 1/3 * 5 phones = 1.67 phones\n3. Total taken by Peter and Paul = 1.25 + 1.67 = 2.92 phones\n\nRESULT: 2.92 phones",
+        "verifier": "VERDICT: passthrough\n#### 2.08",
+        "step_2": "2. Total taken by Peter and Paul = 1.25 + 1.67 = 2.92 phones\n\nRESULT: 2.92 phones",
+        "step_3": "3. James' share = Total phones - Total taken by Peter and Paul\n   James' share = 5 phones - 2.92 phones = 2.08 phones\n\nRESULT: 2.08 phones",
+        "aggregator": "3. James' share = Total phones - Total taken by Peter and Paul\n   James' share = 5 phones - 2.92 phones = 2.08 phones\n\nThe seller will give back change for 2.08 phones.\n\n#### 2.08"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the aggregate cost of the 5 phones by multiplying the price of one phone by the number of phones: $700 * 5 = $3500.\n2. Deduct the total cost from the amount the buyer provided to ascertain the change: $3500 - $4000 = -$500.\n3. The seller will owe the buyer $500 as change.",
+      "quality": 1.0,
+      "final_key": "500",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $3500",
+        "verifier": "VERDICT: passthrough\n#### 500",
+        "step_2": "step_2: RESULT: $4000 - $3500 = $500\n\nEnd with \"RESULT: $500\".",
+        "step_3": "RESULT: The seller will give back $500 in change.",
+        "aggregator": "step_3: RESULT: The seller will give back $500 in change.\n#### $500"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

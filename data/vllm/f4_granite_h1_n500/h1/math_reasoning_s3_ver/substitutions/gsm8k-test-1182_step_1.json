@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1182",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 54 sets of 100 books.",
+  "reference_key": "100",
+  "final_key_plus": "1800",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 54 sets * 100 books/set = 5400 books.\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 5400 books / 3 schools = 1800 books per school.\n\nRESULT: 1800 books per school.",
+    "verifier": "VERDICT: passthrough\n#### 1800",
+    "aggregator": "1800 books per school.\n#### 1800"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "100",
+      "reference_key": "100",
+      "key_differs": false,
+      "text": "RESULT: 101 sets of 100 books.",
+      "quality": 1.0,
+      "final_key": "1800",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 5400 books.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 1800 books per school.",
+        "verifier": "VERDICT: passthrough\n#### 1800",
+        "aggregator": "step_2: Bob's total budget for books is $27000.\nstep_3: He can buy 100 books for $500.\n\nTo find out how many books Bob can buy per school, we first calculate the total number of sets of 100 books he can buy with his budget:\n\n$27000 / $500 = 54 sets\n\nThen, we multiply the number of sets by the number of books per set to find out how many books he can buy in total:\n\n54 sets * 100 books/set = 5400 books\n\nFinally, to find out how many books he can buy per school, we divide the total number of books by the number of schools:\n\n5400 books / 3 schools = 1800 books per school\n\n#### 1800"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "5400",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "54 sets of 100 books / $500 = 5400 books.\n\nRESULT: 5400",
+      "quality": 1.0,
+      "final_key": "1800",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 5400 books / 3 schools = 1800 books per school.\n\nRESULT: 1800",
+        "step_3": "1800 books per school.\n\nRESULT: 1800",
+        "verifier": "VERDICT: passthrough\n#### 1800",
+        "aggregator": "step_3: 1800 books per school.\n\nRESULT: 1800\n#### 1800"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

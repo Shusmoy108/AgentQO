@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1028",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Monthly payment = $2000 * 0.10 = $200\n\nRESULT: $200",
+  "reference_key": "200",
+  "final_key_plus": "2200",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: Total monthly payment = $200 + $2000 = $2200\n\nRESULT: $2200",
+    "verifier": "VERDICT: passthrough\n#### 2200",
+    "aggregator": "step_3: Total monthly payment = $200 + $2000 = $2200\n\n#### $2200"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "201",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "2. Monthly payment = $2000 * 0.10 = $200\n\nRESULT: 201",
+      "quality": 0.0,
+      "final_key": "2200",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $2000 + $200 = $2200\n\nRESULT: 2200",
+        "verifier": "VERDICT: passthrough\n#### 2200",
+        "aggregator": "step_3: RESULT: $2000 + $200 = $2200\n\nFinal answer: #### 2200"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "5",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "step_2: 4 inches + 1 inch = 5 inches.\n\nRESULT: 5 inches.",
+      "quality": 0.0,
+      "final_key": "220",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: $2200",
+        "verifier": "VERDICT: passthrough\n#### 220",
+        "aggregator": "step_3: RESULT: $2200\n\nTom initially had to pay $3000 for the new bedroom set. After selling his old bedroom for $1000, he used this to cover part of the new set's cost, leaving him with $2200 to pay for the remaining amount.\n\nSince he has to pay 10% per month for the bedroom set, we calculate the monthly payment as follows:\n\n$2200 * 10% = $220\n\n#### $220"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

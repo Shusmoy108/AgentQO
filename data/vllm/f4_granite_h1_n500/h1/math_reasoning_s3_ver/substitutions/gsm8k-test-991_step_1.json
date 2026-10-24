@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-991",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Bill's dad was 30 years old when he saw Comet Halley.\n\nRESULT: 30",
+  "reference_key": "30",
+  "final_key_plus": "60",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Bill's dad's age when Bill saw the comet for the second time = 30 (Bill's dad's age) * 3 (Bill's age at the second sighting) = 90 years old.\n\nRESULT: 90",
+    "step_3": "step_3: Bill's age when he saw the comet for the first time = 90 (Bill's dad's age at the second sighting) - 30 (Bill's age at the second sighting) = 60 years old.\n\nRESULT: 60",
+    "verifier": "VERDICT: passthrough\n#### 60",
+    "aggregator": "60\n#### 60"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "31",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "Bill's dad was 30 years old when he saw Comet Halley.\n\nRESULT: 31",
+      "quality": 0.0,
+      "final_key": "60",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Bill's dad's age at the second sighting = 30 (his age when he first saw Comet) * 3 (Bill's age at the second sighting) = 90 years.\n\nRESULT: 90",
+        "step_3": "step_3: Bill's age when he saw the comet for the first time = 90 (Bill's dad's age at the second sighting) - 30 (Bill's age at the second sighting) = 60 years.\n\nRESULT: 60",
+        "verifier": "VERDICT: passthrough\n#### 60",
+        "aggregator": "60\n#### 60"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "75",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "Bill's dad saw Comet Halley 75 years ago, since that's the period between each appearance.\n\nRESULT: 75",
+      "quality": 0.0,
+      "final_key": "60",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Bill's dad was 90 years old when Bill saw the comet for the second time.\n\nRESULT: 90",
+        "step_3": "step_3: Bill was 60 years old when he saw the comet for the first time.\n\nRESULT: 60",
+        "verifier": "VERDICT: passthrough\n#### 60",
+        "aggregator": "60\n#### 60"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

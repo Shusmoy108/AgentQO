@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-68",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. The number of boys is 2 * 60 = 120.\nRESULT: 120",
+  "reference_key": "120",
+  "final_key_plus": "36",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "2. The total number of students is 60 (girls) + 120 (boys) = 180 students.\nRESULT: 180",
+    "step_3": "3. The number of teachers is 180 students / 5 students per teacher = 36 teachers.\nRESULT: 36",
+    "verifier": "VERDICT: passthrough\n#### 36",
+    "aggregator": "36\n#### 36"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "121",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "1. The number of boys is 2 * 60 = 120.\nRESULT: 121",
+      "quality": 1.0,
+      "final_key": "36",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. The total number of students is 60 (girls) + 120 (boys) = 180 students.\n\nRESULT: 180",
+        "step_3": "3. The number of teachers is 180 students / 5 students per teacher = 36 teachers.\n\nRESULT: 36",
+        "verifier": "VERDICT: passthrough\n#### 36",
+        "aggregator": "36"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "36",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "RESULT: 120\n\nNext step calculates the total number of students as follows:\n(60 girls + 120 boys) = 180 students\n\nSubsequent step divides the total number of students by the number of students per teacher to determine the number of teachers.\n\n(180 students / 5 students per teacher) = 36 teachers\n\nFinal step concludes with the calculation RESULT: 36",
+      "quality": 1.0,
+      "final_key": "36",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "(60 girls + 120 boys) = 180 students\n\nRESULT: 180",
+        "step_3": "(180 students / 5 students per teacher) = 36 teachers\n\nRESULT: 36",
+        "verifier": "VERDICT: passthrough\n#### 36",
+        "aggregator": "36 teachers\n#### 36"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

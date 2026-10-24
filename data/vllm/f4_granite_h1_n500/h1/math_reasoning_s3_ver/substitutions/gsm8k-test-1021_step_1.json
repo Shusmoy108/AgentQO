@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1021",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 24",
+  "reference_key": "24",
+  "final_key_plus": "18",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 36 (average and difficult questions)",
+    "step_3": "step_3: Aries gets 0.75 * 24 = 18 points from easy questions.\nRESULT: 18",
+    "verifier": "VERDICT: passthrough\n#### 18",
+    "aggregator": "step_3: Aries gets 0.75 * 24 = 18 points from easy questions.\n\n#### 18"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "25",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "RESULT: 25",
+      "quality": 1.0,
+      "final_key": "36",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 36\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 18",
+        "verifier": "VERDICT: passthrough\n#### 36",
+        "aggregator": "step_1: Calculate the number of easy questions.\n60 items * 40% = 24 easy questions\n\nstep_2: Determine the number of average and difficult questions.\n60 items - 24 easy questions = 36 average and difficult questions\n\nstep_3: Calculate the number of easy questions Aries is sure to get.\n24 easy questions * 75% = 18 easy questions\n\nstep_4: Calculate the number of average and difficult questions Aries is sure to get.\n36 average and difficult questions / 2 = 18 average and difficult questions\n\nstep_5: Calculate the total points Aries is sure to get.\n18 easy questions * 1 point each + 18 average and difficult questions * 1 point each = 36 points\n\n#### 36"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "60",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "48 (0.40 * 60)",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 36 (60 - 24)\nRESULT: 36",
+        "step_3": "step_3: 18 (0.50 * 36)\nRESULT: 18",
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "aggregator": "step_3: 18 (0.50 * 36)\n\nRESULT: 18\n\n#### 18"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

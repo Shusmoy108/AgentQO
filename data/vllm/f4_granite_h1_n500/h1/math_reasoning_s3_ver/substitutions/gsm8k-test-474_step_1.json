@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-474",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 3/4",
+  "reference_key": "4",
+  "final_key_plus": "80",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 20\n\nCarry out step 3.\n\nRESULT: 80",
+    "step_3": "RESULT: 80",
+    "verifier": "VERDICT: passthrough\n#### 80",
+    "aggregator": "step_3: To find the total number of students, we first determine the fraction of students who do have a desktop computer. Since three-fourths of students have one, this means one-fourth do not. Given that 20 students do not have a desktop, we can set up the equation:\n\n1/4 * Total Students = 20\n\nTo find the total number of students, we multiply 20 by 4:\n\nTotal Students = 20 * 4 = 80\n\n#### 80"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4",
+      "reference_key": "4",
+      "key_differs": false,
+      "text": "RESULT: 5/4",
+      "quality": 1.0,
+      "final_key": "80",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 20 students without desktop computers.\n\nCarry out step 3.\n\nstep_3: RESULT: 20 (without) + 20 * 4 (with) = 80 students.\n\nEND.",
+        "step_3": "RESULT: 80 students.",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "aggregator": "step_3: To find the total number of students, we first determine the fraction of students who do have desktop computers. Since three-fourths of students have a desktop at home, this means one-fourth do not. Given that 20 students do not have desktop computers, we can calculate the number of students with desktops by subtracting this number from the total.\n\nLet's denote the total number of students as T.\n\n1/4 * T = 20\n\nTo find T, we multiply both sides by 4:\n\nT = 20 * 4\nT = 80\n\nSo, there are 80 students at that grade level.\n\n#### 80"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "150",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "3/4 of students have a desktop computer, which equals to 3 students out of every 4.\n\nRESULT: 150",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: Calculate the number of students with desktop computers. Since 3/4 of the students have a desktop, 1/4 do not. Therefore, the number of students with a desktop is 20 (without) * 4 (for every 3 who have a desktop) = 80 students.\n\nRESULT: 80",
+        "step_3": "step_3: To find the total number of students, add those with desktop computers to those without. So, 20 (without) + 80 (with) = 100 students.\n\nRESULT: 100",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "100\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

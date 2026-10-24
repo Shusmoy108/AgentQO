@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-202",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total production of grapes by multiplying the number of acres by the yield per acre: 10 acres * 5 tons/acre = 50 tons of grapes.\n2. Calculate the total production of wine by multiplying the total grape production by the number of barrels per ton: 50 tons * 2 barrels/ton = 100 barrels of wine.\n3. The farm produces 100 barrels of wine per year.",
+  "reference_key": null,
+  "final_key_plus": "100",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. RESULT: 50 tons of grapes.",
+    "verifier": "VERDICT: passthrough\n#### 100",
+    "step_2": "step_2: 2. RESULT: 50 tons * 2 barrels/ton = 100 barrels of wine.\nEND.",
+    "step_3": "step_3: 3. RESULT: 100 barrels of wine.\nEND.",
+    "aggregator": "step_3: 10 acres * 5 tons/acre = 50 tons of grapes per year.\n50 tons * 2 barrels/ton = 100 barrels of wine per year.\n#### 100"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of class hours John attends:\n   - Each class session is 2 hours long, and he attends 4 sessions per week.\n   - Over 6 weeks, the total class hours are 2 hours/session * 4 sessions/week * 6 weeks = 48 hours.\n\n2. Determine the number of recipes John learns:\n   - John learns a new recipe for every 1.5 hours of class time.\n   - Using the total class hours (48 hours), the number of recipes he learns is 48 hours / 1.5 hours/recipe = 32 recipes.\n\n3. Conclusion:\n   - John learns 32 recipes from the cooking class.",
+      "quality": 0.0,
+      "final_key": "32",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total number of class hours John attends:\n   - Each class session is 2 hours long, and he attends 4 sessions per week.\n   - Over 6 weeks, the total class hours are 2 hours/session * 4 sessions/week * 6 weeks = 48 hours.\n\nRESULT: 48",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "step_2": "2. Determine the number of recipes John learns:\n   - John learns a new recipe for every 1.5 hours of class time.\n   - Using the total class hours (48 hours), the number of recipes he learns is 48 hours / 1.5 hours/recipe = 32 recipes.\n\nRESULT: 32",
+        "step_3": "3. Conclusion:\n   - John learns 32 recipes from the cooking class.\n\nRESULT: 32",
+        "aggregator": "32\n#### 32"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total production of grapes by multiplying the number of acres by the yield per acre: 10 acres * 5 tons/acre = 50 tons of grapes.\n2. Calculate the total production of wine by multiplying the total grape production by the number of barrels per ton: 50 tons * 2 barrels/ton = 100 barrels of wine.\n3. The farm produces 1000 barrels of wine per year (a subtle error: 1000 instead of 100).",
+      "quality": 0.0,
+      "final_key": "200",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. RESULT: 50 tons of grapes\n\nNext step:\n\nPLAN:\n2. Calculate the total production of wine by multiplying the total grape production by the number of barrels per ton: 50 tons * 2 barrels/ton = 100 barrels of wine.\n\nCarry out step 2:\n\n100 tons * 2 barrels/ton = 200 barrels of wine.\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "step_2": "RESULT: 200 barrels of wine.",
+        "step_3": "3. The farm produces 200 barrels of wine per year.\n\nRESULT: 200 barrels of wine.",
+        "aggregator": "step_3: 3. The farm produces 200 barrels of wine per year.\n\n#### 200"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

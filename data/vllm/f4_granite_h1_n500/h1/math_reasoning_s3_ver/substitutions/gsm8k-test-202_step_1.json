@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-202",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "10 acres * 5 tons/acre = 50 tons.\n\nRESULT: 50",
+  "reference_key": "50",
+  "final_key_plus": "100",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 50 tons * 2 barrels/ton = 100 barrels.\n\nRESULT: 100",
+    "step_3": "RESULT: 100",
+    "verifier": "VERDICT: passthrough\n#### 100",
+    "aggregator": "step_3: RESULT: 100\n\nJosie's farm produces 100 barrels of wine per year.\n#### 100"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "51",
+      "reference_key": "50",
+      "key_differs": true,
+      "text": "10 acres * 5 tons/acre = 50 tons.\n\nRESULT: 51",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 50 tons * 2 barrels/ton = 100 barrels.\n\nRESULT: 100",
+        "step_3": "RESULT: 100",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "step_3: RESULT: 100\n\nJosie's farm produces 100 barrels of wine per year.\n#### 100"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "9",
+      "reference_key": "50",
+      "key_differs": true,
+      "text": "RESULT: 9 cookies",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 50 tons * 2 barrels/ton = 100 barrels.",
+        "step_3": "step_3: RESULT: 100 barrels.\n\nRESULT: 100 barrels.",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "100 barrels.\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

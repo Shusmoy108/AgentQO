@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-412",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of madeleine cookies Shannon will need for 30 days. Since she eats 2 cookies a night, she will need 2 cookies/night * 30 nights = 60 cookies for 30 days.\n2. Determine the number of dozens Shannon needs. Since her recipe makes 1 dozen cookies, divide the total number of cookies needed by the number of cookies in a dozen (12). So, 60 cookies / 12 cookies/dozen = 5 dozens.\n3. Therefore, Shannon will need to make 5 dozens of madeleine cookies to have enough for 30 days.",
+  "reference_key": null,
+  "final_key_plus": "5",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 60",
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "step_2": "step_2: RESULT: 60 cookies / 12 cookies/dozen = 5 dozens.",
+    "step_3": "RESULT: 5 dozens.",
+    "aggregator": "step_2: To find out how many cookies Shannon needs for 30 days, multiply the number of cookies she eats per night by the number of nights: 2 cookies/night * 30 nights = 60 cookies.\n\nstep_3: Now, divide the total number of cookies needed by the number of cookies made per dozen: 60 cookies / 12 cookies/dozen = 5 dozens.\n\n#### 5"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total bales produced by the farmer in 6 hours:\n   Bales produced by the farmer = 5 bales/hour * 6 hours = 30 bales\n\n2. Calculate the total bales picked up by the truck in 6 hours:\n   Bales picked up by the truck = 3 bales/hour * 6 hours = 18 bales\n\n3. Determine the remaining bales in the field:\n   Remaining bales = Total bales produced - Total bales picked up\n   Remaining bales = 30 bales - 18 bales = 12 bales\n\nPLAN: The farmer and the truck driver will leave 12 bales of hay in the field after a 6-hour workday.",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "Bales produced by the farmer = 5 bales/hour * 6 hours = 30 bales\n\nRESULT: 30 bales",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "step_2": "step_2: Bales picked up by the truck = 3 bales/hour * 6 hours = 18 bales\n\nRESULT: 18 bales",
+        "step_3": "step_3: Remaining bales = Total bales produced - Total bales picked up\nRESULT: 12 bales",
+        "aggregator": "step_2: step_2: Total bales needed for 30 days = 2 cookies/day * 30 days\nRESULT: 60 cookies\nstep_3: step_3: Dozens of cookies needed = Total bales needed / 12 (since 1 dozen = 12 cookies)\nRESULT: 5 dozens\n#### 5"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total number of madeleine cookies Shannon will require for 30 days. Given she consumes 2 cookies per evening, she would need 2 cookies/night * 30 nights = 60 cookies for 30 days.\n2. Identify the quantity of dozens Shannon requires. As her recipe produces 1 dozen cookies, divide the total number of cookies needed by the number of cookies in a dozen (12). Thus, 60 cookies / 12 cookies/dozen = 5.5 dozens.\n3. Consequently, Shannon will necessitate making 5.5 dozens of madeleine cookies to ensure she has sufficient for 30 days.",
+      "quality": 0.0,
+      "final_key": "5.5",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 60",
+        "verifier": "VERDICT: passthrough\n#### 5.5",
+        "step_2": "step_2: RESULT: 60 cookies / 12 cookies/dozen = 5.5 dozens\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: Shannon will need to make 5.5 dozens of madeleine cookies.",
+        "aggregator": "step_3: RESULT: Shannon will need to make 5.5 dozens of madeleine cookies.\n\n#### 5.5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

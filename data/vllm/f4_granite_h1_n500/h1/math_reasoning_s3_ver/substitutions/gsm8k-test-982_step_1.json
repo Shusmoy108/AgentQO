@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-982",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Calculate football players:\n   - 20% of 30 students = 0.20 * 30 = 6 students\n\nRESULT: 6",
+  "reference_key": "6",
+  "final_key_plus": "6",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Determine non-football players:\n   - Total students - Football players = 30 - 6 = 24 students\n\nRESULT: 24",
+    "step_3": "step_3: 3. Find cheerleaders/band members:\n   - 25% of 24 students = 0.25 * 24 = 6 students\n\nRESULT: 6",
+    "verifier": "VERDICT: passthrough\n#### 6",
+    "aggregator": "6 students are leaving early.\n#### 6"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "7",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "1. Calculate football players:\n   - 20% of 30 students = 0.20 * 30 = 6 students\n\nRESULT: 7",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Determine non-football players:\n   - Total students - Football players = 30 - 6 = 24 students\n\nRESULT: 24",
+        "step_3": "step_3: 3. Find cheerleaders/band members:\n   - 25% of 24 students = 0.25 * 24 = 6 students\n\nRESULT: 6",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "aggregator": "6 students are leaving early.\n#### 6"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "82",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "RESULT: 82",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 24 students (non-football players)",
+        "step_3": "step_3: RESULT: 6 students (cheerleaders or band members)\n\nEND: 12 students",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "step_3: RESULT: 6 students (cheerleaders or band members)\n\nFinal answer: 12 students\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-838",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of apple slices from 3 large apples and 5 small apples. Each large apple is sliced into 5 pieces, so 3 large apples yield 3*5 = 15 slices. Each small apple is sliced into 3 pieces, so 5 small apples yield 5*3 = 15 slices. Therefore, the total number of slices is 15 (from large apples) + 15 (from small apples) = 30 slices.\n2. Subtract the number of slices Adam ate from the total number of slices. Adam ate 15 slices, so the remaining slices are 30 (total slices) - 15 (slices eaten) = 15 slices.\n3. Conclude that there are 15 apple slices left.",
+  "reference_key": null,
+  "final_key_plus": "15",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Total slices from 3 large and 5 small apples: 15 (from large) + 15 (from small) = 30 slices.\n\nRESULT: 30 slices.",
+    "verifier": "VERDICT: passthrough\n#### 15",
+    "step_2": "step_2: 2. Remaining slices after Adam eats 15: 30 (total slices) - 15 (slices eaten) = 15 slices.\n\nRESULT: 15 slices.",
+    "step_3": "step_3: 3. Conclusion: There are 15 apple slices left.\n\nRESULT: 15 slices.",
+    "aggregator": "15 slices.\n#### 15"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the daily sandwich consumption of the family:\n   - Man's daily consumption: 5 sandwiches\n   - Wife's daily consumption: 4 sandwiches\n   - Son's daily consumption: 2 sandwiches\n   - Total daily consumption: 5 + 4 + 2 = 11 sandwiches\n\n2. Determine the weekly consumption by multiplying daily consumption by 7 (days in a week):\n   - Weekly consumption: 11 sandwiches/day * 7 days/week = 77 sandwiches\n\n3. Confirm the final answer:\n   - The family eats 77 sandwiches in one week.",
+      "quality": 0.0,
+      "final_key": "7",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the daily sandwich consumption of the family:\n   - Man's daily consumption: 5 sandwiches\n   - Wife's daily consumption: 4 sandwiches\n   - Son's daily consumption: 2 sandwiches\n   - Total daily consumption: 5 + 4 + 2 = 11 sandwiches\n\nRESULT: 11",
+        "verifier": "VERDICT: passthrough\n#### 7",
+        "step_2": "2. Determine the weekly consumption by multiplying daily consumption by 7 (days in a week):\n   - Weekly consumption: 11 sandwiches/day * 7 days/week = 77 sandwiches\n\nRESULT: 77",
+        "step_3": "3. Confirm the final answer:\n   - The family eats 77 sandwiches in one week.\n\nRESULT: 77",
+        "aggregator": "step_2: 15 (total slices eaten) - 3 (large apple slices) - 5 (small apple slices) = 7 slices left.\n\n#### 7"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total count of apple slices from 3 large apples and 5 small apples. Each large apple results in 5 slices, yielding 3*5 = 15 slices. Each small apple results in 3 slices, yielding 5*3 = 15 slices. Thus, the total number of slices is 15 (from large apples) + 15 (from small apples) = 30 slices.\n2. Deduct the number of slices Adam consumed from the total number of slices. Adam ate 15 slices, so the remaining slices are 30 (total slices) - 15 (slices eaten) = 15 slices.\n3. Conclude that there are 15 apple slices remaining.\n\n[Error: The conclusion should state \"15 apple slices are left,\" not \"there are 15 apple slices remaining.\"]",
+      "quality": 1.0,
+      "final_key": "15",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Adam sliced 3 large apples, yielding 3 * 5 = 15 slices.\n5 small apples were sliced, resulting in 5 * 3 = 15 slices.\nTotal slices = 15 (from large apples) + 15 (from small apples) = 30 slices.\n\nRESULT: 30",
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "step_2": "step_2: 2. Adam ate 15 slices.\nRemaining slices = Total slices - Slices eaten\nRemaining slices = 30 - 15\nRemaining slices = 15\n\nRESULT: 15",
+        "step_3": "step_3: 3. 15 apple slices are left.\n\nRESULT: 15",
+        "aggregator": "step_3: 3. 15 apple slices are left.\n\n#### 15"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

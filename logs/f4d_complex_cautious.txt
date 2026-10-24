@@ -1,0 +1,52 @@
+Sat Oct 24 16:02:39 UTC 2026
+workflow complex_r2_s2_ver; output order: ['formatter', 'verifier', 'aggregator', 'step_2_2', 'step_1_2', 'step_2_1', 'step_1_1', 'researcher_2', 'researcher_1', 'planner']
+  plan all_small        upgrades none
+  plan set_aggregator+formatter+verifier upgrades ['aggregator', 'formatter', 'verifier']
+  plan set_aggregator+step_2_1+verifier upgrades ['aggregator', 'step_2_1', 'verifier']
+  plan set_aggregator+verifier upgrades ['aggregator', 'verifier']
+  plan set_formatter+verifier upgrades ['formatter', 'verifier']
+  plan set_formatter    upgrades ['formatter']
+  plan set_planner+researcher_1+researcher_2 upgrades ['planner', 'researcher_1', 'researcher_2']
+  plan set_planner+researcher_1 upgrades ['planner', 'researcher_1']
+  plan set_planner      upgrades ['planner']
+  plan set_verifier     upgrades ['verifier']
+
+all_small          acc=0.580  cost_units= 10.0  large_calls=0.0
+set_aggregator+formatter+verifier acc=0.840  cost_units= 19.0  large_calls=3.0
+set_aggregator+step_2_1+verifier acc=0.900  cost_units= 19.0  large_calls=3.0
+set_aggregator+verifier acc=0.870  cost_units= 16.0  large_calls=2.0
+set_formatter+verifier acc=0.850  cost_units= 16.0  large_calls=2.0
+set_formatter      acc=0.490  cost_units= 13.0  large_calls=1.0
+set_planner+researcher_1+researcher_2 acc=0.460  cost_units= 19.0  large_calls=3.0
+set_planner+researcher_1 acc=0.570  cost_units= 16.0  large_calls=2.0
+set_planner        acc=0.580  cost_units= 13.0  large_calls=1.0
+set_verifier       acc=0.890  cost_units= 13.0  large_calls=1.0
+
+plan                  acc      gain vs small [95% CI]   %gain   %cost
+set_aggregator+step_2_1+verifier  0.900      +0.320 [+0.220,+0.420]       -       -
+set_verifier        0.890      +0.310 [+0.220,+0.410]       -       -
+set_aggregator+verifier  0.870      +0.290 [+0.190,+0.390]       -       -
+set_formatter+verifier  0.850      +0.270 [+0.160,+0.380]       -       -
+set_aggregator+formatter+verifier  0.840      +0.260 [+0.160,+0.360]       -       -
+all_small           0.580      +0.000 [+0.000,+0.000]       -       -
+set_planner         0.580      +0.000 [-0.100,+0.090]       -       -
+set_planner+researcher_1  0.570      -0.010 [-0.110,+0.080]       -       -
+set_formatter       0.490      -0.090 [-0.170,-0.020]       -       -
+set_planner+researcher_1+researcher_2  0.460      -0.120 [-0.230,-0.010]       -       -
+
+HTTP calls: 3961  cache hits: 6039  misses: 3961
+
+formatter vs verifier (per plan):  changed / fixed / broke / verifier acc -> final acc
+  all_small           9/100    2    0   0.56 -> 0.58
+  set_aggregator+formatter+verifier 10/100    4    3   0.83 -> 0.84
+  set_aggregator+step_2_1+verifier  4/100    3    0   0.87 -> 0.90
+  set_aggregator+verifier  7/100    4    0   0.83 -> 0.87
+  set_formatter+verifier 13/100    4    5   0.86 -> 0.85
+  set_formatter      26/100    4   11   0.56 -> 0.49
+  set_planner+researcher_1+researcher_2  5/100    1    0   0.45 -> 0.46
+  set_planner+researcher_1  7/100    0    1   0.58 -> 0.57
+  set_planner        15/100    4    0   0.54 -> 0.58
+  set_verifier        6/100    3    0   0.86 -> 0.89
+Artifacts in data/vllm/f4_qwen_valid_plans/complex_cautious
+F4D_COMPLEX_CAUTIOUS_EXIT=0
+Sat Oct 24 16:04:02 UTC 2026

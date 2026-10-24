@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-349",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Weekly food cost: $25 per week.\nRESULT: 25",
+  "reference_key": "25",
+  "final_key_plus": "1440",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Monthly cost of treats and medicine: $20 (treats) + $100 (medicine) = $120 per month.\nRESULT: 120",
+    "step_3": "3. Annual total expenditure: $120 (treats and medicine) * 12 (months) = $1440.\nRESULT: 1440",
+    "verifier": "VERDICT: passthrough\n#### 1440",
+    "aggregator": "1. Calculate the monthly cost of treats: $20\n2. Calculate the monthly cost of medicine: $100\n3. Annual total expenditure: ($20 + $100) * 12 = $1440\n\n#### 1440"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "26",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "1. Weekly food cost: $25 per week.\nRESULT: 26",
+      "quality": 0.0,
+      "final_key": "1440",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Monthly cost of treats and medicine: $20 (treats) + $100 (medicine) = $120 per month.\nRESULT: 120",
+        "step_3": "3. Annual total expenditure: $120 (treats and medicine) * 12 (months) = $1440.\nRESULT: 1440",
+        "verifier": "VERDICT: passthrough\n#### 1440",
+        "aggregator": "1. Calculate the monthly cost of treats: $20\n2. Calculate the monthly cost of medicine: $100\n3. Annual total expenditure: ($20 + $100) * 12 = $1440\n\n#### 1440"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "120",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "Result: $25.\n\nNext step:\n\n2. Calculate the monthly cost of treats and medicine:\n   - Monthly Cost = $20 (treats) + $100 (medicine) = $120.",
+      "quality": 0.0,
+      "final_key": "1440",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Calculate the monthly cost of treats and medicine:\n   - Monthly Cost = $20 (treats) + $100 (medicine) = $120.\n\nRESULT: $120.",
+        "step_3": "3. Compute annual total expenditure:\n   - Annual Expenditure = $120 (monthly) * 12 (months) = $1440.\n\nRESULT: $1440.",
+        "verifier": "VERDICT: passthrough\n#### 1440",
+        "aggregator": "3. Compute annual total expenditure:\n   - Annual Expenditure = $120 (monthly) * 12 (months) = $1440.\n\n#### $1440."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

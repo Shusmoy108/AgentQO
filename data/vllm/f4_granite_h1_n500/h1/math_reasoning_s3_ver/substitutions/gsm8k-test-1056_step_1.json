@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1056",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Compute weekly twin bed loads: Greg has 4 twin beds, and each load washes 2 twin sets. So, weekly twin loads = 4 twin beds * 2 sets per bed = 8 loads.\n\nRESULT: 8",
+  "reference_key": "8",
+  "final_key_plus": "9",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Compute weekly king bed load. Since he has 1 king bed, which requires 1 load, the weekly king bed load is 1.\n\nRESULT: 1",
+    "step_3": "step_3: 3. Add the weekly loads to find the total weekly laundry: Total weekly loads = twin loads + king load = 8 loads + 1 load = 9 loads.\n\nRESULT: 9",
+    "verifier": "VERDICT: passthrough\n#### 9",
+    "aggregator": "9\n#### 9"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "9",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "1. Compute weekly twin bed loads: Greg has 4 twin beds, and each load washes 2 twin sets. So, weekly twin loads = 4 twin beds * 2 sets per bed = 8 loads.\n\nRESULT: 9",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Compute weekly king bed load. Since he has 1 king bed, which requires 1 load, the weekly king bed load is 1.\n\nRESULT: 10",
+        "step_3": "3. Add the weekly loads to find the total weekly laundry: Total weekly loads = twin loads + king load = 8 loads + 1 load = 9 loads.\n\nRESULT: 9",
+        "verifier": "VERDICT: passthrough\n#### 9",
+        "aggregator": "9\n#### 9"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "129",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "1. Calculate the total money raised from selling brownies.\n   - 43 brownies * $3/slice = $129.\n\nRESULT: $129",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Compute weekly king bed load.\n   - 1 king bed * 1 load = 1 load.\n\nRESULT: 1",
+        "step_3": "3. Sum weekly loads to get total weekly loads.\n   - 8 (twin loads) + 1 (king load) = 9 loads.\n\nRESULT: 9",
+        "verifier": "VERDICT: passthrough\n#### 9",
+        "aggregator": "9\n#### 9"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-361",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 225 miles",
+  "reference_key": "225",
+  "final_key_plus": "60",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 300 miles\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 18,000 miles / 300 miles/day = 60 days\nRESULT: 60 days",
+    "verifier": "VERDICT: passthrough\n#### 60",
+    "aggregator": "step_3: RESULT: 18,000 miles / 300 miles/day = 60 days\n\n#### 60"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "226",
+      "reference_key": "225",
+      "key_differs": true,
+      "text": "RESULT: 226 miles",
+      "quality": 0.0,
+      "final_key": "27",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 300 miles\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 60 days",
+        "verifier": "VERDICT: passthrough\n#### 27",
+        "aggregator": "step_3: To find out how many days the train goes between services, we first calculate the total distance traveled in one round trip:\n\n75 miles (first to second) + 100 miles (second to third) + (100 - 50) miles (third to first) = 225 miles\n\nSince the train makes this trip three times a day, the total daily distance is:\n\n225 miles/trip * 3 trips/day = 675 miles/day\n\nThe train needs service every 18,000 miles. To find out how many days it goes between services, we divide the total miles needed for service by the daily distance:\n\n18,000 miles / 675 miles/day \u2248 26.74 days\n\nSince the train can't go a fraction of a day, we round up to the nearest whole day. Therefore, the train goes between services every 27 days.\n\n#### 27"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "150",
+      "reference_key": "225",
+      "key_differs": true,
+      "text": "1. Compute the round trip distance from the third city to the first city:\n\n   Total distance (first to third city) = 75 miles\n   Total distance (third to first city) = 100 miles - 50 miles (first to third) = 50 miles\n   Total round trip distance (first to third to first) = 50 miles + 100 miles = 150 miles\n\nRESULT: 150",
+      "quality": 0.0,
+      "final_key": "80",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2. Calculate the total daily mileage for the round trip:\n\n   Daily mileage = Distance (first to second city) + Distance (third to first city)\n   Daily mileage = 75 miles + 150 miles\n   Daily mileage = 225 miles\n\nRESULT: 225",
+        "step_3": "3. Calculate the number of days between services:\n\n   Days between services = Total miles needed for service / Daily mileage\n   Days between services = 18,000 miles / 225 miles/day\n   Days between services = 80 days\n\nRESULT: 80",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "aggregator": "80\n#### 80"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

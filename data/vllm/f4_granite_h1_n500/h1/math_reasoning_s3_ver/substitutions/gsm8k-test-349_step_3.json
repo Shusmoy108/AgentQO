@@ -1,0 +1,48 @@
+{
+  "task_id": "gsm8k-test-349",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "step_3: 3. Annual total expenditure = $120 (monthly) * 12 (months) = $1440\n\nRESULT: $1440\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+  "reference_key": "4",
+  "final_key_plus": "2640",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 2640",
+    "aggregator": "step_4: 4. Calculate weekly food cost: $25/week\nstep_4: 4. Calculate monthly treat cost: $20/month\nstep_4: 4. Calculate monthly medicine cost: $100/month\nstep_4: 4. Sum up weekly food cost for a month: $25/week * 4 weeks = $100/month\nstep_4: 4. Sum up monthly costs: $100 (food) + $20 (treats) + $100 (medicine) = $220/month\nstep_4: 4. Calculate annual total expenditure: $220/month * 12 months = $2640/year\n\nRESULT: $2640\n#### 2640"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4",
+      "reference_key": "4",
+      "key_differs": false,
+      "text": "step_3: 3. Annual total expenditure = $120 (monthly) * 12 (months) = $1440\n\nRESULT: 5\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "aggregator": "step_4: 4. Calculate weekly expenditure on treats and medicine.\n   - Weekly treats: $20 / 4 weeks = $5\n   - Weekly medicine: $100 / 4 weeks = $25\n   - Total weekly expenditure on treats and medicine: $5 + $25 = $30\n\nRESULT: 30\n\n#### 30"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1440",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "step_3: 3. Annual total expenditure = $120 (treats and medicine) * 12 (months) = $1440\n\nRESULT: $1440",
+      "quality": 0.0,
+      "final_key": "1440",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 1440",
+        "aggregator": "step_3: Annual total expenditure = $120 (treats and medicine) * 12 (months) = $1440\n\n#### $1440"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

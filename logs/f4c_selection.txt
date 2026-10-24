@@ -1,0 +1,8 @@
+setting granite_math_passthrough  (VALID: data/vllm/f4_granite_valid_plans)
+  k=1: aggregator [output_top1/ec_top1/ec500_top1] VALID 0.580 EVAL 0.470; planner [struct_top1/qplus500_top1] VALID 0.580 EVAL 0.600; step_2 [qplus_top1] VALID 0.450 EVAL 0.495
+       pick aggregator (VALID 0.580) EVAL 0.470; best EVAL 0.600; shortfall +0.130 | cheap pick aggregator EVAL 0.470, shortfall +0.130
+  k=2: aggregator,planner [ec_top2/ec500_top2/qplus500_top2] VALID 0.660 EVAL 0.565; aggregator,step_2 [qplus_top2] VALID 0.520 EVAL 0.515; aggregator,step_3 [output_top2] VALID 0.550 EVAL 0.550; planner,step_1 [struct_top2] VALID 0.600 EVAL 0.650
+       pick aggregator,planner (VALID 0.660) EVAL 0.565; best EVAL 0.650; shortfall +0.085 | cheap pick aggregator,planner EVAL 0.565, shortfall +0.085
+  k=3: aggregator,planner,step_1 [qplus500_top3] VALID 0.640 EVAL 0.635; aggregator,planner,step_2 [ec_top3/qplus_top3] VALID 0.630 EVAL 0.595; aggregator,planner,step_3 [ec500_top3] VALID 0.690 EVAL 0.620; aggregator,step_2,step_3 [output_top3] VALID 0.570 EVAL 0.510; planner,step_1,step_2 [struct_top3] VALID 0.600 EVAL 0.630
+       pick aggregator,planner,step_3 (VALID 0.690) EVAL 0.620; best EVAL 0.635; shortfall +0.015 | cheap pick aggregator,planner,step_3 EVAL 0.620, shortfall +0.015
+F4C_SELECT_EXIT=0

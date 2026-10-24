@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1146",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $5",
+  "reference_key": "5",
+  "final_key_plus": "16",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $7",
+    "step_3": "step_3: RESULT: 20 rocks * $5 = $100\n\nRESULT: $100",
+    "verifier": "VERDICT: passthrough\n#### 16",
+    "aggregator": "step_3: RESULT: 20 rocks * $5 = $100\n\nTo find out how much money Adam loses, we first calculate the total cost of the rocks he buys. He buys 20 rocks at $5 each, which amounts to $100.\n\nNext, we determine how many rocks he sells, which is 60% of his total inventory. So, 60% of 20 rocks equals 12 rocks.\n\nAdam sells these 12 rocks at $7 each, so the total revenue from sales is 12 rocks * $7 = $84.\n\nFinally, to find out how much money Adam loses, we subtract the total revenue from the total cost: $100 (total cost) - $84 (total revenue) = $16.\n\n#### 16"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: 6",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 7",
+        "step_3": "step_3: RESULT: 20 * $5 = $100\n\nRESULT: 100",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "step_3: RESULT: 20 * $5 = $100\n\nFinal answer: Adam loses $100.\n\n#### 100"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "10800",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: $10800 (total cost of car and phone)",
+      "quality": 1.0,
+      "final_key": "16",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $7 (selling price per rock)",
+        "step_3": "step_3: RESULT: 20 rocks * $5 = $100 (total cost price)",
+        "verifier": "VERDICT: passthrough\n#### 16",
+        "aggregator": "step_3: RESULT: 20 rocks * $5 = $100 (total cost price)\n\nAdam spends $100 to buy 20 rocks. If he sells 60% of his inventory, he sells 12 rocks (20 * 0.6).\n\nstep_4: step_4: RESULT: 12 rocks * $7 = $84 (revenue from selling 60% of inventory)\n\nThe revenue from selling 60% of his inventory is $84.\n\nstep_5: step_5: RESULT: $100 (total cost price) - $84 (revenue) = $16 loss\n\nAdam loses $16 in total.\n\n#### 16"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

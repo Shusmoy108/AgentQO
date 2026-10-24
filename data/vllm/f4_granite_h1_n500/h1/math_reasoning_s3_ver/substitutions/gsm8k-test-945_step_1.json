@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-945",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 12 miles",
+  "reference_key": "12",
+  "final_key_plus": "5",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 6 hours\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 3 hours (rest time)\nremaining_distance: 8 miles\nstep_4: speed for remaining distance: 4 miles per hour\ntime for remaining distance: 8 / 4 = 2 hours\nEND.\nRESULT: 3 hours (rest time) + 2 hours (remaining distance) = 5 hours.",
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "aggregator": "3 hours (rest time) + 2 hours (remaining distance) = 5 hours.\n#### 5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "13",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 13 miles",
+      "quality": 0.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 6 hours\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 3 hours (rest time)\nRemaining distance: 20 - 12 = 8 miles\nSpeed for remaining distance: 8 / 2 = 4 miles per hour\nTime for remaining distance: 8 / 4 = 2 hours\nRESULT: 2 hours",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_3: RESULT: 3 hours (rest time)\nRemaining distance: 20 - 12 = 8 miles\nSpeed for remaining distance: 8 / 2 = 4 miles per hour\nTime for remaining distance: 8 / 4 = 2 hours\n\nTotal time: 3 (rest) + 2 (remaining) = 5 hours\n\n#### 5"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "1825",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: $1,825",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 6 hours",
+        "step_3": "step_3: RESULT:\nRest time = 3 hours\nRemaining distance = 8 miles\nSpeed for remaining distance = 4 miles per hour\nTime for remaining distance = 8 / 4 = 2 hours\n\nRESULT: 2 hours",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: Rest time = 3 hours\nRemaining distance = 8 miles\nSpeed for remaining distance = 4 miles per hour\nTime for remaining distance = 8 / 4 = 2 hours\n\nRESULT: 2 hours\n#### 2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

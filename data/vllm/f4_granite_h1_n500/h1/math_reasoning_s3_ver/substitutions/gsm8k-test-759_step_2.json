@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-759",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Calculate the total hours of music from all playlists: 6000 songs * 10 hours/song = 60000 hours.\n\nRESULT: 60000 hours.",
+  "reference_key": "60000",
+  "final_key_plus": "60000",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "3. RESULT: 200 hours.",
+    "verifier": "VERDICT: passthrough\n#### 60000",
+    "aggregator": "step_3: 3. To find the total hours for all 20 playlists, multiply the number of songs in each playlist by the length of each song and then by the number of playlists.\n\n20 playlists * 300 songs/playlist * 10 hours/song = 60,000 hours\n\n#### 60,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "60001",
+      "reference_key": "60000",
+      "key_differs": true,
+      "text": "2. Calculate the total hours of music from all playlists: 6000 songs * 10 hours/song = 60000 hours.\n\nRESULT: 60001 hours.",
+      "quality": 0.0,
+      "final_key": "200",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "3. Confirm the total hours by multiplying the number of playlists by the hours per playlist: 20 playlists * 10 hours/playlist = 200 hours.\n\nRESULT: 200 hours.",
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "aggregator": "200 hours. #### 200"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "60000",
+      "key_differs": true,
+      "text": "step_2: RESULT: 60000 hours (6000 songs * 10 hours/song).",
+      "quality": 0.0,
+      "final_key": "200",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 200 hours (20 playlists * 10 hours/playlist).",
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "aggregator": "step_3: RESULT: 200 hours (20 playlists * 10 hours/playlist).\n#### 200"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

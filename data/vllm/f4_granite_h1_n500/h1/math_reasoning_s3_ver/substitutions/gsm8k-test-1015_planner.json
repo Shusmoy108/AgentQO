@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1015",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of packs Anne gave away by subtracting the packs she kept from the total packs.\n2. Divide the total number of packs given away by the number of friends to find out how many packs each friend received.\n3. Multiply the number of packs each friend received by the number of pieces in each pack to find out how many pieces each friend received.",
+  "reference_key": null,
+  "final_key_plus": "78",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Total packs given away = Total packs - Packs kept\n= 15 - 2\n= 13 packs\n\nRESULT: 13",
+    "verifier": "VERDICT: passthrough\n#### 78",
+    "step_2": "step_2: 2. Packs per friend = Total packs given away / Number of friends\n= 13 / 10\n= 1.3 packs per friend\n\nRESULT: 1.3",
+    "step_3": "3. Pieces per friend = Packs per friend * Pieces per pack\n= 1.3 * 60\n= 78 pieces\n\nRESULT: 78",
+    "aggregator": "78 pieces per friend. #### 78"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate Jewel's daily production. Since Jewel processes 50 customers daily, her total weekly production is 50 customers/day * 7 days/week = 350 customers.\n\n2. Next, determine Julie's production rate. Given that Julie operates the cash register twice as fast as Jewel, Julie processes 2 * 50 customers/day = 100 customers per day.\n\n3. Finally, calculate Julie's total weekly production. Julie's weekly production is 100 customers/day * 7 days/week = 700 customers.\n\nTotal weekly production for both Julie and Jewel is 350 (Jewel) + 700 (Julie) = 1050 customers.",
+      "quality": 1.0,
+      "final_key": "78",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Anne's total sweets = 15 packs * 60 pieces/pack = 900 pieces.\n\nRESULT: 900",
+        "verifier": "VERDICT: passthrough\n#### 78",
+        "step_2": "2. Anne kept 2 packs, so she gave away 15 - 2 = 13 packs to her friends.\n\nEach of her 10 friends received 13 packs / 10 friends = 1.3 packs.\n\nSince each pack contains 60 pieces, each friend received 1.3 packs * 60 pieces/pack = 78 pieces.\n\nRESULT: 78",
+        "step_3": "3. Anne's total sweets given to friends = 13 packs * 60 pieces/pack = 780 pieces.\n\nSince she gave these to 10 friends, each friend received 780 pieces / 10 friends = 78 pieces.\n\nRESULT: 78",
+        "aggregator": "78"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the overall count of packs Anne distributed by deducting the packs she preserved from the total packs.\n2. Split the total number of packs distributed by the quantity of friends to ascertain the packs each friend acquired.\n3. Multiply the packs per friend by the pieces per pack to determine the pieces per friend.",
+      "quality": 1.0,
+      "final_key": "78",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. RESULT: 15 packs (total) - 2 packs (kept) = 13 packs (distributed)\n\nNext step: Step 2.",
+        "verifier": "VERDICT: passthrough\n#### 78",
+        "step_2": "step_2: 2. 13 packs (distributed) \u00f7 10 friends = 1.3 packs per friend\n\nRESULT: 1.3 packs per friend. However, since you can't give a fraction of a pack, Anne would have to adjust her distribution. She could either keep one more pack for herself or give each friend 1 pack and 30 pieces of sweets.",
+        "step_3": "step_3: 3. 1.3 packs per friend * 60 pieces per pack = 78 pieces per friend\n\nRESULT: 78 pieces per friend.",
+        "aggregator": "78 pieces per friend.\n#### 78"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

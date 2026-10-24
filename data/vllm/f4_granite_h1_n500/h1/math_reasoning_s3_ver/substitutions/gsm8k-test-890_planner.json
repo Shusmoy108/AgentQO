@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-890",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of indoor plants: Since one-fourth of the plants are indoor, we multiply 100 by 1/4.\n2. Calculate the remaining plants: Subtract the number of indoor plants from the total number of plants.\n3. Calculate the number of outdoor plants: Two-thirds of the remaining plants are outdoor, so we multiply the remaining number by 2/3.\n4. Calculate the number of flowering plants: Subtract the number of outdoor plants from the remaining plants.\n5. Calculate the percentage of flowering plants: Divide the number of flowering plants by the total number of plants and multiply by 100.\n\nNote: The actual calculation of the numbers is not provided as per the instructions.",
+  "reference_key": null,
+  "final_key_plus": "50",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Indoor plants = 100 * (1/4) = 25\n\nRESULT: 25",
+    "verifier": "VERDICT: passthrough\n#### 50",
+    "step_2": "step_2: 2. Remaining plants = 100 - 25 = 75\n\nRESULT: 75",
+    "step_3": "step_3: 3. Outdoor plants = 75 * (2/3) = 50\n\nRESULT: 50",
+    "aggregator": "50\n#### 50"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of pieces Teddy completed from the first puzzle:\n   Teddy finished half of a 500 piece puzzle, so he placed 500 / 2 = 250 pieces.\n\n2. Determine the number of pieces from the second puzzle Teddy completed:\n   Since he finished another 500 piece puzzle within an hour, he placed 500 pieces.\n\n3. Sum the pieces from both puzzles to find the total:\n   Teddy placed 250 (from the first puzzle) + 500 (from the second puzzle) = 750 puzzle pieces during that hour.\n\nPLAN: 1. Calculate half of 500, 2. Calculate the full 500, 3. Add the results from steps 1 and 2.",
+      "quality": 1.0,
+      "final_key": "25",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 250",
+        "verifier": "VERDICT: passthrough\n#### 25",
+        "step_2": "step_2: RESULT: 500\n\nCarry out step 3.\n\nRESULT: 750",
+        "step_3": "RESULT: 750",
+        "aggregator": "step_3: RESULT: 750\n\nTo find the number of flowering plants, we first calculate one-fourth of the total plants, which is 100 * (1/4) = 25 indoor plants.\n\nThis leaves 100 - 25 = 75 plants.\n\nTwo-thirds of these are outdoor plants, so 75 * (2/3) = 50 outdoor plants.\n\nThe remaining plants are flowering plants, which is 75 - 50 = 25.\n\nTo express this as a percentage of the total plants, we calculate 25 / 100 * 100% = 25%.\n\n#### 25%"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate the count of indoor plants: Given that one-fourth of the plants are indoor, we multiply 100 by 1/4.\n2. Determine the residual plants: Subtract the calculated number of indoor plants from the overall plant count.\n3. Estimate the outdoor plants: Approximately two-thirds of the leftover plants are outdoor, so we multiply the residual number by 2/3.\n4. Assess the number of blooming plants: Deduct the estimated outdoor plants from the residual plants.\n5. Compute the proportion of blooming plants: Divide the assessed number of blooming plants by the total plant count and multiply by 100.\n\nNote: The precise computation of the numbers is withheld as per the guidelines.",
+      "quality": 0.0,
+      "final_key": "16.67",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. RESULT: 25 indoor plants (100 * 1/4)",
+        "verifier": "VERDICT: passthrough\n#### 16.67",
+        "step_2": "step_2: 2. RESULT: 75 plants remaining (100 - 25)\n\nNext step will be to estimate the outdoor plants.",
+        "step_3": "step_3: 3. RESULT: 50 outdoor plants (75 * 2/3)\n\nNext step will be to assess the number of blooming plants.\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "aggregator": "step_4: 4. RESULT: 100 - 50 - 33.33 = 16.67 flowering plants (100 - 50 - 33.33)\n\n#### 16.67%"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

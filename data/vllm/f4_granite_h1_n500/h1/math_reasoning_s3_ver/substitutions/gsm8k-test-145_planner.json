@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-145",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of pineapples in the field by multiplying the number of hectares by the number of pineapples per hectare.\n2. Determine the number of harvests in a year by dividing the number of months in a year by the number of months between harvests.\n3. Multiply the total number of pineapples by the number of harvests to find out how many pineapples John can harvest within a year.",
+  "reference_key": null,
+  "final_key_plus": "4000",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. RESULT: 10 hectares * 100 pineapples/hectare = 1000 pineapples\n\nEnd with \"RESULT: <number>\".",
+    "verifier": "VERDICT: passthrough\n#### 4000",
+    "step_2": "step_2: 2. RESULT: 12 months / 3 months per harvest = 4 harvests\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: 3. RESULT: 1000 pineapples * 4 harvests = 4000 pineapples\n\nEND: RESULT: 4000 pineapples",
+    "aggregator": "RESULT: 4000 pineapples\n#### 4000"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Let's denote the cost of one carrot as C.\n2. The salad costs $6, so for two salads, Ellen pays 2 * $6 = $12.\n3. The yogurt is half the price of the salad, so it costs $6 / 2 = $3 for one yogurt.\n4. Ellen eats two carrots and one yogurt, so the total cost for carrots and yogurt is 2C + $3.\n5. We know the total cost for all goods is $11, so we can set up the equation: 2C + $3 = $11.\n6. To find the cost of one carrot (C), we subtract $3 from both sides of the equation: 2C = $11 - $3 = $8.\n7. Finally, divide both sides by 2 to solve for C: C = $8 / 2 = $4.\n\nPLAN:\n1. Define the cost of one carrot as C.\n2. Calculate the total cost for salads (2 * $6 = $12).\n3. Determine the cost of one yogurt (half the price of salad, $3).\n4. Set up an equation for the total cost of carrots and yogurt (2C + $3).\n5. Use the total cost information ($11) to formulate the equation.\n6. Solve for C by isolating it in the equation.",
+      "quality": 1.0,
+      "final_key": "4000",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $4",
+        "verifier": "VERDICT: passthrough\n#### 4000",
+        "step_2": "step_2: RESULT: $12 (total cost for salads)",
+        "step_3": "step_3: RESULT: $3 (cost of one yogurt)",
+        "aggregator": "step_1: Calculate total hectares of pineapple field\n10 hectares\n\nstep_2: Calculate total pineapples on the field\n100 pineapples/hectare * 10 hectares = 1000 pineapples\n\nstep_3: Calculate annual harvests\nSince John can harvest every 3 months, in a year (12 months), he can harvest 4 times (12 months / 3 months per harvest).\n\nFinal answer: 1000 pineapples * 4 harvests = 4000 pineapples\n\n#### 4000"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the overall quantity of pineapples in the field by multiplying the number of hectares by the quantity of pineapples per hectare.\n2. Estimate the frequency of harvests in a year by dividing the number of months in a year by the number of months until the next harvest.\n3. Multiply the overall number of pineapples by the frequency of harvests to ascertain the total number of pineapples John can gather in a year.",
+      "quality": 1.0,
+      "final_key": "4000",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. RESULT: 10 hectares * 100 pineapples/hectare = 1000 pineapples\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 4000",
+        "step_2": "step_2: 2. John harvests every 3 months, so in a year (12 months), he can harvest 12 / 3 = 4 times.\n\nRESULT: 4\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "3. RESULT: 1000 pineapples * 4 harvests = 4000 pineapples\n\nEnd with \"RESULT: <number>\".",
+        "aggregator": "step_3: 3. RESULT: 1000 pineapples * 4 harvests = 4000 pineapples\n\n#### 4000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

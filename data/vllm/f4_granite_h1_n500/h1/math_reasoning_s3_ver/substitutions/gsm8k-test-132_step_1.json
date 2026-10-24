@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-132",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Total roller coaster rides: 2 (Pam) + 4 (Fred) = 6 rides.\nRESULT: 6",
+  "reference_key": "6",
+  "final_key_plus": "60",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Total luge rides: 2 (Pam) + 2 (Fred) = 4 rides.\nRESULT: 4",
+    "step_3": "3. Total tickets used: 6 rides (roller coaster) * 6 tickets/ride + 4 rides (luge) * 6 tickets/ride = 36 tickets (roller coaster) + 24 tickets (luge) = 60 tickets.\n\nRESULT: 60",
+    "verifier": "VERDICT: passthrough\n#### 60",
+    "aggregator": "60\n#### 60"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "7",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "1. Total roller coaster rides: 2 (Pam) + 4 (Fred) = 6 rides.\nRESULT: 7",
+      "quality": 1.0,
+      "final_key": "60",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Total luge rides: 2 (Pam) + 2 (Fred) = 4 rides.\nRESULT: 4",
+        "step_3": "3. Total tickets used: 6 rides (roller coaster) * 6 tickets/ride = 36 tickets.\n4 rides (luge) * 6 tickets/ride = 24 tickets.\nTotal tickets used: 36 tickets (roller coaster) + 24 tickets (luge) = 60 tickets.\n\nRESULT: 60 tickets.",
+        "verifier": "VERDICT: passthrough\n#### 60",
+        "aggregator": "60 tickets. #### 60"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "12",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "RESULT: 12",
+      "quality": 1.0,
+      "final_key": "60",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 4\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 60\n\nRESULT: 60 tickets used that day.",
+        "verifier": "VERDICT: passthrough\n#### 60",
+        "aggregator": "RESULT: 60 tickets used that day.\n#### 60"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

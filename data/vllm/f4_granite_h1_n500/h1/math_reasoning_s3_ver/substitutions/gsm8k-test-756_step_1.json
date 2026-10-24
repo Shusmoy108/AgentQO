@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-756",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: x",
+  "reference_key": null,
+  "final_key_plus": "11",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 2x\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: x + 2x = 33\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".\n\nRESULT: 3x = 33",
+    "verifier": "VERDICT: passthrough\n#### 11",
+    "aggregator": "RESULT: 3x = 33\n\n#### 11"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "RESULT: 25",
+      "quality": 1.0,
+      "final_key": "22",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 2x = 2 * 11 = 22.",
+        "step_3": "step_3: RESULT: 3x = 33.\n\nCarry out step 4. Show the calculation briefly.\n\nEND: RESULT: 22.",
+        "verifier": "VERDICT: passthrough\n#### 22",
+        "aggregator": "step_4: 33 / 3 = 11.\n\nFinal answer: 22. #### 22"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "RESULT: y",
+      "quality": 1.0,
+      "final_key": "22",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 2 * 11 = 22",
+        "step_3": "step_3: RESULT: 3x = 33\nstep_3: RESULT: x = 33 / 3 = 11\nstep_3: RESULT: 2x = 2 * 11 = 22\n\nRESULT: 22",
+        "verifier": "VERDICT: passthrough\n#### 22",
+        "aggregator": "22\n#### 22"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

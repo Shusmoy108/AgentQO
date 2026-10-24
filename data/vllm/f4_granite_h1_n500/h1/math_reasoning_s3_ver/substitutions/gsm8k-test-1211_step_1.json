@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1211",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 42 mL",
+  "reference_key": "42",
+  "final_key_plus": "448",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 56 mL\n\nCarry out step 3 only. Show the final calculation.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 56 mL * 8 = 448 mL\n\nRESULT: 448 mL",
+    "verifier": "VERDICT: passthrough\n#### 448",
+    "aggregator": "448 mL\n#### 448"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "43",
+      "reference_key": "42",
+      "key_differs": true,
+      "text": "RESULT: 43 mL",
+      "quality": 1.0,
+      "final_key": "448",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 56 mL (14 mL + 42 mL)\n\nCarry out step 3 only. Show the final calculation.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 448 mL (56 mL * 8)",
+        "verifier": "VERDICT: passthrough\n#### 448",
+        "aggregator": "step_3: RESULT: 448 mL (56 mL * 8)\n\n#### 448"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "448",
+      "reference_key": "42",
+      "key_differs": true,
+      "text": "RESULT: 42 mL\n\nNext step (Step 2) would calculate total volume for one dosage as 14 mL (first) + 42 mL (second) = 56 mL, then Step 3 would multiply by 8 to get total for 8 doses:\n\n4. Calculate total volume for 8 doses: 56 mL * 8 = 448 mL.\n\nFinal result: 448 mL.",
+      "quality": 1.0,
+      "final_key": "448",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "4. Calculate total volume for 8 doses: 56 mL * 8 = 448 mL.\n\nRESULT: 448 mL.",
+        "step_3": "RESULT: 448 mL.",
+        "verifier": "VERDICT: passthrough\n#### 448",
+        "aggregator": "step_3: To find the total amount of medicine for 8 doses, we first calculate the amount for one dose, which is 14 mL of the first medicine plus 3 times that amount of the second medicine.\n\n14 mL (first medicine) + 3 * 14 mL (second medicine) = 14 mL + 42 mL = 56 mL per dose.\n\nNow, to find the total for 8 doses:\n\n56 mL/dose * 8 doses = 448 mL.\n\n#### 448"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

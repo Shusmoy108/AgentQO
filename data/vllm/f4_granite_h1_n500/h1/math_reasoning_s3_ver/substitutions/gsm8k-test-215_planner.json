@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-215",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the shoes and the belt by adding the price of the shoes ($320.00) to the price of the belt ($32.00).\n2. Divide the total cost by Lori's hourly wage ($8.00) to find out how many hours she needs to work.\n3. The result from step 2 will give the number of hours Lori needs to work to afford her purchase.",
+  "reference_key": null,
+  "final_key_plus": "44",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: $352.00",
+    "verifier": "VERDICT: passthrough\n#### 44",
+    "step_2": "step_2: RESULT: $352.00 / $8.00 = 44 hours\n\nRESULT: 44 hours",
+    "step_3": "step_3: RESULT: 44 hours\n\nRESULT: 44 hours",
+    "aggregator": "44 hours\n#### 44"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate the number of sheep Charleston has. Since Charleston has 4 times as many sheep as Seattle, and Seattle has 20 sheep, Charleston has 4 * 20 = 80 sheep.\n\n2. Next, determine the number of sheep Toulouse has. Toulouse has twice as many sheep as Charleston, so Toulouse has 2 * 80 = 160 sheep.\n\n3. Finally, add up the number of sheep for all three locations to find the total. Toulouse, Charleston, and Seattle have 160 (Toulouse) + 80 (Charleston) + 20 (Seattle) = 260 sheep together.",
+      "quality": 1.0,
+      "final_key": "44",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 80",
+        "verifier": "VERDICT: passthrough\n#### 44",
+        "step_2": "step_2: RESULT: 160\n\nCarry out step 3. Show the final calculation.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 260",
+        "aggregator": "step_3: Lori's total expenditure for the shoes and belt is $320 + $32 = $352.\n\nTo find out how many hours she needs to work, we divide the total cost by her hourly wage:\n\n$352 / $8.00 per hour = 44 hours\n\n#### 44"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total amount required for the shoes and the belt by summing the price of the shoes ($320.00) and the belt ($32.00).\n2. Divide this total by Lori's hourly rate ($7.50) to determine the hours she must work.\n3. The outcome from step 2 indicates the number of hours Lori must work to cover her acquisition.",
+      "quality": 0.0,
+      "final_key": "45",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $352.00\n\nNext step:\n\nPLAN:\n2. Divide the total amount required ($352.00) by Lori's hourly rate ($7.50).\n\nCarry out step 2:\n\nRESULT: 46.6666666667\n\nSince Lori cannot work a fraction of an hour, she will need to work 47 hours to cover the cost of the shoes and the belt.",
+        "verifier": "VERDICT: passthrough\n#### 45",
+        "step_2": "RESULT: 47.00",
+        "step_3": "RESULT: 47.00",
+        "aggregator": "step_3: To find out how many hours Lori needs to work, we first calculate the total cost of the shoes and the belt: $320.00 (shoes) + $32.00 (belt) = $352.00.\n\nNext, we divide the total cost by her hourly wage: $352.00 / $8.00 per hour = 44 hours.\n\nHowever, since she can't work a fraction of an hour, we'll round up to the nearest whole hour. Therefore, Lori will need to work 45 hours to cover the cost of the shoes and belt.\n\n#### 45"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

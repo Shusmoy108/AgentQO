@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1077",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the time the second train arrives and leaves the station.\n2. Calculate the time the third train arrives and leaves the station.\n3. Calculate the time Paul will wait for his train.\n\nExplanation:\n1. The first train arrives in 10 minutes and stays for 20 minutes, so it leaves at 10 + 20 = 30 minutes. The second train arrives half an hour after the first train leaves, so it arrives at 30 + 30 = 60 minutes. The second train stays for a quarter of the time the first train stayed, which is 20 / 4 = 5 minutes, so it leaves at 60 + 5 = 65 minutes.\n2. The third train arrives an hour after the second train leaves, so it arrives at 65 + 60 = 125 minutes. The third train leaves immediately after it arrives, so it leaves at 125 minutes.\n3. The fourth train arrives 20 minutes after the third train leaves, so it arrives at 125 + 20 = 145 minutes. This is the train Paul will board, so Paul will wait until 145 minutes. The total waiting time for Paul is 145 - 10 = 135 minutes.",
+  "reference_key": null,
+  "final_key_plus": "135",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. The second train arrives at 60 minutes (half an hour after the first train leaves at 30 minutes). It stays for 5 minutes.\n\nRESULT: 65 minutes",
+    "verifier": "VERDICT: passthrough\n#### 135",
+    "step_2": "step_2: The third train arrives at 125 minutes (an hour after the second train leaves at 65 minutes). It leaves immediately after arriving, so Paul will wait for 125 - 125 = 0 minutes.\n\nRESULT: 0 minutes",
+    "step_3": "step_3: The fourth train arrives at 145 minutes (20 minutes after the third train leaves at 125 minutes). Paul will board this train.\n\nRESULT: 135 minutes",
+    "aggregator": "step_3: The fourth train arrives at 145 minutes (20 minutes after the third train leaves at 125 minutes). Paul will board this train.\n\nRESULT: 135 minutes\n#### 135"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of bowls Calvin's family can initially fill with the soup:\n   - Four adult bowls + Eight child bowls = 12 bowls\n\n2. Determine the total number of bowls Calvin's family will eat:\n   - Calvin (adult) + Calvin's wife (adult) + Two children = 3 adults + 2 children = 5 bowls\n\n3. Find out how many times the leftover soup can fill a child's bowl:\n   - Leftover bowls = Total bowls - Family bowls = 12 - 5 = 7 bowls\n   - Each child's share = Leftover bowls / Number of children = 7 / 2 = 3.5 times\n\nSince a child cannot have half a bowl, this means the leftover soup will be enough for each child to have a bowl of soup for lunch three times.",
+      "quality": 0.0,
+      "final_key": "3.5",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total number of bowls Calvin's family can initially fill with the soup:\n   - Four adult bowls + Eight child bowls = 12 bowls\n\nRESULT: 12",
+        "verifier": "VERDICT: passthrough\n#### 3.5",
+        "step_2": "step_2: 2. Determine the total number of bowls Calvin's family will eat:\n   - Calvin (adult) + Calvin's wife (adult) + Two children = 3 adults + 2 children = 5 bowls\n\nRESULT: 5",
+        "step_3": "3. Find out how many times the leftover soup can fill a child's bowl:\n   - Leftover bowls = Total bowls - Family bowls = 12 - 5 = 7 bowls\n   - Each child's share = Leftover bowls / Number of children = 7 / 2 = 3.5 times\n\nRESULT: 3.5",
+        "aggregator": "3.5\n#### 3.5"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the time the second train departs and the second train arrives.\n2. Compute the time the third train departs and the third train arrives.\n3. Compute the time Paul has to wait for his train.\n\nExplanation:\n1. The first train arrives in 10 minutes and remains for 20 minutes, thus it departs at 10 + 20 = 30 minutes. The second train arrives 30 minutes after the first train departs, arriving at 30 minutes. The second train persists for a quarter of the duration the first train stayed, which is 20 / 4 = 5 minutes, departing at 30 + 5 = 35 minutes.\n2. The third train departs an hour following the second train's departure, departing at 60 minutes. The third train arrives immediately upon its departure, arriving at 60 minutes.\n3. The fourth train arrives 20 minutes post the third train's departure, arriving at 60 + 20 = 80 minutes. This is the train Paul will board, so Paul will wait until 80 minutes. The total waiting time for Paul is 80 - 10 = 70 minutes.",
+      "quality": 0.0,
+      "final_key": "80",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. The second train departs at 35 minutes (10 minutes for the first train + 25 minutes after it departs). It arrives at 35 minutes (30 minutes after departure + 5 minutes duration).\n\nRESULT: 35 minutes",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "step_2": "step_2: The third train departs at 60 minutes (1 hour after the second train departs). It arrives immediately upon its departure, at 60 minutes.\n\nRESULT: 60 minutes",
+        "step_3": "step_3: The fourth train arrives at 80 minutes (60 minutes after the third train departs + 20 minutes after it departs). Paul will wait until this time.\n\nRESULT: 80 minutes",
+        "aggregator": "80 minutes\n#### 80"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

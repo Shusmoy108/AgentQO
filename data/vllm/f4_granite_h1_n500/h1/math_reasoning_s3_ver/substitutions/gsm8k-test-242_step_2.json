@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-242",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Calculate total pages written (30 pages).\n\nRESULT: 30 pages.",
+  "reference_key": "30",
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 30 pages * 6 minutes/page = 180 minutes.\nRESULT: 3 hours.",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "aggregator": "step_3: Mike writes 30 pages per week, as each of the 2 pen pals sends him 2 letters, totaling 4 letters per week. Each letter is 5 pages long.\n\n180 minutes (30 pages * 6 minutes/page) is the time Mike spends writing these letters.\n\nConverting minutes to hours, we get 3 hours.\n\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "31",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "step_2: Calculate total pages written (30 pages).\n\nRESULT: 31 pages.",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: 31 pages * 6 minutes per page = 186 minutes.\nRESULT: 3 hours.",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_3: Mike writes 31 pages in total (2 letters per person * 2 people he stopped penpaling with * 5 pages per letter).\n\n186 minutes (31 pages * 6 minutes per page) is the time it takes him to write these pages.\n\nConverting minutes to hours, 186 minutes equals 3 hours.\n\n#### 3"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "6",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "step_2: \nRESULT: Mike writes 30 pages per week in response to the 6 letters he receives.\nEnd.",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: \nRESULT: 3 hours.\nEnd.",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "aggregator": "step_3: Mike initially had 5 pen pals. After stopping with 2, he now has 3. Each of the remaining 3 pen pals sends 2 letters a week, totaling 6 letters per week.\n\nEach letter is 5 pages long, so in a week, Mike receives 6 * 5 = 30 pages.\n\nMike writes in kind, so he also sends 30 pages a week.\n\nHe writes a page every 6 minutes, which means he writes at a rate of 30 pages / 6 minutes = 5 pages per minute.\n\nTo find out how many minutes he spends writing, we multiply the number of pages by the time per page: 30 pages * 60 minutes/hour = 1800 minutes.\n\nFinally, to convert minutes to hours, we divide by 60: 1800 minutes / 60 = 30 hours.\n\n#### 30"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,44 @@
+Sat Oct 24 16:01:53 UTC 2026
+workflow math_reasoning_s3_ver; output order: ['verifier', 'aggregator', 'step_3', 'step_2', 'step_1', 'planner']
+  plan all_small        upgrades none
+  plan set_aggregator+step_3+verifier upgrades ['aggregator', 'step_3', 'verifier']
+  plan set_aggregator+verifier upgrades ['aggregator', 'verifier']
+  plan set_planner+step_1 upgrades ['planner', 'step_1']
+  plan set_planner+step_3+verifier upgrades ['planner', 'step_3', 'verifier']
+  plan set_planner+verifier upgrades ['planner', 'verifier']
+  plan set_planner      upgrades ['planner']
+  plan set_verifier     upgrades ['verifier']
+
+all_small          acc=0.520  cost_units=  6.0  large_calls=0.0
+set_aggregator+step_3+verifier acc=0.840  cost_units= 15.0  large_calls=3.0
+set_aggregator+verifier acc=0.870  cost_units= 12.0  large_calls=2.0
+set_planner+step_1 acc=0.480  cost_units= 12.0  large_calls=2.0
+set_planner+step_3+verifier acc=0.810  cost_units= 15.0  large_calls=3.0
+set_planner+verifier acc=0.840  cost_units= 12.0  large_calls=2.0
+set_planner        acc=0.650  cost_units=  9.0  large_calls=1.0
+set_verifier       acc=0.810  cost_units=  9.0  large_calls=1.0
+
+plan                  acc      gain vs small [95% CI]   %gain   %cost
+set_aggregator+verifier  0.870      +0.350 [+0.250,+0.450]       -       -
+set_aggregator+step_3+verifier  0.840      +0.320 [+0.220,+0.420]       -       -
+set_planner+verifier  0.840      +0.320 [+0.220,+0.430]       -       -
+set_planner+step_3+verifier  0.810      +0.290 [+0.190,+0.390]       -       -
+set_verifier        0.810      +0.290 [+0.200,+0.380]       -       -
+set_planner         0.650      +0.130 [+0.030,+0.230]       -       -
+all_small           0.520      +0.000 [+0.000,+0.000]       -       -
+set_planner+step_1  0.480      -0.040 [-0.140,+0.070]       -       -
+
+HTTP calls: 611  cache hits: 4189  misses: 611
+
+verifier vs aggregator (per plan):  changed / fixed / broke / aggregator acc -> final acc
+  all_small          36/100   12    6   0.46 -> 0.52
+  set_aggregator+step_3+verifier 33/100   24    5   0.65 -> 0.84
+  set_aggregator+verifier 29/100   22    3   0.68 -> 0.87
+  set_planner+step_1 36/100   15    8   0.41 -> 0.48
+  set_planner+step_3+verifier 45/100   31    4   0.54 -> 0.81
+  set_planner+verifier 41/100   30    1   0.55 -> 0.84
+  set_planner        30/100   14    4   0.55 -> 0.65
+  set_verifier       50/100   39    4   0.46 -> 0.81
+Artifacts in data/vllm/f4_qwen_valid_plans/math_cautious
+F4D_MATH_CAUTIOUS_EXIT=0
+Sat Oct 24 16:02:37 UTC 2026

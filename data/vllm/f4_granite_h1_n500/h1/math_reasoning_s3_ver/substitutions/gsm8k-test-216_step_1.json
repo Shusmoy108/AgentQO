@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-216",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $200",
+  "reference_key": "200",
+  "final_key_plus": "220",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $1980",
+    "step_3": "step_3: RESULT: $2000 + $200 - $1980 = $220",
+    "verifier": "VERDICT: passthrough\n#### 220",
+    "aggregator": "step_3: RESULT: $2000 + $200 - $1980 = $220\n\n#### $220"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "201",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "RESULT: 201",
+      "quality": 1.0,
+      "final_key": "220",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 1980",
+        "step_3": "step_3: RESULT: $2000 + $200 - $1980 = $220",
+        "verifier": "VERDICT: passthrough\n#### 220",
+        "aggregator": "step_3: RESULT: $2000 + $200 - $1980 = $220\n\n#### $220"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "9000",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "RESULT: 1440 widgets/day for Widgeteer 3000, 1080 widgets/day for WidgetMaster 9000.",
+      "quality": 1.0,
+      "final_key": "220",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $1980 (Total payment over 12 months)",
+        "step_3": "step_3: RESULT: $2000 (Borrowed amount) + $200 (Additional amount) - $1980 (Total payment) = $220 (Remaining balance)",
+        "verifier": "VERDICT: passthrough\n#### 220",
+        "aggregator": "step_3: RESULT: $2000 (Borrowed amount) + $200 (Additional amount) - $1980 (Total payment) = $220 (Remaining balance)\n\n#### $220"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

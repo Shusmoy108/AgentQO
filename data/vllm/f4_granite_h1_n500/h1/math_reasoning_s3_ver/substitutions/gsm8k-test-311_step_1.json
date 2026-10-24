@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-311",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 9 eggs per day.",
+  "reference_key": "9",
+  "final_key_plus": "91",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 4 eggs per day.\n\nEND: RESULT: 13 eggs per day.",
+    "step_3": "step_3: RESULT: 13 eggs per day.\nRESULT: 13 eggs per day * 7 days in a week = 91 eggs in a week.",
+    "verifier": "VERDICT: passthrough\n#### 91",
+    "aggregator": "RESULT: 91 eggs in a week. #### 91"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "10",
+      "reference_key": "9",
+      "key_differs": true,
+      "text": "RESULT: 10 eggs per day.",
+      "quality": 0.0,
+      "final_key": "16",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 6 eggs per day.\n\nEND: RESULT: 6 eggs per day.",
+        "step_3": "step_3: RESULT: 16 eggs per day (10 eggs + 6 eggs).\nEND: RESULT: 16 eggs per day.",
+        "verifier": "VERDICT: passthrough\n#### 16",
+        "aggregator": "step_3: RESULT: 16 eggs per day (10 eggs + 6 eggs).\nEND: RESULT: 16 eggs per day.\n\n#### 16"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "9",
+      "key_differs": true,
+      "text": "RESULT: Nine eggs per day (from the three individuals eating three eggs each).",
+      "quality": 0.0,
+      "final_key": "67",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: Four eggs per day (from the two individuals eating two eggs each).\nEND: RESULT: Four eggs per day.",
+        "step_3": "step_3: RESULT: Sixty-seven eggs in a week (Eleven eggs per day * Seven days in a week).\nEND: RESULT: 67",
+        "verifier": "VERDICT: passthrough\n#### 67",
+        "aggregator": "step_3: RESULT: Sixty-seven eggs in a week (Eleven eggs per day * Seven days in a week).\nEND: RESULT: 67\n#### 67"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

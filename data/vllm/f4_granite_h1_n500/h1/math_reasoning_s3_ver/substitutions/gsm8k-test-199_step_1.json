@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-199",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 500 sentences.",
+  "reference_key": "500",
+  "final_key_plus": "5000",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 10 cents per sentence (Publisher B's rate).\nCarry out step 3.\n\nRESULT: 5000 cents (Mark's total earnings from Publisher B).",
+    "step_3": "RESULT: 5000 cents.",
+    "verifier": "VERDICT: passthrough\n#### 5000",
+    "aggregator": "step_1: Mark edits an equal number of sentences for both publishers, so each publisher gets 500 sentences (1000 total sentences / 2 publishers).\n\nstep_2: Publisher A pays 5 cents per sentence, so for 500 sentences, Mark earns 500 * 5 = 2500 cents from Publisher A.\n\nstep_3: Publisher B pays twice what Publisher A pays, so Publisher B pays 2 * 5 = 10 cents per sentence.\n\nstep_4: For the 500 sentences, Mark earns 500 * 10 = 5000 cents from Publisher B.\n\n#### 5000 cents"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "501",
+      "reference_key": "500",
+      "key_differs": true,
+      "text": "RESULT: 501 sentences.",
+      "quality": 0.0,
+      "final_key": "5000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 10 cents/sentence.\n\nRESULT: 5000 cents.",
+        "step_3": "step_3: RESULT: 5000 cents.\n\nRESULT: 5000 cents.",
+        "verifier": "VERDICT: passthrough\n#### 5000",
+        "aggregator": "5000 cents. #### 5000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "500",
+      "key_differs": true,
+      "text": "RESULT: 500 sentences go to Publisher A.\n\nNext: Step 2 and 3 will calculate Publisher B's payment and total earnings.",
+      "quality": 0.0,
+      "final_key": "5000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 10 cents per sentence for Publisher B.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 500 sentences * 10 cents/sentence = 5000 cents.\n\nRESULT: 5000 cents.",
+        "verifier": "VERDICT: passthrough\n#### 5000",
+        "aggregator": "5000 cents. #### 5000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

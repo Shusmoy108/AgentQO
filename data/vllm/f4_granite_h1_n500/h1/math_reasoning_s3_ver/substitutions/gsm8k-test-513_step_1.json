@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $100",
+  "reference_key": "100",
+  "final_key_plus": "300",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $400",
+    "step_3": "step_3: RESULT: $400 - $100 = $300\n\nRESULT: $300",
+    "verifier": "VERDICT: passthrough\n#### 300",
+    "aggregator": "step_3: RESULT: $400 - $100 = $300\n\n#### $300"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "101",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "RESULT: 101",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $400\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $400 * 0.25 = $100\n\nRESULT: $100",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "step_3: RESULT: $400 * 0.25 = $100\n\nFinal answer: Julie had $100 left. #### 100"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "1. RESULT: Julie spent $100 on clothes.\n\nNext step: Compute the remaining amount post-clothes purchase.\n\nPlan:\n1. Calculate the remaining money after buying clothes: $500 - $100 = $400.\n\nRESULTS so far:\n1. RESULT: Julie spent $100 on clothes.\n2. Remaining money after buying clothes: $400.\n\nCarry out step 2 only. Show the calculation briefly.\n\nEnd with \"Result: <number>\".",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. RESULT: Julie had $400 left after buying clothes.\n\nEnd with \"RESULT: <number>\".\nRESULT: $400",
+        "step_3": "3. RESULT: Julie spent $100 on CDs.\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 300",
+        "aggregator": "step_2: 2. CALCULATION: Remaining money after clothes = $500 - ($500 * 0.20)\nstep_3: 3. RESULT: Julie spent $100 on CDs.\n\nFinal answer: Julie had $300 left after spending on clothes and CDs.\n\n#### $300"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

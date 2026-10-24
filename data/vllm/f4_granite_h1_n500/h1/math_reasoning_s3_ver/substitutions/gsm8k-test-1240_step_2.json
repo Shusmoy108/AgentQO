@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1240",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: The top shelf holds 20 - 5 = 15 books.\nRESULT: 15 books on the top shelf.",
+  "reference_key": "15",
+  "final_key_plus": "2",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: Each bookcase can hold 2 * 10 + 20 = 40 books.\nRESULT: 40 books per bookcase.",
+    "verifier": "VERDICT: passthrough\n#### 2",
+    "aggregator": "step_3: Each bookcase can hold 2 * 10 + 20 = 40 books.\n\n#### 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "16",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "step_2: The top shelf holds 20 - 5 = 15 books.\nRESULT: 16 books on the top shelf.",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: Each bookcase can hold 2 * 10 + 20 = 40 books.\nRESULT: 40 books per bookcase.",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: Each bookcase can hold 2 * 10 + 20 = 40 books.\n\n#### 2"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "step_2: RESULT: 15 books on the top shelf.\n\nPost-step 2 summary:\nbottom_shelf = 20 books\ntop_shelf = 15 books\ntotal_per_bookcase = (2 * 10) + 20 = 40 books\n\nNow, proceed with step_3.\n\nstep_3: RESULT: Each bookcase can hold 40 books.\n\nNext, proceed with step_4.\n\nstep_4: RESULT: Elly needs 3 bookcases to hold all her books.",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: Each bookcase can hold 2 * 10 + 20 = 40 books.",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: RESULT: Each bookcase can hold 2 * 10 + 20 = 40 books.\n\n#### 2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

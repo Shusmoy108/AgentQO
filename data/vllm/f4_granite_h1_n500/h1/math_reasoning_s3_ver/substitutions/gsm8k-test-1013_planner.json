@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1013",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate Janet's total hourly earnings: $10 (wages) + $15 (tips) = $25 per hour.\n2. Calculate the total amount Janet wants to save for the down payment: 20% of $10000 = $2000.\n3. Determine the number of weeks Janet needs to work: $2000 (down payment) / $25 (hourly earnings) = 80 hours. Since Janet works 40 hours a week, divide 80 hours by 40 to find the number of weeks needed.\n\nFinal answer: Janet will need to work for 2 weeks to save the down payment.",
+  "reference_key": null,
+  "final_key_plus": "1",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: $25\n\nNext step:\n\nPlan:\nPLAN:\n1. Calculate Janet's total weekly earnings: $25 (hourly earnings) * 40 hours = $1000.\n\nFinal answer: Janet's total weekly earnings are $1000.\n\nResults so far:\n1. Janet's total hourly earnings: $25\n2. Janet's total weekly earnings: $1000\n\nCarry out step 2 only. Show the calculation briefly.\n\nEnd with \"Next step:\".",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "step_2": "Next step:\n\nCalculation:\n$2000 (down payment) / $1000 (weekly earnings) = 2\n\nRESULT: 2",
+    "step_3": "Next step:\n\nCalculation:\n2 (weeks needed) * 40 (hours per week) = 80\n\nRESULT: 80",
+    "aggregator": "step_3: Calculate total weekly earnings\n\nCalculation:\nJanet's weekly earnings from wages = $10/hour * 40 hours = $400\nJanet's weekly earnings from tips = $15/hour * 40 hours = $600\nTotal weekly earnings = $400 (wages) + $600 (tips) = $1000\n\nNext step: Calculate the total amount needed for the downpayment\n\nCalculation:\n20% of $10000 = 0.20 * $10000 = $2000\n\nNow, calculate the number of weeks needed to save the downpayment\n\nCalculation:\nWeeks needed = Total downpayment / Total weekly earnings\nWeeks needed = $2000 / $1000 = 2\n\nHowever, since Janet works 40 hours a week, we need to adjust the calculation:\n\nWeeks needed = Total downpayment / (Total weekly earnings * Weeks per year)\nWeeks needed = $2000 / ($1000 * 52) = 2 / 52 \u2248 0.0385 weeks\n\nSince Janet can't work a fraction of a week, we'll round up to the nearest whole week.\n\nFinal answer: 1 week\n\n#### 1"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Let's denote the number of bandages the nurses started with on the first day as X.\n2. On the first day, they used 38 bandages, leaving X - 38.\n3. They ordered one bulk pack of 50 bandages, so they had X - 38 + 50 = X + 12 bandages left.\n4. On the second day, they used 38 - 10 = 28 bandages, leaving (X + 12) - 28 = X - 16 bandages.\n5. They ordered two bulk packs, adding 2 * 50 = 100 bandages, making it (X - 16) + 100 = X + 84 bandages.\n6. On the third day, they used half a pack, which is 50 / 2 = 25 bandages, leaving (X + 84) - 25 = X + 59 bandages.\n7. They had 78 bandages left at the end of the third day, so X + 59 = 78.\n8. Solving for X, we find X = 78 - 59 = 19.\n\nPLAN:\n1. Define the initial number of bandages (X).\n2. Calculate remaining bandages after the first day's use.\n3. Calculate remaining bandages after the first day's order.\n4. Calculate remaining bandages after the second day's use.\n5. Calculate remaining bandages after the second day's order.\n6. Calculate remaining bandages after the third day's use.\n7. Determine the final number of bandages using the given information.\n8. Solve for the initial number of bandages (X).",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 19",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "step_2": "step_2: RESULT: X - 38 = 19 - 38 = -19\n\nThis result indicates that there were not enough bandages initially (X) to cover the use and order for the first day. However, since we're looking for the initial number of bandages, we'll consider the negative value as a deficit.\n\nRESULT: -19",
+        "step_3": "step_3: RESULT: X + 12 = -19 + 12 = -7\n\nRESULT: -7",
+        "aggregator": "step_3: Janet's total weekly earnings, including both wages and tips, can be calculated as follows:\n\nHourly wage: $10/hour * 40 hours/week = $400/week\nHourly tips: $15/hour * 40 hours/week = $600/week\n\nTotal weekly earnings: $400 + $600 = $1000/week\n\nJanet wants to save 20% of the car's cost for a downpayment, which is:\n\n20% of $10000 = 0.20 * $10000 = $2000\n\nTo find out how many weeks she needs to work to save this amount, we divide the total downpayment by her weekly earnings:\n\nWeeks needed = $2000 / $1000/week = 2 weeks\n\nHowever, since she works 40 hours a week, we need to account for the fact that she doesn't work on weekends. Assuming she works 5 days a week, she actually works 20 hours per week.\n\nWeekly savings = $1000/week / 20 hours/week = $50/hour\n\nNow, we calculate how many hours she needs to work to save $2000:\n\nHours needed = $2000 / $50/hour = 40 hours\n\nSince she works 20 hours a week, we divide the total hours needed by her weekly hours to find out the number of weeks:\n\nWeeks needed = 40 hours / 20 hours/week = 2 weeks\n\n#### 2"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate Janet's total hourly earnings: $10 (wages) + $15 (tips) = $25 per hour.\n2. Calculate the total amount Janet wants to save for the down payment: 20% of $10000 = $2000.\n3. Determine the number of weeks Janet needs to work: $2000 (down payment) / $25 (hourly earnings) = 80 hours. Since Janet works 40 hours a week, divide 80 hours by 40 to find the number of weeks needed.\n\nFinal answer: Janet will need to work for 1.6 weeks to save the down payment.",
+      "quality": 0.0,
+      "final_key": "80",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $25\n\nNext step:\n\nPlan:\nPLAN:\n1. Calculate Janet's total weekly earnings: $25 (hourly earnings) * 40 hours = $1000.\n\nFinal answer: Janet earns $1000 per week.\n\nResults so far:\n1. Janet's total hourly earnings: $25\n2. Janet's total weekly earnings: $1000\n\nCarry out step 2 only. Show the calculation briefly.\n\nEnd with \"Next step:\".",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "step_2": "Next step:\n\nCalculation:\n$2000 (down payment) / $1000 (weekly earnings) = 2 weeks\n\nRESULT: 2",
+        "step_3": "Next step:\n\nCalculation:\n2 weeks (from step 2) * 40 hours (weekly work) = 80 hours\n\nRESULT: 80",
+        "aggregator": "step_3: Calculate total weekly earnings\n\nCalculation:\nJanet's total weekly earnings = (Hourly wage + Hourly tips) * Hours worked per week\n= ($10 + $15) * 40\n= $25 * 40\n= $1000\n\nNow, calculate the total amount needed for the downpayment:\n\nCalculation:\nDownpayment amount = Total cost of the car * Savings percentage\n= $10000 * 20%\n= $2000\n\nNext, find out how many weeks Janet needs to work to save the downpayment:\n\nCalculation:\nWeeks needed = Downpayment amount / Total weekly earnings\n= $2000 / $1000\n= 2\n\nFinally, multiply the weeks needed by the hours she works per week:\n\nCalculation:\nWeeks to work = Weeks needed * Weeks per week\n= 2 * 40\n= 80\n\n#### 80"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

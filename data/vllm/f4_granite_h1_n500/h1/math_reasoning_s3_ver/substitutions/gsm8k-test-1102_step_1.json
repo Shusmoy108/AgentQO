@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1102",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $15.00",
+  "reference_key": "15",
+  "final_key_plus": "32",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $20.00 (frying pan) + $27.00 (towel set) = $47.00\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $47.00 (sum of discounted prices) - $15.00 (returned item) = $32.00\n\nRESULT: $32.00",
+    "verifier": "VERDICT: passthrough\n#### 32",
+    "aggregator": "RESULT: $32.00\n#### 32.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "16",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "RESULT: 16",
+      "quality": 0.0,
+      "final_key": "32",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $20.00 (frying pan) + $27.00 (towel set) = $47.00\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $47.00 (sum of discounted prices) - $15.00 (returned item) = $32.00\n\nRESULT: $32.00",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "aggregator": "RESULT: $32.00\n#### 32.00"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "27",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "RESULT: $15.00\n\nNext step: Compute the discounted prices for the frying pan and towel set.\n\nStep 2 Calculation:\nFrying pan: $20.00 - ($20.00 * 20%) = $20.00 - $4.00 = $16.00\nTowel set: $30.00 - ($30.00 * 10%) = $30.00 - $3.00 = $27.00\n\nNow, proceed to sum these discounted prices.",
+      "quality": 0.0,
+      "final_key": "27",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "Step 2 Calculation:\nFrying pan: $20.00 - ($20.00 * 20%) = $20.00 - $4.00 = $16.00\nTowel set: $30.00 - ($30.00 * 10%) = $30.00 - $3.00 = $27.00\n\nRESULT: $43.00",
+        "step_3": "step_3: RESULT: $43.00\n\nFinal step: Subtract the total cost of the returned item and new purchases from the original charge.\n\nstep_3: RESULT: $43.00\n\nFinal result:\nRESULT: $27.00",
+        "verifier": "VERDICT: passthrough\n#### 27",
+        "aggregator": "Final result:\nRESULT: $27.00\n#### $27.00"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

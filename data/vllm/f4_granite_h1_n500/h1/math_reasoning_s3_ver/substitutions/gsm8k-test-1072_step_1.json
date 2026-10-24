@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1072",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $120",
+  "reference_key": "120",
+  "final_key_plus": "85",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: Maggie spent $15, and Riza spent approximately $20.\nTotal spent = $15 + $20 = $35.\n\nCarry out step 3.\n\nRESULT: $120 - $35 = $85.",
+    "step_3": "RESULT: $85.",
+    "verifier": "VERDICT: passthrough\n#### 85",
+    "aggregator": "step_3: RESULT: $85.\n\n#### 85"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "121",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "RESULT: 121",
+      "quality": 1.0,
+      "final_key": "85",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $15 (Maggie) + $20 (Riza) = $35 (total spent)\n\nEND: $35",
+        "step_3": "step_3: RESULT: $120 (initial total) - $35 (total spent) = $85 (remaining)\n\nEND: $85",
+        "verifier": "VERDICT: passthrough\n#### 85",
+        "aggregator": "Final answer: $85\n#### 85"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "8",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "Ingrid drinks 8 cups of water daily.\n\nRESULT: 8",
+      "quality": 1.0,
+      "final_key": "85",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Maggie and Riza spent a total of $15 (Maggie) + $20 (Riza) = $35.\n\nRESULT: 35",
+        "step_3": "step_3: The remaining amount is $120 (initial total) - $35 (total spent) = $85.\n\nRESULT: 85",
+        "verifier": "VERDICT: passthrough\n#### 85",
+        "aggregator": "85\n#### 85"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-921",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 4 slices per day.",
+  "reference_key": "4",
+  "final_key_plus": "4",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 6 slices per day (Abby + Josh)\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 24 slices / 6 slices per day = 4 days.\n\nRESULT: 4 days.",
+    "verifier": "VERDICT: passthrough\n#### 4",
+    "aggregator": "4 days. #### 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "5",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "RESULT: 5 slices per day.",
+      "quality": 1.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 6 slices per day (Abby's 2 slices + Josh's 4 slices)\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 4 days (24 slices / 6 slices per day)",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "aggregator": "step_3: RESULT: 4 days (24 slices / 6 slices per day)\n#### 4"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "RESULT: 4\n\nJosh can eat 4 slices a day (2 * 2).",
+      "quality": 1.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 6\n\nAbby eats 2 slices and Josh eats 4 slices, so together they consume 2 + 4 = 6 slices a day.\n\nFinal result: The loaf of bread will last 24 / 6 = 4 days.",
+        "step_3": "RESULT: 4",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "aggregator": "step_3: RESULT: 4\n\nAbby can eat 2 slices a day, and Josh can eat twice as much, which means Josh eats 4 slices a day. Together, they consume 2 (Abby's) + 4 (Josh's) = 6 slices per day.\n\nA loaf of bread has 24 slices. If they eat 6 slices a day, the loaf will last 24 slices / 6 slices per day = 4 days.\n\n#### 4"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

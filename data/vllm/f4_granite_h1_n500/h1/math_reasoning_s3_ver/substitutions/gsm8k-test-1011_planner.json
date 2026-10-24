@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1011",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n\n1. Calculate the amount of water Wanda pumped on the first day: 1/4 of 18000 gallons.\n2. Calculate the amount of water Ms. B pumped on the first day: 3/4 of the amount Wanda pumped.\n3. Calculate the total amount of water pumped in two days and subtract from the tank's capacity to find the remaining gallons.\n\nThe detailed steps are as follows:\n\n1. Wanda pumped 1/4 * 18000 = 4500 gallons on the first day.\n2. Ms. B pumped 3/4 * 4500 = 3375 gallons on the first day.\n3. On the second day, Wanda pumped 2/3 * 4500 = 3000 gallons, and Ms. B pumped 1/3 * 3375 = 1125 gallons.\n4. The total amount of water pumped in two days is 4500 + 3375 + 3000 + 1125 = 12000 gallons.\n5. The remaining gallons for the tank to be full are 18000 - 12000 = 6000 gallons.\n\nSo, the final answer is 6000 gallons.",
+  "reference_key": null,
+  "final_key_plus": "12000",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 4500 gallons",
+    "verifier": "VERDICT: passthrough\n#### 12000",
+    "step_2": "step_2: RESULT: 3375 gallons",
+    "step_3": "step_3: RESULT: 12000 gallons (4500 + 3375 + 3000 + 1125)",
+    "aggregator": "step_3: RESULT: 12000 gallons (4500 + 3375 + 3000 + 1125)\n\nFinal answer: #### 12000"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of loaves sold in the morning:\n   - Two-thirds of 60 loaves = (2/3) * 60 = 40 loaves\n\n2. Determine the remaining loaves after morning sales:\n   - Remaining loaves = Total loaves - Morning sales = 60 - 40 = 20 loaves\n\n3. Calculate the afternoon sales:\n   - Since half of the remaining loaves is sold equally in the afternoon and evening,\n   - Afternoon sales = (1/2) * 20 = 10 loaves\n\nPLAN: The bakery sells 10 loaves of bread in the afternoon.",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the number of loaves sold in the morning:\n   - Two-thirds of 60 loaves = (2/3) * 60 = 40 loaves\n\nRESULT: 40",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "step_2": "step_2: Determine the remaining loaves after morning sales:\n   - Remaining loaves = Total loaves - Morning sales = 60 - 40 = 20 loaves\n\nRESULT: 20",
+        "step_3": "step_3: 3. Calculate the afternoon sales:\n   - Since half of the remaining loaves is sold equally in the afternoon and evening,\n   - Afternoon sales = (1/2) * 20 = 10 loaves\n\nRESULT: 10",
+        "aggregator": "10\n#### 10"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n\n1. Compute the water Wanda displaced on the initial day: 1/4 of 18000 gallons.\n2. Compute the water Ms. B displaced on the initial day: 3/4 of the water Wanda displaced.\n3. Compute the total water displaced in two days and subtract from the tank's capacity to ascertain the leftover gallons.\n\nThe detailed steps are as follows:\n\n1. Wanda displaced 1/4 * 18000 = 4500 gallons on the first day.\n2. Ms. B displaced 3/4 * 4500 = 3375 gallons on the first day.\n3. On the second day, Wanda displaced 2/3 * 4500 = 3000 gallons, and Ms. B displaced 1/3 * 3375 = 1125 gallons.\n4. The total water displaced in two days is 4500 + 3375 + 3000 + 1125 = 12000 gallons.\n5. The leftover gallons for the tank to be full are 18000 - 12000 = 6000 gallons.\n\nThus, the final answer is 6000 gallons.\n\nNote: The subtle error is in step 2, where \"displaced\" is used instead of \"pumped.\" This changes the preposition from active (pumping) to passive (displaced), subtly altering the conclusion that Wanda and Ms. B were actively working to empty the tank.",
+      "quality": 0.0,
+      "final_key": "12000",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 4500 gallons",
+        "verifier": "VERDICT: passthrough\n#### 12000",
+        "step_2": "step_2: RESULT: 3375 gallons",
+        "step_3": "step_3: RESULT: 4500 + 3375 + 3000 + 1125 = 12000 gallons",
+        "aggregator": "step_3: RESULT: 4500 (Wanda's first day) + 3375 (Ms. B's first day) + 3000 (Wanda's second day) + 1125 (Ms. B's second day) = 12000 gallons\n\n#### 12000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

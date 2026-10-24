@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-133",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the miles Walt walked on Tuesday by multiplying the miles he walked on Monday by 6.\n2. Add the miles Walt walked on Monday and Tuesday to find the total miles walked from Monday to Tuesday.\n3. Subtract the total miles walked from Monday to Tuesday from the overall total mileage to find the miles walked on Wednesday.\n\nThe output will be the number of miles Walt walked on Wednesday.",
+  "reference_key": null,
+  "final_key_plus": "13",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Miles walked on Tuesday = 4 miles * 6 = 24 miles.\n\nRESULT: 24 miles.",
+    "verifier": "VERDICT: passthrough\n#### 13",
+    "step_2": "2. Total miles walked from Monday to Tuesday = 4 miles (Monday) + 24 miles (Tuesday) = 28 miles.\n\nRESULT: 28 miles.",
+    "step_3": "3. Miles walked on Wednesday = Total mileage (41 miles) - Total miles walked from Monday to Tuesday (28 miles) = 13 miles.\n\nRESULT: 13 miles.",
+    "aggregator": "13 miles. #### 13"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total time Tatiana has for soccer, video games, and reading by adding the hours she has on Saturday and Sunday: 7 hours (Saturday) + 5 hours (Sunday) = 12 hours.\n\n2. Determine the time spent on reading and video games. She reads for 3 hours and plays video games for 1/3 of the remaining time. First, find the remaining time after reading: 12 hours - 3 hours (reading) = 9 hours. Then, calculate the time for video games: 1/3 * 9 hours = 3 hours.\n\n3. Add the time spent on reading and video games to find the total time spent on these two activities: 3 hours (reading) + 3 hours (video games) = 6 hours. Finally, subtract this total from the overall weekend time to find the time spent on soccer: 12 hours (total weekend) - 6 hours (reading + video games) = 6 hours.\n\nTo find the percentage of her weekend spent playing soccer, divide the time spent on soccer by the total weekend time and multiply by 100: (6 hours / 12 hours) * 100 = 50%.\n\nPLAN:\n1. Calculate total weekend time: 7 hours (Saturday) + 5 hours (Sunday) = 12 hours.\n2. Determine time for reading and video games: 3 hours (reading) + 3 hours (video games) = 6 hours.\n3. Calculate soccer time: 12 hours (total) - 6 hours (reading + video games) = 6 hours.\n4. Find soccer percentage: (6 hours / 12 hours) * 100 = 50%.",
+      "quality": 1.0,
+      "final_key": "13",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 12 hours",
+        "verifier": "VERDICT: passthrough\n#### 13",
+        "step_2": "step_2: RESULT: 6 hours (reading + video games)",
+        "step_3": "step_3: RESULT: 6 hours (soccer)\n\nEND: 6 hours",
+        "aggregator": "step_2: RESULT: Walt walked 24 miles on Tuesday (6 times Monday's distance)\nstep_1: RESULT: Walt walked 4 miles on Monday\n\nstep_3: RESULT: Total mileage from Monday to Tuesday = 4 + 24 = 28 miles\n\nstep_4: RESULT: Wednesday's mileage = Total mileage - Monday's mileage = 41 - 28 = 13 miles\n\n#### 13"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Multiply the miles Walt walked on Monday by 7 to calculate the miles on Tuesday.\n2. Sum the miles from Monday and Tuesday to determine the miles from Monday to Tuesday.\n3. Deduct the miles from Monday to Tuesday from the entire mileage to find the miles walked on Wednesday.\n\nThe output will be the number of miles Walt walked on Wednesday.",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "4 miles (Monday) * 7 = 28 miles (Tuesday)\n\nRESULT: 28 miles",
+        "verifier": "VERDICT: passthrough\n#### 9",
+        "step_2": "step_2: 4 (Monday) + 28 (Tuesday) = 32 miles (Monday to Tuesday)\n\nRESULT: 32 miles",
+        "step_3": "step_3: 41 (total Monday to Wednesday) - 32 (Monday to Tuesday) = 9 miles (Wednesday)\n\nRESULT: 9 miles",
+        "aggregator": "9 miles\n#### 9"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

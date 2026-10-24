@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1033",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate Melissa's total earnings from jury duty by multiplying her daily pay by the number of days she served.\n2. Calculate Melissa's total parking expenses by multiplying her daily parking cost by the number of days she served.\n3. Subtract the total parking expenses from the total earnings to find Melissa's net earnings, then divide by the total number of hours she spent on jury duty to find her hourly rate after expenses.\n\nOutput:\n1. Total earnings = $15/day * 3 days = $45\n2. Total parking expenses = $3/day * 3 days = $9\n3. Net earnings = $45 - $9 = $36\nHours spent on jury duty = 6 hours/day * 3 days = 18 hours\nHourly rate after expenses = $36 / 18 hours = $2/hour",
+  "reference_key": null,
+  "final_key_plus": "2",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: $45",
+    "verifier": "VERDICT: passthrough\n#### 2",
+    "step_2": "step_2: RESULT: $9\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $36 / 18 hours = $2/hour",
+    "aggregator": "step_1: Calculate total jury pay for 3 days - $15/day * 3 days = $45\nstep_2: Subtract parking expenses for 3 days - $3/day * 3 days = $9\nstep_3: Total jury pay after expenses - $45 - $9 = $36\nstep_4: Calculate hours worked - 6 hours/day * 3 days = 18 hours\nstep_5: Calculate hourly pay after expenses - $36 / 18 hours = $2/hour\n\n#### $2/hour"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the rate of the plane: The plane travels 1200 miles in 3 hours. To find the rate, divide the distance by the time: 1200 miles / 3 hours = 400 miles per hour.\n\n2. Determine the time needed for the additional 2000 miles: Using the rate calculated in step 1, multiply the distance by the rate to find the time required: 2000 miles * (1 hour / 400 miles) = 5 hours.\n\n3. Calculate the total time for both distances: Add the initial 3 hours to the time found in step 2: 3 hours + 5 hours = 8 hours.",
+      "quality": 0.0,
+      "final_key": "11.67",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the rate of the plane: The plane travels 1200 miles in 3 hours. To find the rate, divide the distance by the time: 1200 miles / 3 hours = 400 miles per hour.\n\nRESULT: 400 miles per hour",
+        "verifier": "VERDICT: passthrough\n#### 11.67",
+        "step_2": "2. Determine the time needed for the additional 2000 miles: Using the rate calculated in step 1, multiply the distance by the rate to find the time required: 2000 miles * (1 hour / 400 miles) = 5 hours.\n\nRESULT: 5 hours",
+        "step_3": "3. Calculate the total time for both distances: Add the initial 3 hours to the time found in step 2: 3 hours + 5 hours = 8 hours.\n\nRESULT: 8 hours",
+        "aggregator": "step_3: 3. Calculate the total time for both distances: Add the initial 3 hours to the time found in step 2: 3 hours + 5 hours = 8 hours.\n\nRESULT: 8 hours\n\n#### $11.67\n\nExplanation:\nMelissa spends a total of 8 hours on jury duty. She is paid $15 per day for these 8 hours, which equals $120 for the 3 days. However, she also has to pay $3 for parking each day, totaling $9 for the 3 days.\n\nTo find her hourly pay after expenses, we subtract the parking costs from her total pay: $120 - $9 = $111.\n\nThen, we divide the remaining amount by the total hours worked to find her hourly rate: $111 / 8 hours = $13.88 per hour.\n\nHowever, since the question asks for the amount per hour after expenses, we need to consider only the net pay, which is $111.\n\nSo, Melissa makes $111 / 8 hours = $13.88 per hour after expenses."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate Melissa's total earnings from jury duty by multiplying her daily pay by the number of days she served.\n2. Calculate Melissa's total parking expenses by multiplying her daily parking cost by the number of days she served.\n3. Subtract the total parking expenses from the total earnings to find Melissa's net earnings, then divide by the total number of hours she spent on jury duty to find her hourly rate after expenses.\n\nOutput:\n1. Total earnings = $15/day * 3 days = $45\n2. Total parking expenses = $3/day * 3 days = $9\n3. Net earnings = $45 - $9 = $36\nHours spent on jury duty = 6 hours/day * 3 days = 18 hours\nHourly rate after expenses = $36 / 18 hours = $2.10/hour",
+      "quality": 0.0,
+      "final_key": "2.1",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $45",
+        "verifier": "VERDICT: passthrough\n#### 2.1",
+        "step_2": "step_2: RESULT: $9\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $36 / 18 hours = $2.10/hour",
+        "aggregator": "step_1: Calculate total jury pay without expenses\nTotal jury pay without expenses = $15/day * 3 days = $45\n\nstep_2: Calculate total parking expenses\nTotal parking expenses = $3/day * 3 days = $9\n\nstep_3: Calculate net jury pay after expenses\nNet jury pay after expenses = Total jury pay without expenses - Total parking expenses\nNet jury pay after expenses = $45 - $9 = $36\n\nstep_4: Calculate net jury pay per hour\nNet jury pay per hour = Net jury pay after expenses / Total hours spent\nNet jury pay per hour = $36 / 18 hours = $2.10/hour\n\n#### $2.10/hour"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

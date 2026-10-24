@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-606",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 290,000 rotations/month",
+  "reference_key": "290000",
+  "final_key_plus": "6.33",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 10,440,000 rotations / 290,000 rotations/month \u2248 36 months\n\nFinal result: 36 months before the tires need to be replaced.",
+    "step_3": "step_3: RESULT: 36 months / 12 months/year = 3 years\n\nFinal result: 3 years before the tires need to be replaced.",
+    "verifier": "VERDICT: passthrough\n#### 6.33",
+    "aggregator": "step_3: RESULT: 400 miles / 2 miles per rotation = 200 rotations per month\nstep_4: 200 rotations per month * 36 months = 7200 rotations\nstep_5: 7200 rotations / 10,440,000 rotations per tire = 0.000689 tire lifespan\nstep_6: 0.000689 tire lifespan / 12 months = 0.000057 tire lifespan per month\nstep_7: 0.000057 tire lifespan per month * 3 years = 0.171 rotations\n\nFinal result: 0.171 rotations, which means the tires will need to be replaced after approximately 0.171 years, or 6.33 months.\n\n#### 6.33"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "290001",
+      "reference_key": "290000",
+      "key_differs": true,
+      "text": "RESULT: 290001 rotations/month",
+      "quality": 0.0,
+      "final_key": "3.01",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 10440000 / 290001 \u2248 36.07 years\n\nFinal result: 36.07 years",
+        "step_3": "step_3: RESULT: 36.07 years / 12 months/year \u2248 3.01 years\n\nFinal result: 3.01 years",
+        "verifier": "VERDICT: passthrough\n#### 3.01",
+        "aggregator": "step_3: RESULT: 36.07 years / 12 months/year \u2248 3.01 years\n\nFinal result: 3.01 years\n#### 3.01"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "116000000",
+      "reference_key": "290000",
+      "key_differs": true,
+      "text": "290,000 rotations/month * 400 miles/month = 116,000,000 rotations/month.\n\nRESULT: 116,000,000 rotations",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 10,440,000 rotations / 116,000,000 rotations/month \u2248 0.0897 months.\n\nRESULT: 0.0897 months",
+        "step_3": "RESULT: 3 years",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_1: Calculate the total rotations per month.\nJeremy drives 400 miles a month, and each mile results in 725 tire rotations.\nTotal rotations per month = 400 miles/month * 725 rotations/mile = 290,000 rotations/month\n\nstep_2: Calculate the total rotations per year.\nTotal rotations per year = 290,000 rotations/month * 12 months/year = 3,480,000 rotations/year\n\nstep_3: Determine the number of years before replacement.\nEach tire can undergo 10,440,000 rotations.\nYears before replacement = 10,440,000 rotations / 3,480,000 rotations/year = 3 years\n\n#### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

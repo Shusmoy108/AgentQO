@@ -1,0 +1,48 @@
+{
+  "task_id": "gsm8k-test-653",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "RESULT: $80 was withheld from Sally's wage.",
+  "reference_key": "80",
+  "final_key_plus": "80",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 80",
+    "aggregator": "step_2: Calculate the total amount Sally should have in her bank account after receiving her full wage.\nTotal expected balance = Weekly wage + Initial balance\nTotal expected balance = $300 + $200\nTotal expected balance = $500\n\nstep_3: Determine the actual amount in Sally's bank account.\nActual balance = $420\n\nstep_4: Calculate the difference between the expected and actual balances to find the withheld amount.\nWithheld amount = Total expected balance - Actual balance\nWithheld amount = $500 - $420\nWithheld amount = $80\n\n#### 80"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "81",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "RESULT: 81 was withheld from Sally's wage.",
+      "quality": 0.0,
+      "final_key": "81",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 81",
+        "aggregator": "step_2: Calculate the total amount Sally should have in her account after receiving her full wage.\nTotal amount = Weekly wage + Initial bank balance\nTotal amount = $300 + $200\nTotal amount = $500\n\nstep_3: Determine the difference between the actual amount in her account and the expected amount.\nWithheld amount = Actual amount - Expected amount\nWithheld amount = $420 - $500\nWithheld amount = -$80\n\nHowever, since the withheld amount cannot be negative, this indicates an error in the initial information provided. Sally's bank account should have $500, not $420, if she received her full wage of $300.\n\nGiven the discrepancy, let's correct the calculation:\n\nstep_3: RESULT: 81 was withheld from Sally's wage.\n\n#### 81"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "-80",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "RESULT: -$80.\n\nTo further clarify, $80 was withheld from Sally's wage of $300. Therefore, her actual bank balance should have been $500, but due to the withholding, it is $420.\n\nRESULT: -$80.",
+      "quality": 0.0,
+      "final_key": "-80",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### -80",
+        "aggregator": "RESULT: -$80.\n#### -$80"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-458",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of spotted puppies by adding the number of spotted puppies from Jennifer's litter to the number of spotted puppies from Brandon's litter.\n2. Calculate the total number of puppies by adding the total number of puppies from Jennifer's litter to the total number of puppies from Brandon's litter.\n3. Divide the total number of spotted puppies by the total number of puppies and then multiply by 100 to find the percentage of puppies with spots.",
+  "reference_key": null,
+  "final_key_plus": "35",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. RESULT: 7 spotted puppies (3 from Jennifer's + 4 from Brandon's)",
+    "verifier": "VERDICT: passthrough\n#### 35",
+    "step_2": "step_2: 2. RESULT: 11 puppies (8 from Jennifer's + 12 from Brandon's)\n\nCarry out step 3.\n\nRESULT: 7 (spotted puppies) / 11 (total puppies) * 100 = 63.6363636364%",
+    "step_3": "RESULT: 63.6363636364%",
+    "aggregator": "step_3: To find the percentage of puppies with spots, we first calculate the total number of spotted puppies from both dogs: 3 (Jennifer's) + 4 (Brandon's) = 7 spotted puppies.\n\nNext, we find the total number of puppies: 8 (Jennifer's) + 12 (Brandon's) = 20 puppies.\n\nFinally, we calculate the percentage of spotted puppies: (7/20) * 100 = 35%.\n\n#### 35.0\n\nNote: The provided result (63.6363636364%) seems to be incorrect based on the given information. The correct percentage is 35%."
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of slices from large apples: 3 large apples * 5 slices each = 15 slices.\n2. Calculate the total number of slices from small apples: 5 small apples * 3 slices each = 15 slices.\n3. Add the slices from large and small apples to find the total number of slices before eating: 15 slices (from large) + 15 slices (from small) = 30 slices.\n4. Subtract the number of slices Adam ate from the total number of slices to find the remaining slices: 30 slices - 15 slices = 15 slices.\n\nPLAN:\n1. Compute slices from large apples.\n2. Compute slices from small apples.\n3. Sum slices from both types of apples.\n4. Subtract the number of eaten slices from the total to find the remaining slices.",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Compute slices from large apples: 3 large apples * 5 slices each = 15 slices.\n\nRESULT: 15",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "step_2": "step_2: 2. Compute slices from small apples: 5 small apples * 3 slices each = 15 slices.\n\nRESULT: 15",
+        "step_3": "3. Sum slices from both types of apples: 15 slices (from large) + 15 slices (from small) = 30 slices.\n\nRESULT: 30",
+        "aggregator": "30 (total puppies)\n\n#### 30"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Sum the spotted puppies from Jennifer's litter and Brandon's litter to find the total.\n2. Sum the total puppies from Jennifer's and Brandon's litters separately.\n3. Divide the total spotted puppies by the total puppies, then multiply by 100 to determine the percentage of puppies with spots. (A subtle error: This statement now incorrectly suggests that the total number of puppies is the same for both litters, which might not be the case.)",
+      "quality": 1.0,
+      "final_key": "35",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Jennifer's spotted puppies: 3\n2. Brandon's spotted puppies: 4\n3. Total spotted puppies: 3 + 4 = 7\n\nRESULT: 7",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "step_2": "step_2:\n1. Jennifer's total puppies: 8\n2. Brandon's total puppies: 12\n3. Total puppies: 8 + 12 = 20\n\nRESULT: 20",
+        "step_3": "3. Percentage of puppies with spots: (7 / 20) * 100 = 35%\n\nRESULT: 35%",
+        "aggregator": "35%\n#### 35"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

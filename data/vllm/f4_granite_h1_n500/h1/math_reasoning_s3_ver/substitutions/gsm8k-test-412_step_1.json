@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-412",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Shannon eats 2 cookies per night. Over 30 days, she eats 2 * 30 = 60 cookies.\n\nRESULT: 60",
+  "reference_key": "60",
+  "final_key_plus": "5",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Total cookies needed = 60 / 12 = 5 dozens.\n\nRESULT: 5",
+    "step_3": "step_3: Shannon needs to make 5 dozens of cookies to have enough for 30 days.\n\nRESULT: 5",
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "aggregator": "step_3: Shannon needs to make 5 dozens of cookies to have enough for 30 days.\n\n#### 5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "61",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "Shannon eats 2 cookies per night. Over 30 days, she eats 2 * 30 = 60 cookies.\n\nRESULT: 61",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Total cookies needed = 60 / 12 = 5 dozens.\n\nRESULT: 5",
+        "step_3": "RESULT: 5",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_2: Shannon eats 2 cookies per night, so in 30 days, she will consume 2 * 30 = 60 cookies.\n\nstep_3: To find out how many dozens of cookies she needs to make, we divide the total number of cookies she wants by the number of cookies per dozen. So, 60 cookies \u00f7 12 cookies per dozen = 5 dozens.\n\n#### 5"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "30",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "1. RESULT: Shannon eats 60 cookies in 30 days.",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. RESULT: Shannon needs 5 dozens of cookies to have enough for 30 days.",
+        "step_3": "RESULT: 5 dozens.",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_2: To find out how many cookies Shannon needs for 30 days, multiply the number of cookies she eats per night by the number of nights: 2 cookies/night * 30 nights = 60 cookies.\n\nstep_3: Now, divide the total number of cookies needed by the number of cookies made per dozen: 60 cookies / 12 cookies/dozen = 5 dozens.\n\n#### 5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

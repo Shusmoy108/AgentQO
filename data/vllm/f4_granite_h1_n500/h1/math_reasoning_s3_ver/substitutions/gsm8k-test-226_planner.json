@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-226",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the new total number of water type cards James has after losing 8.\n2. Add the new total to the number of grass type cards to find the new total number of cards.\n3. Divide the new total number of water type cards by the new total number of cards and multiply by 100 to find the percentage chance.\n\nThe output will be the percentage chance rounded to the nearest integer.",
+  "reference_key": null,
+  "final_key_plus": "70",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. New total water type cards = 40 - 8 = 32\n\nRESULT: 32",
+    "verifier": "VERDICT: passthrough\n#### 70",
+    "step_2": "2. New total number of cards = 32 (water type) + 14 (grass type) = 46\n\nRESULT: 46",
+    "step_3": "3. Percentage chance = (32 / 46) * 100 \u2248 69.57%\n\nRESULT: 70",
+    "aggregator": "70\n#### 70"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of hamsters: 3 cages * 10 hamsters per cage = 30 hamsters.\n2. Calculate the total number of guinea pigs: 3 cages * 5 guinea pigs per cage = 15 guinea pigs.\n3. Add the total number of hamsters and guinea pigs to find the overall total of rodents: 30 hamsters + 15 guinea pigs = 45 rodents.",
+      "quality": 0.0,
+      "final_key": "40",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 100\n\nExplanation:\nIn this scenario, James initially has 30 fire type, 20 grass type, and 40 water type cards. The total number of water type cards is 40. After losing 8 water type cards, he has 32 left. Then, he buys 14 grass type cards, increasing his grass type collection to 54.\n\nThe total number of cards remains 30 (fire) + 32 (water after loss) + 54 (grass after purchase) = 116 cards.\n\nThe number of water type cards remains 32 (after loss) + 14 (purchased) = 46 cards.\n\nThe percentage chance that a randomly picked card will be a water type is calculated as (46/116) * 100 \u2248 40%. However, since the question asks for the percentage chance rounded to the nearest integer, the answer is 40%.",
+        "verifier": "VERDICT: passthrough\n#### 40",
+        "step_2": "step_2: RESULT: 116",
+        "step_3": "step_3: RESULT: 46 (water type cards) / 116 (total cards) * 100 \u2248 40%\nRESULT: 40",
+        "aggregator": "40\n#### 40"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the revised total count of water cards James possesses post-8 losses.\n2. Integrate this revised total with the grass cards to establish the updated total card count.\n3. Divide the revised water card total by the updated total card count, then multiply by 100 to ascertain the percentage likelihood.\n\nThe output will be the percentage likelihood, rounded to the closest whole number.",
+      "quality": 0.0,
+      "final_key": "40",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. James initially had 40 water type cards. After losing 8, he has 40 - 8 = 32 water type cards remaining.\n\nRESULT: 32",
+        "verifier": "VERDICT: passthrough\n#### 40",
+        "step_2": "2. Updated total card count = 30 (fire) + 20 (grass) + 32 (water) = 82 cards.\n\nRESULT: 32",
+        "step_3": "3. Percentage likelihood = (32 water cards / 82 total cards) * 100 = 39.04%\n\nRESULT: 40",
+        "aggregator": "40"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-658",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Beans' cooking time = (30 minutes + 50 minutes) / 2 = 25 minutes.\nRESULT: 25",
+  "reference_key": "25",
+  "final_key_plus": "105",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Pork's cooking time = 30 minutes (rice) + 20 minutes = 50 minutes.\nRESULT: 50",
+    "step_3": "3. Sum up all cooking times: 30 minutes (rice) + 25 minutes (beans) + 50 minutes (pork) = 105 minutes.\nRESULT: 105",
+    "verifier": "VERDICT: passthrough\n#### 105",
+    "aggregator": "105 minutes. #### 105"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "26",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "1. Beans' cooking time = (30 minutes + 50 minutes) / 2 = 25 minutes.\nRESULT: 26",
+      "quality": 0.0,
+      "final_key": "105",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Pork's cooking time = 30 minutes (rice) + 20 minutes = 50 minutes.\nRESULT: 50",
+        "step_3": "3. Sum up all cooking times: 30 minutes (rice) + 25 minutes (beans) + 50 minutes (pork) = 105 minutes.\n\nRESULT: 105",
+        "verifier": "VERDICT: passthrough\n#### 105",
+        "aggregator": "105\n#### 105"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "24",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "RESULT: 24 gallons",
+      "quality": 0.0,
+      "final_key": "105",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 50 minutes (pork)\n\nCarry out step 3 only. Show the final calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 30 (rice) + 25 (beans) + 50 (pork) = 105 minutes.\n\nRESULT: 105 minutes.",
+        "verifier": "VERDICT: passthrough\n#### 105",
+        "aggregator": "105 minutes. #### 105"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-793",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $20",
+  "reference_key": "20",
+  "final_key_plus": "250",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $20 * 1.5 = $30\n\nCarry out step 3. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $20 * 8 = $160\n\nCarry out step 4. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".\n\nstep_4: RESULT: $30 * 3 = $90\n\nCarry out step 5. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".\n\nstep_5: RESULT: $160 + $90 = $250",
+    "verifier": "VERDICT: passthrough\n#### 250",
+    "aggregator": "step_4: RESULT: $30 * 3 = $90\n\nstep_5: RESULT: $160 + $90 = $250\n\n#### $250"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULT: 21",
+      "quality": 0.0,
+      "final_key": "160",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $20 * 1.5 = $30\n\nRESULT: 30",
+        "step_3": "step_3: RESULT: $20 * 8 = $160\n\nRESULT: 160",
+        "verifier": "VERDICT: passthrough\n#### 160",
+        "aggregator": "160\n#### 160"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "30",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULT: $20\n\nNext step is to compute the special hourly rate, which is 150% of her regular rate:\n\nSpecial rate = Regular rate * 1.5\n             = $20 * 1.5\n             = $30\n\nNow proceed to the next step.",
+      "quality": 1.0,
+      "final_key": "250",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $30",
+        "step_3": "step_3: RESULT: $20 * 8 = $160\n\nNext step is to calculate her pay for the additional 3 hours at the special rate:\n\nstep_4: RESULT: $30 * 3 = $90\n\nFinally, sum the pay from steps 3 and 4 to find the total amount Jamie was paid for her work that day:\n\nstep_5: RESULT: $160 + $90 = $250\n\nJamie was paid $250 for her work that day.",
+        "verifier": "VERDICT: passthrough\n#### 250",
+        "aggregator": "Jamie was paid $250 for her work that day.\n#### 250"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

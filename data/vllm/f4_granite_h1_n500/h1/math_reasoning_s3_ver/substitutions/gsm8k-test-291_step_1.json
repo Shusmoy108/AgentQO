@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-291",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 24",
+  "reference_key": "24",
+  "final_key_plus": "2.5",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 16",
+    "step_3": "step_3: RESULT: 2 chocolate bars per child.",
+    "verifier": "VERDICT: passthrough\n#### 2.5",
+    "aggregator": "step_1: Calculate total chocolate bars for adults.\n4 adults * 6 chocolate bars each = 24 chocolate bars.\n\nstep_2: Subtract adults' chocolate bars from total.\n8 packets * 5 bars per packet - 24 chocolate bars = 20 chocolate bars remaining.\n\nstep_3: Divide remaining chocolate bars among children.\n20 chocolate bars / 8 children = 2.5 chocolate bars per child.\n\n#### 2.5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "25",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "RESULT: 25",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 16 bars remaining for children.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 16 bars \u00f7 8 children = 2 chocolate bars per child.\nRESULT: 2",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: RESULT: 16 bars \u00f7 8 children = 2 chocolate bars per child.\n\n#### 2"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "RESULT: 24 chocolate bars for 4 adults.",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 16 chocolate bars remaining for 8 children.",
+        "step_3": "step_3: RESULT: Each child will get 16 bars / 8 children = 2 chocolate bars.",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: RESULT: Each child will get 16 bars / 8 children = 2 chocolate bars.\n#### 2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

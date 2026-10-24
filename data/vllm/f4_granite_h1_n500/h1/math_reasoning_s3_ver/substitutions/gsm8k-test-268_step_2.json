@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-268",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: $1125 (calculated as $75 per ad * 15 ads)",
+  "reference_key": "15",
+  "final_key_plus": "1375",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: $250 (from newspaper ads) + $1125 (from television ads) = $1375.\nRESULT: $1375.",
+    "verifier": "VERDICT: passthrough\n#### 1375",
+    "aggregator": "step_3: RESULT: $250 (from newspaper ads) + $1125 (from television ads) = $1375.\n\n#### $1375."
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "15",
+      "reference_key": "15",
+      "key_differs": false,
+      "text": "step_2: RESULT: 16 (calculated as $75 per ad * 15 ads)",
+      "quality": 1.0,
+      "final_key": "1375",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $1375 (calculated as $250 (newspaper) + $1125 (television))",
+        "verifier": "VERDICT: passthrough\n#### 1375",
+        "aggregator": "step_3: RESULT: $1375 (calculated as $250 (newspaper) + $1125 (television))\n#### 1375"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1375",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "Carry out step 2:\nStep 2: $75 per ad * 15 ads = $1125\n\nStep 3: Add the costs from step 1 and step 2.\nStep 3: $250 (newspaper) + $1125 (television) = $1375\n\nRESULT: $1375",
+      "quality": 1.0,
+      "final_key": "1375",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: $1375",
+        "verifier": "VERDICT: passthrough\n#### 1375",
+        "aggregator": "step_3: RESULT: $1375\n\n#### 1375"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

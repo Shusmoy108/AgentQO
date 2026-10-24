@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-873",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the bolts by multiplying the number of bolts by the cost per bolt.\n2. Subtract the total cost of the bolts from the amount of money David has.\n3. The result will be the amount of money David has left after buying the bolts.",
+  "reference_key": null,
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Total cost of the bolts = 16 bolts * $0.03/bolt = $0.48\n\nRESULT: $0.48",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "step_2": "step_2: 2. Money left after buying bolts = $12.48 - $0.48 = $12.00\n\nRESULT: $12.00",
+    "step_3": "RESULT: $12.00",
+    "aggregator": "step_3: RESULT: $12.00\n\nDavid has $12.00 left after buying the 16 bolts.\n\n#### 12.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the time it takes for Steve to reach the school:\n   - Steve's distance to school = 3 miles\n   - Steve's biking speed = 440 feet per minute\n   - Convert Steve's distance to feet (3 miles * 5280 feet/mile = 15840 feet)\n   - Time for Steve = Distance / Speed = 15840 feet / 440 feet/minute \u2248 36 minutes\n\n2. Calculate the time it takes for Tim to reach the school:\n   - Tim's distance to school = 2 miles\n   - Tim's skateboarding speed = 264 feet per minute\n   - Time for Tim = Distance / Speed = 2 miles * 5280 feet/mile / 264 feet/minute \u2248 9.2 minutes\n\n3. Determine the waiting time:\n   - Since Steve takes longer to reach the school, he will be the winner.\n   - Waiting time = Steve's time - Tim's time = 36 minutes - 9.2 minutes \u2248 26.8 minutes\n\nPLAN: First, calculate Steve's travel time by converting his distance to feet and dividing by his biking speed. Next, calculate Tim's travel time by converting his distance to feet and dividing by his skateboarding speed. Finally, determine the waiting time by subtracting Tim's travel time from Steve's.",
+      "quality": 0.0,
+      "final_key": "26.8",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate Steve's travel time:\n   - Steve's distance to school = 3 miles\n   - Steve's biking speed = 440 feet per minute\n   - Convert Steve's distance to feet (3 miles * 5280 feet/mile = 15840 feet)\n   - Time for Steve = Distance / Speed = 15840 feet / 440 feet/minute \u2248 36 minutes\n\nRESULT: 36 minutes",
+        "verifier": "VERDICT: passthrough\n#### 26.8",
+        "step_2": "step_2: 2. Calculate Tim's travel time:\n   - Tim's distance to school = 2 miles\n   - Tim's skateboarding speed = 264 feet per minute\n   - Time for Tim = Distance / Speed = 2 miles * 5280 feet/mile / 264 feet/minute \u2248 9.2 minutes\n\nRESULT: 9.2 minutes",
+        "step_3": "3. Determine the waiting time:\n   - Waiting time = Steve's time - Tim's time = 36 minutes - 9.2 minutes \u2248 26.8 minutes\n\nRESULT: 26.8 minutes",
+        "aggregator": "26.8 minutes\n#### 26.8"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total cost of the bolts by multiplying the number of bolts by the cost per bolt.\n2. Subtract the total cost of the bolts from the amount of money David has.\n3. The outcome will indicate the amount of money David retains post-bolt purchase.",
+      "quality": 0.0,
+      "final_key": "11.52",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Total cost of bolts = 16 bolts * $0.03/bolt = $0.48\n\nRESULT: $0.48",
+        "verifier": "VERDICT: passthrough\n#### 11.52",
+        "step_2": "step_2: 2. Money left after purchase = $12.48 - $0.48 = $12.00\n\nRESULT: $12.00",
+        "step_3": "RESULT: $11.52",
+        "aggregator": "step_3: RESULT: $12.48 - ($0.03 * 16) = $11.52\n\n#### 11.52"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

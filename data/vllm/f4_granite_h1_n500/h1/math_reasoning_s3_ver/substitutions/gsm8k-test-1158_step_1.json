@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1158",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 2300",
+  "reference_key": "2300",
+  "final_key_plus": "11500",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 2300 * 100% = 2300\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 2300 * 1 / 0.2 = 11500\n\nRESULT: 11500",
+    "verifier": "VERDICT: passthrough\n#### 11500",
+    "aggregator": "11500\n#### 11500"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "2301",
+      "reference_key": "2300",
+      "key_differs": true,
+      "text": "RESULT: 2301",
+      "quality": 1.0,
+      "final_key": "7300",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 2301 * 100% = 2301\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 2301 * 0.2 = 460.2\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 7300",
+        "aggregator": "step_3: RESULT: 2301 * 0.2 = 460.2\n\nTo satisfy 100% of the daily energy needs of 2300 people, each person would require 2300 * 1 = 2300 bottles of juice.\n\nGiven that each bottle covers 20% of 1 person's daily energy demand, the number of bottles needed for 100% coverage would be 2300 / 0.2 = 11500 bottles.\n\nHortex currently produces 4200 bottles per day. To find out how many more bottles they would need to produce to meet 100% of the daily energy needs for 2300 people, we subtract the current production from the required production:\n\n11500 - 4200 = 7300 bottles\n\n#### 7300"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1",
+      "reference_key": "2300",
+      "key_differs": true,
+      "text": "RESULT: 23000 units (2300 people * 1 person's daily energy demand)",
+      "quality": 0.0,
+      "final_key": "115000",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 23000 units * 100% = 23000 units\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 23000 units / 0.2 units per bottle = 115000 bottles\n\nRESULT: 115000 bottles",
+        "verifier": "VERDICT: passthrough\n#### 115000",
+        "aggregator": "115000 bottles\n#### 115000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

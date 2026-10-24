@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-377",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 14 (apples picked on Monday)",
+  "reference_key": "14",
+  "final_key_plus": "50",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 24 (apples picked on Wednesday)",
+    "step_3": "step_3: RESULT: 14 (Monday) + 12 (Tuesday) + 24 (Wednesday) = 50 apples.\n\nRESULT: 50 apples.",
+    "verifier": "VERDICT: passthrough\n#### 50",
+    "aggregator": "50 apples.\n#### 50"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "15",
+      "reference_key": "14",
+      "key_differs": true,
+      "text": "RESULT: 15 (apples picked on Monday)",
+      "quality": 0.0,
+      "final_key": "92",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 24 (apples picked on Wednesday)",
+        "step_3": "step_3: RESULT: 59 (total apples picked over three days)",
+        "verifier": "VERDICT: passthrough\n#### 92",
+        "aggregator": "step_1: Lucy sold all the apples picked on Monday, so the number of apples sold on Monday is equal to the total picked on Monday.\n\nstep_2: On Tuesday, Lucy picked 12 apples.\n\nstep_3: On Wednesday, Lucy picked double the number of apples she did on Tuesday, which is 2 * 12 = 24 apples.\n\nstep_4: To find the total number of apples picked over the three days, we add the apples picked on Monday, Tuesday, and Wednesday: 56 (Monday) + 12 (Tuesday) + 24 (Wednesday) = 92 apples.\n\n#### 92"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "6",
+      "reference_key": "14",
+      "key_differs": true,
+      "text": "1. The cost of one dinner plate is $6.00.\n\nRESULT: 6.00",
+      "quality": 1.0,
+      "final_key": "50",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. The number of apples picked on Wednesday is calculated by doubling the number of apples picked on Tuesday. So, 12 apples (Tuesday) * 2 = 24 apples.\n\nRESULT: 24",
+        "step_3": "3. The total number of apples picked over the three days is the sum of apples from Monday, Tuesday, and Wednesday. This is 14 (Monday) + 12 (Tuesday) + 24 (Wednesday) = 50 apples.\n\nRESULT: 50",
+        "verifier": "VERDICT: passthrough\n#### 50",
+        "aggregator": "50 apples\n#### 50"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

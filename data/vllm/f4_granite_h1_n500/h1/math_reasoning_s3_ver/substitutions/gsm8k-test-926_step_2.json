@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-926",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2:\nTotal allowance for the month: $150\nAmount spent on popcorn and candy: $24\nRemaining budget for movie tickets: $150 - $24 = $126\n\nRESULT: 126",
+  "reference_key": "126",
+  "final_key_plus": "12",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3:\nNumber of additional movies: $126 / $10 = 12.6\n\nRESULT: 12",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "aggregator": "step_3: Colby has $126 left from his $150 allowance to spend on movies. Each movie ticket costs $10.\n\nNumber of additional movies: $126 / $10 = 12.6\n\nSince Colby can't buy a fraction of a movie, he can see 12 more movies with his remaining money.\n\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "127",
+      "reference_key": "126",
+      "key_differs": true,
+      "text": "step_2:\nTotal allowance for the month: $150\nAmount spent on popcorn and candy: $24\nRemaining budget for movie tickets: $150 - $24 = $126\n\nRESULT: 127",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3:\nRemaining budget for movie tickets: $126\nCost per ticket on Fridays and Saturdays: $10\nNumber of additional movies: $126 / $10 = 12.6\n\nRESULT: 12",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "step_3: step_3:\nRemaining budget for movie tickets: $126\nCost per ticket on Fridays and Saturdays: $10\nNumber of additional movies: $126 / $10 = 12.6\n\nRESULT: 12\n#### 12"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "126",
+      "key_differs": true,
+      "text": "step_2: RESULT: Colby has $126 left for movie tickets, which means he can buy 12 more movies considering Friday/Saturday tickets cost $10.\n\nEND.",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: Colby can watch 12 more movies with his remaining budget of $126, considering each movie ticket costs $10.\n\nEND.",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "step_3: RESULT: Colby can watch 12 more movies with his remaining budget of $126, considering each movie ticket costs $10.\n\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

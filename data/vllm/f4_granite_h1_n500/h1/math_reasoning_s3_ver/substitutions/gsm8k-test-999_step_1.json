@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-999",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: Each kid gets x/4 slices.",
+  "reference_key": "4",
+  "final_key_plus": "50",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: Each adult gets x/2 slices.\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: Each adult gets 50% of the watermelon.\n\nEND: 50%",
+    "verifier": "VERDICT: passthrough\n#### 50",
+    "aggregator": "50%\n#### 50"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "2 slices for each kid.\n\nRESULT: 2",
+      "quality": 0.0,
+      "final_key": "50",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Each adult gets twice as many slices as each kid, so an adult gets 2 * (x/4) = x/2 slices.\n\nRESULT: 50",
+        "step_3": "step_3: To find out what percentage of the watermelon each adult gets, we divide the number of slices an adult gets by the total number of slices (x), and then multiply by 100. This gives us (x/2) / x * 100 = 50%.\n\nRESULT: 50%",
+        "verifier": "VERDICT: passthrough\n#### 50",
+        "aggregator": "50%\n#### 50"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": "3",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "RESULT: Each kid receives x/3 slices.",
+      "quality": 0.0,
+      "final_key": "50",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: Each adult receives x/2 slices.\n\nEND: RESULT: 50%",
+        "step_3": "step_3: RESULT: Each adult gets 50% of the watermelon.\nEND: RESULT: 50%",
+        "verifier": "VERDICT: passthrough\n#### 50",
+        "aggregator": "step_3: RESULT: Each adult gets 50% of the watermelon.\nEND: RESULT: 50%\n#### 50"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

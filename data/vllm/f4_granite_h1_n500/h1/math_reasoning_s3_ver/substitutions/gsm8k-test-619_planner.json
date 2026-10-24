@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-619",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of street lights at each intersection by multiplying the number of poles by the number of street lights per pole: 6 poles * 4 street lights/pole = 24 street lights/intersection.\n2. Calculate the total number of street lights across all intersections by multiplying the number of intersections by the number of street lights per intersection: 4 intersections * 24 street lights/intersection = 96 street lights.\n3. Subtract the number of non-functioning street lights from the total number of street lights to find the number of functioning street lights: 96 street lights - 20 non-functioning street lights = 76 functioning street lights.",
+  "reference_key": null,
+  "final_key_plus": "76",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 24 street lights/intersection.",
+    "verifier": "VERDICT: passthrough\n#### 76",
+    "step_2": "step_2: RESULT: 96 street lights (4 intersections * 24 street lights/intersection).\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 96 street lights (4 intersections * 24 street lights/intersection) - 20 non-functioning street lights = 76 functioning street lights.\nRESULT: 76 functioning street lights.",
+    "aggregator": "RESULT: 76 functioning street lights.\n#### 76"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of cookies Sue's sister ate on Monday and Tuesday:\n   - Monday: 5 cookies\n   - Tuesday: 2 * 13 = 26 cookies\n   - Total for sister: 5 + 26 = 31 cookies\n\n2. Calculate the number of cookies Sue ate on Monday and Tuesday:\n   - Monday: 4 * 5 = 20 cookies\n   - Tuesday: 2 * 26 = 52 cookies\n   - Total for Sue: 20 + 52 = 72 cookies\n\n3. Calculate the difference in calories consumed by Sue and her sister:\n   - Calories for Sue: 72 cookies * 200 calories/cookie = 14,400 calories\n   - Calories for sister: 31 cookies * 200 calories/cookie = 6,200 calories\n   - Difference: 14,400 - 6,200 = 8,200 calories\n\nPLAN: The number of calories Sue consumed more than her sister is 8,200.",
+      "quality": 1.0,
+      "final_key": "76",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate the number of street lights at each intersection:\n   - Each intersection has 6 poles, and each pole has 4 street lights.\n   - Total street lights per intersection = 6 poles * 4 lights/pole = 24 lights\n\nRESULT: 24",
+        "verifier": "VERDICT: passthrough\n#### 76",
+        "step_2": "2. Calculate the total number of street lights at all intersections:\n   - Total intersections = 4\n   - Street lights per intersection = 24\n   - Total street lights = 4 intersections * 24 lights/intersection = 96 lights\n\nRESULT: 96",
+        "step_3": "3. Adjust for non-functioning street lights:\n   - Total street lights = 96\n   - Non-functioning street lights = 20\n   - Functioning street lights = 96 - 20 = 76\n\nRESULT: 76",
+        "aggregator": "76\n#### 76"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total count of street lights at every intersection by multiplying the count of poles by the count of street lights per pole: 6 poles * 4 street lights/pole = 24 street lights/intersection.\n2. Compute the total count of street lights throughout all intersections by multiplying the number of intersections by the count of street lights per intersection: 4 intersections * 24 street lights/intersection = 96 street lights.\n3. Subtract the number of malfunctioning street lights from the overall count of street lights to determine the number of operational street lights: 96 street lights - 15 malfunctioning street lights = 81 operational street lights.",
+      "quality": 0.0,
+      "final_key": "369",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 96 street lights at intersections.",
+        "verifier": "VERDICT: passthrough\n#### 369",
+        "step_2": "step_2: RESULT: 96 street lights * 4 intersections = 384 street lights in total.\n\nCarry out step 3 only. Show the calculation briefly.\n\nEND: 384 street lights - 15 malfunctioning street lights = 369 operational street lights.\n\nRESULT: 369 operational street lights.",
+        "step_3": "384 street lights - 15 malfunctioning street lights = 369 operational street lights.\n\nRESULT: 369 operational street lights.",
+        "aggregator": "369 operational street lights.\n#### 369"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

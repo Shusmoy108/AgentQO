@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1032",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Determine the number of medium-sized jelly beans Grandpa can eat. Since he can eat twice as many medium-sized beans as large beans, and it takes 75 large beans to fill him up, he can eat 2 * 75 = 150 medium-sized beans.\n2. Convert the number of medium-sized beans to small beans. Since eating 3 small beans is the same as eating 1 medium-sized bean, Grandpa can eat 150 / 3 = 50 groups of small beans.\n3. Calculate the total number of small beans Grandpa can eat. Since each group consists of 3 small beans, Grandpa can eat 50 * 3 = 150 small beans.",
+  "reference_key": null,
+  "final_key_plus": "150",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "150 medium-sized beans can be eaten by Grandpa.\n\nRESULT: 150",
+    "verifier": "VERDICT: passthrough\n#### 150",
+    "step_2": "step_2: 150 medium-sized beans are equivalent to 50 groups of small beans (as calculated in step 1).\n\nRESULT: 50",
+    "step_3": "step_3: Each group consists of 3 small beans, so Grandpa can eat 50 groups * 3 small beans per group = 150 small beans.\n\nRESULT: 150",
+    "aggregator": "150 small beans. #### 150"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Identify the fraction of land Mr. Ruther sold: 3/5\n2. Determine the remaining land in hectares: 12.8\n3. Calculate the total land before selling by dividing the remaining land by the fraction sold: 12.8 / (3/5) = 12.8 * (5/3) = 21.333...\n\nPLAN:\n1. Recognize the portion of land sold (3/5)\n2. Note the land left after sale (12.8 hectares)\n3. Compute the original total land area by dividing the remaining land by the fraction sold (12.8 / (3/5))",
+      "quality": 0.0,
+      "final_key": "21.333",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 21.333...",
+        "verifier": "VERDICT: passthrough\n#### 21.333",
+        "step_2": "step_2: RESULT: 12.8 * (5/3) = 21.333...\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 12.8 / (3/5) = 12.8 * (5/3) = 21.333...\n\nRESULT: 21.333...",
+        "aggregator": "21.333...\n#### 21.333..."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate the count of medium-sized jelly beans Grandpa can consume. Given he can munch twice as many medium beans as large ones, and 75 large beans suffice, he could potentially eat 2 * 75 = 150 medium-sized beans.\n2. Translate the medium-sized beans count into small beans. As consuming 3 small beans is equivalent to a medium-sized one, Grandpa might manage 150 / 3 \u2248 50.5 groups of small beans.\n3. Compute the total small beans Grandpa can enjoy. With each group containing roughly 3 small beans, Grandpa could theoretically eat around 50.5 * 3 \u2248 151.5 small beans.",
+      "quality": 0.0,
+      "final_key": "151.5",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 150 medium-sized jelly beans.",
+        "verifier": "VERDICT: passthrough\n#### 151.5",
+        "step_2": "step_2: RESULT: 50.5 groups of small beans.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 151.5 small beans.\n\nRESULT: 151.5",
+        "aggregator": "step_3: RESULT: 151.5 small beans.\n\n#### 151.5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

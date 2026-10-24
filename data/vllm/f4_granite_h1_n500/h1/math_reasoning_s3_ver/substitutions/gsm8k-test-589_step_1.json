@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-589",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: -1.25 pounds/week for Cheerios, +1.75 pounds/week for Donuts.",
+  "reference_key": "1.75",
+  "final_key_plus": "0",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: -6.25 pounds (Cheerios) + 8.75 pounds (Donuts) = 2.5 pounds\n\nEND.",
+    "step_3": "step_3: RESULT: 2.5 pounds (Donuts) - 2.5 pounds (Cheerios) = 0 pounds\n\nEND.",
+    "verifier": "VERDICT: passthrough\n#### 0",
+    "aggregator": "0 pounds\n#### 0"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "1.75",
+      "reference_key": "1.75",
+      "key_differs": false,
+      "text": "RESULT: 2.75 pounds/week for Cheerios, +1.75 pounds/week for Donuts.",
+      "quality": 0.0,
+      "final_key": "2.5",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT:\n- Cheerios: -1.25 pounds/week * 5 weeks = -6.25 pounds\n- Donuts: +1.75 pounds/week * 5 weeks = +8.75 pounds\n\nRESULT: 8.75 pounds (donuts) - 6.25 pounds (Cheerios) = 2.5 pounds",
+        "step_3": "step_3: RESULT: 2.5 pounds\n\nRESULT: 2.5 pounds",
+        "verifier": "VERDICT: passthrough\n#### 2.5",
+        "aggregator": "The difference in Martin's weight at the end of 5 weeks between the two breakfast options would be 2.5 pounds.\n#### 2.5"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "8.75",
+      "reference_key": "1.75",
+      "key_differs": true,
+      "text": "RESULT: -6.25 pounds (Cheerios) for weight loss each week; +8.75 pounds (Donuts) for weight gain each week.",
+      "quality": 0.0,
+      "final_key": "2.5",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: -6.25 pounds (Cheerios) * 5 weeks = -31.25 pounds; +8.75 pounds (Donuts) * 5 weeks = +43.75 pounds.\n\nRESULT: -31.25 pounds (Cheerios) - 43.75 pounds (Donuts) = -74.75 pounds.",
+        "step_3": "RESULT: 2.5 pounds (Donuts - Cheerios)",
+        "verifier": "VERDICT: passthrough\n#### 2.5",
+        "aggregator": "step_3: RESULT: 2.5 pounds (Donuts - Cheerios)\n\n#### 2.5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

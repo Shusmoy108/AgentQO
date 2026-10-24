@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-95",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 80",
+  "reference_key": "80",
+  "final_key_plus": "80",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 120\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 120 * (2/3) = 80\n\nEnd with \"RESULT: 80\".",
+    "verifier": "VERDICT: passthrough\n#### 80",
+    "aggregator": "RESULT: 80\n#### 80"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "81",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "RESULT: 81",
+      "quality": 0.0,
+      "final_key": "80",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 120\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 120 * (2/3) = 80\n\nRESULT: 80",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "aggregator": "80 girls are not in the girl scout.\n#### 80"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "5",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "RESULT: 80 boys in Grade 5.",
+      "quality": 1.0,
+      "final_key": "40",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 120 girls in Grade 5.",
+        "step_3": "step_3: RESULT: 120 girls in girl scout.\n\nCarry out step 4. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 40",
+        "aggregator": "step_4: To find out how many girls are not in the girl scout, we first determine the total number of girls. Since 2/5 of the students are boys, 3/5 must be girls.\n\nTotal girls = 3/5 * 200 = 120\n\nNow, we know 2/3 of these girls are in the girl scout.\n\nGirls in girl scout = 2/3 * 120 = 80\n\nGirls not in girl scout = Total girls - Girls in girl scout\nGirls not in girl scout = 120 - 80 = 40\n\nRESULT: 40\n#### 40"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

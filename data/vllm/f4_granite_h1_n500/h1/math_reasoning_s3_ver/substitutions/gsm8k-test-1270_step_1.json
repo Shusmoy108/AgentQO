@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1270",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $2700",
+  "reference_key": "2700",
+  "final_key_plus": "4410",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $9000 - $2700 = $6300",
+    "step_3": "step_3: RESULT: $6300 - $1890 = $4410",
+    "verifier": "VERDICT: passthrough\n#### 4410",
+    "aggregator": "step_2: step_2: RESULT: $9000 * 30% = $2700\nstep_3: step_3: RESULT: $9000 - $2700 = $6300\nstep_4: step_4: RESULT: $6300 * 30% = $1890\nstep_5: step_5: RESULT: $6300 - $1890 = $4410\n\n#### $4410"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "2701",
+      "reference_key": "2700",
+      "key_differs": true,
+      "text": "RESULT: 2701",
+      "quality": 0.0,
+      "final_key": "4410",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 6300",
+        "step_3": "step_3: RESULT: 4410",
+        "verifier": "VERDICT: passthrough\n#### 4410",
+        "aggregator": "step_1: Calculate the depreciation for the first year.\nDepreciation for the first year = 30% of $9000 = 0.30 * $9000 = $2700\n\nstep_2: Update the value after the first year.\nValue after the first year = Original value - Depreciation for the first year\nValue after the first year = $9000 - $2700 = $6300\n\nstep_3: Calculate the depreciation for the second year.\nDepreciation for the second year = 30% of $6300 = 0.30 * $6300 = $1890\n\nstep_4: Update the value after the second year.\nValue after the second year = Value after the first year - Depreciation for the second year\nValue after the second year = $6300 - $1890 = $4410\n\n#### 4410"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "9000",
+      "reference_key": "2700",
+      "key_differs": true,
+      "text": "1. RESULT: $2700 (30% of $9000)",
+      "quality": 0.0,
+      "final_key": "4410",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. RESULT: $6300 (Original price - First-year depreciation)",
+        "step_3": "step_3: 3. RESULT: $4410 (Value after first year - Second-year depreciation)",
+        "verifier": "VERDICT: passthrough\n#### 4410",
+        "aggregator": "step_3: 3. RESULT: $4410 (Value after first year - Second-year depreciation)\n\n#### $4410"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-300",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 39 minutes.",
+  "reference_key": "39",
+  "final_key_plus": "23",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 78 minutes.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: Calculation: 78 - 39 - 16 = 23 minutes.\nRESULT: 23 minutes.",
+    "verifier": "VERDICT: passthrough\n#### 23",
+    "aggregator": "step_3: Calculation: 23 (Tuesday's goal) - 23 (Sunday's exercise) - 16 (Monday's exercise) = 23 minutes.\n\n#### 23"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "40",
+      "reference_key": "39",
+      "key_differs": true,
+      "text": "RESULT: 40 minutes.",
+      "quality": 0.0,
+      "final_key": "23",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 78 minutes.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: Calculation: 78 (desired total) - 39 (Sunday) - 16 (Monday) = 23 minutes.\nRESULT: 23 minutes.",
+        "verifier": "VERDICT: passthrough\n#### 23",
+        "aggregator": "step_3: Calculation: 78 (desired total) - 39 (Sunday) - 16 (Monday) = 23 minutes.\nRESULT: 23 minutes.\n#### 23"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "54",
+      "reference_key": "39",
+      "key_differs": true,
+      "text": "1. The total distance covered by 3 kangaroos in 18 hours is 3 kangaroos * 18 hours = 54 kangaroo-hours.\n\nRESULT: 54",
+      "quality": 0.0,
+      "final_key": "23",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. The desired total exercise time for Tuesday is calculated as follows:\n   Twice the combined time from Sunday and Monday: 2 * 39 = 78 minutes\n\nRESULT: 78",
+        "step_3": "3. Calculate the minutes Peter needs to exercise on Tuesday:\n   Since he has already exercised for 39 minutes on Sunday and 16 minutes on Monday,\n   he needs to exercise for: 78 - 39 - 16 = 23 minutes on Tuesday.\n\nRESULT: 23",
+        "verifier": "VERDICT: passthrough\n#### 23",
+        "aggregator": "23 minutes. #### 23"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

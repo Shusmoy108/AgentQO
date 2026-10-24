@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-937",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Each goat needs 5 pounds of hay.\nRESULT: 5",
+  "reference_key": "5",
+  "final_key_plus": "75",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Each sheep needs 7 pounds of hay.\nRESULT: 7",
+    "step_3": "step_3: 3. Total hay needed for all goats: 15 goats * 5 pounds each = 75 pounds.\nRESULT: 75",
+    "verifier": "VERDICT: passthrough\n#### 75",
+    "aggregator": "step_3: 3. Total hay needed for all goats: 15 goats * 5 pounds each = 75 pounds.\n\nRESULT: 75\n\n#### 75"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "1. Each goat needs 5 pounds of hay.\nRESULT: 6",
+      "quality": 0.0,
+      "final_key": "75",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Each sheep needs 7 pounds of hay.\nRESULT: 7",
+        "step_3": "3. 15 goats * 5 pounds each = 75 pounds.\nRESULT: 75",
+        "verifier": "VERDICT: passthrough\n#### 75",
+        "aggregator": "step_3: 3. 15 goats * 5 pounds each = 75 pounds.\nRESULT: 75\n#### 75"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "78",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: 78 (Tuesday and Wednesday combined)",
+      "quality": 0.0,
+      "final_key": "105",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 14 pounds (12 sheep * 7 pounds each - 3 pounds per sheep)",
+        "step_3": "step_3: RESULT: 105 pounds (15 goats * 5 pounds each)",
+        "verifier": "VERDICT: passthrough\n#### 105",
+        "aggregator": "step_3: RESULT: 105 pounds (15 goats * 5 pounds each)\n\n#### 105"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

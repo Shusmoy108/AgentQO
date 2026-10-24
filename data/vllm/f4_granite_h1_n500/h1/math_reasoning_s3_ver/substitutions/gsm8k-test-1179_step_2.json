@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1179",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. The total number of teeth fixed by the dentist is 4 (drilled) + 11 (capped) = 15 teeth.\n\nRESULT: 15",
+  "reference_key": "15",
+  "final_key_plus": "50",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "3. The percentage of teeth fixed is (15 / 30) * 100 = 50%.\n\nRESULT: 50%",
+    "verifier": "VERDICT: passthrough\n#### 50",
+    "aggregator": "50%\n#### 50"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "16",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "2. The total number of teeth fixed by the dentist is 4 (drilled) + 11 (capped) = 15 teeth.\n\nRESULT: 16",
+      "quality": 1.0,
+      "final_key": "50",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. The percentage of teeth fixed is calculated as (15 / 30) * 100.\n\nRESULT: 50%",
+        "verifier": "VERDICT: passthrough\n#### 50",
+        "aggregator": "50%\n#### 50"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "50",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "2. RESULT: 15\n\nFinal result: The dentist fixes 50% of James' teeth.",
+      "quality": 1.0,
+      "final_key": "50",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. RESULT: 50%",
+        "verifier": "VERDICT: passthrough\n#### 50",
+        "aggregator": "step_3: 3. RESULT: James initially had 30 teeth. The dentist drills 4, leaving 30 - 4 = 26 teeth. The dentist then caps 7 more teeth than drilled, which is 4 + 7 = 11 teeth.\n\nTotal teeth fixed by the dentist = 4 (drilled) + 11 (capped) = 15 teeth.\n\nPercentage of James' teeth fixed by the dentist = (15 / 30) * 100 = 50%.\n\n#### 50%"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

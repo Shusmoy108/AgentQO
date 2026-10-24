@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-992",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 24 (12 for electric + 12 for gas)",
+  "reference_key": "12",
+  "final_key_plus": "52",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 24 (2 checks/month * 12 months)",
+    "step_3": "step_3: RESULT: 4 (1 check per quarter)\n\nFinal result: 24 (monthly bills) + 24 (church donations) + 4 (pest and lawn service) = 52 checks per year.\n\nRESULT: 52 checks per year.",
+    "verifier": "VERDICT: passthrough\n#### 52",
+    "aggregator": "52 checks per year. #### 52"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "12",
+      "reference_key": "12",
+      "key_differs": false,
+      "text": "RESULT: 13 (12 for electric + 12 for gas)",
+      "quality": 0.0,
+      "final_key": "41",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 24 (2 checks per month * 12 months)",
+        "step_3": "step_3: RESULT: 4 (1 check per quarter)\n\nTotal checks per year: 13 (monthly bills) + 24 (church donations) + 4 (pest and lawn service) = 41 checks\n\nRESULT: 41 checks",
+        "verifier": "VERDICT: passthrough\n#### 41",
+        "aggregator": "41 checks\n#### 41"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "24",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "1. Calculate the number of checks for monthly bills:\n   - Electric bill: 12 checks per year (1 check per month)\n   - Gas bill: 12 checks per year (1 check per month)\n\nRESULT: 24 checks for monthly bills (electric and gas)",
+      "quality": 1.0,
+      "final_key": "52",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Calculate the number of checks for church donations:\n   - Twice per month, Buford writes 2 checks: 2 checks per month\n   - In a year, this amounts to 2 checks/month * 12 months = 24 checks\n\nRESULT: 24 checks for church donations",
+        "step_3": "step_3: 3. Calculate the number of checks for the pest and lawn service:\n   - Quarterly, Buford writes 1 check: 4 checks per year (4 quarters in a year)\n\nRESULT: 4 checks for the pest and lawn service\n\nTotal checks per year: 24 (monthly bills) + 24 (church donations) + 4 (pest and lawn service) = 52 checks\n\nRESULT: 52 checks per year",
+        "verifier": "VERDICT: passthrough\n#### 52",
+        "aggregator": "52 checks per year\n#### 52"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

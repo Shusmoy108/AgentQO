@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-173",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $150",
+  "reference_key": "150",
+  "final_key_plus": "5400",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: New monthly payment = $300 + $150 = $450\nRESULT: $450",
+    "step_3": "step_3: RESULT: $450 * 12 = $5400\n\nRESULT: $5400",
+    "verifier": "VERDICT: passthrough\n#### 5400",
+    "aggregator": "step_3: RESULT: $450 * 12 = $5400\n\n#### 5400"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "151",
+      "reference_key": "150",
+      "key_differs": true,
+      "text": "RESULT: 151",
+      "quality": 0.0,
+      "final_key": "17400",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $7800",
+        "step_3": "step_3: RESULT: $7800",
+        "verifier": "VERDICT: passthrough\n#### 17400",
+        "aggregator": "step_1: Calculate the additional amount Jessica wants to pay beyond the minimum.\nAdditional amount = Minimum payment * 50%\nAdditional amount = $300 * 0.5\nAdditional amount = $150\n\nstep_2: Add the additional amount to the minimum payment for each debt.\nStudent loans: $300 + $150 = $450\nCredit card: $200 + $150 = $350\nMortgage: $500 + $150 = $650\n\nstep_3: Calculate the total monthly payment.\nTotal monthly payment = Student loans + Credit card + Mortgage\nTotal monthly payment = $450 + $350 + $650\nTotal monthly payment = $1450\n\nstep_4: Calculate the annual payment.\nAnnual payment = Total monthly payment * 12\nAnnual payment = $1450 * 12\nAnnual payment = $17400\n\n#### $17400"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1450",
+      "reference_key": "150",
+      "key_differs": true,
+      "text": "RESULT: $450 (Additional amount) + $300 (Student Loan Minimum) + $200 (Credit Card Minimum) + $500 (Mortgage Minimum) = $1450",
+      "quality": 0.0,
+      "final_key": "17400",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $450 (Additional amount) + $300 (Student Loan Minimum) + $200 (Credit Card Minimum) + $500 (Mortgage Minimum) = $1450\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "RESULT: $7800",
+        "verifier": "VERDICT: passthrough\n#### 17400",
+        "aggregator": "step_1: Calculate the additional amount Jessica wants to pay beyond the minimum.\nAdditional amount = Minimum payment * 50%\nAdditional amount = $300 * 0.5\nAdditional amount = $150\n\nstep_2: Add the additional amount to the minimum payment for each debt.\nStudent loans: $300 + $150 = $450\nCredit card: $200 + $150 = $350\nMortgage: $500 + $150 = $650\n\nstep_3: Calculate the total monthly payment.\nTotal monthly payment = Student loans + Credit card + Mortgage\nTotal monthly payment = $450 + $350 + $650\nTotal monthly payment = $1450\n\nstep_4: Calculate the annual payment.\nAnnual payment = Total monthly payment * 12\nAnnual payment = $1450 * 12\nAnnual payment = $17400\n\n#### $17400"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

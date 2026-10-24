@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1146",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: $7 (Selling price per rock)",
+  "reference_key": "7",
+  "final_key_plus": "16",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 20 (Number of rocks)\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "verifier": "VERDICT: passthrough\n#### 16",
+    "aggregator": "step_4: Calculation: Adam buys 20 rocks ($5 each) for a total of $100. He then sells 60% of these rocks, which is 12 rocks (20 * 0.6). The revenue from selling these 12 rocks is $84 (12 * $7). The loss is the initial investment minus the revenue from selling, which is $100 - $84 = $16.\n\nRESULT: 16\n#### 16"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "8",
+      "reference_key": "7",
+      "key_differs": true,
+      "text": "step_2: RESULT: 8 (Selling price per rock)",
+      "quality": 1.0,
+      "final_key": "16",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: 20 (Number of rocks)\n\nEND: 20",
+        "verifier": "VERDICT: passthrough\n#### 16",
+        "aggregator": "step_3: RESULT: 20 (Number of rocks)\n\nAdam buys 20 rocks at $5 each, spending $100 in total. He then sells 60% of these rocks, which is 12 rocks (20 * 0.6).\n\nThe selling price for these 12 rocks is 12 * $7 = $84.\n\nThe profit from selling these rocks would be $84 - $100 = -$16.\n\nHowever, since he only sells 60% of his inventory, he actually loses money. The loss is $16.\n\n#### 16"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "-68",
+      "reference_key": "7",
+      "key_differs": true,
+      "text": "step_2: RESULT: $7 (Selling price per rock)\nNext step involves calculating the total revenue from selling 60% of the inventory.\n\nCarry out step 4.\n\nstep_4: RESULT: 12 (Number of rocks sold, calculated as 20 * 0.6)\n\nProceed to step 5 for total cost price calculation.\n\nstep_5: RESULT: $100 (Total cost price, calculated as 12 * $7)\n\nFinally, complete the loss calculation in step 6.\n\nstep_6: RESULT: -$68 (Loss, calculated as $100 - $84)\n\nThus, Adam loses $68 in the transaction.\n\nRESULT: -$68",
+      "quality": 0.0,
+      "final_key": "24",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 20 (Number of rocks Adam can buy with $100)",
+        "verifier": "VERDICT: passthrough\n#### 24",
+        "aggregator": "step_3: RESULT: 20 (Number of rocks Adam can buy with $100)\n\nAdam can buy 20 rocks with his $100. If he sells 60% of his inventory, he sells 12 rocks (0.60 * 20).\n\nCost per rock: $5\nSelling price per rock: $7\n\nTotal cost for 12 rocks: 12 * $5 = $60\nTotal revenue from 12 rocks: 12 * $7 = $84\n\nLoss: Total cost - Total revenue = $60 - $84 = -$24\n\nSince the result is negative, Adam actually makes a profit of $24. However, the problem states he wants to know how much he loses, which implies a negative outcome. Therefore, the loss is $24.\n\n#### 24"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-240",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Robert's candies = 54 / 2 = 27\nRESULT: 27",
+  "reference_key": "27",
+  "final_key_plus": "21",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "2. James's candies = Robert's candies + 6 = 27 + 6 = 33\nRESULT: 33",
+    "step_3": "3. John's candies - James's candies = 54 - 33 = 21\nRESULT: 21",
+    "verifier": "VERDICT: passthrough\n#### 21",
+    "aggregator": "step_3: 3. John's candies - James's candies = 54 - 33 = 21\n\n#### 21"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "28",
+      "reference_key": "27",
+      "key_differs": true,
+      "text": "1. Robert's candies = 54 / 2 = 27\nRESULT: 28",
+      "quality": 1.0,
+      "final_key": "21",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. James's candies = Robert's candies + 6 = 27 + 6 = 33\nRESULT: 33",
+        "step_3": "3. John's candies - James's candies = 54 - 33 = 21\nRESULT: 21",
+        "verifier": "VERDICT: passthrough\n#### 21",
+        "aggregator": "step_3: 3. John's candies - James's candies = 54 - 33 = 21\n\n#### 21"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "4",
+      "reference_key": "27",
+      "key_differs": true,
+      "text": "1. Compute the cost of the bag of chips: $4.00\n\nRESULT: $4.00",
+      "quality": 1.0,
+      "final_key": "21",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Compute James's candies: James = Robert + 6 = 27 + 6 = 33 candies.\n\nRESULT: 33",
+        "step_3": "3. Calculate the difference in candies between John and James: John - James = 54 - 33 = 21 candies.\n\nRESULT: 21",
+        "verifier": "VERDICT: passthrough\n#### 21",
+        "aggregator": "21\n#### 21"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

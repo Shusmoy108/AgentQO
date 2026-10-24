@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-662",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the bag of chips by multiplying the number of bags by the cost per bag.\n2. Add the cost of the bucket of fried chicken and the bottle of soda to the total cost of the bag of chips.\n3. Subtract the sum from the total amount spent to find the cost of the apple pie.\n\nThe steps are as follows:\n1. Cost of bag of chips = 2 bags * $2.00/bag = $4.00\n2. Total cost of chips, fried chicken, and soda = $4.00 + $8.00 + $1.00 = $13.00\n3. Cost of apple pie = $20.00 - $13.00 = $7.00\n\nSo, the apple pie cost $7.00.",
+  "reference_key": null,
+  "final_key_plus": "7",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Cost of bag of chips = 2 bags * $2.00/bag = $4.00\n\nRESULT: $4.00",
+    "verifier": "VERDICT: passthrough\n#### 7",
+    "step_2": "step_2: 2. Total cost of chips, fried chicken, and soda = $4.00 + $8.00 + $1.00 = $13.00\n\nRESULT: $13.00",
+    "step_3": "3. Cost of apple pie = $20.00 - $13.00 = $7.00\n\nRESULT: $7.00",
+    "aggregator": "step_3: 3. Cost of apple pie = $20.00 - $13.00 = $7.00\n\n#### $7.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the cost for the first 16 minutes at the higher rate: 16 minutes * $0.25/minute = $4.\n2. Calculate the cost for the remaining 20 minutes at the lower rate: 20 minutes * $0.20/minute = $4.\n3. Add the costs from steps 1 and 2 to find the total cost: $4 + $4 = $8.\n\nPLAN:\n1. Compute the cost for the initial 16 minutes at the higher rate.\n2. Compute the cost for the subsequent 20 minutes at the lower rate.\n3. Sum the costs from steps 1 and 2 to determine the total cost.",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Compute the cost for the initial 16 minutes at the higher rate: 16 minutes * $0.25/minute = $4.\n\nRESULT: $4.",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "step_2": "2. Compute the cost for the subsequent 20 minutes at the lower rate: 20 minutes * $0.20/minute = $4.\n\nRESULT: $4.",
+        "step_3": "3. Sum the costs from steps 1 and 2 to determine the total cost: $4 + $4 = $8.\n\nRESULT: $8.",
+        "aggregator": "The final answer is $8. #### 8"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total cost of the bag of chips by multiplying the number of bags by the cost per bag.\n2. Include the cost of the bucket of fried chicken, the bottle of soda, and the bag of chips to the total cost.\n3. Subtract this total from the overall expenditure to determine the cost of the apple pie.\n\nThe steps are detailed as:\n1. Cost of bag of chips = 2 bags * $2.00/bag = $4.00\n2. Total cost of chips, fried chicken, soda, and the bag = $4.00 + $8.00 + $1.00 = $13.00\n3. Cost of apple pie = $20.00 - $13.00 = $7.00\n\nTherefore, the apple pie cost is $7.00.",
+      "quality": 1.0,
+      "final_key": "7",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $4.00",
+        "verifier": "VERDICT: passthrough\n#### 7",
+        "step_2": "step_2: RESULT: $13.00",
+        "step_3": "step_3: RESULT: $20.00 - $13.00 = $7.00",
+        "aggregator": "step_3: RESULT: $20.00 - $13.00 = $7.00\n\n#### $7.00"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

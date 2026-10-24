@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1175",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of goals scored by team B in the first half. Since team B scores 2 goals fewer than team A, and team A scores 4 goals in the first half, team B scores 4 - 2 = 2 goals in the first half.\n2. Calculate the number of goals scored by team B in the second half. Team B scores 4 times the number of goals it scored in the first half, so team B scores 2 * 4 = 8 goals in the second half.\n3. Calculate the number of goals scored by team A in the second half. Team A scores 1/4 of the number of goals scored by team B in the second half, so team A scores 8 / 4 = 2 goals in the second half.\n4. Calculate the total number of goals scored by each team. Team A scores 4 (first half) + 2 (second half) = 6 goals in total. Team B scores 2 (first half) + 8 (second half) = 10 goals in total.\n5. Calculate the total number of goals scored in the match. The total is 6 (team A) + 10 (team B) = 16 goals.\n\nThe final answer is 16 goals.",
+  "reference_key": null,
+  "final_key_plus": "2",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "Team B scored 2 goals in the first half.\n\nRESULT: 2",
+    "verifier": "VERDICT: passthrough\n#### 2",
+    "step_2": "step_2: Team B scored 8 goals in the second half.\n\nRESULT: 8",
+    "step_3": "step_3: Team A scored 2 goals in the second half.\n\nRESULT: 2",
+    "aggregator": "step_3: Team A scored 2 goals in the second half.\n\nRESULT: 2\n#### 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the time Wayne takes to travel from his hotel to the theater: 4 minutes.\n2. Determine the time Bernadette's drive takes, which is four times Wayne's travel time: 4 * 4 = 16 minutes.\n3. Add the 5-minute head start Wayne has to Bernadette's travel time to find out how early Bernadette should leave: 16 + 5 = 21 minutes.\n\nPLAN:\n1. Identify Wayne's travel time (4 minutes).\n2. Calculate Bernadette's travel time (4 * 4 = 16 minutes).\n3. Determine Bernadette's departure time (4 minutes + 16 minutes = 20 minutes).",
+      "quality": 1.0,
+      "final_key": "16",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 4 minutes",
+        "verifier": "VERDICT: passthrough\n#### 16",
+        "step_2": "step_2: RESULT: 16 minutes\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 4 (Wayne's head start) + 16 (Bernadette's travel time) = 20 minutes.\nRESULT: 20 minutes.",
+        "aggregator": "step_1: In the first half, team A scores 4 goals.\nstep_2: Team B scores 2 goals fewer than team A, so team B scores 4 - 2 = 2 goals.\nstep_3: In the second half, team B scores 4 times the number of goals it scored in the first half, which is 4 * 2 = 8 goals.\nstep_4: Team A scores 1/4 of the number of goals scored by team B in the second half, which is 1/4 * 8 = 2 goals.\nstep_5: To find the total goals scored in the match, add the goals from both halves: 4 (team A first half) + 2 (team A second half) + 2 (team B first half) + 8 (team B second half) = 16 goals.\n\n#### 16"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the number of goals scored by team B in the first half. Since team B scores 2 goals less than team A, and team A scores 4 goals in the first half, team B scores 4 - 2 = 2 goals in the first half.\n2. Calculate the number of goals scored by team B in the second half. Team B scores 4 times the number of goals it scored in the first half, so team B scores 2 * 4 = 8 goals in the second half.\n3. Calculate the number of goals scored by team A in the second half. Team A scores 1/3 of the number of goals scored by team B in the second half, so team A scores 8 / 3 \u2248 2.67 goals in the second half.\n4. Calculate the total number of goals scored by each team. Team A scores 4 (first half) + 2.67 (second half) \u2248 6.67 goals in total. Team B scores 2 (first half) + 8 (second half) = 10 goals in total.\n5. Calculate the total number of goals scored in the match. The total is 6.67 (team A) + 10 (team B) \u2248 16.67 goals.\n\nThe final answer is approximately 16.67 goals.",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Team B scored 2 goals in the first half.\n\nRESULT: 2",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: 2. Team B scored 8 goals in the second half (2 * 4).\n\nRESULT: 2",
+        "step_3": "3. Team A scored approximately 2.67 goals in the second half (8 / 3).\n\nRESULT: 3",
+        "aggregator": "3. Team A scored approximately 2.67 goals in the second half (8 / 3).\n\n#### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-466",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Becky's discount is 45 cents per apple, applied to 2 apples, so 90 cents. Subtracting this from her pre-discount total, Becky's final cost is 900 cents - 90 cents = 810 cents.\n\nRESULT: 810 cents",
+  "reference_key": "810",
+  "final_key_plus": "900",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: Kelly's pre-discount total is 1000 cents (20 apples * 50 cents/apple).\n\nKelly's discount is 10 percent of 1000 cents, which is 100 cents (50 cents/apple * 20 apples * 10%).\n\nSubtracting Kelly's discount from her pre-discount total, Kelly's final cost is 1000 cents - 100 cents = 900 cents.\n\nRESULT: 900 cents",
+    "verifier": "VERDICT: passthrough\n#### 900",
+    "aggregator": "Kelly paid 900 cents more than Becky.\n\n#### 900"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "811",
+      "reference_key": "810",
+      "key_differs": true,
+      "text": "step_2: Becky's discount is 45 cents per apple, applied to 2 apples, so 90 cents. Subtracting this from her pre-discount total, Becky's final cost is 900 cents - 90 cents = 810 cents.\n\nRESULT: 811 cents",
+      "quality": 0.0,
+      "final_key": "900",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: Kelly's pre-discount total is 1000 cents (20 apples * 50 cents/apple).\n\nKelly's discount is 10 percent of 1000 cents, which is 100 cents (50 cents/apple * 20 apples * 10%).\n\nSubtracting Kelly's discount from her pre-discount total, Kelly's final cost is 1000 cents - 100 cents = 900 cents.\n\nRESULT: 900 cents",
+        "verifier": "VERDICT: passthrough\n#### 900",
+        "aggregator": "Kelly paid 900 cents more than Becky.\n\n#### 900"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "810",
+      "key_differs": true,
+      "text": "result: 900 cents - 90 cents = 810 cents.\nCarry out step 3. Show the calculation briefly.",
+      "quality": 0.0,
+      "final_key": "0",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 1000 cents - 100 cents = 900 cents.",
+        "verifier": "VERDICT: passthrough\n#### 0",
+        "aggregator": "step_3: Kelly's total cost after discount = 20 apples * 50 cents/apple * 0.9 = 900 cents.\n\nBecky's total cost = 20 apples * 45 cents/apple = 900 cents.\n\nDifference in cost = Kelly's total - Becky's total = 900 cents - 900 cents = 0 cents.\n\n#### 0"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

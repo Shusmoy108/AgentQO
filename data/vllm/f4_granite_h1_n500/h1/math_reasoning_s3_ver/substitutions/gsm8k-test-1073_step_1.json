@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1073",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "10 bananas (first monkey's daily intake).\n\nRESULT: 10",
+  "reference_key": "10",
+  "final_key_plus": "291",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 10 bananas (first monkey's intake) + 14 bananas (second monkey's intake) = 24 bananas (total for first two monkeys).\n\nRESULT: 24",
+    "step_3": "step_3: 315 bananas (total) - 24 bananas (first and second monkeys' intake) = 291 bananas (third monkey's daily intake).\n\nRESULT: 291",
+    "verifier": "VERDICT: passthrough\n#### 291",
+    "aggregator": "291\n#### 291"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "10 bananas (first monkey's daily intake).\n\nRESULT: 11",
+      "quality": 0.0,
+      "final_key": "291",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 10 bananas (first monkey's intake) + 14 bananas (second monkey's intake) = 24 bananas.\n\nRESULT: 24",
+        "step_3": "step_3: 315 bananas (total) - 24 bananas (first and second monkeys' intake) = 291 bananas.\n\nRESULT: 291",
+        "verifier": "VERDICT: passthrough\n#### 291",
+        "aggregator": "291 bananas. #### 291"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "120",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: $120",
+      "quality": 0.0,
+      "final_key": "291",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 14 bananas (second monkey's daily intake)\n\nCarry out step 3.\n\nstep_3: RESULT: 315 bananas (total) - (10 bananas + 14 bananas) = 291 bananas (third monkey's daily intake)\n\nRESULT: 291 bananas",
+        "step_3": "RESULT: 291 bananas",
+        "verifier": "VERDICT: passthrough\n#### 291",
+        "aggregator": "step_3: RESULT: 291 bananas\n\nThe third monkey eats 291 bananas each day.\n\n#### 291"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

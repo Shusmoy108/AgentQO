@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1015",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Total sweets = 15 packs * 60 pieces = 900 pieces\n\nRESULT: 900",
+  "reference_key": "900",
+  "final_key_plus": "78",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Sweets left = 900 pieces - (2 packs * 60 pieces)\n= 900 pieces - 120 pieces\n= 780 pieces\n\nRESULT: 780",
+    "step_3": "step_3: Sweets per friend = 780 pieces / 10 friends\n= 78 pieces per friend\n\nRESULT: 78",
+    "verifier": "VERDICT: passthrough\n#### 78",
+    "aggregator": "78"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "901",
+      "reference_key": "900",
+      "key_differs": true,
+      "text": "Total sweets = 15 packs * 60 pieces = 900 pieces\n\nRESULT: 901",
+      "quality": 1.0,
+      "final_key": "78",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Sweets left = 900 pieces - (2 packs * 60 pieces) = 780 pieces\n\nRESULT: 780",
+        "step_3": "step_3: Sweets per friend = 780 pieces / 10 friends = 78 pieces per friend\n\nRESULT: 78",
+        "verifier": "VERDICT: passthrough\n#### 78",
+        "aggregator": "78\n#### 78"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "1200",
+      "reference_key": "900",
+      "key_differs": true,
+      "text": "RESULT: $1200.00",
+      "quality": 1.0,
+      "final_key": "78",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 780 pieces\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 78 pieces per friend",
+        "verifier": "VERDICT: passthrough\n#### 78",
+        "aggregator": "step_3: RESULT: 78 pieces per friend\n\n#### 78"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

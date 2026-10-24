@@ -1,0 +1,48 @@
+{
+  "task_id": "gsm8k-test-920",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "step_3: Calculate fish = rabbits * 3\nRESULT: 21 fish.",
+  "reference_key": "21",
+  "final_key_plus": "58",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 58",
+    "aggregator": "step_3: Larry has 21 fish.\n\nstep_4: Calculate rabbits = dogs - 2\nRESULT: 18 rabbits.\n\nstep_5: Calculate dogs = cats * 3\nRESULT: 9 dogs.\n\nstep_6: Calculate cats = 3\nRESULT: 3 cats.\n\nstep_7: Calculate gerbils = fish / 3\nRESULT: 7 gerbils.\n\nTotal pets Larry has:\nCats + Dogs + Rabbits + Fish + Gerbils = 3 + 9 + 18 + 21 + 7 = 58 pets.\n\n#### 58"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "22",
+      "reference_key": "21",
+      "key_differs": true,
+      "text": "step_3: Calculate fish = rabbits * 3\nRESULT: 22 fish.",
+      "quality": 0.0,
+      "final_key": "17",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 17",
+        "aggregator": "step_3: Larry has 2 fewer rabbits than dogs, so he has 3 dogs - 2 = 1 rabbit.\n\nstep_4: Larry has 3 times as many dogs as cats, and he has 3 cats, so he has 3 cats * 3 = 9 dogs.\n\nstep_5: From step_4, Larry has 9 dogs, and from step_3, he has 1 rabbit.\n\nstep_6: Larry has a fish tank with three times the number of fish as rabbits, so he has 1 rabbit * 3 = 3 fish.\n\nstep_7: Larry's fish tank contains 3 fish.\n\nstep_8: Larry's collection of gerbils is 1/3 the number of fish he has, so he has 3 fish * (1/3) = 1 gerbil.\n\nstep_9: Adding up all his pets, Larry has 3 cats + 9 dogs + 1 rabbit + 3 fish + 1 gerbil = 17 pets.\n\n#### 17"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "40",
+      "reference_key": "21",
+      "key_differs": true,
+      "text": "step_3: RESULT: $22 + $18 = $40\n\nEND: $40",
+      "quality": 1.0,
+      "final_key": "47",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 47",
+        "aggregator": "step_1: Larry has 3 cats.\nstep_2: He has 3 times as many dogs as cats, so he has 3 * 3 = 9 dogs.\nstep_3: He has 2 fewer rabbits than dogs, so he has 9 - 2 = 7 rabbits.\nstep_4: He has a fish tank with three times the number of fish as rabbits, so he has 3 * 7 = 21 fish.\nstep_5: He has a collection of gerbils that's 1/3 the number of fish he has, so he has 21 / 3 = 7 gerbils.\n\nFinal answer: Larry has 3 cats + 9 dogs + 7 rabbits + 21 fish + 7 gerbils = 47 pets.\n\n#### 47"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

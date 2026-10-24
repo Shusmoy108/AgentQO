@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-928",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 78 (Junebugs removed on Tuesday and Wednesday)",
+  "reference_key": "78",
+  "final_key_plus": "59.8",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 39 (Monday) + 78 (Tuesday) + 78 (Wednesday) + 48 (Thursday) + 57 (Friday) = 299 Junebugs\n\nRESULT: 299",
+    "step_3": "step_3: RESULT: 299 Junebugs / 5 days = 59.8 Junebugs per day\n\nRESULT: 59.8",
+    "verifier": "VERDICT: passthrough\n#### 59.8",
+    "aggregator": "59.8 Junebugs per day\n#### 59.8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "79",
+      "reference_key": "78",
+      "key_differs": true,
+      "text": "RESULT: 79 (Junebugs removed on Tuesday and Wednesday)",
+      "quality": 0.0,
+      "final_key": "59.8",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 299 (Total Junebugs removed from Monday to Friday)",
+        "step_3": "step_3: RESULT: 59.8 (Average Junebugs per day)",
+        "verifier": "VERDICT: passthrough\n#### 59.8",
+        "aggregator": "step_3: RESULT: 59.8 (Average Junebugs per day)\n\n#### 59.8"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "234",
+      "reference_key": "78",
+      "key_differs": true,
+      "text": "Calculation: Tuesday and Wednesday = 2 * 39 = 78 Junebugs each.\n\nRESULT: 78 (Monday) + 78 (Tuesday) + 78 (Wednesday) = 234 Junebugs.",
+      "quality": 0.0,
+      "final_key": "67.8",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: Sum up all the Junebugs: 234 (Monday, Tuesday, Wednesday) + 48 (Thursday) + 57 (Friday) = 339 Junebugs.\n\nRESULT: 339 Junebugs.",
+        "step_3": "step_3: To find the average, divide the total by the number of days, which is 5. So, 339 Junebugs / 5 days = 67.8 Junebugs per day.\n\nRESULT: 67.8 Junebugs per day.",
+        "verifier": "VERDICT: passthrough\n#### 67.8",
+        "aggregator": "RESULT: 67.8 Junebugs per day. #### 67.8"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

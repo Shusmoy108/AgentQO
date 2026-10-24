@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-837",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: $400 (This is the discounted price of the laptop after the trade-in discount.)",
+  "reference_key": "400",
+  "final_key_plus": "120",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: P + $150 + $80 + $50 = $400\n\nCarry out step 4.\n\nRESULT: $120",
+    "verifier": "VERDICT: passthrough\n#### 120",
+    "aggregator": "step_4: step_4: RESULT: $400 (total amount Erika has) - $600 (cost of new laptop) = -$200\n\nSince Erika cannot have a negative amount, it means she does not have enough money in her purse to cover the cost of the laptop after the trade-in. The extra $50 she needs is beyond her current purse funds.\n\n#### $120"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "401",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "step_2: RESULT: 401 (This is the discounted price of the laptop after the trade-in discount.)",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: P + $150 + $80 + $50 = $401\n\nCarry out step 4.\n\nRESULT: $120",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "aggregator": "step_4: step_4: RESULT: $401 (total amount Erika has) - $600 (cost of new laptop) = $120 (amount in her purse)\n\n#### $120"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "120",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "step_2: RESULT: $600 (initial laptop cost) - $200 (trade-in discount) = $400 (discounted laptop price)\nCarry out step 3, then solve for P:\nstep_3: Equation: P + $150 + $80 + $50 = $400\nresult: P + $280 = $400\nCalc: P = $400 - $280 = $120\n\nFinal Result: Erika has $120 in her purse.",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: Equation: P + $150 + $80 + $50 = $400\nresult: P + $280 = $400\nCalc: P = $400 - $280 = $120\n\nRESULT: $120",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "aggregator": "$120\n#### 120"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

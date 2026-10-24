@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-746",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Adult cost: 2 adults * $26 = $52\n   Child cost: 2 children * $12 = $24\n   Total cost for the first park: $52 + $24 = $76\n\nRESULT: $76",
+  "reference_key": "76",
+  "final_key_plus": "28",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Adult cost: 2 adults * $14 = $28\n   Child cost: 2 children * $10 = $20\n   Total cost for the second park: $28 + $20 = $48\n\nRESULT: $48",
+    "step_3": "3. Savings: $76 (first park) - $48 (second park) = $28\n\nRESULT: $28",
+    "verifier": "VERDICT: passthrough\n#### 28",
+    "aggregator": "3. Savings: $76 (first park) - $48 (second park) = $28\n\n#### $28"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "77",
+      "reference_key": "76",
+      "key_differs": true,
+      "text": "1. Adult cost: 2 adults * $26 = $52\n   Child cost: 2 children * $12 = $24\n   Total cost for the first park: $52 + $24 = $76\n\nRESULT: 77",
+      "quality": 1.0,
+      "final_key": "28",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Adult cost: 2 adults * $14 = $28\n   Child cost: 2 children * $10 = $20\n   Total cost for the second park: $28 + $20 = $48\n\nRESULT: 48",
+        "step_3": "3. Savings: $76 (first park) - $48 (second park) = $28\n\nRESULT: 28",
+        "verifier": "VERDICT: passthrough\n#### 28",
+        "aggregator": "3. Savings: $76 (first park) - $48 (second park) = $28\n\n#### 28"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "76",
+      "key_differs": true,
+      "text": "RAM Output:\n- Adult cost: 2 adults * $26 = $52\nRESULT: 52\n\nContinue to step 2.",
+      "quality": 1.0,
+      "final_key": "28",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RAM Output:\n- Adult cost: 2 adults * $14 = $28\n- Child cost: 2 children * $10 = $20\n- Total cost for the second park: $28 + $20 = 48\n\nRESULT: 48",
+        "step_3": "step_3: RAM Output:\n- Savings: Total cost for the first park - Total cost for the second park\n- Savings: $76 - $48 = 28\n\nRESULT: 28",
+        "verifier": "VERDICT: passthrough\n#### 28",
+        "aggregator": "28\n#### 28"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

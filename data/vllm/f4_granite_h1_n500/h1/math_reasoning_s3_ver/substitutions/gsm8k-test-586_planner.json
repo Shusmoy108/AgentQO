@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-586",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total calories burned during aerobics: Hannah burns 500 calories per hour and does aerobics for 2 hours. So, total calories burned during aerobics = 500 calories/hour * 2 hours = 1000 calories.\n2. Calculate the total calories burned during running: Hannah burns 600 calories per hour and runs for 1 hour. So, total calories burned during running = 600 calories/hour * 1 hour = 600 calories.\n3. Calculate the total calories burned: Total calories burned = calories burned during aerobics + calories burned during running = 1000 calories + 600 calories = 1600 calories.\n4. Calculate the total ml of water needed: Hannah needs to drink 100 ml of water for every 200 calories burned. So, total ml of water needed = (1600 calories / 200 calories) * 100 ml = 8 * 100 ml = 800 ml.\n\nFinal answer: Hannah needs to drink 800 ml of water.",
+  "reference_key": null,
+  "final_key_plus": "1600",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 1000 ml",
+    "verifier": "VERDICT: passthrough\n#### 1600",
+    "step_2": "step_2: RESULT: 600 ml\n\nFinal answer: Hannah needs to drink 600 ml of water from aerobics and 600 ml from running, totaling 1200 ml.",
+    "step_3": "step_3: RESULT: 1600 ml\n\nFinal answer: Hannah needs to drink 1600 ml of water in total.",
+    "aggregator": "Final answer: Hannah needs to drink 1600 ml of water in total.\n#### 1600"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. In the first round, Ali contacts 3 families.\n2. Each of these 3 families contacts 3 additional families, resulting in 3 * 3 = 9 new families notified.\n3. In the second round, these 9 families (3 from Ali and 6 new) each contact 3 more families, leading to 9 * 3 = 27 new families notified.\n4. For the third round, these 27 families (9 from the second round and 18 new) each contact 3 more families, adding 27 * 3 = 81 new families notified.\n5. Finally, in the fourth round, these 81 families (27 from the third round and 54 new) each contact 3 more families, resulting in 81 * 3 = 243 new families notified.\n\nPLAN: The total number of families notified during the fourth round is 243.",
+      "quality": 0.0,
+      "final_key": "600",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Ali contacts 3 families.\n\nRESULT: 3",
+        "verifier": "VERDICT: passthrough\n#### 600",
+        "step_2": "2. Each of these 3 families contacts 3 additional families, resulting in 3 * 3 = 9 new families notified.\n\nRESULT: 9",
+        "step_3": "3 * 3 = 9\nRESULT: 9",
+        "aggregator": "step_3: 3 * 3 = 9\nRESULT: 9\n\nHannah burns 500 calories per hour during aerobics and 600 calories per hour while running. To find out how many hours she spends on each activity, we divide the total calories by the calories burned per hour:\n\n- Aerobics: 500 calories / 500 calories/hour = 1 hour\n- Running: 600 calories / 600 calories/hour = 1 hour\n\nNow, we calculate the total calories burned:\n\nTotal calories burned = 500 calories/hour (aerobics) + 600 calories/hour (running) = 1100 calories\n\nNext, we determine how many 200-calorie intervals are in 1100 calories:\n\n1100 calories / 200 calories/interval = 5.5 intervals\n\nSince Hannah can't drink half a ml of water, we'll round up to the nearest whole number, which is 6 intervals.\n\nFinally, we calculate the total water intake:\n\n100 ml/interval * 6 intervals = 600 ml\n\n#### 600"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total calories burned during aerobics: Hannah burns 500 calories per hour and does aerobics for 2 hours. So, total calories burned during aerobics = 500 calories/hour * 2 hours = 1000 calories.\n2. Calculate the total calories burned during running: Hannah burns 600 calories per hour and runs for 1 hour. So, total calories burned during running = 600 calories/hour * 1 hour = 600 calories.\n3. Calculate the total calories burned: Total calories burned = calories burned during aerobics + calories burned during running = 1000 calories + 600 calories = 1600 calories.\n4. Calculate the total ml of water needed: Hannah needs to drink 100 ml of water for every 200 calories burned. So, total ml of water needed = (1600 calories / 200 calories) * 100 ml = 8 * 100 ml = 800 ml.\n\nRevised conclusion: Hannah needs to consume 800 calories of water.",
+      "quality": 1.0,
+      "final_key": "800",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 1000 ml",
+        "verifier": "VERDICT: passthrough\n#### 800",
+        "step_2": "step_2: RESULT: 600 ml\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 1600 ml\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "aggregator": "step_4: To find out the total calories burned, we multiply the calories burned per hour by the duration of each activity.\n\nAerobics: 500 calories/hour * 2 hours = 1000 calories\nRunning: 600 calories/hour * 1 hour = 600 calories\n\nTotal calories burned: 1000 calories + 600 calories = 1600 calories\n\nHannah needs to drink 100 ml of water for every 200 calories. To find out how much water she needs to drink for 1600 calories, we divide the total calories by 200 and then multiply by 100.\n\nWater needed = (1600 calories / 200 calories) * 100 ml/200 calories\n\nWater needed = 8 * 100 ml\n\nWater needed = 800 ml\n\nRESULT: 800 ml\n#### 800"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

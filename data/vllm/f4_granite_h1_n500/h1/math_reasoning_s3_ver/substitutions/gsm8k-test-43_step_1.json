@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-43",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 1250 calories.",
+  "reference_key": "1250",
+  "final_key_plus": "240",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 200 calories remaining.",
+    "step_3": "step_3: RESULT: 0.8 servings * 300g/serving = 240g.\n\nRESULT: 240 grams.",
+    "verifier": "VERDICT: passthrough\n#### 240",
+    "aggregator": "240 grams. #### 240"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "1251",
+      "reference_key": "1250",
+      "key_differs": true,
+      "text": "RESULT: 1251 calories.",
+      "quality": 0.0,
+      "final_key": "240",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 200 calories remaining.",
+        "step_3": "step_3: RESULT: 0.8 servings * 250 calories/serving = 200 calories.\n\nRESULT: 240 grams.",
+        "verifier": "VERDICT: passthrough\n#### 240",
+        "aggregator": "step_3: RESULT: 0.8 servings * 250 calories/serving = 200 calories.\n\nTo find out how many grams of chips you can eat, we first determine the calorie intake from one serving, which is 250 calories. Then, we calculate the calorie intake from 0.8 servings, resulting in 200 calories.\n\nGiven that your daily calorie target is 2000 and you've already consumed 1800 calories, you have 200 calories left for the remaining 240 grams of chips (since 300g - 120g = 180g, and 180g * 0.8 servings = 144 calories, which is less than your remaining 200 calories).\n\n#### 240"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "1250",
+      "key_differs": true,
+      "text": "RESULT: 1250 calories\n\nCarry out step 2 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+      "quality": 0.0,
+      "final_key": "240",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 2000 calories (total daily target) - 1800 calories (consumed) = 200 calories remaining.\n\nRESULT: 200",
+        "step_3": "step_3: RESULT: 200 calories / 250 calories/serving = 0.8 servings.\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 240",
+        "aggregator": "step_4: RESULT: 300g * 0.8 servings = 240g\n\n#### 240g"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

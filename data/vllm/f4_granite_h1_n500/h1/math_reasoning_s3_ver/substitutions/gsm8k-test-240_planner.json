@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-240",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Determine the number of candies Robert has. Since John has twice as many candies as Robert and John has 54 candies, Robert has 54/2 = 27 candies.\n2. Calculate the number of candies James has. James has 6 more candies than Robert, so James has 27 + 6 = 33 candies.\n3. Find out how many more candies John has than James. John has 54 candies and James has 33 candies, so John has 54 - 33 = 21 more candies than James.\n\nOutput:\n1. Robert has 27 candies.\n2. James has 33 candies.\n3. John has 21 more candies than James.",
+  "reference_key": null,
+  "final_key_plus": "21",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Robert has 27 candies.\nRESULT: 27",
+    "verifier": "VERDICT: passthrough\n#### 21",
+    "step_2": "step_2: James has 33 candies.\nRESULT: 33",
+    "step_3": "3. John has 54 candies and James has 33 candies. So, John has 54 - 33 = 21 more candies than James.\n\nRESULT: 21",
+    "aggregator": "21\n#### 21"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of balloons initially filled: 10 packs * 30 balloons per pack = 300 balloons.\n2. Determine the number of balloons thrown: 300 balloons - 12 balloons left = 288 balloons.\n3. Confirm the total number of balloons thrown by adding the leftover balloons: 288 balloons + 12 balloons = 300 balloons.",
+      "quality": 1.0,
+      "final_key": "21",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate the total number of candies initially:\nJames has 6 more candies than Robert.\nJohn has twice as many candies as Robert.\n\nLet's denote Robert's candies as R.\nJames's candies = R + 6\nJohn's candies = 2R\n\nWe know John has 54 candies, so:\n2R = 54\n\nSolving for R:\nR = 54 / 2\nR = 27\n\nNow, calculate James's candies:\nJames's candies = R + 6\nJames's candies = 27 + 6\nJames's candies = 33\n\nRESULT: 33",
+        "verifier": "VERDICT: passthrough\n#### 21",
+        "step_2": "2. Calculate the difference in candies between John and James:\nDifference = John's candies - James's candies\nDifference = 54 - 33\nDifference = 21\n\nRESULT: 21",
+        "step_3": "3. Confirm the difference in candies between John and James:\nDifference = John's candies - James's candies\nDifference = 54 - 33\nDifference = 21\n\nRESULT: 21",
+        "aggregator": "21\n#### 21"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Robert has 27 candies.\n2. James has 33 candies.\n3. John has 34 more candies than James.",
+      "quality": 0.0,
+      "final_key": "34",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Robert has 27 candies.\n\nRESULT: 27",
+        "verifier": "VERDICT: passthrough\n#### 34",
+        "step_2": "step_2: 2. James has 33 candies.\n\nRESULT: 33",
+        "step_3": "3. John has 34 more candies than James.\n\nCalculation:\nJohn's candies = James' candies + 34\n54 = 33 + 34\n\nRESULT: 34",
+        "aggregator": "34\n#### 34"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-392",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $2\n\nExplanation: The discount for each service (Hulu and Disney Plus) is calculated as follows: Original price ($10) * Discount percentage (20%) = $2.",
+  "reference_key": "2",
+  "final_key_plus": "34",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $16\n\nExplanation: The new price for Hulu is $8 (original $10 - $2 discount), and for Disney Plus is also $8 (original $10 - $2 discount). Adding these together gives the total discounted price for both services: $8 (Hulu) + $8 (Disney Plus) = $16.",
+    "step_3": "step_3: RESULT: $34\n\nExplanation: The savings by cancelling the cable package are calculated by subtracting the total cost of the streaming services from the original cable package cost: $60 (original cable cost) - $26 (total streaming cost) = $34.",
+    "verifier": "VERDICT: passthrough\n#### 34",
+    "aggregator": "step_3: RESULT: $34\n\n#### $34"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "2",
+      "reference_key": "2",
+      "key_differs": false,
+      "text": "RESULT: 3\n\nExplanation: The discount for each service (Hulu and Disney Plus) is calculated as follows: Original price ($10) * Discount percentage (20%) = $2.",
+      "quality": 0.0,
+      "final_key": "5",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 4\n\nExplanation: The total discounted price for both Hulu and Disney Plus is calculated by adding the discounted price of each service: $8 (Hulu) + $8 (Disney Plus) = $16.\n\nFinal result: Tim saves $34 by cancelling his $60 cable package and subscribing to Netflix, Hulu, and Disney Plus for a total of $26 per month.",
+        "step_3": "step_3: RESULT: 5\n\nExplanation: The savings by cancelling cable is calculated by subtracting the total cost of streaming services from the original cable package cost: $60 (original cable cost) - $26 (total streaming cost) = $34.\n\nRESULT: 5",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_3: RESULT: 5\n\n#### 5"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "16",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "Health: Calculated discounted prices for Hulu and Disney Plus after a 20% bundling discount.\n\nHulu: $10 - ($10 * 20%) = $10 - $2 = $8\nDisney Plus: $10 - ($10 * 20%) = $10 - $2 = $8\n\nRESULT: $8 (Hulu) + $8 (Disney Plus) = $16.",
+      "quality": 1.0,
+      "final_key": "34",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Health: Sum up the total discounted price for both Hulu and Disney Plus.\n\nRESULT: $16.",
+        "step_3": "step_3: RESULT: $60 (original cable cost) - $26 (total streaming cost) = $34.\n\nRESULT: $34.",
+        "verifier": "VERDICT: passthrough\n#### 34",
+        "aggregator": "step_3: RESULT: $60 (original cable cost) - $26 (total streaming cost) = $34.\n\n#### $34."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

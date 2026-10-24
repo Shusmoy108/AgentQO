@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-592",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Total cost on Amazon: $16 (boots) + $4 (shipping) = $20.\nRESULT: $20",
+  "reference_key": "20",
+  "final_key_plus": "8",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Total cost on eBay: $13 (boots) + 2 * $4 (shipping) = $13 + $8 = $21.\nRESULT: $21",
+    "step_3": "3. RESULT: $28 (eBay) - $20 (Amazon) = $8.\n\nThe boots are $8 more expensive on eBay compared to Amazon.",
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "aggregator": "The boots are $8 more expensive on eBay compared to Amazon.\n\n#### 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "1. Total cost on Amazon: $16 (boots) + $4 (shipping) = $20.\nRESULT: 21",
+      "quality": 1.0,
+      "final_key": "1",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2. Total cost on eBay: $13 (boots) + 2 * $4 (shipping) = $13 + $8 = $21.\nRESULT: 21",
+        "step_3": "3. Difference in cost between eBay and Amazon: $21 (eBay) - $20 (Amazon) = $1.\n\nRESULT: 1",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "aggregator": "1\n#### 1"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULT: $20\n\nPLAN: Now that we've calculated the total cost on Amazon, next, we'll compute the total cost on eBay.\n\nStep 2: Calculate the total cost on eBay: $13 (boots) + 2 * $4 (shipping) = $13 + $8 = $21.\n\nEnd of step 2.\n\nNow, move to step 3 to find the difference in cost between eBay and Amazon.\n\nPlan:\n3. Determine the difference in cost between eBay and Amazon: $21 (eBay) - $20 (Amazon) = $1.\n\nEnd of plan.",
+      "quality": 1.0,
+      "final_key": "1",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "Step 2: Calculate the total cost on eBay: $13 (boots) + 2 * $4 (shipping) = $13 + $8 = $21.\n\nRESULT: $21",
+        "step_3": "Plan:\n3. Determine the difference in cost between eBay and Amazon: $21 (eBay) - $20 (Amazon) = $1.\n\nRESULT: $1",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "aggregator": "The boots are $1 more expensive on eBay compared to Amazon.\n\n#### 1"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

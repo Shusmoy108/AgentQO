@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-698",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $1200.00",
+  "reference_key": "1200",
+  "final_key_plus": "720",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $480.00",
+    "step_3": "step_3: RESULT: $2400.00 - $1200.00 - $480.00 = $720.00\nRESULT: $720.00",
+    "verifier": "VERDICT: passthrough\n#### 720",
+    "aggregator": "step_3: RESULT: $2400.00 - $1200.00 - $480.00 = $720.00\n\n#### $720.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "1201",
+      "reference_key": "1200",
+      "key_differs": true,
+      "text": "RESULT: 1201",
+      "quality": 0.0,
+      "final_key": "1200",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 480",
+        "step_3": "step_3: RESULT: 720",
+        "verifier": "VERDICT: passthrough\n#### 1200",
+        "aggregator": "step_2: Greta's car payment amount = 20% of $2400 = 0.20 * $2400 = $480\nstep_3: Remaining paycheck after retirement contribution = $2400 - $1200 (50% of $2400) = $1200\n\nFinal answer: Greta has $1200 left to spend.\n#### 1200"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "1.1",
+      "reference_key": "1200",
+      "key_differs": true,
+      "text": "1. Calculate the cost of one apple and one orange:\n   - Apples: $5.20 / 4 apples = $1.30 per apple\n   - Oranges: $3.30 / 3 oranges = $1.10 per orange\n\nRESULT: $1.30 (apples) and $1.10 (oranges)",
+      "quality": 1.0,
+      "final_key": "720",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Calculate the remaining amount Greta has after these deductions:\n   Remaining amount = Total paycheck - Retirement contribution - Car payment\n   = $2400.00 - $1200.00 - $480.00\n   = $720.00\n\nRESULT: $720.00",
+        "step_3": "3. Determine the remaining amount Greta has after these deductions:\n   Remaining amount = Total paycheck - Retirement contribution - Car payment\n   = $2400.00 - $1200.00 - $480.00\n   = $720.00\n\nRESULT: $720.00",
+        "verifier": "VERDICT: passthrough\n#### 720",
+        "aggregator": "RESULT: $720.00 #### 720.00"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

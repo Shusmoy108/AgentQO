@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1196",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of red pens: Alain's mom bought 5 packs of red pens, with each pack containing 5 pens. So, the total number of red pens is 5 packs * 5 pens/pack = 25 pens.\n2. Calculate the total number of black pens: Alain's mom bought twice the amount of black pens than red pens. Since there are 25 red pens, the number of black pens is 25 pens * 2 = 50 pens.\n3. Calculate the total number of pens: Add the total number of red pens and black pens together. So, Alain has 25 pens (red) + 50 pens (black) = 75 pens.",
+  "reference_key": null,
+  "final_key_plus": "75",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 25 pens (red)",
+    "verifier": "VERDICT: passthrough\n#### 75",
+    "step_2": "step_2: RESULT: 50 pens (black)",
+    "step_3": "step_3: RESULT: 75 pens (total)",
+    "aggregator": "step_3: RESULT: 75 pens (total)\n\nAlain has 75 pens in total. This includes 5 packs of red pens (5 packs * 5 pens per pack = 25 red pens) and twice the amount of black pens as red, which is 2 * 25 = 50 black pens. Adding these together gives us 75 pens.\n\n#### 75"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total cost of the car and phone: $10000 (car) + $800 (phone) = $10800.\n2. Add the amount Gabriel has from his weekend work and his brother's contribution: $5000 (from work) + $200 (brother's contribution) = $5200.\n3. Subtract the total amount Gabriel has from the total cost of the car and phone: $10800 (total cost) - $5200 (amount Gabriel has) = $5600.\n\nPLAN:\n1. Compute the total cost of the car and phone.\n2. Sum up the money Gabriel has.\n3. Determine the remaining amount Gabriel needs by subtracting the total amount he has from the total cost.",
+      "quality": 1.0,
+      "final_key": "75",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $10800 (total cost of car and phone)",
+        "verifier": "VERDICT: passthrough\n#### 75",
+        "step_2": "step_2: RESULT: $5200 (amount Gabriel has from work and brother's contribution)\nCarry out step 3.\n\nRESULT: $5600 (remaining amount Gabriel needs)",
+        "step_3": "RESULT: $5600 (remaining amount Gabriel needs)",
+        "aggregator": "step_2: Alain's mom bought 5 packs of red pens, so that's 5 * 5 = 25 red pens.\nstep_3: She bought twice the amount of black pens as red, which is 2 * 25 = 50 black pens.\nstep_4: In total, she bought 25 (red) + 50 (black) = 75 pens.\n\nFinal answer: Alain has 75 pens.\n#### 75"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of red pens: Alain's mom procured 5 packages of red pens, each containing 5 pens. Hence, the total number of red pens amounts to 5 packages * 5 pens/package = 25 pens.\n2. Calculate the total number of black pens: Alain's mom bought three times the quantity of black pens as red pens. Given there are 25 red pens, the count of black pens is 25 pens * 3 = 75 pens.\n3. Calculate the total number of pens: Combine the total number of red pens and black pens. Therefore, Alain possesses 25 pens (red) + 75 pens (black) = 100 pens.",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 25 pens",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "step_2": "step_2: RESULT: 75 pens\n\nCarry out step 3. Show the final calculation.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 25 (red) + 75 (black) = 100 pens\n\nRESULT: 100 pens",
+        "aggregator": "100 pens\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

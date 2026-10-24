@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-285",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Determine Ann's brother's current age by multiplying Ann's age by 2.\n2. Calculate Ann's brother's age in 3 years by adding 3 to his current age.\n3. Present the final answer.",
+  "reference_key": null,
+  "final_key_plus": "21",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 18",
+    "verifier": "VERDICT: passthrough\n#### 21",
+    "step_2": "step_2: RESULT: 21",
+    "step_3": "step_3: RESULT: Ann's brother will be 21 years old in 3 years.",
+    "aggregator": "step_3: RESULT: Ann's brother will be 21 years old in 3 years.\n#### 21"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the initial commission for the first $1000 in sales:\n   Commission for $1000 = 30% of $1000 = 0.30 * $1000 = $300\n\n2. Determine the additional commission for the remaining $1500 (since $2500 - $1000 = $1500):\n   Additional commission = 10% of $1500 = 0.10 * $1500 = $150\n\n3. Add the initial and additional commissions to find the total amount earned by Antonella:\n   Total commission = Initial commission + Additional commission\n   Total commission = $300 + $150 = $450\n\nPLAN:\n1. Compute the initial commission for the first $1000 in sales.\n2. Compute the additional commission for the remaining $1500.\n3. Sum the initial and additional commissions to find the total earnings.",
+      "quality": 0.0,
+      "final_key": "450",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Commission for $1000 = 30% of $1000 = 0.30 * $1000 = $300\n\nRESULT: $300",
+        "verifier": "VERDICT: passthrough\n#### 450",
+        "step_2": "step_2: 2. Additional commission = 10% of $1500 = 0.10 * $1500 = $150\n\nRESULT: $150",
+        "step_3": "step_3: 3. Total commission = Initial commission + Additional commission\n   RESULT: $300 + $150 = $450\n\nRESULT: $450",
+        "aggregator": "RESULT: $450\n#### 450"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate Ann's brother's current age by multiplying Ann's age by 2.\n2. Forecast Ann's brother's age in 3 years by subtracting 3 from his current age.\n3. Display the final answer.",
+      "quality": 1.0,
+      "final_key": "21",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Ann's brother is currently 9 * 2 = 18 years old.\nRESULT: 18",
+        "verifier": "VERDICT: passthrough\n#### 21",
+        "step_2": "step_2: 2. Ann's brother's age in 3 years will be 18 - 3 = 15 years old.\nRESULT: 15",
+        "step_3": "RESULT: 15",
+        "aggregator": "step_3: RESULT: 15\n\nAnn's brother is currently twice her age, which means he is 18 years old (9 years * 2). In 3 years, he will be 18 + 3 = 21 years old.\n\n#### 21"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1206",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the loan amount: John's house is worth $250,000 and he gets a loan worth 40% of that. So, the loan amount is 0.40 * $250,000.\n2. Calculate the debt payment: John uses 60% of the loan amount to pay off his debts. So, the debt payment is 0.60 * (loan amount from step 1).\n3. Calculate the leftover money: Subtract the debt payment from step 2 from the loan amount from step 1.\n\nThe final output will be the leftover money after paying off debts.",
+  "reference_key": null,
+  "final_key_plus": "60000",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: $100,000",
+    "verifier": "VERDICT: passthrough\n#### 60000",
+    "step_2": "step_2: RESULT: 0.60 * $100,000 = $60,000\n\nCarry out step 3.\n\nRESULT: $100,000 - $60,000 = $40,000",
+    "step_3": "RESULT: $40,000",
+    "aggregator": "step_2: Calculate 40% of the house value.\n40% of $250,000 = 0.40 * $250,000 = $100,000\n\nstep_3: Calculate 60% of the loan amount.\n60% of $100,000 = 0.60 * $100,000 = $60,000\n\nFinal answer: John used $60,000 to pay off his debts.\n#### $60,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total cost of the shoes and the belt: $320.00 (shoes) + $32.00 (belt) = $352.00\n2. Determine the amount of money Lori needs to earn: $352.00 (total cost)\n3. Calculate the number of hours Lori needs to work: $352.00 / $8.00 (hourly wage) = 44 hours\n\nPLAN:\n1. Add the cost of shoes and belt to find the total purchase price.\n2. Divide the total purchase price by Lori's hourly wage to determine the number of hours she needs to work.\n3. The result from step 2 is the number of hours Lori must work to afford the shoes and belt.",
+      "quality": 1.0,
+      "final_key": "40000",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Total purchase price = Cost of shoes + Cost of belt\n   = $32.00 + $32.00\n   = $64.00\n\nRESULT: $64.00",
+        "verifier": "VERDICT: passthrough\n#### 40000",
+        "step_2": "2. Calculate the number of hours Lori needs to work: $64.00 (total purchase price) / $8.00 (hourly wage) = 8 hours\n\nRESULT: 8",
+        "step_3": "RESULT: 8",
+        "aggregator": "step_2: John's loan amount = 40% of $250,000 = 0.40 * $250,000 = $100,000\nstep_3: John uses 60% of his loan to pay off debts = 0.60 * $100,000 = $60,000\nstep_4: Money leftover after paying debts = $100,000 - $60,000 = $40,000\n\n#### 40,000"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "REWRITTEN PLAN:\n1. Determine the loan sum: John's property is valued at $250,000 and he secures a loan for 60% of it. Thus, the loan sum is 0.60 * $250,000.\n2. Estimate the debt installment: John utilizes 40% of the loan sum to settle his debts. Therefore, the debt installment is 0.40 * (loan sum calculated in step 1).\n3. Compute the remaining funds: Subtract the debt installment from step 2 from the loan sum from step 1.\n\nThe final outcome will represent the remaining funds post debt repayment.",
+      "quality": 0.0,
+      "final_key": "90000",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $150,000",
+        "verifier": "VERDICT: passthrough\n#### 90000",
+        "step_2": "step_2: RESULT: 0.40 * $150,000 = $60,000\n\nRESULT: $150,000 - $60,000 = $90,000",
+        "step_3": "RESULT: $90,000",
+        "aggregator": "step_2: Calculate 40% of the house value.\n40% of $250,000 = 0.40 * $250,000 = $100,000\n\nstep_3: Calculate 60% of the loan amount.\n60% of $100,000 = 0.60 * $100,000 = $60,000\n\nFinal answer: John had $90,000 leftover after paying his debts.\n#### $90,000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

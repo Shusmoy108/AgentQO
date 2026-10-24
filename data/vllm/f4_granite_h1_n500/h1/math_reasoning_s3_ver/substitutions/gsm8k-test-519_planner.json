@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-519",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Convert Rob's shingling time from hours to minutes (since Royce's time is given in minutes). Rob takes 2 hours, so that's 2 * 60 = 120 minutes.\n2. Calculate double Rob's time in minutes. Double of Rob's time is 120 * 2 = 240 minutes.\n3. Add the additional time Royce takes to double Rob's time. Royce takes 240 + 40 = 280 minutes.\n\nSo, Royce takes 280 minutes to shingle a house.",
+  "reference_key": null,
+  "final_key_plus": "280",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "120 minutes (Rob's time in minutes)\n\nRESULT: 120",
+    "verifier": "VERDICT: passthrough\n#### 280",
+    "step_2": "step_2: 240 minutes (double of Rob's time)\n\nRESULT: 240",
+    "step_3": "step_3: 240 + 40 = 280 minutes (Royce's total time)\n\nRESULT: 280",
+    "aggregator": "280 minutes\n#### 280"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total miles Sam ran on Monday, Wednesday, and Friday: 3 miles/day * 3 days = 9 miles.\n2. Calculate the total miles Sam ran on Tuesday and Thursday: 5 miles/day * 2 days = 10 miles.\n3. Add the miles from both sets of days to find the total miles for the week: 9 miles + 10 miles = 19 miles.\n\nPLAN:\n1. Compute miles for Monday, Wednesday, and Friday.\n2. Compute miles for Tuesday and Thursday.\n3. Sum the miles from both sets to get the total for the week.",
+      "quality": 0.0,
+      "final_key": "19",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total miles for Monday, Wednesday, and Friday: 3 miles/day * 3 days = 9 miles.\n\nRESULT: 9 miles",
+        "verifier": "VERDICT: passthrough\n#### 19",
+        "step_2": "step_2: 2. Compute miles for Tuesday and Thursday: 5 miles/day * 2 days = 10 miles.\n\nRESULT: 10 miles",
+        "step_3": "3. Add the miles from both sets of days to find the total miles for the week: 9 miles + 10 miles = 19 miles.\n\nRESULT: 19 miles",
+        "aggregator": "19 minutes\n#### 19"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "REWRITTEN PLAN:\n1. Convert Rob's shingling duration from hours to minutes (as Royce's time is in minutes). Rob's duration is 2 hours, which equals 2 * 60 = 120 minutes.\n2. Compute double Rob's time in minutes. Double of Rob's time is 120 * 2 = 240 minutes.\n3. Incorporate the extra time Royce needs to surpass double Rob's time. Royce takes 240 + 30 = 270 minutes.\n\nConsequently, Royce requires 270 minutes for the task.",
+      "quality": 0.0,
+      "final_key": "270",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 120",
+        "verifier": "VERDICT: passthrough\n#### 270",
+        "step_2": "step_2: RESULT: 240\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 240 + 30 = 270\n\nRESULT: 270 minutes",
+        "aggregator": "step_3: RESULT: 240 (Rob's time in minutes) + 30 (40 minutes more than double Rob's time) = 270 minutes\n\n#### 270"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

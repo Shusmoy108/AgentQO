@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1223",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $4",
+  "reference_key": "4",
+  "final_key_plus": "8",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 20 minutes * $0.20/minute = $4\n\nEND: RESULT: $8",
+    "step_3": "step_3: RESULT: $4 (from step_1) + $4 (from step_2) = $8\n\nEND: RESULT: $8",
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "aggregator": "RESULT: $8\n#### 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "5",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "RESULT: 5",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 4.00\nCarry out step 3.\nRESULT: 8.00",
+        "step_3": "RESULT: 8.00",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "step_3: To calculate the cost of a 36-minute call, we first consider the initial rate of $0.25 per minute for the first 16 minutes. This amounts to 16 * $0.25 = $4.00.\n\nFor the remaining 20 minutes (36 - 16), the rate drops to $0.2 per minute. So, the cost for these 20 minutes is 20 * $0.2 = $4.00.\n\nAdding both costs together, the total for a 36-minute call is $4.00 + $4.00 = $8.00.\n\n#### 8.00"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "12.8",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "RESULT: 12.8",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 4.0\n\nCarry out step 3.\n\nRESULT: 8.0",
+        "step_3": "RESULT: 8.0",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "step_3: To calculate the cost of a 36-minute call, we first consider the initial rate of $0.25 per minute for the first 16 minutes. This amounts to 16 * $0.25 = $4.0.\n\nFor the remaining 20 minutes (36 - 16), the rate drops to $0.2 per minute. So, the cost for these 20 minutes is 20 * $0.2 = $4.0.\n\nAdding both costs together, the total for a 36-minute call is $4.0 + $4.0 = $8.0.\n\n#### 8.0"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

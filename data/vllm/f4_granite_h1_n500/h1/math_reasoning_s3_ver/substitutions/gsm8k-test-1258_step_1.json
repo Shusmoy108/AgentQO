@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1258",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $20 divided by 5 minus the cost of one additional phone.",
+  "reference_key": "5",
+  "final_key_plus": "40",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 2x + x = $20\n\nNow, solve for 'x':\n\n3x = $20\nx = $20 / 3\n\nSo, the cost of one additional phone is $20 / 3.\n\nRESULT: $20 / 3",
+    "step_3": "step_3: RESULT: ($40 / 3) + 4 * ($20 / 3)\n\nNow, calculate the total cost:\n\nRESULT: $120 / 3\n\nSo, the whole phone plan costs $40.",
+    "verifier": "VERDICT: passthrough\n#### 40",
+    "aggregator": "The whole phone plan costs $40.\n\n#### 40"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "5",
+      "reference_key": "5",
+      "key_differs": false,
+      "text": "RESULT: 6 divided by 5 minus the cost of one additional phone.",
+      "quality": 0.0,
+      "final_key": "13.333333333333332",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $20 / 3 (cost of one additional phone)\n\nRESULT: $20 / 3",
+        "step_3": "step_3: RESULT: ($20 / 3) * 2 = $40 / 3\n\nRESULT: $40 / 3",
+        "verifier": "VERDICT: passthrough\n#### 13.333333333333332",
+        "aggregator": "RESULT: $40 / 3\n#### 13.333333333333332"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "1. Main phone cost = Total cost / Total phones - Additional phone cost\n= $20 / 5 - x\n\n2. RESULT: $4",
+      "quality": 0.0,
+      "final_key": "13.33",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2. RESULT: $40 / 3",
+        "step_3": "3. RESULT: $40 / 3",
+        "verifier": "VERDICT: passthrough\n#### 13.33",
+        "aggregator": "step_3: 3. RESULT: $40 / 3\n\nThe whole phone plan costs $40 / 3.\n\n#### $13.33"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1012",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. RESULT: X - 9% of 5 = X - 0.45\n\nThis is the charge of the power bank after 5 hours of losing 9% of its capacity each hour.",
+  "reference_key": "9",
+  "final_key_plus": "-5.16",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: 3. RESULT: (X - 0.45) - 7% of ((X - 0.45) - 7% of 3)\n\nFirst, calculate 7% of 3:\n7% of 3 = 0.07 * 3 = 0.21\n\nNow, subtract this from the remaining capacity after 5 hours:\n(X - 0.45) - 0.21\n\nNext, calculate 7% of the new remaining capacity:\n7% of ((X - 0.45) - 0.21) = 0.07 * ((X - 0.45) - 0.21)\n\nSubtract this from the previous result to find the charge after 8 hours:\nRESULT: (X - 0.45) - 0.21 - 0.07 * ((X - 0.45) - 0.21)",
+    "verifier": "VERDICT: passthrough\n#### -5.16",
+    "aggregator": "RESULT: (X - 0.45) - 0.21 - 0.07 * ((X - 0.45) - 0.21) = 28%\n\nTo find X, we need to solve the equation:\n\n28% = (X - 0.45) - 0.21 - 0.07 * ((X - 0.45) - 0.21)\n\nFirst, let's simplify the equation:\n\n28% = X - 0.45 - 0.21 - 0.07X + 0.07 * 0.45 - 0.07 * 0.21\n\nCombine like terms:\n\n28% = X - 0.66 - 0.07X + 0.021 - 0.049\n\n28% = -0.05X + 0.022\n\nNow, add 0.05X to both sides:\n\n0.05X + 28% = 0.022\n\nSubtract 28% from both sides:\n\n0.05X = 0.022 - 28%\n\n0.05X = 0.022 - 0.28\n\n0.05X = -0.258\n\nDivide both sides by 0.05:\n\nX = -0.258 / 0.05\n\nX = -5.16\n\nSince a negative value doesn't make sense in this context, it seems there might be a mistake in the problem statement or the calculations. The charge of the power bank when Maria went out to the park should be a positive number. Please double-check the problem details.\n\n#### <number> -5.16"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "-0.45",
+      "reference_key": "9",
+      "key_differs": true,
+      "text": "2. Calculate charge after 5 hours of 9% loss per hour:\nX - 9% of 5 = X - 0.09 * 5 = X - 0.45\n\nRESULT: X - 0.45",
+      "quality": 0.0,
+      "final_key": "0.408",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: 3. Calculate charge after 3 hours of 7% loss per hour, given the remaining capacity from step 2:\n\n(X - 0.45) - 7% of ((X - 0.45) - 7% of 3)\n\n= (X - 0.45) - 0.07 * ((X - 0.45) - 0.07 * 3)\n\n= (X - 0.45) - 0.07 * (X - 0.45 - 0.21)\n\n= (X - 0.45) - 0.07 * (X - 0.66)\n\n= (X - 0.45) - 0.07X + 0.042\n\n= X - 0.45 - 0.07X + 0.042\n\n= -0.03X + 0.408\n\nRESULT: -0.03X + 0.408",
+        "verifier": "VERDICT: passthrough\n#### 0.408",
+        "aggregator": "The charge of the power bank when Maria went out to the park was X.\n\nAfter 3 hours of 7% loss per hour, the remaining capacity is -0.03X + 0.408.\n\n#### 0.408"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "0.91",
+      "reference_key": "9",
+      "key_differs": true,
+      "text": "step_2: In this step, we calculate the charge after 5 hours of 9% loss per hour.\n\nCalculation:\nX - 9% of X = X - 0.09X = 0.91X\n\nRESULT: 0.91X",
+      "quality": 0.0,
+      "final_key": "0.85079",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: In this step, we calculate the charge after 3 hours of 7% loss per hour, given the remaining capacity from step 2.\n\nCalculation:\n0.91X - 7% of (0.91X - 7% of 0.91X) = 0.91X - 0.07(0.91X - 0.07*0.91X)\n= 0.91X - 0.07(0.91X - 0.0637X)\n= 0.91X - 0.07(0.8463X)\n= 0.91X - 0.05921X\n= 0.85079X\n\nRESULT: 0.85079X",
+        "verifier": "VERDICT: passthrough\n#### 0.85079",
+        "aggregator": "The charge of the power bank when Maria went out to the park was 0.85079X, where X is the initial charge.\n\n#### 0.85079X"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-622",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Jim chews 1 piece on the way home and 1 after dinner, which totals 2 pieces.\nRESULT: 2",
+  "reference_key": "2",
+  "final_key_plus": "9",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 18 (20 - 2)\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "verifier": "VERDICT: passthrough\n#### 9",
+    "aggregator": "step_4: Jim chews 1 piece on the way home (1 piece) and 1 after dinner (1 piece), totaling 2 pieces.\n\nRemaining gum after these instances: 20 - 2 = 18 pieces\n\nGiving half to his sister: 18 / 2 = 9 pieces\n\nJim has 9 pieces of gum left at the end of the day.\n\nRESULT: 9"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "step_2: Jim chews 1 piece on the way home and 1 after dinner, which totals 2 pieces.\nRESULT: 3",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: 18 (20 - 2)\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 9",
+        "aggregator": "step_4: Jim chews 1 piece on the way home (1 piece) and 1 after dinner (1 piece), totaling 2 pieces.\n\nRemaining gum after these instances: 20 - 2 = 18 pieces\n\nGiving half to his sister: 18 / 2 = 9 pieces\n\nJim has 9 pieces of gum left at the end of the day.\n\nRESULT: 9"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "step_2: RESULT: 2 (1 piece for getting home from school and 1 piece after dinner)",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 18 (20 initial - 2 used during school hours and after school)",
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "aggregator": "step_4: step_4: RESULT: 18 (after giving half to his sister)\n\n#### 18"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

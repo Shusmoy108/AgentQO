@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-921",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of slices Josh can eat in a day, which is twice the number Abby can eat.\n2. Add the number of slices Abby and Josh can eat together in a day to find the total daily consumption.\n3. Divide the total number of slices in the loaf by the total daily consumption to find out how many days the loaf will last.",
+  "reference_key": null,
+  "final_key_plus": "4",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Josh can eat twice as many slices as Abby, so Josh eats 2 * 2 = 4 slices per day.\n\nRESULT: 4",
+    "verifier": "VERDICT: passthrough\n#### 4",
+    "step_2": "step_2: 2. Abby and Josh together eat 2 (Abby's slices) + 4 (Josh's slices) = 6 slices per day.\n\nRESULT: 6",
+    "step_3": "3. 3. Total loaf of bread will last for 24 slices / 6 slices per day = 4 days.\n\nRESULT: 4",
+    "aggregator": "4\n#### 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate twice the amount of money Ethel has: 2 * $8 = $16.\n2. Next, add $2 to the result from step 1 to find out how much money Jimmy has: $16 + $2 = $18.\n3. Therefore, Jimmy has $18.",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "2 * 24 = 48 slices\n\nRESULT: 48",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "step_2": "step_2: Abby's daily consumption = 2 slices\nJosh's daily consumption = 2 * 2 = 4 slices\n\nCombined daily consumption = Abby's + Josh's = 2 + 4 = 6 slices\n\nTo find out how many days the loaf of bread will last, divide the total number of slices by the combined daily consumption:\n\n48 slices / 6 slices per day = 8 days\n\nRESULT: 8",
+        "step_3": "RESULT: 8",
+        "aggregator": "step_3: RESULT: 8\n\nAbby can eat 2 slices a day, and Josh can eat twice as much, which means Josh eats 4 slices a day. Together, they consume 2 (Abby) + 4 (Josh) = 6 slices per day.\n\nWith 24 slices in the loaf of bread, it will last for 24 slices / 6 slices per day = 4 days.\n\nHowever, since Josh eats twice as much as Abby, we need to adjust the daily consumption to reflect Josh's eating pattern. In this case, Abby's consumption is the limiting factor, so we'll use her rate.\n\nTherefore, the loaf of bread will last Abby 24 slices / 2 slices per day = 12 days.\n\n#### 12"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total number of slices Josh can consume in a day, which is double the amount Abby can eat.\n2. Sum up the number of slices both Abby and Josh can eat daily to determine the combined daily intake.\n3. Divide the total slices in the loaf by the combined daily consumption to determine the approximate duration the loaf will endure.",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Josh can eat twice as many slices as Abby, so Josh eats 2 * 2 = 4 slices per day.\n\nRESULT: 4",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: 2. Abby eats 2 slices per day, and Josh eats 4 slices per day. Together, they consume 2 + 4 = 6 slices per day.\n\nRESULT: 6",
+        "step_3": "3. 3. The loaf of bread, with 24 slices, will last Abby and Josh approximately 24 / 6 = 4 days.\n\nRESULT: 4",
+        "aggregator": "3. The loaf of bread, with 24 slices, will last Abby and Josh approximately 24 / (2 + 4) = 3 days.\n#### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

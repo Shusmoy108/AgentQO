@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-321",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. The cost of the magazine is $4 / 2 = $2.\n\nRESULT: $2",
+  "reference_key": "2",
+  "final_key_plus": "1",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "2. The pen costs $1 less than the magazine, which is $2. Therefore, the pen costs $2 - $1 = $1.\n\nRESULT: $1",
+    "step_3": "3. The pen costs $1.\n\nRESULT: $1",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "aggregator": "3. The pen costs $1.\n#### 1"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "1. The cost of the magazine is $4 / 2 = $2.\n\nRESULT: 3",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2. The cost of the pen is $2 (magazine cost) - $1 (difference) = $1.\n\nRESULT: 1",
+        "step_3": "2. The cost of the pen is $1.\n\nRESULT: 2",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "2\n#### 2"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "14",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "1. Apples picked on Tuesday = Total earnings from Monday / Price per apple\n= 56 / 4\n= 14 apples\n\nRESULT: 14",
+      "quality": 1.0,
+      "final_key": "1",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. The pen costs $2 - $1 = $1.\n\nRESULT: $1",
+        "step_3": "3. The pen costs $1.\n\nRESULT: $1",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "aggregator": "3. The pen costs $1.\n#### 1"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

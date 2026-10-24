@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-417",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 800 km",
+  "reference_key": "800",
+  "final_key_plus": "1040",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 240 km\n\nCarry out step 3.\n\nstep_3: RESULT: 1040 km",
+    "step_3": "step_3: RESULT: 800 km (first four days) + 240 km (next two days) + 0 km (no travel day) = 1040 km (total distance for the trip).\nRESULT: 1040 km",
+    "verifier": "VERDICT: passthrough\n#### 1040",
+    "aggregator": "step_3: RESULT: 800 km (first four days) + 240 km (next two days) + 0 km (no travel day) = 1040 km (total distance for the trip).\n\n#### 1040"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "801",
+      "reference_key": "800",
+      "key_differs": true,
+      "text": "RESULT: 801 km",
+      "quality": 0.0,
+      "final_key": "1041",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 240 km\n\nCarry out step 3.\n\nstep_3: RESULT: 1041 km\n\nEND.",
+        "step_3": "step_3: RESULT: 1041 km",
+        "verifier": "VERDICT: passthrough\n#### 1041",
+        "aggregator": "step_1: Calculate the total distance for the first four days.\n200 km/day * 4 days = 800 km\n\nstep_2: Determine the distance for the next two days.\n30% of 800 km = 0.30 * 800 km = 240 km\n\nstep_3: Add the distances from step 1 and step 2.\n800 km + 240 km = 1040 km\n\n#### 1041 km"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "800",
+      "key_differs": true,
+      "text": "RESULT: 800 km\n\nNext steps:\n2. Calculate the distance for the next two days.\n3. Add up all distances to get the total.",
+      "quality": 0.0,
+      "final_key": "1040",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. RESULT: 240 km (30% of 800 km)",
+        "step_3": "3. RESULT: 800 km (first four days) + 240 km (next two days) + 0 km (no travel day) = 1040 km (total distance for the trip)\n\nRESULT: 1040 km",
+        "verifier": "VERDICT: passthrough\n#### 1040",
+        "aggregator": "1040 km\n#### 1040"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

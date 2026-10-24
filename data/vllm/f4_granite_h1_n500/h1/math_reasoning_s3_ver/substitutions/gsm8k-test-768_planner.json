@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-768",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of books Ahmed read in one hour. Since Ezra read twice as many books as Ahmed and Ezra read 300 books, Ahmed read 300/2 = 150 books.\n2. Determine the total number of books Ezra will have read after reading 150 more. Ezra initially read 300 books and plans to read 150 more, so he will have read 300 + 150 = 450 books.\n3. Add the number of books Ahmed and Ezra read to find the total number of books they read altogether. Ahmed read 150 books and Ezra will have read 450 books, so they read 150 + 450 = 600 books altogether.",
+  "reference_key": null,
+  "final_key_plus": "600",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 150",
+    "verifier": "VERDICT: passthrough\n#### 600",
+    "step_2": "step_2: Ezra will have read 300 (initial) + 150 (planned) = 450 books.\nRESULT: 450",
+    "step_3": "RESULT: 600",
+    "aggregator": "step_3: RESULT: 600\n\n#### 600"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total amount Peter spends on wooden action figures from Sunday to Wednesday:\n   - Each day, he spends $5 on wooden action figures.\n   - For 4 days, he spends $5 per day, so the total spent on wooden figures is 4 * $5 = $20.\n\n2. Determine the remaining amount Peter has after buying wooden action figures:\n   - Peter started with $70.\n   - He spent $20 on wooden figures, so he has $70 - $20 = $50 left.\n\n3. Calculate the number of plastic action figures Peter can buy with the remaining $50:\n   - Each plastic action figure costs $2.\n   - With $50, he can buy $50 / $2 = 25 plastic action figures.\n\nPLAN: The total number of action figures Peter will have by the end of the week is 25 (wooden) + 25 (plastic) = 50 action figures.",
+      "quality": 0.0,
+      "final_key": "450",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $20\n\nPlan:\n1. Calculate the total amount Ahmed reads in one hour:\n   - Ezra read twice as many books as Ahmed in one hour.\n   - Ezra read 300 books.\n   - Therefore, Ahmed read 300 / 2 = 150 books.\n\n2. Determine the total number of books read by both Ezra and Ahmed:\n   - Ezra read 300 books.\n   - Ahmed read 150 books.\n   - Total books read = 300 + 150 = 450 books.\n\nPLAN: The total number of books read by Ezra and Ahmed in one hour is 450.\nResults so far:\n1. Ezra read 300 books.\n2. Ahmed read 150 books.\n3. Total books read = 450.\n\nCarry out step 2 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 450",
+        "step_2": "RESULT: 450",
+        "step_3": "3. Calculate the total number of books read by Ezra and Ahmed:\nRESULT: 450",
+        "aggregator": "step_3: 3. Calculate the total number of books read by Ezra and Ahmed:\nRESULT: 450\n\n#### 450"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate the number of books Ahmed read in one hour. Given Ezra read double the books Ahmed did and Ezra had 300 books, Ahmed must have read 300/2 = 150 books.\n2. Forecast the total count of books Ezra will have read post-150 additional reads. Ezra had already read 300 books and aims to read another 150, thus, he will have 300 + 150 = 450 books in total.\n3. Sum the books Ahmed and Ezra read to find the overall total. Ahmed read 150 books and Ezra will finish with 450 books, making it 150 + 450 = 601 books in total.",
+      "quality": 0.0,
+      "final_key": "601",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 150",
+        "verifier": "VERDICT: passthrough\n#### 601",
+        "step_2": "step_2: RESULT: 450",
+        "step_3": "step_3: RESULT: 150 (Ahmed's books) + 450 (Ezra's books) = 601 (Total books read by both)\nRESULT: 601",
+        "aggregator": "step_3: RESULT: 150 (Ahmed's books) + 450 (Ezra's books) = 601 (Total books read by both)\n\n#### 601"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

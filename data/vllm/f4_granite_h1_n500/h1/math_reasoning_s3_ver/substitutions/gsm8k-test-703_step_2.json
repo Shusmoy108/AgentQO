@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-703",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Each male ate 4 dumplings, and there are 8 males. So, 8 * 4 = 32 dumplings.\nRESULT: 32",
+  "reference_key": "32",
+  "final_key_plus": "50",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 18 (females) + 32 (males) = 50 dumplings.\nEND: 50",
+    "verifier": "VERDICT: passthrough\n#### 50",
+    "aggregator": "step_3: RESULT: 18 (females) + 32 (males) = 50 dumplings.\nEND: 50\n#### 50"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "33",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "step_2: Each male ate 4 dumplings, and there are 8 males. So, 8 * 4 = 32 dumplings.\nRESULT: 33",
+      "quality": 0.0,
+      "final_key": "37",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: Total dumplings Larry cooked = Dumplings eaten by females + Dumplings eaten by males\nRESULT: 50",
+        "verifier": "VERDICT: passthrough\n#### 37",
+        "aggregator": "step_3: Dumplings eaten by females = Number of females * Dumplings per female = 6 * 3 = 18\n\nSince each male ate 1 more dumpling than each female, the number of dumplings eaten by males = 18 + 1 = 19\n\nTotal dumplings Larry cooked = Dumplings eaten by females + Dumplings eaten by males = 18 + 19 = 37\n\n#### 37"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "step_2: RESULT: 32\nCarry out step 2 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+      "quality": 1.0,
+      "final_key": "50",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_2: RESULT: 32\n\nCarry out step 3 only. Show the calculation briefly.\n\nRESULT: 50",
+        "verifier": "VERDICT: passthrough\n#### 50",
+        "aggregator": "step_3: To find out how many dumplings Larry cooked, we first calculate the total number of dumplings eaten by the females. Since each female ate 3 dumplings and there were 6 females, the total for females is 6 * 3 = 18 dumplings.\n\nNext, we determine the number of dumplings eaten by the males. Each male ate 1 more dumpling than each female, so each male ate 3 + 1 = 4 dumplings. With 8 males, the total for males is 8 * 4 = 32 dumplings.\n\nFinally, to find the total number of dumplings Larry cooked, we add the dumplings eaten by females and males: 18 (females) + 32 (males) = 50 dumplings.\n\n#### 50"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

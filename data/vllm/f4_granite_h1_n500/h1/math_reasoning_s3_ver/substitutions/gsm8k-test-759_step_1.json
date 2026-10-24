@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-759",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 6000 songs",
+  "reference_key": "6000",
+  "final_key_plus": "200",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 60000 hours (6000 songs * 10 hours/song)\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 200 hours (20 playlists * 10 hours/playlist)\n\nEND: RESULT: 200 hours",
+    "verifier": "VERDICT: passthrough\n#### 200",
+    "aggregator": "200 hours\n#### 200"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6001",
+      "reference_key": "6000",
+      "key_differs": true,
+      "text": "RESULT: 6001 songs",
+      "quality": 0.0,
+      "final_key": "200",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Calculate the total hours of music from all playlists: 6001 songs * 10 hours/song = 60010 hours.\n\nRESULT: 60010 hours",
+        "step_3": "3. Confirm the total hours by multiplying the number of playlists by the hours per playlist: 20 playlists * 10 hours/playlist = 200 hours.\n\nRESULT: 200 hours",
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "aggregator": "200 hours\n#### 200"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "6000",
+      "key_differs": true,
+      "text": "RESULT: 6000 songs\n\nNext steps:\n1. Calculate total hours of music from all playlists\n2. Confirm total hours by multiplying the number of playlists by the hours per playlist",
+      "quality": 0.0,
+      "final_key": "200",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Calculate total hours of music from all playlists:\nRESULT: 60000 hours",
+        "step_3": "3. Confirm the total hours by multiplying the number of playlists by the hours per playlist:\nRESULT: 200 hours",
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "aggregator": "step_3: 3. Confirm the total hours by multiplying the number of playlists by the hours per playlist:\nRESULT: 200 hours\n#### 200"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

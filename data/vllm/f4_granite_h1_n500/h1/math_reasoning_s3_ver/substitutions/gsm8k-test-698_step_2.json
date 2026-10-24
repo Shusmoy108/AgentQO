@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-698",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Car payment = 20% of $2400.00 = 0.20 * $2400.00 = $480.00\nRESULT: $480.00",
+  "reference_key": "480",
+  "final_key_plus": "720",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: Remaining amount = Total paycheck - Retirement contribution - Car payment\n= $2400.00 - $1200.00 - $480.00\n= $720.00\n\nRESULT: $720.00",
+    "verifier": "VERDICT: passthrough\n#### 720",
+    "aggregator": "RESULT: $720.00 #### 720.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "481",
+      "reference_key": "480",
+      "key_differs": true,
+      "text": "step_2: Car payment = 20% of $2400.00 = 0.20 * $2400.00 = $480.00\nRESULT: 481",
+      "quality": 1.0,
+      "final_key": "720",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: Remaining amount = Total paycheck - Retirement contribution - Car payment\n= $2400.00 - $1200.00 - $480.00\n= $720.00\n\nRESULT: 720.00",
+        "verifier": "VERDICT: passthrough\n#### 720",
+        "aggregator": "720.00 #### 720.00"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "480",
+      "key_differs": true,
+      "text": "step_2: RESULT: $480.00\nCarry out step 3 only. Show the final result.\nEnd with \"RESULT: <number>\".",
+      "quality": 1.0,
+      "final_key": "720",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $720.00\n\nFinal result:\nRESULT: $720.00",
+        "verifier": "VERDICT: passthrough\n#### 720",
+        "aggregator": "step_3: RESULT: $720.00\n\nFinal result:\nRESULT: $720.00\n#### $720.00"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

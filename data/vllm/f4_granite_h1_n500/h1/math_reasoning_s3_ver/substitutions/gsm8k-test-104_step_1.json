@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-104",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 250",
+  "reference_key": "250",
+  "final_key_plus": "250",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 750\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 750 / 3 \u2248 250\n\nRESULT: 250",
+    "verifier": "VERDICT: passthrough\n#### 250",
+    "aggregator": "250 jigsaw pieces are left to be placed. #### 250"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "251",
+      "reference_key": "250",
+      "key_differs": true,
+      "text": "RESULT: 251",
+      "quality": 1.0,
+      "final_key": "500",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 750\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 250 pieces placed by mom\nRESULT: 500 pieces left to be placed.",
+        "verifier": "VERDICT: passthrough\n#### 500",
+        "aggregator": "step_3: Poppy initially places a quarter of the 1000 pieces, which is 250 pieces.\n\nAfter Poppy places 250 pieces, there are 750 pieces left on the board (1000 - 250).\n\nHer mom then places a third of the remaining 750 pieces. A third of 750 is 250 pieces.\n\nSo, 250 pieces are placed by mom.\n\nTo find out how many pieces are left to be placed, subtract the pieces placed by mom from the remaining pieces after Poppy's placement:\n\n750 (remaining after Poppy) - 250 (placed by mom) = 500 pieces left to be placed.\n\n#### 500"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "500",
+      "reference_key": "250",
+      "key_differs": true,
+      "text": "500 pieces",
+      "quality": 1.0,
+      "final_key": "500",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 750 pieces (remaining after Poppy's placement)\nRESULT: 500 pieces",
+        "step_3": "step_3: 250 pieces (approximately a third of the remaining 750 pieces)\nRESULT: 500 pieces",
+        "verifier": "VERDICT: passthrough\n#### 500",
+        "aggregator": "step_1: Poppy starts with 1000 pieces.\nstep_2: She places a quarter of the pieces on the board, which is 1000 * 0.25 = 250 pieces.\nstep_3: After Poppy places 250 pieces, there are 1000 - 250 = 750 pieces left.\nstep_4: Her mom then places a third of the remaining 750 pieces, which is 750 * 0.333 (approximately) = 250 pieces.\nstep_5: After her mom places the pieces, there are 750 - 250 = 500 pieces left to be placed.\n\n#### 500"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

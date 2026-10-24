@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-431",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the skipping rope, the board game, and the playground ball by adding their individual prices: $6 (skipping rope) + $11 (board game) + $2 (playground ball) = $19.\n2. Determine the total amount of money Dora currently has by adding her savings and the money given by her mother: $2 (savings) + $16 (from mother) = $18.\n3. Find out how much more money Dora needs by subtracting her total current money from the total cost of the items: $19 (total cost) - $18 (total current money) = $1.\n\nDora needs $1 more to buy the skipping rope, the game, and the ball.",
+  "reference_key": null,
+  "final_key_plus": "1",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: $19",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "step_2": "step_2: RESULT: $18 (total current money)",
+    "step_3": "step_3: RESULT: $19 (total cost) - $18 (total current money) = $1\n\nRESULT: $1",
+    "aggregator": "RESULT: $1\n#### 1"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Identify the initial height of the beanstalk: 4 feet.\n2. Determine the daily growth rate: The beanstalk doubles its height each day.\n3. Calculate the number of days needed for the beanstalk to surpass the window height:\n   - Day 1: 4 feet (initial height)\n   - Day 2: 4 * 2 = 8 feet\n   - Day 3: 8 * 2 = 16 feet\n   - Day 4: 16 * 2 = 32 feet\n   - Day 5: 32 * 2 = 64 feet\n\nThe beanstalk will be taller than Mark's window on Day 5.",
+      "quality": 0.0,
+      "final_key": "11",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 4 feet",
+        "verifier": "VERDICT: passthrough\n#### 11",
+        "step_2": "step_2: The daily growth rate is 100% (doubling).\n\nRESULT: 100%",
+        "step_3": "step_3: RESULT: The beanstalk will surpass the window height on Day 5, which is 64 feet.\n\nRESULT: 64 feet",
+        "aggregator": "RESULT: Dora needs $6 (for the skipping rope) + $11 (for the board game) + $2 (for the playground ball) = $29 in total. She has $2 (from allowance) + $16 (from mother) = $18. Therefore, Dora is short by $29 - $18 = $11.\n\n#### 11"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total cost of the skipping rope, the board game, and the playground ball by adding their individual prices: $6 (skipping rope) + $11 (board game) + $2 (playground ball) = $19.\n2. Determine the total amount of money Dora currently has by adding her savings and the money given by her mother: $2 (savings) + $16 (from mother) = $18.\n3. Find out how much Dora needs by subtracting her total current money from the total cost of the items: $19 (total cost) - $18 (total current money) = $1.\n\nDora needs $1 more to buy the skipping rope, the game, and the ball. However, she currently has $1 less than enough to cover the total cost.",
+      "quality": 0.0,
+      "final_key": "11",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $19",
+        "verifier": "VERDICT: passthrough\n#### 11",
+        "step_2": "step_2: RESULT: $18 (total current money)",
+        "step_3": "step_3: RESULT: $1 (additional amount needed)",
+        "aggregator": "step_3: Dora's total savings = $2 (allowance) + $16 (mother's contribution) = $18\nstep_2: Total cost of items = $6 (rope) + $11 (game) + $2 (ball) = $29\nstep_1: Additional amount needed = Total cost - Total savings = $29 - $18 = $11\n\n#### 11"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

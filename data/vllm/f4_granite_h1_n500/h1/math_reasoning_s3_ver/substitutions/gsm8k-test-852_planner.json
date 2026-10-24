@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-852",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of green food: 3 baskets of green food at $25 each will cost 3 * $25 = $75.\n2. Calculate the discount for red food: $2 off each basket means a total discount of 3 * $2 = $6.\n3. Calculate the total cost of red food after discount: 3 baskets of red food at $18 each would normally cost 3 * $18 = $54, but with the discount, the total cost will be $54 - $6 = $48.\n4. Calculate the total cost for both green and red food: $75 (green food) + $48 (red food) = $123.\n\nSo, the total amount to be paid is $123.",
+  "reference_key": null,
+  "final_key_plus": "48",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: $75",
+    "verifier": "VERDICT: passthrough\n#### 48",
+    "step_2": "step_2: RESULT: $6\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $54 - $6 = $48",
+    "aggregator": "step_3: RESULT: $54 (3 baskets of green food at $25 each) - $6 (total discount for 3 baskets of red food) = $48\n#### 48"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate Jan's age two years ago: Jan's age two years ago = Jan's current age - 2 = 30 - 2 = 28 years.\n2. Next, determine Mark's age two years ago: Mark's age two years ago = Jan's age two years ago - 5 = 28 - 5 = 23 years.\n3. Finally, calculate Jean's current age: Jean's age = Mark's age two years ago + 2 = 23 + 2 = 25 years.",
+      "quality": 1.0,
+      "final_key": "123",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 28",
+        "verifier": "VERDICT: passthrough\n#### 123",
+        "step_2": "step_2: RESULT: 23",
+        "step_3": "step_3: Jean's age = Mark's age two years ago + 2 = 23 + 2 = 25 years.\nRESULT: 25",
+        "aggregator": "First, let's calculate the cost of one basket of green and red food:\n- Green food: $25\n- Red food: $18\n\nNext, let's find the discount per basket of red food:\n- Discount per red food basket: $2\n\nNow, let's calculate the total cost for 3 baskets of green food:\n- Total cost for green food: 3 * $25 = $75\n\nThen, calculate the total cost for 3 baskets of red food with the discount:\n- Total cost for red food: 3 * ($18 - $2) = 3 * $16 = $48\n\nFinally, add the total costs of green and red food to get the overall total:\n- Overall total: $75 + $48 = $123\n\n#### 123"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total cost of green food: 3 baskets of green food at $25 each will cost 3 * $25 = $75.\n2. Calculate the discount for red food: $2 off each basket means a total discount of 3 * $2 = $6.\n3. Calculate the total cost of red food after discount: 3 baskets of red food at $18 each would normally cost 3 * $18 = $54, but with the discount, the total cost will be $54 - $6 = $48.\n4. Calculate the total cost for both green and red food: $75 (green food) + $48 (red food) = $123.\n\nFinal Amount to be Paid: $123.\n\nNote: The conclusion has been slightly altered by adding \"Final Amount to be Paid\" in place of \"So, the total amount to be paid.\"",
+      "quality": 0.0,
+      "final_key": "48",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $75",
+        "verifier": "VERDICT: passthrough\n#### 48",
+        "step_2": "step_2: RESULT: $6",
+        "step_3": "step_3: RESULT: $48",
+        "aggregator": "step_3: RESULT: $48\n\nFinal answer: #### 48"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

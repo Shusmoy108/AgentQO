@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-555",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "John's daily earnings are $2 * 5 = $10.\n\nRESULT: $10",
+  "reference_key": "10",
+  "final_key_plus": "2",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: John's weekly earnings are $10 * 4 = $40.\n\nRESULT: $40",
+    "step_3": "step_3: To find out how many weeks it will take John to save $80, divide his total savings goal by his weekly earnings. So, $80 / $40 = 2 weeks.\n\nRESULT: 2",
+    "verifier": "VERDICT: passthrough\n#### 2",
+    "aggregator": "2 weeks. #### 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "John's daily earnings are $2 * 5 = $10.\n\nRESULT: 11",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: John's weekly earnings are $10 * 4 = $40.\n\nRESULT: 2",
+        "step_3": "3. RESULT: John will need 2 weeks to save $80.\n\nRESULT: 2",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "3. RESULT: John will need 2 weeks to save $80.\n\n#### 2"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "45",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "1. The third book's thickness is calculated as follows: 50 mm (second book's thickness) - 5 mm = 45 mm.\n\nRESULT: 45 mm",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. To find out how many weeks it will take John to save $80, divide his total savings goal by his weekly earnings. So, $80 / $40 = 2 weeks.\n\nRESULT: 2 weeks",
+        "step_3": "3. RESULT: John will need 2 weeks to save $80.",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: 3. RESULT: John will need 2 weeks to save $80.\n#### 2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

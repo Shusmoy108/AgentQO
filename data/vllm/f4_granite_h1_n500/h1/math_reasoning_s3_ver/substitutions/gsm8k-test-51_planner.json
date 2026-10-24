@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-51",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total distance Tom travels from 1 to 4 PM. Since his ship travels at 10 mph, and there are 3 hours in this time frame, the distance covered is 3 hours * 10 mph = 30 miles.\n2. Determine the time it takes for Tom to travel back at 6 mph. The distance is the same, 30 miles, but the speed is different. Use the formula time = distance/speed. So, the time taken to travel back is 30 miles / 6 mph = 5 hours.\n3. Add the time taken to travel back to the initial 3-hour journey to find the total time. Total time = 3 hours (outbound) + 5 hours (return) = 8 hours.",
+  "reference_key": null,
+  "final_key_plus": "8",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 30 miles\n\nNext step:\n\nPLAN:\n2. Calculate the time taken for the return journey.\n\nCalculation:\nTime = Distance / Speed\nTime = 30 miles / 6 mph\nTime = 5 hours\n\nEnd with \"RESULT: <number>\".",
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "step_2": "RESULT: 5 hours",
+    "step_3": "step_3: RESULT: 8 hours",
+    "aggregator": "step_3: Tom's round trip time is calculated by adding the time taken to travel to the destination and the time taken to return.\n\nFor the outbound journey from 1 PM to 4 PM, the time taken is 4 hours - 1 PM = 3 hours.\n\nFor the return journey at 6 mph, the time taken is distance / speed = 30 miles / 6 mph = 5 hours.\n\nTherefore, the total round trip time is 3 hours (outbound) + 5 hours (return) = 8 hours.\n\n#### 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Let's denote the number of cards PJ has as x.\n2. According to the problem, Smendrick has 3 times the amount of cards that PJ has, so Smendrick has 3x cards.\n3. Becca has 12 more cards than Smendrick, so Becca has 3x + 12 cards.\n4. The total number of cards is 341, so we can set up the equation: x + 3x + (3x + 12) = 341.\n5. Simplify and solve for x: 7x + 12 = 341, then 7x = 329, and finally x = 47.\n6. Now, calculate the number of cards Becca has: 3x + 12 = 3(47) + 12 = 141 + 12 = 153.\n\nPLAN:\n1. Define PJ's cards as x.\n2. Calculate Smendrick's cards as 3x.\n3. Determine Becca's cards as 3x + 12.\n4. Set up the total cards equation: x + 3x + (3x + 12) = 341.\n5. Solve for x: 7x = 329, x = 47.\n6. Find Becca's card count: 3x + 12 = 153.",
+      "quality": 0.0,
+      "final_key": "153",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Let's denote the number of cards PJ has as x.\n\nRESULT: 47",
+        "verifier": "VERDICT: passthrough\n#### 153",
+        "step_2": "step_2: 2. Calculate Smendrick's cards as 3x.\n\nRESULT: 141",
+        "step_3": "step_3: 3. Determine Becca's cards as 3x + 12.\n\nRESULT: 153",
+        "aggregator": "step_3: 3. Determine Becca's cards as 3x + 12.\n\nRESULT: 153\n\n#### 153"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total distance Tom covers from 1 to 4 PM. Given his ship's speed is 10 mph and the duration is 3 hours, the distance is 3 hours * 10 mph = 30 miles.\n2. Estimate the duration for Tom's return journey at 6 mph. The distance remains 30 miles, but the speed changes. Utilizing the formula time = distance/speed, the return time is 30 miles / 6 mph = 5 hours.\n3. Merge the return journey duration with the initial 3-hour trip to ascertain the total time. Total time = 3 hours (outbound) + 5 hours (return) = 8 hours.\n\n(Subtle error: In step 2, the time taken for the return journey was incorrectly stated as 5 hours, when in fact, it should be 2.5 hours, as the distance is the same but the speed is different.)",
+      "quality": 0.0,
+      "final_key": "5.5",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 30 miles\n\n(Subsequent steps will correct the return journey duration.)",
+        "verifier": "VERDICT: passthrough\n#### 5.5",
+        "step_2": "step_2: RESULT: 2.5 hours",
+        "step_3": "step_3: RESULT: 3 hours (outbound) + 2.5 hours (return) = 5.5 hours\n\nRESULT: 5.5 hours",
+        "aggregator": "5.5 hours\n#### 5.5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-962",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the additional cost for the travel tickets by finding 50% of the total supply cost. This can be done by multiplying the total supply cost by 0.5.\n2. Add this additional cost to the total supply cost to find the total travel cost.\n3. The result from step 2 will be the total travel cost for Jen.",
+  "reference_key": null,
+  "final_key_plus": "600",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: $200",
+    "verifier": "VERDICT: passthrough\n#### 600",
+    "step_2": "step_2: RESULT: $400 (total supply cost) + $200 (additional cost for tickets) = $600\n\nRESULT: $600",
+    "step_3": "RESULT: $600",
+    "aggregator": "step_3: RESULT: $600\n\n#### 600"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total cost of 5 crayons at $2 each: 5 crayons * $2/crayon = $10.\n2. Determine the change Violetta will receive by subtracting the total cost from her prepared amount: $20 - $10 = $10.\n3. Confirm the change amount: Violetta will get $10 in change.",
+      "quality": 0.0,
+      "final_key": "15",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total cost of 5 crayons at $2 each: 5 crayons * $2/crayon = $10.\n\nRESULT: $10",
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "step_2": "2. Determine the total cost of travel by calculating 50% more than the supplies:\n   50% of $10 = 0.5 * $10 = $5\n   Total travel cost = $10 (supplies) + $5 (50% more) = $15\n\nRESULT: $15",
+        "step_3": "3. Confirm the total travel cost: The total cost for travel is $15.\n\nRESULT: $15",
+        "aggregator": "step_3: 3. Confirm the total travel cost: The total cost for travel is $15.\n\nRESULT: $15\n#### 15"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the extra expenditure on travel tickets by determining 50% of the total supply cost. This can be accomplished by multiplying the total supply cost by 0.5.\n2. Include this additional cost in the total supply cost to determine the total travel cost.\n3. The outcome from step 2 will represent the total travel cost for Jen, assuming there are no unexpected additional expenses.",
+      "quality": 0.0,
+      "final_key": "600",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $200\n\nExplanation:\n50% of $400 is calculated as 0.5 * $400 = $200. This is the extra amount Jen spends on travel tickets.\n\nNext step: Add this extra cost to the total supply cost to find the total travel cost.",
+        "verifier": "VERDICT: passthrough\n#### 600",
+        "step_2": "step_2: RESULT: $400 + $200 = $600\n\nExplanation:\nThe total travel cost is the sum of the total supply cost and the extra expenditure on travel tickets. Therefore, $400 (total supply cost) plus $200 (extra cost for tickets) equals $600.\n\nRESULT: $600",
+        "step_3": "step_3: RESULT: $600\n\nRESULT: $600",
+        "aggregator": "step_3: RESULT: $600\n\n#### $600"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1299",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: $15.00 (movie tickets) + $3.50 (ice cream) + $8.50 (bracelet) = $27.00\nRESULT: $27.00",
+  "reference_key": "27",
+  "final_key_plus": "13",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: $40.00 - $27.00 = $13.00\nEND: $13.00",
+    "verifier": "VERDICT: passthrough\n#### 13",
+    "aggregator": "step_3: RESULT: $40.00 - $27.00 = $13.00\nEND: $13.00\n#### $13.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "28",
+      "reference_key": "27",
+      "key_differs": true,
+      "text": "step_2: $15.00 (movie tickets) + $3.50 (ice cream) + $8.50 (bracelet) = $27.00\nRESULT: 28",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: $40.00 - $28.00 = $12.00\n\nRESULT: $12.00",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "step_3: RESULT: $40.00 - $28.00 = $12.00\n\n#### $12.00"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "20.5",
+      "reference_key": "27",
+      "key_differs": true,
+      "text": "step_2: RESULT: $3.50 (ice cream) + $7.50 (first movie ticket) + $8.50 (bracelet) = $19.50.\n\nstep_3: RESULT: $40.00 - $19.50 = $20.50.\n\nFINAL RESULT: $20.50",
+      "quality": 0.0,
+      "final_key": "20.5",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: $20.50",
+        "verifier": "VERDICT: passthrough\n#### 20.5",
+        "aggregator": "step_1: Janet's total spending on ice cream, movie tickets, and bracelet = $3.50 + ($7.50 + $7.50) + $8.50 = $32\nstep_2: Subtract Janet's total spending from the amount her parents gave her = $40 - $32 = $8\nstep_3: RESULT: $20.50\n#### $20.50"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

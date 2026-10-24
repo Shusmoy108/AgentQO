@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-556",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $40",
+  "reference_key": "40",
+  "final_key_plus": "160",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $40 * 3 = $120\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $40 + $120 = $160\n\nRESULT: $160",
+    "verifier": "VERDICT: passthrough\n#### 160",
+    "aggregator": "$160\n#### 160"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "41",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "RESULT: 41",
+      "quality": 1.0,
+      "final_key": "160",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $120 (40 * 3)\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $160 (40 + 120)",
+        "verifier": "VERDICT: passthrough\n#### 160",
+        "aggregator": "Final answer: $160\n#### 160"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "RESULT: $40\n\nNext steps:\n\nStep 2: Multiply the cost of the foot-long fish sub by 3 to find the cost of the six-inch cold-cut combo sub.\n\nStep 3: Add the cost of both subs to find the total lunch cost.\n\n[Continue with Step 2 and Step 3 for final results.]",
+      "quality": 1.0,
+      "final_key": "160",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "Step 2: $40 * 3 = $120\n\nRESULT: $120",
+        "step_3": "step_3: RESULT: $40 + $120 = $160\n\nRESULT: $160",
+        "verifier": "VERDICT: passthrough\n#### 160",
+        "aggregator": "$160\n#### 160"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

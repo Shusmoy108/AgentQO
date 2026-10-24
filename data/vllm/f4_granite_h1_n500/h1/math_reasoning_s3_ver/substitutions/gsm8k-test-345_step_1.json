@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-345",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "160 legs.\n\nRESULT: 160",
+  "reference_key": "160",
+  "final_key_plus": "310",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 150 legs.\n\nRESULT: 150",
+    "step_3": "step_3: 160 legs (from 40 tables) + 150 legs (from 50 tables) = 310 legs.\n\nRESULT: 310",
+    "verifier": "VERDICT: passthrough\n#### 310",
+    "aggregator": "310 legs. #### 310"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "161",
+      "reference_key": "160",
+      "key_differs": true,
+      "text": "160 legs.\n\nRESULT: 161",
+      "quality": 1.0,
+      "final_key": "310",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 150 legs.\n\nRESULT: 150",
+        "step_3": "step_3: 160 (from step_1) + 150 (from step_2) = 310 legs.\n\nRESULT: 310",
+        "verifier": "VERDICT: passthrough\n#### 310",
+        "aggregator": "310\n#### 310"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "160",
+      "key_differs": true,
+      "text": "Result: 160 legs (40 tables * 4 legs/table)",
+      "quality": 1.0,
+      "final_key": "310",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Result: 150 legs (50 tables * 3 legs/table)\nCarry out step 3.\n\nRESULT: 310 legs (160 legs + 150 legs)",
+        "step_3": "RESULT: 310 legs (160 legs + 150 legs)",
+        "verifier": "VERDICT: passthrough\n#### 310",
+        "aggregator": "step_3: RESULT: 310 legs (160 legs + 150 legs)\n\n#### 310"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

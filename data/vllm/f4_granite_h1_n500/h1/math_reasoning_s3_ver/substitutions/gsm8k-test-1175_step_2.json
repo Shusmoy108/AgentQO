@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1175",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: 2. Team B scored 8 goals in the second half.\n\nRESULT: 8",
+  "reference_key": "8",
+  "final_key_plus": "10",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: 3. Team B's total goals = First half goals + Second half goals = 2 + 8 = 10 goals.\n\nRESULT: 10",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "aggregator": "3. Team B's total goals = First half goals + Second half goals = 2 + 8 = 10 goals.\n\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "9",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "step_2: 2. Team B scored 8 goals in the second half.\n\nRESULT: 9",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. Calculate team B's total goals.\n\nRESULT: 10",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "step_3: 3. Calculate team B's total goals.\n\nRESULT: 10\n\n#### 10"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "step_2: Result: 3\nTeam B's second half goals = 4 * 2 = 8 goals.\nRESULT: 3",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: Result: 4\nTeam B's total goals = First half goals + Second half goals\nTeam B's total goals = 2 + 8 = 10 goals.\nRESULT: 4",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "Team A's total goals = First half goals + Second half goals\nTeam A's total goals = 4 + (1/4 * 8)\nTeam A's total goals = 4 + 2\nTeam A's total goals = 6 goals.\n\n#### 10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-945",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: 6 hours\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+  "reference_key": "3",
+  "final_key_plus": "5",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 3 hours (rest time)\nremaining_distance: 8 miles\nnew_speed: 4 miles per hour\ntime_for_remaining_distance: 8 / 4 = 2 hours\nRESULT: 2 hours",
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "aggregator": "step_3: RESULT: 3 hours (rest time)\nremaining_distance: 20 - (0.6 * 20) = 8 miles\nnew_speed: 2 miles per hour * 0.5 = 4 miles per hour\ntime_for_remaining_distance: 8 / 4 = 2 hours\n\nFinal answer: 3 hours (rest) + 2 hours (remaining distance) = 5 hours.\n#### 5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "3",
+      "key_differs": false,
+      "text": "step_2: RESULT: 4 hours\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+      "quality": 0.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: 3 hours (rest time) + 2 hours (remaining distance) = 5 hours.\n\nRESULT: 5 hours.",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_3: RESULT: 3 hours (rest time) + 2 hours (remaining distance) = 5 hours.\n\n#### 5"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "11",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "step_2: RESULT: 6 hours\n\nOverall Process Summary:\n1. James swims 12 miles initially at a pace of 2 miles per hour.\n2. This takes him 6 hours.\n3. He rests for half the swimming time, which is 3 hours (6 / 2).\n4. The remaining distance is 8 miles, and he swims at half the speed, which is 4 miles per hour.\n5. This part of the journey takes him 2 hours (8 / 4).\n6. The total time taken for the entire journey is 6 (initial swim) + 3 (rest) + 2 (remaining distance) = 11 hours.",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 8 miles (remaining distance)\n\nOverall Process Summary:\n3. The remaining distance is 8 miles, and he swims at half the speed, which is 4 miles per hour.\n4. This part of the journey takes him 2 hours (8 / 4).\n\nRESULT: 2 hours",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: RESULT: 8 miles (remaining distance)\n\nOverall Process Summary:\n3. The remaining distance is 8 miles, and he swims at half the speed, which is 4 miles per hour.\n4. This part of the journey takes him 2 hours (8 / 4).\n\nRESULT: 2 hours\n\n#### 2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

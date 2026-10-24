@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-670",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. First, calculate the total amount of candy by adding up the individual amounts of candy each person has: Robert's 3 pounds, Cindy's 5 pounds, and Aaron's 4 pounds.\n2. Next, determine how many people are sharing the candy by considering that each person will receive an equal share, so they are effectively one group.\n3. Finally, divide the total amount of candy by the number of people to find out how much candy each person will have.\n\nThe final output will be the amount of candy each person will have after sharing equally.",
+  "reference_key": null,
+  "final_key_plus": "4",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 12 pounds (3 + 5 + 4)",
+    "verifier": "VERDICT: passthrough\n#### 4",
+    "step_2": "step_2: RESULT: 12 pounds / 3 people = 4 pounds per person\n\nRESULT: 4 pounds",
+    "step_3": "RESULT: 4 pounds",
+    "aggregator": "step_3: RESULT: 4 pounds\n\nEach of them would have 4 pounds of candy after pooling and sharing equally.\n\n#### 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the loan amount: John gets a loan worth 40% of his home's value. So, the loan amount is 40/100 * $250,000 = $100,000.\n\n2. Determine the amount used to pay off debts: John uses 60% of the loan amount to pay off his debts. Therefore, the amount used for debt payment is 60/100 * $100,000 = $60,000.\n\n3. Find out the leftover amount: After paying off his debts, John has $100,000 (loan amount) - $60,000 (debt payment) = $40,000 leftover.",
+      "quality": 1.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate the loan amount: John gets a loan worth 40% of his home's value. So, the loan amount is 40/100 * $250,000 = $100,000.\n\nRESULT: $100,000",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "step_2": "step_2: 2. Determine the amount used to pay off debts: John uses 60% of the loan amount to pay off his debts. Therefore, the amount used for debt payment is 60/100 * $100,000 = $60,000.\n\nRESULT: $60,000",
+        "step_3": "3. Find out the leftover amount: After paying off his debts, John has $100,000 (loan amount) - $60,000 (debt payment) = $40,000 leftover.\n\nRESULT: $40,000",
+        "aggregator": "Step results:\nstep_3: 3. Calculate the total candy: Robert (3 pounds), Cindy (5 pounds), Aaron (4 pounds) = 12 pounds in total.\n\nStep results:\nstep_4: 4. Determine the equal share: 12 pounds \u00f7 3 people = 4 pounds per person.\n\nFinal answer: Each of them would have 4 pounds of candy.\n\n#### 4"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initially, sum up the individual candy quantities: Robert's 3 pounds, Cindy's 5 pounds, and Aaron's 4 pounds.\n2. Subsequently, recognize that each person will get an equal portion, effectively treating them as a single group.\n3. Ultimately, divide the total candy by the number of people to ascertain the individual candy allocation.\n\nThe concluding result will be the individual candy share each person receives when distributed equally.",
+      "quality": 1.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 12 pounds\n\nNext step:\n\nPLAN:\n2. Now, divide the total candy (12 pounds) by the number of people (3).\n\nCalculation: 12 pounds / 3 people = 4 pounds per person.\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "step_2": "RESULT: 4 pounds per person.",
+        "step_3": "step_3: RESULT: 4 pounds per person.",
+        "aggregator": "step_3: RESULT: 4 pounds per person.\n\n#### 4"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

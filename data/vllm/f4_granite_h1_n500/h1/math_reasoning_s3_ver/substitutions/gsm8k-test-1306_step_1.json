@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1306",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Let's denote the number of test tubes Igor gathered as T, beakers as B, and Petri dishes as P.\n\nRESULT: 0",
+  "reference_key": "0",
+  "final_key_plus": "2",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: T = 16/2 = 8 (half as many test tubes as requested), P = 14 - 2 = 12 (two more than the number of Petri dishes requested), and B = 7 (correct number of beakers).\n\nRESULT: 0",
+    "step_3": "step_3: T + B + P = 8 + 7 + 12 = 27.\n\nRESULT: 2",
+    "verifier": "VERDICT: passthrough\n#### 2",
+    "aggregator": "step_3: step_3: T + B + P = 8 + 7 + 12 = 27.\n\nRESULT: 2\n#### 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "1",
+      "reference_key": "0",
+      "key_differs": true,
+      "text": "Let's denote the number of test tubes Igor gathered as T, beakers as B, and Petri dishes as P.\n\nRESULT: 1",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: T = 16/2 = 8 (half as many test tubes as requested), P = 14 - 2 = 12 (two more than the number of Petri dishes requested), and B = 7 (correct number of beakers).\n\nRESULT: 2",
+        "step_3": "step_3: T + B + P = 8 + 7 + 12 = 27.\n\nRESULT: 3",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_3: step_3: T + B + P = 8 + 7 + 12 = 27.\n\nRESULT: 3\n#### 3"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "8",
+      "reference_key": "0",
+      "key_differs": true,
+      "text": "RESULT: T = 16/2 (since half as many test tubes as requested) = 8",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: P = 14 - 2 (since two more than the number of Petri dishes requested) = 12\n\nRESULT: 8 (test tubes), 12 (Petri dishes), 7 (beakers)",
+        "step_3": "step_3: RESULT: 8 (test tubes) + 7 (beakers) + 12 (Petri dishes) = 27\n\nRESULT: 27",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: RESULT: 8 (test tubes) + 7 (beakers) + 12 (Petri dishes) = 27\n\nRESULT: 27\n\n#### 2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

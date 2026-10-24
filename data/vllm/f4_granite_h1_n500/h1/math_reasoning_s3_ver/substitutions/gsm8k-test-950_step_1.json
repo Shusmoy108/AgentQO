@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-950",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Let's denote Azibo's score as A.\n\nRESULT: A",
+  "reference_key": null,
+  "final_key_plus": "15",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: Bahati's score is A + 20, which equals 5 + 20 = 25.\n\nRESULT: 25",
+    "step_3": "step_3: Dinar's score is (A + 20) - 10, which equals (5 + 20) - 10 = 15.\n\nRESULT: 15",
+    "verifier": "VERDICT: passthrough\n#### 15",
+    "aggregator": "15\n#### 15"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "RESULT: 50 oranges",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: A = 5\n\nRESULT: 5",
+        "step_3": "step_3: RESULT: Azibo's score = 5",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_3: RESULT: Azibo's score = 5\n\n#### 5"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "Let's denote Azibo's score as B.\n\nRESULT: B",
+      "quality": 0.0,
+      "final_key": "35",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: Bahati scored 20 more points than Azibo, so Bahati's score is B + 20.\n\nCalculation:\nB + (B + 20) = 45\n2B + 20 = 45\n2B = 25\nB = 12.5\n\nRESULT: 12.5",
+        "step_3": "step_3: The problem also states that Bahati scored 10 more points than Dinar, so Dinar's score is (B + 20) - 10.\n\nCalculation:\n(B + 20) - 10 = 45\nB + 10 = 45\nB = 35\n\nRESULT: 35",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "aggregator": "35\n#### 35"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

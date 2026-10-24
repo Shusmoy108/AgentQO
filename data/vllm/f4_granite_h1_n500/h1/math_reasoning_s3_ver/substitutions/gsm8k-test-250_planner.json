@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-250",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of students in the school by multiplying the number of classes by the number of students per class: 3 classes * 20 students/class = 60 students.\n2. Since the school is 50% boys and 50% girls, there are 30 boys and 30 girls in the school.\n3. Subtract the number of girls in the first two classes from the total number of girls in the school to find the number of girls in the third class: 30 girls (total) - 15 girls (first class) - 12 girls (second class) = 3 girls (third class).\n4. Subtract the number of girls in the third class from the total number of girls to find the number of boys in the third class: 30 boys (total) - 3 girls (third class) = 27 boys (third class).\n\nFinal answer: There are 27 boys in the third class.",
+  "reference_key": null,
+  "final_key_plus": "27",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 60 students",
+    "verifier": "VERDICT: passthrough\n#### 27",
+    "step_2": "step_2: RESULT: 30 boys (total) and 30 girls (total)\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 3 girls (third class)\n\nFinal answer: There are 27 boys in the third class.\nRESULT: 27",
+    "aggregator": "Final answer: There are 27 boys in the third class.\nRESULT: 27\n#### 27"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of Chinese participants by subtracting the number of Japanese from the total number of Asians: 240 - 80 = 160 Chinese participants.\n2. Determine the number of boys on the Chinese team by using the given information: 60 boys.\n3. Find the number of girls on the Chinese team by subtracting the number of boys from the total number of Chinese participants: 160 - 60 = 100 girls.\n\nPLAN:\n1. Compute total Chinese participants (240 - 80).\n2. Identify boys on Chinese team (60).\n3. Calculate girls on Chinese team (160 - 60).",
+      "quality": 0.0,
+      "final_key": "60",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 160",
+        "verifier": "VERDICT: passthrough\n#### 60",
+        "step_2": "step_2: RESULT: 100 girls on the Chinese team.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 160 - 100 = 60 boys on the Chinese team.\nRESULT: 60 boys on the Chinese team.",
+        "aggregator": "step_3: RESULT: 160 - 100 = 60 boys on the Chinese team.\n\nFinal answer: 60 boys. #### 60"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total student count in the school by multiplying the class count by the students per class: 3 classes * 20 students/class = 60 students.\n2. Given that the school is equally divided into boys and girls, there are 30 boys and 30 girls in the school.\n3. Deduct the number of girls in the initial two classes from the overall girl count to determine the girls in the third class: 30 girls (total) - 15 girls (first class) - 12 girls (second class) = 3 girls (third class).\n4. Subtract the girls in the third class from the total girl count to find the boys in the third class: 30 boys (total) - 3 girls (third class) = 27 boys (third class).\n\nFinal answer: There are 27 boys residing in the third class.",
+      "quality": 0.0,
+      "final_key": "27",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 60 students (total)",
+        "verifier": "VERDICT: passthrough\n#### 27",
+        "step_2": "step_2: RESULT: 30 boys (total) and 30 girls (total)",
+        "step_3": "step_3: RESULT: 3 girls (third class)\n\nRESULT: 27 boys (third class)",
+        "aggregator": "step_3: RESULT: 3 girls (third class)\n\nTo find the number of boys in the third class, we first determine the total number of girls across all three classes. Since each class has 20 students and there are 3 classes, the total number of students is 3 * 20 = 60. Given that the school is 50% boys and 50% girls, the number of girls is 0.5 * 60 = 30.\n\nThe first class has 15 girls, and the second class has 12 girls, so together they account for 15 + 12 = 27 girls.\n\nTherefore, the third class must have 30 (total girls) - 27 (girls in the first two classes) = 3 girls.\n\nHowever, since we are asked for the number of boys, and we know there are 30 girls in total, the number of boys in the third class is 30 (total students) - 3 (girls in the third class) = 27 boys.\n\n#### 27"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

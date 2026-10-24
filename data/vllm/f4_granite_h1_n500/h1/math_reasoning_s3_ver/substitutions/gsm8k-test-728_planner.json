@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-728",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of blue spools by adding the light blue and dark blue spools.\n2. Calculate the total number of spools by adding all the spools together (light blue, dark blue, light green, and dark green).\n3. Divide the total number of blue spools by the total number of spools and multiply by 100 to find the percentage.",
+  "reference_key": null,
+  "final_key_plus": "40",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Calculate the total number of blue spools: 15 (light blue) + 45 (dark blue) = 60 blue spools.\n\nRESULT: 60",
+    "verifier": "VERDICT: passthrough\n#### 40",
+    "step_2": "step_2: 2. Calculate the total number of spools: 15 (light blue) + 45 (dark blue) + 40 (light green) + 50 (dark green) = 150 spools in total.\n\nRESULT: 150",
+    "step_3": "3. Percentage of blue spools: (60 / 150) * 100 = 40%\n\nRESULT: 40%",
+    "aggregator": "40%\n#### 40"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the arrival time of the second train: The second train arrives 30 minutes after the first train (half an hour). Since the first train arrives in 10 minutes, the second train arrives at 10 + 30 = 40 minutes.\n\n2. Determine the duration of the second train's stay: The second train stays for a quarter of the time the first train stayed (20 minutes). Therefore, the second train stays for 20 / 4 = 5 minutes.\n\n3. Calculate the total waiting time for Paul: Paul needs to wait for the third train after the second train leaves. The third train arrives 60 minutes after the second train (1 hour), and it leaves immediately after arriving. So, Paul waits for the third train for 60 minutes.\n\n4. Add the waiting times for all trains to find Paul's total waiting time: Paul waits for the second train (5 minutes) and the third train (60 minutes). Thus, his total waiting time is 5 + 60 = 65 minutes.\n\nPLAN:\n1. Compute the second train's arrival time.\n2. Find the second train's stay duration.\n3. Calculate Paul's total waiting time.\n4. Sum up the waiting times for all trains.",
+      "quality": 1.0,
+      "final_key": "40",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. The second train arrives 30 minutes after the first train. Since the first train arrives in 10 minutes, the second train arrives at 10 + 30 = 40 minutes.\n\nRESULT: 40 minutes",
+        "verifier": "VERDICT: passthrough\n#### 40",
+        "step_2": "2. The second train stays for a quarter of the time the first train stayed. The first train stayed for 10 minutes. So, the second train's stay duration is 10 / 4 = 2.5 minutes.\n\nRESULT: 2.5 minutes",
+        "step_3": "3. Paul waits for the third train, which arrives 60 minutes after the second train. So, Paul's total waiting time is 60 minutes.\n\nRESULT: 60 minutes",
+        "aggregator": "1. Calculate the total number of blue spools: 15 (light blue) + 45 (dark blue) = 60 blue spools.\n2. Calculate the total number of spools: 15 (light blue) + 45 (dark blue) + 40 (light green) + 50 (dark green) = 150 spools.\n3. Calculate the percentage of blue spools: (60 blue spools / 150 total spools) * 100 = 40%.\n\n#### 40%"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of blue spools by adding the light blue and dark blue spools.\n2. Calculate the total number of spools by adding all the spools together (light blue, dark blue, light green, and dark green).\n3. Divide the total number of blue spools by the total number of spools and multiply by 99 to find the percentage.",
+      "quality": 0.0,
+      "final_key": "36",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total number of blue spools: 15 (light blue) + 45 (dark blue) = 60 blue spools.\n\nRESULT: 60",
+        "verifier": "VERDICT: passthrough\n#### 36",
+        "step_2": "step_2: 2. Calculate the total number of spools: 15 (light blue) + 45 (dark blue) + 40 (light green) + 50 (dark green) = 150 spools in total.\n\nRESULT: 150",
+        "step_3": "3. Percentage of blue spools: (60 / 150) * 99 = 36%\n\nRESULT: 36",
+        "aggregator": "36\n#### 36"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

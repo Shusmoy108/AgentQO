@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1016",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the price increase for the first year by finding 5% of the initial price ($120).\n2. Add this increase to the initial price to find the price after the first year.\n3. Repeat the process for the second and third years, using the price after the previous year as the new initial price.\n4. Round the final price to the nearest integer.\n\nNote: The actual calculation is not provided as per the instructions.",
+  "reference_key": null,
+  "final_key_plus": "132",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "5% of $120 is calculated as 0.05 * $120 = $6.\n\nRESULT: $126",
+    "verifier": "VERDICT: passthrough\n#### 132",
+    "step_2": "step_2: Add the increase ($6) to the initial price ($120) to find the price after the first year: $120 + $6 = $126.\n\nRESULT: $126",
+    "step_3": "step_3: For the second year, use the new initial price ($126) and calculate the increase (5% of $126): 0.05 * $126 = $6.3.\n\nRESULT: $132.3",
+    "aggregator": "step_3: For the second year, use the new initial price ($126) and calculate the increase (5% of $126): 0.05 * $126 = $6.3.\n\nRESULT: $132.3\n\n#### 132"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Let the cost of the lot be represented by the variable 'L'.\n2. According to the problem, the house costs three times the lot, so the cost of the house is '3L'.\n3. The total cost of the house and the lot is $120,000. Therefore, we can write the equation: L + 3L = 120,000.\n4. Solving this equation for 'L' will give us the cost of the lot. Then, multiplying this value by 3 will give us the cost of the house.\n\nPLAN:\n1. Define 'L' as the cost of the lot.\n2. Express the cost of the house as '3L'.\n3. Set up the equation: L + 3L = 120,000.\n4. Solve for 'L' and then multiply by 3 to find the cost of the house.",
+      "quality": 0.0,
+      "final_key": "160000",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Let 'L' represent the cost of the lot.\n\nRESULT: 40,000",
+        "verifier": "VERDICT: passthrough\n#### 160000",
+        "step_2": "step_2: 2. The cost of the house is '3L'.\n\nRESULT: 120,000",
+        "step_3": "step_3: 3. Set up the equation: L + 3L = 120,000.\n\nRESULT: 40,000 + 3(40,000) = 120,000\n\nRESULT: 160,000",
+        "aggregator": "160,000\n#### 160,000"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the price hike for the first year by computing 5% of the original price ($120).\n2. Integrate this rise into the original price to derive the price post the first year.\n3. Apply the same methodology for the second and third years, employing the price post the preceding year as the new initial price.\n4. Approximate the concluding price to the nearest whole number.\n\nNote: The actual numerical computation is intentionally omitted as per the guidelines.\n\n[Error: The phrase \"the actual price increase\" in step 1 should be \"the price hike\" to maintain the subtle variation in conclusion.]",
+      "quality": 0.0,
+      "final_key": "139",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: The price hike for the first year is 5% of $120, which is $6.\n\n[Note: The remaining steps (steps 2-4) will follow similarly, with the new initial price being the price from the previous year plus the price hike.]",
+        "verifier": "VERDICT: passthrough\n#### 139",
+        "step_2": "step_2: RESULT: The price post the first year is $120 + $6 = $126.",
+        "step_3": "step_3: RESULT: For the second year, the price hike is 5% of $126, which is $6.3.\nAdding this to the price from the first year, the price post the second year is $126 + $6.3 = $132.3.\n\n[Note: The calculation for the third year follows the same pattern. The price hike for the third year is 5% of $132.3, which is $6.615. Adding this to the price from the second year, the price post the third year is $132.3 + $6.615 = $138.915.]\n\nRESULT: 139",
+        "aggregator": "139\n#### 139"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

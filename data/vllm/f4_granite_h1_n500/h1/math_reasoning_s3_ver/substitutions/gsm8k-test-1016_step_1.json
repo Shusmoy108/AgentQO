@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1016",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 0.05 * 120 = 6",
+  "reference_key": "6",
+  "final_key_plus": "138",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 120 + 6 = 126\nstep_2: RESULT: 126 + 126 * 0.05 = 132.30\nstep_2: RESULT: 132.30 + 132.30 * 0.05 = 137.695\n\nFinal result: RESULT: 138",
+    "step_3": "RESULT: 138",
+    "verifier": "VERDICT: passthrough\n#### 138",
+    "aggregator": "step_3: RESULT: 120 * (1 + 0.05)^3\n\nFinal answer: 138\n#### 138"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "6",
+      "key_differs": false,
+      "text": "RESULT: 7 * 120 = 6",
+      "quality": 1.0,
+      "final_key": "138",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 120 + 6 = 126\n\nCarry out step 3.\n\nRESULT: 138",
+        "step_3": "RESULT: 138",
+        "verifier": "VERDICT: passthrough\n#### 138",
+        "aggregator": "step_3: RESULT: 120 * (1 + 0.05)^3\n\nFinal answer: 138\n#### 138"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "0.6",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "RESULT: 0.6",
+      "quality": 1.0,
+      "final_key": "138",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2:\n- First year: $120 * 0.05 = $6\n- Second year: $126 * 0.05 = $6.30\n- Third year: $132.30 * 0.05 = $6.615\n\nFinal price after three years: $120 + $6 + $6.30 + $6.615 = $139.915\n\nRESULT: 139",
+        "step_3": "step_3: RESULT: 138",
+        "verifier": "VERDICT: passthrough\n#### 138",
+        "aggregator": "step_3: RESULT: 138\n\n#### 138"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

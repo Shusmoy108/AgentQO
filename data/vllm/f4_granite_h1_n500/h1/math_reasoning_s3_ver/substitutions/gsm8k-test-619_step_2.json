@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-619",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "16 street lights/intersection * 4 intersections = 64 street lights.\nRESULT: 64 street lights.",
+  "reference_key": "64",
+  "final_key_plus": "44",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: 44 functioning street lights.",
+    "verifier": "VERDICT: passthrough\n#### 44",
+    "aggregator": "step_1: Calculate total streetlights at intersections.\nTotal streetlights per intersection = 4 poles * 4 lights = 16 lights\nTotal streetlights at 4 intersections = 16 lights/intersection * 4 intersections = 64 lights\n\nstep_2: Account for non-functioning lights.\nNon-functioning lights = 20\nFunctioning lights = Total streetlights - Non-functioning lights\nFunctioning lights = 64 - 20 = 44 lights\n\nFinal answer: 44 functioning street lights. #### 44"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "65",
+      "reference_key": "64",
+      "key_differs": true,
+      "text": "16 street lights/intersection * 4 intersections = 64 street lights.\nRESULT: 65 street lights.",
+      "quality": 0.0,
+      "final_key": "44",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 44 functioning street lights.",
+        "verifier": "VERDICT: passthrough\n#### 44",
+        "aggregator": "step_1: Calculate total streetlights at intersections.\nTotal streetlights per intersection = 4 poles * 4 lights = 16 lights\nTotal streetlights at 4 intersections = 16 lights/intersection * 4 intersections = 64 lights\n\nstep_2: Account for non-functioning lights.\nNon-functioning lights = 20\nFunctioning lights = Total streetlights - Non-functioning lights\nFunctioning lights = 64 - 20 = 44 lights\n\nFinal answer: 44 functioning street lights. #### 44"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "96",
+      "reference_key": "64",
+      "key_differs": true,
+      "text": "step_2: RESULT: 16 street lights per intersection * 6 intersections = 96 street lights total.\n\nEnd with \"RESULT: <number>\".",
+      "quality": 1.0,
+      "final_key": "76",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 96 street lights total - 20 non-functioning street lights = 76 functioning street lights.\n\nRESULT: 76 functioning street lights.",
+        "verifier": "VERDICT: passthrough\n#### 76",
+        "aggregator": "76 functioning street lights.\n#### 76"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

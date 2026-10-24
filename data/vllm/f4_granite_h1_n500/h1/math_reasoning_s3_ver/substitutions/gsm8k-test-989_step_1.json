@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-989",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Emily can peel 30 shrimp in 10 minutes.\n\nRESULT: 10 minutes",
+  "reference_key": "10",
+  "final_key_plus": "10",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Emily needs to peel 60 shrimp.\n\nRESULT: 10 minutes",
+    "step_3": "step_3: To find out how long it will take Emily to peel the remaining 60 shrimp, we divide the number of shrimp by her peeling rate.\n\nRESULT: 10 minutes",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "aggregator": "step_3: To find out how long it will take Emily to peel the remaining 60 shrimp, we divide the number of shrimp by her peeling rate.\n\nRESULT: 10 minutes\n\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "Emily can peel 30 shrimp in 10 minutes.\n\nRESULT: 11 minutes",
+      "quality": 0.0,
+      "final_key": "11",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: Emily needs to peel 60 shrimp.\n\nRESULT: 11 minutes",
+        "step_3": "step_3: To find out how long it will take Emily to peel the remaining 60 shrimp, we divide the number of shrimp by her peeling rate.\n\nRESULT: 11 minutes",
+        "verifier": "VERDICT: passthrough\n#### 11",
+        "aggregator": "step_3: To find out how long it will take Emily to peel the remaining 60 shrimp, we divide the number of shrimp by her peeling rate.\n\nRESULT: 11 minutes\n\n#### 11"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "30",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 30 shrimp.",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 90 shrimp (total) - 30 shrimp (sauteed) = 60 shrimp (to peel).\n\nEND.",
+        "step_3": "step_3: RESULT: 60 shrimp (to peel) / 6 shrimp per minute = 10 minutes.\n\nRESULT: 10 minutes.",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "10 minutes. #### 10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-198",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: 2. Elaine collected 60 (first month) - 20 = 40 Pokemon cards in the second month.\n\nRESULT: 40",
+  "reference_key": "40",
+  "final_key_plus": "320",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: 3. Sum first two months' collection.\n\nRESULT: 60 (first month) + 40 (second month) = 100 cards\n\nNow, proceed to step 4 and 5 to find the total number of Pokemon cards Elaine has now.\n\nstep_4: 4. Compute third month collection.\n\nRESULT: 2 * 100 (first and second months) = 200 cards\n\nstep_5: 5. Add all three months' collections to get the current total.\n\nRESULT: 20 (initial) + 100 (first two months) + 200 (third month) = 320 cards\n\nElaine now has a total of 320 Pokemon cards.",
+    "verifier": "VERDICT: passthrough\n#### 320",
+    "aggregator": "320 cards\n#### 320"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "41",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "step_2: 2. Elaine collected 60 (first month) - 20 = 40 Pokemon cards in the second month.\n\nRESULT: 41",
+      "quality": 0.0,
+      "final_key": "280",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: 3. Sum first two months' collection.\n\nRESULT: 60 (first month) + 40 (second month) = 100 cards.\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 280",
+        "aggregator": "step_4: Calculate third month's collection.\n\nRESULT: 2 * (100 + 40) = 2 * 140 = 280 cards.\n\n#### 280"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "3",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "step_2: RESULT: 15\nCarry out step 3.\n\nEnd with \"RESULT: <number>\".",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: 3. Sum first two months' collection.\nRESULT: 60 (first month) + 40 (second month) = 100 cards.\n\nRESULT: 100",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "100\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

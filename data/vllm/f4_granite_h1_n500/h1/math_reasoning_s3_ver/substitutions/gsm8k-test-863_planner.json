@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-863",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Identify the number of gold coins Gretchen has, which is given as 70.\n2. Determine the number of silver coins by subtracting the difference (30) from the number of gold coins (70).\n3. Add the number of gold coins and silver coins to find the total number of coins Gretchen has.",
+  "reference_key": null,
+  "final_key_plus": "110",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 70",
+    "verifier": "VERDICT: passthrough\n#### 110",
+    "step_2": "step_2: RESULT: 70 (gold coins) - 30 (difference) = 40 (silver coins)\n\nCarry out step 3.\n\nRESULT: 70 (gold coins) + 40 (silver coins) = 110 (total coins)",
+    "step_3": "RESULT: 110",
+    "aggregator": "step_3: RESULT: 110\n\nGretchen had a total of 110 coins. #### 110"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate twice the amount of rain from Monday: 2 inches * 2 = 4 inches.\n2. Add the additional rain expected on Tuesday to the result from step 1: 4 inches + 1 inch = 5 inches.\n3. The total rainfall expected on Tuesday is 5 inches.",
+      "quality": 1.0,
+      "final_key": "110",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate twice the amount of rain from Monday: 2 inches * 2 = 4 inches.\n\nRESULT: 4 inches",
+        "verifier": "VERDICT: passthrough\n#### 110",
+        "step_2": "2. Add the additional rain expected on Tuesday to the result from step 1: 4 inches + 1 inch = 5 inches.\n\nRESULT: 5 inches",
+        "step_3": "3. The total rainfall expected on Tuesday is 5 inches.\n\nRESULT: 5 inches",
+        "aggregator": "1. First, let's find out how many silver coins Gretchen has. Since there are 30 more gold coins than silver coins, and she has 70 gold coins, we can calculate the number of silver coins as follows:\n   Silver coins = Gold coins - 30\n   Silver coins = 70 - 30\n   Silver coins = 40\n\n2. Now, to find the total number of coins Gretchen has, we add the number of gold coins to the number of silver coins:\n   Total coins = Gold coins + Silver coins\n   Total coins = 70 + 40\n   Total coins = 110\n\n#### 110"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Identify the number of gold coins Gretchen possesses, which is provided as 75.\n2. Compute the number of silver coins by subtracting the disparity (35) from the quantity of gold coins (75).\n3. Accumulate the number of gold coins and silver coins to ascertain the total number of coins Gretchen holds.",
+      "quality": 0.0,
+      "final_key": "120",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 75",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "step_2": "step_2: RESULT: 75 - 30 = 45\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 75 (gold coins) + 45 (silver coins) = 120\n\nRESULT: 120",
+        "aggregator": "120\n#### 120"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

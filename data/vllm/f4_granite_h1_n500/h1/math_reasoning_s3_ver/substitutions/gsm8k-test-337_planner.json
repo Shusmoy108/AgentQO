@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-337",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of hot dogs Thomas ate by multiplying Luke's consumption by three.\n2. Determine the number of hot dogs John ate by dividing Thomas's consumption by two.\n3. Find the difference between the number of hot dogs John ate and Luke's consumption to determine how many more hot dogs John ate than Luke.",
+  "reference_key": null,
+  "final_key_plus": "1",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Thomas ate 3 times more hot dogs than Luke, who ate 2. So, Thomas ate 3 * 2 = 6 hot dogs.\n\nRESULT: 6",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "step_2": "step_2: 2. John ate half the amount Thomas ate, so John ate 6 / 2 = 3 hot dogs.\n\nRESULT: 3",
+    "step_3": "3 (John's consumption) - 2 (Luke's consumption) = 1\n\nRESULT: 1",
+    "aggregator": "1\n#### 1"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of truck stamps: Max bought 3 more truck stamps than snowflake stamps. Since he bought 16 snowflake stamps, the number of truck stamps is 16 + 3 = 19.\n\n2. Calculate the number of rose stamps: Max bought 9 fewer rose stamps than truck stamps. Given that he bought 19 truck stamps, the number of rose stamps is 19 - 9 = 10.\n\n3. Calculate the total number of stamps: Add the number of snowflake, truck, and rose stamps together. So, the total is 16 (snowflake) + 19 (truck) + 10 (rose) = 45 stamps.\n\nPLAN:\n1. Compute truck stamps: 16 (snowflake) + 3 = 19.\n2. Compute rose stamps: 19 (truck) - 9 = 10.\n3. Calculate total stamps: 16 (snowflake) + 19 (truck) + 10 (rose) = 45.",
+      "quality": 1.0,
+      "final_key": "1",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Compute truck stamps: 16 (snowflake) + 3 = 19.\n\nRESULT: 19",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "step_2": "2. Compute rose stamps: 19 (truck) - 9 = 10.\n\nRESULT: 10",
+        "step_3": "3. Calculate total stamps: 16 (snowflake) + 19 (truck) + 10 (rose) = 45.\n\nRESULT: 45",
+        "aggregator": "John ate half the amount Thomas ate, which is 3 times more than Luke's 2 hot dogs. So, Thomas ate 3 * 2 = 6 hot dogs. Therefore, John ate 6 / 2 = 3 hot dogs.\n\nTo find out how many more hot dogs John ate than Luke, we subtract Luke's amount from John's: 3 (John's hot dogs) - 2 (Luke's hot dogs) = 1.\n\n#### 1"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the number of hot dogs Thomas ate by multiplying Luke's consumption by three.\n2. Determine the number of hot dogs John ate by dividing Thomas's consumption by two.\n3. Compute the disparity in hot dog intake between John and Luke, which shows John ate fewer hot dogs than Luke.",
+      "quality": 1.0,
+      "final_key": "1",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 6\n\nThomas ate 2 (Luke's hot dogs) * 3 = 6 hot dogs.",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "step_2": "step_2: RESULT: 3\n\nJohn ate half of what Thomas ate, so John ate 6 / 2 = 3 hot dogs.\n\nNow, let's find out how many more hot dogs John ate than Luke:\n\nLuke ate 2 hot dogs.\nJohn ate 3 hot dogs.\n\nThe difference is 3 - 2 = 1 hot dog.\n\nJohn ate 1 hot dog less than Luke.",
+        "step_3": "RESULT: 1",
+        "aggregator": "step_3: RESULT: 1\n\nJohn ate half the amount Thomas ate, which is 3 times more than Luke's 2 hot dogs. So, Thomas ate 3 * 2 = 6 hot dogs. Half of that is 6 / 2 = 3 hot dogs.\n\nLuke ate 2 hot dogs.\n\nJohn ate 1 more hot dog than Luke, which is 2 + 1 = 3 hot dogs.\n\n#### 1"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

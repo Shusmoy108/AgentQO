@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-476",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of books Sarah bought by dividing the total amount spent by the cost per book.\n2. Determine the number of books each child received by dividing the total number of books by the number of children.\n3. Verify the result to ensure it is a whole number, as it is not possible to give a fraction of a book to a child.",
+  "reference_key": null,
+  "final_key_plus": "5",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Calculate the total number of books Sarah bought:\nTotal books = Total spent / Cost per book\nTotal books = $300 / $15\nTotal books = 20\n\nRESULT: 20",
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "step_2": "step_2: 2. Determine the number of books each child received:\nBooks per child = Total books / Number of children\nBooks per child = 20 / 4\nBooks per child = 5\n\nRESULT: 5",
+    "step_3": "step_3: 3. Verify the result to ensure it is a whole number:\nSince 20 divided by 4 equals 5, this is indeed a whole number.\n\nRESULT: 5",
+    "aggregator": "5"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the weekly cost of food: $25 per week.\n2. Calculate the monthly cost of treats and medicine: $20 (treats) + $100 (medicine) = $120 per month.\n3. Calculate the annual cost by multiplying the monthly expenses by 12 (months in a year): $120 (monthly) * 12 (months) = $1440.\n4. Add the weekly food cost to the annual cost of treats and medicine to find the total annual expenditure: $1440 (treats and medicine) + ($25 * 4 weeks * 52 weeks/year) = $1440 + $5000 = $6440.\n\nPLAN:\n1. Compute weekly food cost.\n2. Compute monthly treat and medicine cost.\n3. Compute annual total expenditure.\n4. Sum up weekly food cost to get the total annual expenditure.",
+      "quality": 0.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the weekly cost of food: $25 per week.\n\nRESULT: $25",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "step_2": "step_2: 2. Calculate the monthly cost of treats and medicine: $20 (treats) + $100 (medicine) = $120 per month.\n\nRESULT: $120",
+        "step_3": "step_3: 3. Calculate the annual cost by multiplying the monthly expenses by 12 (months in a year): $120 (monthly) * 12 (months) = $1440.\n\nRESULT: $1440",
+        "aggregator": "step_3: 3. Calculate the total number of books Sarah bought: $300 (total spent) / $15 (cost per book) = 20 books.\n\nRESULT: 20 books\n#### 20"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total quantity of books Sarah procured by segmenting the entire expenditure by the cost per book.\n2. Estimate the books handed out to each child by segmenting the total books by the number of children.\n3. Validate the outcome to confirm it is an integer, as it's impractical to allocate a fraction of a book per child.",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. RESULT: Sarah bought 300 / 15 = 20 books.\n\nEnd.",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "step_2": "step_2: 2. RESULT: Each child received 20 books / 4 children = 5 books.\n\nEnd.",
+        "step_3": "3. RESULT: 5 books per child (an integer, as expected).",
+        "aggregator": "step_3: 3. RESULT: Sarah gave each of her 4 kids 5 books.\n#### 5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

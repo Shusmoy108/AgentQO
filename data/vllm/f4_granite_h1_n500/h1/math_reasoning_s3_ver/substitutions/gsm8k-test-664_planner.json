@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-664",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total hours of class time: 4 meetings per week * 2 hours per meeting * 6 weeks = 48 hours.\n2. Determine the number of recipes learned per hour: 1 recipe per 1.5 hours = 2/3 recipes per hour.\n3. Calculate the total number of recipes learned: 48 hours * (2/3 recipes per hour) = 32 recipes.",
+  "reference_key": null,
+  "final_key_plus": "32",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 48 hours",
+    "verifier": "VERDICT: passthrough\n#### 32",
+    "step_2": "step_2: RESULT: 48 hours * (2/3) = 32 recipes.\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 48 hours * (2/3) = 32 recipes.\n\nRESULT: 32 recipes.",
+    "aggregator": "32 recipes.\n#### 32"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate the number of cookies Josh made. Since Josh made one-fourth the number of cookies that Suzanne made, we multiply Suzanne's total by 1/4:\n   Josh's cookies = Suzanne's cookies * (1/4)\n   = 36 cookies * (1/4)\n   = 9 cookies\n\n2. Next, determine the number of cookies Kelsie made. Kelsie made two times more cookies than Josh, so we multiply Josh's total by 2:\n   Kelsie's cookies = Josh's cookies * 2\n   = 9 cookies * 2\n   = 18 cookies\n\nPLAN: The final answer is 18 cookies. Kelsie made 18 cookies.",
+      "quality": 1.0,
+      "final_key": "32",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Josh made one-fourth the number of cookies Suzanne made.\n2. Suzanne made 36 cookies.\n3. Therefore, Josh made 36 cookies / 4 = 9 cookies.\n\nRESULT: 9 recipes.",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "step_2": "step_2: Kelsie made twice the number of recipes Josh did.\nKelsie's recipes = Josh's recipes * 2\n= 9 recipes * 2\n= 18 recipes\n\nRESULT: 18 recipes.",
+        "step_3": "RESULT: 18 recipes.",
+        "aggregator": "step_2: John attends 4 classes per week for 6 weeks, so he has 4 * 6 = 24 class sessions in total.\n\nstep_3: Each class session is 2 hours long, so in total, John spends 24 * 2 = 48 hours in the cooking class.\n\nstep_4: John learns a new recipe every 1.5 hours of class time. Therefore, the number of recipes he learns is 48 / 1.5 = 32 recipes.\n\n#### 32 recipes."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total hours of class time: 4 meetings per week * 2 hours per meeting * 6 weeks = 48 hours.\n2. Determine the number of recipes learned per hour: 1 recipe per 1.5 hours = 2/3 recipes per hour.\n3. Calculate the total number of recipes learned: 48 hours * (1.5 recipes per hour) = 72 recipes.",
+      "quality": 1.0,
+      "final_key": "32",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 48 hours",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "step_2": "step_2: RESULT: 48 hours * (2/3 recipes per hour) = 32 recipes.\n\nEnd with \"RESULT: 32 recipes.\"",
+        "step_3": "RESULT: 32 recipes.",
+        "aggregator": "step_1: John attends the cooking class 4 times a week for 2 hours each time.\nstep_2: Calculate total weekly class time: 4 sessions * 2 hours/session = 8 hours/week.\nstep_3: Determine total class time over 6 weeks: 8 hours/week * 6 weeks = 48 hours.\nstep_4: Calculate the number of recipes John learns, given he learns a new recipe every 1.5 hours of class time.\nstep_5: RESULT: 48 hours / 1.5 hours/recipe = 32 recipes.\n\n#### 32 recipes."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

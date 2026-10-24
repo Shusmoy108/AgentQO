@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-740",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 5 students like to play basketball.",
+  "reference_key": "5",
+  "final_key_plus": "35",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 5 (basketball players) * 2 = 10 students like to play music.\n\nCarry out step 3.\n\nstep_3: RESULT: 50 (total students) - 5 (basketball players) - 10 (music players) = 35 students like to bake or play video games.",
+    "step_3": "RESULT: 35 students like to bake or play video games.",
+    "verifier": "VERDICT: passthrough\n#### 35",
+    "aggregator": "step_3: RESULT: 35 students like to bake or play video games.\n\nTo find out how many like to play video games, we subtract the number of students who like basketball and baking from the total number of students.\n\nTotal students - (Basketball + Baking) = Video Games\n50 - (5 + 10) = 35\n\nSo, 35 students like to play video games.\n\n#### 35"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: 6 students like to play basketball.",
+      "quality": 0.0,
+      "final_key": "35",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 10 students like to play music.\n\nEND.",
+        "step_3": "step_3: RESULT: 35 students like to bake or play video games.\n\nEND.",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "aggregator": "step_3: RESULT: 35 students like to bake or play video games.\n\n#### 35"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "150",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: 150",
+      "quality": 0.0,
+      "final_key": "35",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 10 students like to play music.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 35 students like to bake or play video games.\n\nRESULT: 35",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "aggregator": "step_3: RESULT: 35 students like to bake or play video games.\n\nFinal answer: #### 35"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1013",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Calculate Janet's total weekly earnings:\n   - Wages: $10/hour * 40 hours/week = $400\n   - Tips: $15/hour * 40 hours/week = $600\n   - Total weekly earnings: $400 (wages) + $600 (tips) = $1000\n\nRESULT: $1000",
+  "reference_key": "1000",
+  "final_key_plus": "2",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "2. Determine the desired savings amount:\n   - 20% of the car's cost: 0.20 * $10000 = $2000\n\nRESULT: $2000",
+    "step_3": "step_3: 3. Calculate the number of weeks needed to save the down payment:\n   - Weekly savings: $1000\n   - Weeks needed: $2000 / $1000 = 2 weeks\n\nRESULT: 2",
+    "verifier": "VERDICT: passthrough\n#### 2",
+    "aggregator": "3. Calculate the number of weeks needed to save the down payment:\n   - Weekly savings: $1000\n   - Weeks needed: $2000 / $1000 = 2 weeks\n\nRESULT: 2\n#### 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "1001",
+      "reference_key": "1000",
+      "key_differs": true,
+      "text": "1. Calculate Janet's total weekly earnings:\n   - Wages: $10/hour * 40 hours/week = $400\n   - Tips: $15/hour * 40 hours/week = $600\n   - Total weekly earnings: $400 (wages) + $600 (tips) = $1000\n\nRESULT: 1001",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Determine the desired savings amount:\n   - 20% of the car's cost: 0.20 * $10000 = $2000\n\nRESULT: 2000",
+        "step_3": "3. Calculate the number of weeks needed to save the down payment:\n   - Weekly savings: $1000\n   - Weeks needed: $2000 / $1000 = 2 weeks\n\nRESULT: 2",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "3. Calculate the number of weeks needed to save the down payment:\n   - Weekly savings: $1000\n   - Weeks needed: $2000 / $1000 = 2 weeks\n\nRESULT: 2\n#### 2"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "60",
+      "reference_key": "1000",
+      "key_differs": true,
+      "text": "RESULT: $60",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: Janet needs to save $2000 for the down payment.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: Janet needs 2 weeks to save the $2000 for the down payment.\n\nRESULT: 2",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: RESULT: Janet needs 2 weeks to save the $2000 for the down payment.\n\n#### 2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

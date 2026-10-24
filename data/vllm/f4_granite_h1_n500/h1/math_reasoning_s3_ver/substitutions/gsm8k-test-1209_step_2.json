@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1209",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Compute daily water removal for medium setting: 1 liter (low setting) * 2 = 2 liters per day.\n\nRESULT: 2",
+  "reference_key": "2",
+  "final_key_plus": "20",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "3. Calculate total water removal for each setting over their respective periods:\n   - Low setting for 3 days: 1 liter/day * 3 days = 3 liters.\n   - Medium setting for 3 days: 2 liters/day * 3 days = 6 liters.\n   - High setting for 5 days: 2 liters/day * 5 days = 10 liters.\n\nRESULT: 20",
+    "verifier": "VERDICT: passthrough\n#### 20",
+    "aggregator": "3 liters (low setting) + 6 liters (medium setting) + 10 liters (high setting) = 20 liters.\n\n#### 20"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "2. Compute daily water removal for medium setting: 1 liter (low setting) * 2 = 2 liters per day.\n\nRESULT: 3",
+      "quality": 0.0,
+      "final_key": "20",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. Calculate total water removal for each setting over their respective periods:\n   - Low setting for 3 days: 1 liter/day * 3 days = 3 liters.\n   - Medium setting for 3 days: 2 liters/day * 3 days = 6 liters.\n   - High setting for 5 days: 2 liters/day * 5 days = 10 liters.\n\nRESULT: 20",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "aggregator": "3 liters (low setting) + 6 liters (medium setting) + 10 liters (high setting) = 20 liters.\n\n#### 20"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "step_2: Compute daily water removal for medium setting. 2 liters (low setting) * 2 = 4 liters per day.\n\nRESULT: 4",
+      "quality": 0.0,
+      "final_key": "25",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: Calculate total water removal for each setting over their respective periods.\n- Low setting for 3 days: 1 liter/day * 3 days = 3 liters.\n- Medium setting for 3 days: 4 liters/day * 3 days = 12 liters.\n- High setting for 5 days: 2 liters/day * 5 days = 10 liters.\n\nRESULT: 3 + 12 + 10 = 25 liters.",
+        "verifier": "VERDICT: passthrough\n#### 25",
+        "aggregator": "25 liters. #### 25"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

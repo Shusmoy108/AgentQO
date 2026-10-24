@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1056",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of sets of sheets Greg washes in a week. He washes 2 twin sets and 1 king set, so that's 3 sets per week.\n2. Calculate the total number of sets of sheets Greg washes in a year. There are 52 weeks in a year, so he washes 3 sets * 52 weeks = 156 sets in a year.\n3. Since each load can only wash 2 twin sets or 1 king set, calculate the total number of loads needed. He needs 156 sets / 3 sets per load = 52 loads per year.\n\nFinal answer: Greg does 52 loads of laundry in a year.",
+  "reference_key": null,
+  "final_key_plus": "52",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 3 sets per week.",
+    "verifier": "VERDICT: passthrough\n#### 52",
+    "step_2": "step_2: RESULT: 3 sets per week * 52 weeks per year = 156 sets per year.\n\nFinal answer: Greg does 156 sets of sheets in a year.",
+    "step_3": "step_3: RESULT: 156 sets per year / 3 sets per load = 52 loads per year.\n\nFinal answer: Greg does 52 loads of laundry in a year.",
+    "aggregator": "Final answer: Greg does 52 loads of laundry in a year. #### 52"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total cost on Amazon: $16 (boots) + $4 (shipping) = $20.\n2. Calculate the total cost on eBay: $13 (boots) + 2 * $4 (shipping) = $20 + $8 = $28.\n3. Determine the difference in cost between eBay and Amazon: $28 (eBay) - $20 (Amazon) = $8.\n\nPLAN: First, compute the total cost on Amazon, then on eBay, and finally, find the discrepancy in cost between the two platforms.",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $20\n\nPlan:\n1. Calculate the total number of twin sets of sheets Greg washes per week: 4 twin beds * 2 sets = 8 sets.\n2. Calculate the total number of king sets of sheets Greg washes per week: 1 king bed * 1 set = 1 set.\n3. Calculate the total number of loads of laundry per week: 8 (twin) + 1 (king) = 9 loads.\n4. Calculate the annual number of loads of laundry: 9 loads/week * 52 weeks/year = 468 loads.\n\nPLAN: First, determine the weekly load count, then the annual count.\n\nResults so far:\n(none yet)\n\nCarry out step 1 only. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 9",
+        "step_2": "1. RESULT: 8\n2. RESULT: 1",
+        "step_3": "3. RESULT: 9\n\nCarry out step 4 only. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".",
+        "aggregator": "step_4: \n- Calculate weekly loads for twin beds: 4 twin beds * 2 sets per week = 8 loads\n- Calculate weekly loads for king bed: 1 king bed * 1 set per week = 1 load\n- Total weekly loads: 8 (twin) + 1 (king) = 9 loads\n\nRESULT: 9\n#### 9"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of sets of sheets Greg washes in a week. He washes 2 twin sets and 1 king set, so that's 3 sets per week.\n2. Calculate the total number of sets of sheets Greg washes in a year. There are 52 weeks in a year, so he washes 3 sets * 52 weeks = 156 sets in a year.\n3. Since each load can only wash 2 twin sets or 1 king set, calculate the total number of loads needed. He needs 156 sets / 3 sets per load = 52 loads per year.\n\nFinal answer: Greg does 53 loads of laundry in a year (due to rounding error).",
+      "quality": 0.0,
+      "final_key": "52",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 3 sets per week.",
+        "verifier": "VERDICT: passthrough\n#### 52",
+        "step_2": "step_2: RESULT: 3 sets per week * 52 weeks = 156 sets per year.\n\nFinal answer: Greg does 156 loads of laundry in a year.",
+        "step_3": "step_3: RESULT: 156 sets / 3 sets per load = 52 loads per year.\n\nFinal answer: Greg does 52 loads of laundry in a year.",
+        "aggregator": "Final answer: Greg does 52 loads of laundry in a year. #### 52"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

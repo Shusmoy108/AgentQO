@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-501",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Mariah used 364 * 1/4 = 91 yards of yarn.\n\nRESULT: 91",
+  "reference_key": "91",
+  "final_key_plus": "273",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Mariah's grandma used 364 * 1/2 = 182 yards of yarn.\n\nRESULT: 182",
+    "step_3": "step_3: Total yards used = Mariah's usage + Grandma's usage\n= 91 yards + 182 yards\n= 273 yards\n\nRESULT: 273",
+    "verifier": "VERDICT: passthrough\n#### 273",
+    "aggregator": "273\n#### 273"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "92",
+      "reference_key": "91",
+      "key_differs": true,
+      "text": "Mariah used 364 * 1/4 = 91 yards of yarn.\n\nRESULT: 92",
+      "quality": 1.0,
+      "final_key": "273",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Mariah's grandma used 364 * 1/2 = 182 yards of yarn.\n\nRESULT: 273",
+        "step_3": "step_3: Total yards used = Mariah's usage + Grandma's usage\n= 91 yards + 182 yards\n= 273 yards\n\nRESULT: 273",
+        "verifier": "VERDICT: passthrough\n#### 273",
+        "aggregator": "273\n#### 273"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "91",
+      "key_differs": true,
+      "text": "RESULT: 91 yards (Mariah used 1/4 of a skein, which is 364 yards * 1/4).",
+      "quality": 0.0,
+      "final_key": "364",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 182 yards (Her grandma used 1/2 of a skein, which is 364 yards * 1/2).",
+        "step_3": "step_3: RESULT: 364 yards (Mariah used 91 yards, and her grandma used 182 yards).",
+        "verifier": "VERDICT: passthrough\n#### 364",
+        "aggregator": "step_3: RESULT: 364 yards (Mariah used 91 yards, and her grandma used 182 yards).\n\n#### 364 yards"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

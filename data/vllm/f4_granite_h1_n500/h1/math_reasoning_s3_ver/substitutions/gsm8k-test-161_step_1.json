@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-161",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Locsin's starfish count = 10 - 5 = 5\nRESULT: 5",
+  "reference_key": "5",
+  "final_key_plus": "32",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "2. Locsin's sea horses count = 6 - 3 = 3\nRESULT: 3",
+    "step_3": "step_3: 3. Locsin's clownfish count = 3 + 2 = 5\nRESULT: 5",
+    "verifier": "VERDICT: passthrough\n#### 32",
+    "aggregator": "step_2: Locsin's starfish count = Anakin's starfish count - 5\nstep_3: Locsin's clownfish count = 3 + 2 = 5\n\nLocsin caught 5 fewer starfish than Anakin, so Locsin caught 10 - 5 = 5 starfish.\nLocsin caught 2 more clownfish than Anakin, so Locsin caught 3 + 2 = 5 clownfish.\n\nTotal fish caught by both:\nAnakin's total = 10 (starfish) + 6 (sea horses) + 3 (clownfish) = 19\nLocsin's total = 5 (starfish) + 3 (sea horses) + 5 (clownfish) = 13\n\nCombined total = Anakin's total + Locsin's total = 19 + 13 = 32\n\n#### 32"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "1. Locsin's starfish count = 10 - 5 = 5\nRESULT: 6",
+      "quality": 1.0,
+      "final_key": "32",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Locsin's sea horses count = 6 - 3 = 3\nRESULT: 3",
+        "step_3": "step_3: 3. Locsin's clownfish count = 3 + 2 = 5\nRESULT: 5",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "aggregator": "step_2: Locsin's starfish count = Anakin's starfish count - 5\nstep_3: Locsin's clownfish count = 3 + 2 = 5\n\nLocsin caught 5 fewer starfish than Anakin, so Locsin caught 10 - 5 = 5 starfish.\nLocsin caught 2 more clownfish than Anakin, so Locsin caught 3 + 2 = 5 clownfish.\n\nTotal fish caught by both:\nAnakin's total = 10 (starfish) + 6 (sea horses) + 3 (clownfish) = 19\nLocsin's total = 5 (starfish) + 3 (sea horses) + 5 (clownfish) = 13\n\nCombined total = Anakin's total + Locsin's total = 19 + 13 = 32\n\n#### 32"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "Result: 10 starfish",
+      "quality": 0.0,
+      "final_key": "5",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: Result: 6 sea horses\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: Result: 3 clownfish (Anakin's count) + 2 (additional clownfish Locsin caught) = 5 clownfish (Locsin's count)\n\nRESULT: 5 clownfish",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_3: Result: 3 clownfish (Anakin's count) + 2 (additional clownfish Locsin caught) = 5 clownfish (Locsin's count)\n\n#### 5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

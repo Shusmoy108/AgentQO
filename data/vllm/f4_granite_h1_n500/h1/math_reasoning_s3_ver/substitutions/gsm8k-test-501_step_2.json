@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-501",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Mariah's grandma used 364 * 1/2 = 182 yards of yarn.\nRESULT: 182",
+  "reference_key": "182",
+  "final_key_plus": "273",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: Total yards used = Mariah's yards + Grandma's yards\nRESULT: 91 + 182 = 273 yards.\nRESULT: 273",
+    "verifier": "VERDICT: passthrough\n#### 273",
+    "aggregator": "step_3: Total yards used = Mariah's yards + Grandma's yards\nRESULT: 1/4 + 1/2 = 3/4\nRESULT: 3/4 * 364 = 273 yards.\n#### 273"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "183",
+      "reference_key": "182",
+      "key_differs": true,
+      "text": "step_2: Mariah's grandma used 364 * 1/2 = 182 yards of yarn.\nRESULT: 183",
+      "quality": 1.0,
+      "final_key": "273",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: Total yards used = Mariah's usage + Grandma's usage\n= 91 yards + 182 yards\n= 273 yards\n\nRESULT: 273",
+        "verifier": "VERDICT: passthrough\n#### 273",
+        "aggregator": "273\n#### 273"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "273",
+      "reference_key": "182",
+      "key_differs": true,
+      "text": "step_2: Mariah's grandma used 364 * 1/2 = 182 yards of yarn.\n\nRESULT: 182 yards (for Mariah's grandma) + 91 yards (for Mariah) = 273 yards (altogether).",
+      "quality": 1.0,
+      "final_key": "273",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 273 yards (altogether).",
+        "verifier": "VERDICT: passthrough\n#### 273",
+        "aggregator": "step_2: Mariah used 1/4 of a skein, which is 364 * 1/4 = 91 yards.\nstep_3: Grandma used 1/2 of a skein, which is 364 * 1/2 = 182 yards.\nstep_4: Together, they used 91 (Mariah) + 182 (Grandma) = 273 yards.\n\n#### 273"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

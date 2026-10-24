@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1095",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Determine the speed of the second train. Since it's traveling half the distance of the first train per hour, its speed is 60 miles/hour / 2 = 30 miles/hour.\n2. Calculate the distance each train travels in 3 hours. The first train travels 60 miles/hour * 3 hours = 180 miles. The second train travels 30 miles/hour * 3 hours = 90 miles.\n3. Add the distances to find the total distance between the two trains after 3 hours. The total distance is 180 miles + 90 miles = 270 miles.",
+  "reference_key": null,
+  "final_key_plus": "270",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 30 miles/hour",
+    "verifier": "VERDICT: passthrough\n#### 270",
+    "step_2": "step_2: RESULT: 180 miles (first train) + 90 miles (second train) = 270 miles (total distance)",
+    "step_3": "step_3: RESULT: 270 miles (total distance)",
+    "aggregator": "step_3: RESULT: 270 miles (total distance)\n\n#### 270"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the cost to repave Monica's street: $194/meter * 150 meters = $29,100.\n2. Calculate the cost to repave Lewis' street: $194/meter * 490 meters = $95,060.\n3. Determine the additional cost for Lewis' street compared to Monica's: $95,060 - $29,100 = $65,960.\n\nPLAN: First, compute the cost for Monica's street, then for Lewis' street, and finally, find the difference between the two costs to determine the additional expense for Lewis' street.",
+      "quality": 0.0,
+      "final_key": "65.96",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $29,100",
+        "verifier": "VERDICT: passthrough\n#### 65.96",
+        "step_2": "step_2: RESULT: $95,060\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "RESULT: $65,960",
+        "aggregator": "step_3: RESULT: 65.96 miles\n\n#### 65.96"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Establish the pace of the second train. Given it traverses half the distance of the first train in an hour, its speed is 60 miles/hour divided by 2, yielding 30 miles/hour.\n2. Compute the distance each train covers in 3 hours. The first train moves at 60 miles/hour for 3 hours, covering 180 miles. The second train moves at 30 miles/hour for 3 hours, covering 90 miles.\n3. Aggregate the distances to ascertain the total distance separating the two trains after 3 hours. The total distance is 180 miles plus 90 miles, equating to 270 miles.",
+      "quality": 1.0,
+      "final_key": "270",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: The second train's speed is 30 miles per hour.",
+        "verifier": "VERDICT: passthrough\n#### 270",
+        "step_2": "step_2: RESULT: The first train covers 180 miles in 3 hours (60 miles/hour * 3 hours), and the second train covers 90 miles in 3 hours (30 miles/hour * 3 hours).\n\nTotal distance between the two trains after 3 hours: 180 miles + 90 miles = 270 miles.\n\nRESULT: 270 miles.",
+        "step_3": "RESULT: 270 miles.",
+        "aggregator": "step_3: RESULT: 270 miles.\n#### 270"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

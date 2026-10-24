@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-185",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "Jenna picked 10 apples.\nRESULT: 10",
+  "reference_key": "10",
+  "final_key_plus": "30",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: 30",
+    "verifier": "VERDICT: passthrough\n#### 30",
+    "aggregator": "step_2: Jenna picked half as many apples as her mom. So, Jenna picked 20 / 2 = 10 apples.\nstep_3: Together, Jenna and her mom picked 20 (mom's apples) + 10 (Jenna's apples) = 30 apples.\n\n#### 30"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "Jenna picked 10 apples.\nRESULT: 11",
+      "quality": 1.0,
+      "final_key": "30",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 30",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "aggregator": "step_2: Jenna picked half as many apples as her mom. So, Jenna picked 20 / 2 = 10 apples.\nstep_3: Together, Jenna and her mom picked 20 (mom's apples) + 10 (Jenna's apples) = 30 apples.\n\n#### 30"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "20",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "step_2: Jenna picked 10 apples (half of her mom's 20 apples).\n\nRESULT: 20",
+      "quality": 1.0,
+      "final_key": "30",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: 20 + 10 = 30\n\nRESULT: 30",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "aggregator": "step_3: RESULT: 20 + 10 = 30\n\n#### 30"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

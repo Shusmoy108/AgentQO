@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-838",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 15",
+  "reference_key": "15",
+  "final_key_plus": "30",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 15 slices (from 5 small apples)\n\nCarry out step 3.\n\nstep_3: RESULT: 15 slices (from large apples) + 15 slices (from small apples) = 30 slices\n\nCarry out step 4.\n\nstep_4: RESULT: 30 slices - 15 slices = 15 slices\n\nFinal result: 15 slices left.",
+    "step_3": "step_3: RESULT: 15 slices (from large apples) + 15 slices (from small apples) = 30 slices\n\nFinal result: 30 slices",
+    "verifier": "VERDICT: passthrough\n#### 30",
+    "aggregator": "Final result: 30 slices\nState the final answer. End with \"#### 30\"."
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "16",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "RESULT: 16",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 15 slices from 5 small apples.\n\nCarry out step 3. Show the calculation briefly.\n\nRESULT: 30 slices (from large) + 15 slices (from small) = 45 slices.\n\nEnd with \"RESULT: <number>\".\n\nRESULT: 45 slices.",
+        "step_3": "RESULT: 45 slices.",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "aggregator": "step_1: Adam sliced 3 large apples, each yielding 5 slices, so that's 3 * 5 = 15 slices from large apples.\nstep_2: Adam sliced 5 small apples, each yielding 3 slices, so that's 5 * 3 = 15 slices from small apples.\nstep_3: Total slices before eating = slices from large apples + slices from small apples = 15 + 15 = 30 slices.\n\n#### 30"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "1250",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "RESULT: 1250 calories",
+      "quality": 0.0,
+      "final_key": "60",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 45 slices from small apples.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 45 slices (from small) + 15 slices (from large) = 60 slices in total before eating.\nRESULT: 60 slices.",
+        "verifier": "VERDICT: passthrough\n#### 60",
+        "aggregator": "step_3: RESULT: 45 slices (from small) + 15 slices (from large) = 60 slices in total before eating.\n\n#### 60"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

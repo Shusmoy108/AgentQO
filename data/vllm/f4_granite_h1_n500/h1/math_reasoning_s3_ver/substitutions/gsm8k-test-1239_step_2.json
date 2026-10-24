@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1239",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: The custodian cleans 16 classrooms per day.\nRESULT: 16",
+  "reference_key": "16",
+  "final_key_plus": "50",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: The average percentage of the day spent cleaning is (240 minutes / 480 minutes) * 100%.\nRESULT: 50%",
+    "verifier": "VERDICT: passthrough\n#### 50",
+    "aggregator": "step_3: The average percentage of the day spent cleaning is (240 minutes / 480 minutes) * 100%.\nRESULT: 50%\n#### 50"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "17",
+      "reference_key": "16",
+      "key_differs": true,
+      "text": "step_2: The custodian cleans 16 classrooms per day.\nRESULT: 17",
+      "quality": 1.0,
+      "final_key": "50",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: The average percentage of the day spent cleaning is (240 minutes / 480 minutes) * 100%.\nRESULT: 50%",
+        "verifier": "VERDICT: passthrough\n#### 50",
+        "aggregator": "step_3: The average percentage of the day spent cleaning is (240 minutes / 480 minutes) * 100%.\nRESULT: 50%\n#### 50"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3.2",
+      "reference_key": "16",
+      "key_differs": true,
+      "text": "step_2: \n16 classrooms / 5 days = 3.2 classrooms per day\n\nRESULT: 3.2",
+      "quality": 0.0,
+      "final_key": "1.6",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: \n(3.2 classrooms * 15 minutes/classroom) / 480 minutes\n\nRESULT: 1.6%",
+        "verifier": "VERDICT: passthrough\n#### 1.6",
+        "aggregator": "step_3: \n(3.2 classrooms * 15 minutes/classroom) / 480 minutes\n\nRESULT: 1.6%\n\n#### 1.6"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

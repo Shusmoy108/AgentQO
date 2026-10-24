@@ -1,0 +1,80 @@
+{
+ "setting": "math_cautious",
+ "workflow": "math",
+ "verifier": "cautious",
+ "budgets": {
+  "1": [
+   {
+    "upgraded": "planner",
+    "rules": [
+     "struct_top1"
+    ],
+    "custom": "set_planner",
+    "eval_accuracy": 0.48,
+    "eval_source": "c14_h3_cautious_eval200:only_planner"
+   },
+   {
+    "upgraded": "verifier",
+    "rules": [
+     "output_top1",
+     "ec_top1"
+    ],
+    "custom": "set_verifier",
+    "eval_accuracy": 0.74,
+    "eval_source": "c14_h3_cautious_eval200:only_verifier"
+   }
+  ],
+  "2": [
+   {
+    "upgraded": "aggregator,verifier",
+    "rules": [
+     "output_top2"
+    ],
+    "custom": "set_aggregator+verifier",
+    "eval_accuracy": 0.82,
+    "eval_source": "e1_output_cautious:output_top2"
+   },
+   {
+    "upgraded": "planner,step_1",
+    "rules": [
+     "struct_top2"
+    ],
+    "custom": "set_planner+step_1",
+    "eval_accuracy": 0.455,
+    "eval_source": "c14_h3_cautious_eval200:struct_top2"
+   },
+   {
+    "upgraded": "planner,verifier",
+    "rules": [
+     "ec_top2"
+    ],
+    "custom": "set_planner+verifier",
+    "eval_accuracy": 0.76,
+    "eval_source": "c14_h3_cautious_eval200:ec_top2"
+   }
+  ],
+  "3": [
+   {
+    "upgraded": "aggregator,step_3,verifier",
+    "rules": [
+     "output_top3"
+    ],
+    "custom": "set_aggregator+step_3+verifier",
+    "eval_accuracy": 0.795,
+    "eval_source": "e1_output_cautious:output_top3"
+   },
+   {
+    "upgraded": "planner,step_3,verifier",
+    "rules": [
+     "ec_top3"
+    ],
+    "custom": "set_planner+step_3+verifier",
+    "eval_accuracy": 0.765,
+    "eval_source": "e1_output_cautious:ec_top3"
+   }
+  ]
+ },
+ "missing": [
+  "struct_top3 (planner,step_1,step_2): no EVAL result for this node set"
+ ]
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1166",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "5-year-old: 50 fruits\n6-year-old: 150 fruits\n7-year-old: 350 fruits\n8-year-old: 200 fruits (less than 10-year-old)\n10-year-old: 1000 fruits\n\nRESULT: 1750",
+  "reference_key": "1750",
+  "final_key_plus": "800",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: Total for 5-year-old and 10-year-old: 50 + 1000 = 1050 fruits\n\nRESULT: 1050",
+    "step_3": "step_3: Adjusted 8-year-old production: 1000 - 200 = 800 fruits\n\nRESULT: 800",
+    "verifier": "VERDICT: passthrough\n#### 800",
+    "aggregator": "step_3: Adjusted 8-year-old production: 1000 - 200 = 800 fruits\n\nRESULT: 800\n#### 800"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "1751",
+      "reference_key": "1750",
+      "key_differs": true,
+      "text": "5-year-old: 50 fruits\n6-year-old: 150 fruits\n7-year-old: 350 fruits\n8-year-old: 200 fruits (less than 10-year-old)\n10-year-old: 1000 fruits\n\nRESULT: 1751",
+      "quality": 0.0,
+      "final_key": "800",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Total for 5-year-old and 10-year-old: 50 + 1000 = 1050 fruits\n\nRESULT: 1050",
+        "step_3": "step_3: Adjusted 8-year-old production: 1000 - 200 = 800 fruits\n\nRESULT: 800",
+        "verifier": "VERDICT: passthrough\n#### 800",
+        "aggregator": "step_3: Adjusted 8-year-old production: 1000 - 200 = 800 fruits\n\nRESULT: 800\n#### 800"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "1750",
+      "key_differs": true,
+      "text": "1. Calculate the fruit production for each age group:\n   - 5-year-old: 50 fruits\n   - 6-year-old: 3 * 50 = 150 fruits\n   - 7-year-old: 7 * 50 = 350 fruits\n   - 8-year-old: 200 fruits (less than a 10-year-old)\n   - 10-year-old: 20 * 50 = 1000 fruits\n\nRESULT: 1050 fruits (5-year-old + 10-year-old)",
+      "quality": 0.0,
+      "final_key": "800",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Sum the fruit production from the 5-year-old and 10-year-old trees:\n   - Total for 5-year-old and 10-year-old: 50 + 1000 = 1050 fruits\n\nRESULT: 1050 fruits",
+        "step_3": "3. Since the 8-year-old tree produces 200 fruits less than the 10-year-old, subtract 200 from the 10-year-old's production:\n   - Adjusted 8-year-old production: 1000 - 200 = 800 fruits\n\nRESULT: 800 fruits",
+        "verifier": "VERDICT: passthrough\n#### 800",
+        "aggregator": "800 fruits\n#### 800"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

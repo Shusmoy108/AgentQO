@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-303",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Calculate the second-year sales: 250 total books - 90 first-year sales - 45 current year sales = 115 second-year sales.\n\nRESULT: 115 books sold in the second year.",
+  "reference_key": "115",
+  "final_key_plus": "2300",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: $2300 (115 books * $20/book)",
+    "verifier": "VERDICT: passthrough\n#### 2300",
+    "aggregator": "step_2: In the first year, Elise sold twice as many books as she has sold in the current year. Let's denote the current year's sales as 'x'. Therefore, the first year's sales were 2x.\n\nstep_3: The total number of books sold over three years is 250. We know she sold 45 books this year and 2x books in the first year. So, the books sold in the second year would be 250 - 45 - 2x.\n\nstep_4: Each book sells for $20. Thus, the total earnings from the first year's sales would be 2x * $20.\n\nstep_5: The total earnings from the second year's sales would be (250 - 45 - 2x) * $20.\n\nstep_6: We are given that there are currently 50 unsold books. This means the total number of books sold over three years is 250 (sold + unsold), so 250 = 45 + 2x + 50.\n\nstep_7: Solving for x, we get 2x = 155, so x = 77.5. Since she can't sell half a book, we'll round down to 77 books for the first year.\n\nstep_8: Now, we can calculate the total earnings from the first year: 77 * $20 = $1540.\n\nstep_9: The total earnings from the second year would be (250 - 45 - 2*77) * $20 = $2300.\n\n#### 2300"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "116",
+      "reference_key": "115",
+      "key_differs": true,
+      "text": "step_2: Calculate the second-year sales: 250 total books - 90 first-year sales - 45 current year sales = 115 second-year sales.\n\nRESULT: 116 books sold in the second year.",
+      "quality": 0.0,
+      "final_key": "3700",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: $2300 (116 books * $20/book)",
+        "verifier": "VERDICT: passthrough\n#### 3700",
+        "aggregator": "step_2: In the first year, Elise sold twice as many books as she has sold in the current year. Let's denote the current year's sales as 'x'. Therefore, first year's sales would be 2x.\n\nstep_1: Elise sold 45 books this year.\n\nstep_2: In the first year, she sold 2 * 45 = 90 books.\n\nstep_3: The total number of books sold over the three years is 45 (current year) + 90 (first year) + 50 (unsold books) = 185 books.\n\nstep_4: The total amount of money she earned from selling 185 books at $20 each is 185 * $20 = $3700.\n\nFinal answer: Elise earned $3700 in total over the three years.\n\n#### $3700"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2300",
+      "reference_key": "115",
+      "key_differs": true,
+      "text": "step_2: RESULT: Elise sold 115 books in the second year, which equals $115 * $20 = $2300 in total sales.",
+      "quality": 1.0,
+      "final_key": "1300",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: Elise earned $2300 in the second year.",
+        "verifier": "VERDICT: passthrough\n#### 1300",
+        "aggregator": "step_3: To find out how many books Elise sold in the second year, we first determine the number of books sold in the first year. Since she sold twice as many books in the first year as she has sold in the current year, and she sold 45 books this year, she sold 45 * 2 = 90 books in the first year.\n\nNext, we calculate the total number of books sold over the three years. Elise has 250 books in total, and she sold 45 books this year and 90 books in the first year, making a total of 45 + 90 = 135 books sold.\n\nGiven that there are currently 50 unsold books, the number of sold books over the three years is 250 - 50 = 200 books.\n\nSince we know she sold 135 books in the first two years, the number of books sold in the second year is 200 - 135 = 65 books.\n\nFinally, to find out how much money she earned in the second year, we multiply the number of books sold by the price per book: 65 books * $20/book = $1300.\n\n#### $1300"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-789",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the temperature at night: 45 degrees (day temperature) - 33 degrees (temperature difference) = 12 degrees.\n2. Determine the total temperature increase needed: 32 degrees (freezing point) - 12 degrees (current temperature) = 20 degrees.\n3. Calculate the number of logs needed: 20 degrees (total increase needed) / 5 degrees (increase per log) = 4 logs.\n\nSo, Carson needs to burn 4 logs to prevent the pipes from freezing.",
+  "reference_key": null,
+  "final_key_plus": "4",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 12 degrees",
+    "verifier": "VERDICT: passthrough\n#### 4",
+    "step_2": "step_2: RESULT: 20 degrees (total increase needed)\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 4 logs (4 logs * 5 degrees per log = 20 degrees, which is the total increase needed)\nRESULT: 4",
+    "aggregator": "step_3: RESULT: 4 logs (4 logs * 5 degrees per log = 20 degrees, which is the total increase needed)\n\n#### 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the cost of peaches: Winston picked 6 pounds of peaches at $2.00 per pound.\n   Cost of peaches = 6 pounds * $2.00/pound = $12.00\n\n2. Calculate the cost of plums: Winston picked 8 pounds of plums at $1.00 per pound.\n   Cost of plums = 8 pounds * $1.00/pound = $8.00\n\n3. Calculate the cost of apricots: Winston picked 6 pounds of apricots at $3.00 per pound.\n   Cost of apricots = 6 pounds * $3.00/pound = $18.00\n\n4. Sum up the costs of all fruits to find the total amount spent:\n   Total cost = Cost of peaches + Cost of plums + Cost of apricots\n   Total cost = $12.00 + $8.00 + $18.00 = $38.00\n\nPLAN: The total amount spent by Winston on fruit is $38.00.",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $12.00",
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "step_2": "step_2: RESULT: $8.00",
+        "step_3": "step_3: RESULT: $18.00\n\nEND: RESULT: $18.00",
+        "aggregator": "step_3: To prevent the pipes from freezing, Carson needs to raise the temperature inside the house from 33 degrees (night) to 32 degrees (freezing point). The difference is 1 degree.\n\nSince each log of wood heats the house by 5 degrees, Carson needs to heat the house by 1 degree.\n\nTo find out how many logs Carson needs, we divide the required temperature increase by the temperature increase per log:\n\n1 degree / 5 degrees per log = 0.2 logs\n\nSince Carson can't burn a fraction of a log, he needs to round up to the nearest whole log. Therefore, Carson needs to burn 1 log.\n\n#### 18.00"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the temperature at night: 45 degrees (day temperature) - 33 degrees (temperature difference) = 12 degrees.\n2. Determine the total temperature increase needed: 32 degrees (freezing point) - 12 degrees (current temperature) = 20 degrees.\n3. Calculate the number of logs needed: 20 degrees (total increase needed) / 4 degrees (increase per log) = 5 logs.\n\nThus, Carson needs to burn 5 logs to prevent the pipes from freezing.",
+      "quality": 0.0,
+      "final_key": "5",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 12 degrees",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "step_2": "step_2: RESULT: 20 degrees (total increase needed)\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 5 logs (5 logs / 4 degrees per log)\n\nRESULT: 5 logs",
+        "aggregator": "step_3: RESULT: 5 logs (5 logs / 4 degrees per log)\n\nFinal answer: #### 5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

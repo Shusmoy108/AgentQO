@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-512",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total distance Hannah needs to run by multiplying the number of laps by the distance of each lap: 8 laps * 0.25 km/lap = 2 km.\n2. Convert the total distance from kilometers to milliliters by multiplying by the rate of water consumption per kilometer: 2 km * 60 ml/km = 120 ml.\n3. The final answer is the total amount of water Hannah needs to drink, which is 120 milliliters.",
+  "reference_key": null,
+  "final_key_plus": "120",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 2 km\n\nNext step:\n\nPLAN:\n2. Calculate the total water consumption in milliliters by multiplying the total distance in kilometers by the rate of water consumption per kilometer.\n\nCalculation:\n2 km * 60 ml/km = 120 ml\n\nEnd with \"RESULT: <number>\".",
+    "verifier": "VERDICT: passthrough\n#### 120",
+    "step_2": "RESULT: 120 ml",
+    "step_3": "RESULT: 120 ml",
+    "aggregator": "step_2: Calculate total distance Hannah runs.\nDistance per lap = 0.25 km\nNumber of laps = 8\nTotal distance = Distance per lap * Number of laps\nTotal distance = 0.25 km * 8\nTotal distance = 2 km\n\nstep_3: Calculate total water needed.\nWater per kilometer = 60 ml\nTotal water needed = Water per kilometer * Total distance\nTotal water needed = 60 ml * 2 km\nTotal water needed = 120 ml\n\n#### 120"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the amount of water Wanda pumped on the first day:\n   Wanda's first day pumping = 1/4 * 18000 gallons\n\n2. Calculate the amount of water Ms. B pumped on the first day:\n   Ms. B's first day pumping = 3/4 * Wanda's first day pumping\n\n3. Calculate the remaining capacity after the first day's pumping:\n   Remaining capacity after first day = 18000 gallons - (Wanda's first day pumping + Ms. B's first day pumping)\n\n4. Calculate the amount of water Wanda pumped on the second day:\n   Wanda's second day pumping = 2/3 * Wanda's first day pumping\n\n5. Calculate the amount of water Ms. B pumped on the second day:\n   Ms. B's second day pumping = 1/3 * Ms. B's first day pumping\n\n6. Calculate the total water pumped on the second day:\n   Total second day pumping = Wanda's second day pumping + Ms. B's second day pumping\n\n7. Calculate the remaining capacity after the second day's pumping:\n   Remaining capacity after second day = 18000 gallons - (Total second day pumping)\n\n8. The remaining capacity will be the answer to how many gallons are left for the tank to be full.",
+      "quality": 0.0,
+      "final_key": "10125",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the amount of water Wanda pumped on the first day:\n   Wanda's first day pumping = 1/4 * 18000 gallons\n   = 4500 gallons\n\nRESULT: 4500",
+        "verifier": "VERDICT: passthrough\n#### 10125",
+        "step_2": "step_2: 2. Calculate the amount of water Ms. B pumped on the first day:\n   Ms. B's first day pumping = 3/4 * Wanda's first day pumping\n   = 3/4 * 4500 gallons\n   = 3375 gallons\n\nRESULT: 3375",
+        "step_3": "3. Calculate the remaining capacity after the first day's pumping:\n   Remaining capacity after first day = 18000 gallons - (Wanda's first day pumping + Ms. B's first day pumping)\n   = 18000 - (4500 + 3375)\n   = 18000 - 7875\n   = 10125 gallons\n\nRESULT: 10125",
+        "aggregator": "10125\n#### 10125"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total distance Hannah has to run by multiplying the number of laps by the distance per lap: 8 laps * 0.25 km/lap = 2 km.\n2. Convert the total distance from kilometers to milliliters by multiplying by the rate of water consumption per kilometer: 2 km * 60 ml/km = 120 ml.\n3. The final answer is the total amount of water Hannah needs to drink, which is 119 milliliters. (Subtle error: Missed the conversion by one milliliter due to a minor calculation oversight.)",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 2 km\n\nNext step:\n\nPLAN:\n2. Convert the total distance from kilometers to milliliters by multiplying by the rate of water consumption per kilometer: 2 km * 60 ml/km = 120 ml.\n\nCarry out step 2:\n\nRESULT: 120 ml",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "step_2": "RESULT: 120 ml",
+        "step_3": "RESULT: 120 ml",
+        "aggregator": "step_2: Calculate total distance Hannah runs.\nDistance per lap = 0.25 km\nNumber of laps = 8\nTotal distance = Distance per lap * Number of laps\nTotal distance = 0.25 km * 8\nTotal distance = 2 km\n\nstep_3: Calculate total water needed.\nWater per kilometer = 60 ml\nTotal water needed = Water per kilometer * Total distance\nTotal water needed = 60 ml * 2 km\nTotal water needed = 120 ml\n\n#### 120"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

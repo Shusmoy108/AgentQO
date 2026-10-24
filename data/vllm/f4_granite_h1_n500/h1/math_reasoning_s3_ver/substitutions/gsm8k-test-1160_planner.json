@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1160",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of reports received from Monday to Friday, excluding Wednesday, by adding the reports received on Monday and Tuesday (1907) to the reports received on Thursday and Friday (2136).\n2. Subtract the total number of reports received from the calculated total (5168) to find out how many reports were received on Wednesday.\n3. Verify the result by checking if the sum of all reports (Monday to Friday) equals the total number of reports received (5168).",
+  "reference_key": null,
+  "final_key_plus": "7204",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1907 (Monday and Tuesday) + 2136 (Thursday and Friday) = 4043 (Total from Monday to Friday excluding Wednesday)\n\nRESULT: 4043",
+    "verifier": "VERDICT: passthrough\n#### 7204",
+    "step_2": "step_2: 5168 (Total reports) - 4043 (Total from Monday to Friday excluding Wednesday) = 1125\n\nRESULT: 1125",
+    "step_3": "step_3: 1907 (Monday) + 1125 (Tuesday) + 2136 (Thursday) + 2136 (Friday) = 7204\n\nRESULT: 7204",
+    "aggregator": "7204\n#### 7204"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the cost of one basket of green food: $25.\n2. Calculate the cost of one basket of red food after the discount: $18 - $2 = $16.\n3. Determine the total cost for 3 baskets of green food: 3 * $25 = $75.\n4. Determine the total cost for 3 baskets of red food after the discount: 3 * $16 = $48.\n5. Calculate the total cost for both types of baskets: $75 + $48 = $123.\n\nPLAN:\n1. Identify the cost of one basket of green food.\n2. Calculate the discounted cost of one basket of red food.\n3. Compute the total cost for 3 baskets of green food.\n4. Compute the total cost for 3 baskets of red food after the discount.\n5. Sum the costs to find the total amount to be paid.",
+      "quality": 1.0,
+      "final_key": "1125",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $25",
+        "verifier": "VERDICT: passthrough\n#### 1125",
+        "step_2": "step_2: RESULT: $25 - $2 = $23\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 3 * $23 = $69\n\nRESULT: $69",
+        "aggregator": "RESULT: 5168 - 1907 - 2136 = 1125\n#### 1125"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total reports from Monday to Friday, excluding Wednesday, by summing the reports from Monday and Tuesday (1907) and Thursday and Friday (2136).\n2. From this computed total (5168), deduct the total number of reports received (4892) to determine the reports on Wednesday.\n3. Confirm the accuracy by ensuring the sum of Monday to Friday reports (5168) matches the overall total reports (4892).",
+      "quality": 1.0,
+      "final_key": "1125",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Total reports from Monday to Friday (excluding Wednesday) = 1907 (Monday) + 2136 (Thursday) = 4043.\n\nRESULT: 4043",
+        "verifier": "VERDICT: passthrough\n#### 1125",
+        "step_2": "2. Reports on Wednesday = Total reports (5168) - Total reports from Monday to Friday (excluding Wednesday) = 5168 - 4043 = 1125.\n\nRESULT: 1125",
+        "step_3": "3. Confirmation:\nTotal reports (5168) = Reports from Monday to Friday (excluding Wednesday, 4043) + Reports on Wednesday = 4043 + 1125 = 5168.\n\nRESULT: 1125",
+        "aggregator": "1125\n#### 1125"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

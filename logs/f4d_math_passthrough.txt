@@ -1,0 +1,44 @@
+Sat Oct 24 16:01:13 UTC 2026
+workflow math_reasoning_s3_ver; output order: ['aggregator', 'step_3', 'step_2', 'step_1', 'planner']
+  plan all_small        upgrades none
+  plan set_aggregator+planner+step_3 upgrades ['aggregator', 'planner', 'step_3']
+  plan set_aggregator+planner upgrades ['aggregator', 'planner']
+  plan set_aggregator+step_3 upgrades ['aggregator', 'step_3']
+  plan set_aggregator   upgrades ['aggregator']
+  plan set_planner+step_1+step_2 upgrades ['planner', 'step_1', 'step_2']
+  plan set_planner+step_1 upgrades ['planner', 'step_1']
+  plan set_planner      upgrades ['planner']
+
+all_small          acc=0.460  cost_units=  5.0  large_calls=0.0
+set_aggregator+planner+step_3 acc=0.650  cost_units= 14.0  large_calls=3.0
+set_aggregator+planner acc=0.660  cost_units= 11.0  large_calls=2.0
+set_aggregator+step_3 acc=0.650  cost_units= 11.0  large_calls=2.0
+set_aggregator     acc=0.680  cost_units=  8.0  large_calls=1.0
+set_planner+step_1+step_2 acc=0.520  cost_units= 14.0  large_calls=3.0
+set_planner+step_1 acc=0.410  cost_units= 11.0  large_calls=2.0
+set_planner        acc=0.550  cost_units=  8.0  large_calls=1.0
+
+plan                  acc      gain vs small [95% CI]   %gain   %cost
+set_aggregator      0.680      +0.220 [+0.130,+0.300]       -       -
+set_aggregator+planner  0.660      +0.200 [+0.090,+0.300]       -       -
+set_aggregator+planner+step_3  0.650      +0.190 [+0.080,+0.300]       -       -
+set_aggregator+step_3  0.650      +0.190 [+0.100,+0.280]       -       -
+set_planner         0.550      +0.090 [-0.010,+0.190]       -       -
+set_planner+step_1+step_2  0.520      +0.060 [-0.050,+0.170]       -       -
+all_small           0.460      +0.000 [+0.000,+0.000]       -       -
+set_planner+step_1  0.410      -0.050 [-0.160,+0.060]       -       -
+
+HTTP calls: 2013  cache hits: 1987  misses: 2013
+
+verifier vs aggregator (per plan):  changed / fixed / broke / aggregator acc -> final acc
+  all_small           0/100    0    0   0.46 -> 0.46
+  set_aggregator+planner+step_3  0/100    0    0   0.65 -> 0.65
+  set_aggregator+planner  0/100    0    0   0.66 -> 0.66
+  set_aggregator+step_3  0/100    0    0   0.65 -> 0.65
+  set_aggregator      0/100    0    0   0.68 -> 0.68
+  set_planner+step_1+step_2  0/100    0    0   0.52 -> 0.52
+  set_planner+step_1  0/100    0    0   0.41 -> 0.41
+  set_planner         0/100    0    0   0.55 -> 0.55
+Artifacts in data/vllm/f4_qwen_valid_plans/math_passthrough
+F4D_MATH_PASSTHROUGH_EXIT=0
+Sat Oct 24 16:01:52 UTC 2026

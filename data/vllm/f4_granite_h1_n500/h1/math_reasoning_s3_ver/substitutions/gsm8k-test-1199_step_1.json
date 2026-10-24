@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1199",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 24 gallons",
+  "reference_key": "24",
+  "final_key_plus": "13",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 24 - 4 = 20 gallons\n\nRESULT: 20 gallons",
+    "step_3": "step_3: RESULT: 20 - 7 = 13 gallons\n\nRESULT: 13 gallons",
+    "verifier": "VERDICT: passthrough\n#### 13",
+    "aggregator": "step_3: RESULT: 24 - 4 - 7 - 5 = 13 gallons\n\nFinal answer: #### 13"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "25",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "RESULT: 25 gallons",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 20 gallons\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 20 - 7 = 13 gallons\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "step_4: RESULT: 13 - 5 = 8 gallons\n\nFinal answer: #### 8 gallons"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2.67",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "RESULT: 24 gallons\n\nPLAN continues:\n\n1. RESULT: 24 gallons of root beer initially made.\n2. To compute the remaining after children's consumption: 24 - 4 = 20 gallons.\n3. After Barbie's spill: 20 - 7 = 13 gallons remaining.\n4. Subtracting Ronnie's take: 13 - 5 = 8 gallons.\n5. Final calculation for equal sharing among 3 people at the party: 8 / 3 \u2248 2.67 gallons per person.\n\nEND",
+      "quality": 0.0,
+      "final_key": "13",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "24 - 4 = 20 gallons remaining after children's consumption.\n\nRESULT: 20 gallons",
+        "step_3": "step_3: 20 - 7 = 13 gallons remaining after Barbie's spill.\n\nRESULT: 13 gallons",
+        "verifier": "VERDICT: passthrough\n#### 13",
+        "aggregator": "step_3: 20 - 7 = 13 gallons remaining after Barbie's spill.\n\nRESULT: 13 gallons\n#### 13"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

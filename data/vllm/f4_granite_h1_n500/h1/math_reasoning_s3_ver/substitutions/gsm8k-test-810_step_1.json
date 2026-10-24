@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-810",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 10 students.",
+  "reference_key": "10",
+  "final_key_plus": "70",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: The number of students doubles every month.\n\nRESULT: 10 students.",
+    "step_3": "step_3: The year starts in January and ends in December, so there are 4 months from January to April. May is the fifth month, which means there are 3 months from April to May.\n\nRESULT: 3 doubling periods.",
+    "verifier": "VERDICT: passthrough\n#### 70",
+    "aggregator": "step_4: Each doubling period adds 10 students (from 10 to 20, then 20 to 40, and finally 40 to 80).\n\nstep_5: Calculate the total additional students for 3 doubling periods: 10 (initial) + 20 (April) + 40 (May) = 70 students.\n\n#### 70"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 11 students.",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: The number of students doubles every month.\n\nRESULT: 11 students.",
+        "step_3": "step_3: The number of doubling periods in May (April to May) is 3.\n\nRESULT: 3",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "3\n#### 3"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 10 students\nEnd of step 1. Proceeding to step 2.",
+      "quality": 0.0,
+      "final_key": "80",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 10 students * 2^3 (for 3 doubling periods in May) = 10 * 8 = 80 students\nEnd of step 2. Proceeding to step 3.\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "RESULT: 80 students",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "aggregator": "step_3: RESULT: 80 students\n\n#### 80"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

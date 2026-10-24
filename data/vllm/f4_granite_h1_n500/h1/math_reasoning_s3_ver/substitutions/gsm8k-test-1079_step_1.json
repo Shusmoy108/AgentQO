@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1079",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $1500",
+  "reference_key": "1500",
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $1800\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <percentage>\".",
+    "step_3": "step_3: RESULT: [(2000 - 1800) / 2000] * 100 = 10%\nRESULT: 10%",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "aggregator": "step_3: RESULT: [(2000 - 1800) / 2000] * 100 = 10%\n\n#### 10%"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "1501",
+      "reference_key": "1500",
+      "key_differs": true,
+      "text": "RESULT: 1501",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 1800\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: [(2000 - 1800) / 2000] * 100 = 10%\nRESULT: 10%",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "step_3: RESULT: [(2000 - 1800) / 2000] * 100 = 10%\n\n#### 10%"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "75",
+      "reference_key": "1500",
+      "key_differs": true,
+      "text": "Mr. Rogers purchased the watch at $1500.\n\nRESULT: 75",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Mr. Rogers sold the watch to his friend at 120% of the price he bought it.\nSelling price for Mr. Rogers = 1.2 * $1500 = $1800.\n\nRESULT: 120",
+        "step_3": "step_3: The friend bought the watch for $1500 and sold it for $1800.\nPercentage discount for the friend = [(2000 - 1800) / 2000] * 100.\nPercentage discount for the friend = [200 / 2000] * 100 = 10%.\n\nRESULT: 10",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "10\n#### 10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

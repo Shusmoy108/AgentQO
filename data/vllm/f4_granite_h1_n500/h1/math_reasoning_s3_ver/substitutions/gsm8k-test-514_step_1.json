@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-514",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: L (cost of the lot)",
+  "reference_key": null,
+  "final_key_plus": "90000",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 3L (cost of the house)\n\nCarry out step 3.\n\n3L + L = 120,000\n4L = 120,000\n\nNow, solve for L:\n\nL = 120,000 / 4\nL = 30,000\n\nCarry out step 4.\n\nRESULT: 3 * 30,000 = $90,000\n\nThe house cost $90,000.",
+    "step_3": "3L + L = 120,000\n4L = 120,000\nL = 120,000 / 4\nL = 30,000\n\nRESULT: 3 * 30,000 = $90,000",
+    "verifier": "VERDICT: passthrough\n#### 90000",
+    "aggregator": "3 * 30,000 = $90,000\n#### $90,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "RESULT: 0.6",
+      "quality": 0.0,
+      "final_key": "180000",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 180,000\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: L + 3L = 120,000\n1.1. Subtract L from both sides: 2L = 120,000\n1.2. Divide both sides by 2: L = 60,000\n1.3. Multiply L by 3 to find the cost of the house: 3L = 3 * 60,000 = 180,000\n\nRESULT: 180,000",
+        "verifier": "VERDICT: passthrough\n#### 180000",
+        "aggregator": "180,000\n#### 180,000"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "RESULT: L (cost of the lot) + Additional Expenses (for site preparation)",
+      "quality": 1.0,
+      "final_key": "90000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 3L (cost of the house)\n\nTo find the exact cost of the house, we need to solve the equation L + 3L = 120,000 for 'L'.\n\nCarry out step 3 only. Show the calculation briefly.\n\nEND WITH \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 4L = 120,000\n\nTo find the value of 'L', divide both sides of the equation by 4:\n\nL = 120,000 / 4\nL = 30,000\n\nNow, to find the cost of the house, multiply the cost of the lot by 3:\n\nRESULT: 3L = 3 * 30,000 = $90,000",
+        "verifier": "VERDICT: passthrough\n#### 90000",
+        "aggregator": "RESULT: The house cost $90,000. #### 90000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

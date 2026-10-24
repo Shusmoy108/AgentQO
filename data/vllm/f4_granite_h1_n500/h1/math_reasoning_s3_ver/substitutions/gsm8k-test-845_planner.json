@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-845",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Identify the total number of students in the class, which is 20.\n2. Subtract the number of students who are good at English only (8) from the total number of students to find out how many are good at either math or both.\n3. Since 5 students are good at math only, subtract this number from the result of step 2 to find out how many are good at both math and English. Then, add this number back to the 5 students who are good at math only to find the total number of students who are good at math.",
+  "reference_key": null,
+  "final_key_plus": "17",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 20 students in total.",
+    "verifier": "VERDICT: passthrough\n#### 17",
+    "step_2": "step_2: RESULT: 20 - 8 = 12 students are good at either math or both.\n\nCarry out step 3.\n\nRESULT: 12 (both math and English) + 5 (math only) = 17 students are good at math.",
+    "step_3": "12 (both math and English) + 5 (math only) = 17 students are good at math.\n\nRESULT: 17 students are good at math.",
+    "aggregator": "17 students are good at math.\n#### 17"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Let's denote Melanie's present age as M.\n2. According to the problem, in 10 years, Melanie will be 18 years old. Therefore, we can write the equation: M + 10 = 18.\n3. To find her present age (M), we solve the equation: M = 18 - 10, which gives M = 8.\n4. Now, we need to determine how many years it will take for Melanie's age to be thrice her present age. In 10 years, her age will be 18 (as calculated in step 2).\n5. Let's denote the number of years it will take for her age to be thrice her present age as Y. In Y years, her age will be M + Y.\n6. We set up the equation: 8 + Y = 3 * 8.\n7. Solving for Y: Y = 3 * 8 - 8, which gives Y = 12.\n\nPLAN:\n1. Define Melanie's present age as M.\n2. Use the given information to set up an equation for her age in 10 years.\n3. Solve for M to find her present age.\n4. Set up an equation for the future age when it's thrice her present age.\n5. Solve for Y to find the number of years it will take for her age to be thrice her present age.",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 8",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "step_2": "step_2: RESULT: M + 10 = 18\n\nCarry out step 3. Show the calculation briefly.\n\nRESULT: M = 18 - 10 = 8",
+        "step_3": "RESULT: 8",
+        "aggregator": "step_3: RESULT: 8\n\nFinal answer: There are 8 students in Miss Susan's class who are good at math. #### 8"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total count of students in the class, which is 20.\n2. Deduct the count of students proficient solely in English (8) from the total student count to ascertain those who excel in either math or both.\n3. Subtract the 5 students who excel only in math from the previous result to determine those who excel in both math and English. Then, sum this number with the 5 students who excel only in math to find the overall count of students who excel in math.",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 20\n\nNext step:\n\nPLAN:\n1. Deduct the count of students proficient solely in English (8) from the total student count (20) to ascertain those who excel in either math or both.\n\nCalculation: 20 - 8 = 12\n\nRESULT: 12\n\nNow proceed to step 2.",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "step_2": "PLAN:\n1. Subtract the 5 students who excel only in math from the previous result (12) to determine those who excel in both math and English.\n\nCalculation: 12 - 5 = 7\n\nRESULT: 7",
+        "step_3": "PLAN:\n1. Add the 5 students who excel only in math to the 7 students who excel in both math and English to find the overall count of students who excel in math.\n\nCalculation: 5 + 7 = 12\n\nRESULT: 12",
+        "aggregator": "12 students are good at math.\n\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

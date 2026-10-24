@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-135",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of video games Brian has after losing 5.\n2. Determine the number of video games Bobby has by applying the given condition (3 times as many as Brian minus 5).\n3. Present the final answer.\n\nNode Output:\n1. Brian's current video games = 20 - 5 = 15\n2. Bobby's video games = 3 * 15 - 5 = 45 - 5 = 40\n3. Bobby has 40 video games.",
+  "reference_key": null,
+  "final_key_plus": "55",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Brian's current video games = 20 - 5 = 15\nRESULT: 15",
+    "verifier": "VERDICT: passthrough\n#### 55",
+    "step_2": "2. Bobby's video games = 3 * 15 - 5 = 45 - 5 = 40\nRESULT: 40",
+    "step_3": "3. Bobby has 40 video games.\nRESULT: 40",
+    "aggregator": "step_1: Brian's original number of video games = 20\nstep_2: Bobby's video games = 3 * Brian's original number - 5\nstep_3: Bobby's video games = 3 * 20 - 5 = 60 - 5 = 55\n\n#### 55"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the additional amount Jessica wants to pay beyond the minimum:\n   Additional amount = Minimum payment * Percentage increase\n   = $300 * 50%\n   = $150\n\n2. Add the additional amount to each minimum payment to find the new total monthly payment:\n   New monthly payment = Minimum payment + Additional amount\n   = $300 + $150\n   = $450\n   = $200 + $150\n   = $350\n   = $500 + $150\n   = $650\n\n3. To find the annual payment, multiply the new monthly payment by 12 (months in a year):\n   Annual payment = New monthly payment * 12\n   = $450 * 12\n   = $5400\n   = $350 * 12\n   = $4200\n   = $650 * 12\n   = $7800\n\nPLAN: The annual payment Jessica should make, after increasing her minimum payments by 50%, is $7800.",
+      "quality": 0.0,
+      "final_key": "35",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $150",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "step_2": "step_2: RESULT: $450\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "RESULT: $7800",
+        "aggregator": "step_1: Brian's original number of video games = 20\nstep_2: Brian lost 5 video games, so he has 20 - 5 = 15 video games left.\nstep_3: Bobby has 3 times as many as Brian's original amount minus 5, so Bobby has 3 * 15 - 5 = 40 video games.\nstep_4: Bobby has 5 fewer than the calculated amount, so Bobby has 40 - 5 = 35 video games.\n\n#### 35"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "Node Output:\n1. Brian's current video games = 20 - 5 = 15\n2. Bobby's video games = 3 * 15 - 5 = 45 - 5 = 40\n3. Bobby has 40 video games. (Re-evaluation: Bobby actually has 35 video games due to the subtle error.)",
+      "quality": 0.0,
+      "final_key": "35",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Brian's current video games = 20 - 5 = 15\n\nRESULT: 15",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "step_2": "2. Bobby's video games = 3 * 15 - 5 = 45 - 5 = 40\n\nRESULT: 40",
+        "step_3": "3. Bobby has 40 - 5 = 35 video games.\n\nRESULT: 35",
+        "aggregator": "step_3: 3. Bobby has 40 - 5 = 35 video games.\n\nRESULT: 35\n#### 35"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

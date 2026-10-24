@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-664",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 48 hours",
+  "reference_key": "48",
+  "final_key_plus": "32",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 32 recipes",
+    "step_3": "RESULT: 32 recipes",
+    "verifier": "VERDICT: passthrough\n#### 32",
+    "aggregator": "step_2: John attends 4 classes per week for 6 weeks, so he has 4 * 6 = 24 class sessions in total.\n\nstep_3: Each class session is 2 hours long, so in total, John spends 24 * 2 = 48 hours in the cooking class.\n\nstep_4: John learns a new recipe every 1.5 hours of class time. Therefore, the number of recipes he learns is 48 / 1.5 = 32 recipes.\n\n#### 32 recipes"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "49",
+      "reference_key": "48",
+      "key_differs": true,
+      "text": "RESULT: 49 hours",
+      "quality": 1.0,
+      "final_key": "32",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 32 recipes",
+        "step_3": "step_2: RESULT: 32 recipes\n\nConclusion:\nRESULT: 32 recipes",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "aggregator": "step_3: step_2: RESULT: 32 recipes\n\nConclusion:\nRESULT: 32 recipes\n\nState the final answer. End with \"#### 32\"."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "72",
+      "reference_key": "48",
+      "key_differs": true,
+      "text": "1. Calculate the total number of class hours John attends:\n  - Each class session is 2 hours long, and he attends 4 sessions per week.\n  - Over 6 weeks, the total class hours are 72 hours (2 hours/session * 4 sessions/week * 6 weeks).\n\n  RESULT: 72 hours.",
+      "quality": 1.0,
+      "final_key": "32",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Determine the number of recipes John learns:\n  - John learns a new recipe for every 1.5 hours of class time.\n  - Using the total class hours (72 hours), the number of recipes he learns is 72 hours / 1.5 hours/recipe = 48 recipes.\n\nRESULT: 48 recipes.",
+        "step_3": "RESULT: 48 recipes.",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "aggregator": "step_1: Calculate total class hours.\nJohn's class meets 4 times a week for 2 hours each time. So, total class hours per week = 4 * 2 = 8 hours.\n\nstep_2: Calculate total class hours over 6 weeks.\nTotal class hours over 6 weeks = 8 hours/week * 6 weeks = 48 hours.\n\nstep_3: Determine the number of recipes learned.\nJohn learns a new recipe for every 1.5 hours of class time. So, the number of recipes he learns = total class hours / 1.5 hours per recipe.\n\nRecipes learned = 48 hours / 1.5 hours/recipe = 32 recipes.\n\n#### 32 recipes."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

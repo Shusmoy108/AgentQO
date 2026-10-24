@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-895",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. First, calculate Carl's weight by adding 16 kg to Martin's weight.\n2. Next, find Christian's weight by adding 8 kg to Carl's weight.\n3. Finally, determine Harry's weight by subtracting 5 kg from Christian's weight.",
+  "reference_key": null,
+  "final_key_plus": "74",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Carl's weight = Martin's weight + 16 kg\nRESULT: 55 kg + 16 kg = 71 kg",
+    "verifier": "VERDICT: passthrough\n#### 74",
+    "step_2": "step_2: 2. Christian's weight = Carl's weight + 8 kg\nRESULT: 71 kg + 8 kg = 79 kg\n\nNow, proceed to step 3 to find Harry's weight.\n\nstep_3: 3. Harry's weight = Christian's weight - 5 kg\nRESULT: 79 kg - 5 kg = 74 kg\n\nHarry's weight is 74 kg.",
+    "step_3": "RESULT: 74 kg",
+    "aggregator": "step_2: Carl's weight = Martin's weight + 16 kg\nCarl's weight = 55 kg + 16 kg\nCarl's weight = 71 kg\n\nstep_3: Christian's weight = Carl's weight + 8 kg\nChristian's weight = 71 kg + 8 kg\nChristian's weight = 79 kg\n\nstep_4: Harry's weight = Christian's weight - 5 kg\nHarry's weight = 79 kg - 5 kg\nHarry's weight = 74 kg\n\n#### 74 kg"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of rides Paul took in a day:\n   - Morning rides: 2\n   - Afternoon rides: 2\n   - Total rides per day = 2 (morning) + 2 (afternoon) = 4 rides\n\n2. Determine the daily cost of driving:\n   - Morning ride cost: $6\n   - Afternoon ride cost: $2\n   - Daily cost = (4 rides * $6) + (4 rides * $2) = $24 + $8 = $32\n\n3. Calculate the total cost for 14 days:\n   - Total cost = Daily cost * Number of days = $32 * 14 = $448\n\nPLAN: The total amount of money Paul spent on driving his car during these two weeks is $448.",
+      "quality": 1.0,
+      "final_key": "74",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate the total number of rides Paul took in a day:\n   - Morning rides: 2\n   - Afternoon rides: 2\n   - Total rides per day = 2 (morning) + 2 (afternoon) = 4 rides\n\nRESULT: 4",
+        "verifier": "VERDICT: passthrough\n#### 74",
+        "step_2": "2. Determine the daily cost of driving:\n   - Morning ride cost: $6\n   - Afternoon ride cost: $2\n   - Daily cost = (4 rides * $6) + (4 rides * $2) = $24 + $8 = $32\n\nRESULT: 32",
+        "step_3": "step_3: 3. Calculate the total cost for 14 days:\n   - Total cost = Daily cost * Number of days = $32 * 14 = $448\n\nRESULT: 448",
+        "aggregator": "step_4: step_4: 4. Determine Harry's weight:\n   - Carl's weight = Martin's weight + 16 = 55 + 16 = 71 kg\n   - Christian's weight = Carl's weight + 8 = 71 + 8 = 79 kg\n   - Harry's weight = Christian's weight - 5 = 79 - 5 = 74 kg\n\n#### 74"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initially, determine Carl's weight by adding 16 kg to Martin's weight.\n2. Subsequently, ascertain Christian's weight by adding 8 kg to Carl's weight.\n3. Ultimately, establish Harry's weight by subtracting 5 kg from Christian's weight.",
+      "quality": 1.0,
+      "final_key": "74",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. RESULT: Carl's weight = Martin's weight + 16 kg = 55 kg + 16 kg = 71 kg.",
+        "verifier": "VERDICT: passthrough\n#### 74",
+        "step_2": "step_2: 2. RESULT: Christian's weight = Carl's weight + 8 kg = 71 kg + 8 kg = 79 kg.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: 3. RESULT: Harry's weight = Christian's weight - 5 kg = 79 kg - 5 kg = 74 kg.\n\nRESULT: 74 kg.",
+        "aggregator": "74 kg. #### 74"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

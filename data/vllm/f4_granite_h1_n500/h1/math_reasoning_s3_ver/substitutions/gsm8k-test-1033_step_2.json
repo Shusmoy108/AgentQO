@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1033",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: $9 (3 days * $3 per day)",
+  "reference_key": "3",
+  "final_key_plus": "1",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: $6 (net earnings per day after expenses)\n\nCarry out step 4. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "aggregator": "step_4: RESULT: $6 (net earnings per day after expenses)\n\nTo find out Melissa's hourly wage after expenses, we divide her net earnings per day by the number of hours she works per day.\n\n$6 (net earnings per day) \u00f7 6 hours per day = $1 per hour\n\n#### $1"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "3",
+      "key_differs": false,
+      "text": "step_2: RESULT: 4 (3 days * $3 per day)",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: $15 (total daily earnings) - $9 (total parking expenses) = $6 (net earnings per day)\n\nRESULT: $6",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "aggregator": "RESULT: $6\n#### 6"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "6",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "step_2: Calculation: $3 (parking cost) * 3 days = $9\nRESULT: $9\n\nContinue with step 3:\nstep_3: Find net earnings per day after expenses: $15 (total earnings) - $9 (parking expenses) = $6\nEND_WITH: <RESULT: $6>",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: $15 (total earnings) - $9 (parking expenses) = $6\nEND_WITH: <RESULT: $6>",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "aggregator": "step_1: Melissa spends 6 hours a day for 3 days, so she works a total of 6 hours/day * 3 days = 18 hours.\nstep_2: Melissa's total earnings from jury duty are $15 per day * 3 days = $45.\nstep_3: step_3: RESULT: $15 (total earnings) - $9 (parking expenses) = $6\nEND_WITH: <RESULT: $6>\n\n#### $6"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

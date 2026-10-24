@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-267",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 8 minutes",
+  "reference_key": "8",
+  "final_key_plus": "33",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 33 minutes\n\nEND.",
+    "step_3": "step_3: RESULT: 28 minutes (heating to 400 degrees) + 5 minutes (cooking) = 33 minutes (total time from starting the oil to cooking chicken).\n\nRESULT: 33 minutes.",
+    "verifier": "VERDICT: passthrough\n#### 33",
+    "aggregator": "33 minutes. #### 33"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "9",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "RESULT: 9 minutes",
+      "quality": 0.0,
+      "final_key": "38",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 33 minutes\n\nEND.",
+        "step_3": "step_3: RESULT: 38 minutes.\n\nEND.",
+        "verifier": "VERDICT: passthrough\n#### 38",
+        "aggregator": "step_3: RESULT: 38 minutes.\n\n#### 38"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "28",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "RESULT: 8 minutes\n\nPLAN: Calculate additional time for heating the oil to 400 degrees.\n\nCalculation:\nAdditional time = 20 minutes * 40% = 8 minutes.\n\nTotal time for heating to 400 degrees = 20 minutes + 8 minutes = 28 minutes.",
+      "quality": 0.0,
+      "final_key": "43",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "PLAN: Determine the total time for heating and cooking.\n\nCalculation:\nLet's denote the time to cook chicken as 'x' minutes.\nThe total time for heating and cooking is 5 minutes less than the time to heat up to 400 degrees.\nSo, the total time is 28 minutes + 5 minutes = 33 minutes.\n\nRESULT: 33 minutes.\n\nPLAN: Find the total time from starting the oil to cooking chicken.\n\nCalculation:\nThe total time for heating the oil to 400 degrees is 28 minutes.\nTherefore, the total time from starting the oil to cooking chicken is 28 minutes + x minutes = 33 minutes.\nSolving for 'x', we get x = 33 minutes - 28 minutes = 5 minutes.\n\nRESULT: 5 minutes.",
+        "step_3": "RESULT: 5 minutes.",
+        "verifier": "VERDICT: passthrough\n#### 43",
+        "aggregator": "step_1: Calculate the additional time for the oil to reach 400 degrees.\n40% of 20 minutes is 0.4 * 20 = 8 minutes.\nSo, the oil takes 20 + 8 = 28 minutes to reach 400 degrees.\n\nstep_2: Determine the total time for warming the oil.\nWarming the oil takes 20 minutes to reach 300 degrees and 28 minutes to reach 400 degrees, totaling 20 + 28 = 48 minutes.\n\nstep_3: Calculate the time taken to cook the chicken.\nAfter warming the oil, it takes 5 minutes less to cook than it took to warm the oil.\nSo, the cooking time is 48 - 5 = 43 minutes.\n\nFinal answer: #### 43 minutes."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

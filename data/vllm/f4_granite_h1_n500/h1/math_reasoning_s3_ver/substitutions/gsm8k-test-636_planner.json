@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-636",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the daily production of Jewel. Since Jewel processes 50 customers daily, her daily production is 50 customers.\n2. Determine Julie's daily production. Given that Julie operates the cash register twice as fast as Jewel, her daily production is 2 * 50 = 100 customers.\n3. Calculate the total weekly production for both. Since there are 7 days in a week, the total weekly production for Jewel is 50 customers/day * 7 days/week = 350 customers/week. Similarly, the total weekly production for Julie is 100 customers/day * 7 days/week = 700 customers/week. Therefore, the combined total weekly production for both is 350 customers/week + 700 customers/week = 1050 customers/week.",
+  "reference_key": null,
+  "final_key_plus": "1050",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 50 customers/day",
+    "verifier": "VERDICT: passthrough\n#### 1050",
+    "step_2": "step_2: RESULT: 100 customers/day (Julie's production is twice Jewel's, so 2 * 50)",
+    "step_3": "step_3: RESULT: 350 customers/week (Jewel's production) + 700 customers/week (Julie's production) = 1050 customers/week (combined total weekly production)\nEND: 1050 customers/week",
+    "aggregator": "step_3: RESULT: 350 customers/week (Jewel's production) + 700 customers/week (Julie's production) = 1050 customers/week (combined total weekly production)\nEND: 1050 customers/week\n#### 1050"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the amount Greta puts into her retirement account:\n   Retirement contribution = 50% of $2400.00\n   = 0.50 * $2400.00\n   = $1200.00\n\n2. Calculate the amount Greta uses for her car payment:\n   Car payment = 20% of $2400.00\n   = 0.20 * $2400.00\n   = $480.00\n\n3. Determine the remaining amount Greta has after these deductions:\n   Remaining amount = Total paycheck - Retirement contribution - Car payment\n   = $2400.00 - $1200.00 - $480.00\n   = $720.00\n\nPLAN: The remaining amount Greta has after funding her retirement and making her car payment is $720.00.",
+      "quality": 0.0,
+      "final_key": "1750",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "Retirement contribution = 50% of $2400.00\n= 0.50 * $2400.00\n= $1200.00\n\nRESULT: $1200.00",
+        "verifier": "VERDICT: passthrough\n#### 1750",
+        "step_2": "step_2: Car payment = 20% of $2400.00\n= 0.20 * $2400.00\n= $480.00\n\nRESULT: $480.00",
+        "step_3": "step_3: Remaining amount = Total paycheck - Retirement contribution - Car payment\n= $2400.00 - $1200.00 - $480.00\n= $720.00\n\nRESULT: $720.00",
+        "aggregator": "step_1: Calculate Julie's processing speed.\nJulie processes twice as fast as Jewel, so for every 2 customers Jewel processes, Julie processes 2 * 2 = 4 customers.\n\nstep_2: Determine Julie's daily production.\nJewel processes 50 customers daily. Therefore, Julie processes 4 * 50 = 200 customers daily.\n\nstep_3: Calculate weekly production for both.\nAssuming they work 7 days a week, Jewel's weekly production is 50 customers/day * 7 days = 350 customers.\nJulie's weekly production is 200 customers/day * 7 days = 1400 customers.\n\nTotal weekly production for both = Jewel's weekly production + Julie's weekly production\n= 350 customers + 1400 customers\n= 1750 customers\n\n#### 1750"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "REWRITTEN PLAN:\n1. Determine the daily production of Jewel. As Jewel handles 50 customers daily, her daily production is 50 customers.\n2. Estimate Julie's daily production. Julie manages the cash register at a rate that's one-and-a-half times faster than Jewel, thus her daily production is 1.5 * 50 = 75 customers.\n3. Compute the weekly production for both. Considering there are 7 days in a week, Jewel's total weekly production amounts to 50 customers/day * 7 days/week = 350 customers/week. Similarly, Julie's weekly production is 75 customers/day * 7 days/week = 525 customers/week. Consequently, the combined weekly production for both is 350 customers/week + 525 customers/week = 875 customers/week.",
+      "quality": 0.0,
+      "final_key": "875",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 50 customers/day",
+        "verifier": "VERDICT: passthrough\n#### 875",
+        "step_2": "step_2: RESULT: 75 customers/day (Julie's production is 1.5 times Jewel's)",
+        "step_3": "step_3: RESULT: 350 customers/week (Jewel's weekly production) + 525 customers/week (Julie's weekly production) = 875 customers/week (combined weekly production for both)\n\nRESULT: 875 customers/week",
+        "aggregator": "875 customers/week\n#### 875"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

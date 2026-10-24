@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1201",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 22",
+  "reference_key": "22",
+  "final_key_plus": "42",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 44\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 44 * (5/11) = 20\nRESULT: 20",
+    "verifier": "VERDICT: passthrough\n#### 42",
+    "aggregator": "Step 1: Calculate one-third of the total fish.\n66 fish * (1/3) = 22 fish with red stripes.\n\nStep 2: Determine the remaining fish after accounting for those with red stripes.\n66 fish - 22 fish = 44 fish.\n\nStep 3: Calculate 5/11 of the remaining fish that have blue stripes.\n44 fish * (5/11) = 20 fish with blue stripes.\n\nFinal answer:\n22 fish (red stripes) + 20 fish (blue stripes) = 42 fish in total have red stripes and blue stripes.\n\n#### 42"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "23",
+      "reference_key": "22",
+      "key_differs": true,
+      "text": "RESULT: 23",
+      "quality": 0.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 44\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 20\n\nCarry out step 3 only. Show the calculation briefly.\n\nBlue stripes = 44 * (5/11) = 20 fish.\n\nRESULT: 20",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "aggregator": "20 fish have blue stripes.\n\n#### 20"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "6000",
+      "reference_key": "22",
+      "key_differs": true,
+      "text": "RESULT: 6000 songs.",
+      "quality": 0.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 44 fish.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 20 fish.\n\nEND: 20 fish.",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "aggregator": "20 fish.\n#### 20"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

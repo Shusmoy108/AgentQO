@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1308",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Identify the number of eggs in the first basket, which is given as 10.\n2. Determine the number of eggs in the second basket. Since it's stated that there are twice as many eggs in the second basket as in the first, calculate this by multiplying the number of eggs in the first basket (10) by 2.\n3. Add the number of eggs in both baskets to find the total number of eggs.",
+  "reference_key": null,
+  "final_key_plus": "30",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. RESULT: 10 eggs in the first basket.\n\nNext step:\n\nPLAN:\n2. Calculate the number of eggs in the second basket.\n\nCarry out step 2:\n\n2. Multiply the number of eggs in the first basket (10) by 2.\n\nCalculation: 10 * 2 = 20 eggs in the second basket.\n\nEnd with \"RESULT: <number>\".\n\n2. RESULT: 20 eggs in the second basket.\n\nFinal step:\n\nPLAN:\n3. Add the number of eggs in both baskets to find the total number of eggs.\n\nCarry out step 3:\n\n3. Add the eggs from both baskets: 10 (first basket) + 20 (second basket) = 30 eggs in total.\n\nEnd with \"RESULT: <number>\".\n\n3. RESULT: 30 eggs in total.",
+    "verifier": "VERDICT: passthrough\n#### 30",
+    "step_2": "2. RESULT: 20 eggs in the second basket.",
+    "step_3": "3. RESULT: 30 eggs in total.",
+    "aggregator": "step_3: 2 * 10 (initial eggs) + 10 (twice as many in the second basket) = 30 eggs in total.\n\n#### 30"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of oranges the youngest son can wash. Since the youngest son is half as old as the oldest, he is 8 / 2 = 4 years old. Therefore, the youngest son can wash 4 oranges.\n\n2. Determine the total number of oranges washed. The oldest son can wash 8 oranges, and the youngest son can wash 4 oranges. So, 8 + 4 = 12 oranges are washed.\n\n3. Calculate the number of oranges left unwashed. Will initially bought 15 oranges. After washing 12, the number of unwashed oranges is 15 - 12 = 3 oranges.\n\nPLAN:\n1. Calculate the number of oranges the youngest son can wash (4 oranges).\n2. Determine the total number of oranges washed (12 oranges).\n3. Calculate the number of oranges left unwashed (3 oranges).",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. The youngest son can wash 4 oranges.\n\nRESULT: 4",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: 2. The total number of oranges washed is 8 (oldest son) + 4 (youngest son) = 12 oranges.\n\nRESULT: 12",
+        "step_3": "step_3: 3. The number of oranges left unwashed is 15 (initial) - 12 (washed) = 3 oranges.\n\nRESULT: 3",
+        "aggregator": "3\n#### 3"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Identify the number of eggs in the first basket, which is given as 10.\n2. Calculate the number of eggs in the second basket. It's mentioned that there are double the amount of eggs in the second basket compared to the first. So, find this by multiplying the number of eggs in the first basket (10) by 2.\n3. Sum up the number of eggs in both baskets to get the total count of eggs.",
+      "quality": 1.0,
+      "final_key": "30",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. The first basket contains 10 eggs.\n\nRESULT: 10",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "step_2": "step_2: 2. The second basket contains 10 * 2 = 20 eggs.\n\nRESULT: 20",
+        "step_3": "step_3: 3. The total number of eggs in both baskets is 10 (first basket) + 20 (second basket) = 30 eggs.\n\nRESULT: 30",
+        "aggregator": "30\n#### 30"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

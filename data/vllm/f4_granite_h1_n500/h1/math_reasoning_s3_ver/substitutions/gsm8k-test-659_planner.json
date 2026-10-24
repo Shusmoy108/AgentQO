@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-659",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the cost of the first mixture:\n   - Cost of 1/2 pound of almonds = 1/2 * $10 = $5\n   - Cost of 1/3 pound of walnuts = 1/3 * $15 = $5\n   - Total cost of the first mixture = $5 + $5 = $10\n\n2. Calculate the cost of the second mixture:\n   - Cost of 1/5 pound of almonds = 1/5 * $10 = $2\n   - Cost of 1/3 pound of walnuts = 1/3 * $15 = $5\n   - Total cost of the second mixture = $2 + $5 = $7\n\n3. Find the difference in cost between the two mixtures:\n   - Difference = Cost of the first mixture - Cost of the second mixture = $10 - $7 = $3\n\nThe cost of the first mixture is $3 more than the cost of the second mixture.",
+  "reference_key": null,
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: $5",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "step_2": "step_2: RESULT: $7",
+    "step_3": "RESULT: $3",
+    "aggregator": "step_3: To find the difference in cost, first calculate the cost for each mixture.\n\nFor the first mixture (1/2 pound almonds and 1/3 pound walnuts):\nCost = (1/2 pound almonds * $10/pound) + (1/3 pound walnuts * $15/pound)\n= ($5) + ($5)\n= $10\n\nFor the second mixture (1/5 pound almonds and 1/3 pound walnuts):\nCost = (1/5 pound almonds * $10/pound) + (1/3 pound walnuts * $15/pound)\n= ($2) + ($5)\n= $7\n\nNow, find the difference in cost between the two mixtures:\nDifference = Cost of first mixture - Cost of second mixture\n= $10 - $7\n= $3\n\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Determine Mia's current age: Mia is 40 years old.\n2. Calculate Emma's current age: Since Mia is 16 years younger than Emma, Emma's age is 40 + 16 = 56 years.\n3. Compute the average of their ages: The average is the sum of their ages divided by 2. So, (40 + 56) / 2 = 96 / 2 = 48 years.\n\nPLAN: First, establish Mia's age, then find Emma's age, and finally, calculate the average of their ages.",
+      "quality": 0.0,
+      "final_key": "48",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 40",
+        "verifier": "VERDICT: passthrough\n#### 48",
+        "step_2": "step_2: RESULT: 56\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: (40 + 56) / 2 = 96 / 2 = 48\nRESULT: 48",
+        "aggregator": "48\n#### 48"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n\n1. Calculate the cost of the first mixture:\n   - Cost of 1/2 pound of almonds = 1/2 * $10 = $5\n   - Cost of 1/3 pound of walnuts = 1/3 * $15 = $5\n   - Total cost of the first mixture = $5 + $5 = $10\n\n2. Calculate the cost of the second mixture:\n   - Cost of 1/5 pound of almonds = 1/5 * $10 = $2\n   - Cost of 1/3 pound of walnuts = 1/3 * $15 = $5\n   - Total cost of the second mixture = $2 + $5 = $7\n\n3. Find the difference in cost between the two mixtures:\n   - Difference = Cost of the first mixture - Cost of the second mixture = $10 - $7 = $3\n\nThe cost of the first mixture is $3 less than the cost of the second mixture. (Subtle error: changed \"more\" to \"less\")",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $5",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: RESULT: $7",
+        "step_3": "step_3: RESULT: $10 - $7 = $3",
+        "aggregator": "step_3: RESULT: $10 - $7 = $3\n\n#### $3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

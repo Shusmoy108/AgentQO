@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-185",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Jenna's mom picked 20 apples, so half of that is 20 / 2 = 10 apples.\nRESULT: 10",
+  "reference_key": "10",
+  "final_key_plus": "30",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Jenna picked half of her mom's total, which is 10 apples.\nRESULT: 10",
+    "step_3": "3. Total apples picked by both: 20 (mom's apples) + 10 (Jenna's apples) = 30 apples.\n\nRESULT: 30",
+    "verifier": "VERDICT: passthrough\n#### 30",
+    "aggregator": "30\n#### 30"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "1. Jenna's mom picked 20 apples, so half of that is 20 / 2 = 10 apples.\nRESULT: 11",
+      "quality": 1.0,
+      "final_key": "30",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Jenna picked 10 apples (half of her mom's 20).\nRESULT: 21",
+        "step_3": "3. Total apples picked by both Jenna and her mom = 20 (mom's apples) + 10 (Jenna's apples) = 30 apples.\n\nRESULT: 30",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "aggregator": "30\n#### 30"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "20",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "10 (half of 20 apples Jenna's mom picked)",
+      "quality": 1.0,
+      "final_key": "30",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Jenna picked 10 apples (half of 20 her mom picked).\n\nRESULT: 30 apples",
+        "step_3": "RESULT: 30 apples",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "aggregator": "step_2: Jenna picked half as many apples as her mom. So, Jenna picked 20 / 2 = 10 apples.\nstep_3: To find the total number of apples they both picked, we add Jenna's apples to her mom's apples. So, 20 (mom's apples) + 10 (Jenna's apples) = 30 apples.\n\n#### 30"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

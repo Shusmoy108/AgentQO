@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-653",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $500",
+  "reference_key": "500",
+  "final_key_plus": "80",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $420 (actual balance) - $500 (expected balance) = -$80\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $80 (withheld from Sally's wage)",
+    "verifier": "VERDICT: passthrough\n#### 80",
+    "aggregator": "step_3: RESULT: $80 (withheld from Sally's wage)\n\n#### 80"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "501",
+      "reference_key": "500",
+      "key_differs": true,
+      "text": "RESULT: 501",
+      "quality": 1.0,
+      "final_key": "80",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: -80",
+        "step_3": "step_3: RESULT: Sally was withheld $80 from her wage.",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "aggregator": "step_3: RESULT: Sally was withheld $80 from her wage.\n\n#### $80"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "300",
+      "reference_key": "500",
+      "key_differs": true,
+      "text": "RESULT: $500 (Expected balance after a full week's wage of $300).",
+      "quality": 1.0,
+      "final_key": "80",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: -$80 (Difference between actual and expected balance after a full week's wage).",
+        "step_3": "step_3: RESULT: Sally was withheld $80 from her wage.",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "aggregator": "step_3: RESULT: Sally was withheld $80 from her wage.\n\n#### $80"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-650",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: $398 (after applying $2 voucher discount from $400)",
+  "reference_key": "400",
+  "final_key_plus": "60",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: $600 (total cost for Sheila before discount)\nstep_3: RESULT: $540 (final cost for Sheila after applying 10% store discount)\nEND: $540",
+    "verifier": "VERDICT: passthrough\n#### 60",
+    "aggregator": "step_3: RESULT: $600 (total cost for Sheila before discount)\nstep_3: RESULT: $540 (final cost for Sheila after applying 10% store discount)\n\n#### $60"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "400",
+      "reference_key": "400",
+      "key_differs": false,
+      "text": "step_2: RESULT: 401 (after applying $2 voucher discount from $400)",
+      "quality": 0.0,
+      "final_key": "200",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: $600 (total cost for Sheila after applying $30 price per pomegranate and 10% store discount)\n\nRESULT: $600",
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "aggregator": "The difference between the final prices paid for the pomegranates on the two days is $600 - $400 = $200.\n\n#### $200"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "398",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "step_2: RESULT: $398 (After applying the voucher, the cost is $398)",
+      "quality": 0.0,
+      "final_key": "540",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: $540 (Sheila's final price after applying the 10% store discount)\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 540",
+        "aggregator": "step_3: RESULT: $540 (Sheila's final price after applying the 10% store discount)\n\n#### $540"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

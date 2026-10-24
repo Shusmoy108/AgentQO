@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-100",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: The third friend pressed 600 more times than the fourth friend, who pressed 60 times. So, the third friend pressed 60 + 600 = 660 times.\n\nRESULT: 660",
+  "reference_key": "660",
+  "final_key_plus": "705",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: The total number of doorbell presses is the sum of presses from all friends: 20 (first friend) + 25 (second friend) + 660 (third friend) = 705 times.\n\nRESULT: 705",
+    "verifier": "VERDICT: passthrough\n#### 705",
+    "aggregator": "705\n#### 705"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "661",
+      "reference_key": "660",
+      "key_differs": true,
+      "text": "step_2: The third friend pressed 600 more times than the fourth friend, who pressed 60 times. So, the third friend pressed 60 + 600 = 660 times.\n\nRESULT: 661",
+      "quality": 0.0,
+      "final_key": "705",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: The total number of doorbell presses is the sum of presses from all friends: 20 (first friend) + 25 (second friend) + 660 (third friend) = 705 times.\n\nRESULT: 705",
+        "verifier": "VERDICT: passthrough\n#### 705",
+        "aggregator": "705\n#### 705"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "70",
+      "reference_key": "660",
+      "key_differs": true,
+      "text": "step_2: \n10 (additional presses for the third friend) + 60 (presses by the fourth friend) = 70\nRESULT: 70",
+      "quality": 1.0,
+      "final_key": "175",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: \n20 (first friend) + 70 (third friend) + 660 (third friend) = 750\nRESULT: 750",
+        "verifier": "VERDICT: passthrough\n#### 175",
+        "aggregator": "step_3: The third friend pressed on the doorbell 10 times more than the fourth friend, who pressed 60 times. So, the third friend rang the doorbell 60 + 10 = 70 times.\n\nThe second friend pressed on the doorbell 1/4 times more than Jerome's first friend, who pressed 20 times. So, the second friend rang the doorbell 20 + (1/4 * 20) = 20 + 5 = 25 times.\n\nAdding all the rings together:\nFirst friend: 20\nSecond friend: 25\nThird friend: 70\nFourth friend: 60\n\nTotal doorbell rings = 20 + 25 + 70 + 60 = 175\n\n#### 175"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

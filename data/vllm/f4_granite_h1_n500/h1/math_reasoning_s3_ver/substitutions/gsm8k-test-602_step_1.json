@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-602",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 400 miles per hour.",
+  "reference_key": "400",
+  "final_key_plus": "8",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 2000 miles * (1 hour / 400 miles) = 5 hours.\nRESULT: 5 hours.",
+    "step_3": "step_3: RESULT: 3 hours (initial travel time) + 5 hours (additional time) = 8 hours.\nRESULT: 8 hours.",
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "aggregator": "step_3: RESULT: 3 hours (initial travel time) + 5 hours (additional time) = 8 hours.\nRESULT: 8 hours.\n#### 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "401",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "RESULT: 401 miles per hour.",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 5 hours.\n\nThe plane would take an additional 5 hours to travel the extra 2000 miles, given its current rate.",
+        "step_3": "step_3: RESULT: 3 hours + 5 hours = 8 hours.\n\nRESULT: 8 hours.",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "8 hours. #### 8"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "24",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "RESULT: 24",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 5 hours.\n\nThe plane would take an additional 5 hours to travel the extra 2000 miles, given its current rate.",
+        "step_3": "step_3: RESULT: 3 + 5 = 8 hours.\n\nThe plane would take a total of 8 hours to travel both 1200 miles and the additional 2000 miles.\n\nRESULT: 8 hours.",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "8 hours. #### 8"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

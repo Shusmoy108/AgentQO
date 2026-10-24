@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-887",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Compute the total number of birds in groups feeding (3 * 8).\n\nRESULT: 24",
+  "reference_key": "24",
+  "final_key_plus": "34",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "3. Add the results from step 1 and step 2: 6 (nesting birds) + 4 (flying birds) + 24 (feeding birds) = 34 birds in total.\n\nRESULT: 34",
+    "verifier": "VERDICT: passthrough\n#### 34",
+    "aggregator": "34 birds in total. #### 34"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "25",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "2. Compute the total number of birds in groups feeding (3 * 8).\n\nRESULT: 25",
+      "quality": 0.0,
+      "final_key": "35",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "3. Add the results from step 1 and step 2: 6 (nesting birds) + 4 (flying birds) + 25 (feeding birds) = 35 birds in total.\n\nRESULT: 35",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "aggregator": "35 birds in total. #### 35"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "34",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "2. Compute the total number of birds in groups feeding (3 * 8).\nRESULT: 24 birds feeding\nCarry out step 3 to find the final total count.\nRESULT: 34 birds in total",
+      "quality": 1.0,
+      "final_key": "34",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 34 birds in total",
+        "verifier": "VERDICT: passthrough\n#### 34",
+        "aggregator": "step_1: Jerry counts 6 birds nesting in the bushes.\nstep_2: He observes 2/3 * 6 = 4 birds flying overhead.\nstep_3: There are 3 groups of 8 birds each feeding, which equals 3 * 8 = 24 birds.\nstep_4: To find the total number of birds, add the counts from steps 1, 2, and 3: 6 + 4 + 24 = 34 birds.\n\n#### 34"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

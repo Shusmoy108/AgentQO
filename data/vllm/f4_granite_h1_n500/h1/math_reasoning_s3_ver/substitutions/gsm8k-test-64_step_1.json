@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-64",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 12 gallons",
+  "reference_key": "12",
+  "final_key_plus": "3",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 100 miles\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 12 gallons / 4 gallons = 3 miles per gallon\n\nRESULT: 3 miles per gallon",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "aggregator": "RESULT: 12 gallons / 4 gallons = 3 miles per gallon\n\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "13",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 13 gallons",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 100 miles (current mileage)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 12 gallons / 4 gallons = 3 miles per gallon (mpg)\n\nRESULT: 3 miles per gallon",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "RESULT: 3 miles per gallon\n#### 3"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "129",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: $129.00",
+      "quality": 0.0,
+      "final_key": "36",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 100 miles (current mileage)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 12 gallons / 4 gallons = 3 miles per gallon (mpg)\n\nRESULT: 36 miles",
+        "verifier": "VERDICT: passthrough\n#### 36",
+        "aggregator": "step_3: RESULT: 12 gallons / 4 gallons = 3 miles per gallon (mpg)\n\nSophia can drive 36 miles on a single tank of gas.\n\n#### 36"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

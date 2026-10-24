@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-653",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total amount of money in Sally's bank account at the end of the week by adding her initial balance to the amount she received this week. This can be done by adding $200 (initial balance) and $300 (weekly wage) together.\n2. Subtract the total amount of money Sally should have received this week ($500, $200 initial balance + $300 weekly wage) from the current balance in her bank account ($420). This will give us the amount of money that was withheld from her wage.\n3. The result from step 2 will be the dollar amount that was withheld from Sally's wage.",
+  "reference_key": null,
+  "final_key_plus": "-80",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: $500",
+    "verifier": "VERDICT: passthrough\n#### -80",
+    "step_2": "step_2: RESULT: $420 - $500 = -$80\n\nRESULT: -$80\n\nExplanation: Sally was supposed to have $500 in her account this week, but she only has $420. The negative sign indicates that $80 was withheld from her wage, as $420 is less than the expected $500.",
+    "step_3": "RESULT: -$80",
+    "aggregator": "step_3: RESULT: -$80\n\nSally was withheld $80 from her wage this week.\n\n#### -$80"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the thickness of the third book: The third book is 5 mm less thick than the second book, which is 50 mm. So, the third book's thickness is 50 mm - 5 mm = 45 mm.\n\n2. Calculate the thickness of the fourth book: The fourth book is twice as thick as the first book, which is 31 mm. Therefore, the fourth book's thickness is 31 mm * 2 = 62 mm.\n\n3. Sum the thicknesses of all four books to find the total: The total thickness is 31 mm (first book) + 50 mm (second book) + 45 mm (third book) + 62 mm (fourth book) = 188 mm.\n\nPLAN:\n1. Compute the third book's thickness (45 mm).\n2. Compute the fourth book's thickness (62 mm).\n3. Sum the thicknesses to get the total (188 mm).",
+      "quality": 1.0,
+      "final_key": "80",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Compute the third book's thickness (45 mm).\n\nRESULT: 45 mm",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "step_2": "step_2: 2. Compute the fourth book's thickness (62 mm).\n\nRESULT: 62 mm",
+        "step_3": "3. Sum the thicknesses to get the total (188 mm).\n\nRESULT: 188 mm",
+        "aggregator": "step_1: Calculate the total amount Sally should have in her bank account after a full week's wage.\nSally's weekly wage should be $300.\nTotal amount in bank account after full wage = Weekly wage + Initial amount\n= $300 + $200\n= $500\n\nstep_2: Determine the difference between the actual amount in the bank account and the expected amount.\nActual amount in bank account = $420\nDifference = Actual amount - Expected amount\n= $420 - $500\n= -$80\n\nstep_3: Interpret the difference as the amount withheld from Sally's wage.\nSince the result is negative, it indicates that $80 was withheld from Sally's wage.\n\n#### $80"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total sum of money Sally possessed at the end of the week by merging her starting balance with the amount she earned this week. This entails adding $200 (initial balance) and $300 (weekly wage) together.\n2. Subtract the total sum Sally was supposed to receive this week ($550, $200 initial balance + $300 weekly wage) from her current bank balance ($420). This will reveal the amount deducted from her wage.\n3. The outcome from step 2 signifies the monetary amount that was deducted from Sally's wage.",
+      "quality": 0.0,
+      "final_key": "-130",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $520",
+        "verifier": "VERDICT: passthrough\n#### -130",
+        "step_2": "step_2: RESULT: $420 - $550 = -$130\n\nRESULT: -$130",
+        "step_3": "RESULT: -$130",
+        "aggregator": "step_3: RESULT: -$130\n\nSally was withheld $130 from her wage this week.\n\n#### -$130"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

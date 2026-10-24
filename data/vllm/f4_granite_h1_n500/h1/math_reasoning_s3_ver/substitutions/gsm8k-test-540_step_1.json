@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-540",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $6",
+  "reference_key": "6",
+  "final_key_plus": "39",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $6 + $5 = $11\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $11 - $8 = $3\nRESULT: $3",
+    "verifier": "VERDICT: passthrough\n#### 39",
+    "aggregator": "step_1: The initial amount each boy gets is $18 / 3 = $6.\nstep_2: The eldest boy adds $5 to his share, so now he has $6 + $5 = $11.\nstep_3: He adds another $10, making his total $11 + $10 = $21.\nstep_4: He spends $8, leaving him with $21 - $8 = $13.\nstep_5: He saves more, tripling the amount he has left after spending the $8, so he now has 3 * $13 = $39.\n\n#### $39"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "7",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "RESULT: 7",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $11 (initial share + $5 increment)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $11 - $8 = $3\n\nRESULT: $3",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_3: RESULT: $11 - $8 = $3\n\nFinal answer: #### $3"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "8",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "1. Calculate the fraction of sales that are smart TVs and analog TVs.\n   - Smart TVs: 1/4\n   - Analog TVs: 1/8\n\nRESULT: 1/4, 1/8",
+      "quality": 0.0,
+      "final_key": "13",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2. Add increments to the initial share:\n   - Initial share per boy: $6\n   - First increment: $5\n   - Second increment: $10\n   - Total share after increments: $6 + $5 + $10 = $21\n\nRESULT: $21",
+        "step_3": "3. Subtract the amount spent: $21 - $8 = $13\n\nRESULT: $13",
+        "verifier": "VERDICT: passthrough\n#### 13",
+        "aggregator": "step_3: 3. Subtract the amount spent: $21 - $8 = $13\n\nRESULT: $13\n#### 13"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

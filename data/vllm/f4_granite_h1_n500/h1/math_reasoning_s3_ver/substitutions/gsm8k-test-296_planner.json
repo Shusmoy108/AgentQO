@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-296",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total daily consumption of rice by the household. Since each member consumes 0.2 kg per meal and there are 5 members eating rice twice a day, the daily consumption is 5 members * 2 meals * 0.2 kg/meal = 2 kg/day.\n2. Determine the total consumption per week. Since there are 7 days in a week, the weekly consumption is 2 kg/day * 7 days/week = 14 kg/week.\n3. Calculate the number of weeks the 42 kg bag of rice will last. Divide the total amount of rice by the weekly consumption: 42 kg / 14 kg/week = 3 weeks.",
+  "reference_key": null,
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Daily consumption of rice by the household = 5 members * 2 meals * 0.2 kg/meal = 2 kg/day.\n\nRESULT: 2",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "step_2": "step_2: 2. Weekly consumption of rice = 2 kg/day * 7 days/week = 14 kg/week.\n\nRESULT: 14",
+    "step_3": "3. step_3: 3. Number of weeks the 42 kg bag of rice will last = 42 kg / 14 kg/week = 3 weeks.\n\nRESULT: 3",
+    "aggregator": "3\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate Lloyd's earnings for the first week:\n   Earnings for the first week = Hourly rate \u00d7 Hours tutored\n   = $10/hour \u00d7 5 hours\n   = $50\n\n2. Calculate Lloyd's earnings for the second week:\n   Earnings for the second week = Hourly rate \u00d7 Hours tutored\n   = $10/hour \u00d7 8 hours\n   = $80\n\n3. Sum up Lloyd's earnings for the first two weeks:\n   Total earnings = Earnings for the first week + Earnings for the second week\n   = $50 + $80\n   = $130",
+      "quality": 0.0,
+      "final_key": "130",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $50",
+        "verifier": "VERDICT: passthrough\n#### 130",
+        "step_2": "step_2: RESULT: $80",
+        "step_3": "step_3: RESULT: $50 + $80 = $130\n\nRESULT: $130",
+        "aggregator": "step_3: RESULT: $130\n\nFinal answer: #### 130"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate the total daily rice intake by the household. With each member consuming 0.2 kg per meal and 5 members dining rice twice daily, the daily consumption is 5 members * 2 meals * 0.2 kg/meal = 2 kg/day.\n2. Estimate the total weekly rice consumption. Given there are 7 days in a week, the weekly consumption is 2 kg/day * 7 days/week = 14 kg/week.\n3. Determine how many weeks a 42 kg bag of rice will endure. Subtract the total rice amount from the weekly consumption: 42 kg - 14 kg/week * 3 weeks = 18 kg/week. This means the 42 kg bag will last for approximately 2.2 weeks.",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 2 kg/day\n\nExplanation:\nEach of the 5 household members consumes 0.2 kg of rice per meal, and they eat rice twice a day (for lunch and dinner). Therefore, the daily rice consumption for the entire household is calculated as follows:\n\n5 members * 2 meals/member * 0.2 kg/meal = 2 kg/day\n\nThis means the household consumes 2 kg of rice each day.",
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "step_2": "step_2: RESULT: 14 kg/week\n\nExplanation:\nWith the daily consumption of 2 kg, the weekly consumption is calculated by multiplying the daily consumption by the number of days in a week:\n\n2 kg/day * 7 days/week = 14 kg/week\n\nThis means the household consumes 14 kg of rice each week.\n\nNow, let's determine how many weeks a 42 kg bag of rice will last.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 18 kg/week\n\nExplanation:\nTo find out how many weeks a 42 kg bag of rice will last, we subtract the weekly consumption from the total rice amount:\n\n42 kg - 14 kg/week * 3 weeks\n\nFirst, calculate the total weeks the rice will last without considering the 3 weeks:\n\n42 kg / 14 kg/week = 3 weeks\n\nSince the household consumes rice for 3 weeks, the 42 kg bag will last for 3 weeks. However, we need to account for the 3 weeks that have already passed.\n\nRESULT: 18 kg/week",
+        "aggregator": "18 kg/week\n#### 18"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

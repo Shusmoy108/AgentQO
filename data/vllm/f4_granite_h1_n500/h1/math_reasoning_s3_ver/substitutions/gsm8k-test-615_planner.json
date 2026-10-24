@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-615",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the bags of rocks by multiplying the price per bag by the number of bags, then add this to the cost of the aquarium.\n2. Calculate the total cost of the pieces of coral by multiplying the price per piece by the number of pieces, then add this to the previous total.\n3. Calculate the total cost of the fish by multiplying the price per fish by the number of fish, then add this to the previous total. Finally, add the cost of the fish food to find the total amount spent.",
+  "reference_key": null,
+  "final_key_plus": "33",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Total cost of bags of rocks = $2.50/bag * 2 bags = $5.00\n2. Total spent so far = $10.00 (aquarium) + $5.00 (rocks) = $15.00\n\nRESULT: $15.00",
+    "verifier": "VERDICT: passthrough\n#### 33",
+    "step_2": "step_2: 2. Total cost of coral = $2.00/piece * 3 pieces = $6.00\n3. Total spent so far = $15.00 (previous total) + $6.00 (coral) = $21.00\n\nRESULT: $21.00",
+    "step_3": "3. Total cost of fish = $0.50/fish * 20 fish = $10.00\n4. Total amount spent = $21.00 (previous total) + $10.00 (fish) + $2.00 (fish food) = $33.00\n\nRESULT: $33.00",
+    "aggregator": "3. Total cost of fish = $0.50/fish * 20 fish = $10.00\n4. Total amount spent = $10.00 (aquarium) + $2.50 (rocks) * 2 + $2.00 (coral) * 3 + $10.00 (fish) + $2.00 (fish food) = $33.00\n\n#### $33.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of cookies Shannon eats in 30 days:\n   Shannon eats 2 cookies per night. Over 30 days, she eats 2 * 30 = 60 cookies.\n\n2. Determine the total number of cookies needed for 30 days:\n   Since each dozen (12 cookies) is the target amount, we divide the total number of cookies by 12.\n   Total cookies needed = 60 / 12 = 5 dozens.\n\n3. Conclude the number of dozens Shannon must make:\n   Shannon needs to make 5 dozens of cookies to have enough for 30 days.",
+      "quality": 1.0,
+      "final_key": "33",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 60",
+        "verifier": "VERDICT: passthrough\n#### 33",
+        "step_2": "step_2: RESULT: 5",
+        "step_3": "RESULT: 5",
+        "aggregator": "step_3: RESULT: 5\n\nScarlett spent $10.00 on the aquarium. For the rocks, she spent 2 * $2.50 = $5.00. For the coral, she spent 3 * $2.00 = $6.00. For the fish, she spent 20 * $0.50 = $10.00. The fish food cost $2.00.\n\nAdding all these amounts together:\n\n$10.00 (aquarium) + $5.00 (rocks) + $6.00 (coral) + $10.00 (fish) + $2.00 (fish food) = $33.00\n\n#### 33"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total cost of the bags of rocks by multiplying the price per bag by the number of bags, subsequently adding this to the aquarium's cost.\n2. Compute the total cost of the coral pieces by multiplying the price per piece by the number of pieces, then adding this to the prior total.\n3. Compute the total cost of the fish by multiplying the price per fish by the number of fish, then adding this to the previous total. Ultimately, include the fish food cost to ascertain the overall expenditure.",
+      "quality": 0.0,
+      "final_key": "31",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Total cost of bags of rocks = $2.50/bag * 2 bags = $5.00\n2. Add aquarium cost: $10.00 + $5.00 = $15.00\n\nRESULT: $15.00",
+        "verifier": "VERDICT: passthrough\n#### 31",
+        "step_2": "step_2: 2. Total cost of coral pieces = $2.00/piece * 3 pieces = $6.00\n3. Add coral cost to the previous total: $15.00 + $6.00 = $21.00\n\nRESULT: $21.00",
+        "step_3": "step_3: 3. Total cost of fish = $0.50/fish * 20 fish = $10.00\n4. Add fish cost to the previous total: $21.00 + $10.00 = $31.00\n\nRESULT: $31.00",
+        "aggregator": "step_3: 3. Total cost of fish = $0.50/fish * 20 fish = $10.00\n4. Add fish cost to the previous total: $21.00 + $10.00 = $31.00\n\n#### $31.00"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-551",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Compute the cost of hamburgers: 5 hamburgers * $4 each = $20.\nRESULT: $20",
+  "reference_key": "20",
+  "final_key_plus": "17",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Compute the cost of potato fries: 10 packs * $0.30 each = $3.\nRESULT: $3",
+    "step_3": "3. Compute the cost of fruit drinks: 5 cans * $2 each = $10.\nRESULT: $10",
+    "verifier": "VERDICT: passthrough\n#### 17",
+    "aggregator": "step_1: Calculate the cost of hamburgers: 5 hamburgers * $4 each = $20.\nstep_2: Calculate the cost of potato fries: 10 packs * $0.30 each = $3.\nstep_3: Compute the cost of fruit drinks: 5 cans * $2 each = $10.\nstep_4: Sum up the total cost: $20 (hamburgers) + $3 (fries) + $10 (drinks) = $33.\n\n#### $17\n\nCarly gets $17 in change back since she gave a fifty-dollar bill and the total cost of her order is $33."
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "1. Compute the cost of hamburgers: 5 hamburgers * $4 each = $20.\nRESULT: 21",
+      "quality": 0.0,
+      "final_key": "33",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2. Compute the cost of potato fries: 10 packs * $0.30 each = $3.\nRESULT: 24",
+        "step_3": "3. Compute the cost of fruit drinks: 5 cans * $2 each = $10.\nRESULT: 34",
+        "verifier": "VERDICT: passthrough\n#### 33",
+        "aggregator": "step_3: 3. Compute the cost of fruit drinks: 5 cans * $2 each = $10.\n\nRESULT: 34\n\nCarly's total cost for hamburgers, potato fries, and fruit drinks is $4 (hamburgers) + $0.30 (fries) * 10 (packs) + $2 (drinks) * 5 (cans) = $4 + $3 + $10 = $17.\n\nIf Carly gives a fifty-dollar bill, she will get $50 - $17 = $33 in change.\n\n#### 33"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "300",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "1. Calculate the total time spent on singing \"Deck the Halls\" twice: 150 seconds (per performance) * 2 = 300 seconds.\n\nRESULT: 300 seconds",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2. Calculate the cost of potato fries.\n2 * 10 * $0.30 = $6.\n\nRESULT: $6",
+        "step_3": "3. Calculate the cost of fruit drinks.\n5 * $2 = $10.\n\nRESULT: $10",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "step_3: 3. Calculate the cost of fruit drinks.\n5 * $2 = $10.\n\nRESULT: $10\n\n#### $10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

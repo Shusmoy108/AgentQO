@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-408",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 9000 words",
+  "reference_key": "9000",
+  "final_key_plus": "40",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 9000 words / 300 words/minute = 30 minutes\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 30 minutes (reading) + 10 minutes (traveling) = 40 minutes\n\nRESULT: 40 minutes",
+    "verifier": "VERDICT: passthrough\n#### 40",
+    "aggregator": "RESULT: 40 minutes\n#### 40"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "9001",
+      "reference_key": "9000",
+      "key_differs": true,
+      "text": "RESULT: 9001 words",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 30 minutes (reading time)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 40 minutes (total time spent)\n\nRESULT: 40 minutes",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "aggregator": "step_3: Toby will spend 40 minutes reading the book, considering the average 200 words per page and his reading speed of 300 words per minute. This includes the time to get to the airport, which is 10 minutes. Therefore, Toby will be 30 minutes early at the airport.\n\n#### 30"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "9000",
+      "key_differs": true,
+      "text": "RESULT: 9000 words\n\nNext step is to proceed with step 2 to estimate reading time.",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 30 minutes",
+        "step_3": "step_3: RESULT: 40 minutes\n\nFinal result: Toby will be 20 minutes early at the airport.\nRESULT: 20 minutes early.",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "aggregator": "step_3: RESULT: 40 minutes\n\nFinal result: Toby will be 20 minutes early at the airport.\n\n#### 20"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

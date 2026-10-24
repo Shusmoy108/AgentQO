@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-990",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cooling effect of the air conditioner on low for 3 hours: 2 degrees/hour * 3 hours = 6 degrees.\n2. Calculate the total cooling effect of the air conditioner on high for 4 hours: 3 degrees/hour * 4 hours = 12 degrees.\n3. Calculate the total warming effect of the room without the air conditioner for 2 hours: 2 degrees/hour * 2 hours = 4 degrees.\n4. Subtract the total warming effect from the total cooling effect to find the final temperature relative to the starting temperature: (6 degrees + 12 degrees) - 4 degrees = 14 degrees.\n\nThe final temperature is 14 degrees lower than the starting temperature.",
+  "reference_key": null,
+  "final_key_plus": "4",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "2 degrees\n\nRESULT: 2",
+    "verifier": "VERDICT: passthrough\n#### 4",
+    "step_2": "step_2: 3 degrees/hour * 4 hours = 12 degrees\n\nRESULT: 12",
+    "step_3": "step_3: 2 degrees/hour * 2 hours = 4 degrees\n\nRESULT: 4",
+    "aggregator": "step_3: 2 degrees/hour * 2 hours = 4 degrees\n\nRESULT: 4\n#### 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the amount of hay needed for one goat: 5 pounds.\n2. Determine the hay requirement for one sheep: Twice the amount a goat needs, minus 3 pounds. So, 2 * 5 - 3 = 10 - 3 = 7 pounds.\n3. Calculate the total hay needed for all goats: 15 goats * 5 pounds each = 75 pounds.\n4. Calculate the total hay needed for all sheep: 12 sheep * 7 pounds each = 84 pounds.\n5. Add the total hay needed for goats and sheep to find the overall total: 75 pounds + 84 pounds = 159 pounds.",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the amount of hay needed for one air conditioner: 0 degrees per hour.\n\nRESULT: 0 degrees",
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "step_2": "2. Determine the cooling effect of the air conditioner:\n   - Low setting: 2 degrees per hour\n   - High setting: 3 degrees per hour\n\nRESULT: 3 degrees",
+        "step_3": "3. Calculate the net cooling effect over the entire period:\n   - Low setting for 3 hours: 3 hours * 2 degrees/hour = 6 degrees cooler\n   - High setting for 4 hours: 4 hours * 3 degrees/hour = 12 degrees cooler\n   - No cooling during the 2-hour off period\n\nRESULT: 6 + 12 = 18 degrees cooler.",
+        "aggregator": "18 degrees cooler. #### 18"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total cooling impact of the air conditioner on low for 3 hours: 2 degrees/hour * 3 hours = 6 degrees.\n2. Compute the total cooling impact of the air conditioner on high for 4 hours: 3 degrees/hour * 4 hours = 12 degrees.\n3. Compute the total warming impact of the room without the air conditioner for 2 hours: 2 degrees/hour * 2 hours = 4 degrees.\n4. Subtract the total warming impact from the total cooling impact to determine the final temperature relative to the initial temperature: (6 degrees + 12 degrees) - 4 degrees = 14 degrees.\n\nThe final temperature is 14 degrees higher than the starting temperature.",
+      "quality": 0.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "2 degrees/hour * 3 hours = 6 degrees\n\nRESULT: 6",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "step_2": "step_2: 3 degrees/hour * 4 hours = 12 degrees\n\nRESULT: 12",
+        "step_3": "step_3: 2 degrees/hour * 2 hours = 4 degrees\n\nRESULT: 4",
+        "aggregator": "step_3: 2 degrees/hour * 2 hours = 4 degrees\n\nRESULT: 4\n#### 4"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

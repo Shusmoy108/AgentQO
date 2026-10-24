@@ -1,0 +1,48 @@
+{
+  "task_id": "gsm8k-test-1164",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "step_3: Calculate Charlie's eggs (10 - 2 = 8).\nRESULT: 8",
+  "reference_key": "8",
+  "final_key_plus": "12",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "aggregator": "step_3: Charlie finds 2 less than Stacy, so Stacy has 5 + 2 = 7 eggs.\nstep_4: Mei finds half as many as Charlie, so Mei has 8 / 2 = 4 eggs.\nstep_5: Cole hid 3 dozen eggs, which equals 3 * 12 = 36 eggs.\nstep_6: Subtract the eggs found by Lamar, Stacy, Charlie, and Mei from the total.\nRESULT: 36 - 5 - 7 - 8 - 4 = 12 eggs.\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "9",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "step_3: Calculate Charlie's eggs (10 - 2 = 8).\nRESULT: 9",
+      "quality": 1.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 9",
+        "aggregator": "step_3: Charlie finds 2 less than Stacy, so if Stacy found twice as many as Lamar, and Lamar found 5 eggs, then Stacy found 2 * 5 = 10 eggs. Subtracting 2 from Stacy's total, Charlie found 10 - 2 = 8 eggs.\n\nRESULT: 9\n#### 9"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "-2",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "step_3: RESULT: 8 (Charlie's eggs = Stacy's eggs - 2)",
+      "quality": 1.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 9",
+        "aggregator": "step_1: Cole hid 3 dozen eggs, which equals 36 eggs.\nstep_2: Lamar finds 5 eggs.\nstep_3: Stacy finds twice as many as Lamar, so Stacy finds 5 * 2 = 10 eggs.\nstep_4: Charlie finds 2 less than Stacy, so Charlie finds 10 - 2 = 8 eggs.\nstep_5: Mei finds half as many as Charlie, so Mei finds 8 / 2 = 4 eggs.\nstep_6: To find out how many eggs are still hidden, subtract the total found from the initial amount.\nstep_6_result: 36 - (5 + 10 + 8 + 4) = 36 - 27 = 9 eggs.\n\n#### 9"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

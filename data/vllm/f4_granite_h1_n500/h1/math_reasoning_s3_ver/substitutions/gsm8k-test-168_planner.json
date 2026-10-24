@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-168",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Identify Ethel's amount of money, which is given as $8.\n2. Calculate twice the amount of money Ethel has: 2 * $8 = $16.\n3. Add the additional $2 to find out how much money Jimmy has: $16 + $2 = $18.\n\nSo, Jimmy is having $18.",
+  "reference_key": null,
+  "final_key_plus": "18",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 8",
+    "verifier": "VERDICT: passthrough\n#### 18",
+    "step_2": "step_2: RESULT: 16\n\nCarry out step 3. Show the final calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 18",
+    "aggregator": "step_3: RESULT: 18\n\nJimmy has $18. #### 18"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate the total number of seashells found by Tom, Nancy, and Benny by adding their individual counts: 214 (Tom) + 432 (Nancy) + 86 (Benny) = 732 seashells.\n2. Next, subtract the number of cracked seashells from the total number of seashells to find the number of good seashells: 732 (total seashells) - 67 (cracked seashells) = 665 good seashells.\n3. The final step is to confirm the total by adding the number of good seashells found by all three: 665 (good seashells) + 67 (cracked seashells) = 732 seashells.",
+      "quality": 0.0,
+      "final_key": "24",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 734",
+        "verifier": "VERDICT: passthrough\n#### 24",
+        "step_2": "step_2: RESULT: 732 (732 - 67 = 665)",
+        "step_3": "step_3: RESULT: 732 (665 + 67 = 732)",
+        "aggregator": "step_3: RESULT: 732 (2 * 8 + 2 = 18 + 2 = 20, then 20 + 2 = 22, and finally 22 + 2 = 24)\n\n#### 24"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine Ethel's total amount of money, which is provided as $8.\n2. Compute twice the sum Ethel possesses: 2 * $8 = $16.\n3. Include the extra $2 to ascertain Jimmy's total: $16 + $2 = $18.\n\nHence, Jimmy accumulates $18.",
+      "quality": 1.0,
+      "final_key": "18",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 8",
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "step_2": "step_2: RESULT: 16\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 18",
+        "aggregator": "step_3: RESULT: 18\n\nJimmy has $18. #### 18"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

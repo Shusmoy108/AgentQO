@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-990",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Temperature change on low for 3 hours: 2 degrees/hour * 3 hours = 6 degrees cooler.\nRESULT: 6",
+  "reference_key": "6",
+  "final_key_plus": "18",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Temperature change on high for 4 hours: 3 degrees/hour * 4 hours = 12 degrees cooler.\nRESULT: 12",
+    "step_3": "3. step_3: 3. Total temperature change after 7 hours (3 hours low + 4 hours high): 6 degrees (low) + 12 degrees (high) = 18 degrees cooler.\nRESULT: 18",
+    "verifier": "VERDICT: passthrough\n#### 18",
+    "aggregator": "18\n#### 18"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "7",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "1. Temperature change on low for 3 hours: 2 degrees/hour * 3 hours = 6 degrees cooler.\nRESULT: 7",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Temperature change on high for 4 hours: 3 degrees/hour * 4 hours = 12 degrees cooler.\nRESULT: 12",
+        "step_3": "3. step_3: 3. Total temperature change after 7 hours (3 hours low + 4 hours high): 6 degrees (low) + 12 degrees (high) = 18 degrees cooler.\nRESULT: 18",
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "aggregator": "18\n#### 18"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "22",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "\ud83d\udd39 Result: 6 degrees cooler than the starting temperature.\n\nNext steps:\n\n1. Calculate temperature change when on high: 3 degrees/hour * 4 hours = 12 degrees cooler.\n2. Total cooling: 6 degrees (low) + 12 degrees (high) = 18 degrees cooler.\n3. Room warms up by 2 degrees/hour * 2 hours = 4 degrees.\n4. Final temperature: Start - 18 degrees (from low) - 4 degrees (from high) = 22 degrees lower than starting temperature.",
+      "quality": 0.0,
+      "final_key": "22",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "\ud83d\udd39 Result: 12 degrees cooler.",
+        "step_3": "step_3: \ud83d\udd39 Result: 18 degrees cooler.\n\nFinal Result: 22 degrees lower than the starting temperature.",
+        "verifier": "VERDICT: passthrough\n#### 22",
+        "aggregator": "\ud83d\udd39 Result: 18 degrees cooler.\n\nFinal Result: 22 degrees lower than the starting temperature.\n#### 22"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

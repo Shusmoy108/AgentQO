@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-793",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate Jamie's regular hourly rate: $20\n2. Calculate the special hourly rate: 150% of $20 is 1.5 * $20 = $30\n3. Calculate total pay for the day: (8 hours * $20) + (3 hours * $30)\n\nThe final answer will be the sum of the pay for the first 8 hours and the pay for the additional 3 hours.",
+  "reference_key": null,
+  "final_key_plus": "240",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: $20\n\nNext step:\n\nPLAN:\n2. Calculate the special hourly rate: 150% of $20 is 1.5 * $20 = $30\n\nThe final answer will be the sum of the pay for the first 8 hours and the pay for the additional 3 hours.\n\nResults so far:\nRegular hourly rate: $20\n\nCarry out step 2 only. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".",
+    "verifier": "VERDICT: passthrough\n#### 240",
+    "step_2": "2. Calculate the special hourly rate: 150% of $20 is 1.5 * $20 = $30\n\nRESULT: $30",
+    "step_3": "3. Calculate total pay for the day: (8 hours * $20) + (3 hours * $30)\n\nRESULT: $240\n\nFinal answer: Jamie was paid $240 for her work that day.",
+    "aggregator": "Final answer: Jamie was paid $240 for her work that day. #### 240"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Determine Aliya's current age: Aliya is 3 years old.\n2. Calculate Shawna's current age: Since Shawna is three times as old as Aliya, Shawna's age is 3 * 3 = 9 years.\n3. Find Shawna's father's current age: Shawna's father is five times as old as Shawna, so his age is 5 * 9 = 45 years.\n\nPLAN:\n1. Identify Aliya's age (3 years).\n2. Compute Shawna's age (3 * 3 = 9 years).\n3. Determine Shawna's father's age (5 * 9 = 45 years).",
+      "quality": 0.0,
+      "final_key": "110",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 3",
+        "verifier": "VERDICT: passthrough\n#### 110",
+        "step_2": "step_2: RESULT: 9\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 45",
+        "aggregator": "step_3: RESULT: 45\n\nJamie's regular hourly rate is $20. For the additional 3 hours she worked (11 total hours - 8 regular hours), she gets paid 150% of her regular rate. \n\n150% of $20 is calculated as:\n1.5 * $20 = $30\n\nSo, for the 3 extra hours, she gets paid $30 per hour.\n\nTotal pay for the day:\n8 hours at $20/hour (regular pay) + 3 hours at $30/hour (overtime) = $20 + $90 = $110\n\n#### 110"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate Jamie's standard hourly wage: $20\n2. Determine the premium hourly rate: 150% of $20 equals 1.5 * $20 = $30\n3. Determine the total compensation for the day: (8 hours * $20) + (3 hours * $30)\n\nThe concluding amount will be the aggregate of the pay for the initial 8 hours and the pay for the extra 3 hours.",
+      "quality": 1.0,
+      "final_key": "250",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $20\n\nNext step:\n\nPLAN:\n2. Determine the premium hourly rate: 150% of $20 equals 1.5 * $20 = $30\n\nThe premium hourly rate for Jamie is $30.\n\nNow, let's proceed to the next step.\n\nRESULT: $30\n\nNext step:\n\nPLAN:\n3. Determine the total compensation for the day: (8 hours * $20) + (3 hours * $30)\n\nTotal compensation = (8 * $20) + (3 * $30)\nTotal compensation = $160 + $90\nTotal compensation = $250\n\nThe total amount Jamie was paid for her work that day is $250.\n\nEND.",
+        "verifier": "VERDICT: passthrough\n#### 250",
+        "step_2": "RESULT: $30",
+        "step_3": "RESULT: $250",
+        "aggregator": "step_3: RESULT: $250\n\nFinal Answer: #### 250"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

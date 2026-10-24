@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-720",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of boxes of cereal Castle bought this week by adding the number of boxes of Coco Crunch and Fruit Loops.\n2. Subtract the total number of boxes of cereal bought last week from the total number of boxes bought this week.\n3. The result will be the difference in the number of boxes of cereal bought this week compared to last week.",
+  "reference_key": null,
+  "final_key_plus": "1",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "3 (Coco Crunch) + 5 (Fruit Loops) = 8 boxes of cereal bought this week.\n\nRESULT: 8",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "step_2": "step_2: 8 (total boxes bought this week) - 4 (total boxes bought last week) = 4\n\nRESULT: 4",
+    "step_3": "RESULT: 4",
+    "aggregator": "step_3: RESULT: 1\n#### 1"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total weight of sunflowers: 4 sunflowers * 3 pounds each = 12 pounds.\n2. Calculate the total weight of carnations: 10 carnations * 1.5 pounds each = 15 pounds.\n3. Determine the remaining weight for roses: 30 pounds (total soil) - 12 pounds (sunflowers) - 15 pounds (carnations) = 4 pounds.\n4. Calculate the number of roses: 4 pounds (remaining soil) / 1 pound per rose = 4 roses.\n\nPLAN:\n1. Compute the weight of sunflowers.\n2. Compute the weight of carnations.\n3. Determine the weight available for roses.\n4. Calculate the number of roses that can be planted.",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the weight of sunflowers: 4 sunflowers * 3 pounds each = 12 pounds.\n\nRESULT: 12 pounds",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "step_2": "step_2: 2. Compute the weight of carnations.\n2.1. 10 carnations * 1.5 pounds each = 15 pounds.\n\nRESULT: 15 pounds",
+        "step_3": "3. Determine the weight available for roses.\n3.1. 30 pounds (total soil) - 12 pounds (sunflowers) - 15 pounds (carnations) = 4 pounds.\n\nRESULT: 4 pounds",
+        "aggregator": "3.2. 4 pounds (available for roses) - 2 pounds (previous week's roses) = 2 pounds.\n\n#### 2"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total count of cereal boxes Castle procured this week by summing the boxes of Coco Crunch and Fruit Loops.\n2. Subtract the total boxes of cereal bought last week from the current week's total.\n3. This will reveal the disparity in the quantity of cereal boxes purchased this week over last week.",
+      "quality": 0.0,
+      "final_key": "1",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 8\n\nExplanation:\nCastle bought 3 boxes of Coco Crunch and 5 boxes of Fruit Loops this week, totaling 3 + 5 = 8 boxes.",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "step_2": "step_2: RESULT: 8 - 4 = 4\n\nExplanation:\nCastle bought 4 boxes of cereal last week. Subtracting this from the total boxes bought this week (8), we find she bought 4 more boxes this week than last week.\n\nRESULT: 4",
+        "step_3": "RESULT: 4",
+        "aggregator": "step_3: RESULT: 1\n#### 1"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

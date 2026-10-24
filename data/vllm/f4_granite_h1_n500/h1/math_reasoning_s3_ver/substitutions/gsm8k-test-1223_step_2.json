@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1223",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Compute the cost for the subsequent 20 minutes at the lower rate: 20 minutes * $0.20/minute = $4.\n\nRESULT: $4",
+  "reference_key": "4",
+  "final_key_plus": "8",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "3. Sum the costs from steps 1 and 2 to determine the total cost: $4 + $4 = $8.\n\nRESULT: $8",
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "aggregator": "RESULT: $8 #### 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "5",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "2. Compute the cost for the subsequent 20 minutes at the lower rate: 20 minutes * $0.20/minute = $4.\n\nRESULT: 5",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. Sum the costs from steps 1 and 2 to determine the total cost: $4 (step 1) + $4 (step 2) = $8.\n\nRESULT: $8",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "RESULT: $8#### 8"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "21.333",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "step_2: RESULT: 12.8 * (5/3) = 21.333...\n\nEND: 21.333...",
+      "quality": 0.0,
+      "final_key": "25.33",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "3. Add the costs from step 1 and step 2 to find the total cost: $4 + $21.333... = $25.333...\n\nRESULT: $25.333...",
+        "verifier": "VERDICT: passthrough\n#### 25.33",
+        "aggregator": "RESULT: $25.33\n#### 25.33"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1180",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $14,000",
+  "reference_key": "14000",
+  "final_key_plus": "5600",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 1600 gallons * $3.5/gallon = $5,600\n\nEND: $5,600",
+    "step_3": "step_3: RESULT: 1600 gallons * $3.5/gallon = $5,600\n\nEND: $5,600",
+    "verifier": "VERDICT: passthrough\n#### 5600",
+    "aggregator": "$5,600\n#### 5600"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "14001",
+      "reference_key": "14000",
+      "key_differs": true,
+      "text": "RESULT: 14001",
+      "quality": 1.0,
+      "final_key": "5600",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 1600 gallons * $3.5/gallon = $5,600\n\nRESULT: $5,600",
+        "step_3": "step_3: RESULT: 1600 gallons * $3.5/gallon = $5,600\n\nRESULT: $5,600",
+        "verifier": "VERDICT: passthrough\n#### 5600",
+        "aggregator": "$5,600\n#### 5600"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "7",
+      "reference_key": "14000",
+      "key_differs": true,
+      "text": "RESULT: Jake ate 7 slices.",
+      "quality": 1.0,
+      "final_key": "5600",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 1600 gallons (expired) * $3.5/gallon = $5,600 (refund amount)",
+        "step_3": "step_3: RESULT: $5,600 (refund amount)\n\nEND: $5,600",
+        "verifier": "VERDICT: passthrough\n#### 5600",
+        "aggregator": "$5,600\n#### 5600"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

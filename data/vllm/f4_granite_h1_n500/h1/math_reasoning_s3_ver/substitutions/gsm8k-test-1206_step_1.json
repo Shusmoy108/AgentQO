@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1206",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $100,000",
+  "reference_key": "100000",
+  "final_key_plus": "40000",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $60,000",
+    "step_3": "step_3: RESULT: $100,000 (loan amount) - $60,000 (debt payment) = $40,000 leftover.\n\nRESULT: $40,000",
+    "verifier": "VERDICT: passthrough\n#### 40000",
+    "aggregator": "step_3: RESULT: $100,000 (loan amount) - $60,000 (debt payment) = $40,000 leftover.\n\n#### $40,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "100001",
+      "reference_key": "100000",
+      "key_differs": true,
+      "text": "RESULT: 100001",
+      "quality": 1.0,
+      "final_key": "40000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 60000",
+        "step_3": "step_3: RESULT: 40000",
+        "verifier": "VERDICT: passthrough\n#### 40000",
+        "aggregator": "step_3: RESULT: 40000\n\nJohn mortgaged 40% of his home's worth, which is 0.40 * $250,000 = $100,000.\n\nHe then used 60% of this amount to pay off his debts, which is 0.60 * $100,000 = $60,000.\n\nAfter paying off his debts, John had $100,000 - $60,000 = $40,000 leftover.\n\n#### 40000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "80",
+      "reference_key": "100000",
+      "key_differs": true,
+      "text": "RESULT: 80",
+      "quality": 1.0,
+      "final_key": "40000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 60",
+        "step_3": "step_3: RESULT: $40,000",
+        "verifier": "VERDICT: passthrough\n#### 40000",
+        "aggregator": "step_3: RESULT: $40,000\n\nJohn mortgaged 40% of his home's worth, which is $250,000 * 0.40 = $100,000.\n\nHe then used 60% of this amount to pay off his debts, which is $100,000 * 0.60 = $60,000.\n\nAfter paying off his debts, John had $100,000 - $60,000 = $40,000 leftover.\n\n#### 40000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

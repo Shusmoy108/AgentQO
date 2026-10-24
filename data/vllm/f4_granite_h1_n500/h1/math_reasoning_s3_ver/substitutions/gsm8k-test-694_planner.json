@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-694",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of chairs currently available by adding the number of high chairs and regular chairs.\n2. Determine the total number of chairs needed by adding the number of adults and babies, assuming each person will need a chair.\n3. Subtract the current number of chairs from the total number of chairs needed to find out how many more chairs are required.\n\nOutput:\n1. Current chairs = High chairs + Regular chairs = 8 + (5 * 8) = 48 chairs\n2. Total chairs needed = Adults + Babies = 42 + 15 = 57 chairs\n3. Additional chairs needed = Total chairs needed - Current chairs = 57 - 48 = 9 chairs",
+  "reference_key": null,
+  "final_key_plus": "9",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Current chairs = High chairs + Regular chairs = 8 + (5 * 8) = 48 chairs\n\nRESULT: 48 chairs",
+    "verifier": "VERDICT: passthrough\n#### 9",
+    "step_2": "step_2: 2. Total chairs needed = Adults + Babies = 42 + 15 = 57 chairs\n\nRESULT: 57 chairs",
+    "step_3": "step_3: 3. Additional chairs needed = Total chairs needed - Current chairs = 57 - 48 = 9 chairs\n\nRESULT: 9 chairs",
+    "aggregator": "9 chairs\n#### 9"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of animals Melissa needs to groom: 8 dogs + 5 cats + 3 birds + 12 horses = 28 animals.\n2. Determine the number of days in a week: 7 days.\n3. Divide the total number of animals by the number of days to find out how many animals she grooms each day: 28 animals \u00f7 7 days = 4 animals per day.\n\nPLAN:\n1. Sum the total number of animals Melissa needs to groom.\n2. Identify the number of days in a week.\n3. Divide the total number of animals by the number of days to find out how many animals she grooms each day.",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 28 animals.",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "step_2": "step_2: RESULT: 7 days.\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 28 animals \u00f7 7 days = 4 animals per day.\nRESULT: 4 animals per day.",
+        "aggregator": "step_2: step_2: Total adults = 42\nstep_3: step_3: Total babies = 15\nstep_4: step_4: Total attendees = Total adults + Total babies = 42 + 15 = 57\nstep_5: step_5: High chairs available = 8\nstep_6: step_6: Regular chairs available = 5 * High chairs available = 5 * 8 = 40\nstep_7: step_7: Total chairs available = Regular chairs available + High chairs available = 40 + 8 = 48\nstep_8: step_8: Chairs needed = Total attendees - Total chairs available = 57 - 48 = 9\nstep_9: step_9: Chairs to get = Chairs needed - (High chairs available - 1) = 9 - (8 - 1) = 9 - 7 = 2\n#### 2"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of chairs currently available by adding the number of high chairs and regular chairs.\n2. Determine the total number of chairs needed by adding the number of adults and babies, assuming each person will need a chair.\n3. Subtract the current number of chairs from the total number of chairs needed to find out how many more chairs are required.\n\nOutput:\n1. Current chairs = High chairs + Regular chairs = 8 + (5 * 10) = 58 chairs\n2. Total chairs needed = Adults + Babies = 40 + 15 = 55 chairs\n3. Additional chairs needed = Total chairs needed - Current chairs = 55 - 58 = -3 chairs",
+      "quality": 0.0,
+      "final_key": "-3",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Current chairs = High chairs + Regular chairs = 8 + (5 * 10) = 58 chairs\n\nRESULT: 58 chairs",
+        "verifier": "VERDICT: passthrough\n#### -3",
+        "step_2": "step_2: 2. Total chairs needed = Adults + Babies = 40 + 15 = 55 chairs\n\nRESULT: 55 chairs",
+        "step_3": "step_3: 3. Additional chairs needed = Total chairs needed - Current chairs = 55 - 58 = -3 chairs\n\nRESULT: -3 chairs",
+        "aggregator": "RESULT: -3 chairs\n#### -3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

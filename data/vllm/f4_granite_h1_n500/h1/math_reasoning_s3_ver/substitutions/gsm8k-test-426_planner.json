@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-426",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the cost of the soup, which is 25% more than the $4 bagel.\n2. Determine the cost of the cake, which is half the price of the bagel.\n3. Add the cost of the soup, bagel, and cake to find the total cost of Aleksandra's dinner.",
+  "reference_key": null,
+  "final_key_plus": "11",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Calculate the cost of the soup:\n25% of $4 = 0.25 * $4 = $1\nSo, the soup costs $4 + $1 = $5.\n\nRESULT: $5",
+    "verifier": "VERDICT: passthrough\n#### 11",
+    "step_2": "step_2: 2. Determine the cost of the cake:\nThe cake is half the price of the bagel, which is $4.\nSo, the cake costs $4 / 2 = $2.\n\nRESULT: $2",
+    "step_3": "3. Add the cost of the soup, bagel, and cake to find the total cost of Aleksandra's dinner:\n$5 (soup) + $4 (bagel) + $2 (cake) = $11.\n\nRESULT: $11",
+    "aggregator": "11\n#### 11"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate the number of fairies Katelyn saw initially. Since she saw 50 fairies, this remains the same.\n2. Next, determine the number of fairies that joined from the east. This is half of the initial 50 fairies, so 50 / 2 = 25 fairies.\n3. Then, add the fairies that joined to the initial count to find the total number of fairies before some left. This is 50 (initial) + 25 (joined) = 75 fairies.\n4. Finally, subtract the 30 fairies that flew away from the total to find the remaining number of fairies. This is 75 - 30 = 45 fairies.",
+      "quality": 0.0,
+      "final_key": "75",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 50",
+        "verifier": "VERDICT: passthrough\n#### 75",
+        "step_2": "step_2: RESULT: 50 / 2 = 25\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 50 (initial) + 25 (joined) = 75 fairies\n\nRESULT: 75",
+        "aggregator": "75\n#### 75"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the cost of the soup, which is 25% higher than the $4 bagel.\n2. Find the cost of the cake, which is double the price of the bagel.\n3. Sum up the cost of the soup, bagel, and cake to determine Aleksandra's total dinner expenditure.",
+      "quality": 1.0,
+      "final_key": "11",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate the cost of the soup:\n25% of $4 = 0.25 * $4 = $1\nSo, the soup costs $4 + $1 = $5.\n\nRESULT: $5",
+        "verifier": "VERDICT: passthrough\n#### 11",
+        "step_2": "step_2: 2. Find the cost of the cake:\nThe cake is half the price of the bagel, which is $4.\nSo, the cake costs $4 / 2 = $2.\n\nRESULT: $2",
+        "step_3": "3. Sum up the cost of the soup, bagel, and cake:\n$5 (soup) + $4 (bagel) + $2 (cake) = $11.\n\nRESULT: $11",
+        "aggregator": "11\n#### 11"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

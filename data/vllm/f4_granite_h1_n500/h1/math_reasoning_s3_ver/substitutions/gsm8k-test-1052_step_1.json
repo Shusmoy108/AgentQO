@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1052",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 120 (initial passenger count)",
+  "reference_key": "120",
+  "final_key_plus": "190",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 120 + 20 = 140 (after first stop)",
+    "step_3": "step_3: RESULT: 140 - 50 + 100 = 190 (after second stop)\nEND: 190",
+    "verifier": "VERDICT: passthrough\n#### 190",
+    "aggregator": "step_3: RESULT: 140 - 50 + 100 = 190 (after second stop)\nEND: 190\n#### 190"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "121",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "RESULT: 121 (initial passenger count)",
+      "quality": 0.0,
+      "final_key": "241",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 141 (initial passenger count after first stop)",
+        "step_3": "step_3: RESULT: 191 (final passenger count after second stop)",
+        "verifier": "VERDICT: passthrough\n#### 241",
+        "aggregator": "step_4: step_4: RESULT: 241 (final passenger count after third stop)\n\n#### 241"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "140",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "RESULT: 120\n\nNext step would be:\n2. Add the passengers who board at the first stop (20).\nCalculation: 120 + 20 = 140 people.",
+      "quality": 0.0,
+      "final_key": "190",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Add the passengers who board at the first stop (20).\nCalculation: 120 + 20 = 140 people.\nRESULT: 140",
+        "step_3": "3. At the second stop, 50 people leave and 100 (twice the number who left) board. The calculation for this step is 140 - 50 + 100 = 190 people.\nRESULT: 190",
+        "verifier": "VERDICT: passthrough\n#### 190",
+        "aggregator": "step_3: 3. At the second stop, 50 people leave and 100 (twice the number who left) board. The calculation for this step is 140 - 50 + 100 = 190 people.\n\nRESULT: 190\n\n#### 190"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

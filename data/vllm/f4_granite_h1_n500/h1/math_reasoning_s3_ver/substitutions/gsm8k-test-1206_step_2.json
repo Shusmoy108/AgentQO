@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1206",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: John uses 60% of the loan amount to pay off his debts. Therefore, the amount used for debt payment is 60/100 * $100,000 = $60,000.\nRESULT: $60,000",
+  "reference_key": "60000",
+  "final_key_plus": "40000",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: $100,000 (loan amount) - $60,000 (debt payment) = $40,000 leftover.\nRESULT: $40,000",
+    "verifier": "VERDICT: passthrough\n#### 40000",
+    "aggregator": "step_3: RESULT: $100,000 (loan amount) - $60,000 (debt payment) = $40,000 leftover.\n\n#### $40,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "60001",
+      "reference_key": "60000",
+      "key_differs": true,
+      "text": "step_2: John uses 60% of the loan amount to pay off his debts. Therefore, the amount used for debt payment is 60/100 * $100,000 = $60,000.\nRESULT: 60001",
+      "quality": 1.0,
+      "final_key": "40000",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $100,000 (loan amount) - $60,000 (debt payment) = $40,000 leftover.\nRESULT: 40000",
+        "verifier": "VERDICT: passthrough\n#### 40000",
+        "aggregator": "step_3: RESULT: $100,000 (loan amount) - $60,000 (debt payment) = $40,000 leftover.\n\n#### 40000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "40000",
+      "reference_key": "60000",
+      "key_differs": true,
+      "text": "step_2: RESULT: $60,000\n\nCarry out step 3 to find the leftover amount.\n\nstep_3: RESULT: $40,000",
+      "quality": 0.0,
+      "final_key": "60000",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: $40,000",
+        "verifier": "VERDICT: passthrough\n#### 60000",
+        "aggregator": "step_2: Calculate 40% of the house value.\n40% of $250,000 = 0.40 * $250,000 = $100,000\n\nstep_3: Calculate 60% of the loan amount.\n60% of $100,000 = 0.60 * $100,000 = $60,000\n\nFinal answer: John used $60,000 to pay off his debts.\n#### $60,000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

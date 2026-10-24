@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1164",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Lamar found 5 eggs.\n\nRESULT: 5",
+  "reference_key": "5",
+  "final_key_plus": "9",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Stacy found twice as many as Lamar.\nRESULT: 10",
+    "step_3": "step_3: Charlie found 2 less than Stacy.\nRESULT: 8",
+    "verifier": "VERDICT: passthrough\n#### 9",
+    "aggregator": "step_3: Charlie found 2 less than Stacy.\nRESULT: 8\n\nStacy found twice as many as Lamar, who found 5 eggs. So, Stacy found 2 * 5 = 10 eggs.\n\nCharlie found 2 less than Stacy, which is 10 - 2 = 8 eggs.\n\nMei found half as many as Charlie, so Mei found 8 / 2 = 4 eggs.\n\nTo find out how many eggs are still hidden, subtract the total found from the initial 3 dozen (36 eggs):\n\n36 - (5 + 10 + 8 + 4) = 36 - 27 = 9 eggs.\n\n#### 9"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "Lamar found 5 eggs.\n\nRESULT: 6",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: Stacy found twice as many as Lamar, so calculate: 5 * 2 = 10 eggs.\n\nRESULT: 10",
+        "step_3": "step_3: Charlie found 2 less than Stacy, so calculate: 10 - 2 = 8 eggs.\n\nRESULT: 8",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "step_3: Charlie found 2 less than Stacy, so calculate: 10 - 2 = 8 eggs.\n\nRESULT: 8\n#### 8"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "240",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: 240 minutes",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 10 eggs (Stacy found twice as many as Lamar)",
+        "step_3": "step_3: RESULT: 8 eggs (Charlie found 2 less than Stacy)",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_2: step_2: RESULT: Stacy found 10 eggs (twice as many as Lamar)\nstep_3: step_3: RESULT: Charlie found 8 eggs (2 less than Stacy)\nstep_4: step_4: RESULT: Mei found 4 eggs (half as many as Charlie)\n\nTotal found: 5 (Lamar) + 10 (Stacy) + 8 (Charlie) + 4 (Mei) = 27 eggs\n\n#### 3 eggs still hidden in the yard."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

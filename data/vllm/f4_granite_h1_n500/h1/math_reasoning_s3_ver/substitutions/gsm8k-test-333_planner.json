@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-333",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of Furniture United's offer by adding the advance payment to the sum of the monthly installments.\n2. Calculate the total cost of Cozy Homes' offer by adding the advance payment to the sum of the monthly installments.\n3. Subtract the total cost of Cozy Homes' offer from the total cost of Furniture United's offer to find the cost difference.",
+  "reference_key": null,
+  "final_key_plus": "200",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Furniture United's total cost = $1,350 (advance payment) + (6 * $350) (monthly installments)\nRESULT: $2,150",
+    "verifier": "VERDICT: passthrough\n#### 200",
+    "step_2": "step_2: 2. Cozy Homes' total cost = $1,100 (advance payment) + (9 * $250) (monthly installments)\nRESULT: $1,950\n\nNow, subtract the total cost of Cozy Homes' offer from the total cost of Furniture United's offer to find the cost difference.\n\nRESULT: $2,150 (Furniture United's total cost) - $1,950 (Cozy Homes' total cost) = $200\n\nThe cost difference between the two offers is $200.",
+    "step_3": "RESULT: $200",
+    "aggregator": "step_3: RESULT: $200\n\nThe cost difference between the two offers is $200.\n\n#### 200"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total cost of the grape gum: Since Suzie paid $2 for a pack of grape gum, and she bought two packs, the total cost for grape gum is 2 * $2 = $4.\n\n2. Determine the cost of the green apple gum: Suzie paid half as much for the green apple gum as she did for the grape gum. Therefore, the cost of the green apple gum is $4 / 2 = $2.\n\n3. Find the total cost of the strawberry gum: Suzie bought four packs of gum in total, with two being strawberry. The total cost for strawberry gum is $7 (total cost) - $4 (grape gum) - $2 (green apple gum) = $1.\n\n4. Calculate the cost per pack of strawberry gum: Since Suzie bought two packs of strawberry gum for a total of $1, the cost per pack of strawberry gum is $1 / 2 = $0.50.\n\nPLAN:\n1. Calculate the total cost of grape gum: $4\n2. Determine the cost of green apple gum: $2\n3. Find the total cost of strawberry gum: $1\n4. Calculate the cost per pack of strawberry gum: $0.50",
+      "quality": 0.0,
+      "final_key": "250",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total cost of grape gum: $2 (for one pack) * 2 (packs) = $4.\n\nRESULT: $4",
+        "verifier": "VERDICT: passthrough\n#### 250",
+        "step_2": "step_2: 2. Determine the cost of green apple gum: $4 (total cost of grape gum) / 2 (ratio of green apple to grape gum) = $2.\n\nRESULT: $2",
+        "step_3": "step_3: 3. Find the total cost of strawberry gum: $1 (total cost of green apple gum) - $4 (grape gum) - $2 (green apple gum) = $1.\n\nRESULT: $1",
+        "aggregator": "The cost difference between the two offers is $1,350 (Furniture United) - $1,100 (Cozy Homes) = $250.\n\n#### $250"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the overall price of Furniture United's proposal by merging the initial payment with the total of the monthly payments.\n2. Compute the overall price of Cozy Homes' proposal by merging the initial payment with the total of the monthly payments.\n3. Deduct the overall price of Cozy Homes' proposal from the overall price of Furniture United's proposal to ascertain the price disparity.",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Furniture United's overall price = Initial payment + Total monthly payments\n   = $1,350 + (6 * $350)\n   = $1,350 + $2,100\n   = $3,450\n\nRESULT: $3,450",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "step_2": "step_2: 2. Cozy Homes' overall price = Initial payment + Total monthly payments\n   = $1,100 + (9 * $250)\n   = $1,100 + $2,250\n   = $3,350\n\nRESULT: $3,350",
+        "step_3": "3. Price difference = Furniture United's overall price - Cozy Homes' overall price\n   = $3,450 - $3,350\n   = $100\n\nRESULT: $100",
+        "aggregator": "The cost difference between the two offers is $100.\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

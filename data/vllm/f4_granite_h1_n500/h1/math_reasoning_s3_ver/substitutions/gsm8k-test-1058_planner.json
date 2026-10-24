@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1058",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of stickers Leo collected this year by doubling the number of stickers he collected last year.\n2. Add the number of stickers Leo had two years ago to the total number of stickers he collected last year and this year.\n3. The result will be the total number of stickers in Leo's collection.",
+  "reference_key": null,
+  "final_key_plus": "250",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Leo collected twice the number of stickers this year as last year, which was 50. So, this year's collection = 2 * 50 = 100 stickers.\n\nRESULT: 100",
+    "verifier": "VERDICT: passthrough\n#### 250",
+    "step_2": "step_2: 2. Leo had 100 stickers two years ago. Adding the stickers collected last year (50) and this year (100), we get: 100 (from two years ago) + 50 (last year) + 100 (this year) = 250 stickers.\n\nRESULT: 250",
+    "step_3": "RESULT: 250",
+    "aggregator": "step_3: RESULT: 250\n\n#### 250"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Initially, the train has 172 people.\n2. After the first stop, 47 people get off and 13 more people get on. So, the change in the number of people is -47 (people who got off) + 13 (people who got on), which equals -34.\n3. Therefore, the number of people on the train after the first stop is 172 - 34 = 138.\n4. At the next stop, another 38 people get off. So, the change in the number of people is -38.\n5. Thus, the number of people on the train after the second stop is 138 - 38 = 100.\n\nPLAN:\n1. Identify initial passengers (172).\n2. Calculate net change at the first stop (-47 + 13 = -34).\n3. Determine final passengers after the first stop (172 - 34 = 138).\n4. Calculate net change at the second stop (-38).\n5. Find final passengers after the second stop (138 - 38 = 100).",
+      "quality": 0.0,
+      "final_key": "150",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Initially, the train has 172 people.\n\nRESULT: 172",
+        "verifier": "VERDICT: passthrough\n#### 150",
+        "step_2": "step_2: 2. Calculate net change at the first stop (-47 + 13 = -34).\nRESULT: -34",
+        "step_3": "step_3: 3. Determine final passengers after the first stop (172 - 34 = 138).\nRESULT: 138\n\nstep_4: step_4: 4. Calculate net change at the second stop (-38).\nRESULT: -38\n\nstep_5: step_5: 5. Find final passengers after the second stop (138 - 38 = 100).\nRESULT: 100",
+        "aggregator": "step_6: step_6: 6. Calculate the total stickers Leo has now (100 + 50 = 150).\nRESULT: 150\n\n#### 150"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the number of stickers Leo accumulated this year by merely multiplying the count of stickers he gathered last year by two.\n2. Include the quantity of stickers Leo possessed two years prior to the total number of stickers he collected last year and this year.\n3. The final figure will represent the total number of stickers in Leo's collection.",
+      "quality": 0.0,
+      "final_key": "500",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. RESULT: 100 (stickers collected last year) * 2 = 200 (stickers collected this year)",
+        "verifier": "VERDICT: passthrough\n#### 500",
+        "step_2": "step_2: 2. RESULT: 100 (stickers from two years ago) + 200 (stickers from last year) + 200 (stickers from this year) = 500 (total stickers in Leo's collection)\n\nRESULT: 500",
+        "step_3": "RESULT: 500",
+        "aggregator": "step_3: RESULT: 500\n\n#### 500"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

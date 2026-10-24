@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-200",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 25 liters.",
+  "reference_key": "25",
+  "final_key_plus": "55",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 30 liters.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 25 liters (morning) + 30 liters (afternoon) = 55 liters (daily).\nRESULT: 55 liters.",
+    "verifier": "VERDICT: passthrough\n#### 55",
+    "aggregator": "55 liters. #### 55"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "26",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "RESULT: 26 liters.",
+      "quality": 1.0,
+      "final_key": "55",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 30 liters.\n\nFinal Result: 55 liters.",
+        "step_3": "step_3: RESULT: 25 liters (morning) + 30 liters (afternoon) = 55 liters.\n\nRESULT: 55 liters.",
+        "verifier": "VERDICT: passthrough\n#### 55",
+        "aggregator": "55 liters.\n#### 55"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "250",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "250 pieces\n\nRESULT: 250",
+      "quality": 1.0,
+      "final_key": "55",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 300 liters\n\nRESULT: 300",
+        "step_3": "step_3: 25 + 30 = 55 liters\n\nRESULT: 55",
+        "verifier": "VERDICT: passthrough\n#### 55",
+        "aggregator": "55 liters\n#### 55"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

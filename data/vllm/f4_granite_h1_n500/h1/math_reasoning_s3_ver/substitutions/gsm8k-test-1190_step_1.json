@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1190",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Let's denote the number of bandages the nurses started with on the first day as X.\n\nRESULT: X",
+  "reference_key": "1",
+  "final_key_plus": "88",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Calculate remaining bandages after the first day's use.\n\nRESULT: X - 38",
+    "step_3": "step_3: 3. Calculate remaining bandages after the first day's order.\n\nRESULT: X + 12",
+    "verifier": "VERDICT: passthrough\n#### 88",
+    "aggregator": "step_3: 3. Calculate remaining bandages after the first day's order.\n\nRESULT: 38 + 50 = 88\n\n#### 88"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "19",
+      "reference_key": "1",
+      "key_differs": true,
+      "text": "RESULT: The nurses started with X = 19 bandages on the first day.",
+      "quality": 0.0,
+      "final_key": "38",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: The nurses had X + 12 = 19 + 12 = 31 bandages left after the first day's order.\n\nRESULT: 31",
+        "step_3": "step_3: RESULT: The nurses had 31 - 28 = 3 bandages left after the second day's use.\n\nRESULT: 3",
+        "verifier": "VERDICT: passthrough\n#### 38",
+        "aggregator": "step_3: RESULT: The nurses had 31 - 28 = 3 bandages left after the second day's use.\n\nFinal answer: #### 38"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "19",
+      "reference_key": "1",
+      "key_differs": true,
+      "text": "1. RESULT: X = 19.\n\nPlease note that this is the initial number of bandages they had before any were used or ordered, as per the problem statement. The subsequent steps will help confirm this value.",
+      "quality": 0.0,
+      "final_key": "81",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2. Calculate remaining bandages after the first day's use.\nRESULT: X - 38 = 19 - 38 = -19\n\nThis result indicates that the initial number of bandages (X) was incorrect. The calculation shows that after using 38 bandages, they had -19 bandages left, which is not possible. This suggests there was a mistake in the interpretation of the problem or the initial calculation. Let's re-evaluate the first day's use of bandages.\n\nThe nurses used 38 bandages on the first day, leaving them with X - 38 bandages. However, this calculation does not account for the order of bandages on the same day. The nurses ordered one bulk pack of 50 bandages, so they had X + 50 bandages after the order.\n\nLet's correct the calculation for the first day:\n\n1. Calculate remaining bandages after the first day's use.\nRESULT: X + 50 - 38 = 19 + 50 - 38 = 31\n\nThis corrected value indicates that the nurses started with 31 bandages on the first day.",
+        "step_3": "step_3: 3. Calculate remaining bandages after the first day's order.\nRESULT: 31 + 50 = 81\n\nThis result shows that after ordering one bulk pack of 50 bandages, they had 81 bandages left. This confirms the initial calculation and provides the correct starting number of bandages for the first day.\n\nRESULT: 81",
+        "verifier": "VERDICT: passthrough\n#### 81",
+        "aggregator": "81"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

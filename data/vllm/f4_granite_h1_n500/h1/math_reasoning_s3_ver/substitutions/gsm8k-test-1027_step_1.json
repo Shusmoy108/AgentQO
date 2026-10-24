@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1027",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $1.50",
+  "reference_key": "1.5",
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 8 * $1.50 = $12",
+    "step_3": "step_3: RESULT: $12 (which is 1.33 times the total cost of the first two packages, $9)",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "aggregator": "step_3: RESULT: $12 (which is 1.33 times the total cost of the first two packages, $9)\n\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "2.5",
+      "reference_key": "1.5",
+      "key_differs": true,
+      "text": "RESULT: 2.5",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 12",
+        "step_3": "step_3: The total cost for the first two packages is $9. The third package should cost 1.33 times this amount, which is 1.33 * $9 = $11.97. However, since we're dealing with whole dollars, we round this to $12.\n\nRESULT: 12",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "12\n#### 12"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "22",
+      "reference_key": "1.5",
+      "key_differs": true,
+      "text": "RESULT: $22",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $12",
+        "step_3": "step_3: RESULT: The total cost for the first two packages is $9. The third package should cost 1.33 times this amount, which is $9 * 1.33 = $12. This confirms the proportional relationship.\nRESULT: $12",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "The package with 8 sandwiches will cost $12.\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

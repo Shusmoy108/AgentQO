@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-661",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $6 per pound for the more expensive brand.",
+  "reference_key": "6",
+  "final_key_plus": "44",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 7 pounds * $6 per pound = $42 for coffee.\nEND.",
+    "step_3": "step_3: RESULT: $42 (for coffee) + $2 (for donut) = $44.\nEND.",
+    "verifier": "VERDICT: passthrough\n#### 44",
+    "aggregator": "step_3: RESULT: $42 (for coffee) + $2 (for donut) = $44.\n#### 44"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "7",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "RESULT: 7 per pound for the more expensive brand.",
+      "quality": 1.0,
+      "final_key": "44",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $42 for the total cost of coffee for a week.",
+        "step_3": "step_3: RESULT: $44 for the total cost including the donut.",
+        "verifier": "VERDICT: passthrough\n#### 44",
+        "aggregator": "step_1: Calculate the price increase for the more expensive brand.\n20% of $5 = 0.20 * $5 = $1\n\nstep_2: Determine the new price per pound of the more expensive brand.\nNew price = Normal price + Increase\nNew price = $5 + $1 = $6 per pound\n\nstep_3: Calculate the total cost for a week's worth of coffee.\nTotal coffee cost = New price per pound * Number of days\nTotal coffee cost = $6 * 7 = $42\n\nstep_4: Add the cost of the donut.\nTotal cost including donut = Total coffee cost + Cost of donut\nTotal cost including donut = $42 + $2 = $44\n\n#### 44"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "5.5",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "1. Calculate the price increase for the more expensive brand:\n   - The normal brand costs $5 per pound.\n   - The more expensive brand costs 20% more, so the price increase is 20/100 * $5 = $0.50 per pound.\n   - Therefore, the price of the more expensive brand is $5 + $0.50 = $5.50 per pound.\n   RESULT: $5.50",
+      "quality": 0.0,
+      "final_key": "40.5",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2. Determine the total cost of coffee for a week:\n   - Roger uses 1 pound of coffee per day.\n   - A week consists of 7 days.\n   - So, the total pounds of coffee needed for a week is 7 pounds.\n   - The cost for 7 pounds of the more expensive brand is 7 * $5.50 = $38.50.\n   RESULT: $38.50",
+        "step_3": "step_3: 3. Add the cost of donuts:\n   - Roger buys a donut for $2.\n   - The total cost for everything is the cost of coffee plus the cost of the donut: $38.50 + $2 = $40.50.\n   RESULT: $40.50",
+        "verifier": "VERDICT: passthrough\n#### 40.5",
+        "aggregator": "step_3: The total cost for everything, including the more expensive coffee brand, a week's worth of coffee (1 pound per day for a week), and a donut, is $40.50.\n#### $40.50"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

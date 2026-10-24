@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-195",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. First, calculate the cost of a pen by adding the cost of a pencil and an eraser.\n2. Then, multiply the cost of one pen by 8 to find the total cost for 8 pens.\n3. Finally, present the total cost for 8 pens.",
+  "reference_key": null,
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. RESULT: $1.50 (cost of a pen)",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "step_2": "step_2: 2. RESULT: $1.50 (cost of one pen) * 8 = $12.00 (total cost for 8 pens)\nEnd with \"RESULT: $12.00\".",
+    "step_3": "RESULT: $12.00",
+    "aggregator": "step_3: RESULT: $12.00\n\n#### $12.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of cookies Carla is baking over two days: 36 (today) + 30 (tomorrow) = 66 cookies.\n2. Determine the number of cups of flour needed for 66 cookies, knowing two cups make a dozen (12 cookies): 66 cookies \u00f7 12 cookies per cup = 5.5 cups.\n3. Since Carla can't use half a cup of flour, round up to the nearest whole number, which is 6 cups of flour.",
+      "quality": 0.0,
+      "final_key": "9.6",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total number of pens Carla can buy with $1.20 (cost of a pencil) and $0.30 (cost of an eraser):\n   1.20 (pencil) + 0.30 (eraser) = 1.50\n\nRESULT: 1.50",
+        "verifier": "VERDICT: passthrough\n#### 9.6",
+        "step_2": "2. Calculate the number of pens Carla can buy with $1.50 (total cost of a pencil and eraser):\n   1.50 (total cost) \u00f7 1.20 (cost of a pencil) = 1.25 pens\n\nRESULT: 1.25",
+        "step_3": "3. Calculate the total cost for 8 pens, given each pen costs $1.20:\n   1.20 (cost per pen) * 8 (number of pens) = 9.60\n\nRESULT: 9.60",
+        "aggregator": "9.60\n#### 9.60"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initially, sum the cost of a pencil and an eraser to determine the cost of a pen.\n2. Subsequently, multiply the cost of one pen by 7 instead of 8 to estimate the total cost for 8 pens.\n3. Ultimately, display the total cost for 8 pens.",
+      "quality": 0.0,
+      "final_key": "10.5",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. The cost of a pen is the sum of a pencil and an eraser, which is $1.20 + $0.30 = $1.50.\n\nRESULT: $1.50",
+        "verifier": "VERDICT: passthrough\n#### 10.5",
+        "step_2": "step_2: 2. To estimate the total cost for 8 pens, we multiply the cost of one pen by 7.\n\nRESULT: $10.50",
+        "step_3": "RESULT: $10.50",
+        "aggregator": "step_3: RESULT: $10.50\n\n#### $10.50"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

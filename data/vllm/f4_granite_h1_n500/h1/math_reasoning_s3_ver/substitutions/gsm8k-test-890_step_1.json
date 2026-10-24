@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-890",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Indoor plants = 1/4 * 100 = 25 plants\n\nRESULT: 25",
+  "reference_key": "25",
+  "final_key_plus": "25",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Remaining plants = 100 - 25 = 75 plants\n\nRESULT: 75",
+    "step_3": "step_3: 3. Flowering plants = Remaining plants - Outdoor plants = 75 - 50 = 25 plants\n\nRESULT: 25",
+    "verifier": "VERDICT: passthrough\n#### 25",
+    "aggregator": "25\n#### 25"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "26",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "1. Indoor plants = 1/4 * 100 = 25 plants\n\nRESULT: 26",
+      "quality": 0.0,
+      "final_key": "28",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2. Remaining plants = 100 - 25 = 75 plants\n\nRESULT: 27",
+        "step_3": "step_3: 3. Flowering plants = Remaining plants - Outdoor plants = 75 - 50 = 25 plants\n\nRESULT: 28",
+        "verifier": "VERDICT: passthrough\n#### 28",
+        "aggregator": "28\n#### 28"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "RESULT: Nine eggs per day.",
+      "quality": 1.0,
+      "final_key": "25",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 75 plants remaining after accounting for indoor plants.",
+        "step_3": "step_3: RESULT: 25 plants are flowering.\nRESULT: 25%",
+        "verifier": "VERDICT: passthrough\n#### 25",
+        "aggregator": "step_3: RESULT: 25 plants are flowering.\n\nTo find the percentage of flowering plants, we use the formula:\n\n(Number of flowering plants / Total number of plants) * 100\n\nSo, (25 / 100) * 100 = 25%\n\n#### 25%"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

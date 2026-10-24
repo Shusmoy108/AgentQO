@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-173",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2:\nNew monthly payment for student loans = $300 + $150 = $450\nNew monthly payment for credit card = $200 + $150 = $350\nNew monthly payment for mortgage = $500 + $150 = $650\n\nAnnual payment for student loans = $450 * 12 = $5400\nAnnual payment for credit card = $350 * 12 = $4200\nAnnual payment for mortgage = $650 * 12 = $7800\n\nRESULT: $5400, $4200, $7800",
+  "reference_key": "7800",
+  "final_key_plus": "5400",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3:\nAnnual payment = New monthly payment * 12\n= $450 * 12\n= $5400\n\nRESULT: $5400",
+    "verifier": "VERDICT: passthrough\n#### 5400",
+    "aggregator": "Final answer: $5400#### 5400"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "7800",
+      "reference_key": "7800",
+      "key_differs": false,
+      "text": "step_2:\nNew monthly payment for student loans = $300 + $150 = $450\nNew monthly payment for credit card = $200 + $150 = $350\nNew monthly payment for mortgage = $500 + $150 = $650\n\nAnnual payment for student loans = $450 * 12 = $5400\nAnnual payment for credit card = $350 * 12 = $4200\nAnnual payment for mortgage = $650 * 12 = $7800\n\nRESULT: 7801 $4200, $7800",
+      "quality": 0.0,
+      "final_key": "7800",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3:\nAnnual payment = New monthly payment * 12\n= $450 * 12\n= $5400\n= $350 * 12\n= $4200\n= $650 * 12\n= $7800\n\nRESULT: 7800",
+        "verifier": "VERDICT: passthrough\n#### 7800",
+        "aggregator": "7800\n#### 7800"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1450",
+      "reference_key": "7800",
+      "key_differs": true,
+      "text": "This step involves calculating the new monthly payment by adding the additional $150 to each of the minimum payments.\n\nNew monthly payment = $300 (student loans) + $150 (additional) + $200 (credit card) + $150 (additional) + $500 (mortgage) + $150 (additional)\nNew monthly payment = $300 + $200 + $300 + $500 + $150\nNew monthly payment = $1450\n\nRESULT: $1450",
+      "quality": 0.0,
+      "final_key": "17400",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: $7800\n\nTo find the annual payment, we multiply the new monthly payment by 12 (months in a year):\n\nAnnual payment = New monthly payment * 12\nAnnual payment = $1450 * 12\nAnnual payment = $17400\n\nRESULT: $17400",
+        "verifier": "VERDICT: passthrough\n#### 17400",
+        "aggregator": "Final answer: Jessica pays $17400 on her debts each year.\n#### 17400"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

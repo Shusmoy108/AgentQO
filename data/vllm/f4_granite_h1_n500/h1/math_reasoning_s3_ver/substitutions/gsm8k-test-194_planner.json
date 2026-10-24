@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-194",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the crayons by multiplying the number of colors needed (5) by the cost of one crayon ($2).\n2. Subtract the total cost of the crayons from the amount of money Violetta has prepared ($20).\n3. The result will be the change Violetta will get.",
+  "reference_key": null,
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Total cost of crayons = 5 colors * $2/color = $10\n\nRESULT: $10",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "step_2": "step_2: 2. Change = $20 - $10 = $10\n\nRESULT: $10",
+    "step_3": "RESULT: $10",
+    "aggregator": "step_3: RESULT: $10\n\nVioletta will get $10 in change. #### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the height increase from the first to the second week: 3 inches (initial height) \u00d7 2 = 6 inches.\n2. Add the initial height to the growth from the first to the second week: 3 inches + 6 inches = 9 inches.\n3. Include the third week's growth: 9 inches + 4 inches = 13 inches.\n\nPLAN: Compute the growth from the first to the second week, then sum this with the initial height to find the height after the first two weeks. Finally, add the third week's growth to this total to determine the beanstalk's height after three weeks.",
+      "quality": 0.0,
+      "final_key": "-10",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 6 inches",
+        "verifier": "VERDICT: passthrough\n#### -10",
+        "step_2": "step_2: RESULT: 9 inches\n\nPLAN: Now, add the third week's growth to the total height after two weeks to find the final height after three weeks.\n\nstep_3: RESULT: 13 inches\n\nThe beanstalk will be 13 inches tall after three weeks.",
+        "step_3": "RESULT: 13 inches",
+        "aggregator": "step_3: Violetta needs 5 crayons. Each costs $2. So, the total cost is 5 * $2 = $10.\n\nVioletta has $20.\n\nChange she will get = Total cost - Amount she has\nChange = $10 - $20 = -$10\n\nSince she can't get a negative amount of change, she will actually owe $10.\n\n#### -10"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the complete expense for the crayons by multiplying the quantity of colors required (5) by the price of a single crayon ($2).\n2. Deposit the entire expense of the crayons into the amount Violetta has gathered ($20).\n3. The difference will represent Violetta's leftover funds.",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. RESULT: $10\n\nExplanation: Violetta needs 5 crayons, each costing $2. So, the total expense for the crayons is 5 * $2 = $10.",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "step_2": "step_2: 2. RESULT: $20 - $10 = $10\n\nExplanation: Violetta has $20 and the total expense for the crayons is $10. By subtracting the total expense from her available funds, we find out how much change she will receive.\n\nRESULT: $10",
+        "step_3": "step_3: 3. RESULT: $20 - $10 = $10\n\nRESULT: $10",
+        "aggregator": "RESULT: $10\n#### 10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

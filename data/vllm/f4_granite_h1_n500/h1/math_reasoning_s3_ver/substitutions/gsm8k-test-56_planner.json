@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-56",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost for one movie visit by adding the cost of the ticket and the popcorn: $7 (ticket) + $7 (popcorn) = $14.\n2. Determine the number of movie visits Peter can afford by dividing his total budget by the total cost for one visit: $42 (total budget) / $14 (cost per visit) = 3.\n3. Conclude that Peter can go to the movies 3 times this week.",
+  "reference_key": null,
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 14",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "step_2": "step_2: RESULT: 3.0",
+    "step_3": "step_3: RESULT: 3",
+    "aggregator": "step_3: RESULT: 3\n\nPeter can go to the movies 3 times with his budget of 42 dollars. This is calculated by dividing his total amount by the cost of one movie ticket and popcorn combination, which is $7 + $7 = $14. So, 42 / 14 = 3.\n\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of sheets per room: 2 sheets.\n2. Determine the number of pillow cases per room: 2 * 2 = 4 pillow cases.\n3. Calculate the number of towels per room: 4 * 2 = 8 towels.\n4. Find the total laundry per room: 2 (sheets) + 4 (pillow cases) + 8 (towels) = 14 pieces of laundry.\n5. Calculate the total laundry for 80 rooms: 14 (laundry per room) * 80 (rooms) = 1120 pieces of laundry.",
+      "quality": 0.0,
+      "final_key": "4",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the number of sheets per room: 2 sheets.\n\nRESULT: 2",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "step_2": "step_2: 2 * 2 = 4 pillow cases.\n\nRESULT: 4",
+        "step_3": "step_3: 4 * 2 = 8 towels.\n\nRESULT: 8",
+        "aggregator": "step_3: 42 / (7 + 7) = 4.2. Since Peter can't go to the movies a fraction of a time, he can go 4 times.\n\n#### 4"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total expense for one movie outing by summing the ticket and large drink: $7 (ticket) + $8 (large drink) = $15.\n2. Estimate the number of movie outings Peter can manage by deducting his total budget from the total cost for one outing: $42 (total budget) - $15 (cost per outing) = 2.5.\n3. Deduce that Peter can visit the movies 2.5 times this week.",
+      "quality": 0.0,
+      "final_key": "2.5",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 15\n\nExplanation:\nThe total expense for one movie outing is calculated by adding the cost of the ticket ($7) and the large drink ($8). So, $7 (ticket) + $8 (large drink) = $15.",
+        "verifier": "VERDICT: passthrough\n#### 2.5",
+        "step_2": "step_2: RESULT: 2.5",
+        "step_3": "step_3: RESULT: 2.5\n\nExplanation:\nSince Peter has $42 for the week and each movie outing costs $15, we can calculate how many times he can go by dividing his total budget by the cost per outing: $42 / $15 = 2.5.\n\nRESULT: 2.5",
+        "aggregator": "2.5\n#### 2.5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

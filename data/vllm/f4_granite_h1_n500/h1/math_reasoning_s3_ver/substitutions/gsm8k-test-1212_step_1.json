@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1212",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Ali's class capacity is 120 students.\n\nRESULT: 120",
+  "reference_key": "120",
+  "final_key_plus": "150",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: John's class capacity is 120 / 8 = 15 students per class.\n\nRESULT: 15",
+    "step_3": "step_3: Combined capacity of both schools = Ali's class capacity + (John's class capacity * number of John's classes)\n\nRESULT: 150",
+    "verifier": "VERDICT: passthrough\n#### 150",
+    "aggregator": "step_3: Combined capacity of both schools = Ali's class capacity + (John's class capacity * number of John's classes)\n\nRESULT: 150\n\n#### 150"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "121",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "Ali's class capacity is 120 students.\n\nRESULT: 121",
+      "quality": 1.0,
+      "final_key": "150",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: John's class capacity is 120 / 8 = 15 students per class.\n\nRESULT: 15",
+        "step_3": "step_3: Combined capacity of both schools = Ali's class capacity + (John's class capacity * number of John's classes)\nRESULT: 150",
+        "verifier": "VERDICT: passthrough\n#### 150",
+        "aggregator": "step_3: Combined capacity of both schools = Ali's class capacity + (John's class capacity * number of John's classes)\n\nAli's class capacity = 120 students\nJohn's class capacity = 1/8 * 120 = 15 students\nNumber of John's classes = 2\n\nCombined capacity of both schools = 120 + (15 * 2)\n\nCombined capacity of both schools = 120 + 30\n\nCombined capacity of both schools = 150\n\n#### 150"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "120",
+      "key_differs": true,
+      "text": "RESULT: 120 students\n\nNext, let's proceed to step 2 to determine John's class capacity.\n\nPlan:\n1. Determine John's class capacity: Each of John's classes has 1/8 the capacity of Ali's class. So, the capacity of one of John's classes is 120 / 8 = 15 students.\n\nEnd with \"Result of Step 2: <number>\".",
+      "quality": 1.0,
+      "final_key": "150",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "Plan:\n1. Determine John's class capacity: Each of John's classes has 1/8 the capacity of Ali's class. So, the capacity of one of John's classes is 120 / 8 = 15 students.\n\nResult of Step 2: 15 students.\n\nRESULT: 15 students.",
+        "step_3": "3. Compute the total capacity of both schools: 120 (Ali's class) + 30 (John's classes) = 150 students.\n\nRESULT: 150 students.",
+        "verifier": "VERDICT: passthrough\n#### 150",
+        "aggregator": "150 students. #### 150"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

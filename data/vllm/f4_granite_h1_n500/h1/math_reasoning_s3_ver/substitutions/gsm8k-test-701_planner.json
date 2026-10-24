@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-701",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of seats needed: Aiden and his 12 friends make 13 people, and they will meet 7 more friends at the cinema, making a total of 20 people. Each seat can hold one person, so they will need 20 seats.\n2. Determine the total number of drinks and snacks needed: Each seat can hold two drinks and three snacks. Therefore, for 20 seats, they will need 40 drinks (20 seats * 2 drinks per seat) and 60 snacks (20 seats * 3 snacks per seat).\n3. Calculate the total cost of drinks and snacks: Since each drink and snack costs $2, the total cost for drinks will be 40 drinks * $2 per drink = $80, and the total cost for snacks will be 60 snacks * $2 per snack = $120. The overall cost for both drinks and snacks will be $80 (drinks) + $120 (snacks) = $200.",
+  "reference_key": null,
+  "final_key_plus": "200",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 20 seats are needed.",
+    "verifier": "VERDICT: passthrough\n#### 200",
+    "step_2": "step_2: RESULT: 40 drinks (20 seats * 2 drinks per seat) and 60 snacks (20 seats * 3 snacks per seat).\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $80 (for drinks) + $120 (for snacks) = $200 (overall cost).\n\nRESULT: $200.",
+    "aggregator": "step_3: RESULT: $80 (for drinks) + $120 (for snacks) = $200 (overall cost).\n\n#### 200"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the cost per flower for the first package option (3 for $2.50):\n   - Total flowers in the package: 3\n   - Cost per flower: $2.50 / 3 = $0.8333 (rounded to three decimal places)\n\n2. Calculate the cost per flower for the second package option (2 for $1):\n   - Total flowers in the package: 2\n   - Cost per flower: $1 / 2 = $0.50\n\n3. Compare the two options to find the better deal and calculate the savings for 18 flowers:\n   - For 18 flowers, the better option is the second (2 for $1), as it costs $1 for 2 flowers.\n   - Total cost for 18 flowers at the better price: 18 flowers * $0.50/flower = $9.00\n   - Savings by choosing the better deal over the first option: $2.50 (first option for 18 flowers) - $9.00 (second option for 18 flowers) = -$6.50\n\nPLAN: The better deal costs $9.00 for 18 flowers, resulting in a savings of -$6.50 compared to the first option. This means Vincent actually spends $6.50 more by choosing the better deal.",
+      "quality": 0.0,
+      "final_key": "6.5",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $0.8333",
+        "verifier": "VERDICT: passthrough\n#### 6.5",
+        "step_2": "step_2: RESULT: $0.50\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $6.50",
+        "aggregator": "step_3: RESULT: $6.50\n\n#### 6.50"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total seating capacity required: Aiden and his 12 friends constitute 13 individuals, and they are joining 7 more friends at the cinema, totaling 20 people. As each seat accommodates one person, they will necessitate 20 seats.\n2. Estimate the quantity of beverages and munchies required: Each seat can accommodate two beverages and three munchies. Consequently, for 20 seats, they will necessitate 40 beverages (20 seats * 2 beverages per seat) and 60 munchies (20 seats * 3 munchies per seat).\n3. Determine the total expenditure for beverages and munchies: Given that each beverage and munchie costs $2, the total expense for beverages will be 40 beverages * $2 per beverage = $80, and the total expense for munchies will be 60 munchies * $2 per munchie = $120. The aggregate cost for both beverages and munchies will be $80 (beverages) + $120 (munchies) = $200.\n\n[Error] The conclusion remains the same, but the final sentence has been slightly altered by adding the word \"aggregate\" to emphasize that the total cost is a sum of two distinct categories (beverages and munchies), making the statement slightly more formal and precise.",
+      "quality": 1.0,
+      "final_key": "200",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 20 seats are required.",
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "step_2": "step_2: RESULT: 40 beverages (20 seats * 2 beverages per seat) and 60 munchies (20 seats * 3 munchies per seat).\n\nRESULT: 40 + 60 = 100.",
+        "step_3": "step_3: RESULT: $80 (beverages) + $120 (munchies) = $200.\n\nRESULT: $200.",
+        "aggregator": "step_3: RESULT: $80 (beverages) + $120 (munchies) = $200.\n\n#### 200"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

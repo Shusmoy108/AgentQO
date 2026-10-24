@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-32",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 5 hours",
+  "reference_key": "5",
+  "final_key_plus": "35",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 5 hours/day * 7 days/week = 35 hours/week",
+    "step_3": "step_3: RESULT: 5 hours/day * 7 days/week = 35 hours/week\n\nRESULT: 35 hours",
+    "verifier": "VERDICT: passthrough\n#### 35",
+    "aggregator": "step_3: RESULT: 5 hours/day * 7 days/week = 35 hours/week\n\nFinal answer: 35 hours\n#### 35"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: 6 hours",
+      "quality": 1.0,
+      "final_key": "35",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 35 hours",
+        "step_3": "step_3: RESULT: 35 hours\n\nFinal Answer: John spends 35 hours a week taking care of his 10 dogs.",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "aggregator": "Final Answer: John spends 35 hours a week taking care of his 10 dogs. #### 35"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: 5 hours\n\nNext steps:\n1. Calculate the total weekly time spent.\n2. Confirm the final answer.",
+      "quality": 1.0,
+      "final_key": "35",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "RESULT: 35 hours",
+        "step_3": "RESULT: 35 hours",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "aggregator": "step_2: Calculate total daily care time for all dogs.\n10 dogs * .5 hours/dog = 5 hours\n\nstep_3: Calculate total weekly care time.\n5 hours/day * 7 days/week = 35 hours\n\n#### 35"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

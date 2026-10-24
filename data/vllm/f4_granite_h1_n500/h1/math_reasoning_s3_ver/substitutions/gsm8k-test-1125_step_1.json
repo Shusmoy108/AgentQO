@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1125",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 30 ounces",
+  "reference_key": "30",
+  "final_key_plus": "90",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 900 M&M (30 ounces * 30 M&M/ounce)\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 90 small bags (900 M&M / 10 M&M/bag)",
+    "verifier": "VERDICT: passthrough\n#### 90",
+    "aggregator": "step_3: RESULT: 90 small bags (900 M&M / 10 M&M/bag)\n\n#### 90"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "31",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "RESULT: 31 ounces",
+      "quality": 1.0,
+      "final_key": "90",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 900 M&M\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 90 small bags",
+        "verifier": "VERDICT: passthrough\n#### 90",
+        "aggregator": "step_3: RESULT: 90 small bags\n\n#### 90"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "90",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "Result: John buys 90 ounces of M&M in total.\n\nRESULT: 90",
+      "quality": 1.0,
+      "final_key": "90",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Result: John has 900 M&M in total.\n\nRESULT: 900",
+        "step_3": "step_3: Result: John can make 90 small bags, as he has 900 M&M and each small bag contains 10 M&M.\n\nRESULT: 90",
+        "verifier": "VERDICT: passthrough\n#### 90",
+        "aggregator": "90\n#### 90"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

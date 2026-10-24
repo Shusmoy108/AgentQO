@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-829",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 4,000 bars/week.",
+  "reference_key": "4000",
+  "final_key_plus": "-112000",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 150,000 bars/month.\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 50,000 bars/month - (8,000 + 4,000 + 150,000) = 50,000 bars/month - 162,000 bars/month = -112,000 bars/month.\n\nRESULT: -112,000 bars/month.",
+    "verifier": "VERDICT: passthrough\n#### -112000",
+    "aggregator": "RESULT: -112,000 bars/month.\n#### -112,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4001",
+      "reference_key": "4000",
+      "key_differs": true,
+      "text": "RESULT: 4001 bars/week.",
+      "quality": 0.0,
+      "final_key": "-112000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 150,000 bars/month.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 50,000 bars/month - (8,000 + 4,000 + 150,000) = 50,000 bars/month - 162,000 bars/month = -112,000 bars/month.\n\nRESULT: -112,000 bars/month.",
+        "verifier": "VERDICT: passthrough\n#### -112000",
+        "aggregator": "RESULT: -112,000 bars/month.\n#### -112,000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "20000",
+      "reference_key": "4000",
+      "key_differs": true,
+      "text": "RESULT: 4,000 bars/week or 20,000 bars/month.",
+      "quality": 1.0,
+      "final_key": "14000",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 150,000 bars/month.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "RESULT: -112,000 bars/month.",
+        "verifier": "VERDICT: passthrough\n#### 14000",
+        "aggregator": "step_1: Boris produces 8,000 bars in the first week.\nstep_2: In the second week, he produces half of the first week, which is 8,000 / 2 = 4,000 bars.\nstep_3: In the third week, he produces three times the first week, so that's 8,000 * 3 = 24,000 bars.\n\nNow, let's calculate the total production for the first three weeks:\n8,000 (first week) + 4,000 (second week) + 24,000 (third week) = 36,000 bars.\n\nBoris produces 50,000 bars each month. If we subtract the total production of the first three weeks from the monthly total, we get:\n50,000 (monthly total) - 36,000 (first three weeks) = 14,000 bars.\n\nTherefore, Boris produces 14,000 bars in the fourth week.\n\n#### 14,000 bars"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

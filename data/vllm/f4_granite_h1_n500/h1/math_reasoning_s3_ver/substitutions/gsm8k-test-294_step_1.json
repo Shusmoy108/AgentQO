@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-294",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. The youngest son can wash 4 oranges.\nRESULT: 4",
+  "reference_key": "4",
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. The total number of oranges washed is 8 (oldest son) + 4 (youngest son) = 12 oranges.\nRESULT: 12",
+    "step_3": "step_3: 3. The number of oranges left unwashed is 15 (initial) - 12 (washed) = 3 oranges.\nRESULT: 3",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "aggregator": "3\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "5",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "1. The youngest son can wash 4 oranges.\nRESULT: 5",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. The total number of oranges washed is 8 (oldest son) + 4 (youngest son) = 12 oranges.\nRESULT: 6",
+        "step_3": "3. RESULT: 3 oranges are left unwashed.",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_3: 3. RESULT: 3 oranges are left unwashed.\nFinal answer: #### 3"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "2 oranges (since the youngest son is 4 years old).\n\nRESULT: 2",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 12 oranges (8 + 4)\n\nRESULT: 12",
+        "step_3": "3 (15 - 12)\n\nRESULT: 3",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "3\n#### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

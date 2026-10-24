@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1175",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Team B's first half goals = 4 - 2 = 2 goals.\nRESULT: 2",
+  "reference_key": "2",
+  "final_key_plus": "16",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Team B's second half goals = 4 * 2 = 8 goals.\nRESULT: 8",
+    "step_3": "step_3: 3. Team B's total goals = First half goals + Second half goals\nRESULT: 10",
+    "verifier": "VERDICT: passthrough\n#### 16",
+    "aggregator": "step_3: Team B's total goals = First half goals + Second half goals\nRESULT: 10\n\nFinal answer: #### 16\n\nExplanation:\n- In the first half, team A scores 4 goals.\n- Team B scores 2 goals fewer than team A, so team B scores 4 - 2 = 2 goals.\n- In the second half, team B scores 4 times the number of goals it scored in the first half, which is 4 * 2 = 8 goals.\n- Team A scores 1/4 of the number of goals scored by team B in the second half, which is 1/4 * 8 = 2 goals.\n- Therefore, team A's total goals in the match are 4 (first half) + 2 (second half) = 6 goals.\n- Team B's total goals in the match are 2 (first half) + 8 (second half) = 10 goals.\n- The total number of goals scored in the match is 6 (team A) + 10 (team B) = 16 goals."
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "1. Team B's first half goals = 4 - 2 = 2 goals.\nRESULT: 3",
+      "quality": 1.0,
+      "final_key": "16",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Team B's second half goals = 4 * 2 = 8 goals.\nRESULT: 4",
+        "step_3": "step_3: 3. Team B's total goals = First half goals + Second half goals\nRESULT: 10",
+        "verifier": "VERDICT: passthrough\n#### 16",
+        "aggregator": "step_3: Team B's total goals = First half goals + Second half goals\nRESULT: 10\n\nFinal answer: #### 16\n\nExplanation:\n- In the first half, team A scores 4 goals.\n- Team B scores 2 goals fewer than team A, so team B scores 4 - 2 = 2 goals.\n- In the second half, team B scores 4 times the number of goals it scored in the first half, which is 4 * 2 = 8 goals.\n- Team A scores 1/4 of the number of goals scored by team B in the second half, which is 1/4 * 8 = 2 goals.\n- Therefore, team A's total goals in the match are 4 (first half) + 2 (second half) = 6 goals.\n- Team B's total goals in the match are 2 (first half) + 8 (second half) = 10 goals.\n- The total number of goals scored in the match is 6 (team A) + 10 (team B) = 16 goals."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "2000",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "RESULT: $2000",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 8 goals",
+        "step_3": "step_3: RESULT: 2 + 8 = 10 goals\nRESULT: 10",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "step_3: RESULT: 2 + 8 = 10 goals\n\n#### 10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

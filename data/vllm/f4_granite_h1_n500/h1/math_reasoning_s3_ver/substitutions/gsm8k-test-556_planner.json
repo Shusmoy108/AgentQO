@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-556",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Identify the cost of the foot-long fish sub, which is $40.\n2. Determine the cost of the six-inch cold-cut combo sub, which is thrice the cost of the foot-long fish sub.\n3. Calculate the total cost by adding the cost of the foot-long fish sub and the six-inch cold-cut combo sub.",
+  "reference_key": null,
+  "final_key_plus": "160",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: $40\n\nNext step: Calculate the cost of the six-inch cold-cut combo sub.",
+    "verifier": "VERDICT: passthrough\n#### 160",
+    "step_2": "step_2: RESULT: $40 * 3 = $120\n\nNext step: Calculate the total cost.\nCarry out step 3.\n\nRESULT: $40 + $120 = $160",
+    "step_3": "RESULT: $160",
+    "aggregator": "step_3: RESULT: $160\n\n#### 160"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate half of Raymond's jewels: 40 jewels / 2 = 20 jewels.\n2. Next, determine how many jewels Aaron has, which is 5 more than half of Raymond's jewels: 20 jewels + 5 jewels = 25 jewels.\n3. Finally, find out how many jewels Siobhan has, which is 2 fewer than Aaron: 25 jewels - 2 jewels = 23 jewels.\n\nPLAN:\n1. Calculate half of Raymond's jewels: 40 / 2 = 20 jewels.\n2. Determine Aaron's jewels: 20 jewels + 5 jewels = 25 jewels.\n3. Find Siobhan's jewels: 25 jewels - 2 jewels = 23 jewels.",
+      "quality": 0.0,
+      "final_key": "39",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 20 jewels",
+        "verifier": "VERDICT: passthrough\n#### 39",
+        "step_2": "step_2: RESULT: 25 jewels\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 23 jewels.\n\nEND.",
+        "aggregator": "39 jewels.\n#### 39"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Identify the cost of the foot-long fish sub, which is $40.\n2. Estimate the cost of the six-inch cold-cut combo sub, which is three times the cost of the foot-long fish sub.\n3. Compute the total cost by adding the cost of the foot-long fish sub and the six-inch cold-cut combo sub.",
+      "quality": 1.0,
+      "final_key": "160",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $40\n\nNext step: Estimate the cost of the six-inch cold-cut combo sub.",
+        "verifier": "VERDICT: passthrough\n#### 160",
+        "step_2": "step_2: RESULT: $40 * 3 = $120\n\nNext step: Compute the total cost.\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "RESULT: $160",
+        "aggregator": "step_3: RESULT: $160\n\n#### 160"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

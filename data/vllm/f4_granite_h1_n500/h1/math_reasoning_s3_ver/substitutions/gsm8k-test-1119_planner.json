@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1119",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the time Megan took to walk the dog. Since it took her 2 hours longer than Amalia, Megan's time is 4 hours (Amalia's time) + 2 hours = 6 hours.\n2. Calculate the time Dior took to do laundry. Since Dior took well over 4 hours longer than Amalia, Dior's time is 4 hours (Amalia's time) + (well over 4 hours). For the purpose of this plan, we'll represent \"well over 4 hours\" as x, so Dior's time is 4 + x hours.\n3. Add up the total time taken by all three. This is Amalia's time (4 hours) + Megan's time (6 hours) + Dior's time (4 + x hours) = 4 + 6 + (4 + x) = 14 + x hours.\n\nNote: The exact total time cannot be determined without knowing the specific value of x (the \"well over 4 hours\" Dior took).",
+  "reference_key": null,
+  "final_key_plus": "14",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 6 hours",
+    "verifier": "VERDICT: passthrough\n#### 14",
+    "step_2": "step_2: RESULT: 4 + x hours\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 4 + 6 + (4 + x) = 14 + x hours\n\nRESULT: 14 + x hours",
+    "aggregator": "14 + x hours\n#### 14 + x"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of Post-it notes Candice used at work: 220 cups of coffee \u00d7 1 note per cup = 220 notes.\n2. Determine the number of Post-it notes Candice had after purchasing the package: 80 initial notes + 23 remaining notes = 103 notes.\n3. Find out how many Post-it notes were in the package by subtracting the work usage from the total post-purchase count: 103 notes (total after purchase) - 220 notes (used at work) = 18 notes.",
+      "quality": 1.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total number of Post-it notes Candice used at work:\n220 cups of coffee \u00d7 1 note per cup = 220 notes.\n\nRESULT: 220 notes.",
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "step_2": "2. Determine the number of Post-it notes Candice had after purchasing the package:\n80 initial notes + 23 remaining notes = 103 notes.\n\nRESULT: 103 notes.",
+        "step_3": "3. Find out how many Post-it notes were in the package by subtracting the work usage from the total post-purchase count:\n103 notes (total after purchase) - 220 notes (used at work) = 18 notes.\n\nRESULT: 18 notes.",
+        "aggregator": "1. Calculate Megan's chore duration:\nMegan's chore duration = Amalia's duration + 2 hours\nMegan's chore duration = 4 hours + 2 hours = 6 hours.\n\n2. Determine Dior's chore duration:\nDior's chore duration = Amalia's duration + 4 hours\nDior's chore duration = 4 hours + 4 hours = 8 hours.\n\n3. Sum up all the chores' durations:\nTotal chores duration = Amalia's duration + Megan's duration + Dior's duration\nTotal chores duration = 4 hours + 6 hours + 8 hours = 18 hours.\n\n#### 18"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the duration Megan spent walking the dog. Given it extended by 2 hours beyond Amalia, Megan's time is 4 hours (Amalia's time) + 2 hours = 6 hours.\n2. Estimate the time Dior allocated for laundry. With Dior exceeding Amalia's time by more than 4 hours, Dior's time is 4 hours (Amalia's time) + (over 4 hours). For this calculation, we'll denote \"over 4 hours\" as y, so Dior's time is 4 + y hours.\n3. Sum up the collective time for all three. This consists of Amalia's time (4 hours) plus Megan's time (6 hours) plus Dior's time (4 + y hours) = 4 + 6 + (4 + y) = 14 + y hours.\n\nNote: The exact total time remains uncertain as we lack the precise value of y (the \"over 4 hours\" Dior took).",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 6 hours",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "step_2": "step_2: RESULT: 4 + (over 4 hours) = 4 + y hours\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 4 + 4 + y = 8 + y hours\n\nEND: 8 + y hours",
+        "aggregator": "step_3: RESULT: 4 + 4 + y = 8 + y hours\n\nFinal answer: 8 + y hours\n#### 8 + y"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

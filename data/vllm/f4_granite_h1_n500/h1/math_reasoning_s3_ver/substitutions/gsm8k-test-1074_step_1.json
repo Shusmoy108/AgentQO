@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1074",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Calculate half of 500:\n   RESULT: 250",
+  "reference_key": "250",
+  "final_key_plus": "750",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Calculate the full 500:\n   RESULT: 500\n\nNow, add the results from step 1 and step 2 to find the total number of pieces Teddy placed during that hour.\n\nRESULT: 750",
+    "step_3": "RESULT: 750",
+    "verifier": "VERDICT: passthrough\n#### 750",
+    "aggregator": "step_3: RESULT: 750\n\n#### 750"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "251",
+      "reference_key": "250",
+      "key_differs": true,
+      "text": "1. Calculate half of 500:\n   RESULT: 251",
+      "quality": 0.0,
+      "final_key": "751",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2. Calculate the full 500 pieces from the second puzzle:\n   RESULT: 500\n\nNow, let's sum the results from both steps to find the total number of pieces Teddy placed during that hour.\n\nFinal result:\nRESULT: 751",
+        "step_3": "RESULT: 751",
+        "verifier": "VERDICT: passthrough\n#### 751",
+        "aggregator": "step_3: RESULT: 751\n\n#### 751"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "500",
+      "reference_key": "250",
+      "key_differs": true,
+      "text": "RESULT: Teddy placed 250 puzzle pieces from the first half of a 500 piece puzzle.",
+      "quality": 1.0,
+      "final_key": "750",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Teddy placed 500 puzzle pieces from the second 500 piece puzzle.\nRESULT: Teddy placed 750 puzzle pieces during that hour.",
+        "step_3": "RESULT: Teddy placed 750 puzzle pieces during that hour.",
+        "verifier": "VERDICT: passthrough\n#### 750",
+        "aggregator": "step_3: RESULT: Teddy placed 750 puzzle pieces during that hour.\n#### 750"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

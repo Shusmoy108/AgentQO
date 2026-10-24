@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1287",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 24",
+  "reference_key": "24",
+  "final_key_plus": "72",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 48",
+    "step_3": "step_3: RESULT: 24 + 48 = 72",
+    "verifier": "VERDICT: passthrough\n#### 72",
+    "aggregator": "step_3: RESULT: 24 (age of the older brother) + 48 (age of the 12-year-old brother) = 72\n\n#### 72"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "25",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "RESULT: 25",
+      "quality": 0.0,
+      "final_key": "72",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 48\n\nCarry out step 3.\n\nRESULT: 72",
+        "step_3": "RESULT: 72",
+        "verifier": "VERDICT: passthrough\n#### 72",
+        "aggregator": "step_3: RESULT: 72\n\nFinal Answer: 72\n#### 72"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "48",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "1. Calculate the total number of class hours John attends:\n   - Each class session is 2 hours long, and he attends 4 sessions per week.\n   - Over 6 weeks, the total class hours are 2 hours/session * 4 sessions/week * 6 weeks = 48 hours.\n\nRESULT: 48 hours",
+      "quality": 1.0,
+      "final_key": "84",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2. Calculate the total age of the brothers:\n   - One brother is 12 years old.\n   - The older brother is twice as old as the 12-year-old, so he is 12 * 2 = 24 years old.\n   - The total age of the two brothers is 12 + 24 = 36 years.\n\nRESULT: 36 years",
+        "step_3": "3. Sum up the ages of all siblings:\n   - Total age of sisters = 16 years/sister * 3 sisters = 48 years.\n   - Total age of brothers = 12 years + 24 years = 36 years.\n   - Total age of all siblings = 48 years (sisters) + 36 years (brothers) = 84 years.\n\nRESULT: 84 years",
+        "verifier": "VERDICT: passthrough\n#### 84",
+        "aggregator": "84 years #### 84"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

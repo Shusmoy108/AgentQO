@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-12",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 7 lemons * $1.5/lemon = $10.5",
+  "reference_key": "10.5",
+  "final_key_plus": "12",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $10.5 (annual profit) - $3 (watering and feeding) = $7.5 (net annual income)\n\nCarry out step 3.\n\nEND: 12 years",
+    "step_3": "step_3: RESULT: $90 (initial cost) / $7.5 (net annual income) = 12 years\n\nEND: 12 years",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "aggregator": "12 years\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "10.5",
+      "reference_key": "10.5",
+      "key_differs": false,
+      "text": "RESULT: 11.5 lemons * $1.5/lemon = $10.5",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $10.5 (annual profit) - $3 (watering and feeding) = $7.5 (net annual income)\n\nRESULT: 12.0",
+        "step_3": "step_3: RESULT: $90 (initial cost) / $7.5 (net annual income) = 12.0\n\nRESULT: 12.0",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "12.0\n#### 12.0"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "12",
+      "reference_key": "10.5",
+      "key_differs": true,
+      "text": "Calculation:\nAnnual profit = 7 lemons * $1.5/lemon = $10.5\n\nRESULT: 12",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Calculation:\nNet annual income = Annual profit - Expenses\nNet annual income = $10.5 - $3 = $7.5\n\nRESULT: 12",
+        "step_3": "step_3: Calculation:\nNumber of years to break even = Initial cost / Net annual income\nNumber of years to break even = $90 / $7.5 = 12 years\n\nRESULT: 12",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "12\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

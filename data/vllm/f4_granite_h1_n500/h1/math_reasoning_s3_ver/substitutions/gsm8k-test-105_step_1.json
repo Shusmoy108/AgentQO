@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-105",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Amir eats 5 cookies.\n\nRESULT: 5",
+  "reference_key": "5",
+  "final_key_plus": "20",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Cody eats three times as many as Amir, so Cody eats 3 * 5 = 15 cookies.\n\nRESULT: 15",
+    "step_3": "step_3: Total = Amir's cookies + Cody's cookies = 5 + 15 = 20 cookies.\n\nRESULT: 20",
+    "verifier": "VERDICT: passthrough\n#### 20",
+    "aggregator": "20\n#### 20"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "Amir eats 5 cookies.\n\nRESULT: 6",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Cody eats three times as many as Amir, so Cody eats 3 * 5 = 15 cookies.\n\nRESULT: 15",
+        "step_3": "step_3: Total = Amir's cookies + Cody's cookies = 5 + 15 = 20 cookies.\n\nRESULT: 20",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "aggregator": "20\n#### 20"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "15",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "Process executed: Cody's cookies = 3 * Amir's cookies\n\nGiven: Amir eats 5 cookies.\n\nCalculation: Cody eats 3 * 5 cookies = 15 cookies.\n\nRESULT: 15 cookies.",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Process executed: Cody's cookies = 3 * Amir's cookies\n\nGiven: Amir eats 5 cookies.\n\nCalculation: Cody eats 3 * 5 cookies = 15 cookies.\n\nRESULT: 15 cookies.",
+        "step_3": "step_3: Process executed: Total cookies eaten by both\n\nGiven: Amir eats 5 cookies, Cody eats 15 cookies.\n\nCalculation: Total = Amir's cookies + Cody's cookies = 5 + 15 = 20 cookies.\n\nRESULT: 20 cookies.",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "aggregator": "20 cookies. #### 20"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

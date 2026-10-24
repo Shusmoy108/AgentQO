@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1182",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the cost per book by dividing the total amount spent on books by the number of books bought.\n2. Divide the total amount allocated to each school by the cost per book to find out how many books can be bought per school.\n3. Since the total amount is distributed equally among the three schools, divide the total amount allocated per school by three to find out how many books can be bought per school.",
+  "reference_key": null,
+  "final_key_plus": "9000",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Calculate the cost per book: $27000 / 100 books = $270 per book.\n\nRESULT: $270",
+    "verifier": "VERDICT: passthrough\n#### 9000",
+    "step_2": "step_2: 2. Divide the total amount allocated to each school by the cost per book: $27000 / $270 = 100 books per school.\n\nRESULT: 100",
+    "step_3": "step_3: 3. Divide the total amount allocated per school by three to find out how many books can be bought per school: $27000 / 3 schools = 9000 books per school.\n\nRESULT: 9000",
+    "aggregator": "9000\n#### 9000"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the cost of the small pizza: Sally buys a small pizza for $8.\n2. Determine the cost of the family-size pizza: This pizza costs 3 times the price of the small pizza, so it costs 3 * $8 = $24.\n3. Find the total amount Sally spends: Add the cost of the small pizza to the cost of the family-size pizza, which is $8 + $24 = $32.\n\nPLAN:\n1. Identify the cost of the small pizza.\n2. Calculate the cost of the family-size pizza, which is 3 times the small pizza's cost.\n3. Sum the costs of both pizzas to find the total amount spent.",
+      "quality": 1.0,
+      "final_key": "1800",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. The cost of the small pizza is $8.\n\nRESULT: 8",
+        "verifier": "VERDICT: passthrough\n#### 1800",
+        "step_2": "step_2: 2. The cost of the family-size pizza is 3 * $8 = $24.\n\nRESULT: 24",
+        "step_3": "3. The total amount Sally spends is $8 (small pizza) + $24 (family-size pizza) = $32.\n\nRESULT: 32",
+        "aggregator": "step_1: Calculate the total number of books Bob can buy with $27000.\nBob can buy $27000 / $500 = 54 sets of 100 books.\n\nstep_2: Determine the total number of books Bob can buy.\nTotal books = 54 sets * 100 books/set = 5400 books.\n\nstep_3: Divide the total number of books by the number of schools to find out how many books per school.\nBooks per school = 5400 books / 3 schools = 1800 books/school.\n\n#### 1800"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the cost per book by dividing the entire sum expended on books by the total number of books procured.\n2. Divide the overall budget designated for each school by the cost per book to determine the quantity of books that can be procured per school.\n3. Given the total budget is evenly split among the three schools, divide the overall budget allocated per school by three to ascertain the number of books that can be procured per school.",
+      "quality": 0.0,
+      "final_key": "9000",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Cost per book = Total budget / Number of books\n   = $27000 / 100\n   = $270\n\nRESULT: $270",
+        "verifier": "VERDICT: passthrough\n#### 9000",
+        "step_2": "step_2: 2. Books per school = Total budget per school / Cost per book\n   = $27000 / $270\n   = 100 books\n\nRESULT: 100",
+        "step_3": "step_3: 3. Books per school = Total budget per school / Number of schools\n   = $27000 / 3\n   = 9000 books\n\nRESULT: 9000",
+        "aggregator": "9000 books per school. #### 9000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

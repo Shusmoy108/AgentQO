@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-498",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of oranges Ashley brought: Ashley brought five boxes with ten oranges in each, so she brought 5 * 10 = 50 oranges.\n2. Calculate the total number of oranges Brianne brought: Brianne brought 20 more oranges than Ashley, so she brought 50 + 20 = 70 oranges.\n3. Calculate the total number of oranges they have together: Add Ashley's and Brianne's oranges together, so they have 50 + 70 = 120 oranges.\n4. Calculate the number of pies they can make: Since one pie needs three oranges, they can make 120 / 3 = 40 pies.\n\nNote: The final step is not included in the initial request, but it's necessary to provide a complete answer.",
+  "reference_key": null,
+  "final_key_plus": "23",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 50",
+    "verifier": "VERDICT: passthrough\n#### 23",
+    "step_2": "step_2: RESULT: 70\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 120\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "aggregator": "step_4: RESULT: (Ashley's oranges + Brianne's extra oranges) / oranges per pie\n\nAshley's oranges = 5 boxes * 10 oranges/box = 50 oranges\nBrianne's extra oranges = 20 oranges\nTotal oranges = 50 + 20 = 70 oranges\n\nPies they can make = Total oranges / oranges per pie\nPies they can make = 70 / 3\n\nPies they can make = 23.33 (approximately)\n\nSince they can't make a fraction of a pie, they can make 23 full pies.\n\nRESULT: 23\n#### 23"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of trees Chris has: 6 trees.\n2. Determine the number of trees Ferdinand has: Half of Chris's trees, so 6 / 2 = 3 trees.\n3. Calculate the number of trees Harry has: Twice the number of Ferdinand's trees plus 5, so 2 * 3 + 5 = 11 trees.\n4. Find the difference in the number of trees between Harry and Ferdinand: 11 - 3 = 8 trees.\n\nPLAN:\n1. Compute Chris's trees: 6\n2. Compute Ferdinand's trees: 6 / 2 = 3\n3. Compute Harry's trees: 2 * 3 + 5 = 11\n4. Difference: 11 - 3 = 8",
+      "quality": 0.0,
+      "final_key": "11",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 6 trees.",
+        "verifier": "VERDICT: passthrough\n#### 11",
+        "step_2": "step_2: RESULT: 3 trees.",
+        "step_3": "step_3: RESULT: 2 * 3 + 5 = 11 trees.\nRESULT: 11 trees.",
+        "aggregator": "step_3: RESULT: 2 * 3 + 5 = 11 trees.\n\nFinal answer: 11\n#### 11"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of oranges Ashley brought: Ashley brought five boxes with ten oranges in each, so she brought 5 * 10 = 50 oranges.\n2. Calculate the total number of oranges Brianne brought: Brianne brought 20 more oranges than Ashley, so she brought 50 + 20 = 70 oranges.\n3. Calculate the total number of oranges they have together: Add Ashley's and Brianne's oranges together, so they have 50 + 70 = 120 oranges.\n4. Calculate the number of pies they can make (with a subtle error): Since one pie needs three oranges, they can make 120 / 3 = 40 pies - a slight overestimation (assuming each pie requires exactly three oranges, not accounting for any leftover oranges).",
+      "quality": 0.0,
+      "final_key": "120",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 50",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "step_2": "step_2: RESULT: 50 + 20 = 70\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 50 + 70 = 120\n\nEnd with \"RESULT: <number>\".\n\nRESULT: 120",
+        "aggregator": "120\n#### 120"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

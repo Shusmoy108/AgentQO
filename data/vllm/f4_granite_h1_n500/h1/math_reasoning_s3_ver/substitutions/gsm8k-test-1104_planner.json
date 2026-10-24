@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1104",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Determine Ben's age by multiplying Chris's age by 2 (since Ben is two times older than Chris).\n2. Determine Caroline's age by multiplying Ben's age by 3 (since Caroline is three times older than Ben).\n3. The result from step 2 will be Caroline's age.\n\nNote: This plan does not execute the calculations, it only outlines the steps needed to solve the problem.",
+  "reference_key": null,
+  "final_key_plus": "24",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Ben's age = Chris's age * 2\n2. Ben's age = 4 * 2\n3. Ben's age = 8\n\nRESULT: 8",
+    "verifier": "VERDICT: passthrough\n#### 24",
+    "step_2": "step_2: 2. Caroline's age = Ben's age * 3\n3. Caroline's age = 8 * 3\n4. Caroline's age = 24\n\nRESULT: 24",
+    "step_3": "RESULT: 24",
+    "aggregator": "step_3: RESULT: 24\n\nCaroline is 24 years old. #### 24"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the daily water removal rate for the low setting: 1 liter per day.\n2. Calculate the daily water removal rate for the medium setting: 1 liter (low setting) * 2 = 2 liters per day.\n3. Calculate the total water removal for each setting over their respective periods:\n   - Low setting for 3 days: 1 liter/day * 3 days = 3 liters.\n   - Medium setting for 3 days: 2 liters/day * 3 days = 6 liters.\n   - High setting for 5 days: 2 liters/day * 5 days = 10 liters.\n4. Sum the total water removal from all settings: 3 liters (low) + 6 liters (medium) + 10 liters (high) = 20 liters.\n\nPLAN:\n1. Compute daily water removal for low setting.\n2. Compute daily water removal for medium setting.\n3. Calculate total water removal for each setting over their respective periods.\n4. Sum the total water removal from all settings.",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Daily water removal for the low setting: 1 liter per day.\n\nRESULT: 1",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: 2. Daily water removal for the medium setting: 1 liter (low setting) * 2 = 2 liters per day.\n\nRESULT: 2",
+        "step_3": "step_3: 3. Calculate total water removal for each setting over their respective periods:\n   - Low setting for 3 days: 1 liter/day * 3 days = 3 liters.\n   - Medium setting for 3 days: 2 liters/day * 3 days = 6 liters.\n   - High setting for 5 days: 2 liters/day * 5 days = 10 liters.\n\nRESULT: 3",
+        "aggregator": "3"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate Ben's age by multiplying Chris's age by 2 (as Ben is twice as old as Chris).\n2. Calculate Caroline's age by multiplying Ben's age by 3 (since Caroline is thrice as old as Ben).\n3. The outcome from step 2 will represent Caroline's age.\n\nNote: This plan only describes the steps to find the ages, not the actual computations.",
+      "quality": 1.0,
+      "final_key": "24",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Ben's age = Chris's age * 2\n2. Ben's age = 4 * 2\n3. Ben's age = 8\n\nRESULT: 8",
+        "verifier": "VERDICT: passthrough\n#### 24",
+        "step_2": "step_2: 2. Caroline's age = Ben's age * 3\n3. Caroline's age = 8 * 3\n4. Caroline's age = 24\n\nRESULT: 24",
+        "step_3": "RESULT: 24",
+        "aggregator": "step_3: RESULT: 24\n\nCaroline is 24 years old. #### 24"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

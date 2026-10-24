@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-914",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total miles Jon drives in a month by multiplying his daily mileage by the number of days in the month.\n2. Divide the total monthly mileage by the mileage required for a tune-up to find out how many tune-ups are needed.\n3. Since Jon needs a tune-up every 1000 miles, divide the total monthly mileage by 1000 to find out how many tune-ups are required.",
+  "reference_key": null,
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Total miles Jon drives in a month = 100 miles/day * 30 days = 3000 miles\n\nRESULT: 3000",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "step_2": "step_2: 2. Tune-ups needed = Total miles / Mileage for tune-up = 3000 miles / 1000 miles = 3\n\nRESULT: 3",
+    "step_3": "step_3: 3. Tune-ups required = Total miles / Mileage for one tune-up = 3000 miles / 1000 miles = 3\n\nRESULT: 3",
+    "aggregator": "3\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total cost of the child ticket and adult ticket:\n   - Child ticket: $10\n   - Adult ticket: $12\n   - Total cost: $10 + $12 = $22\n\n2. Determine the amount given to the cashier by subtracting the change from the total cost:\n   - Change received: $8\n   - Total cost: $22\n   - Amount given to the cashier: $22 - $8 = $14\n\n3. Confirm the final answer:\n   - The cashier was given $14 in total.",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate the total cost of the child ticket and adult ticket:\n   - Child ticket: $10\n   - Adult ticket: $12\n   - Total cost: $10 + $12 = $22\n\nRESULT: $22",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "2. Determine the amount given to the cashier by subtracting the change from the total cost:\n   - Change received: $8\n   - Total cost: $22\n   - Amount given to the cashier: $22 - $8 = $14\n\nRESULT: $14",
+        "step_3": "3. Confirm the final answer:\n   - The cashier was given $14 in total.\n\nRESULT: $14",
+        "aggregator": "Step 1: Calculate the total miles Jon drives in a month.\nJon drives 100 miles a day for 30 days, so he drives 100 * 30 = 3000 miles in a month.\n\nStep 2: Determine how many tune-ups are needed in a month.\nJon's car needs a tune-up every 1000 miles. So, for 3000 miles, he would need 3000 / 1000 = 3 tune-ups in a month.\n\n#### 3"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total miles Jon drives in a month by multiplying his daily mileage by the number of days in the month.\n2. Determine the number of tune-ups needed by dividing the total monthly mileage by the mileage required for a tune-up.\n3. Given that Jon necessitates a tune-up every 1100 miles, divide the total monthly mileage by 1100 to ascertain the tune-up frequency.",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Total miles Jon drives in a month = 100 miles/day * 30 days = 3000 miles\n\nRESULT: 3000",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: 2. Number of tune-ups needed = Total miles in a month / Mileage for a tune-up\nRESULT: 3000 / 1100 = 2.72727272727\n\nSince Jon can't have a fraction of a tune-up, we'll round up to the nearest whole number.\n\nRESULT: 3",
+        "step_3": "step_3: 3. Rounding up to the nearest whole number, Jon requires 3 tune-ups in a 30-day month.\n\nRESULT: 3",
+        "aggregator": "3\n#### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

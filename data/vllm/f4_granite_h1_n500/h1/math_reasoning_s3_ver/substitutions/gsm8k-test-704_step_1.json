@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-704",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 5",
+  "reference_key": "5",
+  "final_key_plus": "5",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 15\n\nCarry out step 3.\n\nRESULT: $5",
+    "step_3": "RESULT: $5",
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "aggregator": "step_2: Calculate the total parts of the ratio.\nTotal parts = 3 (Gerald's share) + 2 (Julia's share) = 5\n\nstep_3: Determine Gerald's share value.\nGerald's share value = (3/5) * $100 = $60\n\nstep_4: Calculate remaining money after Gerald's expenditure.\nRemaining money = Gerald's share value - $10 = $60 - $10 = $5\n\n#### 5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: 6",
+      "quality": 0.0,
+      "final_key": "35",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 15 parts * 3 = 45\n\nRESULT: 45",
+        "step_3": "step_3: RESULT: 45 - 10 = 35\n\nRESULT: 35",
+        "verifier": "VERDICT: passthrough\n#### 35",
+        "aggregator": "35\n#### 35"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "100",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "RESULT: $100",
+      "quality": 0.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Determine Gerald's share (15 parts)\nCalculation: 5 parts * 3 = 15 parts\nRESULT: 15 parts",
+        "step_3": "3. Calculate Gerald's remaining money: 15 parts - 10 = $5\n\nRESULT: $5",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "3. Calculate Gerald's remaining money: 15 parts - 10 = $5\n\nRESULT: $5\n#### 5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

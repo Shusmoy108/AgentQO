@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-72",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Calculate the total money raised from selling brownies.\n   - Multiply the number of brownies sold by the price per slice: 43 brownies * $3/slice = $129.\n\nRESULT: $129",
+  "reference_key": "129",
+  "final_key_plus": "221",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "2. Calculate the total money raised from selling cheesecakes.\n   - Multiply the number of cheesecake slices sold by the price per slice: 23 slices * $4/slice = $92.\n\nRESULT: $92",
+    "step_3": "3. Sum the money from both types of sales to find the total amount raised.\n   - Add the money from brownies and cheesecakes: $129 (from brownies) + $92 (from cheesecakes) = $221.\n\nRESULT: $221",
+    "verifier": "VERDICT: passthrough\n#### 221",
+    "aggregator": "221\n#### 221"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "130",
+      "reference_key": "129",
+      "key_differs": true,
+      "text": "1. Calculate the total money raised from selling brownies.\n   - Multiply the number of brownies sold by the price per slice: 43 brownies * $3/slice = $129.\n\nRESULT: 130",
+      "quality": 1.0,
+      "final_key": "221",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Calculate the total money raised from selling cheesecakes.\n   - Multiply the number of cheesecake slices sold by the price per slice: 23 slices * $4/slice = $92.\n\nRESULT: 92",
+        "step_3": "3. Sum the money from both types of sales to find the total amount raised.\n   - Add the money from brownies and cheesecakes: $129 (from brownies) + $92 (from cheesecakes) = $221.\n\nRESULT: 221",
+        "verifier": "VERDICT: passthrough\n#### 221",
+        "aggregator": "221\n#### 221"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "129",
+      "key_differs": true,
+      "text": "1. RESULT: $129 (from selling 43 brownies at $3 each)",
+      "quality": 1.0,
+      "final_key": "221",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. RESULT: $92 (from selling 23 cheesecake slices at $4 each)\nEnd with \"RESULT: <number>\".",
+        "step_3": "3. RESULT: $129 (from brownies) + $92 (from cheesecakes) = $221.\nRESULT: $221.",
+        "verifier": "VERDICT: passthrough\n#### 221",
+        "aggregator": "step_3: 3. RESULT: $129 (from brownies) + $92 (from cheesecakes) = $221.\nRESULT: $221.\n#### $221."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

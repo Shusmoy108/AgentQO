@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-552",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $300",
+  "reference_key": "300",
+  "final_key_plus": "450",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 0.10 * $1500 = $150\n\nEND: $150",
+    "step_3": "step_3: RESULT: $300 (initial commission) + $150 (additional commission) = $450\n\nEND: RESULT: $450",
+    "verifier": "VERDICT: passthrough\n#### 450",
+    "aggregator": "RESULT: $450\n#### 450"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "301",
+      "reference_key": "300",
+      "key_differs": true,
+      "text": "RESULT: 301",
+      "quality": 1.0,
+      "final_key": "450",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 150\n\nTotal commission = Initial commission + Additional commission\nTotal commission = $300 + $150 = $450\n\nRESULT: $450",
+        "step_3": "Total commission = Initial commission + Additional commission\nTotal commission = $300 + $150 = $450\n\nRESULT: $450",
+        "verifier": "VERDICT: passthrough\n#### 450",
+        "aggregator": "RESULT: $450\n#### 450"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "110",
+      "reference_key": "300",
+      "key_differs": true,
+      "text": "1. Compute the tomato yield: 5 plants * 22 tomatoes/plant = 110 tomatoes.\n\nRESULT: 110 tomatoes",
+      "quality": 1.0,
+      "final_key": "450",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Compute the additional commission for the remaining $1500.\nAdditional commission = 10% of $1500 = 0.10 * $1500 = $150\n\nRESULT: $150",
+        "step_3": "3. Total commission = Initial commission + Additional commission\nRESULT: $450",
+        "verifier": "VERDICT: passthrough\n#### 450",
+        "aggregator": "step_3: 3. Total commission = Initial commission + Additional commission\n\nInitial commission = 30% of $1000 = 0.30 * $1000 = $300\nAdditional commission = 10% of ($2500 - $1000) = 0.10 * $1500 = $150\n\nTotal commission = $300 + $150 = $450\n\n#### 450"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

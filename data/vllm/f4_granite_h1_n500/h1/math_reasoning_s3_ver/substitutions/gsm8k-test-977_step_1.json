@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-977",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 32 hours",
+  "reference_key": "32",
+  "final_key_plus": "4",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 32 ounces\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 32 ounces / 8 ounces/bottle = 4 bottles.\nRESULT: 4 bottles.",
+    "verifier": "VERDICT: passthrough\n#### 4",
+    "aggregator": "step_3: RESULT: 32 ounces / 8 ounces/bottle = 4 bottles.\n\n#### 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "33",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "RESULT: 33 hours",
+      "quality": 1.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 32 ounces (32 hours * 1 ounce/hour)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 4 bottles (32 ounces / 8 ounces/bottle)",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "aggregator": "step_3: RESULT: 4 bottles (32 ounces / 8 ounces/bottle)\n\n#### 4"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "256",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "(32 hours / 1 day * 8 days) = 256 hours in total.\nRESULT: 256",
+      "quality": 0.0,
+      "final_key": "32",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 256 hours * 1 ounce/hour = 256 ounces.\nRESULT: 256",
+        "step_3": "step_3: 256 ounces / 8 ounces/bottle = 32 bottles.\nRESULT: 32",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "aggregator": "32 bottles. #### 32"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

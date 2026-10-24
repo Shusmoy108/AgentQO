@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-296",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 1 kg",
+  "reference_key": "1",
+  "final_key_plus": "6",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 7 kg\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 42 kg / 7 kg/week = 6 weeks\n\nRESULT: 6 weeks",
+    "verifier": "VERDICT: passthrough\n#### 6",
+    "aggregator": "RESULT: 6 weeks\n#### 6"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "2",
+      "reference_key": "1",
+      "key_differs": true,
+      "text": "RESULT: 2 kg",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 7 kg\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 42 kg / 7 kg/week = 6 weeks\nRESULT: 6 weeks",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "aggregator": "step_3: RESULT: 42 kg / 7 kg/week = 6 weeks\n\n#### 6"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "5",
+      "reference_key": "1",
+      "key_differs": true,
+      "text": "1 kg per day, thus 1 kg for 5 members equals 5 kg per day total for the household.\n\nRESULT: 5",
+      "quality": 0.0,
+      "final_key": "1.2",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: The total weekly rice consumption is 5 kg/day * 7 days = 35 kg.\n\nRESULT: 35",
+        "step_3": "step_3: The rice will last for 42 kg / 35 kg/week = 1.2 weeks.\n\nRESULT: 1.2",
+        "verifier": "VERDICT: passthrough\n#### 1.2",
+        "aggregator": "1.2\n#### 1.2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

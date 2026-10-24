@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-957",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "RESULT: 5 * 3 = 15",
+  "reference_key": "15",
+  "final_key_plus": "75",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 5 * 15 = 75\n\nRESULT: 75",
+    "verifier": "VERDICT: passthrough\n#### 75",
+    "aggregator": "step_3: RESULT: 5 * 15 = 75\n\nFinal answer: Shawna's father is 75 years old. #### 75"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "15",
+      "reference_key": "15",
+      "key_differs": false,
+      "text": "RESULT: 16 * 3 = 15",
+      "quality": 0.0,
+      "final_key": "225",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 45 * 5 = 225",
+        "verifier": "VERDICT: passthrough\n#### 225",
+        "aggregator": "step_3: RESULT: 225\n\nShawna's father is 225 years old.\n\n#### 225"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "45",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "step_2: RESULT: 9\n\nCarry out step 3.\n\nRESULT: 45",
+      "quality": 1.0,
+      "final_key": "45",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 45",
+        "verifier": "VERDICT: passthrough\n#### 45",
+        "aggregator": "step_3: RESULT: 45\n\nShawna's father is 45 years old.\n\n#### 45"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

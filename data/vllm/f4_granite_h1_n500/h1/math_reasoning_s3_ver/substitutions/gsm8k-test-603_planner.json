@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-603",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the rate at which Ruiz makes chocolates per hour: Ruiz makes 120 pounds in 2 hours, so his rate is 120/2 = 60 pounds per hour.\n2. Calculate the rate at which Marissa makes chocolates per hour: Marissa makes 3/4 times as many pounds as Ruiz in an hour, so her rate is (3/4)*60 = 45 pounds per hour.\n3. Calculate the total amount of chocolate they make in 12 hours: Ruiz's total for 12 hours is 60 pounds/hour * 12 hours = 720 pounds. Marissa's total for 12 hours is 45 pounds/hour * 12 hours = 540 pounds. The combined total is 720 + 540 = 1260 pounds.",
+  "reference_key": null,
+  "final_key_plus": "1260",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "Ruiz makes 60 pounds of chocolates per hour.\n\nRESULT: 60",
+    "verifier": "VERDICT: passthrough\n#### 1260",
+    "step_2": "step_2: Marissa makes 45 pounds of chocolates per hour.\n\nRESULT: 45",
+    "step_3": "step_3: Combined total for 12 hours is 720 (Ruiz) + 540 (Marissa) = 1260 pounds.\n\nRESULT: 1260",
+    "aggregator": "1260\n#### 1260"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of chocolate bars adults will receive:\n   - Each adult gets 6 chocolate bars.\n   - There are 4 adults.\n   - Total chocolate bars for adults = 6 bars/adult * 4 adults = 24 bars.\n\n2. Determine the remaining chocolate bars after adults' share:\n   - Total chocolate bars = 8 packets * 5 bars/packet = 40 bars.\n   - Remaining chocolate bars = 40 bars - 24 bars = 16 bars.\n\n3. Divide the remaining chocolate bars among the children:\n   - There are 8 children.\n   - Each child will get 16 bars / 8 children = 2 chocolate bars.\n\nPLAN: The adults will receive 24 chocolate bars, leaving 16 bars for the children. Each child will get 2 chocolate bars.",
+      "quality": 0.0,
+      "final_key": "210",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 24",
+        "verifier": "VERDICT: passthrough\n#### 210",
+        "step_2": "step_2: RESULT: 16 bars for children (8 children * 2 bars/child)",
+        "step_3": "step_3: RESULT: 16 bars for 8 children, each child gets 2 bars.\n\nRESULT: 16",
+        "aggregator": "step_4: Marissa's daily production = 120 pounds * (3/4) = 90 pounds\nstep_5: Total daily production = Ruiz's production + Marissa's production\nstep_5: Total daily production = 120 pounds + 90 pounds = 210 pounds\n\n#### 210"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the pace at which Ruiz crafts chocolates per hour: Ruiz produces 120 pounds in 2 hours, thus his pace is 120/2 = 60 pounds per hour.\n2. Determine the pace at which Marissa crafts chocolates per hour: Marissa surpasses Ruiz by producing 3/4 the amount of pounds in an hour, hence her pace is (3/4)*60 = 45 pounds per hour.\n3. Compute the overall quantity of chocolate they produce in 12 hours: Ruiz's total for 12 hours is 60 pounds/hour * 12 hours = 720 pounds. Marissa's total for 12 hours is 45 pounds/hour * 12 hours = 540 pounds. The cumulative total is 720 + 540 = 1265 pounds.",
+      "quality": 0.0,
+      "final_key": "1260",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: Ruiz produces 60 pounds of chocolates per hour.",
+        "verifier": "VERDICT: passthrough\n#### 1260",
+        "step_2": "step_2: RESULT: Marissa produces 45 pounds of chocolates per hour.\n\nCarry out step 3.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: Ruiz's total for 12 hours = 60 pounds/hour * 12 hours = 720 pounds.\nMarissa's total for 12 hours = 45 pounds/hour * 12 hours = 540 pounds.\nCumulative total = 720 + 540 = 1260 pounds.\n\nRESULT: 1260 pounds.",
+        "aggregator": "1260 pounds. #### 1260"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

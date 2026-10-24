@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-982",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of football players: 20% of 30 students = 0.20 * 30 = 6 students.\n2. Subtract the number of football players from the total number of students to find the remaining students: 30 - 6 = 24 students.\n3. Calculate the number of cheerleaders or band members: 25% of 24 students = 0.25 * 24 = 6 students.\n4. Add the number of football players and cheerleaders or band members to find the total number of students leaving early: 6 + 6 = 12 students.\n\nSo, 12 students are leaving early.",
+  "reference_key": null,
+  "final_key_plus": "6",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "20% of 30 students = 0.20 * 30 = 6 students.\n\nRESULT: 6",
+    "verifier": "VERDICT: passthrough\n#### 6",
+    "step_2": "step_2: 24 students (total remaining after football players)\n\nRESULT: 24",
+    "step_3": "step_3: 25% of 24 students = 0.25 * 24 = 6 students.\n\nRESULT: 6",
+    "aggregator": "6 students are leaving early.\n#### 6"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, subtract the number of cookies Lani ate from the total number of cookies to find out how many were left for the jars: 55 - 5 = 50 cookies.\n2. Next, divide the remaining cookies by the number of jars to determine how many cookies are in each jar: 50 \u00f7 5 = 10 cookies per jar.\n3. Finally, confirm the result by checking if all cookies were accounted for: 10 cookies/jar \u00d7 5 jars = 50 cookies.",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 50",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "step_2": "step_2: RESULT: 50 cookies per jar\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 50 cookies per jar \u00d7 5 jars = 250 cookies.\n\nRESULT: 250",
+        "aggregator": "step_1: Calculate the number of football players.\n20% of 30 students = 0.20 \u00d7 30 = 6 students.\n\nstep_2: Determine the number of non-football players.\n30 students - 6 football players = 24 non-football players.\n\nstep_3: Calculate the number of cheerleaders or band members.\n25% of 24 non-football players = 0.25 \u00d7 24 = 6 students.\n\nstep_4: Find the total number of students leaving early.\n6 football players + 6 cheerleaders/band members = 12 students.\n\n#### 12"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the number of football players: 20% of 30 students = 0.20 * 30 = 6 students.\n2. Deduct the number of football players from the overall student count to ascertain the remaining students: 30 - 6 = 24 students.\n3. Compute the number of cheerleaders or band members: 25% of 24 students = 0.25 * 24 = 6 students.\n4. Sum the number of football players and cheerleaders or band members to ascertain the total number of students leaving early: 6 + 6 = 12 students.\n\nHence, 13 students are leaving early.",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "20% of 30 students are football players.\n\nCalculation: 0.20 * 30 = 6 students.\n\nRESULT: 6 students.",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "step_2": "step_2: Remaining students after deducting football players.\n\nCalculation: 30 - 6 = 24 students.\n\nRESULT: 24 students.",
+        "step_3": "step_3: 25% of the remaining students are cheerleaders or band members.\n\nCalculation: 0.25 * 24 = 6 students.\n\nRESULT: 6 students.",
+        "aggregator": "6 students. #### 6"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-956",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of non-work emails by subtracting the work emails from the total daily emails: 16 - 7 = 9 emails.\n2. Determine the number of family emails by taking two-thirds of the non-work emails: (2/3) * 9 = 6 emails.\n3. Calculate the number of emails to her boyfriend by taking one-third of the remaining non-work and family emails: (1/3) * (9 - 6) = 1 email.\n\nThe final output will be the number of emails sent to her boyfriend, which is 1.",
+  "reference_key": null,
+  "final_key_plus": "1",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Calculate the number of non-work emails: 16 - 7 = 9 emails.\n\nRESULT: 9",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "step_2": "step_2: 2. Determine the number of family emails: (2/3) * 9 = 6 emails.\n\nRESULT: 6",
+    "step_3": "step_3: 3. Calculate the number of emails to her boyfriend: (1/3) * (9 - 6) = 1 email.\n\nRESULT: 1",
+    "aggregator": "1\n#### 1"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the temperature difference between day and night: 45 degrees (day) - 33 degrees (night) = 12 degrees.\n2. Determine the additional warmth needed to reach the freezing point: 32 degrees (freezing point) - 33 degrees (night) = -1 degree.\n3. Compute the number of logs required: (-1 degree) / 5 degrees per log = -0.2 logs. Since Carson can't burn a negative number of logs, he needs to burn 0 logs during the night to prevent the pipes from freezing.",
+      "quality": 0.0,
+      "final_key": "0",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the temperature difference between day and night: 45 degrees (day) - 33 degrees (night) = 12 degrees.\n\nRESULT: 12",
+        "verifier": "VERDICT: passthrough\n#### 0",
+        "step_2": "step_2: 2. Determine the additional warmth needed to reach the freezing point: 32 degrees (freezing point) - 33 degrees (night) = -1 degree.\n\nRESULT: -1",
+        "step_3": "step_3: 3. Compute the number of logs required: (-1 degree) / 5 degrees per log = -0.2 logs. Since Carson can't burn a negative number of logs, he needs to burn 0 logs during the night to prevent the pipes from freezing.\n\nRESULT: 0",
+        "aggregator": "0\n#### 0"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the number of non-work emails by subtracting the work emails from the total daily emails: 16 - 7 = 9 emails.\n2. Determine the number of family emails by taking two-thirds of the non-work emails: (2/3) * 9 = 6 emails.\n3. Calculate the number of emails to her boyfriend by taking one-third of the remaining non-work and family emails: (1/3) * (9 - 6) = 1 email.\n\nThe final output will be the number of emails sent to her boyfriend, which is 1.\n\n[Error: The final output should state that the number of emails sent to her boyfriend is 1, but incorrectly states it as 6.]",
+      "quality": 1.0,
+      "final_key": "1",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 9",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "step_2": "step_2: RESULT: (2/3) * 9 = 6 emails to family.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: (1/3) * (9 - 6) = 1 email to her boyfriend.\n\nRESULT: 1",
+        "aggregator": "1\n#### 1"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

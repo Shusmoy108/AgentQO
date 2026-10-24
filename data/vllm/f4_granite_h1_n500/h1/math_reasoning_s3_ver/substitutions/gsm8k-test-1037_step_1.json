@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1037",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. The cost of Parmesan cheese is 2 pounds * $11/pound = $22.\nRESULT: $22",
+  "reference_key": "22",
+  "final_key_plus": "20",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. The cost of Mozzarella cheese is 3 pounds * $6/pound = $18.\nRESULT: $18",
+    "step_3": "3. The total expenditure is $22 (Parmesan) + $18 (Mozzarella) = $40.\nRESULT: $40",
+    "verifier": "VERDICT: passthrough\n#### 20",
+    "aggregator": "3. The total expenditure is $22 (Parmesan) + $18 (Mozzarella) = $40.\n\n#### 20"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "23",
+      "reference_key": "22",
+      "key_differs": true,
+      "text": "1. The cost of Parmesan cheese is 2 pounds * $11/pound = $22.\nRESULT: 23",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2. The cost of Mozzarella cheese is 3 pounds * $6/pound = $18.\nRESULT: 40",
+        "step_3": "3. The total expenditure for both cheeses is $22 (Parmesan) + $18 (Mozzarella) = $40.\nRESULT: 40",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "aggregator": "3. The total expenditure for both cheeses is $22 (Parmesan) + $18 (Mozzarella) = $40.\n\nAmor starts with $50. After buying the cheese, she will have:\n\n50 - 40 = 10 dollars left.\n\n#### 10"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "20",
+      "reference_key": "22",
+      "key_differs": true,
+      "text": "20 white shirts have collars.\n\nRESULT: 20",
+      "quality": 0.0,
+      "final_key": "40",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2:\nCost of Mozzarella cheese = 3 pounds * $6/pound = $18\n\nRESULT: 18",
+        "step_3": "step_3: Total expenditure = Cost of Parmesan + Cost of Mozzarella\n= $22 + $18\n= $40\n\nRESULT: 40",
+        "verifier": "VERDICT: passthrough\n#### 40",
+        "aggregator": "40\n#### 40"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

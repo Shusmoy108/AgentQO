@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-708",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $12",
+  "reference_key": "12",
+  "final_key_plus": "168",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 7 days/week * 2 weeks = 14 days\n\nCarry out step 3.\n\nRESULT: $12/day * 14 days = $168",
+    "step_3": "RESULT: $168",
+    "verifier": "VERDICT: passthrough\n#### 168",
+    "aggregator": "step_3: RESULT: $168\n\n#### 168"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "13",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 13",
+      "quality": 1.0,
+      "final_key": "168",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 14 days (7 days/week * 2 weeks)\n\nCarry out step 3.\n\nRESULT: $168",
+        "step_3": "RESULT: $168",
+        "verifier": "VERDICT: passthrough\n#### 168",
+        "aggregator": "step_3: RESULT: $168\n\n#### 168"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "8",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 8",
+      "quality": 1.0,
+      "final_key": "168",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 14 days * $12/day = $168\n\nRESULT: $168",
+        "step_3": "step_3: RESULT: $12/day * 14 days = $168\n\nRESULT: $168",
+        "verifier": "VERDICT: passthrough\n#### 168",
+        "aggregator": "$168\n#### 168"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

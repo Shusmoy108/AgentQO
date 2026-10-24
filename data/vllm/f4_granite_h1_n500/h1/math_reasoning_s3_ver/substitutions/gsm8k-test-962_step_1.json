@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-962",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $200",
+  "reference_key": "200",
+  "final_key_plus": "1000",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: Travel tickets cost = Supplies cost + Additional cost\n= $400 + $200\n= $600\n\nRESULT: $600",
+    "step_3": "step_3: Total cost = Supplies cost + Travel tickets cost\n= $400 + $600\n= $1000\n\nRESULT: $1000",
+    "verifier": "VERDICT: passthrough\n#### 1000",
+    "aggregator": "step_3: Total cost = Supplies cost + Travel tickets cost\n= $400 + $600\n= $1000\n\n#### $1000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "201",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "RESULT: 201",
+      "quality": 1.0,
+      "final_key": "1000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: Travel tickets cost = Supplies cost + Additional cost\n= $400 + $200\n= $600\n\nRESULT: 600",
+        "step_3": "step_3: Total cost = Supplies cost + Travel tickets cost\n= $400 + $600\n= $1000\n\nRESULT: 1000",
+        "verifier": "VERDICT: passthrough\n#### 1000",
+        "aggregator": "1000\n#### 1000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "RESULT: $200\n\nCarry out step 2 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+      "quality": 1.0,
+      "final_key": "1000",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $600",
+        "step_3": "step_3: RESULT: $1000",
+        "verifier": "VERDICT: passthrough\n#### 1000",
+        "aggregator": "step_3: RESULT: $1000\n\n#### $1000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

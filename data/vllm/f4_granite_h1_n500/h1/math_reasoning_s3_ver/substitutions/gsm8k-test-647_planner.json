@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-647",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the time taken to dig through the soil: Bill can dig 4 feet of soil per hour. He needs to dig 24 feet of soil. So, the time taken to dig through the soil is 24 feet / 4 feet per hour = 6 hours.\n2. Calculate the time taken to dig through the clay: Bill digs at half his speed through clay, which means he digs 2 feet of clay per hour. He needs to dig 8 feet of clay. So, the time taken to dig through the clay is 8 feet / 2 feet per hour = 4 hours.\n3. Calculate the total time: Add the time taken to dig through the soil and the clay to find the total time. So, the total time is 6 hours (soil) + 4 hours (clay) = 10 hours.",
+  "reference_key": null,
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 6 hours",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "step_2": "step_2: RESULT: 4 hours\nCarry out step 3.\n\nTotal time: 6 hours (soil) + 4 hours (clay) = 10 hours.\n\nRESULT: 10 hours",
+    "step_3": "RESULT: 10 hours",
+    "aggregator": "step_3: RESULT: Bill digs 4 feet/hour through soil and 2 feet/hour through clay.\n\nFor the soil (24 feet):\n24 feet / 4 feet/hour = 6 hours\n\nFor the clay (8 feet):\n8 feet / 2 feet/hour = 4 hours\n\nTotal time: 6 hours (soil) + 4 hours (clay) = 10 hours\n\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total duration Vince worked:\n   - From 8:00 AM to 11:00 PM is 15 hours.\n   - Since there are 60 minutes in an hour, 15 hours is 15 * 60 = 900 minutes.\n\n2. Determine the number of stapling intervals within the total duration:\n   - Vince staples 30 reports every 15 minutes.\n   - To find out how many 15-minute intervals are in 900 minutes, divide 900 by 15.\n   - 900 / 15 = 60 intervals.\n\n3. Calculate the total number of reports stapled:\n   - Vince staples 30 reports per interval.\n   - With 60 intervals, the total number of reports stapled is 60 * 30 = 1800 reports.\n\nPLAN: The total number of reports Vince stapled is 1800.",
+      "quality": 0.0,
+      "final_key": "32",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total duration Bill worked:\n   - For soil: 24 feet / 4 feet/hour = 6 hours\n   - For clay: 8 feet / (4 feet/hour / 2) = 4 hours\n   - Total duration = 6 hours + 4 hours = 10 hours\n\nRESULT: 10 hours",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "step_2": "step_2: 2. Determine the number of stapling intervals within the total duration:\n   - Bill digs 4 feet/hour through soil and half that through clay.\n   - Soil duration: 24 feet / 4 feet/hour = 6 hours\n   - Clay duration: 8 feet / (4 feet/hour / 2) = 4 hours\n   - Total duration: 6 hours + 4 hours = 10 hours\n   - Number of intervals: 10 hours / 15 minutes/interval = 66.67 intervals\n   - Since Bill can't work a fraction of an interval, we'll consider 66 intervals.\n\nRESULT: 66 intervals",
+        "step_3": "3. Calculate the total number of feet Bill dug:\n   - Soil: 6 hours * 4 feet/hour = 24 feet\n   - Clay: 4 hours * (4 feet/hour / 2) = 8 feet\n   - Total feet dug = 24 feet + 8 feet = 32 feet\n\nRESULT: 32 feet",
+        "aggregator": "32 feet\n#### 32"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the duration for excavating the soil: Bill's rate of excavation for soil is 4 feet per hour. He's required to excavate 24 feet of soil. Thus, the duration for soil excavation is 24 feet / 4 feet per hour = 6 hours.\n2. Estimate the duration for clay excavation: Bill's efficiency for clay is reduced by half, i.e., 2 feet per hour. He must excavate 8 feet of clay. Consequently, the duration for clay excavation is 8 feet / 2 feet per hour = 4 hours.\n3. Compute the overall duration: Sum the duration for soil excavation and clay excavation to determine the total duration. Therefore, the total duration is 6 hours (soil) + 4 hours (clay) = 10 hours.",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 6 hours",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "step_2": "step_2: RESULT: 4 hours\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 6 hours (soil) + 4 hours (clay) = 10 hours\n\nRESULT: 10 hours",
+        "aggregator": "10 hours\n#### 10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1210",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of balloons initially by multiplying the number of packs by the number of balloons per pack: 10 packs * 30 balloons/pack = 300 balloons.\n2. Subtract the number of balloons left from the total number of balloons to find out how many were thrown: 300 balloons - 12 balloons = 288 balloons.\n3. The number of balloons thrown is the result from step 2.",
+  "reference_key": null,
+  "final_key_plus": "288",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "300 balloons (10 packs * 30 balloons/pack)\n\nRESULT: 300 balloons",
+    "verifier": "VERDICT: passthrough\n#### 288",
+    "step_2": "step_2: 300 balloons - 12 balloons = 288 balloons\n\nRESULT: 288 balloons",
+    "step_3": "RESULT: 288 balloons",
+    "aggregator": "step_2: Calculate total balloons filled.\nTotal balloons filled = packs of balloons * balloons per pack\nTotal balloons filled = 10 packs * 30 balloons\nTotal balloons filled = 300 balloons\n\nstep_3: Calculate balloons thrown.\nBalloons thrown = Total balloons filled - Balloons left\nBalloons thrown = 300 balloons - 12 balloons\nBalloons thrown = 288 balloons\n\n#### 288"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total cost of the bag of chips: 2 bags * $2.00 each = $4.00\n2. Calculate the total cost of the fried chicken and soda: $8.00 (fried chicken) + $1.00 (soda) = $9.00\n3. Subtract the total cost of the bag of chips, fried chicken, and soda from the total amount spent to find the cost of the apple pie: $20.00 (total spent) - $9.00 (chips + soda) = $11.00\n\nPLAN:\n1. Compute the cost of the bag of chips: $4.00\n2. Compute the combined cost of the fried chicken and soda: $9.00\n3. Determine the cost of the apple pie by subtracting the combined cost of chips and soda from the total amount spent: $11.00",
+      "quality": 1.0,
+      "final_key": "288",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate the total number of balloons: 10 packs * 30 balloons per pack = 300 balloons.\n\nRESULT: 300 balloons.",
+        "verifier": "VERDICT: passthrough\n#### 288",
+        "step_2": "step_2: 2. Subtract the leftover balloons from the total: 300 balloons - 12 balloons = 288 balloons.\n\nRESULT: 288 balloons.",
+        "step_3": "step_3: 3. Calculate the total number of balloons thrown: 288 balloons.\n\nRESULT: 288 balloons.",
+        "aggregator": "step_3: 3. Calculate the total number of balloons thrown: 10 packs * 30 balloons per pack = 300 balloons.\n\nThen, subtract the leftover balloons: 300 balloons - 12 balloons = 288 balloons.\n\n#### 288"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total count of balloons at the start by multiplying the quantity of packs by the number of balloons per pack: 10 packs * 30 balloons/pack = 300 balloons.\n2. Deduct the number of balloons remaining from the overall balloon count to determine the ones thrown: 300 balloons - 15 balloons = 285 balloons.\n3. The number of balloons thrown is the outcome from step 2.",
+      "quality": 1.0,
+      "final_key": "288",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "300 balloons (10 packs * 30 balloons/pack)\n\nRESULT: 300",
+        "verifier": "VERDICT: passthrough\n#### 288",
+        "step_2": "step_2: 285 balloons (300 balloons - 12 balloons)\n\nRESULT: 285",
+        "step_3": "RESULT: 285",
+        "aggregator": "step_2: Calculate the total number of balloons filled.\nTotal balloons filled = 10 packs * 30 balloons per pack = 300 balloons\n\nstep_3: Calculate the number of balloons thrown.\nBalloons thrown = Total balloons filled - Balloons left\nBalloons thrown = 300 - 12 = 288 balloons\n\n#### 288"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

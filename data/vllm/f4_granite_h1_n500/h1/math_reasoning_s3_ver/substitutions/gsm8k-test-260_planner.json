@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-260",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of cookies Carla is making over the two days.\n2. Determine the total number of cups of flour needed for the total number of cookies, given that two cups are needed for a dozen cookies.\n3. Outline the steps to find the total cups of flour needed for each day separately and then sum them up.",
+  "reference_key": null,
+  "final_key_plus": "12",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 42\n\nCarla is making 36 cookies today and 30 cookies tomorrow, which totals to 66 cookies over the two days.",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "step_2": "step_2: RESULT: 6 cups\n\nTo find the total cups of flour needed for 66 cookies, we first convert the total number of cookies into dozens (since 1 dozen equals 12 cookies).\n\n66 cookies \u00f7 12 cookies/dozen = 5.5 dozens\n\nSince Carla needs 2 cups of flour for each dozen, we multiply the number of dozens by 2.\n\n5.5 dozens \u00d7 2 cups/dozen = 11 cups\n\nHowever, this calculation gives us the total cups needed for 5.5 dozens, not 6 dozens (since 66 cookies is 6 dozens). To find the correct amount, we need to consider the excess flour needed for the extra 0.5 dozen.\n\nFor 0.5 dozen cookies, Carla needs:\n0.5 dozen \u00d7 2 cups/dozen = 1 cup\n\nAdding this to the initial 11 cups, we get:\n11 cups + 1 cup = 12 cups\n\nSo, Carla will need 12 cups of flour to bake 66 cookies over the two days.",
+    "step_3": "step_3: RESULT: Carla will need 6 cups of flour for today (36 cookies) and an additional 6 cups for tomorrow (30 cookies), totaling 12 cups.",
+    "aggregator": "step_3: RESULT: Carla will need 6 cups of flour for today (36 cookies) and an additional 6 cups for tomorrow (30 cookies), totaling 12 cups.\n\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Tanya uses the same amount of citrus zest as fragrance, and the same amount of salt as sugar. Let's denote the common amount for these ingredients as 'x' ounces.\n\n2. She uses twice as much oil as salt, and twice as much salt as zest. Therefore, the amount of oil used is 2 * (2x) = 4x ounces.\n\n3. The total volume of the mixture is 10 ounces, which includes the citrus zest, fragrance, salt, sugar, and oil. Since the amounts of zest, fragrance, salt, and sugar are 'x' ounces each, the total volume used by these four ingredients is 4x ounces.\n\nTo find out how much oil she uses, we subtract the total volume of the other four ingredients from the total volume of the mixture: 10 - 4x ounces.\n\nPLAN:\n1. Establish the common amount for citrus zest, fragrance, and salt as 'x' ounces.\n2. Calculate the amount of oil used as 4x ounces, since it's twice the amount of salt (which is twice the amount of zest).\n3. Determine the total volume of the mixture is 10 ounces, and then find the volume of oil by subtracting the total volume of the other four ingredients (4x ounces) from the total mixture volume (10 ounces).",
+      "quality": 0.0,
+      "final_key": "4",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 1\n\nPlan:\n1. Establish the common amount for citrus zest, fragrance, and salt as 'x' ounces.\n\nCalculation:\n- Citrus zest = x ounces\n- Fragrance = x ounces\n- Salt = 2x ounces (twice the amount of zest)\n\nRESULT: 1",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "step_2": "2. Calculate the amount of oil used as 4x ounces, since it's twice the amount of salt (which is twice the amount of zest).\n\nRESULT: 2",
+        "step_3": "step_3: 3. Determine the total volume of the mixture is 10 ounces, and then find the volume of oil by subtracting the total volume of the other four ingredients (4x ounces) from the total mixture volume (10 ounces).\n\nRESULT: 3. 10 - 4x ounces",
+        "aggregator": "10 - 4(2) = 4 ounces of oil.\n\n#### 4"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of cookies Carla is making over the two days.\n2. Determine the total number of cups of flour needed for the total number of cookies, considering a dozen cookies require two cups of flour.\n3. Outline the steps to find the total cups of flour needed for each day separately, then sum them up. (Incorrect conclusion: This now implies that the total flour required for both days might be less than calculated due to rephrasing the second step.)",
+      "quality": 1.0,
+      "final_key": "11",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 42 cookies (36 today + 30 tomorrow)\n\nNext step: Calculate the total cups of flour needed for 42 cookies.\n\nPLAN:\n1. Determine the number of dozens of cookies Carla is making.\n2. Calculate the total cups of flour needed for the number of dozens.\n\nStep 1: Calculate the number of dozens of cookies.\n42 cookies \u00f7 12 cookies/dozen = 3.5 dozens\n\nStep 2: Calculate the total cups of flour needed.\n3.5 dozens \u00d7 2 cups/dozen = 7 cups\n\nFinal result: Carla will need 7 cups of flour to bake the cookies today and tomorrow.",
+        "verifier": "VERDICT: passthrough\n#### 11",
+        "step_2": "RESULT: 7 cups",
+        "step_3": "Step 3: Calculate the total cups of flour needed for each day separately, then sum them up.\n\nDay 1 (36 cookies):\n36 cookies \u00f7 12 cookies/dozen = 3 dozens\n3 dozens \u00d7 2 cups/dozen = 6 cups\n\nDay 2 (30 cookies):\n30 cookies \u00f7 12 cookies/dozen = 2.5 dozens\n2.5 dozens \u00d7 2 cups/dozen = 5 cups\n\nTotal cups of flour needed:\n6 cups (Day 1) + 5 cups (Day 2) = 11 cups\n\nRESULT: 11 cups",
+        "aggregator": "11 cups\n#### 11"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

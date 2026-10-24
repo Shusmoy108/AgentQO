@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1074",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of puzzle pieces Teddy completed in the first puzzle: Half of 500 pieces is 250 pieces.\n2. Calculate the number of puzzle pieces Teddy completed in the second puzzle: 500 pieces.\n3. Add the number of pieces from both puzzles to find the total number of pieces Teddy placed in an hour: 250 (from the first puzzle) + 500 (from the second puzzle) = 750 pieces.\n\nSo, Teddy placed 750 puzzle pieces during that hour.",
+  "reference_key": null,
+  "final_key_plus": "750",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "250 pieces.\nRESULT: 250",
+    "verifier": "VERDICT: passthrough\n#### 750",
+    "step_2": "step_2: 500 pieces.\nRESULT: 500",
+    "step_3": "step_3: 250 (from the first puzzle) + 500 (from the second puzzle) = 750 pieces.\nRESULT: 750",
+    "aggregator": "750\n#### 750"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total eggs consumed by the group of three individuals who eat three eggs each day:\n   - Three individuals * Three eggs per individual = Nine eggs per day.\n\n2. Calculate the total eggs consumed by the remaining two individuals who eat two eggs each day:\n   - Two individuals * Two eggs per individual = Four eggs per day.\n\n3. Add the daily egg consumption of both groups to find the weekly consumption:\n   - Nine eggs (group of three) + Four eggs (remaining two) = Eleven eggs per day.\n   - Eleven eggs per day * Seven days in a week = Sixty-seven eggs in a week.\n\nPLAN: The family will consume 67 eggs in a week.",
+      "quality": 0.0,
+      "final_key": "500",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total eggs consumed by the group of three individuals who eat three eggs each day:\n   - Three individuals * Three eggs per individual = Nine eggs per day.\n\nRESULT: Nine eggs per day.",
+        "verifier": "VERDICT: passthrough\n#### 500",
+        "step_2": "2. Calculate the total eggs consumed by the remaining two individuals who eat two eggs each day:\n   - Two individuals * Two eggs per individual = Four eggs per day.\n\nRESULT: Four eggs per day.",
+        "step_3": "3. Add the daily egg consumption of both groups to find the weekly consumption:\n   - Nine eggs (group of three) + Four eggs (remaining two) = Eleven eggs per day.\n   - Eleven eggs per day * Seven days in a week = Sixty-seven eggs in a week.\n\nRESULT: Sixty-seven eggs in a week.",
+        "aggregator": "Teddy placed 500 puzzle pieces during that hour.\n\n#### 500"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the puzzle pieces Teddy finished in the initial puzzle: Half of 500 pieces equals 250 pieces.\n2. Determine the puzzle pieces Teddy completed in the subsequent puzzle: 500 pieces.\n3. Aggregate the pieces from both puzzles to ascertain the total number of pieces Teddy arranged in an hour: 250 (from the first puzzle) + 500 (from the second puzzle) = 750 pieces.\n\nConsequently, Teddy arranged 749 puzzle pieces during that hour.",
+      "quality": 1.0,
+      "final_key": "750",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 250 pieces",
+        "verifier": "VERDICT: passthrough\n#### 750",
+        "step_2": "step_2: RESULT: 500 pieces\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 250 (first puzzle) + 500 (second puzzle) = 750 pieces\n\nRESULT: 750 pieces",
+        "aggregator": "750 pieces\n#### 750"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

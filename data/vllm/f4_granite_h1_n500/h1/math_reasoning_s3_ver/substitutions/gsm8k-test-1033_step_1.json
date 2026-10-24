@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1033",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $15",
+  "reference_key": "15",
+  "final_key_plus": "6",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $3 (parking cost) * 3 days = $9\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $15 (daily earnings) - $9 (parking expenses) = $6 (net earnings per day)\n\nRESULT: $6",
+    "verifier": "VERDICT: passthrough\n#### 6",
+    "aggregator": "RESULT: $6\n#### 6"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "16",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "RESULT: 16",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $9\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $6 (net earnings per day) / 3 days = $2 per hour.\n\nRESULT: $2",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "RESULT: $2\n#### 2"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "6",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "RESULT: $15\n\nBreakdown:\n- Daily pay: $15\n- Time spent: 6 hours\n\nDoes that help, or do we need to proceed to the next step?",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $3 (parking cost) * 3 days = $9\n\nBreakdown:\n- Parking expenses: $3 per day * 3 days = $9\n\nNext step: Calculate Melissa's net earnings per day after expenses.",
+        "step_3": "step_3: RESULT: $15 (daily earnings) - $9 (parking expenses) = $6\n\nBreakdown:\n- Daily earnings: $15\n- Parking expenses: $9\n- Net earnings per day: $15 - $9 = $6\n\nFinal result:\nRESULT: $6",
+        "verifier": "VERDICT: passthrough\n#### 6",
+        "aggregator": "RESULT: $6\n#### 6"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

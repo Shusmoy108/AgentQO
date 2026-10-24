@@ -1,0 +1,81 @@
+{
+ "setting": "math_passthrough",
+ "workflow": "math",
+ "verifier": "passthrough",
+ "budgets": {
+  "1": [
+   {
+    "upgraded": "aggregator",
+    "rules": [
+     "output_top1",
+     "ec_top1"
+    ],
+    "custom": "set_aggregator",
+    "eval_accuracy": 0.6,
+    "eval_source": "h3_eval_n200:only_aggregator"
+   },
+   {
+    "upgraded": "planner",
+    "rules": [
+     "struct_top1"
+    ],
+    "custom": "set_planner",
+    "eval_accuracy": 0.465,
+    "eval_source": "h3_eval_n200:only_planner"
+   }
+  ],
+  "2": [
+   {
+    "upgraded": "aggregator,planner",
+    "rules": [
+     "qplus_top2"
+    ],
+    "custom": "set_aggregator+planner",
+    "eval_accuracy": 0.62,
+    "eval_source": "c12_qplus_top2:qplus_top2"
+   },
+   {
+    "upgraded": "aggregator,step_3",
+    "rules": [
+     "output_top2",
+     "ec_top2"
+    ],
+    "custom": "set_aggregator+step_3",
+    "eval_accuracy": 0.615,
+    "eval_source": "h3_eval_n200:ec_top2"
+   },
+   {
+    "upgraded": "planner,step_1",
+    "rules": [
+     "struct_top2"
+    ],
+    "custom": "set_planner+step_1",
+    "eval_accuracy": 0.335,
+    "eval_source": "h3_eval_n200:struct_top2"
+   }
+  ],
+  "3": [
+   {
+    "upgraded": "aggregator,planner,step_3",
+    "rules": [
+     "ec_top3"
+    ],
+    "custom": "set_aggregator+planner+step_3",
+    "eval_accuracy": 0.66,
+    "eval_source": "c13_budget_curve:ec_top3"
+   },
+   {
+    "upgraded": "planner,step_1,step_2",
+    "rules": [
+     "struct_top3"
+    ],
+    "custom": "set_planner+step_1+step_2",
+    "eval_accuracy": 0.4,
+    "eval_source": "c13_budget_curve:struct_top3"
+   }
+  ]
+ },
+ "missing": [
+  "output_top3 (aggregator,step_2,step_3): no EVAL result for this node set"
+ ]
+}

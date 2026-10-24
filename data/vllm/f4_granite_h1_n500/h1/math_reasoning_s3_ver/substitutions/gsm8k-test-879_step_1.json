@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-879",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $100",
+  "reference_key": "100",
+  "final_key_plus": "575",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $75",
+    "step_3": "step_3: RESULT: $400 (cost of hair) + $100 (manicure) + $75 (pedicure) = $575 (total spa expenses)",
+    "verifier": "VERDICT: passthrough\n#### 575",
+    "aggregator": "step_3: RESULT: $400 (cost of hair) + $100 (manicure) + $75 (pedicure) = $575 (total spa expenses)\n\n#### 575"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "101",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "RESULT: 101",
+      "quality": 1.0,
+      "final_key": "575",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 75",
+        "step_3": "step_3: RESULT: 400 + 100 + 75 = 575",
+        "verifier": "VERDICT: passthrough\n#### 575",
+        "aggregator": "step_3: RESULT: 400 (hair) + 100 (manicure) + 75 (pedicure) = 575\n\n#### 575"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "23000",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "RESULT: 23000",
+      "quality": 1.0,
+      "final_key": "575",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 750",
+        "step_3": "step_3: RESULT: $400 + $100 + $75 = $575",
+        "verifier": "VERDICT: passthrough\n#### 575",
+        "aggregator": "step_1: Iris spent $400 on her hair.\nstep_2: She spent 1/4 of that amount on a manicure, which equals $100.\nstep_3: For a pedicure, she spent 3/4 of the manicure cost, which is $75.\nstep_4: To find the total amount spent at the spa, add the costs from steps 1, 2, and 3: $400 + $100 + $75 = $575.\n\n#### 575"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

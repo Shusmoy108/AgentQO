@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-306",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: 20 loaves\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+  "reference_key": "3",
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: (1/2) * 20 = 10 loaves\n\nRESULT: 10 loaves",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "aggregator": "10 loaves\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "3",
+      "key_differs": false,
+      "text": "step_2: RESULT: 4 loaves\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: (1/2) * 4 = 2 loaves\n\nRESULT: 2 loaves",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "aggregator": "step_3: RESULT: (1/2) * 4 = 2 loaves\n\nFinal answer: 2 loaves\n#### 2"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "step_2:\nTotal loaves remaining = 20\nHalf of these loaves = 20 / 2 = 10 loaves\n\nRESULT: 10",
+      "quality": 0.0,
+      "final_key": "5",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3:\nAfternoon sales = (1/2) * 10 = 5 loaves\n\nRESULT: 5",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "5\n#### 5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

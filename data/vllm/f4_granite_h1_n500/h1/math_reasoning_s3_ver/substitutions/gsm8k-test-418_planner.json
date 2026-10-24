@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-418",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Determine the size of Zack's locker by multiplying the size of Peter's locker by 4 (since Peter's locker is 1/4 the size of Zack's).\n2. Since Zack's locker is half the size of Timothy's locker, divide the size of Zack's locker by 2 to find the size of Timothy's locker.\n\nThe final answer will be the size of Timothy's locker in cubic inches.",
+  "reference_key": null,
+  "final_key_plus": "12",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Zack's locker size = Peter's locker size * 4\nRESULT: 5 * 4 = 20 cubic inches",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "step_2": "step_2: 2. Timothy's locker size = Zack's locker size / 2\nRESULT: 20 / 2 = 10 cubic inches",
+    "step_3": "step_3: 3. Timothy's locker size\nRESULT: 10 cubic inches",
+    "aggregator": "step_3: Zack's locker size\nRESULT: 12 cubic inches\n\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total cost of movie tickets: $7.50 (for Janet) + $7.50 (for her sister) = $15.\n2. Add the cost of the ice cream and the bracelet to the total movie ticket cost: $15 (movie tickets) + $3.50 (ice cream) + $8.50 (bracelet) = $27.\n3. Subtract the total amount spent from the initial amount given by her parents: $40.00 - $27.00 = $13.00.\n\nPLAN:\n1. Compute the movie ticket expense for both Janet and her sister.\n2. Sum the ice cream, movie tickets, and bracelet costs.\n3. Subtract the total expenditure from the initial amount given by her parents to find the remaining balance.",
+      "quality": 1.0,
+      "final_key": "40",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $15.00",
+        "verifier": "VERDICT: passthrough\n#### 40",
+        "step_2": "step_2: RESULT: $15.00 (movie tickets) + $3.50 (ice cream) + $8.50 (bracelet) = $27.00\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $40.00 (initial amount) - $27.00 (total expenditure) = $13.00\n\nRESULT: $13.00",
+        "aggregator": "RESULT: Timothy's locker is 40 cubic inches.\n#### 40"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the size of Zack's locker by multiplying the size of Peter's locker by 4 (as Peter's locker is 1/4 the size of Zack's).\n2. Given that Zack's locker is a quarter the size of Timothy's locker, multiply the size of Zack's locker by 4 to find the size of Timothy's locker.\n\nThe concluding response will present the size of Timothy's locker in cubic inches.",
+      "quality": 0.0,
+      "final_key": "80",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Zack's locker size = Peter's locker size * 4 = 5 cubic inches * 4 = 20 cubic inches.\n\nRESULT: 20 cubic inches.",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "step_2": "step_2: 2. Timothy's locker size = Zack's locker size * 4 = 20 cubic inches * 4 = 80 cubic inches.\n\nRESULT: 80 cubic inches.",
+        "step_3": "step_3: 3. Timothy's locker size = Zack's locker size * 4 = 20 cubic inches * 4 = 80 cubic inches.\n\nRESULT: 80 cubic inches.",
+        "aggregator": "RESULT: 80 cubic inches. #### 80"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

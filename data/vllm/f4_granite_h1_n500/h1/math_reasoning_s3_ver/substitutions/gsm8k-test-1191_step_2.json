@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1191",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Add the coloring cost ($40) to the haircut cost ($60).\nRESULT: $100",
+  "reference_key": "100",
+  "final_key_plus": "100",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: $100",
+    "verifier": "VERDICT: passthrough\n#### 100",
+    "aggregator": "step_3: RESULT: $100\n\n#### 100"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "101",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "step_2: Add the coloring cost ($40) to the haircut cost ($60).\nRESULT: 101",
+      "quality": 0.0,
+      "final_key": "101",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: $101\n\nEND: $101",
+        "verifier": "VERDICT: passthrough\n#### 101",
+        "aggregator": "step_3: RESULT: $101\n\n#### 101"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "40",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "step_2: RESULT: $40 (coloring cost)",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $60 (haircut cost) + $40 (coloring cost) = $100 (total cost)",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "step_3: RESULT: $60 (haircut cost) + $40 (coloring cost) = $100 (total cost)\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

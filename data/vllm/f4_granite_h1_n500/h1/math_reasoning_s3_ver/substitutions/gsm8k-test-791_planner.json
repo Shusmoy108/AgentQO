@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-791",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Subtract the number of people who got off at the first stop from the initial number of passengers to find out how many people are left on the train after the first stop.\n2. Add the number of people who got on at the first stop to the number of people left on the train after the first stop.\n3. Subtract the number of people who got off at the second stop from the updated number of passengers to find the final number of people on the train.",
+  "reference_key": null,
+  "final_key_plus": "100",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. 172 (initial passengers) - 47 (people who got off at the first stop) = 125 people remaining on the train after the first stop.\n\nRESULT: 125",
+    "verifier": "VERDICT: passthrough\n#### 100",
+    "step_2": "step_2: 125 (people remaining after first stop) + 13 (people who got on at the first stop) = 138 people on the train after the first stop.\n\nRESULT: 138",
+    "step_3": "step_3: 138 (people after first stop) - 38 (people who got off at the second stop) = 100 people on the train after the second stop.\n\nRESULT: 100",
+    "aggregator": "100\n#### 100"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the relative speed at which Tom is closing the gap between him and Bob. This is Tom's speed minus Bob's speed: 70 mph - 55 mph = 15 mph.\n\n2. Determine the distance Tom needs to cover to catch up with Bob. Since Bob is currently 75 miles ahead, Tom must cover this distance at the relative speed: 75 miles.\n\n3. Calculate the time it will take for Tom to catch up with Bob using the formula: time = distance / speed. In this case, time = 75 miles / 15 mph = 5 hours.",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 15 mph",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "step_2": "step_2: RESULT: 75 miles\n\nTo find the time it will take for Tom to cover this distance at his relative speed, we use the formula: time = distance / speed.\n\ntime = 75 miles / 15 mph = 5 hours\n\nRESULT: 5 hours",
+        "step_3": "RESULT: 5 hours",
+        "aggregator": "step_4: RESULT: 172 - 47 + 13 - 38 = 100 people are on the train.\n#### 100"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Subtract the number of people who disembarked at the initial stop from the original count of passengers to determine the remaining passengers on the train post the first stop.\n2. Incorporate the count of new passengers who joined at the first stop to the residual passengers on the train after the first stop.\n3. Subtract the number of people who disembarked at the subsequent stop from the augmented passenger count to ascertain the concluding number of passengers on the train.",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. 172 (original passengers) - 47 (disembarked at first stop) = 125 passengers remaining on the train after the first stop.\n\nRESULT: 125",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "step_2": "step_2: 125 (remaining passengers after first stop) + 13 (new passengers at first stop) = 138 passengers on the train after the second stop.\n\nRESULT: 138",
+        "step_3": "step_3: 138 (passengers after second stop) - 38 (disembarked at second stop) = 100 passengers remaining on the train.\n\nRESULT: 100",
+        "aggregator": "100\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

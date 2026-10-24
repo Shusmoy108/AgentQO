@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1154",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of carrots Mason eats on weekdays. Since he eats 4 carrots each on weekdays (Monday to Friday), the total for weekdays is 4 carrots/day * 5 days = 20 carrots.\n2. Calculate the total number of carrots Mason eats on weekends. He eats 5 carrots each on Saturday and Sunday, so the total for weekends is 5 carrots/day * 2 days = 10 carrots.\n3. Add the total number of carrots eaten on weekdays and weekends to find the total weekly consumption. This is 20 carrots (weekdays) + 10 carrots (weekends) = 30 carrots.",
+  "reference_key": null,
+  "final_key_plus": "30",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Mason eats 4 carrots each weekday (Monday to Friday).\n2. Total carrots eaten on weekdays = 4 carrots/day * 5 days = 20 carrots.\n\nRESULT: 20 carrots",
+    "verifier": "VERDICT: passthrough\n#### 30",
+    "step_2": "step_2: 1. Mason eats 5 carrots each on Saturday and Sunday.\n2. Total carrots eaten on weekends = 5 carrots/day * 2 days = 10 carrots.\n\nRESULT: 10 carrots",
+    "step_3": "3. Total weekly consumption = 20 carrots (weekdays) + 10 carrots (weekends) = 30 carrots.\n\nRESULT: 30 carrots",
+    "aggregator": "30 carrots\n#### 30"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of legs for the 40 tables with 4 legs each:\n   - Multiply the number of tables by the number of legs per table: 40 tables * 4 legs/table = 160 legs.\n\n2. Calculate the total number of legs for the 50 tables with 3 legs each:\n   - Multiply the number of tables by the number of legs per table: 50 tables * 3 legs/table = 150 legs.\n\n3. Sum the total legs from both types of tables to find the overall total:\n   - Add the legs from the 40-table group to the legs from the 50-table group: 160 legs + 150 legs = 310 legs.\n\nPLAN: The total number of legs the restaurant's tables have is 310.",
+      "quality": 0.0,
+      "final_key": "310",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total number of legs for the 40 tables with 4 legs each:\n   - Multiply the number of tables by the number of legs per table: 40 tables * 4 legs/table = 160 legs.\n\nRESULT: 160",
+        "verifier": "VERDICT: passthrough\n#### 310",
+        "step_2": "step_2: 2. Calculate the total number of legs for the 50 tables with 3 legs each:\n   - Multiply the number of tables by the number of legs per table: 50 tables * 3 legs/table = 150 legs.\n\nRESULT: 150",
+        "step_3": "3. Sum the total legs from both types of tables to find the overall total:\n   - Add the legs from the 40-table group to the legs from the 50-table group: 160 legs + 150 legs = 310 legs.\n\nRESULT: 310",
+        "aggregator": "310\n#### 310"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total carrots Mason consumes during weekdays. Given he devours 4 carrots each on weekdays (Monday to Friday), the total for weekdays amounts to 4 carrots/day * 5 days = 20 carrots.\n2. Determine the total carrots Mason consumes during weekends. On Saturday and Sunday, he indulges in 5 carrots each, making the total for weekends 5 carrots/day * 2 days = 10 carrots.\n3. Combine the totals for weekdays and weekends to ascertain the weekly consumption. This results in 20 carrots (weekdays) + 10 carrots (weekends) = 31 carrots.",
+      "quality": 0.0,
+      "final_key": "31",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 20 carrots (weekdays)",
+        "verifier": "VERDICT: passthrough\n#### 31",
+        "step_2": "step_2: RESULT: 10 carrots (weekends)\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 20 (weekdays) + 10 (weekends) = 31 carrots\n\nRESULT: 31 carrots",
+        "aggregator": "31 carrots\n#### 31"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

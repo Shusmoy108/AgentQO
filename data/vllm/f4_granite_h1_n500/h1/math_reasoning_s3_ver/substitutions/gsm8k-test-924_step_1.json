@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-924",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 8 hours",
+  "reference_key": "8",
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 8 hours / 4 hours per trip = 2 trips per hour\n\nRESULT: 2 trips per hour",
+    "step_3": "step_3: RESULT: 24 berries / 2 trips per hour = 12 berries per trip\n\nRESULT: 12 berries per trip",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "aggregator": "12 berries per trip\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "9",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "RESULT: 9 hours",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 8 hours (total time available) / 4 hours (time per trip) = 2 trips per hour.\n\nRESULT: 2 trips per hour.",
+        "step_3": "step_3: RESULT: 24 berries (total desired) / 2 trips per hour = 12 berries per trip.\n\nRESULT: 12 berries per trip.",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "12 berries per trip.\n#### 12"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "32",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "32 berries (8 hours)\nRESULT: 32",
+      "quality": 0.0,
+      "final_key": "32",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 32 berries / 2 trips per hour = 16 berries per trip\n\nRESULT: 16",
+        "step_3": "step_3: 16 berries per trip * 2 trips per hour = 32 berries per hour\n\nRESULT: 32",
+        "verifier": "VERDICT: passthrough\n#### 32",
+        "aggregator": "step_3: 16 berries per trip * 2 trips per hour = 32 berries per hour\n\n#### 32"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

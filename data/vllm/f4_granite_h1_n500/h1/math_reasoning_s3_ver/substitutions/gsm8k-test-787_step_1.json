@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-787",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 1/4 for smart TVs, 1/8 for analog TVs.",
+  "reference_key": "8",
+  "final_key_plus": "5",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 1/4 + 1/8 = 4/8 + 1/8 = 5/8\n\nRESULT: 5/8",
+    "step_3": "step_3: RESULT: 1 - 5/8 = 8/8 - 5/8 = 3/8\n\nRESULT: 3/8",
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "aggregator": "step_3: RESULT: 3/8\n\nFinal answer: #### 5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "8",
+      "reference_key": "8",
+      "key_differs": false,
+      "text": "RESULT: 9/4 for smart TVs, 1/8 for analog TVs.",
+      "quality": 0.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: (9/4 + 1/8) = (27/12 + 3/12) = 30/12 = 5/2\n\nNow, proceed to step 3.\n\nstep_3: RESULT: 1 - 5/2 = 2/2 - 5/2 = -3/2\n\nHowever, this result doesn't make sense in the context of the problem, as we cannot have a negative fraction of sales. There seems to be a mistake in the calculation. Let's correct it:\n\nstep_3: RESULT: 1 - (1/4 + 1/8) = 1 - (2/8 + 1/8) = 1 - 3/8 = 5/8\n\nNow, proceed to step 4.\n\nstep_4: RESULT: 40 * (5/8) = 200/8 = 25\n\nSo, Samwell was able to sell 25 OLED TVs.",
+        "step_3": "RESULT: 1 - (1/4 + 1/8) = 1 - (2/8 + 1/8) = 1 - 3/8 = 5/8",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_3: RESULT: 1 - (1/4 + 1/8) = 1 - (2/8 + 1/8) = 1 - 3/8 = 5/8\n\n#### 5/8"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "0.375",
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "1/4 = 0.25\n1/8 = 0.125\nRESULT: 0.375",
+      "quality": 0.0,
+      "final_key": "0.625",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: Add the fractions of smart TVs and analog TVs.\n0.25 (smart TVs) + 0.125 (analog TVs) = 0.375\n\nRESULT: 0.375",
+        "step_3": "step_3: OLED TVs fraction = 1 - 0.375 = 0.625\n\nRESULT: 0.625",
+        "verifier": "VERDICT: passthrough\n#### 0.625",
+        "aggregator": "step_3: OLED TVs fraction = 1 - 0.375 = 0.625\n\nRESULT: 0.625\n\n#### 0.625"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

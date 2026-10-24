@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-917",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of pieces of fruit Kira bought: 3 apples + 5 bananas + 6 oranges = 14 pieces of fruit.\n2. Subtract the number of pieces Lola ate from the total: 14 pieces - 2 pieces = 12 pieces.\n3. The remaining number of pieces of fruit is 12.",
+  "reference_key": null,
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Kira bought 3 apples, 5 bananas, and 6 oranges, which equals 3 + 5 + 6 = 14 pieces of fruit.\n\nRESULT: 14",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "step_2": "step_2: 2. Kira initially had 14 pieces of fruit. After Lola ate 2 pieces, the remaining number of pieces is 14 - 2 = 12 pieces.\n\nRESULT: 12",
+    "step_3": "step_3: 3. The remaining number of pieces of fruit is 12.\n\nRESULT: 12",
+    "aggregator": "12\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the cost of the returned item: $15.00\n2. Calculate the discounted price of the frying pan: $20.00 - ($20.00 * 20%) = $20.00 - $4.00 = $16.00\n3. Calculate the discounted price of the towel set: $30.00 - ($30.00 * 10%) = $30.00 - $3.00 = $27.00\n4. Sum up the total cost of the new purchases: $16.00 (frying pan) + $27.00 (towel set) = $43.00\n5. Subtract the total cost of the returned item and new purchases from the original charge: $85.00 - $15.00 (returned item) - $43.00 (new purchases) = $27.00\n\nPLAN:\n1. Compute the cost of the returned item.\n2. Determine the discounted prices for the frying pan and towel set.\n3. Sum the discounted prices of the new purchases.\n4. Subtract the total cost of the returned item and new purchases from the original charge to find the new balance.",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. The cost of the returned item, which is 2 pieces of fruit, is $1.00 (assuming each piece costs $0.50).\n\nRESULT: 1.00",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "2. The discounted price for the frying pan is $16.00 (original price - 20% discount).\n\nRESULT: 16.00",
+        "step_3": "3. The discounted price for the towel set is $27.00 (original price - 10% discount).\n\nRESULT: 27.00",
+        "aggregator": "3.00\n#### 3.00"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total quantity of fruits Kira procured: 3 apples + 5 bananas + 6 oranges = 14 pieces of fruit.\n2. Deduct the quantity Lola consumed from the total: 14 pieces - 2 pieces = 12 pieces.\n3. The leftover count of fruits is 12.",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 14",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "step_2": "step_2: RESULT: 14 - 2 = 12",
+        "step_3": "step_3: RESULT: 12 pieces of fruit are left.",
+        "aggregator": "step_3: RESULT: 12 pieces of fruit are left.\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-592",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the boots on Amazon by adding the price of the boots ($16) to the shipping cost ($4).\n2. Calculate the shipping cost on eBay, which is twice the cost on Amazon ($4 * 2 = $8).\n3. Add the price of the boots on eBay ($13) to the shipping cost on eBay ($8) to find the total cost, then subtract the total cost on Amazon to find the difference.",
+  "reference_key": null,
+  "final_key_plus": "1",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: $20\n\nNext step:\n\nPLAN:\n2. Calculate the shipping cost on eBay, which is twice the cost on Amazon ($4 * 2 = $8).\n\nCarry out step 2:\n\nRESULT: $8\n\nNow, combine the results from both steps to find the final answer.\n\nPLAN:\n3. Add the price of the boots on eBay ($13) to the shipping cost on eBay ($8) to find the total cost, then subtract the total cost on Amazon to find the difference.\n\nCarry out step 3:\n\nTotal cost on eBay = $13 (boots) + $8 (shipping) = $21\nTotal cost on Amazon = $16 (boots) + $4 (shipping) = $20\n\nDifference = Total cost on eBay - Total cost on Amazon\nDifference = $21 - $20 = $1\n\nFinal answer: The boots are $1 more expensive on eBay.",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "step_2": "RESULT: $8",
+    "step_3": "Difference = $13 (eBay boots) + $8 (eBay shipping) - $16 (Amazon boots) - $4 (Amazon shipping) = $1\n\nRESULT: $1",
+    "aggregator": "The boots are $1 more expensive on eBay.\n\n#### 1"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total money raised from selling brownies.\n   - Multiply the number of brownies sold by the price per slice: 43 brownies * $3/slice = $129.\n\n2. Calculate the total money raised from selling cheesecakes.\n   - Multiply the number of cheesecake slices sold by the price per slice: 23 slices * $4/slice = $92.\n\n3. Sum the money from both types of sales to find the total amount raised.\n   - Add the money from brownies and cheesecakes: $129 (from brownies) + $92 (from cheesecakes) = $221.\n\nPLAN: The total money Tommy raises is $221.",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total money raised from selling brownies.\n   - Multiply the number of brownies sold by the price per slice: 43 brownies * $3/slice = $129.\n\nRESULT: $129",
+        "verifier": "VERDICT: passthrough\n#### 2",
+        "step_2": "2. Calculate the total money raised from selling cheesecakes.\n   - Multiply the number of cheesecake slices sold by the price per slice: 23 slices * $4/slice = $92.\n\nRESULT: $92",
+        "step_3": "3. Sum the money from both types of sales to find the total amount raised.\n   - Add the money from brownies and cheesecakes: $129 (from brownies) + $92 (from cheesecakes) = $221.\n\nRESULT: $221",
+        "aggregator": "step_4: 4. Calculate the difference in total cost between eBay and Amazon.\n   - Amazon total: $16 (boots) + $4 (shipping) = $20.\n   - eBay total: $13 (boots) + ($4 * 2) (shipping) = $22.\n   - Difference: $22 (eBay) - $20 (Amazon) = $2.\n\n#### $2\n\n#### <number>"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total cost of the boots on Amazon by merging the boots' price ($16) with the shipping cost ($4).\n2. Compute the shipping cost on eBay, which is double the Amazon's shipping cost ($4 * 2 = $8).\n3. Merge the boots' price on eBay ($13) with the shipping cost on eBay ($8) to determine the total cost, then subtract the total cost on Amazon to find the difference.\n\nError:\nIn step 2, the shipping cost on eBay is incorrectly stated as \"double the cost on Amazon\" instead of \"twice the cost on Amazon.\" This subtle change alters the calculation of the eBay shipping cost without affecting the overall plan or the conclusion of the cost difference.",
+      "quality": 1.0,
+      "final_key": "1",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $20\n\nPlan:\n1. Compute the total cost of the boots on Amazon by merging the boots' price ($16) with the shipping cost ($4).\n2. Compute the shipping cost on eBay, which is twice the Amazon's shipping cost ($4 * 2 = $8).\n3. Merge the boots' price on eBay ($13) with the shipping cost on eBay ($8) to determine the total cost, then subtract the total cost on Amazon to find the difference.",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "step_2": "step_2: RESULT: $8",
+        "step_3": "step_3: RESULT: $13 (boots' price on eBay) + $8 (eBay shipping cost) = $21\nRESULT: $21 (total cost on eBay) - $20 (total cost on Amazon) = $1",
+        "aggregator": "The boots are $1 more expensive on eBay compared to Amazon.\n\n#### 1"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

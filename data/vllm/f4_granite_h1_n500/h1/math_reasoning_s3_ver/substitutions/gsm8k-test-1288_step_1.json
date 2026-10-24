@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1288",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Daily meditation time = 30 minutes\n\nRESULT: 30",
+  "reference_key": "30",
+  "final_key_plus": "80",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "2. Weekly yoga practice time = 5 hours\n\nRESULT: 5",
+    "step_3": "3. Total time in 4 weeks = (5 hours/week * 4 weeks) + (30 minutes/day * 4 days/week * 4 weeks)\n\nRESULT: 80",
+    "verifier": "VERDICT: passthrough\n#### 80",
+    "aggregator": "3. Total time in 4 weeks = (5 hours/week * 4 weeks) + (30 minutes/day * 4 days/week * 4 weeks)\n\nRESULT: 80\n\n#### 80"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "31",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "1. Daily meditation time = 30 minutes\n\nRESULT: 31",
+      "quality": 0.0,
+      "final_key": "80",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Weekly yoga practice time = 5 hours\n\nRESULT: 2",
+        "step_3": "3. Total time in 4 weeks = (5 hours/week * 4 weeks) + (30 minutes/day * 4 days/week * 4 weeks)\n\nRESULT: 80 hours",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "aggregator": "3. Total time in 4 weeks = (5 hours/week * 4 weeks) + (30 minutes/day * 4 days/week * 4 weeks)\n\nRESULT: 80 hours\n\n#### 80"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "45.2",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "RESULT: 30 minutes\n\nPlan: \n1. Calculate the total meditation time for 4 weeks.\n   - Daily meditation time * number of days in 4 weeks = 30 minutes * 84 days\n   - Confirmed daily meditation time in counted as 15 minutes each day\n   - 15 minutes * 84 days = 1260 minutes\n\n2. Convert the total meditation time from minutes to hours.\n   - 1260 minutes / 60 minutes/hour = 21 hours\n\n3. Calculate the weekly yoga practice time for 4 weeks.\n   - Weekly yoga practice time * 4 weeks = 5 hours * 4\n   - Total yoga practice time = 20 hours\n\n4. Calculate the total time spent on meditation and yoga practice in 4 weeks.\n   - Total meditation time + Total yoga practice time\n   - 21 hours + 20 hours = 41 hours\n\nPlan:\n1. Daily meditation time = 30 minutes\n2. Weekly yoga practice time = 5 hours\n3. Daily meditation time for 4 weeks = 30 minutes/day * 84 days = 25.2 hours\n4. Total yoga practice time for 4 weeks = 5 hours/week * 4 weeks = 20 hours\n5. Total time spent on meditation and yoga in 4 weeks = 25.2 hours + 20 hours = 45.2 hours\n\nrt = 45.2 hours",
+      "quality": 0.0,
+      "final_key": "45.2",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2. Weekly yoga practice time for 4 weeks = 5 hours/week * 4 weeks = 20 hours\n\nRESULT: 20 hours",
+        "step_3": "3. Total time spent on meditation and yoga in 4 weeks = 25.2 hours (daily meditation) + 20 hours (weekly yoga) = 45.2 hours\n\nRESULT: 45.2 hours",
+        "verifier": "VERDICT: passthrough\n#### 45.2",
+        "aggregator": "45.2 hours\n#### 45.2"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

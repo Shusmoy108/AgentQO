@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-467",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Calculate the number of sheets per room: 2 sheets.\nRESULT: 2",
+  "reference_key": "2",
+  "final_key_plus": "8",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Determine the number of pillow cases per room: 2 * 2 = 4 pillow cases.\nRESULT: 4",
+    "step_3": "step_3: 3. Calculate the number of towels per room: 4 * 2 = 8 towels.\nRESULT: 8",
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "aggregator": "step_3: 3. Calculate the number of towels per room: 4 * 2 = 8 towels.\nRESULT: 8\n#### 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "1. Calculate the number of sheets per room: 2 sheets.\nRESULT: 3",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Determine the number of pillow cases per room: 2 * 2 = 4 pillow cases.\nRESULT: 4",
+        "step_3": "step_3: 3. Calculate the number of towels per room: 4 * 2 = 8 towels.\nRESULT: 8",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "step_3: 3. Calculate the number of towels per room: 4 * 2 = 8 towels.\nRESULT: 8\n#### 8"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "6",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "RESULT: 6",
+      "quality": 0.0,
+      "final_key": "9600",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 8\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 14 (8 pillow cases * 2 towels per pillow case)",
+        "verifier": "VERDICT: passthrough\n#### 9600",
+        "aggregator": "step_2: Each room requires 2 sheets, 1 comforter, 4 pillow cases (twice as many as sheets), and 8 towels (twice as many as pillow cases).\n\nstep_3: For 80 rooms, the calculation would be:\n2 sheets/room * 80 rooms = 160 sheets\n1 comforter/room * 80 rooms = 80 comforters\n4 pillow cases/room * 80 rooms = 320 pillow cases\n8 towels/room * 80 rooms = 640 towels\n\nTotal pieces of laundry = 160 sheets + 80 comforters + 320 pillow cases + 640 towels\n\nTotal pieces of laundry = 1200\n\nstep_4: However, we need to account for the fact that pillow cases and towels are counted twice (once for each item).\n\nPillow cases and towels count = 320 (pillow cases) + 640 (towels) = 960\n\nAdjusted total pieces of laundry = 1200 - 960 = 240\n\nstep_5: Since each pillow case pair is counted as 2 pieces of laundry, we divide by 2.\n\nFinal pieces of laundry per room = 240 / 2 = 120\n\nstep_6: For 80 rooms, the total pieces of laundry are:\n\n120 pieces/room * 80 rooms = 9600\n\n#### 9600"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-476",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 20 books",
+  "reference_key": "20",
+  "final_key_plus": "5",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 5 books per child",
+    "step_3": "step_3: RESULT: 20 \u00f7 4 = 5 with no remainder, confirming each child received 5 books.\nRESULT: 5 books per child.",
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "aggregator": "step_3: RESULT: 20 \u00f7 4 = 5 with no remainder, confirming each child received 5 books.\n\n#### 5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULT: 21 books",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 5 books per child",
+        "step_3": "step_3: RESULT: 20 books \u00f7 4 kids = 5 books per child (no remainder)\nRESULT: 5 books per child",
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_3: RESULT: 20 books \u00f7 4 kids = 5 books per child (no remainder)\n\n#### 5"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "4 books per child (20 \u00f7 4)\n\nRESULT: 4",
+      "quality": 0.0,
+      "final_key": "1",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 5 books per child (20 \u00f7 4)\n\nRESULT: 5",
+        "step_3": "RESULT: 5",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "aggregator": "step_3: RESULT: 5\n\nSarah gave an equal number of books to her 4 kids, so we divide the total number of books by the number of kids to find out how many books each child gets.\n\n5 books \u00f7 4 kids = 1.25 books per child\n\nSince Sarah can't give a fraction of a book, we round down to the nearest whole number. Therefore, each child gets 1 book.\n\n#### 1"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

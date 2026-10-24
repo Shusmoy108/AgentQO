@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-852",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $25",
+  "reference_key": "25",
+  "final_key_plus": "69",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $16 (after applying the $2 discount per basket of red food)",
+    "step_3": "step_3: RESULT: $75 (3 baskets of green food at $25 each)",
+    "verifier": "VERDICT: passthrough\n#### 69",
+    "aggregator": "step_3: RESULT: $75 (3 baskets of green food at $25 each)\n\nTo calculate the total cost, we first determine the cost of the green food baskets: 3 baskets * $25/basket = $75.\n\nNext, we consider the discount for the red food baskets. Since you're buying 3 baskets of red food and getting $2 off each, the total discount is 3 baskets * $2/basket = $6.\n\nFinally, we subtract the total discount from the cost of the green food baskets to find the total cost: $75 - $6 = $69.\n\n#### 69"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "26",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "RESULT: 26",
+      "quality": 0.0,
+      "final_key": "129",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $16 (18 - 2)",
+        "step_3": "step_3: RESULT: 75 (3 * 25)",
+        "verifier": "VERDICT: passthrough\n#### 129",
+        "aggregator": "step_4: step_4: RESULT: 75 (total cost for 3 baskets of green food)\nstep_5: step_5: RESULT: 54 (18 * 3 - 2 * 3)\nstep_6: step_6: RESULT: 75 + 54 = 129 (total cost including green and red food baskets with discount)\n\n#### 129"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "30",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "RESULT: 30",
+      "quality": 0.0,
+      "final_key": "75",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $16\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 3 * $25 = $75\nRESULT: $75",
+        "verifier": "VERDICT: passthrough\n#### 75",
+        "aggregator": "step_3: RESULT: 3 * $25 = $75\n\nFinal answer: #### $75"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

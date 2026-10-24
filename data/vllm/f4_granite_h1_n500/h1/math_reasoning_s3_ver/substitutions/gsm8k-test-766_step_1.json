@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-766",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $60",
+  "reference_key": "60",
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 12 candy bars",
+    "step_3": "step_3: RESULT: 12 candy bars\n\nEnd with \"RESULT: 12\".",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "aggregator": "step_2: Marissa's remaining money after buying the ball = $80 - $20 = $60\nstep_3: Number of candy bars Marissa could buy with $60 = $60 / $5 per candy bar = 12 candy bars\n\nRESULT: 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "61",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "RESULT: 61",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 12 candy bars\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 12 candy bars\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "step_2: Marissa had $80 initially.\nstep_3: She spent $20 on a ball.\nstep_4: The remaining amount for candy bars is $80 - $20 = $60.\nstep_5: Candy bars are priced at $5 each.\nstep_6: To find out how many candy bars Marissa bought for Jimmy, divide the remaining amount by the price per candy bar: $60 / $5 = 12 candy bars.\n\nRESULT: 12 candy bars\n#### 12"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "RESULT: $60\n\n[End of Step 1]\n\nNext step will be to find out how many candy bars Marissa bought for Jimmy using the remaining money.",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 12 candy bars",
+        "step_3": "step_3: RESULT: 12 candy bars\n\n[End of Step 3]",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "#### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

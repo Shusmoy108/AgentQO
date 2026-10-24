@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-65",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Calculate reading time per session: Jim reads for half as long as he watches TV, which is 2 hours. So, reading time per session = 2 / 2 = 1 hour.\n\nRESULT: 1 hour",
+  "reference_key": "1",
+  "final_key_plus": "12",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "2. Determine the total time spent on TV and reading per week: Jim does this activity 3 times a week, so the total time is 2 hours (TV) + 1 hour (reading) = 3 hours per week.\n\nRESULT: 3 hours",
+    "step_3": "3 hours/week * 4 weeks = 12 hours\n\nRESULT: 12 hours",
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "aggregator": "step_1: Jim watches TV for 2 hours each time.\nstep_2: He reads for half the time he spends watching TV, so 2 hours / 2 = 1 hour per reading session.\nstep_3: He does this 3 times a week, so 2 hours (TV) + 1 hour (reading) = 3 hours per week.\nstep_4: Over 4 weeks, he spends 3 hours/week * 4 weeks = 12 hours.\n\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "2",
+      "reference_key": "1",
+      "key_differs": true,
+      "text": "1. Calculate reading time per session: Jim reads for half as long as he watches TV, which is 2 hours. So, reading time per session = 2 / 2 = 1 hour.\n\nRESULT: 2 hour",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2. Determine the total time spent on TV and reading per week: Jim does this activity 3 times a week, so the total time is 2 hours (TV) + 1 hour (reading) = 3 hours per week.\n\nRESULT: 3 hours",
+        "step_3": "3 hours/week * 4 weeks = 12 hours\n\nRESULT: 12 hours",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "step_1: Jim watches TV for 2 hours each time.\nstep_2: He reads for half the time he spends watching TV, so 2 hours / 2 = 1 hour per reading session.\nstep_3: He does this 3 times a week, so 2 hours (TV) + 1 hour (reading) = 3 hours per week.\nstep_4: Over 4 weeks, he spends 3 hours/week * 4 weeks = 12 hours.\n\n#### 12"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "1",
+      "key_differs": true,
+      "text": "RESULT: Jim reads for 1 hour per session.\n\nNext Steps:\n\n1. \n2. \n3. (3 and 4 to be calculated)",
+      "quality": 1.0,
+      "final_key": "36",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "2. RESULT: Jim spends 3 hours per week on TV and reading combined.",
+        "step_3": "3. RESULT: Jim spends 12 hours on TV and reading in 4 weeks.",
+        "verifier": "VERDICT: passthrough\n#### 36",
+        "aggregator": "step_1: Calculate the time Jim spends reading per session.\nJim reads for half the time he spends watching TV, which is 2 hours.\nSo, reading time per session = 2 hours / 2 = 1 hour.\n\nstep_2: Calculate total reading time in 4 weeks.\nJim reads 3 times a week, so in 4 weeks, he reads for 3 sessions/week * 4 weeks = 12 sessions.\nTotal reading time in 4 weeks = 12 sessions * 1 hour/session = 12 hours.\n\nstep_3: Calculate total TV time in 4 weeks.\nJim watches TV for 2 hours each time.\nTotal TV time in 4 weeks = 2 hours/session * 3 sessions/week * 4 weeks = 24 hours.\n\nstep_4: Sum up total time spent on TV and reading in 4 weeks.\nTotal time spent = Total TV time + Total reading time\nTotal time spent = 24 hours + 12 hours = 36 hours.\n\n#### 36"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

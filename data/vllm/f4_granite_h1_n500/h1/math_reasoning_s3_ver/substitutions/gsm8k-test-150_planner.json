@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-150",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Convert the distance from miles to feet. Since 1 mile is equal to 5280 feet, Steve lives 3 miles away, which is 3 * 5280 = 15840 feet from the school. Tim lives 2 miles away, which is 2 * 5280 = 10560 feet from the school.\n2. Calculate the time it takes for each person to get home. Steve bikes at 440 feet per minute, so the time it takes him to get home is 15840 feet / 440 feet per minute = 36 minutes. Tim skateboards at 264 feet per minute, so the time it takes him is 10560 feet / 264 feet per minute = 40 minutes.\n3. Determine the difference in arrival times. The loser will take 40 minutes, while the winner will take 36 minutes. The winner will be waiting for the loser for 40 - 36 = 4 minutes.\n\nThe winner will be waiting for 4 minutes before the loser finishes the race.",
+  "reference_key": null,
+  "final_key_plus": "33",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 15840 feet for Steve, 10560 feet for Tim.",
+    "verifier": "VERDICT: passthrough\n#### 33",
+    "step_2": "step_2: RESULT: Steve takes 36 minutes (15840 feet / 440 feet per minute), Tim takes 40 minutes (10560 feet / 264 feet per minute).\n\nRESULT: 4",
+    "step_3": "step_3: RESULT: 40 - 36 = 4 minutes.\n\nRESULT: 4",
+    "aggregator": "36 minutes is the time it takes for Tim to reach the school on his skateboard. Since Steve lives 3 miles away and can bike at 440 feet per minute, we first convert Steve's speed to feet per minute: 440 feet/minute * 5280 feet/mile = 232320 feet/mile.\n\nNow, we calculate how long it takes Steve to reach the school: 3 miles * 232320 feet/mile = 696960 feet.\n\nNext, we find out how long it takes for Steve to bike to the school: 696960 feet / 232320 feet/minute = 3 minutes.\n\nFinally, we determine the waiting time for the winner: 36 minutes (Tim's time) - 3 minutes (Steve's time) = 33 minutes.\n\n#### 33"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the weekly usage of paper by Miguel: 2 pads * 30 sheets per pad = 60 sheets per week.\n2. Determine the monthly usage by multiplying the weekly usage by the number of weeks in a month. Assuming a month has approximately 4 weeks: 60 sheets/week * 4 weeks/month = 240 sheets per month.\n3. Confirm the result by stating the final answer: Miguel uses 240 sheets of paper every month.",
+      "quality": 0.0,
+      "final_key": "-0.0258",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the weekly usage of paper by Miguel: 2 pads * 30 sheets per pad = 60 sheets per week.\n\nRESULT: 60 sheets per week.",
+        "verifier": "VERDICT: passthrough\n#### -0.0258",
+        "step_2": "2. Determine the monthly usage by multiplying the weekly usage by the number of weeks in a month. Assuming a month has approximately 4 weeks: 60 sheets/week * 4 weeks/month = 240 sheets per month.\n\nRESULT: 240 sheets per month.",
+        "step_3": "3. Confirm the result by stating the final answer: Miguel uses 240 sheets of paper every month.\n\nRESULT: 240 sheets per month.",
+        "aggregator": "step_1: Calculate Steve's travel time.\nSteve's distance = 3 miles\nSteve's speed = 440 feet per minute\nSteve's travel time = 3 miles * (1000 feet / 1 mile) / 440 feet per minute = 0.7826 minutes\n\nstep_2: Calculate Tim's travel time.\nTim's distance = 2 miles\nTim's speed = 264 feet per minute\nTim's travel time = 2 miles * (1000 feet / 1 mile) / 264 feet per minute = 0.7568 minutes\n\nstep_3: Determine the winner and the waiting time.\nSince Steve lives further away and can bike faster, he will be the winner.\nWaiting time for Tim = Tim's travel time - Steve's travel time\nWaiting time for Tim = 0.7568 minutes - 0.7826 minutes = -0.0258 minutes\n\nThe negative value indicates that Tim will be waiting for Steve to finish, not the other way around.\n\n#### -0.0258 minutes\n\nNote: The negative value indicates that Tim will be waiting for Steve to finish, not the other way around. This means Tim will be waiting at home for Steve to return, and the time he waits is approximately 0.0258 minutes or 1.55 seconds."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Convert the distance from miles to feet. Given that 1 mile is equivalent to 5280 feet, Steve resides 3 miles from the school, making it 3 * 5280 = 15840 feet away. Tim, however, is 2 miles away, equivalent to 2 * 5280 = 10560 feet.\n2. Compute the duration for each individual to reach home. Steve pedals at a pace of 440 feet per minute, meaning his journey home takes 15840 feet / 440 feet per minute = 36 minutes. Tim skates at 264 feet per minute, so his travel time is 10560 feet / 264 feet per minute = 40 minutes.\n3. Compute the disparity in arrival times. The one who lags behind will take 40 minutes, while the faster one will take 36 minutes. Consequently, the faster one will be waiting for the slower one for 40 - 36 = 4 minutes.\n\nThe faster one will be waiting for 4 minutes before the slower one completes the race.",
+      "quality": 1.0,
+      "final_key": "4",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Steve's distance in feet: 15840 feet\n2. Tim's distance in feet: 10560 feet\n\nRESULT: 15840",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "step_2": "step_2: 2. Steve's travel time: 15840 feet / 440 feet per minute = 36 minutes\n\nRESULT: 36",
+        "step_3": "step_3: 3. Disparity in arrival times: 40 minutes (Tim's time) - 36 minutes (Steve's time) = 4 minutes\n\nRESULT: 4",
+        "aggregator": "4\n#### 4"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

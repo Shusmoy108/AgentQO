@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-504",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $4",
+  "reference_key": "4",
+  "final_key_plus": "1",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $2\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $7 (total cost) - $4 (grape gum) - $2 (green apple gum) = $1 (strawberry gum)",
+    "verifier": "VERDICT: passthrough\n#### 1",
+    "aggregator": "step_3: RESULT: $7 (total cost) - $4 (grape gum) - $2 (green apple gum) = $1 (strawberry gum)\n\nSuzie spent $1 on each pack of strawberry gum.\n\n#### $1"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "5",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "RESULT: 5",
+      "quality": 0.0,
+      "final_key": "1",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $2\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $1\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "aggregator": "step_3: RESULT: $1\n\nSuzie paid $1 for each pack of strawberry gum.\n\n#### $1"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "1. Calculate the total cost of grape gum: $2 (since she bought two packs)\nRESULT: $2",
+      "quality": 0.0,
+      "final_key": "1",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Determine the cost of green apple gum: $2 (half of the grape gum cost)\nRESULT: $2",
+        "step_3": "step_3: 3. Find the total cost of strawberry gum: $7 (total cost) - $4 (grape gum) - $2 (green apple gum) = $1\nRESULT: $1",
+        "verifier": "VERDICT: passthrough\n#### 1",
+        "aggregator": "step_3: The total cost of strawberry gum is $1.\n\n#### $1"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

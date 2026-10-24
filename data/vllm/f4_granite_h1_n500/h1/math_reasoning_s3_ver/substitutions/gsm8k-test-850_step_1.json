@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-850",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 10 goats were sold from Farm X.",
+  "reference_key": "10",
+  "final_key_plus": "40",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 10 goats (from Farm X) * 2 = 20 goats (sold from Farm Y).\n\nRESULT: 20 goats were sold from Farm Y.",
+    "step_3": "step_3: RESULT: 45 goats (Farm X) - 10 goats = 35 goats.\nstep_3: RESULT: 25 goats (Farm Y) - 20 goats = 5 goats.\n\nRESULT: 35 goats (Farm X) and 5 goats (Farm Y) are left in total.",
+    "verifier": "VERDICT: passthrough\n#### 40",
+    "aggregator": "35 goats (Farm X) and 5 goats (Farm Y) are left in total.\n#### 40"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 11 goats were sold from Farm X.",
+      "quality": 1.0,
+      "final_key": "70",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 20 goats were sold from Farm Y.\n\nRESULT: 20 goats were sold from Farm Y.",
+        "step_3": "step_3: RESULT: \n- Farm X: 55 goats - 10 goats = 45 goats.\n- Farm Y: 45 goats - 20 goats = 25 goats.\n\nRESULT: 45 goats in Farm X and 25 goats in Farm Y, totaling 70 goats.",
+        "verifier": "VERDICT: passthrough\n#### 70",
+        "aggregator": "45 goats in Farm X and 25 goats in Farm Y, totaling 70 goats.\n#### 70"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "70",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "Result: 10 goats sold from Farm X.\n\nNext step:\n\n2. Calculate the number of goats sold from Farm Y, which is twice the number sold from Farm X.\n\nRESULT: 20 goats sold from Farm Y.\n\nNow, proceed to step 3:\n\n3. Determine the remaining number of goats in each farm.\n\nRESULT: 45 goats left in Farm X.\nRESULT: 25 goats left in Farm Y.\n\nALTOGETHER: 45 (Farm X) + 25 (Farm Y) = 70 goats.\n\nFinal result: There are 70 goats left in the two farms altogether.",
+      "quality": 1.0,
+      "final_key": "70",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "RESULT: 20 goats sold from Farm Y.",
+        "step_3": "RESULT: 45 goats left in Farm X.\nRESULT: 25 goats left in Farm Y.\nALTOGETHER: 45 (Farm X) + 25 (Farm Y) = 70 goats.\nFinal result: There are 70 goats left in the two farms altogether.",
+        "verifier": "VERDICT: passthrough\n#### 70",
+        "aggregator": "Final result: There are 70 goats left in the two farms altogether.\n#### 70"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

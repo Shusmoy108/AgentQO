@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-42",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Compute the total number of pie pieces baked: 5 pies * 8 pieces per pie = 40 pieces.\nRESULT: 40",
+  "reference_key": "40",
+  "final_key_plus": "26",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. Identify the number of pieces left after the event.\nRESULT: 14 pieces\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "3. RESULT: 40 (total pieces) - 14 (remaining pieces) = 26 (pieces taken by guests)",
+    "verifier": "VERDICT: passthrough\n#### 26",
+    "aggregator": "step_3: 3. RESULT: 40 (total pieces) - 14 (remaining pieces) = 26 (pieces taken by guests)\n\n#### 26"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "41",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "1. Compute the total number of pie pieces baked: 5 pies * 8 pieces per pie = 40 pieces.\nRESULT: 41",
+      "quality": 1.0,
+      "final_key": "26",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. Identify the number of pieces left after the event.\nRESULT: 14 pieces\n\nCarry out step 3. Show the calculation briefly.\nEND:\nRESULT: 26 pieces",
+        "step_3": "RESULT: 26 pieces",
+        "verifier": "VERDICT: passthrough\n#### 26",
+        "aggregator": "step_3: RESULT: 26 pieces\n\nGrandma Jones initially had 5 pies, each cut into 8 pieces, making a total of 40 pieces (5 pies * 8 pieces per pie). After the event, 14 pieces remained untouched. To find out how many pieces were taken by the guests, subtract the remaining pieces from the initial total:\n\n40 (initial pieces) - 14 (remaining pieces) = 26 pieces\n\n#### 26"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "8",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "1. RESULT: 40 pieces (5 pies * 8 pieces per pie)",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: 2. RESULT: 40 pieces (total) - 14 pieces (remaining) = 26 pieces (taken by guests)\n\nRESULT: 26 pieces.",
+        "step_3": "26 pieces (total pieces) - 14 pieces (remaining) = 12 pieces (taken by guests)\n\nRESULT: 12 pieces.",
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "12 pieces. #### 12"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

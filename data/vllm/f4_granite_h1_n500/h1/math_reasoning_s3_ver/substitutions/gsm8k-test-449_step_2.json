@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-449",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Calculate the total number of colors from the four packets with sixteen pieces each:\n   - Multiply the number of packets (4) by the number of colors per packet (16).\n   - Result: 4 * 16 = 64 colors.\n\nRESULT: 64",
+  "reference_key": "64",
+  "final_key_plus": "112",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 48 (from step 1) + 64 (from step 2) = 112 colors.\nRESULT: 112",
+    "verifier": "VERDICT: passthrough\n#### 112",
+    "aggregator": "step_1: 6 packets * 8 colors each = 48 colors\nstep_2: 4 packets * 16 colors each = 64 colors\nstep_3: 48 (from step 1) + 64 (from step 2) = 112 colors\n\n#### 112"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "65",
+      "reference_key": "64",
+      "key_differs": true,
+      "text": "2. Calculate the total number of colors from the four packets with sixteen pieces each:\n   - Multiply the number of packets (4) by the number of colors per packet (16).\n   - Result: 4 * 16 = 64 colors.\n\nRESULT: 65",
+      "quality": 1.0,
+      "final_key": "112",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: 48 (from step 1) + 64 (from step 2) = 112 colors.\n\nRESULT: 112",
+        "verifier": "VERDICT: passthrough\n#### 112",
+        "aggregator": "112\n#### 112"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "112",
+      "reference_key": "64",
+      "key_differs": true,
+      "text": "step_2: 4 * 16 = 64 colors.\nRESULT: 112 colors.",
+      "quality": 1.0,
+      "final_key": "112",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: 48 (from step 1) + 64 (from step 2) = 112 colors.\nRESULT: 112 colors.",
+        "verifier": "VERDICT: passthrough\n#### 112",
+        "aggregator": "step_1: Six packets had eight pieces of colors each, so 6 * 8 = 48 colors.\nstep_2: The other four packets had sixteen pieces of colors each, so 4 * 16 = 64 colors.\nstep_3: Adding the colors from both types of packets, 48 + 64 = 112 colors.\n\n#### 112 colors."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

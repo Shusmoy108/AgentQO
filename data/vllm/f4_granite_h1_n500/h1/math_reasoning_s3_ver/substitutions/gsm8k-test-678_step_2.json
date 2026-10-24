@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-678",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Karen's daily earnings are $60.\n\nRESULT: 60\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+  "reference_key": "3",
+  "final_key_plus": "120",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: 120",
+    "verifier": "VERDICT: passthrough\n#### 120",
+    "aggregator": "step_3: RESULT: Karen earns $10 per hour. Since Karen earns twice what Lorie earns, Karen's hourly rate is $20.\n\nKaren works 3 hours per day, so her daily earnings are 3 hours * $20/hour = $60.\n\nOver two days, Karen's total earnings would be 2 days * $60/day = $120.\n\n#### 120"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "3",
+      "key_differs": false,
+      "text": "step_2: Karen's daily earnings are $60.\n\nRESULT: 4\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 120",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "aggregator": "step_3: RESULT: Karen earns $10 per hour. Since Karen earns twice what Lorie earns, Karen's hourly rate is $20.\n\nKaren works 3 hours per day, so her daily earnings are 3 hours * $20/hour = $60.\n\nOver two days, Karen's total earnings would be 2 days * $60/day = $120.\n\n#### 120"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "60",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "2. Karen's daily earnings: $20 * 3 = $60.\n\nRESULT: 60",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. Karen's earnings over two days: $60 * 2 = $120.\n\nRESULT: 120",
+        "verifier": "VERDICT: passthrough\n#### 120",
+        "aggregator": "120\n#### 120"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

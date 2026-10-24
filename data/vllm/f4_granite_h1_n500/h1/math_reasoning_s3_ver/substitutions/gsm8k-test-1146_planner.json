@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1146",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of rocks Adam can buy with his $100: $100 / $5 = 20 rocks.\n2. Determine the number of rocks Adam sells: 60% of 20 rocks = 0.6 * 20 = 12 rocks.\n3. Calculate the total revenue from selling 12 rocks: 12 rocks * $7 = $84.\n4. Calculate the total cost of buying 20 rocks: 20 rocks * $5 = $100.\n5. Determine the loss: $100 (cost) - $84 (revenue) = $16.\n\nFinal Answer: Adam loses $16.",
+  "reference_key": null,
+  "final_key_plus": "-9.6",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Adam can buy 20 rocks with his $100.\nRESULT: 20",
+    "verifier": "VERDICT: passthrough\n#### -9.6",
+    "step_2": "step_2: 2. Adam sells 12 rocks (0.6 * 20).\nRESULT: 12",
+    "step_3": "3. RESULT: 12 rocks * $7 = $84.",
+    "aggregator": "step_3: 3. RESULT: Adam buys 12 rocks (100% of his initial investment) at $5 each, spending $60.\n\nHe then sells 60% of these rocks, which is 7.2 rocks (60% of 12).\n\nstep_4: 4. RESULT: 7.2 rocks * $7 = $50.4.\n\nAdam's total revenue from selling 60% of his inventory is $50.4.\n\nstep_5: 5. RESULT: $60 (initial investment) - $50.4 (revenue) = -$9.6.\n\nAdam loses $9.6 in this transaction.\n\n#### -$9.6"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of red pens: 5 packs * 5 pens per pack = 25 red pens.\n2. Determine the number of black pens: Twice the amount of red pens = 2 * 25 = 50 black pens.\n3. Find the total number of pens: 25 red pens + 50 black pens = 75 pens in total.",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the total number of rocks: Adam buys rocks for $5 each. With $100, he can buy 100/5 = 20 rocks.\n\nRESULT: 20 rocks",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "step_2": "2. Calculate the total revenue from selling 60% of the inventory:\n60% of 20 rocks = 0.60 * 20 = 12 rocks sold.\nRevenue from selling 12 rocks = 12 * $7 = $84.\n\nRESULT: 84",
+        "step_3": "3. Calculate the cost of the rocks:\nCost of 20 rocks = 20 * $5 = $100.\n\nRESULT: 100",
+        "aggregator": "100\n#### 100"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of rocks Adam can buy with his $100: $100 / $5 = 20 rocks.\n2. Determine the number of rocks Adam sells: 60% of 20 rocks = 0.6 * 20 = 12 rocks.\n3. Calculate the total revenue from selling 12 rocks: 12 rocks * $7 = $84.\n4. Calculate the total cost of buying 20 rocks: 20 rocks * $5 = $100.\n5. Determine the gain: $84 (revenue) - $100 (cost) = -$16.\n\nFinal Answer: Adam gains $16. (Note: The error is in step 5, where the conclusion should be a gain, not a loss.)",
+      "quality": 0.0,
+      "final_key": "33.6",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 20",
+        "verifier": "VERDICT: passthrough\n#### 33.6",
+        "step_2": "step_2: RESULT: 12",
+        "step_3": "step_3: RESULT: $84 (12 rocks * $7)",
+        "aggregator": "step_3: RESULT: $84 (12 rocks * $7)\n\nAdam's total investment in rocks is $100. If he buys 12 rocks (since 100 / 5 = 20 rocks, and he sells 60% of this, which is 12 rocks), and sells each for $7, his total revenue would be $84 (12 rocks * $7).\n\nHowever, Adam only sells 60% of his inventory, so he actually sells 7.2 rocks (12 * 0.6). The revenue from these 7.2 rocks would be $50.4 (7.2 rocks * $7).\n\nThe difference between the total revenue he could have made (from selling all 12 rocks) and the actual revenue he made (from selling 7.2 rocks) is the loss: $84 - $50.4 = $33.6.\n\n#### $33.6"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

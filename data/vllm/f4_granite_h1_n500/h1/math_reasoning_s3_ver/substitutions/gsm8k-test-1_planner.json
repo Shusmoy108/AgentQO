@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Identify the amount of blue fiber required: 2 bolts\n2. Calculate the amount of white fiber required: 2 bolts / 2 = 1 bolt\n3. Sum the total amount of fiber: 2 bolts (blue) + 1 bolt (white) = 3 bolts\n\nThe total number of bolts required to make the robe is 3.",
+  "reference_key": null,
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 2 bolts (blue fiber)",
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "step_2": "step_2: RESULT: 2 bolts (blue) / 2 = 1 bolt (white)\n\nFinal result:\nRESULT: 3 bolts (total)",
+    "step_3": "step_3: RESULT: 2 (blue) + 1 (white) = 3 bolts (total)\n\nRESULT: 3",
+    "aggregator": "3\n#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Let's denote the number of copies Harald sold as H.\n2. According to the problem, Marilyn's record sold 10 times as many copies as Harald's, so Marilyn sold 10H copies.\n3. The total number of copies sold by both is 88,000. Therefore, we can write the equation: H + 10H = 88,000.\n4. Simplify the equation to find H: 11H = 88,000.\n5. Solve for H: H = 88,000 / 11 = 8,000.\n\nPLAN:\n1. Define Harald's sales as H.\n2. Express Marilyn's sales as 10H.\n3. Set up the equation H + 10H = 88,000 and solve for H.",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 8,000",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: RESULT: 80,000\n\nEND: 80,000",
+        "step_3": "step_3: RESULT: 8,000 (Harald's sales) + 10 * 8,000 (Marilyn's sales) = 88,000 (total sales)\n\nRESULT: 88,000",
+        "aggregator": "2 bolts of blue fiber and half that much white fiber. Half of 2 is 1. So, it takes 2 bolts of blue and 1 bolt of white.\n\nFinal answer: 2 (blue) + 1 (white) = 3 bolts in total.\n\n#### 3"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the quantity of blue fiber needed: 2 bolts\n2. Compute the quantity of white fiber needed: 2 bolts / 2 = 1 bolt\n3. Aggregate the total fiber amount: 2 bolts (blue) + 1 bolt (white) = 3 bolts\n\nThe total number of bolts necessary for the robe is 4.",
+      "quality": 0.0,
+      "final_key": "4",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 2 bolts (blue fiber)",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "step_2": "step_2: RESULT: 2 bolts (blue fiber) / 2 = 1 bolt (white fiber)\n\nFinal result:\nRESULT: 4 bolts (total)",
+        "step_3": "step_3: RESULT: 2 bolts (blue) + 1 bolt (white) = 3 bolts\n\nFinal result:\nRESULT: 4 bolts (total)",
+        "aggregator": "RESULT: 4 bolts (total)\n#### 4"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

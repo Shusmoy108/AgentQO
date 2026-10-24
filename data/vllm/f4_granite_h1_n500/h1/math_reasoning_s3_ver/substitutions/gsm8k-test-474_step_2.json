@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-474",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: 80 (This is the total number of students, calculated as 20 (without desktop) + 20 * 4 (with desktop).)",
+  "reference_key": "4",
+  "final_key_plus": "230",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 150 (This is the number of students with desktop computers, calculated as 3/4 of the total.)\n\nTo find the total number of students, we add those with desktop computers to those without:\n\n80 (students without) + 150 (students with) = 230 students in total.\n\nRESULT: 230",
+    "verifier": "VERDICT: passthrough\n#### 230",
+    "aggregator": "230 students are at that grade level.\n#### 230"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4",
+      "reference_key": "4",
+      "key_differs": false,
+      "text": "step_2: RESULT: 5 (This is the total number of students, calculated as 20 (without desktop) + 20 * 4 (with desktop).)",
+      "quality": 1.0,
+      "final_key": "80",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 80 (This is the total number of students, calculated as 20 (without desktop) + 20 * 4 (with desktop).)\n\nRESULT: 80",
+        "verifier": "VERDICT: passthrough\n#### 80",
+        "aggregator": "80\n#### 80"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "100",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "step_2: RESULT: 20 + (20 * 4) = 20 + 80 = 100 students.\n\nEND: 100\nRESULT: 100 students.",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 100 students.\nEND: 100\nRESULT: 100",
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "step_3: RESULT: 100 students.\nEND: 100\n#### 100"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

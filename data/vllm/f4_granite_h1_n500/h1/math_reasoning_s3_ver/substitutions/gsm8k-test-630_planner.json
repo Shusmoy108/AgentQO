@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-630",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of riders who can stay upright on the wave: Since 25% of the riders can stay upright, we multiply the total number of riders (100) by 0.25.\n2. Determine the number of women who can stay upright: Given that 60% of the upright riders are women, we multiply the number of upright riders (from step 1) by 0.60.\n3. Calculate the number of men who can stay upright: Subtract the number of women who can stay upright (from step 2) from the total number of upright riders (from step 1).",
+  "reference_key": null,
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 25",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "step_2": "step_2: RESULT: 25 * 0.60 = 15\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 25 - 15 = 10\n\nRESULT: 10",
+    "aggregator": "step_3: RESULT: 25 - 15 = 10\n\nFinal answer: 10 men can stay upright on the wave.\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of colors from the six packets with eight pieces each:\n   - Multiply the number of packets (6) by the number of colors per packet (8).\n   - Result: 6 * 8 = 48 colors.\n\n2. Calculate the total number of colors from the four packets with sixteen pieces each:\n   - Multiply the number of packets (4) by the number of colors per packet (16).\n   - Result: 4 * 16 = 64 colors.\n\n3. Add the totals from steps 1 and 2 to find the overall total number of colors:\n   - 48 (from step 1) + 64 (from step 2) = 112 colors.\n\nPLAN: The total number of colors of crayons Beatrice bought is 112.",
+      "quality": 0.0,
+      "final_key": "112",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 48",
+        "verifier": "VERDICT: passthrough\n#### 112",
+        "step_2": "step_2: RESULT: 64",
+        "step_3": "step_3: RESULT: 48 + 64 = 112\n\nRESULT: 112",
+        "aggregator": "step_3: RESULT: 48 + 64 = 112\n\nFinal answer: 112 men can stay upright on the wave.\n#### 112"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate the number of riders capable of maintaining their balance on the wave: Given that 25% of the riders possess this skill, we multiply the total number of riders (100) by 0.25.\n2. Estimate the number of women who can maintain balance: Acknowledging that 60% of the balanced riders are female, we multiply the number of balanced riders (from step 1) by 0.60.\n3. Estimate the number of men who can maintain balance: Subtract the number of women who can maintain balance (from step 2) from the total number of balanced riders (from step 1).",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. RESULT: 25 riders can maintain their balance on the wave.",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "step_2": "step_2: 2. RESULT: 15 men can maintain their balance on the wave (25 balanced riders * 0.60 = 15).\n\nEND.",
+        "step_3": "step_3: 3. RESULT: 10 men can stay upright on the wave (25 balanced riders - 15 women = 10 men).\n\nEND.",
+        "aggregator": "3. RESULT: 10 men can stay upright on the wave.\n#### 10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

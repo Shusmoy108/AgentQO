@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1171",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. The area of one bedroom is 20 feet * 12 feet = 240 square feet.\n\nRESULT: 240",
+  "reference_key": "240",
+  "final_key_plus": "2160",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: 2. The living room is 5 times larger than one bedroom, so its area is 240 square feet * 5 = 1200 square feet.\n\nRESULT: 1200",
+    "step_3": "3. The total area of the house is the sum of the areas of all bedrooms and the living room: 4 bedrooms * 240 square feet + 1200 square feet = 960 square feet + 1200 square feet = 2160 square feet.\n\nRESULT: 2160",
+    "verifier": "VERDICT: passthrough\n#### 2160",
+    "aggregator": "2160\n#### 2160"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "241",
+      "reference_key": "240",
+      "key_differs": true,
+      "text": "1. The area of one bedroom is 20 feet * 12 feet = 240 square feet.\n\nRESULT: 241",
+      "quality": 0.0,
+      "final_key": "2160",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: 2. The living room, being 5 times larger than one bedroom, has an area of 240 square feet * 5 = 1200 square feet.\n\nRESULT: 1200",
+        "step_3": "3. The total area of the house is the sum of the areas of all bedrooms and the living room: 4 bedrooms * 240 square feet + 1200 square feet = 960 square feet + 1200 square feet = 2160 square feet.\n\nRESULT: 2160",
+        "verifier": "VERDICT: passthrough\n#### 2160",
+        "aggregator": "2160\n#### 2160"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2160",
+      "reference_key": "240",
+      "key_differs": true,
+      "text": "RESULT: 240 square feet\n\nSubtract the given 1000 square feet from the result of step 1 to find the total area of the bedrooms and living room alone.\n\nPLAN:\n1. Multiply the area of one bedroom (240 sq ft) by 4 (total bedrooms) to find the total bedroom area.\n2. Subtract the given remaining area (1000 sq ft) from the result of step 1 to find the total area of the house.\n\nStep 1: 240 square feet * 4 bedrooms = 960 square feet\nStep 2: 960 square feet - 1000 square feet = -40 square feet\n\nSince the result is negative, this indicates an error in assumption. Let's re-evaluate the information given.\n\nRevising the plan:\n1. Calculate the total area of bedrooms: 240 square feet * 4 = 960 square feet.\n2. Add the area of the living room, which is 5 times the size of one bedroom: 960 square feet + (240 square feet * 5) = 960 square feet + 1200 square feet = 2160 square feet.\n3. Add the remaining area of 1000 square feet to find the total area of the house.\n\nREVised RESULT: 2160 square feet.\n\nFinal Result:\nThe total area of Tom's house is 2160 square feet.",
+      "quality": 0.0,
+      "final_key": "2160",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "2160 square feet (240 sq ft * 4 bedrooms + 240 sq ft * 5 for the living room)\n\nRESULT: 2160 square feet.",
+        "step_3": "RESULT: 2160 square feet.",
+        "verifier": "VERDICT: passthrough\n#### 2160",
+        "aggregator": "step_1: Calculate the area of one bedroom.\nArea of one bedroom = 20 feet * 12 feet = 240 square feet.\n\nstep_2: Determine the area of the living room.\nLiving room area = 5 * bedroom area = 5 * 240 square feet = 1200 square feet.\n\nstep_3: Add the area of the bedrooms and the living room to find the total area.\nTotal area = bedroom area * 4 + living room area = 240 square feet * 4 + 1200 square feet = 960 square feet + 1200 square feet = 2160 square feet.\n\n#### 2160"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

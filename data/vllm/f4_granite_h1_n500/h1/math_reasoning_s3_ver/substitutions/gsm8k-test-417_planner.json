@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-417",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total distance Tom traveled in the first four days: 200 kilometers/day * 4 days = 800 kilometers.\n2. Calculate the distance Tom traveled in the next two days: 30% of 800 kilometers = 0.30 * 800 kilometers = 240 kilometers.\n3. Add the distances from steps 1 and 2, and then add the distances for the second week: 800 kilometers + 240 kilometers + (300 kilometers/day * 7 days) = total kilometers.\n\nNote: The final step involves calculating the total distance for the second week and then adding it to the distances from the first week to find the total distance for the two-week trip.",
+  "reference_key": null,
+  "final_key_plus": "3140",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 800 kilometers\n\nNext step:\n\nPLAN:\n2. Calculate the distance Tom traveled in the next two days: 30% of 800 kilometers = 0.30 * 800 kilometers = 240 kilometers.\n\nCarry out step 2:\n\nRESULT: 240 kilometers\n\nNow, add the distances from both steps:\n\nPLAN:\n3. Add the distances from steps 1 and 2, and then add the distances for the second week: 800 kilometers + 240 kilometers + (300 kilometers/day * 7 days) = total kilometers.\n\nCarry out step 3:\n\nRESULT: 800 kilometers + 240 kilometers + (300 kilometers/day * 7 days) = 1040 kilometers + 2100 kilometers = 3140 kilometers\n\nFinal answer: Tom made a total of 3140 kilometers during his two-week-long trip.",
+    "verifier": "VERDICT: passthrough\n#### 3140",
+    "step_2": "RESULT: 240 kilometers",
+    "step_3": "RESULT: 800 kilometers + 240 kilometers + (300 kilometers/day * 7 days) = 1040 kilometers + 2100 kilometers = 3140 kilometers",
+    "aggregator": "step_3: RESULT: 800 kilometers (first four days) + 240 kilometers (next two days) + (300 kilometers/day * 7 days) (second week) = 1040 kilometers + 2100 kilometers = 3140 kilometers\n\n#### 3140 kilometers"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of books Ahmed read in the hour: Since Ezra read twice as many books as Ahmed, and Ezra read 300 books, Ahmed read half of that amount. So, Ahmed read 300 / 2 = 150 books.\n\n2. Determine the total number of books Ezra will read: Ezra initially read 300 books and plans to read an additional 150. Therefore, Ezra will read a total of 300 + 150 = 450 books.\n\n3. Calculate the total number of books read by both: To find the total, add the books Ahmed read to the books Ezra will read. So, Ahmed read 150 books, and Ezra will read 450 books. Therefore, together they read 150 + 450 = 600 books.",
+      "quality": 0.0,
+      "final_key": "600",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 150",
+        "verifier": "VERDICT: passthrough\n#### 600",
+        "step_2": "step_2: RESULT: 450",
+        "step_3": "step_3: RESULT: 600",
+        "aggregator": "step_3: RESULT: 600\n\n#### 600"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the total distance Tom journeyed in the initial four days: 200 kilometers/day * 4 days = 800 kilometers.\n2. Compute the distance Tom covered in the subsequent two days: 30% of 800 kilometers = 0.30 * 800 kilometers = 240 kilometers.\n3. Sum the distances from steps 1 and 2, and then incorporate the distances for the ensuing week: 800 kilometers + 240 kilometers + (300 kilometers/day * 7 days) = total kilometers.\n\nNote: The concluding phase entails computing the aggregate distance for the forthcoming week and subsequently merging it with the distances from the preceding week to ascertain the total distance for the entire two-week excursion.",
+      "quality": 0.0,
+      "final_key": "3380",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 800 kilometers",
+        "verifier": "VERDICT: passthrough\n#### 3380",
+        "step_2": "step_2: RESULT: 240 kilometers\n\nCarry out step 3.\n\nRESULT: 800 kilometers + 240 kilometers + (300 kilometers/day * 7 days) = 800 kilometers + 240 kilometers + 2100 kilometers = 3140 kilometers.",
+        "step_3": "RESULT: 3140 kilometers.",
+        "aggregator": "step_1: Calculate the total distance for the first four days.\n200 km/day * 4 days = 800 kilometers\n\nstep_2: Determine the distance for the next two days.\n30% of 800 km = 0.30 * 800 km = 240 kilometers\n\nstep_3: Add the distances from the first four days and the next two days.\n800 km + 240 km = 1040 kilometers\n\nstep_4: Calculate the distance for the last day of the first week.\n0 kilometers\n\nstep_5: Calculate the total distance for the second week.\n300 km/day * 7 days = 2100 kilometers\n\nstep_6: Sum up all the distances.\n1040 km (first four days) + 240 km (next two days) + 0 km (last day of first week) + 2100 km (second week) = 3380 kilometers\n\n#### 3380 kilometers"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

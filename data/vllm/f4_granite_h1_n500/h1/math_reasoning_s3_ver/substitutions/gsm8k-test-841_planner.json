@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-841",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the car and the phone: $10000 (car) + $800 (phone) = $10800.\n2. Determine the total amount of money Gabriel currently has: $5000 (from working) + $200 (from his brother) = $5200.\n3. Find out how much more money Gabriel needs: $10800 (total cost) - $5200 (current amount) = $5600.\n\nSo, Gabriel still needs $5600.",
+  "reference_key": null,
+  "final_key_plus": "5600",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: $10800",
+    "verifier": "VERDICT: passthrough\n#### 5600",
+    "step_2": "step_2: RESULT: $5200\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: $10800 (total cost) - $5200 (current amount) = $5600.\nRESULT: $5600",
+    "aggregator": "RESULT: $5600\n#### 5600"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of girls on varsity: One-third of the 12 girls are on varsity, which equals 12 * (1/3) = 4 girls.\n2. Calculate the number of boys on varsity: One-fourth of the 12 boys are on varsity, which equals 12 * (1/4) = 3 boys.\n3. Calculate the total number of students on varsity: Add the girls and boys on varsity from steps 1 and 2, which equals 4 (girls) + 3 (boys) = 7 students.\n4. Calculate the number of students not on varsity: Subtract the total number of students on varsity from the total number of students in the class, which equals 12 (girls) + 12 (boys) - 7 (varsity students) = 17 students.",
+      "quality": 0.0,
+      "final_key": "5800",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the number of girls on varsity: One-third of the 12 girls are on varsity, which equals 12 * (1/3) = 4 girls.\n\nRESULT: 4",
+        "verifier": "VERDICT: passthrough\n#### 5800",
+        "step_2": "step_2: 2. Calculate the number of boys on varsity: One-fourth of the 12 boys are on varsity, which equals 12 * (1/4) = 3 boys.\n\nRESULT: 3",
+        "step_3": "3. Calculate the total number of students on varsity: Add the girls and boys on varsity from steps 1 and 2, which equals 4 (girls) + 3 (boys) = 7 students.\n\nRESULT: 7",
+        "aggregator": "1. Calculate the total amount Gabriel has: $5000 (from weekends) + $200 (from brother) = $5200.\n2. Subtract the total cost of the car and phone from the total amount Gabriel has: $5200 - $10000 (car) - $800 (phone) = -$5800.\n\nGabriel still needs $5800 to buy the car and phone.\n\n#### 5800"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total cost of the car and the phone: $10000 (car) + $800 (phone) = $10800.\n2. Determine the total amount of money Gabriel currently has: $5000 (from working) + $200 (from his brother) = $5200.\n3. Find out how much more money Gabriel needs: $10800 (total cost) - $5200 (current amount) = $5600.\n\nGabriel, however, has managed to secure an additional $1000, bringing his total to $6200.\n\nTherefore, Gabriel still needs $5600, but he has a surplus of $1000.",
+      "quality": 1.0,
+      "final_key": "5600",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $10800",
+        "verifier": "VERDICT: passthrough\n#### 5600",
+        "step_2": "step_2: RESULT: $5200\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $10800 (total cost) - $5200 (current amount) = $5600 (remaining amount needed)\n\nRESULT: $5600",
+        "aggregator": "$5600\n#### 5600"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

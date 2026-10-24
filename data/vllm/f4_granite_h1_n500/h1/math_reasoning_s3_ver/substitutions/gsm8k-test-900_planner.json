@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-900",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of pages Denise read today. Since Denise read 5 more than as many pages as Daniel read yesterday, and Daniel read 13 pages yesterday, Denise read 13 + 5 = 18 pages today.\n2. Calculate the total number of pages Denise read. Denise read 10 pages yesterday and 18 pages today, so she read a total of 10 + 18 = 28 pages.\n3. Calculate the difference in the number of pages read by Denise and Daniel. Denise read 28 pages and Daniel read 13 pages, so Denise read 28 - 13 = 15 more pages than Daniel.\n\nFinal answer: Denise read 15 more pages than Daniel.",
+  "reference_key": null,
+  "final_key_plus": "15",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Denise read 13 (yesterday) + 5 (today) = 18 pages today.\n\nRESULT: 18",
+    "verifier": "VERDICT: passthrough\n#### 15",
+    "step_2": "step_2: 2. Denise's total pages = 10 (yesterday) + 18 (today) = 28 pages.\n\nRESULT: 28",
+    "step_3": "3. Denise's total pages - Daniel's pages = 28 - 13 = 15\n\nRESULT: 15",
+    "aggregator": "15\n#### 15"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate Melissa's total daily earnings before expenses: $15 (daily pay) * 1 day = $15.\n2. Calculate Melissa's total parking expenses for 3 days: $3 (parking cost) * 3 days = $9.\n3. Determine Melissa's net earnings per day after expenses: $15 (daily earnings) - $9 (parking expenses) = $6.\n4. Calculate Melissa's hourly wage after expenses: $6 (net earnings per day) / 3 days = $2 per hour.",
+      "quality": 1.0,
+      "final_key": "15",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Denise's total pages read yesterday: 10\n2. Daniel's total pages read yesterday: 13\n3. Denise's additional pages read today: 5\n4. Daniel's pages read today: 0\n5. Denise's total pages read today: 10 (yesterday) + 5 (today) = 15\n6. Total pages read by Denise: 10 (yesterday) + 15 (today) = 25\n7. Total pages read by Daniel: 13 (yesterday) + 0 (today) = 13\n8. Difference in pages read: 25 (Denise) - 13 (Daniel) = 12\n\nRESULT: 12",
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "step_2": "2. Daniel's total parking expenses for 3 days: $3 (parking cost) * 3 days = $9\n\nRESULT: $9",
+        "step_3": "3. Determine Melissa's net earnings per day after expenses: $15 (daily pay) - $9 (parking expenses) = $6\n\nRESULT: $6",
+        "aggregator": "1. Calculate the difference in pages read by Denise and Daniel yesterday: 13 (Daniel) - 10 (Denise) = 3 pages.\n2. Determine the number of pages Denise read today: 13 (Daniel's yesterday) + 5 = 18 pages.\n3. Calculate the total pages Denise read: 10 (yesterday) + 18 (today) = 28 pages.\n4. Calculate the total pages Daniel read: 13 (yesterday) + 0 (today) = 13 pages.\n5. Find out how many more pages Denise read than Daniel: 28 (Denise) - 13 (Daniel) = 15 pages.\n\n#### 15"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the number of pages Denise read today. Given Denise read 7 more pages than Daniel did yesterday, and Daniel read 13 pages yesterday, Denise read 13 + 7 = 20 pages today.\n2. Determine the total pages Denise read. Denise read 10 pages yesterday and 20 pages today, thus she read a total of 10 + 20 = 30 pages.\n3. Determine the difference in pages read by Denise and Daniel. Denise read 30 pages and Daniel read 13 pages, so Denise read 30 - 13 = 17 more pages than Daniel.\n\nFinal answer: Denise read 17 more pages than Daniel.",
+      "quality": 0.0,
+      "final_key": "17",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Denise read 20 pages today.\nRESULT: 20",
+        "verifier": "VERDICT: passthrough\n#### 17",
+        "step_2": "step_2: 2. Denise read a total of 10 (yesterday) + 20 (today) = 30 pages.\nRESULT: 30",
+        "step_3": "3. Denise read 30 pages, and Daniel read 13 pages. The difference is 30 - 13 = 17 pages.\n\nRESULT: 17",
+        "aggregator": "17"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-490",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the remaining amount needed: Subtract the child's current savings from the total cost of the toy car.\n2. Determine the number of days required: Divide the remaining amount by the daily savings.\n3. Confirm the result: Ensure the result is a whole number, as the child cannot save for a fraction of a day. If not, round up to the nearest whole number, as the child needs to save for an additional day to reach the remaining amount.",
+  "reference_key": null,
+  "final_key_plus": "4",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 8",
+    "verifier": "VERDICT: passthrough\n#### 4",
+    "step_2": "step_2: RESULT: $12 (total cost) - $4 (current savings) = $8 (remaining amount)\n\nstep_3: RESULT: $8 (remaining amount) \u00f7 $2 (daily savings) = 4 days\n\nRESULT: 4 days",
+    "step_3": "RESULT: 4 days",
+    "aggregator": "step_3: RESULT: 4 days\n\n#### 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the daily post count for the entire group:\n   - Each of the 1000 members posts 3 times a day.\n   - Daily post count = 1000 members * 3 posts/member = 3000 posts.\n\n2. Determine the number of days in March:\n   - March typically has 31 days.\n\n3. Multiply the daily post count by the number of days in March to find the total posts:\n   - Total posts = Daily post count * Number of days in March\n   - Total posts = 3000 posts/day * 31 days = 93,000 posts.\n\nPLAN: The total number of posts in March will be 93,000.",
+      "quality": 1.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Calculate the daily post count for the child:\n   - Each day, the child saves $2.\n   - Daily post count = $2 savings/day.\n\nRESULT: 2",
+        "verifier": "VERDICT: passthrough\n#### 4",
+        "step_2": "2. Calculate the total amount the child needs to save:\n   - Remaining amount = Toy car cost - Savings\n   - Remaining amount = $12 - $4 = $8.\n\nRESULT: 2",
+        "step_3": "3. Calculate the number of days needed to save the remaining amount:\n   - Number of days = Remaining amount / Daily savings\n   - Number of days = $8 / $2/day = 4 days.\n\nRESULT: 4",
+        "aggregator": "4\n#### 4"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the balance necessary: Subtract the child's present savings from the total price of the toy car.\n2. Estimate the duration needed: Divide the leftover sum by the average daily savings.\n3. Validate the outcome: Make sure the result is an integer, as the child can't save in fractions of a day. If it's not, round down to the closest integer, as the child needs to save for an extra day to attain the remaining amount.",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. RESULT: $12 (total cost of toy car) - $4 (current savings) = $8 (balance necessary)",
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "step_2": "step_2: 2. RESULT: $8 (balance necessary) \u00f7 $2 (daily savings) = 4 days\n\nEnd with \"RESULT: 4\".",
+        "step_3": "3. RESULT: Since 4 is an integer, no rounding is needed.\n\nRESULT: 4",
+        "aggregator": "3 days. #### 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

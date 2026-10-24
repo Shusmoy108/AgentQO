@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-651",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $800",
+  "reference_key": "800",
+  "final_key_plus": "1800",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $400 (red hats) + $800 (green hats) = $1200 (total sales in the first month)\n\nEND: $1200",
+    "step_3": "step_3: RESULT: $1200 (total sales in the first month) * 3/4 = $900 (second month's sales)\n\nEND: $900",
+    "verifier": "VERDICT: passthrough\n#### 1800",
+    "aggregator": "Final answer: $1800\n#### 1800"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "801",
+      "reference_key": "800",
+      "key_differs": true,
+      "text": "RESULT: 801",
+      "quality": 0.0,
+      "final_key": "2600",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $1200 (sum of red and green hats sales in the first month)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $900 (second month's sales, which is 3/4 of the first month's total sales)",
+        "verifier": "VERDICT: passthrough\n#### 2600",
+        "aggregator": "step_2: RESULT: First month's total sales from red hats = $400\nstep_3: RESULT: Second month's total sales from green hats = $900 (3/4 of the first month's total sales)\nstep_4: RESULT: Total sales from red hats in two months = $400 * 2 = $800\nstep_5: RESULT: Total sales from green hats in two months = $900 * 2 = $1800\nstep_6: FINAL ANSWER: Total amount Ariadne made in two months = $800 + $1800 = $2600\n#### 2600"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "100000",
+      "reference_key": "800",
+      "key_differs": true,
+      "text": "RESULT: $100,000",
+      "quality": 0.0,
+      "final_key": "1700",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: $1200 (sum of red and green hats sales in the first month)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $900 (3/4 of $1200)",
+        "verifier": "VERDICT: passthrough\n#### 1700",
+        "aggregator": "step_2: RESULT: $800 (half of $1600)\nstep_3: RESULT: $900 (3/4 of $1200)\n\nTo find the total amount Ariadne made in two months, we add the sales from the first and second months:\n\nTotal sales = Sales from red hats + Sales from green hats\nTotal sales = $800 + $900\nTotal sales = $1700\n\n#### 1700"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

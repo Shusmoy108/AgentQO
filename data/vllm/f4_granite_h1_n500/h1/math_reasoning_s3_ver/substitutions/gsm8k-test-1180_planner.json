@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1180",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the milk Mr. Marcellus initially purchased by multiplying the total gallons by the cost per gallon.\n2. Determine the amount of milk that was returned by calculating 2/5 of the total gallons.\n3. Calculate the refund amount by multiplying the gallons returned by the cost per gallon.\n\nThe final output will be the refund amount Mr. Marcellus received.",
+  "reference_key": null,
+  "final_key_plus": "5600",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "1. Total cost of milk = 4000 gallons * $3.5/gallon = $14,000\n\nRESULT: $14,000",
+    "verifier": "VERDICT: passthrough\n#### 5600",
+    "step_2": "step_2: 2. Amount of milk returned = 2/5 * 4000 gallons = 1600 gallons\n\nRESULT: 1600 gallons",
+    "step_3": "step_3: 3. Refund amount = 1600 gallons * $3.5/gallon = $5,600\n\nRESULT: $5,600",
+    "aggregator": "3. Refund amount = 1600 gallons * $3.5/gallon = $5,600\n\n#### $5,600"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of jello cups needed: Greg wants each of the 30 kids to have 4 jello cups. So, the total number of jello cups required is 30 kids * 4 cups/kid = 120 cups.\n\n2. Determine the number of boxes needed: Each box makes 10 jello cups. To find out how many boxes Greg needs, divide the total number of cups by the number of cups per box: 120 cups / 10 cups/box = 12 boxes.\n\n3. Calculate the total cost: Each box costs $1.25. Therefore, the total cost for 12 boxes would be 12 boxes * $1.25/box = $15.00.\n\nPLAN:\n1. Compute total jello cups required (30 kids * 4 cups/kid = 120 cups).\n2. Calculate the number of boxes needed (120 cups / 10 cups/box = 12 boxes).\n3. Determine the total cost (12 boxes * $1.25/box = $15.00).",
+      "quality": 0.0,
+      "final_key": "15",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Compute total jello cups required (30 kids * 4 cups/kid = 120 cups).\n\nRESULT: 120",
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "step_2": "step_2: 2. Calculate the number of boxes needed (120 cups / 10 cups/box = 12 boxes).\n\nRESULT: 12",
+        "step_3": "step_3: 3. Determine the total cost (12 boxes * $1.25/box = $15.00).\n\nRESULT: $15.00",
+        "aggregator": "step_3: 3. Determine the total cost (12 boxes * $1.25/box = $15.00).\n\nRESULT: $15.00\n#### $15.00"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the initial milk cost for Mr. Marcellus by multiplying the total gallons by the cost per gallon.\n2. Estimate the returned milk volume by calculating 3/4 of the total gallons.\n3. Compute the refund amount by multiplying the gallons returned by the cost per gallon.\n\nThe concluding figure will be the refund amount Mr. Marcellus was entitled to.",
+      "quality": 0.0,
+      "final_key": "10500",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: $14,000\n\nExplanation:\nThe initial cost for Mr. Marcellus was calculated by multiplying the total gallons (4000) by the cost per gallon ($3.5).\n\n4000 gallons * $3.5/gallon = $14,000\n\nThis is the initial cost Mr. Marcellus incurred for the milk.",
+        "verifier": "VERDICT: passthrough\n#### 10500",
+        "step_2": "step_2: RESULT: 3000 gallons\n\nExplanation:\nThe returned milk volume was calculated by finding 3/4 of the total gallons (4000).\n\n4000 gallons * 3/4 = 3000 gallons\n\nThis is the amount of milk Mr. Marcellus returned to the company.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: $10,500\n\nExplanation:\nThe refund amount was computed by multiplying the gallons returned (3000) by the cost per gallon ($3.5).\n\n3000 gallons * $3.5/gallon = $10,500\n\nThis is the total refund Mr. Marcellus received for the sour milk.\n\nRESULT: $10,500",
+        "aggregator": "RESULT: $10,500\n#### 10500"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1299",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $15.00",
+  "reference_key": "15",
+  "final_key_plus": "13",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: $3.50 (ice cream) + $7.50 (movie tickets for Janet) + $8.50 (bracelet) = $19.50\n\nCarry out step 3.\n\nRESULT: $13.00",
+    "step_3": "RESULT: $13.00",
+    "verifier": "VERDICT: passthrough\n#### 13",
+    "aggregator": "step_1: Janet's total spending on ice cream, movie tickets, and bracelet = $3.50 + ($7.50 + $7.50) + $8.50 = $32.00\nstep_2: Subtract Janet's total spending from the amount her parents gave her = $40 - $32.00 = $8.00\nstep_3: RESULT: $13.00\n#### $13.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "16",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "RESULT: 16",
+      "quality": 1.0,
+      "final_key": "13",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $3.50 (ice cream) + $7.50 (movie tickets for Janet) + $8.50 (bracelet) = $19.50\n\nCarry out step 3.\n\nRESULT: $13.00",
+        "step_3": "RESULT: $13.00",
+        "verifier": "VERDICT: passthrough\n#### 13",
+        "aggregator": "step_1: Janet's total spending on ice cream, movie tickets, and bracelet = $3.50 + ($7.50 + $7.50) + $8.50 = $32.00\nstep_2: Subtract Janet's total spending from the amount her parents gave her = $40 - $32.00 = $8.00\nstep_3: RESULT: $13.00\n#### $13.00"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "16",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "RESULT: $8 (Hulu) + $8 (Disney Plus) = $16 (Total discounted price for both services).",
+      "quality": 1.0,
+      "final_key": "13",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: $3.50 (ice cream) + $7.50 (movie tickets for Janet) + $7.50 (movie tickets for sister) + $8.50 (bracelet) = $27.00 (Total spent).\n\nRESULT: $13.00",
+        "step_3": "step_3: RESULT: $40.00 (initial amount) - $27.00 (total spent) = $13.00 (remaining balance).\n\nRESULT: $13.00",
+        "verifier": "VERDICT: passthrough\n#### 13",
+        "aggregator": "RESULT: $13.00\n#### 13.00"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

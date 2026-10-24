@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-888",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Subtract the number of cookies Lani ate from the total number of cookies she baked to find out how many cookies are left.\n2. Divide the remaining number of cookies by the number of jars to find out how many cookies were in each jar.\n3. Write down the final answer.",
+  "reference_key": null,
+  "final_key_plus": "10",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Lani baked 55 cookies and ate 5, so the remaining cookies are 55 - 5 = 50.\n\nRESULT: 50",
+    "verifier": "VERDICT: passthrough\n#### 10",
+    "step_2": "step_2: 2. The remaining 50 cookies are divided equally into 5 jars, so each jar contains 50 / 5 = 10 cookies.\n\nRESULT: 10",
+    "step_3": "RESULT: 10",
+    "aggregator": "step_3: RESULT: 10\n\nLani had 55 cookies in total. After eating 5, she had 50 cookies left. She then divided these 50 cookies equally into five jars. Therefore, each jar contained 50 \u00f7 5 = 10 cookies.\n\n#### 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the new total number of cards after the transactions:\n   - Original total = 30 (fire) + 20 (grass) + 40 (water) = 90 cards\n   - After losing 8 water type cards, the new total = 90 - 8 = 82 cards\n   - After buying 14 grass type cards, the new total = 82 + 14 = 96 cards\n\n2. Determine the new number of water type cards:\n   - Original water type cards = 40\n   - After losing 8, the remaining water type cards = 40 - 8 = 32\n\n3. Calculate the percentage chance of picking a water type card:\n   - Percentage = (Number of water type cards / New total number of cards) * 100\n   - Percentage = (32 / 96) * 100 \u2248 33.33%\n\nRounded to the nearest integer, the percentage chance that a randomly picked card will be a water type is 33%.",
+      "quality": 0.0,
+      "final_key": "33",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 90",
+        "verifier": "VERDICT: passthrough\n#### 33",
+        "step_2": "step_2: RESULT: 32\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 33\n\nRESULT: 33",
+        "aggregator": "33 cookies were in each jar.\n#### 33"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Subtract the number of cookies Lani ate from the total number of cookies she baked to determine the leftover cookies.\n2. Divide the remaining cookies by the number of jars to ascertain the number of cookies in each jar.\n3. Note down the concluding figure.",
+      "quality": 1.0,
+      "final_key": "10",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 50\n\nExplanation: Lani baked 55 cookies and ate 5, so the number of cookies left is 55 - 5 = 50.",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "step_2": "step_2: RESULT: 10\n\nExplanation: Lani has 50 cookies left and placed them equally into 5 jars. So, 50 cookies divided by 5 jars equals 10 cookies per jar.",
+        "step_3": "step_3: RESULT: 10\n\nExplanation: Lani placed 50 cookies equally into 5 jars, so each jar contains 50 cookies / 5 jars = 10 cookies.",
+        "aggregator": "Final answer: 10 cookies were in each jar. #### 10"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

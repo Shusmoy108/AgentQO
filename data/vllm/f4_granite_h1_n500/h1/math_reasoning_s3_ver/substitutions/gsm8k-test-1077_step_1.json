@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1077",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 40 minutes",
+  "reference_key": "40",
+  "final_key_plus": "5",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 5 minutes (second train's stay duration)",
+    "step_3": "step_3: Paul's total waiting time = waiting time for second train + waiting time for third train\nRESULT: 65 minutes",
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "aggregator": "step_3: Paul's total waiting time = waiting time for second train + waiting time for third train\n\nTo calculate this, let's break it down:\n\n- The second train arrives 30 minutes after the first train (half an hour).\n- The second train stays in the station for a quarter of the time the first train stayed, which is 20 minutes / 4 = 5 minutes.\n- The third train arrives 60 minutes after the second train (an hour).\n- The third train leaves immediately after arriving, so it doesn't stay in the station.\n\nNow, Paul's total waiting time is the sum of the waiting time for the second train and the time the third train was in the station (which is 0 minutes).\n\nPaul's total waiting time = 5 minutes (second train) + 0 minutes (third train) = 5 minutes\n\n#### 5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "41",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "RESULT: 41 minutes",
+      "quality": 0.0,
+      "final_key": "106",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: The second train stays for 5 minutes.\n\nRESULT: 46 minutes",
+        "step_3": "step_3: Paul waits for the third train for 60 minutes (since it arrives 60 minutes after the second train leaves).\n\nRESULT: 106 minutes",
+        "verifier": "VERDICT: passthrough\n#### 106",
+        "aggregator": "step_3: Paul waits for the third train for 60 minutes (since it arrives 60 minutes after the second train leaves).\n\nRESULT: 106 minutes\n\n#### 106"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "RESULT: 40 minutes. The second train arrives 30 minutes after the first train, which arrives at 10 minutes.\n\nNext Phase:",
+      "quality": 0.0,
+      "final_key": "65",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "step_2: RESULT: 5 minutes. The second train stays for a quarter of the time the first train stayed (20 minutes). Therefore, the second train stays for 20 / 4 = 5 minutes.",
+        "step_3": "step_3: RESULT: 65 minutes. Paul waits for the second train (5 minutes) and the third train (60 minutes). Thus, his total waiting time is 5 + 60 = 65 minutes.",
+        "verifier": "VERDICT: passthrough\n#### 65",
+        "aggregator": "step_3: RESULT: 65 minutes. Paul waits for the second train (5 minutes) and the third train (60 minutes). Thus, his total waiting time is 5 + 60 = 65 minutes.\n\n#### 65"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

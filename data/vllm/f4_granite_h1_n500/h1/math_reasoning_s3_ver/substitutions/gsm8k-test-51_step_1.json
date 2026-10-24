@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-51",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 30 miles",
+  "reference_key": "30",
+  "final_key_plus": "8",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 5 hours",
+    "step_3": "step_3: RESULT: 3 hours (initial travel) + 5 hours (return) = 8 hours (total travel time)\nRESULT: 8 hours",
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "aggregator": "RESULT: 8 hours\n#### 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "31",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "RESULT: 31 miles",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 5 hours\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 8 hours\n\nEND: RESULT: 8",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "8\n#### 8"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "RESULT: Tom travels 30 miles in the initial leg of his journey from 1 PM to 4 PM.",
+      "quality": 0.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: The return journey takes 5 hours, as calculated by dividing the distance (30 miles) by the return speed (6 miles per hour).",
+        "step_3": "step_3: RESULT: The total travel time, including both the initial and return journeys, is 3 hours (initial) + 5 hours (return) = 8 hours.\n\nRESULT: 8 hours.",
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "8 hours. #### 8"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

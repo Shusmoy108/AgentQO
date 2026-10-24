@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-586",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 1000 calories",
+  "reference_key": "1000",
+  "final_key_plus": "1600",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "step_2: RESULT: 600 calories\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 1000 calories (aerobics) + 600 calories (running) = 1600 calories\n\nRESULT: 1600 calories",
+    "verifier": "VERDICT: passthrough\n#### 1600",
+    "aggregator": "1600 calories\n#### 1600"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "1001",
+      "reference_key": "1000",
+      "key_differs": true,
+      "text": "RESULT: 1001 calories",
+      "quality": 0.0,
+      "final_key": "1600",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 600 calories\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 1600 calories (1001 calories from aerobics + 600 calories from running)\n\nRESULT: 1600",
+        "verifier": "VERDICT: passthrough\n#### 1600",
+        "aggregator": "1600 ml\n#### 1600"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "5",
+      "reference_key": "1000",
+      "key_differs": true,
+      "text": "RESULT: 5",
+      "quality": 0.0,
+      "final_key": "1600",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "step_2: RESULT: 600 calories from running.\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: 1600 calories (1000 from aerobics + 600 from running)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".\n\nRESULT: 1600",
+        "verifier": "VERDICT: passthrough\n#### 1600",
+        "aggregator": "RESULT: 1600\n#### 1600"
+      }
+    }
+  ],
+  "invariant_violations": []
+}
