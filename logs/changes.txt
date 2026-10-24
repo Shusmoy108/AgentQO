@@ -128,3 +128,25 @@ Definitions fixed before any F4 run:
 VM-A: vllm serve ibm-granite/granite-3.1-2b-instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
 VM-B: vllm serve ibm-granite/granite-3.1-8b-instruct --host 0.0.0.0 --port 8002 --max-model-len 4096 --gpu-memory-utilization 0.85
 === 2026-10-24T16:01:04Z  F4d: Granite servers stopped; Qwen servers started as in C9/E2: VM-A via serve.sh start8001 (vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25), VM-B: vllm serve Qwen/Qwen2.5-7B-Instruct --host 0.0.0.0 --port 8002 --max-model-len 4096 --gpu-memory-utilization 0.85. F4c finished 15:59 UTC (< 17:00), so F4d runs.
+=== 2026-10-24T16:45:48Z  F5 (branch f5 from f4 4449282), logged before any F5 run ===
+Problem sets: the GSM8K test file has 1,319 rows; 300 form the C9 working set (dev 100 + EVAL 200) and LABEL/VALID
+used 500 of the remaining 1,019, so only 519 unused test rows remain, fewer than the 600 needed.
+Decision: EVAL2 = the next 300 unused test rows in the F4 order (numpy default_rng(1) permutation, positions 500-799),
+so the reference truth stays on the test distribution like EVAL; VALID2 = 300 rows of the GSM8K *train* split
+(numpy default_rng(2) permutation, first 300), disjoint from everything by construction. Caveat: the check sets
+VALID (test) and VALID2 (train) come from different GSM8K splits. New --split valid2 / eval2 (defaults unchanged,
+gsm8k_ids.json not rewritten, md5 f8a0d122... unchanged; pytest 120 passed).
+Sizes: EVAL 200, LABEL 500, VALID 100, VALID2 300, EVAL2 300; all pairwise overlaps 0; no duplicates;
+LABEL and VALID identical to F4.
+First 5 VALID2: gsm8k-train-3775, gsm8k-train-4365, gsm8k-train-4415, gsm8k-train-54, gsm8k-train-2457
+First 5 EVAL2 : gsm8k-test-156, gsm8k-test-151, gsm8k-test-111, gsm8k-test-582, gsm8k-test-264
+F5a candidates: the 12 distinct node sets of data/vllm/f4_granite_valid_plans/candidates.json + all_small (13 plans),
+run as the same --custom-plan names as F4c.
+F5b definitions: EVALBIG = EVAL (200; per-problem results from F3b/F4b by node set) + EVAL2 (300). Accuracy CI: bootstrap
+over problems, 2000 resamples, seed 0. Paired CIs: C11 method (5000 resamples, seed 0). Selector tie rule as F4
+(VALID-type accuracy, then cost, then label). S100 = VALID; S400 = VALID + VALID2. Successive halving: problems in the
+order VALID then VALID2; at n = 100, 200, 300, 400: rank candidates on the first n; stop if one remains, if the top two's
+paired 95% CI on the first n excludes 0, or at n = 400 (pick the top); otherwise keep the better ceil(m/2) (at least 2)
+and add 100. "Problems used" = n at stopping. Hybrid: the 2 candidates with the highest summed Q+ - baseline (n = 500)
+then the best on VALID + VALID2. Reference selectors: struct_topk, output_topk, ec_topk (F3, 100 labels), qplus500_topk.
+=== 2026-10-24T16:46:11Z  F5: user instruction during setup: "no need to think about time, finish it for full results". The 17:15 / 17:45 UTC gates are dropped; F5 runs to completion (the lease end at 20:00 UTC remains the hard limit). Granite servers started with the F3/F4 commands.

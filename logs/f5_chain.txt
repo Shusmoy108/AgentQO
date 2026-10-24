@@ -1,0 +1,140 @@
+plans: all_small,set_aggregator+planner+step_1,set_aggregator+planner+step_2,set_aggregator+planner+step_3,set_aggregator+planner,set_aggregator+step_2+step_3,set_aggregator+step_2,set_aggregator+step_3,set_aggregator,set_planner+step_1+step_2,set_planner+step_1,set_planner,set_step_2
+Sat Oct 24 16:46:11 UTC 2026
+"id":"ibm-granite/granite-3.1-2b-instruct"
+"id":"ibm-granite/granite-3.1-8b-instruct"
+all_small          acc=0.333  cost_units=  5.0  large_calls=0.0
+set_planner        acc=0.333  cost_units=  8.0  large_calls=1.0
+set_aggregator     acc=0.667  cost_units=  8.0  large_calls=1.0
+all_small          acc=0.667  cost_units=  5.0  large_calls=0.0
+set_planner        acc=0.667  cost_units=  8.0  large_calls=1.0
+set_aggregator     acc=0.667  cost_units=  8.0  large_calls=1.0
+SMOKE_F5_EXIT=0
+Sat Oct 24 16:46:29 UTC 2026
+workflow math_reasoning_s3_ver; output order: ['aggregator', 'step_3', 'step_2', 'step_1', 'planner']
+  plan all_small        upgrades none
+  plan set_aggregator+planner+step_1 upgrades ['aggregator', 'planner', 'step_1']
+  plan set_aggregator+planner+step_2 upgrades ['aggregator', 'planner', 'step_2']
+  plan set_aggregator+planner+step_3 upgrades ['aggregator', 'planner', 'step_3']
+  plan set_aggregator+planner upgrades ['aggregator', 'planner']
+  plan set_aggregator+step_2+step_3 upgrades ['aggregator', 'step_2', 'step_3']
+  plan set_aggregator+step_2 upgrades ['aggregator', 'step_2']
+  plan set_aggregator+step_3 upgrades ['aggregator', 'step_3']
+  plan set_aggregator   upgrades ['aggregator']
+  plan set_planner+step_1+step_2 upgrades ['planner', 'step_1', 'step_2']
+  plan set_planner+step_1 upgrades ['planner', 'step_1']
+  plan set_planner      upgrades ['planner']
+  plan set_step_2       upgrades ['step_2']
+
+all_small          acc=0.610  cost_units=  5.0  large_calls=0.0
+set_aggregator+planner+step_1 acc=0.683  cost_units= 14.0  large_calls=3.0
+set_aggregator+planner+step_2 acc=0.690  cost_units= 14.0  large_calls=3.0
+set_aggregator+planner+step_3 acc=0.673  cost_units= 14.0  large_calls=3.0
+set_aggregator+planner acc=0.657  cost_units= 11.0  large_calls=2.0
+set_aggregator+step_2+step_3 acc=0.657  cost_units= 14.0  large_calls=3.0
+set_aggregator+step_2 acc=0.647  cost_units= 11.0  large_calls=2.0
+set_aggregator+step_3 acc=0.687  cost_units= 11.0  large_calls=2.0
+set_aggregator     acc=0.607  cost_units=  8.0  large_calls=1.0
+set_planner+step_1+step_2 acc=0.703  cost_units= 14.0  large_calls=3.0
+set_planner+step_1 acc=0.700  cost_units= 11.0  large_calls=2.0
+set_planner        acc=0.647  cost_units=  8.0  large_calls=1.0
+set_step_2         acc=0.617  cost_units=  8.0  large_calls=1.0
+
+plan                  acc      gain vs small [95% CI]   %gain   %cost
+set_planner+step_1+step_2  0.703      +0.093 [+0.027,+0.163]       -       -
+set_planner+step_1  0.700      +0.090 [+0.027,+0.150]       -       -
+set_aggregator+planner+step_2  0.690      +0.080 [+0.013,+0.150]       -       -
+set_aggregator+step_3  0.687      +0.077 [+0.030,+0.123]       -       -
+set_aggregator+planner+step_1  0.683      +0.073 [+0.010,+0.133]       -       -
+set_aggregator+planner+step_3  0.673      +0.063 [-0.007,+0.133]       -       -
+set_aggregator+planner  0.657      +0.047 [-0.023,+0.117]       -       -
+set_aggregator+step_2+step_3  0.657      +0.047 [+0.000,+0.090]       -       -
+set_aggregator+step_2  0.647      +0.037 [-0.010,+0.087]       -       -
+set_planner         0.647      +0.037 [-0.030,+0.103]       -       -
+set_step_2          0.617      +0.007 [-0.033,+0.047]       -       -
+all_small           0.610      +0.000 [+0.000,+0.000]       -       -
+set_aggregator      0.607      -0.003 [-0.047,+0.037]       -       -
+
+HTTP calls: 8779  cache hits: 10721  misses: 8779
+
+verifier vs aggregator (per plan):  changed / fixed / broke / aggregator acc -> final acc
+  all_small           0/300    0    0   0.61 -> 0.61
+  set_aggregator+planner+step_1  0/300    0    0   0.68 -> 0.68
+  set_aggregator+planner+step_2  0/300    0    0   0.69 -> 0.69
+  set_aggregator+planner+step_3  0/300    0    0   0.67 -> 0.67
+  set_aggregator+planner  0/300    0    0   0.66 -> 0.66
+  set_aggregator+step_2+step_3  0/300    0    0   0.66 -> 0.66
+  set_aggregator+step_2  0/300    0    0   0.65 -> 0.65
+  set_aggregator+step_3  0/300    0    0   0.69 -> 0.69
+  set_aggregator      0/300    0    0   0.61 -> 0.61
+  set_planner+step_1+step_2  0/300    0    0   0.70 -> 0.70
+  set_planner+step_1  0/300    0    0   0.70 -> 0.70
+  set_planner         0/300    0    0   0.65 -> 0.65
+  set_step_2          0/300    0    0   0.62 -> 0.62
+Artifacts in data/vllm/f5_granite_valid2
+F5A_VALID2_EXIT=0
+Sat Oct 24 16:50:22 UTC 2026
+Sat Oct 24 16:50:22 UTC 2026
+workflow math_reasoning_s3_ver; output order: ['aggregator', 'step_3', 'step_2', 'step_1', 'planner']
+  plan all_small        upgrades none
+  plan set_aggregator+planner+step_1 upgrades ['aggregator', 'planner', 'step_1']
+  plan set_aggregator+planner+step_2 upgrades ['aggregator', 'planner', 'step_2']
+  plan set_aggregator+planner+step_3 upgrades ['aggregator', 'planner', 'step_3']
+  plan set_aggregator+planner upgrades ['aggregator', 'planner']
+  plan set_aggregator+step_2+step_3 upgrades ['aggregator', 'step_2', 'step_3']
+  plan set_aggregator+step_2 upgrades ['aggregator', 'step_2']
+  plan set_aggregator+step_3 upgrades ['aggregator', 'step_3']
+  plan set_aggregator   upgrades ['aggregator']
+  plan set_planner+step_1+step_2 upgrades ['planner', 'step_1', 'step_2']
+  plan set_planner+step_1 upgrades ['planner', 'step_1']
+  plan set_planner      upgrades ['planner']
+  plan set_step_2       upgrades ['step_2']
+
+all_small          acc=0.503  cost_units=  5.0  large_calls=0.0
+set_aggregator+planner+step_1 acc=0.650  cost_units= 14.0  large_calls=3.0
+set_aggregator+planner+step_2 acc=0.630  cost_units= 14.0  large_calls=3.0
+set_aggregator+planner+step_3 acc=0.667  cost_units= 14.0  large_calls=3.0
+set_aggregator+planner acc=0.610  cost_units= 11.0  large_calls=2.0
+set_aggregator+step_2+step_3 acc=0.547  cost_units= 14.0  large_calls=3.0
+set_aggregator+step_2 acc=0.543  cost_units= 11.0  large_calls=2.0
+set_aggregator+step_3 acc=0.547  cost_units= 11.0  large_calls=2.0
+set_aggregator     acc=0.520  cost_units=  8.0  large_calls=1.0
+set_planner+step_1+step_2 acc=0.627  cost_units= 14.0  large_calls=3.0
+set_planner+step_1 acc=0.617  cost_units= 11.0  large_calls=2.0
+set_planner        acc=0.570  cost_units=  8.0  large_calls=1.0
+set_step_2         acc=0.480  cost_units=  8.0  large_calls=1.0
+
+plan                  acc      gain vs small [95% CI]   %gain   %cost
+set_aggregator+planner+step_3  0.667      +0.163 [+0.093,+0.233]       -       -
+set_aggregator+planner+step_1  0.650      +0.147 [+0.077,+0.217]       -       -
+set_aggregator+planner+step_2  0.630      +0.127 [+0.063,+0.197]       -       -
+set_planner+step_1+step_2  0.627      +0.123 [+0.063,+0.190]       -       -
+set_planner+step_1  0.617      +0.113 [+0.047,+0.180]       -       -
+set_aggregator+planner  0.610      +0.107 [+0.037,+0.177]       -       -
+set_planner         0.570      +0.067 [+0.003,+0.133]       -       -
+set_aggregator+step_2+step_3  0.547      +0.043 [-0.007,+0.093]       -       -
+set_aggregator+step_3  0.547      +0.043 [-0.003,+0.090]       -       -
+set_aggregator+step_2  0.543      +0.040 [-0.010,+0.090]       -       -
+set_aggregator      0.520      +0.017 [-0.027,+0.060]       -       -
+all_small           0.503      +0.000 [+0.000,+0.000]       -       -
+set_step_2          0.480      -0.023 [-0.063,+0.017]       -       -
+
+HTTP calls: 8769  cache hits: 10731  misses: 8769
+
+verifier vs aggregator (per plan):  changed / fixed / broke / aggregator acc -> final acc
+  all_small           0/300    0    0   0.50 -> 0.50
+  set_aggregator+planner+step_1  0/300    0    0   0.65 -> 0.65
+  set_aggregator+planner+step_2  0/300    0    0   0.63 -> 0.63
+  set_aggregator+planner+step_3  0/300    0    0   0.67 -> 0.67
+  set_aggregator+planner  0/300    0    0   0.61 -> 0.61
+  set_aggregator+step_2+step_3  0/300    0    0   0.55 -> 0.55
+  set_aggregator+step_2  0/300    0    0   0.54 -> 0.54
+  set_aggregator+step_3  0/300    0    0   0.55 -> 0.55
+  set_aggregator      0/300    0    0   0.52 -> 0.52
+  set_planner+step_1+step_2  0/300    0    0   0.63 -> 0.63
+  set_planner+step_1  0/300    0    0   0.62 -> 0.62
+  set_planner         0/300    0    0   0.57 -> 0.57
+  set_step_2          0/300    0    0   0.48 -> 0.48
+Artifacts in data/vllm/f5_granite_eval2
+F5A_EVAL2_EXIT=0
+Sat Oct 24 16:54:38 UTC 2026
+F5_CHAIN_EXIT=0
