@@ -7,6 +7,7 @@ answer, and whether those changes fixed or broke it.
 
     python3 scripts/verifier_analysis.py data/ollama/h1_n30 data/ollama/h1_math_judge
 
+--workflow-dir NAME reads h1/NAME/traces (default math_reasoning_s3_ver).
 --details adds a verdict-vs-correctness cross-tab, a kept/changed cross-tab and
 the median verifier output length in tokens.
 """
@@ -29,8 +30,8 @@ def same(a, b):
         return str(a).strip() == str(b).strip()
 
 
-def analyze(run_dir: Path, details: bool = False):
-    tdir = run_dir / "h1" / "math_reasoning_s3_ver" / "traces"
+def analyze(run_dir: Path, details: bool = False, workflow_dir: str = "math_reasoning_s3_ver"):
+    tdir = run_dir / "h1" / workflow_dir / "traces"
     traces = [json.loads(p.read_text()) for p in sorted(tdir.glob("*.json"))]
     n = len(traces)
     agg_ok = ver_ok = changed = fixed = broke = wrong_to_wrong = no_key = 0
@@ -88,5 +89,10 @@ def print_details(traces):
 if __name__ == "__main__":
     args = sys.argv[1:]
     details = "--details" in args
+    wf_dir = "math_reasoning_s3_ver"
+    if "--workflow-dir" in args:  # e.g. complex_r2_s2_ver
+        i = args.index("--workflow-dir")
+        wf_dir = args[i + 1]
+        del args[i:i + 2]
     for d in [a for a in args if a != "--details"]:
-        analyze(Path(d), details)
+        analyze(Path(d), details, wf_dir)

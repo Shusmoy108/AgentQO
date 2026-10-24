@@ -15,6 +15,10 @@ Extra plans, built only when named in --plans (the default set above is unchange
   ec_top1/3/4      the k highest-EC nodes (ec_top1 = only the top-EC node)
   struct_top1/3/4  the k nodes with the largest downstream reach, ordered as struct_top2
   qplus_top2       aggregator + planner (top two by single-upgrade accuracy, Q+)
+  output_top1/2/3  the k LLM nodes nearest the final node (longest path to it, shortest
+                   first; ties go to the later node in topological order)
+With --qplus-from <h1 run>/h1/<workflow>, qplus_top2/3 are instead the nodes with the
+highest mean Q+ minus baseline correctness in that run's substitution files.
 
 If --h1-summary points to an h1_summary.json, the script also checks whether
 each node's measured EC predicts the accuracy gain from upgrading that node
@@ -33,7 +37,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import numpy as np
 
@@ -45,6 +49,7 @@ from agentqo.executor import FidelityPlan, WorkflowExecutor  # noqa: E402
 from agentqo.backends.vllm_http import _output_as_text  # noqa: E402
 from agentqo.metrics.io import write_csv, write_json  # noqa: E402
 from agentqo.tasks.answers import extract_gsm8k_number  # noqa: E402
+from agentqo.tasks.prompts import code_output  # noqa: E402
 from agentqo.tasks.real_task_model import RealTaskModel  # noqa: E402
 from agentqo.workflows.dag import LARGE_FIDELITY, SMALL_FIDELITY  # noqa: E402
 from scripts.run_real_pipeline import WORKFLOWS, build_backend, load_problems  # noqa: E402
@@ -70,7 +75,40 @@ def _upgrade(nodes) -> FidelityPlan:
     return FidelityPlan(assignments={n: LARGE_FIDELITY for n in nodes}, default_fidelity=SMALL_FIDELITY)
 
 
-def make_plans(workflow, ec: Dict[str, float], extra: bool = False) -> Dict[str, FidelityPlan]:
+def is_llm_node(workflow, nid: str) -> bool:
+    """False for nodes computed in code (passthrough verifier, SC majority vote)."""
+    return code_output(workflow.nodes[nid], {}, {"workflow": workflow}) is None
+
+
+def output_order(workflow) -> List[str]:
+    """Upgradable LLM nodes nearest the final node first."""
+    topo = list(workflow.topological_order)
+    dist = {topo[-1]: 0}
+    for n in reversed(topo[:-1]):
+        succ = [d for d in topo if n in workflow.nodes[d].inputs and d in dist]
+        if succ:
+            dist[n] = 1 + max(dist[d] for d in succ)
+    cand = [n for n in topo if n in dist and len(workflow.nodes[n].fidelities) > 1 and is_llm_node(workflow, n)]
+    return sorted(cand, key=lambda n: (dist[n], -topo.index(n)))
+
+
+def load_qplus(h1_dir: str) -> Dict[str, Dict[str, float]]:
+    """Per node: mean Q+, mean Q-, and mean (Q+ - baseline correctness) over an H1 run's substitutions."""
+    d = Path(h1_dir)
+    base = {json.loads(t.read_text())["task_id"]: float(json.loads(t.read_text())["final_quality"])
+            for t in sorted((d / "traces").glob("*.json"))}
+    acc: Dict[str, List[tuple]] = {}
+    for f in sorted((d / "substitutions").glob("*.json")):
+        r = json.loads(f.read_text())
+        acc.setdefault(r["node_id"], []).append((float(r["q_plus"]), float(r["q_minus"]), base[r["task_id"]]))
+    return {n: {"q_plus": float(np.mean([a for a, _, _ in v])), "q_minus": float(np.mean([b for _, b, _ in v])),
+                "baseline": float(np.mean([c for _, _, c in v])),
+                "q_plus_minus_baseline": float(np.mean([a - c for a, _, c in v])), "n": len(v)}
+            for n, v in acc.items()}
+
+
+def make_plans(workflow, ec: Dict[str, float], extra: bool = False,
+               qplus: Optional[Dict[str, Dict[str, float]]] = None) -> Dict[str, FidelityPlan]:
     nodes = list(workflow.topological_order)
     plans = {
         "all_small": FidelityPlan(default_fidelity=SMALL_FIDELITY),
@@ -97,7 +135,16 @@ def make_plans(workflow, ec: Dict[str, float], extra: bool = False) -> Dict[str,
             ec_order = [n for n, _ in sorted(ec.items(), key=lambda kv: -kv[1])]
             for k in (1, 3, 4):
                 plans[f"ec_top{k}"] = _upgrade(ec_order[:k])
-        plans["qplus_top2"] = _upgrade(["aggregator", "planner"])
+        out = output_order(workflow)
+        for k in (1, 2, 3):
+            plans[f"output_top{k}"] = _upgrade(out[:k])
+        if qplus is None:
+            plans["qplus_top2"] = _upgrade(["aggregator", "planner"])
+        else:
+            q_order = sorted((n for n in qplus if n in upgradable and is_llm_node(workflow, n)),
+                             key=lambda n: (-qplus[n]["q_plus_minus_baseline"], nodes.index(n)))
+            for k in (2, 3):
+                plans[f"qplus_top{k}"] = _upgrade(q_order[:k])
     return plans
 
 
@@ -111,6 +158,8 @@ def main() -> None:
     ap.add_argument("--h1-summary", default="", help="h1_summary.json from run_real_pipeline.py")
     ap.add_argument("--compare", action="append", default=[], metavar="A:B",
                     help="paired difference of plan A minus plan B, as in C11 (repeatable)")
+    ap.add_argument("--qplus-from", default="",
+                    help="h1/<workflow> dir of an H1 run: build qplus_top2/3 from its substitutions")
     ap.add_argument("--budget-plot", action="store_true",
                     help="write budget_curve.png: accuracy vs extra cost for ec_top* and struct_top*")
     ap.add_argument("--cache", default="data/cache/ollama.sqlite")
@@ -138,7 +187,14 @@ def main() -> None:
         summary = json.loads(Path(args.h1_summary).read_text())
         ec = {nid: float(d["ec"]) for nid, d in summary["by_node"].items()}
 
-    plans = make_plans(workflow, ec, extra=bool(args.plans))
+    qplus = load_qplus(args.qplus_from) if args.qplus_from else None
+    if qplus:
+        print(f"Q+ from {args.qplus_from}:")
+        print(f"  {'node':<14}{'Q+':>7}{'Q-':>7}{'base':>7}{'Q+-base':>9}{'n':>5}")
+        for n, q in qplus.items():
+            print(f"  {n:<14}{q['q_plus']:7.3f}{q['q_minus']:7.3f}{q['baseline']:7.3f}"
+                  f"{q['q_plus_minus_baseline']:+9.3f}{q['n']:5d}")
+    plans = make_plans(workflow, ec, extra=bool(args.plans), qplus=qplus)
     if args.plans:
         keep = {p.strip() for p in args.plans.split(",") if p.strip()}
         keep.add("all_small")  # the reference for paired differences
@@ -146,6 +202,10 @@ def main() -> None:
         if missing:
             print(f"WARNING: unknown plans ignored: {sorted(missing)}", flush=True)
         plans = {k: v for k, v in plans.items() if k in keep}
+        print(f"workflow {workflow.name}; output order: {output_order(workflow)}")
+        for k, v in plans.items():
+            print(f"  plan {k:<16} upgrades {sorted(v.assignments) if v.assignments else ('all' if k == 'all_large' else 'none')}")
+        print(flush=True)
 
     rows, per_task, traces = [], {}, {}
     for name, plan in plans.items():
@@ -212,6 +272,16 @@ def main() -> None:
         ec_check = {"spearman_ec_vs_gain": float(rho), "p_value": float(p), "nodes": common}
         print(f"\nDoes measured EC predict the gain from upgrading a node? "
               f"Spearman = {rho:+.2f} (p = {p:.2f}, n = {len(common)} nodes)")
+    if ec and qplus and len(singles) >= 3:
+        cons = {nid: float(d["consequence"]) for nid, d in summary["by_node"].items()}
+        llm = [n for n in singles if is_llm_node(workflow, n) and n in ec and n in qplus]
+        ec_check = dict(ec_check or {}, llm_nodes=llm)
+        print(f"Spearman vs single-node gain over {len(llm)} LLM nodes:")
+        for label, src in (("EC", ec), ("consequence", cons),
+                           ("Q+ - baseline", {n: q["q_plus_minus_baseline"] for n, q in qplus.items()})):
+            rho, p = spearmanr([src[n] for n in llm], [singles[n] for n in llm])
+            ec_check[f"spearman_{label}"] = {"rho": float(rho), "p_value": float(p)}
+            print(f"  {label:<14} rho = {rho:+.2f} (p = {p:.2f})")
 
     comparisons = {}
     for spec in args.compare:
@@ -267,8 +337,11 @@ def budget_plot(rows: List[dict], path: Path) -> None:
     by = {r["plan"]: r for r in rows}
     base = by["all_small"]
     fig, ax = plt.subplots(figsize=(6, 4))
-    for prefix, label in (("ec_top", "EC order"), ("struct_top", "structure order")):
+    for prefix, label in (("ec_top", "EC order"), ("qplus_top", "Q+ order"), ("struct_top", "structure order"),
+                          ("output_top", "output order")):
         pts = [base] + [by[f"{prefix}{k}"] for k in range(1, 5) if f"{prefix}{k}" in by]
+        if len(pts) == 1:
+            continue
         ax.plot([r["cost_units"] - base["cost_units"] for r in pts], [r["accuracy"] for r in pts],
                 marker="o", label=label)
     for name in ("all_small", "all_large"):
