@@ -12,3 +12,4 @@ and logs/h4_changes.txt.
 - f1_chain.sh, f2_chain.sh, f2_extract_check.py, ids_check.py: last run (F1, F2 smoke)
 - f3_chain.sh, f3_smoke_check.py, f3_calls.py, f3a_analysis.py: F3 (Granite, max_tokens 512)
 - f4_tools.py, f4_chain.sh, f4d_chain.sh: F4 (label-size curve, F4b check, candidate sets, plan-level selector; Granite and Qwen chains)
+- f5_chain.sh, f5_analysis.py: F5 (VALID2/EVAL2 runs, EVALBIG reference, selectors incl. successive halving)
