@@ -158,6 +158,8 @@ def main() -> None:
     ap.add_argument("--h1-summary", default="", help="h1_summary.json from run_real_pipeline.py")
     ap.add_argument("--compare", action="append", default=[], metavar="A:B",
                     help="paired difference of plan A minus plan B, as in C11 (repeatable)")
+    ap.add_argument("--workers", type=int, default=1,
+                    help="problems run in parallel per plan (default 1 = one at a time, as before)")
     ap.add_argument("--qplus-from", default="",
                     help="h1/<workflow> dir of an H1 run: build qplus_top2/3 from its substitutions")
     ap.add_argument("--budget-plot", action="store_true",
@@ -211,9 +213,17 @@ def main() -> None:
     for name, plan in plans.items():
         task_model.reset()
         correct, cost_units, large_calls, latency = [], [], [], []
-        for _ in range(len(problems)):
-            task = task_model.generate_task(workflow, None)
-            rec = executor.run_workflow(workflow, task, fidelity_plan=plan, seed=0)
+        tasks = [task_model.generate_task(workflow, None) for _ in range(len(problems))]
+
+        def run(task, plan=plan):
+            return executor.run_workflow(workflow, task, fidelity_plan=plan, seed=0)
+        if args.workers > 1:
+            from concurrent.futures import ThreadPoolExecutor
+            with ThreadPoolExecutor(max_workers=args.workers) as pool:
+                recs = list(pool.map(run, tasks))
+        else:
+            recs = map(run, tasks)  # lazily: same order of calls as the original loop
+        for task, rec in zip(tasks, recs):
             correct.append(float(rec.final_quality))
             traces.setdefault(name, []).append({
                 "task_id": task.task_id, "gold": task.ground_truth,
