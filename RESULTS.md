@@ -167,3 +167,52 @@
 - Figure: data/ollama/h1_math_passthrough/h1/<workflow>/h1_consequence.png
 - Interpretation: Ollama 4-bit models on the Mac: debugging evidence only, not a reported result.
 - Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=10, split=dev, workflows=math, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 FAIL range 0.550 cv 2.027 key-change 1.0; H2 not run; H3 not run
+- Figure: data/vllm/h1_math_n10/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=100, split=dev, workflows=math,sc, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 FAIL range 0.400 cv 1.486 key-change 0.9939759036144579; self_consistency_k3: H1 PASS range 0.455 cv 0.563 key-change 1.0; H2 not run; H3 not run
+- Figure: data/vllm/h1_n100/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=100, split=dev, workflows=math, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 FAIL range 0.570 cv 0.642 key-change 0.9939759036144579; H2 not run; H3 not run
+- Figure: data/vllm/h1_math_passthrough_n100/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=3, split=dev, workflows=math, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 FAIL range 1.000 cv 0.887 key-change 1.0; H2 not run; H3 not run
+- Figure: /tmp/smoke_c14a/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=100, split=dev, workflows=math, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 FAIL range 0.810 cv 1.138 key-change 0.9939759036144579; H2 not run; H3 not run
+- Figure: data/vllm/c14_h1_cautious_n100/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=3, split=dev, workflows=complex, probe=placeholder, C=2, K=3
+- Result: complex_r2_s2_ver: H1 FAIL range 0.500 cv 1.571 key-change 1.0; H2 not run; H3 not run
+- Figure: /tmp/smoke_e2a/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=100, split=dev, workflows=complex, probe=placeholder, C=2, K=3
+- Result: complex_r2_s2_ver: H1 FAIL range 0.825 cv 1.689 key-change 0.9983333333333333; H2 not run; H3 not run
+- Figure: data/vllm/e2_complex_h1_n100/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
