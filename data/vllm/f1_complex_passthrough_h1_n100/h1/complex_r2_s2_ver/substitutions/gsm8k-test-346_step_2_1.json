@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-346",
+  "node_id": "step_2_1",
+  "role": "researcher",
+  "reference": "RESULT: 25",
+  "reference_key": "25",
+  "final_key_plus": "25",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2_2": "To find out how many cookies Jenny eats, we first need to determine how many cookies are left after her son gets his share and her husband eats some. We already calculated that there are 25 cookies left after her son gets his share.\n\nNext, we need to account for the cookies eaten by her husband. She eats 7 cookies herself, so we add these to the remaining cookies:\n\n\\[ \\text{Total cookies eaten by Jenny} = \\text{Cookies eaten by son} + \\text{Cookies eaten by husband} = 4 + 7 = 11 \\]\n\nTherefore, Jenny eats a total of 11 cookies.",
+    "aggregator": "#### 11",
+    "verifier": "VERDICT: passthrough\n#### 11",
+    "formatter": "#### 25"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "26",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "RESULT: 26",
+      "quality": 0.0,
+      "final_key": "33",
+      "final_differs": true,
+      "descendants": {
+        "step_2_2": "To find out how many cookies Jenny eats, we first need to determine how many cookies are left after her son gets his share and her husband eats some. We already calculated that there are 26 cookies left after her son gets his share.\n\nNext, we need to account for the cookies eaten by her husband. She eats 7 cookies herself, so we add these to the remaining cookies:\n\n\\[ \\text{Cookies eaten by Jenny} = \\text{Remaining cookies} + \\text{Cookies eaten by husband} = 26 + 7 = 33 \\]\n\nTherefore, Jenny eats 33 cookies.",
+        "aggregator": "#### 33",
+        "verifier": "VERDICT: passthrough\n#### 33",
+        "formatter": "#### 33"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "92",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "```python\ntotal_cookies_bought = 36  # Total cookies Jenny buys each week\r\ncookies_in_lunch_box_per_day = 4  # Cookies put in the lunch box per day\r\ndays_in_week = 7  # Number of days in a week\r\n\r\n# Calculating the number of times she fills her son's lunch box each week\r\ntimes_cookie_box_filled_each_week = days_in_week / 5\r\n\r\n# Assuming a round trip of placing cookies into both boxes each day means we count once instead of twice or thrice due to overlapping.\r\ncookies_in_lunch_box_each_time = max(0, min(cookies_in_lunch_box_per_day * 2 - 1, times_cookie_box_filled_each_week) + 1)\r\n\r\n# Cookie quantity after her son gets his share\r\nremaining_cookies_after_son_gets_what_he_wants = total_cookies_bought - ((cookies_in_lunch_box_per_day * 2 - 1))\r\n\r\n# Calculating cookies eaten by her husband\r\ncookies_eaten_by_husband_per_week = 28  # Days in a week / Days filled per lunch box * Cookie consumption rate over multiple trips.\r\n\r\nRESULT: 92",
+      "quality": 0.0,
+      "final_key": "25",
+      "final_differs": false,
+      "descendants": {
+        "step_2_2": "To finish calculating how many cookies Jenny eats, we'll follow these steps:\n\n1. **Calculate the total number of cookies Jenny buys each week:** \n   \\[ \\text{Total cookies bought} = 36 \\]\n\n2. **Determine the number of cookies Jenny puts in her son's lunch box each week:**\n   \\[ \\text{Cookies in lunch box per week} = 4 \\]\n   \n3. **Calculate the number of cookies Jenny's husband eats each week:**\n   \\[ \\text{Cookies eaten by husband per week} = 1 \\times 7 = 7 \\]\n\n4. **Subtract the number of cookies put in the lunch box from the total bought to find out how many are left after her son gets his share:**\n   \\[ \\text{Remaining cookies after son gets what he wants} = 36 - 4 = 32 \\]\n\n5. **Subtract the number of cookies eaten by her husband from the remaining cookies to find out how many are left for Jenny:**\n   \\[ \\text{Cookies left for Jenny} = 32 - 7 = 25 \\]\n\n6. **Add up all the cookies Jenny eats, which includes those in her",
+        "aggregator": "Jenny eats 25 cookies each week. #### 25",
+        "verifier": "VERDICT: passthrough\n#### 25",
+        "formatter": "#### 25"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

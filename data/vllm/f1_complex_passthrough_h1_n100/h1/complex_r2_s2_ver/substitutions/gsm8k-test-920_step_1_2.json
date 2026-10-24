@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-920",
+  "node_id": "step_1_2",
+  "role": "researcher",
+  "reference": "RESULT: 7 rabbits\nPLAN: \n2. Calculate the number of rabbits by subtracting 2 from the number of dogs.",
+  "reference_key": "2",
+  "final_key_plus": "36",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "formatter": "#### 36",
+    "aggregator": "Larry has 7 rabbits, which is 2 fewer than the number of dogs (8). The total number of pets Larry has is:\n\n7 (rabbits) + 8 (dogs) + 21 (cats) = 36 pets.\n\n#### 36",
+    "verifier": "VERDICT: passthrough\n#### 36"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "2",
+      "reference_key": "2",
+      "key_differs": false,
+      "text": "RESULT: 3 rabbits\nPLAN: \n2. Calculate the number of rabbits by subtracting 2 from the number of dogs.",
+      "quality": 0.0,
+      "final_key": "65",
+      "final_differs": true,
+      "descendants": {
+        "formatter": "#### 65",
+        "aggregator": "Larry has 3 + (3 * 3) = 12 dogs.\nHe has 12 - 2 = 10 rabbits.\nHe has 10 * 3 = 30 fish.\nHe has 30 / 3 = 10 gerbils.\n\nIn total, Larry has 3 + 12 + 10 + 30 + 10 = 65 pets.\n\n#### 65",
+        "verifier": "VERDICT: passthrough\n#### 65"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "27",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "```python\ndog = cats * 3\n\nrabbit = dog - 2\n\nfish = rabbit * 3\n\ngerbil = fish / 3\n\ntotal_pets = cats + dogs + rabbit + fish + gerbil\n\nRESULT: 27\n```\n\nFinal result:\n\nLarry has a total of 27 pets (cats, dogs, rabbits, fish, and gerbils).",
+      "quality": 0.0,
+      "final_key": "27",
+      "final_differs": true,
+      "descendants": {
+        "formatter": "#### 27",
+        "aggregator": "Larry has a total of 27 pets. #### 27",
+        "verifier": "VERDICT: passthrough\n#### 27"
+      }
+    }
+  ],
+  "invariant_violations": []
+}
