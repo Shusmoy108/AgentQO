@@ -93,13 +93,23 @@ def extended_pools(working, dev) -> Dict[str, List[Dict[str, str]]]:
     order = np.random.default_rng(1).permutation(len(rest))
     extra = [{"qid": f"gsm8k-test-{rest[j]}", "question": rows[rest[j]]["question"],
               "gold": gsm8k_gold(rows[rest[j]]["answer"])} for j in order[:500]]
-    return {"label": list(dev) + extra[:400], "valid": extra[400:500]}
+    pools = {"label": list(dev) + extra[:400], "valid": extra[400:500]}
+    # F5: eval2 = the next 300 unused test rows (same order); valid2 = 300 GSM8K train rows (numpy seed 2),
+    # because only 519 unused test rows remain after label/valid.
+    more = [{"qid": f"gsm8k-test-{rest[j]}", "question": rows[rest[j]]["question"],
+             "gold": gsm8k_gold(rows[rest[j]]["answer"])} for j in order[500:800]]
+    train = _gsm8k_rows("train", TASK_DIR)
+    tidx = np.random.default_rng(2).permutation(len(train))[:300]
+    pools["eval2"] = more
+    pools["valid2"] = [{"qid": f"gsm8k-train-{i}", "question": train[i]["question"],
+                        "gold": gsm8k_gold(train[i]["answer"])} for i in tidx]
+    return pools
 
 
 def load_problems(args) -> List[Dict[str, str]]:
     working = load_gsm8k(n=300, seed=0)
     split = dev_eval_split(working, n_dev=100, seed=0)
-    if args.split in ("label", "valid"):
+    if args.split in ("label", "valid", "valid2", "eval2"):
         return extended_pools(working, split["dev"])[args.split][: args.n_tasks]
     pool = working if args.split == "all" else split[args.split]
     return pool[: args.n_tasks]
@@ -185,7 +195,7 @@ def main() -> None:
                     help="YAML of flag values (e.g. configs/phase_b.yaml); explicit flags win")
     ap.add_argument("--backend", choices=["fake", "ollama", "vllm"], default="fake")
     ap.add_argument("--n-tasks", type=int, default=10)
-    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "valid"], default="dev",
+    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "valid", "valid2", "eval2"], default="dev",
                     help="label = dev + 400 further problems; valid = 100 more (both outside the working set)")
     ap.add_argument("--workflows", default="math,sc,complex")
     ap.add_argument("--stage", choices=["all", "smoke", "h1", "h2", "h3"], default="all",

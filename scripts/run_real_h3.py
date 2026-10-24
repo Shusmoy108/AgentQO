@@ -153,7 +153,7 @@ def main() -> None:
     ap.add_argument("--backend", choices=["fake", "ollama", "vllm"], default="ollama")
     ap.add_argument("--workflow", default="math", choices=list(WORKFLOWS))
     ap.add_argument("--n-tasks", type=int, default=30)
-    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "valid"], default="dev")
+    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "valid", "valid2", "eval2"], default="dev")
     ap.add_argument("--plans", default="", help="comma list to run a subset, e.g. all_small,only_verifier")
     ap.add_argument("--h1-summary", default="", help="h1_summary.json from run_real_pipeline.py")
     ap.add_argument("--compare", action="append", default=[], metavar="A:B",
