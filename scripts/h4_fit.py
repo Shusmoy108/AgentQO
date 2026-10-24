@@ -440,8 +440,12 @@ def cmd_p3_report(args):
                 print(f"{pl:<10}{m:<7}{conc:>5}" + "".join(f"{x:>14.3f}" for x in v))
     # hit rates
     hits = defaultdict(lambda: [0.0, 0.0])
-    for path in glob.glob(f"{args.p3}/placement_separate_*_p{long_p}_*_prefix_cache.json"):
-        for lv in json.load(open(path))["levels"]:
+    # files are tagged with the requested prefix (p2000); match on the measured count stored inside
+    for path in glob.glob(f"{args.p3}/placement_separate_*_prefix_cache.json"):
+        d = json.load(open(path))
+        if d["prefix_tokens"] != long_p:
+            continue
+        for lv in d["levels"]:
             if lv["concurrency"] in (16, 32):
                 hits[lv["model"]][0] += lv["hit_tokens"]
                 hits[lv["model"]][1] += lv["query_tokens"]
