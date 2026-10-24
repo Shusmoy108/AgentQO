@@ -9,3 +9,4 @@ and logs/h4_changes.txt.
 - grid.sh, chain_p1a.sh, pt.sh, serve.sh, p2.sh, p3.sh, master.sh: H4 (P1-P4); serve.sh starts/stops vLLM and MPS
 - e_chain.sh, e1_check.py, e2a_analysis.py, e2b_check.py: follow-up E (E1, E2a, E2b)
 - final_A.sh, final_branch.sh: bundles and the session1-results branch
+- f1_chain.sh, f2_chain.sh, f2_extract_check.py, ids_check.py: last run (F1, F2 smoke)

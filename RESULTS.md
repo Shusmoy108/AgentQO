@@ -216,3 +216,24 @@
 - Figure: data/vllm/e2_complex_h1_n100/h1/<workflow>/h1_consequence.png
 - Interpretation: 
 - Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=3, split=dev, workflows=complex, probe=placeholder, C=2, K=3
+- Result: complex_r2_s2_ver: H1 FAIL range 0.667 cv 1.041 key-change 1.0; H2 not run; H3 not run
+- Figure: /tmp/smoke_f1a/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=100, split=dev, workflows=complex, probe=placeholder, C=2, K=3
+- Result: complex_r2_s2_ver: H1 FAIL range 0.590 cv 1.109 key-change 0.9983333333333333; H2 not run; H3 not run
+- Figure: data/vllm/f1_complex_passthrough_h1_n100/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=3, split=dev, workflows=math, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 PASS range 0.500 cv 1.031 key-change 0.9666666666666667; H2 not run; H3 not run
+- Figure: /tmp/smoke_f2a/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
