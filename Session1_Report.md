@@ -19,6 +19,8 @@
 | F1 | Branching workflow with no LLM verifier | 1 of 4 predictions held |
 | F2 | Second model family (Granite 3.1 2B/8B) | **Skipped**: answer extraction failed on Granite output in the smoke test |
 | F3 | F2 rerun with max_tokens 512 | Ran; 2 of 5 predictions held. On Granite, structural selection beat EC |
+| F4 | More label problems (500) and a plan-level check on 100 VALID problems | 2 of 5 held. Planner becomes the clear top node, but the 100-problem check missed on Granite; on Qwen it picked the best plan 11/12 |
+| F5 | Larger check sets (400) and a 500-problem reference (EVALBIG) on Granite | 3 of 4 held. Checking on 400 problems picks the best plan at every budget |
 | Delivery | Archives, GitHub branches, servers stopped | All verified; VMs left running for you to delete |
 
 ---
@@ -394,14 +396,100 @@ Without an LLM verifier, the last LLM node is the formatter, so the closest-to-a
 
 ---
 
+## 6c. F4: more labels and a plan-level check (branch `f4`, 15:42–16:07 UTC)
+
+**Purpose:** test two fixes for F3's failure. (a) Use more label problems. (b) Choose between candidate plans by running them directly on a separate check set.
+
+**Problem sets** (logged before any run; none overlap EVAL):
+- The dev split has only 100 problems, so new `--split label/valid` options draw extra GSM8K test problems from outside the 300-problem working set.
+- **LABEL** = 500 problems: the 100 C7/F3a problems in the same order, plus 400 more.
+- **VALID** = 100 more.
+- **EVAL** = the C9 200.
+
+**New options** (defaults unchanged): `--name-tag 500` (plan names `ec500_*` / `qplus500_*`) and `--custom-plan`.
+
+### F4a: Granite H1 on 500 LABEL problems
+Exit 0, 10 min 20 s, 33,791 calls; the first 100 came from the cache.
+
+| n | Q+ ranking | Spearman Q+ vs F3b gains | Q+(planner) − Q+(aggregator) |
+|---|---|---|---|
+| 100 | step_2 > aggregator > planner > step_1 > step_3 | −0.63 | −0.010 [−0.130, +0.110] |
+| 200 | planner > aggregator > step_2 > step_3 > step_1 | 0.00 | +0.065 [−0.020, +0.150] |
+| 300 | planner > step_2 > aggregator > step_1 > step_3 | +0.20 | +0.063 [−0.003, +0.130] |
+| 400 | planner > step_1 > step_3 > aggregator > step_2 | +0.90 | +0.072 [+0.013, +0.130] |
+| 500 | **planner** > aggregator > step_1 > step_3 > step_2 | **+0.36** | **+0.060 [+0.008, +0.112]** |
+
+- **Q+ at n = 500:** the planner scores +0.082 [+0.032, +0.132]; every other node is at +0.022 or less.
+- **EC is stuck:** its Spearman correlation stays at −0.30 for every n.
+- Files: `data/vllm/f4_granite_h1_n500/label_size_curve.csv` and `.png`.
+
+### F4b: plans from the 500-problem labels, on EVAL
+Exit 0, 30 s. Every node set F3b also ran gives identical per-problem results.
+
+| Plan | Upgrades | Accuracy | vs struct_topk |
+|---|---|---|---|
+| qplus500_top1 = struct_top1 | planner | 0.600 | 0 |
+| ec500_top1 | aggregator | 0.470 | −0.130 [−0.215, −0.050] |
+| qplus500_top2 = ec500_top2 | aggregator, planner | **0.565** | −0.085 [−0.145, −0.025] |
+| qplus500_top3 | aggregator, planner, step_1 | 0.635 | +0.005 [−0.055, +0.065] |
+| ec500_top3 | aggregator, planner, step_3 | 0.620 | −0.010 [−0.075, +0.050] |
+
+### F4c and F4d: plan-level selection (pick the best on VALID, score on EVAL)
+- **Selector rule:** the candidates for budget k are the distinct node sets chosen by the rule plans. The selector takes the highest VALID accuracy, breaking ties by lower cost and then alphabetically.
+- **F4c (Granite):** shortfalls from the best candidate on EVAL were **0.130 / 0.085 / 0.015** at k = 1 / 2 / 3. At k = 1, aggregator and planner tied on VALID (0.580 each), and the alphabetical tie-break chose the aggregator. The cheaper version (only the top 2 candidates by Q+) made the same picks.
+- **F4d (Qwen, 4 settings):** after swapping back to the Qwen servers, the selector picked the best EVAL candidate in **11 of 12** cases. The exception was complex/cautious at k = 2: aggregator + verifier, 2.5 points short. Two candidates were excluded because no EVAL result exists for their node sets: math/passthrough `output_top3` and math/cautious `struct_top3`.
+
+| F4 prediction | Number | Verdict |
+|---|---|---|
+| F4a: at n = 500, the planner has the highest Q+ − baseline | +0.082 vs at most +0.022 | HELD |
+| F4a: Spearman of the Q+ ranking with the F3b gains is at least +0.5 at n = 500 | +0.36 | **FAILED** |
+| F4b: qplus500_top2 accuracy on EVAL is at least 0.60 | 0.565 | **FAILED** |
+| F4c: Granite selector within 3 points at every k | 0.130 / 0.085 / 0.015 | **FAILED** |
+| F4d: Qwen selector within 3 points in ≥ 80% of cases, never > 6 points short | 12/12, maximum 0.025 | HELD |
+
+## 6d. F5: larger check sets for the Granite near-tie (branch `f5`, 16:44–16:56 UTC)
+
+**Problem sets:** only 519 unused GSM8K test problems remained. So **EVAL2** = the next 300 unused test problems, and **VALID2** = 300 problems from the GSM8K *train* split (`--split valid2/eval2`). **EVALBIG** = EVAL (200) + EVAL2 (300) = 500 problems, used as the reference truth. None of the sets overlap.
+
+**Runs:** all 13 F4c candidate plans on VALID2 (3 min 53 s, 8,779 calls) and on EVAL2 (4 min 16 s, 8,769 calls). Both exited 0, as did the analysis.
+
+**Time gates:** at your request ("finish it for full results"), the 17:15 and 17:45 UTC gates were dropped. That decision is logged.
+
+| k | Best on EVALBIG | Runner-up | Best − runner-up (paired) |
+|---|---|---|---|
+| 1 | planner 0.582 [0.538, 0.624] | aggregator 0.500 | +0.082 [+0.028, +0.132] |
+| 2 | planner + step_1 0.630 [0.586, 0.672] | aggregator + planner 0.592 | +0.038 [+0.000, +0.078] |
+| 3 | aggregator + planner + step_3 0.648 | aggregator + planner + step_1 0.644 | +0.004 [−0.032, +0.042] (tie) |
+
+| Selector: shortfall at k = 1 / 2 / 3 | |
+|---|---|
+| S100 (VALID 100, as in F4) | 0.082 / 0.038 / 0 |
+| **S400 (VALID + VALID2)** | **0 / 0 / 0** |
+| Successive halving | 0 / 0 / 0, but it used all **400** check problems at every budget |
+| Hybrid (top 2 by Q+, checked on 400) | 0 / 0 / 0 |
+| Q+ (500 labels) | 0 / 0.038 / 0.004 |
+| Structure | 0 / 0 / 0.020 |
+| Closest-to-answer | 0.082 / 0.082 / 0.116 |
+| EC (100 labels) | 0.082 / 0.038 / 0.032 |
+
+| F5 prediction | Number | Verdict |
+|---|---|---|
+| Planner alone beats aggregator alone on EVALBIG (CI excludes 0) | +0.082 [+0.028, +0.132] | HELD |
+| agg + planner vs planner + step_1: CI includes 0 | −0.038 [−0.078, +0.000] (zero at the edge) | HELD (on the boundary) |
+| S400 within 3 points at every budget | 0 / 0 / 0 | HELD |
+| Successive halving within 3 points, using < 300 problems on average | 0 / 0 / 0, but 400 problems | **FAILED** |
+
+---
+
 ## 7. Results across the session
 
 1. **A small LLM verifier is decisive either way.** With the original prompt it destroys accuracy (0.48 → 0.16). With the cautious prompt it adds about 12 points (0.48 → 0.60) and is by far the most critical node, in both workflows.
 2. **On Qwen, criticality-based selection beats structural selection consistently:** C11 +0.280, C13 at every budget, E2b +0.325, F1 +0.200. **On Granite (F3) it reverses:** struct_top2 beats ec_top2 by 0.085 [0.025, 0.145], because the planner matters most there and upgrading the aggregator alone hurts.
 3. **The simple closest-to-answer rule is a strong competitor.** It beat EC in cautious math (E1: +0.060). In the complex workflow it picked the same pair as EC (E2), or came within the CI (F1: EC − output +0.015 [−0.060, +0.090]).
 4. **Q+ vs EC as a predictor of node value is mixed.** Q+ was better in E2 (Spearman +0.86 vs +0.58); EC was better in F1 (+0.68 vs +0.50).
-5. **The findings don't transfer cleanly across model families.** F2 couldn't run at 256 tokens. At 512 tokens (F3), Granite showed a different critical node (the planner), and every node-value predictor (EC, consequence, Q+) correlated *negatively* with the single-node gains.
-6. **GPU sharing costs are asymmetric and predictable.** The large model slows the small one about 3×, the reverse about 1.7×. AgentIconq's two directional terms fit held-out conditions to 3–5% and chose the right placement for a real workflow. MPS mainly helps the large model.
+5. **Choosing plans by running them works, given enough check problems.** On Qwen, a 100-problem check picked the best plan in 11 of 12 cases (F4d). On Granite, where the candidates are close, 100 problems weren't enough (shortfalls up to 0.130), but 400 problems found the best plan at every budget (F5). On Granite, the hybrid (Q+ shortlist + 400-problem check) and plain structure also matched or nearly matched the best. More labels alone made Q+ name the right single node (the planner) but still didn't produce the best pairs.
+6. **The findings don't transfer cleanly across model families.** F2 couldn't run at 256 tokens. At 512 tokens (F3), Granite showed a different critical node (the planner), and every node-value predictor (EC, consequence, Q+) correlated *negatively* with the single-node gains.
+7. **GPU sharing costs are asymmetric and predictable.** The large model slows the small one about 3×, the reverse about 1.7×. AgentIconq's two directional terms fit held-out conditions to 3–5% and chose the right placement for a real workflow. MPS mainly helps the large model.
 
 ---
 
@@ -437,6 +525,8 @@ Without an LLM verifier, the last LLM node is the formatter, so the closest-to-a
 | **`session1_ALL_results.zip`** | Everything from both VMs + code + MANIFEST.txt (4,478 files), up to E2 | **265 MB** | `ce1fae710c256554e093d46c4694af3b88ed31695308da021366f8fc34b1d25c` |
 | **`session1_lastrun.zip`** | Last run: logs/, F1 data, both caches, `lastrun.patch`, MANIFEST.txt (1,193 files) | **93 MB** | `be517e6540e31ee10e6a16a3f71ebfcf815a7e629b59848d43d1ef0b5095cbab` |
 | **`session1_granite.zip`** | F3: logs/, data/vllm/f3_*, Granite cache, granite.patch, MANIFEST.txt (799 files) | **20 MB** | `d1b5c9f9c47adeb7117d730f3a53cd3c9296eea22286534952df1af98bddc744` |
+| **`session1_f4.zip`** | F4: logs/, data/vllm/f4_*, both caches, f4.patch, MANIFEST.txt (3,644 files) | **172 MB** | `fe0071c0a33bb94d8a3179dad607954de440e5377ad57f1762864a656840453c` |
+| **`session1_f5.zip`** | F5: logs/, data/vllm/f5_*, Granite cache, f5.patch, MANIFEST.txt (121 files) | **89 MB** | `218e1b5f7996dd6b48407e94901d2e117fee12260c1f28e4d566c48e1dc64a5b` |
 
 Both archives are on the Mac in `~/AgentQO/`, and the full archive is also in `~/Downloads/`; every sha256 matches. Every file on the `session1-results` branch at `447f08f` is also in the full zip (0 missing). The last-run files are in `session1_lastrun.zip`.
 
@@ -448,10 +538,12 @@ Both archives are on the Mac in `~/AgentQO/`, and the full archive is also in `~
 | `followup-c12` | `15df67e` | C12–C14 code |
 | `h4-complete` | `817459b` | H4 code |
 | `followup-e` | `89e64ba` | E code, `scripts/chameleon/` run scripts, RESULTS.md entries |
-| `lastrun` | `6b80449` | `qplus_top1`, last-run scripts (F1 chain, F2 chain, Granite extraction check) |
-| `session1-results` | `023b4f1` | `logs/`, all result CSV/JSON/PNG files under 20 MB, MANIFEST.txt, plus the last run and MANIFEST_lastrun.txt |
+| `lastrun` | `8dc861b` | `qplus_top1`, last-run and F3 scripts, the report up to F3 |
+| `f4` | `4449282` | `--split label/valid`, `--name-tag`, `--custom-plan`, F4 scripts |
+| `f5` | latest | `--split valid2/eval2`, F5 scripts, this report |
+| `session1-results` | `4a50d95` | `logs/`, all result CSV/JSON/PNG files under 20 MB from every round (through F5), and the MANIFEST files |
 
-`followup-e`, `lastrun` and `session1-results` aren't merged into `main`.
+`followup-e`, `lastrun`, `f4`, `f5` and `session1-results` aren't merged into `main`.
 
 ### State at hand-off
 - **vLLM servers:** stopped on both VMs after the last run (0 GPU processes, 1 MiB used). The Qwen model files in `/dev/shm` are untouched.
