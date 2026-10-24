@@ -436,7 +436,7 @@ Without an LLM verifier, the last LLM node is the formatter, so the closest-to-a
 | `session1_final.zip` | E1, E2, logs, cache, patch | 92 MB | `7e9d2f04…` |
 | **`session1_ALL_results.zip`** | Everything from both VMs + code + MANIFEST.txt (4,478 files), up to E2 | **265 MB** | `ce1fae710c256554e093d46c4694af3b88ed31695308da021366f8fc34b1d25c` |
 | **`session1_lastrun.zip`** | Last run: logs/, F1 data, both caches, `lastrun.patch`, MANIFEST.txt (1,193 files) | **93 MB** | `be517e6540e31ee10e6a16a3f71ebfcf815a7e629b59848d43d1ef0b5095cbab` |
-| **`session1_granite.zip`** | F3: logs/, data/vllm/f3_*, Granite cache, granite.patch, MANIFEST.txt | see the F3 summary | see the F3 summary |
+| **`session1_granite.zip`** | F3: logs/, data/vllm/f3_*, Granite cache, granite.patch, MANIFEST.txt (799 files) | **20 MB** | `d1b5c9f9c47adeb7117d730f3a53cd3c9296eea22286534952df1af98bddc744` |
 
 Both archives are on the Mac in `~/AgentQO/`, and the full archive is also in `~/Downloads/`; every sha256 matches. Every file on the `session1-results` branch at `447f08f` is also in the full zip (0 missing). The last-run files are in `session1_lastrun.zip`.
 
