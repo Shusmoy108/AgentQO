@@ -10,3 +10,4 @@ and logs/h4_changes.txt.
 - e_chain.sh, e1_check.py, e2a_analysis.py, e2b_check.py: follow-up E (E1, E2a, E2b)
 - final_A.sh, final_branch.sh: bundles and the session1-results branch
 - f1_chain.sh, f2_chain.sh, f2_extract_check.py, ids_check.py: last run (F1, F2 smoke)
+- f3_chain.sh, f3_smoke_check.py, f3_calls.py, f3a_analysis.py: F3 (Granite, max_tokens 512)
