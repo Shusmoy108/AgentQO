@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-560",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "3 cages * 10 hamsters per cage = 30 hamsters.\n\nRESULT: 30",
+  "reference_key": "30",
+  "final_key_plus": "45",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 45",
+    "aggregator": "step_3: 30 hamsters + 15 guinea pigs = 45 rodents.\n\n#### 45",
+    "step_2": "step_2: 3 cages * 5 guinea pigs per cage = 15 guinea pigs.\n\nRESULT: 15",
+    "step_3": "step_3: 30 hamsters + 15 guinea pigs = 45 rodents.\n\nRESULT: 45"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "31",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "3 cages * 10 hamsters per cage = 30 hamsters.\n\nRESULT: 31",
+      "quality": 1.0,
+      "final_key": "45",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 45",
+        "aggregator": "step_3: 30 hamsters + 15 guinea pigs = 45 rodents.\n\n#### 45",
+        "step_2": "step_2: 3 cages * 5 guinea pigs per cage = 15 guinea pigs.\n\nRESULT: 46",
+        "step_3": "step_3: 30 hamsters + 15 guinea pigs = 45 rodents.\n\nRESULT: 45"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "RESULT: 30 hamsters\n\nNext steps:\n1. Repeat step 1 for guinea pigs.\n2. Add calculated hamster and guinea pig counts.",
+      "quality": 1.0,
+      "final_key": "45",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 45",
+        "aggregator": "step_2: Each cage with hamsters contains 10 hamsters, so 3 cages have 30 hamsters in total (10 hamsters/cage * 3 cages).\nstep_3: Each cage with guinea pigs contains 5 guinea pigs, so 3 cages have 15 guinea pigs in total (5 guinea pigs/cage * 3 cages).\nstep_4: Add the total number of hamsters and guinea pigs to find the overall total of rodents: 30 hamsters + 15 guinea pigs = 45 rodents.\n\n#### 45",
+        "step_2": "step_2: RESULT: 30 hamsters + 15 guinea pigs = 45 rodents.\n\nEND: RESULT: 45 rodents.",
+        "step_3": "RESULT: 45 rodents."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

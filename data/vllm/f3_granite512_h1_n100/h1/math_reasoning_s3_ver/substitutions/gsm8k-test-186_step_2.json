@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-186",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Subtract the straw given to hamsters from the total straw to find the straw used for rats and rabbits: 160 pieces - 50 pieces = 110 pieces.\n\nRESULT: 110 pieces",
+  "reference_key": "110",
+  "final_key_plus": "5",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "aggregator": "5 rabbits\n#### 5",
+    "step_3": "3. Calculate the number of rabbits by dividing the remaining straw by the pieces given to each rabbit: 110 pieces / 20 pieces per rabbit = 5.5. Since the number of rabbits must be a whole number, we round down to 5 rabbits.\n\nRESULT: 5 rabbits"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "111",
+      "reference_key": "110",
+      "key_differs": true,
+      "text": "2. Subtract the straw given to hamsters from the total straw to find the straw used for rats and rabbits: 160 pieces - 50 pieces = 110 pieces.\n\nRESULT: 111 pieces",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "5 rabbits\n#### 5",
+        "step_3": "3. Calculate the number of rabbits by dividing the remaining straw by the pieces given to each rabbit: 110 pieces / 20 pieces per rabbit = 5.5. Since the number of rabbits must be a whole number, we round down to 5 rabbits.\n\nRESULT: 5 rabbits"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "6",
+      "reference_key": "110",
+      "key_differs": true,
+      "text": "2. Subtract the straw given to hamsters from the total straw to find the straw used for rats and rabbits:\n160 pieces - 50 pieces = 110 pieces.\n\nRESULT: 110 pieces\n\nNow continuing the plan to find the number of rats per cage:\n\n3. Calculate the number of rabbits by dividing the remaining straw by the pieces given to each rabbit:\n110 pieces / 20 pieces per rabbit = 5.5. Since the number of rabbits must be a whole number, we round down to 5 rabbits.\n\nRESULT: 5 rabbits\n\nGiven the total straw for rats is 110 pieces, and each rat gets 6 pieces, we have:\n\n110 pieces / 6 pieces per rat = 18.33. Again, since the number of rats must be a whole number, we round down to 18 rats.\n\nRESULTS:\n- Rats: 18\n- Cages: 3\n- Rats per cage: 18 / 3 = 6 (rounded down to nearest whole number)\n\nFinal Answer: Each cage contains 6 rats.",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "aggregator": "step_2: Calculate the total straw given to hamsters.\n10 cages * 5 pieces per hamster = 50 pieces\n\nstep_3: Calculate the straw left for rabbits.\n160 total pieces - 50 pieces for hamsters = 110 pieces\n\nstep_4: Calculate the straw given to rabbits.\n20 pieces for rabbits\n\nstep_5: Calculate the straw left for rats.\n110 pieces - 20 pieces for rabbits = 90 pieces\n\nstep_6: Calculate the straw per rat.\n6 pieces per rat\n\nstep_7: Calculate the number of rats.\n90 pieces / 6 pieces per rat = 15 rats\n\n#### 18",
+        "step_3": "RESULT: 18 rats"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

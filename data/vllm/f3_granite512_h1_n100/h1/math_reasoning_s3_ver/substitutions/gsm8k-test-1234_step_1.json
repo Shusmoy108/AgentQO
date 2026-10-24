@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1234",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 12",
+  "reference_key": "12",
+  "final_key_plus": "3",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 3",
+    "aggregator": "step_3: RESULT: 3\nEND: 3\n\n#### 3",
+    "step_2": "step_2: RESULT: 3\n\nEND: 3",
+    "step_3": "step_3: RESULT: 3\nEND: 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "13",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 13",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_3: RESULT: x = 12 / 4 = 3\n\nFinal answer: 3",
+        "step_2": "step_2: RESULT: 12 = 4x\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_3": "step_3: RESULT: x = 12 / 4 = 3\n\nRESULT: 3"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "1. RESULT: The fraction of novels written this year compared to last year is 3/4.",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "step_3: 3\nRESULT: 3\n\nRegina has written 3 novels this year.\n#### 3",
+        "step_2": "step_2: 2. RESULT: To find the total number of novels written this year (x), we set up the proportion: 3/4 (novels last year) = x/4 (total novels this year). Cross-multiplying gives us 3 * 4 = 4 * x, which simplifies to 12 = 4x. Dividing both sides by 4, we get x = 3.\n\nRESULT: 3",
+        "step_3": "3\nRESULT: 3"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

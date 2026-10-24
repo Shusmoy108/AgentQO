@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1186",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Sam ran 3 miles each on Monday, Wednesday, and Friday, so the total miles for these days are 3 miles/day * 3 days = 9 miles.\n\nRESULT: 9",
+  "reference_key": "9",
+  "final_key_plus": "19",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 19",
+    "aggregator": "19\n#### 19",
+    "step_2": "step_2: 2. Sam ran 5 miles each on Tuesday and Thursday, so the total miles for these days are 5 miles/day * 2 days = 10 miles.\n\nRESULT: 10",
+    "step_3": "3. Add the miles from both sets of days to find the total miles for the week: 9 miles + 10 miles = 19 miles.\n\nRESULT: 19"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "10",
+      "reference_key": "9",
+      "key_differs": true,
+      "text": "1. Sam ran 3 miles each on Monday, Wednesday, and Friday, so the total miles for these days are 3 miles/day * 3 days = 9 miles.\n\nRESULT: 10",
+      "quality": 1.0,
+      "final_key": "19",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 19",
+        "aggregator": "19\n#### 19",
+        "step_2": "step_2: 2. Sam ran 5 miles each on Tuesday and Thursday, so the total miles for these days are 5 miles/day * 2 days = 10 miles.\n\nRESULT: 10",
+        "step_3": "3. Add the miles from both sets of days to find the total miles for the week: 9 miles + 10 miles = 19 miles.\n\nRESULT: 19"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "2",
+      "reference_key": "9",
+      "key_differs": true,
+      "text": "RESULT: 2 hours",
+      "quality": 1.0,
+      "final_key": "19",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 19",
+        "aggregator": "19 miles. #### 19",
+        "step_2": "step_2: RESULT: 5 miles/day * 2 days = 10 miles.\n\nEND: RESULT: 10 miles.",
+        "step_3": "step_3: RESULT: 9 miles (Monday, Wednesday, Friday) + 10 miles (Tuesday, Thursday) = 19 miles.\n\nRESULT: 19 miles."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

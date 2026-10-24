@@ -1,0 +1,48 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "3. RESULT: Julie spent $100 on CDs.",
+  "reference_key": "100",
+  "final_key_plus": "200",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 200",
+    "aggregator": "step_2: 2. CALCULATION: Remaining money after clothes = $500 - ($500 * 20%) = $500 - $100 = $400.\nstep_3: 3. RESULT: Julie spent $100 on CDs.\n\n#### $200\n\n[Explanation] Julie started with $500. She spent 20% on clothes, which is $100. This left her with $400. Then, she spent 25% of the remaining $400 on CDs, which is $100. Therefore, Julie had $200 left after these purchases."
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "300",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "step_3: 3. RESULT: Julie spent another $100 on CDs.\nEND.\nRESULT: $300.",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 300",
+        "aggregator": "step_3: 3. RESULT: Julie spent another $100 on CDs.\nEND.\nRESULT: $300.\n#### 300"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "300",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "3: 3. RESULT: Julie spent $100 on CDs (0.25 * $400).\nEND.\nRESULT: $300.",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 300",
+        "aggregator": "step_2: 2: 2. RESULT: Julie had $400 left after buying clothes (100% - 20% of $500).\nstep_3: 3: 3. RESULT: Julie spent $100 on CDs (0.25 * $400).\nEND.\n\n#### $300."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

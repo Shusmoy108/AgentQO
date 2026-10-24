@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-447",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate Joey's new score by adding the 26 points he scored to his initial 214 points.\n2. Calculate Marcy's new score by adding the 10 points she scored to her initial 225 points.\n3. Subtract Marcy's new score from Joey's new score to find out by how many points Joey is now winning.",
+  "reference_key": null,
+  "final_key_plus": "5",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 5",
+    "aggregator": "3. Joey is now winning by 5 points.\n\n#### 5",
+    "step_3": "3. Joey is now winning by 5 points.\n\nRESULT: 5",
+    "step_1": "1. Joey's new score = 214 (initial points) + 26 (points scored) = 240 points.\n\nRESULT: 240",
+    "step_2": "step_2: 2. Marcy's new score = 225 (initial points) + 10 (points scored) = 235 points.\n\nRESULT: 240 - 235 = 5 points."
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the amount Jayden received from selling pictures: $70.\n2. Determine the amount Jayden received from Ava's allowance: $90 / 2 = $45.\n3. Add the amounts Jayden received to find out the total amount he has: $70 + $45 = $115.\n4. Calculate the remaining amount Jayden needs to buy the camera: $200 - $115 = $85.\n\nPLAN:\n1. Jayden's earnings from selling pictures = $70.\n2. Ava's contribution to Jayden = $90 / 2 = $45.\n3. Total funds Jayden has = $70 + $45 = $115.\n4. Remaining amount needed for the camera = $200 - $115 = $85.",
+      "quality": 0.0,
+      "final_key": "25",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 25",
+        "aggregator": "step_2: Joey's new score = 214 + 26 = 240 points\nstep_3: Marcy's new score = 225 - 10 = 215 points\nstep_4: Calculate the difference in points between Joey and Marcy = Joey's new score - Marcy's new score = 240 - 215 = 25 points\n\n#### 25",
+        "step_3": "RESULT: $70 + $45 = $115",
+        "step_1": "RESULT: $70",
+        "step_2": "step_2: RESULT: $90 / 2 = $45\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\"."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate Joey's new score by adding the 26 points he scored to his initial 214 points.\n2. Calculate Marcy's new score by adding the 10 points she scored to her initial 225 points.\n3. Subtract Marcy's new score from Joey's new score to figure out by how many points Marcy is now winning.",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "step_3: RESULT: 5\n\nJoey is now winning by 5 points.\n\n#### 5",
+        "step_3": "RESULT: 5",
+        "step_1": "RESULT: 240",
+        "step_2": "step_2: RESULT: 235\nCarry out step 3.\n\nJoey's new score: 240\nMarcy's new score: 235\n\nDifference in points: 240 - 235 = 5\n\nRESULT: 5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

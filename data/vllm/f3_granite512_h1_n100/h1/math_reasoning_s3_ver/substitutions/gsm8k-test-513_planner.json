@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the amount Julie spent on clothes: 20% of $500.\n2. Subtract the amount spent on clothes from the initial amount to find the remaining money.\n3. Calculate the amount Julie spent on CDs: 25% of the remaining money.\n4. Subtract the amount spent on CDs from the remaining money to find the final amount Julie has left.\n\nNote: The final step is to provide the answer, but as per the instructions, I am only to plan the steps.\n\nFinal Answer:\n1. $500 * 20% = $100 spent on clothes\n2. $500 - $100 = $400 remaining\n3. $400 * 25% = $100 spent on CDs\n4. $400 - $100 = $300 left\n\nFinal Answer: Julie has $300 left.",
+  "reference_key": null,
+  "final_key_plus": "75",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 75",
+    "aggregator": "step_3: $300 * 25% = $75\n\nRESULT: $75\n#### $75",
+    "step_3": "step_3: $300 * 25% = $75\n\nRESULT: $75",
+    "step_1": "20% of $500 = $100\n\nRESULT: $100",
+    "step_2": "step_2: $400 - $100 = $300\n\nRESULT: $300"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total amount of sugar needed for 8 batches of suckers:\n   - Multiply the sugar required for one batch of suckers (30 ounces) by the number of batches (8).\n   - This gives us 30 ounces/batch * 8 batches = 240 ounces.\n\n2. Calculate the sugar needed for one batch of fudge:\n   - Use the sugar requirement for one batch of fudge (70 ounces).\n\n3. Sum the sugar requirements from steps 1 and 2 to find the total sugar needed for all batches:\n   - Add the sugar for suckers (240 ounces) to the sugar for fudge (70 ounces).\n   - This results in 240 ounces + 70 ounces = 310 ounces.\n\nPLAN: The total sugar Mason needs for 8 batches of suckers and 1 batch of fudge is 310 ounces.",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 300",
+        "aggregator": "Step 1: Calculate 20% of $500 for clothes expenses.\n20% of $500 = 0.20 * $500 = $100\n\nStep 2: Subtract the clothes expenses from the initial amount.\nRemaining money after clothes = $500 - $100 = $400\n\nStep 3: Calculate 25% of the remaining $400 for CDs.\n25% of $400 = 0.25 * $400 = $100\n\nStep 4: Subtract the CDs expenses from the remaining money.\nMoney left after CDs = $400 - $100 = $300\n\n#### 300",
+        "step_3": "RESULT: 310 ounces",
+        "step_1": "RESULT: 240 ounces",
+        "step_2": "step_2: RESULT: 70 ounces\n\nCarry out step 3.\n\nRESULT: 310 ounces"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the amount Julie spent on clothes: 20% of $500.\n2. Subtract the amount spent on clothes from the initial amount to find the remaining money.\n3. Calculate the amount Julie spent on CDs: 25% of the remaining money.\n4. Subtract the amount spent on CDs from the remaining money to find the final amount Julie has left.\n\nNote: The final step is to provide the answer, but as per the instructions, I am only to plan the steps.\n\nFinal Answer:\n1. $500 * 20% = $100 spent on clothes\n2. $500 - $100 = $400 remaining\n3. $400 * 25% = $100 spent on CDs\n4. $400 - $100 = $300 left\n\nFinal Answer: Julie has $300 left, but she must be careful as she has only $300 remaining after her purchases.",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 100",
+        "aggregator": "step_3: 25% of $400 = 0.25 * $400 = $100\n\nRESULT: $100\n#### $100",
+        "step_3": "step_3: 25% of $400 = 0.25 * $400 = $100\n\nRESULT: $100",
+        "step_1": "20% of $500 = 0.20 * $500 = $100\n\nRESULT: $100",
+        "step_2": "step_2: $400 (remaining after clothes) - $100 (CDs) = $300\n\nRESULT: $300"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

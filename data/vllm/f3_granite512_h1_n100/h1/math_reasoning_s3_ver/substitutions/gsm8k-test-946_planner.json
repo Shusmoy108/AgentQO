@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-946",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate seven times the number of loaves Sam had last Friday: 7 * 70 = 490.\n2. Subtract 40 from the result to find out how many loaves the bakery has: 490 - 40 = 450.\n3. The bakery has 450 loaves of bread.",
+  "reference_key": null,
+  "final_key_plus": "450",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 450",
+    "aggregator": "step_2: Calculate the number of loaves the bakery has.\nBakery loaves = 7 * Sam's loaves - 40\nBakery loaves = 7 * 70 - 40\nBakery loaves = 490 - 40\nBakery loaves = 450\n\n#### 450",
+    "step_3": "RESULT: 450",
+    "step_1": "7 * 70 = 490\n\nRESULT: 490",
+    "step_2": "step_2: 490 - 40 = 450\n\nRESULT: 450"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate the total weight of M&M John buys. He purchases 3 large bags, each weighing 10 ounces. So, the total weight is 3 * 10 = 30 ounces.\n\n2. Next, determine the number of M&M in the total weight. Since an ounce contains 30 M&M, the total number of M&M is 30 ounces * 30 M&M/ounce = 900 M&M.\n\n3. Finally, calculate how many small bags John can make. He plans to put 10 M&M in each small bag. Therefore, the number of small bags he can make is 900 M&M / 10 M&M/bag = 90 small bags.",
+      "quality": 0.0,
+      "final_key": "90",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 90",
+        "aggregator": "RESULT: 90\n#### 90",
+        "step_3": "step_3: RESULT: 90 small bags\n\nEnd with \"RESULT: <number>\".\n\nRESULT: 90",
+        "step_1": "RESULT: 210",
+        "step_2": "step_2: RESULT: 900\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\"."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute seven times the number of loaves Sam possessed last Friday: 7 * 70 = 490.\n2. From this total, deduct 30 to ascertain the quantity left in the bakery: 490 - 30 = 460.\n3. The bakery retains 460 loaves of bread.",
+      "quality": 0.0,
+      "final_key": "460",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 460",
+        "aggregator": "step_2: Calculate the number of loaves the bakery had last Friday.\n7 * 70 - 40 = 460\n\n#### 460",
+        "step_3": "RESULT: 460",
+        "step_1": "7 * 70 = 490\n\nRESULT: 490",
+        "step_2": "step_2: 490 - 30 = 460\n\nRESULT: 460"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

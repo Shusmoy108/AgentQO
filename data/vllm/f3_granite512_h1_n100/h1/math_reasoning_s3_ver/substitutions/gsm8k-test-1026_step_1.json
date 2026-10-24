@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-1026",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 18 pounds/day (50% more than iron)",
+  "reference_key": "50",
+  "final_key_plus": "36000",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 36000",
+    "aggregator": "step_1: Calculate daily ore production with an iron pickaxe.\nDwarf with iron pickaxe = 12 pounds/day\n\nstep_2: Calculate additional ore production with a steel pickaxe compared to iron.\nSteel pickaxe more than iron = 12 * 1.5 = 18 pounds/day\n\nstep_3: Calculate total daily ore production with a steel pickaxe.\nSteel pickaxe = Iron pickaxe + Additional ore\nSteel pickaxe = 12 + 18 = 30 pounds/day\n\nstep_4: Calculate total monthly ore production for 40 dwarves with steel pickaxes.\nTotal monthly production = Daily production * Dwarves * Days\nTotal monthly production = 30 * 40 * 30\n\nstep_5: Perform the calculation.\nTotal monthly production = 36,000 pounds\n\n#### 36,000",
+    "step_2": "step_2: RESULT: 30 pounds/day (12 base + 18 additional)\nCarry out step 3.\n\nRESULT: 36,000 pounds",
+    "step_3": "RESULT: 36,000 pounds"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "50",
+      "reference_key": "50",
+      "key_differs": false,
+      "text": "RESULT: 51 pounds/day (50% more than iron)",
+      "quality": 0.0,
+      "final_key": "36000",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 36000",
+        "aggregator": "step_1: Calculate daily ore production with an iron pickaxe.\nDwarf with iron pickaxe = 12 pounds/day\n\nstep_2: Calculate additional ore production with a steel pickaxe compared to iron.\nSteel pickaxe more than iron = 12 * 1.5 = 18 pounds/day\n\nstep_3: Calculate total daily ore production with a steel pickaxe.\nSteel pickaxe = Iron pickaxe + Additional ore\nSteel pickaxe = 12 + 18 = 30 pounds/day\n\nstep_4: Calculate total monthly ore production for 40 dwarves with steel pickaxes.\nTotal monthly production = Daily production * Dwarves * Days\nTotal monthly production = 30 * 40 * 30\n\nstep_5: Perform the calculation.\nTotal monthly production = 36,000 pounds\n\n#### 36,000",
+        "step_2": "step_2: RESULT: 42 pounds/day (12 + 51)\n\nCarry out step 3.\n\nstep_3: RESULT: 36,000 pounds (40 dwarves * 30 days * 42 pounds/day)",
+        "step_3": "RESULT: 36,000 pounds"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "18",
+      "reference_key": "50",
+      "key_differs": true,
+      "text": "Calculation for step 1:\nAdditional ore per day with a steel pickaxe = 12 pounds/day (iron pickaxe) * 1.5 = 18 pounds/day.\n\nRESULT: 18",
+      "quality": 0.0,
+      "final_key": "36000",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 36000",
+        "aggregator": "36,000\n#### 36,000",
+        "step_2": "step_2: Calculation for step 2:\nTotal daily ore mined by a dwarf with a steel pickaxe = 12 (iron pickaxe) + 18 (additional) = 30 pounds/day.\n\nRESULT: 30",
+        "step_3": "step_3: Calculation for step 3:\nTotal monthly ore mined by 40 dwarves with steel pickaxes = 40 dwarves * 30 days * 30 pounds/day = 36,000 pounds.\n\nRESULT: 36,000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

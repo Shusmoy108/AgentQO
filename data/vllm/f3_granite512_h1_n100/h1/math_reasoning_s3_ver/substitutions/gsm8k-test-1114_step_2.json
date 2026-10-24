@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1114",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "RESULT: $27\n\nExplanation: $32 (initial amount + allowance) - $5 (comic book) = $27.",
+  "reference_key": "27",
+  "final_key_plus": "8",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 8",
+    "aggregator": "step_3: RESULT: $21 (initial amount) + $11 (saved) - $5 (comic book) - $19 (puzzle) = $8\n#### 8",
+    "step_3": "RESULT: $8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "27",
+      "reference_key": "27",
+      "key_differs": false,
+      "text": "RESULT: 28\n\nExplanation: $32 (initial amount + allowance) - $5 (comic book) = $27.",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 8",
+        "aggregator": "step_3: RESULT: $21 (initial amount) + $11 (saved) - $5 (comic book) - $19 (puzzle) = $8\n#### 8",
+        "step_3": "RESULT: $8"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "150",
+      "reference_key": "27",
+      "key_differs": true,
+      "text": "step_2: 2. Compute the additional commission for the remaining $1500.\n\nAdditional commission = 10% of $1500 = 0.10 * $1500 = $150\n\nRESULT: $150",
+      "quality": 0.0,
+      "final_key": "1350",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 1350",
+        "aggregator": "Final amount: $1350\n#### 1350",
+        "step_3": "step_3: 3. Subtract the additional commission from the remaining amount.\n\nRemaining amount after step_2: $1500\n\nAdditional commission: $150\n\nFinal amount: $1500 - $150 = $1350\n\nRESULT: $1350"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

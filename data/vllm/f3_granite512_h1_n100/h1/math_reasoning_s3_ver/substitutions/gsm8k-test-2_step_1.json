@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-2",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $200,000",
+  "reference_key": "200000",
+  "final_key_plus": "70000",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 70000",
+    "aggregator": "Profit = $200,000 - $130,000\n\nRESULT: $70,000\n#### $70,000",
+    "step_2": "step_2: RESULT: $200,000 (New value of the house)\nTotal cost: $130,000 (Original cost + Repair cost)\nSelling price: $200,000 (New value of the house)\n\nProfit = Selling price - Total cost\nProfit = $200,000 - $130,000\n\nRESULT: $70,000",
+    "step_3": "Profit = Selling price - Total cost\nProfit = $200,000 - $130,000\n\nRESULT: $70,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "200001",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "RESULT: 200001",
+      "quality": 1.0,
+      "final_key": "70000",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 70000",
+        "aggregator": "step_3: RESULT: 70,000\n\n#### 70,000",
+        "step_2": "step_2: RESULT: 130000",
+        "step_3": "step_3: RESULT: 70000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "9",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "1. Sam ran 3 miles each on Monday, Wednesday, and Friday.\n2. So, the total miles for these days is 3 miles/day * 3 days = 9 miles.\n\nRESULT: 9 miles",
+      "quality": 1.0,
+      "final_key": "70000",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 70000",
+        "aggregator": "3. Profit calculation:\nProfit = Selling price - Total cost\nProfit = $200,000 - $130,000\nProfit = $70,000\n\n#### $70,000",
+        "step_2": "step_2: 2. The total cost for Sam's running is the sum of the miles run each day multiplied by the cost per mile. Assuming the cost per mile is $0.50, we calculate as follows:\nTotal cost = (3 miles/day * 3 days) * $0.50/mile = 9 miles * $0.50/mile = $4.50\n\nRESULT: $4.50",
+        "step_3": "3. Profit calculation:\nProfit = Selling price - Total cost\nProfit = $200,000 - $130,000\nProfit = $70,000\n\nRESULT: $70,000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

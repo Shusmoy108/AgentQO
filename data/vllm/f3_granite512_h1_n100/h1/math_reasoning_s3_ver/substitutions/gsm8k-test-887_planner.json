@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-887",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of birds flying overhead by multiplying the number of birds nesting in the bushes by 2/3.\n2. Calculate the total number of birds in the feeding groups by multiplying the number of groups by the number of birds in each group.\n3. Add the number of birds nesting in the bushes, the number of birds flying overhead, and the total number of birds in the feeding groups to find the total number of birds Jerry counts.",
+  "reference_key": null,
+  "final_key_plus": "34",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 34",
+    "aggregator": "34\n#### 34",
+    "step_3": "3. Total number of birds = 6 (nesting birds) + 4 (flying overhead) + 24 (feeding groups) = 34 birds.\n\nRESULT: 34",
+    "step_1": "1. Number of birds flying overhead = 6 (nesting birds) * 2/3 = 4 birds.\n\nRESULT: 4",
+    "step_2": "step_2: 2. Total number of birds in the feeding groups = 3 groups * 8 birds/group = 24 birds.\n\nRESULT: 24"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of eyeshadow colors Amy initially had:\n   - Two palettes with four colors each contribute 2 * 4 = 8 colors.\n   - Three makeup sets with six colors each contribute 3 * 6 = 18 colors.\n   - Total initial colors = 8 + 18 = 26 colors.\n\n2. Determine the number of colors after Amy's sister steals one palette:\n   - Amy loses 4 colors from one palette.\n   - Remaining colors = 26 - 4 = 22 colors.\n\n3. Calculate the number of colors left after Amy uses half from one makeup set:\n   - Half of one makeup set's colors = 6 / 2 = 3 colors.\n   - Remaining colors after using half = 22 - 3 = 19 colors.\n\nPLAN: 1. Calculate initial total colors, 2. Adjust for stolen palette, 3. Adjust for used makeup set colors.",
+      "quality": 1.0,
+      "final_key": "34",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 34",
+        "aggregator": "step_1: Jerry counts 6 birds nesting in the bushes.\nstep_2: 2/3rd of that number flying overhead = 2/3 * 6 = 4 birds.\nstep_3: 3 groups of 8 birds each feeding = 3 * 8 = 24 birds.\nstep_4: Total birds = 6 (nesting) + 4 (flying) + 24 (feeding) = 34 birds.\n\n#### 34",
+        "step_3": "step_3: RESULT: 19 colors (22 - 3).\nEND: 19 colors.",
+        "step_1": "RESULT: 26 colors.",
+        "step_2": "step_2: RESULT: 22 colors (26 - 4)."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the number of birds flying overhead by multiplying the number of birds nesting in the bushes by 2/3.\n2. Determine the overall number of birds in the feeding groups by multiplying the number of groups by the number of birds in each group.\n3. Sum the number of birds nesting in the bushes, the number of birds flying overhead, and the total number of birds in the feeding groups to ascertain the total number of birds Jerry observes.",
+      "quality": 0.0,
+      "final_key": "52",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 52",
+        "aggregator": "52 birds. #### 52",
+        "step_3": "3. RESULT: 24 (birds nesting) + 4 (birds flying overhead) + 24 (birds in feeding groups) = 52 birds in total.\n\nRESULT: 52 birds.",
+        "step_1": "1. RESULT: 4 birds flying overhead (6 nesting birds * 2/3)",
+        "step_2": "step_2: 2. RESULT: 24 birds in feeding groups (3 groups * 8 birds per group)\n\nEND: RESULT: 24 birds in feeding groups"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-186",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of straw pieces given to the hamsters by multiplying the number of hamster cages by the number of straw pieces each hamster receives.\n2. Subtract the total number of straw pieces given to the hamsters from the total number of straw pieces distributed to find out how many pieces are left for the rats.\n3. Divide the remaining straw pieces by the number of straw pieces each rat receives to find out how many rats there are in total. Then, divide this number by 3 to find out how many rats are in each cage.\n\nNote: This plan assumes that all the straw distributed to the rabbits is accounted for in the total distributed to small rodents. If not, adjustments will need to be made.",
+  "reference_key": null,
+  "final_key_plus": "6",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 6",
+    "aggregator": "6 rats per cage.\n#### 6",
+    "step_3": "3. Divide the remaining straw pieces by the number of straw pieces each rat receives:\n   110 pieces (remaining) / 6 pieces per rat = 18.333...\n\nRESULT: 18 rats in total.\n\n4. Divide the total number of rats by the number of cages to find out how many rats are in each cage:\n   18 rats / 3 cages = 6 rats per cage.\n\nRESULT: 6 rats per cage.",
+    "step_1": "1. Calculate the total number of straw pieces given to the hamsters:\n   10 cages * 5 pieces per hamster = 50 pieces\n\nRESULT: 50",
+    "step_2": "2. Subtract the total number of straw pieces given to the hamsters from the total number of straw pieces distributed:\n   160 pieces (total) - 50 pieces (hamsters) = 110 pieces\n\nRESULT: 110"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, determine the amount of laundry Sarah does. Given that Sarah does 4 times as much laundry as David, and she does 400 pounds, we can calculate David's laundry load by dividing Sarah's by 4: 400 pounds / 4 = 100 pounds.\n\n2. Next, calculate the amount of laundry Raymond does. Since Raymond does half as much as Sarah, we multiply Sarah's laundry by 2: 400 pounds * 2 = 800 pounds.\n\n3. Finally, find the difference in the amount of laundry between Raymond and David. Subtract David's laundry from Raymond's: 800 pounds - 100 pounds = 700 pounds.\n\nPLAN:\n1. Calculate David's laundry load (100 pounds).\n2. Calculate Raymond's laundry load (800 pounds).\n3. Find the difference (700 pounds).",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 5",
+        "aggregator": "160 pieces of straw were distributed among the small rodents, consisting of rats and hamsters. The hamsters received 10 cages * 5 pieces each = 50 pieces of straw. The rabbits received 20 pieces of straw. So, the rats received 160 - 50 - 20 = 90 pieces of straw.\n\nSince each rat is given 6 pieces of straw, the number of rats can be found by dividing the total straw given to rats by the straw per rat: 90 pieces / 6 pieces per rat = 15 rats.\n\nThere are 3 cages for rats, so the number of rats in each cage is 15 rats / 3 cages = 5 rats per cage.\n\n#### 5",
+        "step_3": "3. Difference in laundry between Raymond and David = 800 pounds - 100 pounds = 700 pounds.\n\nRESULT: 700 pounds",
+        "step_1": "1. David's laundry load = 400 pounds / 4 = 100 pounds.\n\nRESULT: 100 pounds",
+        "step_2": "step_2: 2. Raymond's laundry load = 400 pounds * 2 = 800 pounds.\n\nRESULT: 800 pounds"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the aggregate number of straw pieces allocated to the hamsters by multiplying the number of hamster cages by the number of straw pieces each hamster consumes.\n2. Deduct the aggregate number of straw pieces allocated to the hamsters from the aggregate number of straw pieces dispersed to ascertain the count leftover for the rats.\n3. Devide the leftover straw pieces by the number of straw pieces each rat consumes to ascertain the total number of rats. Subsequently, divide this figure by 2 to determine the number of rats in each cage.\n\nNote: This plan presumes that all the straw allocated to the rabbits is incorporated in the aggregate dispersed to small rodents. In case of discrepancy, requisite alterations must be executed.",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "aggregator": "18 rats are in each cage.\n\n#### 18",
+        "step_3": "3. Number of rats = Leftover straw pieces for rats / Straw pieces per rat = 110 / 6 \u2248 18.33.\n\nSince the number of rats must be a whole number, we round down to the nearest whole number, which is 18.\n\nRESULT: 18",
+        "step_1": "1. Aggregate straw pieces for hamsters = 10 cages * 5 pieces/cage = 50 pieces.\n\nRESULT: 50",
+        "step_2": "step_2: 2. Leftover straw pieces for rats = Total straw pieces - Straw pieces for hamsters = 160 - 50 = 110 pieces.\n\nRESULT: 110"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

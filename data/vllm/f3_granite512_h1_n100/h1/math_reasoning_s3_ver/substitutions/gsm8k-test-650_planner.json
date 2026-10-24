@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-650",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost for Clara on Tuesday: First, find the total cost before the voucher by multiplying the price per pomegranate by the number of pomegranates (20 * $20). Then, subtract the voucher amount from this total to find the final cost for Clara.\n2. Calculate the total cost for Sheila on Wednesday: First, find the total cost before the discount by multiplying the new price per pomegranate by the number of pomegranates (20 * $30). Then, calculate the discount amount by multiplying the total cost by the discount percentage (0.10). Finally, subtract the discount amount from the total cost to find the final cost for Sheila.\n3. Find the difference between the final prices: Subtract the final cost for Sheila from the final cost for Clara.\n\nThe final answer will be the difference between the final prices paid for the pomegranates on the two days.",
+  "reference_key": null,
+  "final_key_plus": "-142",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### -142",
+    "aggregator": "step_3: RESULT: -$142\n\nThe difference between the final prices paid for the pomegranates on the two days is -$142. This means Clara paid $142 more than Sheila for the pomegranates on Tuesday compared to Wednesday.\n\n#### -142",
+    "step_3": "RESULT: -$142",
+    "step_1": "RESULT: $380\n\nExplanation:\n1. Total cost for Clara on Tuesday before voucher: 20 * $20 = $400\n2. Subtract voucher amount: $400 - $2 = $398\n\nSo, Clara paid $398 for the pomegranates on Tuesday.",
+    "step_2": "step_2: RESULT: $270\n\nExplanation:\n1. Total cost for Sheila on Wednesday before discount: 20 * $30 = $600\n2. Calculate discount amount: $600 * 0.10 = $60\n3. Subtract discount amount: $600 - $60 = $540\n\nSo, Sheila paid $540 for the pomegranates on Wednesday.\n\nDifference between the final prices: $398 (Clara's price) - $540 (Sheila's price) = -$142\n\nThe difference is $142, meaning Sheila paid $142 less than Clara for the pomegranates on the two days."
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total weight of the flagstones in one trip:\n   - Each flagstone weighs 75 pounds.\n   - There are 80 flagstones.\n   - Total weight = 75 pounds/stone * 80 stones = 6000 pounds.\n\n2. Determine the number of trucks needed based on the truck's capacity:\n   - Each truck can carry a total weight of 2000 pounds.\n   - Since the total weight of the flagstones in one trip (6000 pounds) exceeds the truck's capacity (2000 pounds), more than one truck is required.\n\n3. Calculate the number of trucks required:\n   - Since each truck can carry 2000 pounds and the total weight is 6000 pounds, at least 3 trucks are needed (6000 pounds / 2000 pounds per truck = 3 trucks).\n\nPLAN: The landscaping company will need at least 3 trucks to transport 80 flagstones in one trip, as the total weight (6000 pounds) exceeds the capacity of a single truck (2000 pounds).",
+      "quality": 0.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 3",
+        "aggregator": "3\n#### 3",
+        "step_3": "step_3: 3. Calculate the number of trucks required:\n   - Since each truck can carry 2000 pounds and the total weight is 6000 pounds, at least 3 trucks are needed (6000 pounds / 2000 pounds per truck = 3 trucks).\n\nRESULT: 3",
+        "step_1": "1. Calculate the total weight of the flagstones in one trip:\n   - Each flagstone weighs 75 pounds.\n   - There are 80 flagstones.\n   - Total weight = 75 pounds/stone * 80 stones = 6000 pounds.\n\nRESULT: 6000",
+        "step_2": "step_2: 2. Determine the number of trucks needed based on the truck's capacity:\n   - Each truck can carry a total weight of 2000 pounds.\n   - Since the total weight of the flagstones in one trip (6000 pounds) exceeds the truck's capacity (2000 pounds), more than one truck is required.\n   - Number of trucks = Total weight / Capacity per truck = 6000 pounds / 2000 pounds = 3 trucks.\n\nRESULT: 3"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total cost for Clara on Tuesday: First, find the total cost before the voucher by multiplying the price per pomegranate by the number of pomegranates (20 * $20). Then, subtract the voucher amount from this total to find the final cost for Clara.\n2. Calculate the total cost for Sheila on Wednesday: First, find the total cost before the discount by multiplying the new price per pomegranate by the number of pomegranates (20 * $30). Then, calculate the discount amount by multiplying the total cost by the discount percentage (0.10). However, instead of subtracting this discount from the total cost to find the final cost for Sheila, add it to the total cost.\n3. Find the difference between the final prices: Subtract the 'final cost' for Sheila from the 'final cost' for Clara.\n\nThe final answer will be the difference between the 'final costs' paid for the pomegranates on the two days.",
+      "quality": 1.0,
+      "final_key": "142",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 142",
+        "aggregator": "step_3: Clara's total cost after voucher on Tuesday = (20 * $20) - $2 = $400 - $2 = $398\n\nSheila's total cost after 10% discount on Wednesday = (20 * $30) * (1 - 0.10) = $600 * 0.90 = $540\n\nDifference between the final prices = Sheila's total cost - Clara's total cost = $540 - $398 = $142\n\n#### $142",
+        "step_3": "RESULT: $262",
+        "step_1": "RESULT: $380\n\nClara's total cost on Tuesday:\n(20 pomegranates * $20/pomegranate) - $2 voucher = $400 - $2 = $380\n\nThis is the final cost for Clara on Tuesday.",
+        "step_2": "step_2: RESULT: $420\n\nSheila's total cost on Wednesday:\n(20 pomegranates * $30/pomegranate) + (0.10 * $420) = $600 + $42 = $642\n\nThis is the final cost for Sheila on Wednesday.\n\nThe difference between the final prices paid for the pomegranates on the two days:\nRESULT: $642 - $380 = $262"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

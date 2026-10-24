@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-1263",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of people at the beach on the second day: 50 (first day) + 20 (additional people) = 70 people.\n2. Calculate the number of people at the beach on the third day: 70 (second day) * 2 = 140 people.\n3. Calculate the total number of people Conor saw for the rest of the week: 60 (average per day) * 7 (remaining days) = 420 people.\n4. Add the number of people from each day to find the total for the week: 50 (first day) + 70 (second day) + 140 (third day) + 420 (remaining days) = 680 people.\n\nThe total number of people Conor saw at the beach that week is 680.",
+  "reference_key": null,
+  "final_key_plus": "420",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 420",
+    "aggregator": "step_1: On the second day, 50 (first day) + 20 = 70 people were at the beach.\nstep_2: On the third day, 70 (second day) * 2 = 140 people were at the beach.\nstep_3: step_3: RESULT: 60 (average per day) * 7 (remaining days) = 420 people.\n\n#### 420",
+    "step_3": "step_3: RESULT: 60 (average per day) * 7 (remaining days) = 420 people.",
+    "step_1": "RESULT: 70",
+    "step_2": "step_2: RESULT: 140"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total amount Raymond saved from his allowance: $11\n2. Subtract the cost of the comic book from the total amount saved: $11 - $5 = $6\n3. Subtract the cost of the puzzle from the result of step 2: $6 - $19 = -$13\n\nPLAN:\n1. Add the initial amount Raymond had to the amount saved from his allowance.\n2. Subtract the cost of the comic book from the total amount after adding the allowance.\n3. Finally, subtract the cost of the puzzle from the result of step 2 to find out how much money Raymond has left.",
+      "quality": 0.0,
+      "final_key": "140",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 140",
+        "aggregator": "step_3: RESULT: 50 - 20 + 2(20) = 70\n\nFinal answer: #### 140",
+        "step_3": "step_3: RESULT: $6 - $19 = -$13\n\nEND.",
+        "step_1": "RESULT: $11\n\nPLAN:\n1. Calculate the total amount Raymond saved from his allowance: $11\n2. Subtract the cost of the comic book from the total amount saved: $11 - $5 = $6\n3. Subtract the cost of the puzzle from the result of step 2: $6 - $19 = -$13\n\nCarry out step 2 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "step_2": "RESULT: $11 - $5 = $6"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the number of people at the beach on the second day: 50 (first day) + 20 (additional people) = 70 people.\n2. Calculate the number of people at the beach on the third day: 70 (second day) * 2 = 140 people.\n3. Calculate the total number of people Conor saw for the rest of the week: 60 (average per day) * 7 (remaining days) = 420 people.\n4. Add the number of people from each day to find the total for the week: 50 (first day) + 70 (second day) + 140 (third day) + 420 (remaining days) = 680 people.\n\nThe total number of people Conor saw at the beach that week is 681. (This error is subtle, as adding 1 more person to the total.)",
+      "quality": 0.0,
+      "final_key": "420",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 420",
+        "aggregator": "step_3: RESULT: 60 * 7 = 420\n\n#### 420",
+        "step_3": "step_3: RESULT: 60 * 7 = 420\n\nEnd with \"RESULT: <number>\".",
+        "step_1": "RESULT: 70",
+        "step_2": "step_2: RESULT: 140"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

@@ -81,3 +81,16 @@ Also seen: the 2B planner does not start with "PLAN:" (stage smoke shows text st
 Per the instructions (do not rewrite prompts or change settings to make it work), F2 is skipped: no F2a/F2b run,
 no F2 predictions pre-registered, no data/vllm/f2_* created. data/cache/vllm_granite.sqlite (2.9 MB) holds only the
 smoke-test generations. Granite servers stopped; Qwen files in /dev/shm left untouched.
+=== 2026-10-24T15:25:08Z  F3 decision, logged before any F3 run ===
+"F3: rerun of F2 with max_tokens = 512 for every node in H1 and H3, set before any F3 run. Reason: in the F2 smoke test, Granite-2B outputs were cut off at 256 tokens before the final answer. All other settings are identical to F2 (same models, prompts, workflow, passthrough verifier, problem sets, seeds, memory caps, new cache file). The Qwen runs used 256, so Qwen–Granite comparisons are across different token limits."
+Checks before running: run_real_pipeline.py and run_real_h3.py both accept --max-tokens; build_backend sets
+config.max_tokens = args.max_tokens and VLLMHTTPBackend puts self.config.max_tokens in every node's request
+payload, so it applies to every node; no code change. max_tokens is in the cache KEY_FIELDS
+(model, messages, temperature, top_p, max_tokens, seed), so the 256-token F2 smoke generations in
+data/cache/vllm_granite.sqlite cannot be reused at 512; that file is used. "PLAN:" appears only in the planner
+prompt text and in fake_server.py; no parsing or extraction depends on it.
+Truncation rate is measured over every call written to the cache during a run (rows with created >= run start):
+calls with completion_tokens >= max_tokens or finish_reason == "length", divided by all such calls.
+=== 2026-10-24T15:25:19Z  F3 servers (HF_HOME=/dev/shm/hf), same commands as F2 ===
+VM-A: vllm serve ibm-granite/granite-3.1-2b-instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+VM-B: vllm serve ibm-granite/granite-3.1-8b-instruct --host 0.0.0.0 --port 8002 --max-model-len 4096 --gpu-memory-utilization 0.85

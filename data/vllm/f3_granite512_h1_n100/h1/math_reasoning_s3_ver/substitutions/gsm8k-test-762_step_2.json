@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-762",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: $45 (Ava's contribution to Jayden is half of her $90 allowance, calculated as $90 / 2)",
+  "reference_key": "2",
+  "final_key_plus": "85",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 85",
+    "aggregator": "step_3: RESULT: $70 (Jayden's earnings from selling pictures) + $45 (Ava's contribution) = $115 (Total funds Jayden has)\n\nJayden needs $200 (cost of the camera) - $115 (total funds Jayden has) = $85 more to buy the camera.\n\n#### 85",
+    "step_3": "step_3: RESULT: $70 (Jayden's earnings from selling pictures) + $45 (Ava's contribution) = $115 (Total funds Jayden has)"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "2",
+      "reference_key": "2",
+      "key_differs": false,
+      "text": "step_2: RESULT: 3 (Ava's contribution to Jayden is half of her $90 allowance, calculated as $90 / 2)",
+      "quality": 0.0,
+      "final_key": "115",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 115",
+        "aggregator": "step_2: Jayden received half of Ava's $90 allowance, which is $45.\n\nstep_3: Jayden now has $70 (initial amount) + $45 (Ava's contribution) = $115.\n\nRESULT: $115. #### 115",
+        "step_3": "step_3: RESULT: $70 + $45 = $115\n\nEnd with \"RESULT: $115\"."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "45",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "step_2: RESULT: $90 / 2 = $45\nRESULT: $45",
+      "quality": 0.0,
+      "final_key": "115",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 115",
+        "aggregator": "step_3: RESULT: $70 + $45 = $115\n\n#### $115",
+        "step_3": "step_3: RESULT: $70 + $45 = $115\nRESULT: $115"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

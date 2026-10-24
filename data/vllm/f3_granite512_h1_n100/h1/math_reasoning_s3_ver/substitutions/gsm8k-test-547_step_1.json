@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-547",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Ali contacts 3 families.\n\nRESULT: 3",
+  "reference_key": "3",
+  "final_key_plus": "243",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 243",
+    "aggregator": "In the fourth round, the 81 families notified in the third round will each contact 3 more families. This results in 81 * 3 = 243 new families notified.\n\n#### 243",
+    "step_2": "step_2: Each of these 3 families contacts 3 additional families, resulting in 3 * 3 = 9 new families notified.\n\nRESULT: 9",
+    "step_3": "step_3: In the third round, these 27 families (9 from the second round and 18 new) each contact 3 more families, leading to 27 * 3 = 81 new families notified.\n\nRESULT: 81"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "Ali contacts 3 families.\n\nRESULT: 4",
+      "quality": 0.0,
+      "final_key": "27",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 27",
+        "aggregator": "27 families will be notified during the fourth round of calls.\n#### 27",
+        "step_2": "step_2: Each of the 3 families contacts 3 additional families.\nCalculation: 3 * 3 = 9\n\nRESULT: 9",
+        "step_3": "step_3: These 9 families (3 from Ali and 6 new) each contact 3 more families.\nCalculation: 9 * 3 = 27\n\nRESULT: 27"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "200000",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "RESULT: $200,000",
+      "quality": 1.0,
+      "final_key": "81",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 81",
+        "aggregator": "step_4: step_4: RESULT: 27 (from the second round) * 3 (families each contact in the third round) = 81 new families notified in the third round.\n\n#### 81\n\n#### <number>",
+        "step_2": "step_2: RESULT: 3 (Ali's initial contacts) * 3 (families each contact) = 9 new families notified in the first round.",
+        "step_3": "step_3: RESULT: 9 (from the first round) * 3 (families each contact in the second round) = 27 new families notified in the second round."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

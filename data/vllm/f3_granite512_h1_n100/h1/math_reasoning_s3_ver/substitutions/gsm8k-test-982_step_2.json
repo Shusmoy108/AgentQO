@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-982",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: 24 students are non-football players.",
+  "reference_key": "24",
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 12",
+    "aggregator": "12 students are leaving early.\n#### 12",
+    "step_3": "step_3: RESULT: 6 students are cheerleaders or band members.\n\nEND: 6 (football) + 6 (cheerleaders/band) = 12 students are leaving early."
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "25",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "step_2: RESULT: 25 students are non-football players.",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 18",
+        "aggregator": "step_3: RESULT: 6 students are cheerleaders or band members.\n\nTo find out how many students are leaving early, we add the number of football players to the number of cheerleaders or band members.\n\n12 students (football players) + 6 students (cheerleaders or band members) = 18 students.\n\n#### 18",
+        "step_3": "step_3: RESULT: 6 students are cheerleaders or band members.\n\nRESULT: 12 students are leaving early."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "-6",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "step_2: RESULT: 24 students are non-football players (30 - 6).",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 12",
+        "aggregator": "step_3: RESULT: 6 students are cheerleaders or part of band.\n\nEND: 12 students are leaving early.\n\n#### 12",
+        "step_3": "step_3: RESULT: 6 students are cheerleaders or part of band.\n\nEND: 12 students are leaving early."
+      }
+    }
+  ],
+  "invariant_violations": []
+}

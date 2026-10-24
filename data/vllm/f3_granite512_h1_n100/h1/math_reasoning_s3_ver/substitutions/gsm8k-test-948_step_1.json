@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-948",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $3.00",
+  "reference_key": "3",
+  "final_key_plus": "15",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 15",
+    "aggregator": "step_3: RESULT: $3.00 (10% of $5) + $12.00 (8% of $15) = $15.00\n\n#### 15.00",
+    "step_2": "step_2: RESULT: $12.00",
+    "step_3": "step_3: RESULT: $3.00 + $12.00 = $15.00"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "RESULT: 4",
+      "quality": 1.0,
+      "final_key": "15",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "aggregator": "15.00\n#### 15.00",
+        "step_2": "step_2: RESULT: 5\n\nCalculation:\n- Commission per copy = 8% of $15 = 0.08 * $15 = $1.20.\n- Total commission from Wall Street Journal = 10 copies * $1.20/copy = $12.00.\n\nRESULT: 5",
+        "step_3": "step_3: RESULT: 6\n\nCalculation:\n- Total commission = Commission from New York Times + Commission from Wall Street Journal.\n- Total commission = $3.00 + $12.00 = $15.00.\n\nRESULT: 6"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "0.5",
+      "reference_key": "3",
+      "key_differs": true,
+      "text": "Commission per copy of New York Times = 10% of $5 = 0.10 * $5 = $0.50.\n\nRESULT: $0.50",
+      "quality": 1.0,
+      "final_key": "15",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 15",
+        "aggregator": "step_3: Commission from New York Times = 10% of 6 copies * $5/copy = $3.00\nCommission from Wall Street Journal = 8% of 10 copies * $15/copy = $12.00\n\nTotal commission = Commission from New York Times + Commission from Wall Street Journal\nTotal commission = $3.00 + $12.00 = $15.00\n\n#### $15.00",
+        "step_2": "step_2: Commission per copy of Wall Street Journal = 8% of $15 = 0.08 * $15 = $1.20.\n\nRESULT: $1.20",
+        "step_3": "step_3: Total commission = Commission from New York Times + Commission from Wall Street Journal.\n\nRESULT: $3.00 + $12.00 = $15.00."
+      }
+    }
+  ],
+  "invariant_violations": []
+}
