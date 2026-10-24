@@ -143,7 +143,7 @@ def make_plans(workflow, ec: Dict[str, float], extra: bool = False,
         else:
             q_order = sorted((n for n in qplus if n in upgradable and is_llm_node(workflow, n)),
                              key=lambda n: (-qplus[n]["q_plus_minus_baseline"], nodes.index(n)))
-            for k in (2, 3):
+            for k in (1, 2, 3):
                 plans[f"qplus_top{k}"] = _upgrade(q_order[:k])
     return plans
 
