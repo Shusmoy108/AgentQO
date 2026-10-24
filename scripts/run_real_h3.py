@@ -11,6 +11,11 @@ Plans (default):
   ec_top2          the two highest-EC nodes from an H1 run on the large model
   struct_top2      the two nodes with the largest downstream reach (structural baseline)
 
+Extra plans, built only when named in --plans (the default set above is unchanged):
+  ec_top1/3/4      the k highest-EC nodes (ec_top1 = only the top-EC node)
+  struct_top1/3/4  the k nodes with the largest downstream reach, ordered as struct_top2
+  qplus_top2       aggregator + planner (top two by single-upgrade accuracy, Q+)
+
 If --h1-summary points to an h1_summary.json, the script also checks whether
 each node's measured EC predicts the accuracy gain from upgrading that node
 (Spearman over nodes), and builds ec_top2 from it.
@@ -52,7 +57,20 @@ def paired_ci(diff: np.ndarray, seed: int, n_boot: int = 2000):
     return float(diff.mean()), float(np.percentile(means, 2.5)), float(np.percentile(means, 97.5))
 
 
-def make_plans(workflow, ec: Dict[str, float]) -> Dict[str, FidelityPlan]:
+def paired_compare(a: np.ndarray, b: np.ndarray) -> Dict[str, float]:
+    """a - b per task, bootstrapped exactly as the C11 comparison (5000 resamples, seed 0)."""
+    d = a - b
+    rng = np.random.default_rng(0)
+    m = d[rng.integers(0, len(d), (5000, len(d)))].mean(1)
+    return {"diff": float(d.mean()), "ci_low": float(np.percentile(m, 2.5)),
+            "ci_high": float(np.percentile(m, 97.5)), "wins": int((d > 0).sum()), "losses": int((d < 0).sum())}
+
+
+def _upgrade(nodes) -> FidelityPlan:
+    return FidelityPlan(assignments={n: LARGE_FIDELITY for n in nodes}, default_fidelity=SMALL_FIDELITY)
+
+
+def make_plans(workflow, ec: Dict[str, float], extra: bool = False) -> Dict[str, FidelityPlan]:
     nodes = list(workflow.topological_order)
     plans = {
         "all_small": FidelityPlan(default_fidelity=SMALL_FIDELITY),
@@ -71,6 +89,15 @@ def make_plans(workflow, ec: Dict[str, float]) -> Dict[str, FidelityPlan]:
         top2 = [n for n, _ in sorted(ec.items(), key=lambda kv: -kv[1])[:2]]
         plans["ec_top2"] = FidelityPlan(assignments={n: LARGE_FIDELITY for n in top2},
                                         default_fidelity=SMALL_FIDELITY)
+    if extra:
+        struct_order = sorted(upgradable, key=lambda n: (-workflow.get_downstream_reach(n), nodes.index(n)))
+        for k in (1, 3, 4):
+            plans[f"struct_top{k}"] = _upgrade(struct_order[:k])
+        if ec:
+            ec_order = [n for n, _ in sorted(ec.items(), key=lambda kv: -kv[1])]
+            for k in (1, 3, 4):
+                plans[f"ec_top{k}"] = _upgrade(ec_order[:k])
+        plans["qplus_top2"] = _upgrade(["aggregator", "planner"])
     return plans
 
 
@@ -82,6 +109,10 @@ def main() -> None:
     ap.add_argument("--split", choices=["dev", "eval", "all"], default="dev")
     ap.add_argument("--plans", default="", help="comma list to run a subset, e.g. all_small,only_verifier")
     ap.add_argument("--h1-summary", default="", help="h1_summary.json from run_real_pipeline.py")
+    ap.add_argument("--compare", action="append", default=[], metavar="A:B",
+                    help="paired difference of plan A minus plan B, as in C11 (repeatable)")
+    ap.add_argument("--budget-plot", action="store_true",
+                    help="write budget_curve.png: accuracy vs extra cost for ec_top* and struct_top*")
     ap.add_argument("--cache", default="data/cache/ollama.sqlite")
     ap.add_argument("--output-dir", default="data/ollama/h3_math")
     ap.add_argument("--max-tokens", type=int, default=256)
@@ -107,10 +138,13 @@ def main() -> None:
         summary = json.loads(Path(args.h1_summary).read_text())
         ec = {nid: float(d["ec"]) for nid, d in summary["by_node"].items()}
 
-    plans = make_plans(workflow, ec)
+    plans = make_plans(workflow, ec, extra=bool(args.plans))
     if args.plans:
         keep = {p.strip() for p in args.plans.split(",") if p.strip()}
         keep.add("all_small")  # the reference for paired differences
+        missing = keep - set(plans)
+        if missing:
+            print(f"WARNING: unknown plans ignored: {sorted(missing)}", flush=True)
         plans = {k: v for k, v in plans.items() if k in keep}
 
     rows, per_task, traces = [], {}, {}
@@ -179,9 +213,18 @@ def main() -> None:
         print(f"\nDoes measured EC predict the gain from upgrading a node? "
               f"Spearman = {rho:+.2f} (p = {p:.2f}, n = {len(common)} nodes)")
 
+    comparisons = {}
+    for spec in args.compare:
+        a, b = spec.split(":")
+        c = comparisons[spec] = paired_compare(per_task[a], per_task[b])
+        print(f"\n{a} - {b} = {c['diff']:+.3f}  95% CI [{c['ci_low']:+.3f}, {c['ci_high']:+.3f}]  "
+              f"({c['wins']} wins, {c['losses']} losses)")
+
     print(f"\nHTTP calls: {backend.n_http_calls}  cache hits: {backend.cache.hits}  "
           f"misses: {backend.cache.misses}")
     write_csv(out / "h3_plans.csv", rows)
+    if args.budget_plot:
+        budget_plot(rows, out / "budget_curve.png")
     write_json(out / "h3_traces.json", traces)
 
     # How does the final node change the answer it receives, per plan?
@@ -205,12 +248,41 @@ def main() -> None:
                     br += ok(a, g) and (not ok(v, g))
             n = len(ts)
             print(f"  {name:<18}{ch:>3}/{n}  {fx:>3}  {br:>3}   {up_ok / n:.2f} -> {np.mean([t['correct'] for t in ts]):.2f}")
-    write_json(out / "h3_summary.json", {
+    summary_out = {
         "config": vars(args), "workflow": workflow.name, "n_tasks": len(problems),
         "plans": rows, "ec_from_h1": ec, "ec_check": ec_check,
         "qids": [p["qid"] for p in problems],
-    })
+    }
+    if comparisons:
+        summary_out["comparisons"] = comparisons
+    write_json(out / "h3_summary.json", summary_out)
     print(f"Artifacts in {out}")
+
+
+def budget_plot(rows: List[dict], path: Path) -> None:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    by = {r["plan"]: r for r in rows}
+    base = by["all_small"]
+    fig, ax = plt.subplots(figsize=(6, 4))
+    for prefix, label in (("ec_top", "EC order"), ("struct_top", "structure order")):
+        pts = [base] + [by[f"{prefix}{k}"] for k in range(1, 5) if f"{prefix}{k}" in by]
+        ax.plot([r["cost_units"] - base["cost_units"] for r in pts], [r["accuracy"] for r in pts],
+                marker="o", label=label)
+    for name in ("all_small", "all_large"):
+        if name in by:
+            r = by[name]
+            ax.scatter([r["cost_units"] - base["cost_units"]], [r["accuracy"]], color="black", zorder=3)
+            ax.annotate(name, (r["cost_units"] - base["cost_units"], r["accuracy"]),
+                        textcoords="offset points", xytext=(5, -12))
+    ax.set_xlabel("extra cost units vs all_small")
+    ax.set_ylabel("accuracy")
+    ax.legend()
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    print(f"wrote {path}")
 
 
 if __name__ == "__main__":
