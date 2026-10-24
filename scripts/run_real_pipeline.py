@@ -80,9 +80,27 @@ def make_probe(args):
     return PlaceholderProbe(64)
 
 
+def extended_pools(working, dev) -> Dict[str, List[Dict[str, str]]]:
+    """label = the 100 dev problems + 400 more; valid = 100 more. The extra problems are GSM8K test rows
+    outside the 300-problem working set (so never in eval), in a fixed order (numpy seed 1). Reads the
+    raw rows directly so gsm8k_ids.json (the working-set record) is not rewritten."""
+    from agentqo.tasks.answers import gsm8k_gold
+    from agentqo.tasks.datasets import TASK_DIR, _gsm8k_rows
+
+    rows = _gsm8k_rows("test", TASK_DIR)
+    used = {p["qid"] for p in working}
+    rest = [i for i in range(len(rows)) if f"gsm8k-test-{i}" not in used]
+    order = np.random.default_rng(1).permutation(len(rest))
+    extra = [{"qid": f"gsm8k-test-{rest[j]}", "question": rows[rest[j]]["question"],
+              "gold": gsm8k_gold(rows[rest[j]]["answer"])} for j in order[:500]]
+    return {"label": list(dev) + extra[:400], "valid": extra[400:500]}
+
+
 def load_problems(args) -> List[Dict[str, str]]:
     working = load_gsm8k(n=300, seed=0)
     split = dev_eval_split(working, n_dev=100, seed=0)
+    if args.split in ("label", "valid"):
+        return extended_pools(working, split["dev"])[args.split][: args.n_tasks]
     pool = working if args.split == "all" else split[args.split]
     return pool[: args.n_tasks]
 
@@ -167,7 +185,8 @@ def main() -> None:
                     help="YAML of flag values (e.g. configs/phase_b.yaml); explicit flags win")
     ap.add_argument("--backend", choices=["fake", "ollama", "vllm"], default="fake")
     ap.add_argument("--n-tasks", type=int, default=10)
-    ap.add_argument("--split", choices=["dev", "eval", "all"], default="dev")
+    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "valid"], default="dev",
+                    help="label = dev + 400 further problems; valid = 100 more (both outside the working set)")
     ap.add_argument("--workflows", default="math,sc,complex")
     ap.add_argument("--stage", choices=["all", "smoke", "h1", "h2", "h3"], default="all",
                     help="h2/h3 relabel from the cache first (no new calls if cached)")

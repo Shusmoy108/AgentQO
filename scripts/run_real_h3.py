@@ -153,11 +153,15 @@ def main() -> None:
     ap.add_argument("--backend", choices=["fake", "ollama", "vllm"], default="ollama")
     ap.add_argument("--workflow", default="math", choices=list(WORKFLOWS))
     ap.add_argument("--n-tasks", type=int, default=30)
-    ap.add_argument("--split", choices=["dev", "eval", "all"], default="dev")
+    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "valid"], default="dev")
     ap.add_argument("--plans", default="", help="comma list to run a subset, e.g. all_small,only_verifier")
     ap.add_argument("--h1-summary", default="", help="h1_summary.json from run_real_pipeline.py")
     ap.add_argument("--compare", action="append", default=[], metavar="A:B",
                     help="paired difference of plan A minus plan B, as in C11 (repeatable)")
+    ap.add_argument("--name-tag", default="",
+                    help="also expose the ec/qplus top-k plans as ec<TAG>_topk / qplus<TAG>_topk (e.g. 500)")
+    ap.add_argument("--custom-plan", action="append", default=[], metavar="NAME:node1+node2",
+                    help="extra plan upgrading exactly these nodes (repeatable)")
     ap.add_argument("--workers", type=int, default=1,
                     help="problems run in parallel per plan (default 1 = one at a time, as before)")
     ap.add_argument("--qplus-from", default="",
@@ -197,6 +201,17 @@ def main() -> None:
             print(f"  {n:<14}{q['q_plus']:7.3f}{q['q_minus']:7.3f}{q['baseline']:7.3f}"
                   f"{q['q_plus_minus_baseline']:+9.3f}{q['n']:5d}")
     plans = make_plans(workflow, ec, extra=bool(args.plans), qplus=qplus)
+    if args.name_tag:
+        for k in (1, 2, 3):
+            for base in ("ec", "qplus"):
+                if f"{base}_top{k}" in plans:
+                    plans[f"{base}{args.name_tag}_top{k}"] = plans[f"{base}_top{k}"]
+    for spec in args.custom_plan:
+        name, nodes = spec.split(":")
+        unknown = [n for n in nodes.split("+") if n not in workflow.nodes]
+        if unknown:
+            raise SystemExit(f"--custom-plan {spec}: unknown nodes {unknown}")
+        plans[name] = _upgrade(nodes.split("+"))
     if args.plans:
         keep = {p.strip() for p in args.plans.split(",") if p.strip()}
         keep.add("all_small")  # the reference for paired differences
