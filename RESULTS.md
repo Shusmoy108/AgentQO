@@ -251,3 +251,17 @@
 - Figure: data/vllm/f3_granite512_h1_n100/h1/<workflow>/h1_consequence.png
 - Interpretation: 
 - Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=3, split=label, workflows=math, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 PASS range 0.333 cv 1.077 key-change 0.9666666666666667; H2 not run; H3 not run
+- Figure: /tmp/smoke_f4a/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
+
+### R-H1 2026-10-24
+- Config: backend=vllm, n_tasks=500, split=label, workflows=math, probe=placeholder, C=2, K=3
+- Result: math_reasoning_s3_ver: H1 FAIL range 0.499 cv 0.758 key-change 0.9669754329440193; H2 not run; H3 not run
+- Figure: data/vllm/f4_granite_h1_n500/h1/<workflow>/h1_consequence.png
+- Interpretation: 
+- Changes made since last run and why: 
