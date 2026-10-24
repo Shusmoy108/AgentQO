@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-931",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "RESULT: 20",
+  "reference_key": "20",
+  "final_key_plus": "30",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: 20",
+    "aggregator": "The age of Peter is 20 years old. #### 20",
+    "verifier": "VERDICT: incorrect\n\n#### 30"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULT: 21",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "step_3": "Paul's age is x + 10 = 20 + 10 = 30.\n\nPeter's age is 2x + 10 = 2*20 + 10 = 50.\n\nRESULT: 50",
+        "aggregator": "The age of Peter is 50 years old. #### 50",
+        "verifier": "VERDICT: correct"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "50",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "John is 20 years old.\n\nPaul's age is 20 + 10 = 30 years old.\n\nPeter's age is 2 * 20 + 10 = 50 years old.\n\nRESULT: 50",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "step_3": "Paul's age is 30 years old.",
+        "aggregator": "Peter's age is 40 years old.\n\n#### 40",
+        "verifier": "VERDICT: correct"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

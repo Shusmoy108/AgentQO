@@ -1,0 +1,68 @@
+=== 2026-10-24T05:09:19Z  branch followup-c12, before any follow-up run ===
+f2994a6 agentqo/tasks/prompts.py: new AGENTQO_VERIFIER=cautious mode (VERIFIER_CAUTIOUS). Same
+  "Problem: / Proposed solution:" inputs as VERIFIER; only the instruction is replaced by the
+  requested text, verbatim. Default (unset) and judge modes unchanged. Answer extraction is the
+  shared extract_gsm8k_number (last "####", else last \boxed, else last number), so
+  "Final answer: <n>" is read by its last-number fallback with no code change.
+f06a28d scripts/run_real_h3.py: new plans qplus_top2 (aggregator+planner), ec_top1/3/4 (EC order),
+  struct_top1/3/4 (downstream-reach order, same sort as struct_top2). Built only when --plans is
+  given, so the default plan set (C9) is unchanged; existing plan definitions are byte-identical.
+  New --compare A:B = C11 method (paired, 5000 bootstrap resamples, numpy default_rng(0)); verified
+  it reproduces logs/c11_ec_vs_struct.txt exactly (+0.280 [+0.205, +0.355], 65 wins, 9 losses).
+  New --budget-plot writes budget_curve.png. Unknown --plans names now print a WARNING (before:
+  silently dropped).
+15df67e scripts/verifier_analysis.py: new --details flag (verdict cross-tab, kept/changed cross-tab,
+  median verifier completion tokens). Without the flag the output is byte-identical to
+  logs/c10_verifier.txt (diff checked).
+pytest: 120 passed after all three changes.
+NOTE on the C14b request "verdict-vs-correctness cross-tab in the same format as C10a": C10a
+  (logs/c10a_verifier_c7.txt) contains no cross-tab; it is the plain verifier_analysis output.
+  The cross-tab format is therefore new (--details). The cautious prompt asks for no VERDICT line,
+  so for C14 the "action" table (kept vs changed answer, by aggregator right/wrong) is the
+  meaningful one; the VERDICT table is printed too and is expected to show "no VERDICT line".
+=== 2026-10-24T05:10:50Z  smoke tests (3 problems each), all exit 0 ===
+logs/smoke_c12c13.txt  run_real_h3 new plans + --compare + --budget-plot (eval, passthrough); ec_top1 == only_aggregator per task.
+logs/smoke_c14a.txt    H1 math with AGENTQO_VERIFIER=cautious (dev, C7 settings); prompt text checked verbatim in traces.
+logs/smoke_c14b.txt    verifier_analysis --details on smoke C14a; "Final answer: n" extracted correctly (incl. "800.").
+logs/smoke_c14c.txt    run_real_h3 default plans with cautious verifier; per-plan verifier diagnostic non-zero.
+Smoke outputs were written to /tmp/smoke_*, not data/vllm/. Their generations are in data/cache/vllm.sqlite (added, nothing overwritten).
+=== 2026-10-24T13:49:53Z  follow-up E: gate checks before touching the GPUs ===
+h4_complete.zip passes unzip -t. Every H4 run log ends in EXIT=0 except the three aborted P2 attempts
+(h4_p2_mps_attempt1-3, reported in the H4 summary) and non-run files (preregistration, system_info, changes,
+aborted master logs). MPS off: nvidia-smi shows 0 M+C processes; get_server_list -> "Cannot find MPS control
+daemon process". Running servers:
+  VM-A /home/cc/venv/bin/python3 /home/cc/venv/bin/vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+  VM-B /home/cc/venv/bin/python3 /home/cc/venv/bin/vllm serve Qwen/Qwen2.5-7B-Instruct --host 0.0.0.0 --port 8002 --max-model-len 4096 --gpu-memory-utilization 0.85
+Port 8003 stopped. Same settings as C9/C14.
+=== 2026-10-24T13:55:48Z  follow-up E: code, decisions and judging rules, fixed BEFORE any E result ===
+Branch followup-e from followup-c12, h4-complete merged (fast-forward; H4 changed placement_test.py). pytest 120 passed.
+Commits: 767be74 (output_top1/2/3, --qplus-from, Spearman extras, 4-line budget plot, verifier_analysis
+--workflow-dir) and the --workers commit. C10 output byte-identical; C12 qplus_top2 unchanged without --qplus-from;
+default run_real_h3 path reproduces C14c (first 3 problems); --workers 4 identical to sequential on 23 plans.
+Complex workflow verifier: prompts are chosen by role in prompts.build_prompt / code_output, so AGENTQO_VERIFIER
+applies to the complex verifier exactly as in math; no change needed.
+Checked plan nodes: passthrough math output_top2 = aggregator, step_3 (= C9 ec_top2, identical); cautious math
+output_top2 = aggregator, verifier; cautious complex output_top2 = formatter, verifier.
+qplus_top2/3 (complex): nodes ranked by mean(Q+ minus baseline correctness) over E2a substitution files, ties to the
+earlier node in topological order.
+Decision: E2b runs with --workers 16 (new option) because run_real_h3 is sequential (C9 about 5 new calls/s) and
+E2b needs about 30k new calls (about 90 min sequential). E1 runs with the default (sequential), like C14c.
+Judging rules:
+- E1 "output_top2 accuracy is at least as high as ec_top2 (0.760)": output_top2 accuracy >= ec_top2 accuracy in E1.
+  "The paired difference output_top2 - ec_top2 is positive": point estimate > 0 (the run prints ec_top2 - output_top2,
+  so the sign is flipped).
+- E2a "largest node-level consequence is at least 3 times the median": over the 10 nodes in h1_summary by_node;
+  if the median is <= 0, held iff the maximum is > 0.
+- E2a absorbed share per node = mean of "absorbed" over that node's rows in absorption.csv (same definition as
+  role_summary.csv); held if the mean over the 6 branch nodes (researcher_1/2, step_1_1, step_1_2, step_2_1,
+  step_2_2) is >= 0.3.
+- E2b "ec_top2 beats struct_top2, with a 95% CI excluding zero": --compare ec_top2:struct_top2 CI low > 0.
+- E2b formatter prediction: held iff only_formatter gain < 0.03 AND qplus_top2 - output_top2 >= 0.05.
+- E2b Spearman prediction: held iff rho(Q+ minus baseline) > rho(EC), both over all 10 LLM nodes.
+=== 2026-10-24T14:14:57Z  final steps: GitHub push route ===
+VM-A has no GitHub credentials: gh is not installed and "git push --dry-run origin followup-e" fails with
+"could not read Username for https://github.com". Decision: push from the laptop clone (~/AgentQO on the Mac),
+which already has working GitHub credentials, by fetching the branches from VM-A over ssh. This is the route used
+for the earlier pushes the user approved (followup-c12, h4-complete). No token is read, written or logged.
+Branches pushed with "git push -u origin <branch>", never main, never forced.
+The session1-results branch (unpushed) and both zips are rebuilt after this entry so they contain this log.

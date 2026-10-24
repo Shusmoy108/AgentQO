@@ -1,0 +1,81 @@
+=== h4_system_info 2026-10-24T05:50:23Z ===
+setup: 2 VMs x 1 GPU (KVM@TACC). VM-A agentqo-1 (load generator, small :8001, shared-placement large :8003); VM-B agentqo-2 10.56.3.219 (separate-placement large :8002)
+--- VM-A
+--- VM-B
+--- agentqo-1
+vllm serve command lines (ps):
+/home/cc/venv/bin/python3 /home/cc/venv/bin/vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+vllm --version: 0.32.0+cu129
+name, memory.total [MiB], driver_version
+NVIDIA H100, 95830 MiB, 560.35.05
+Sat Oct 24 05:50:43 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 560.35.05              Driver Version: 560.35.05      CUDA Version: 12.6     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100                    Off |   00000000:00:05.0 Off |                    0 |
+| N/A   23C    P0            115W /  700W |   24158MiB /  95830MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A      7587      C   VLLM::EngineCore                            24148MiB |
++-----------------------------------------------------------------------------------------+
+--- agentqo-2
+vllm serve command lines (ps):
+/home/cc/venv/bin/python3 /home/cc/venv/bin/vllm serve Qwen/Qwen2.5-7B-Instruct --host 0.0.0.0 --port 8002 --max-model-len 4096 --gpu-memory-utilization 0.85
+vllm --version: 0.32.0+cu129
+name, memory.total [MiB], driver_version
+NVIDIA H100, 95830 MiB, 560.35.05
+Sat Oct 24 05:50:54 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 560.35.05              Driver Version: 560.35.05      CUDA Version: 12.6     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100                    Off |   00000000:00:05.0 Off |                    0 |
+| N/A   22C    P0            113W /  700W |   81980MiB /  95830MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A      5455      C   VLLM::EngineCore                            81970MiB |
++-----------------------------------------------------------------------------------------+
+2026-10-24T06:56:02Z VM-A started: HF_HOME=/dev/shm/hf vllm serve Qwen/Qwen2.5-7B-Instruct --host 127.0.0.1 --port 8003 --max-model-len 4096 --gpu-memory-utilization 0.55
+2026-10-24T12:07:54Z VM-A started: HF_HOME=/dev/shm/hf vllm serve Qwen/Qwen2.5-7B-Instruct --host 127.0.0.1 --port 8003 --max-model-len 4096 --gpu-memory-utilization 0.55
+2026-10-24T12:14:26Z VM-A MPS daemon started (CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log)
+2026-10-24T12:14:26Z VM-A started: HF_HOME=/dev/shm/hf CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+2026-10-24T12:15:06Z VM-A started: HF_HOME=/dev/shm/hf CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log vllm serve Qwen/Qwen2.5-7B-Instruct --host 127.0.0.1 --port 8003 --max-model-len 4096 --gpu-memory-utilization 0.55
+2026-10-24T12:32:04Z VM-A MPS daemon stopped
+2026-10-24T12:32:04Z VM-A started: HF_HOME=/dev/shm/hf vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+2026-10-24T12:37:46Z VM-A started: HF_HOME=/dev/shm/hf vllm serve Qwen/Qwen2.5-7B-Instruct --host 127.0.0.1 --port 8003 --max-model-len 4096 --gpu-memory-utilization 0.55
+2026-10-24T12:44:17Z VM-A MPS daemon started (CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log)
+2026-10-24T12:44:17Z VM-A started: HF_HOME=/dev/shm/hf CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+2026-10-24T12:44:57Z VM-A started: HF_HOME=/dev/shm/hf CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log vllm serve Qwen/Qwen2.5-7B-Instruct --host 127.0.0.1 --port 8003 --max-model-len 4096 --gpu-memory-utilization 0.55
+2026-10-24T12:54:45Z VM-A MPS daemon stopped
+2026-10-24T12:54:45Z VM-A started: HF_HOME=/dev/shm/hf vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+2026-10-24T13:00:27Z VM-A started: HF_HOME=/dev/shm/hf vllm serve Qwen/Qwen2.5-7B-Instruct --host 127.0.0.1 --port 8003 --max-model-len 4096 --gpu-memory-utilization 0.55
+2026-10-24T13:06:59Z VM-A MPS daemon started (CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log)
+2026-10-24T13:06:59Z VM-A started: HF_HOME=/dev/shm/hf CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+2026-10-24T13:07:39Z VM-A started: HF_HOME=/dev/shm/hf CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log vllm serve Qwen/Qwen2.5-7B-Instruct --host 127.0.0.1 --port 8003 --max-model-len 4096 --gpu-memory-utilization 0.55
+2026-10-24T13:13:57Z VM-A MPS daemon stopped
+2026-10-24T13:13:57Z VM-A started: HF_HOME=/dev/shm/hf vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+2026-10-24T13:19:42Z VM-A started: HF_HOME=/dev/shm/hf vllm serve Qwen/Qwen2.5-7B-Instruct --host 127.0.0.1 --port 8003 --max-model-len 4096 --gpu-memory-utilization 0.55
+2026-10-24T13:31:47Z VM-A MPS daemon started (CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log)
+2026-10-24T13:31:47Z VM-A started: HF_HOME=/dev/shm/hf CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25
+2026-10-24T13:32:27Z VM-A started: HF_HOME=/dev/shm/hf CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_pipe CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log vllm serve Qwen/Qwen2.5-7B-Instruct --host 127.0.0.1 --port 8003 --max-model-len 4096 --gpu-memory-utilization 0.55
+2026-10-24T13:36:29Z VM-A MPS daemon stopped
+2026-10-24T13:36:29Z VM-A started: HF_HOME=/dev/shm/hf vllm serve Qwen/Qwen2.5-1.5B-Instruct --host 127.0.0.1 --port 8001 --max-model-len 4096 --gpu-memory-utilization 0.25

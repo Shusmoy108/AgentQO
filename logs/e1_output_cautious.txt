@@ -1,0 +1,44 @@
+Sat Oct 24 13:56:24 UTC 2026
+workflow math_reasoning_s3_ver; output order: ['verifier', 'aggregator', 'step_3', 'step_2', 'step_1', 'planner']
+  plan all_small        upgrades none
+  plan all_large        upgrades all
+  plan ec_top2          upgrades ['planner', 'verifier']
+  plan ec_top3          upgrades ['planner', 'step_3', 'verifier']
+  plan output_top1      upgrades ['verifier']
+  plan output_top2      upgrades ['aggregator', 'verifier']
+  plan output_top3      upgrades ['aggregator', 'step_3', 'verifier']
+
+all_small          acc=0.470  cost_units=  6.0  large_calls=0.0
+all_large          acc=0.810  cost_units= 24.0  large_calls=6.0
+ec_top2            acc=0.760  cost_units= 12.0  large_calls=2.0
+ec_top3            acc=0.765  cost_units= 15.0  large_calls=3.0
+output_top1        acc=0.740  cost_units=  9.0  large_calls=1.0
+output_top2        acc=0.820  cost_units= 12.0  large_calls=2.0
+output_top3        acc=0.795  cost_units= 15.0  large_calls=3.0
+
+plan                  acc      gain vs small [95% CI]   %gain   %cost
+output_top2         0.820      +0.350 [+0.270,+0.430]    103%     33%
+all_large           0.810      +0.340 [+0.260,+0.415]    100%    100%
+output_top3         0.795      +0.325 [+0.250,+0.400]     96%     50%
+ec_top3             0.765      +0.295 [+0.220,+0.370]     87%     50%
+ec_top2             0.760      +0.290 [+0.210,+0.360]     85%     33%
+output_top1         0.740      +0.270 [+0.195,+0.340]     79%     17%
+all_small           0.470      +0.000 [+0.000,+0.000]      0%      0%
+
+ec_top2 - output_top2 = -0.060  95% CI [-0.115, -0.005]  (10 wins, 22 losses)
+
+ec_top3 - output_top3 = -0.030  95% CI [-0.080, +0.020]  (12 wins, 18 losses)
+
+HTTP calls: 378  cache hits: 8022  misses: 378
+
+verifier vs aggregator (per plan):  changed / fixed / broke / aggregator acc -> final acc
+  all_small          71/200   19   17   0.46 -> 0.47
+  all_large          72/200   45    9   0.63 -> 0.81
+  ec_top2           101/200   66    7   0.47 -> 0.76
+  ec_top3            91/200   56   13   0.55 -> 0.77
+  output_top1       100/200   64    8   0.46 -> 0.74
+  output_top2        77/200   51    7   0.60 -> 0.82
+  output_top3        72/200   43    7   0.61 -> 0.80
+Artifacts in data/vllm/e1_output_cautious
+E1_EXIT=0
+Sat Oct 24 14:03:12 UTC 2026

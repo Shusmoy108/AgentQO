@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-591",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 20",
+  "reference_key": "20",
+  "final_key_plus": "220",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: 2200",
+    "aggregator": "The Mastiff weighs 2200 pounds. #### 2200",
+    "verifier": "VERDICT: incorrect\n\nThe correct calculation should be:\n\n- First dog (Affenpinscher): 10 pounds\n- Second dog (Dachshund): \\( 10 \\times 2 = 20 \\) pounds\n- Third dog (Papillon): \\( 20 / 4 = 5 \\) pounds\n- Fourth dog (Mastiff): \\( 5 \\times 44 = 220 \\) pounds\n\nSo, the Mastiff weighs **220** pounds.",
+    "step_2": "RESULT: 5"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULT: 21",
+      "quality": 0.0,
+      "final_key": "2240",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 2376",
+        "aggregator": "The Mastiff weighs 2376 pounds. #### 2376",
+        "verifier": "VERDICT: incorrect\n\n#### 2240",
+        "step_2": "RESULT: 5.25"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "5",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "Weight of the Papillon = Weight of the Dachshund / 4  \n   = (2 * 10) / 4 = 5 lbs RESULT: 5 lbs",
+      "quality": 1.0,
+      "final_key": "220",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Weight of the Mastiff = 5 * 44 = 220 lbs RESULT: 220 lbs",
+        "aggregator": "The Mastiff weighs 220 pounds. #### 220",
+        "verifier": "VERDICT: incorrect\n\n#### 220",
+        "step_2": "Weight of the Mastiff = Weight of the Papillon * 44  \n= 5 * 44 = 220 lbs RESULT: 220 lbs"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

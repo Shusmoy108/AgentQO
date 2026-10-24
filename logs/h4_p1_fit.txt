@@ -1,0 +1,55 @@
+Sat Oct 24 10:21:02 UTC 2026
+cells: 432 total, 216 shared-GPU cells with L_iso, 162 used for fitting
+
+separate placement, p50 at concurrency 64 / p50 at concurrency 1 (median over repeats):
+  large  share=0.25  max_tokens=32   ratio=1.244
+  large  share=0.25  max_tokens=128  ratio=1.136
+  large  share=0.25  max_tokens=512  ratio=1.155
+  large  share=0.5   max_tokens=32   ratio=1.143
+  large  share=0.5   max_tokens=128  ratio=1.111
+  large  share=0.5   max_tokens=512  ratio=1.123
+  large  share=0.75  max_tokens=32   ratio=1.081
+  large  share=0.75  max_tokens=128  ratio=1.065
+  large  share=0.75  max_tokens=512  ratio=1.071
+  small  share=0.25  max_tokens=32   ratio=1.204
+  small  share=0.25  max_tokens=128  ratio=1.085
+  small  share=0.25  max_tokens=512  ratio=1.068
+  small  share=0.5   max_tokens=32   ratio=1.322
+  small  share=0.5   max_tokens=128  ratio=1.130
+  small  share=0.5   max_tokens=512  ratio=1.130
+  small  share=0.75  max_tokens=32   ratio=1.579
+  small  share=0.75  max_tokens=128  ratio=1.231
+  small  share=0.75  max_tokens=512  ratio=1.196
+
+fitted on all shared cells (concurrency > 1), 95% bootstrap CIs (1000 resamples of cells):
+  p50 B1          a=0.034 [0.028,0.041]
+  p50 B2          s=1.465 [1.344,1.591]
+  p50 AgentIconq  beta_large_to_small=2.398 [2.325,2.477]  beta_small_to_large=0.901 [0.877,0.923]
+  p95 B1          a=0.034 [0.029,0.041]
+  p95 B2          s=1.527 [1.411,1.651]
+  p95 AgentIconq  beta_large_to_small=2.392 [2.313,2.477]  beta_small_to_large=0.991 [0.958,1.028]
+
+Test A: fit small_share 0.25,0.75 -> predict 0.50   train cells 108, held-out cells 72
+  model        MAPE p50  MAPE p95  dir acc (c>=4)  dir acc (all)  params p50
+  B0              0.414     0.419        0.00 (9)       0.00 (12)  
+  B1              0.317     0.325        0.00 (9)       0.00 (12)  0.033
+  B2              0.222     0.218        0.00 (9)       0.00 (12)  1.464
+  AgentIconq      0.029     0.032        1.00 (9)       0.75 (12)  2.431 0.894
+
+Test B: fit max_tokens 32,128 -> predict 512   train cells 108, held-out cells 72
+  model        MAPE p50  MAPE p95  dir acc (c>=4)  dir acc (all)  params p50
+  B0              0.411     0.423        0.00 (9)       0.00 (12)  
+  B1              0.299     0.313        0.00 (9)       0.00 (12)  0.032
+  B2              0.236     0.217        0.00 (9)       0.00 (12)  1.435
+  AgentIconq      0.043     0.046        1.00 (9)       0.75 (12)  2.332 0.893
+
+Test C: fit repeat 0 -> predict repeats 1,2   train cells 54, held-out cells 144
+  model        MAPE p50  MAPE p95  dir acc (c>=4)  dir acc (all)  params p50
+  B0              0.406     0.418        0.00 (27)       0.00 (36)  
+  B1              0.312     0.330        0.00 (27)       0.00 (36)  0.034
+  B2              0.230     0.211        0.00 (27)       0.00 (36)  1.449
+  AgentIconq      0.043     0.051        1.00 (27)       0.75 (36)  2.377 0.891
+
+wrote data/h4/fit/cells.csv, fit_results.json, tests.csv, pred_vs_measured_test*.png
+H4_P1_FIT_EXIT=0
+Sat Oct 24 10:21:19 UTC 2026

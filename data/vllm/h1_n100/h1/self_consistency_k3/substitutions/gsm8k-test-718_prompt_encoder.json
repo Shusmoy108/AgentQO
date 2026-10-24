@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-718",
+  "node_id": "prompt_encoder",
+  "role": "planner",
+  "reference": "GIVEN: \n- 100 people apply for a job at Google.\n- 30% of applicants receive interviews.\n- 20% of those who receive interviews get a job offer.\n- A third of those who receive a job offers accept the position.",
+  "reference_key": null,
+  "final_key_plus": "2",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "sampler_2": "Step 1: Calculate the number of people receiving interviews.\n```markdown\nNumber receiving interviews = Total applicants * Interview percentage\n                           = 100 * 30%\n                           = 100 * 0.3\n                           = 30\n```\n\nStep 2: Calculate the number of people getting a job offer.\n```markdown\nNumber getting job offer = Number receiving interviews * Job offer percentage\n                         = 30 * 20%\n                         = 30 * 0.2\n                         = 6\n```\n\nStep 3: Calculate the number of people accepting the position.\n```markdown\nNumber accepting position = Number getting job offer / 3\n                          = 6 / 3\n                          = 2\n```\n\n#### 2",
+    "sampler_3": "30 * 100 = 300 interviewees\n\n300 * .20 = 60 people get a job offer\n\n60 / 3 = 20 people accept the position.\n\n#### 20",
+    "aggregator": "VOTE: {'2': 2, '20': 1} (2/3)\n#### 2",
+    "sampler_1": "Step 1: Calculate the number of people who receive interviews.\n\\[ \\text{Interviews} = 100 \\times 0.30 = 30 \\]\n\nStep 2: Calculate the number of people who receive job offers.\n\\[ \\text{Job Offers} = 30 \\times 0.20 = 6 \\]\n\nStep 3: Calculate the number of people who accept the positions.\n\\[ \\text{Acceptances} = 6 \\times \\frac{1}{3} = 2 \\]\n\n#### 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "GIVEN:\n- Shortest tree height = 6 feet\n- Second tree height = 6 feet + 5 feet = 11 feet\n- Combined height of the first two trees = 6 feet + 11 feet = 17 feet\n- Tallest tree height = Twice the combined height of the first two trees = 2 * 17 feet = 34 feet",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "sampler_2": "To solve the problem about the number of people who accept a job offer, let's break it down step by step:\n\n1. **Calculate the number of people getting interviews:**  \n   - Total applicants = 100  \n   - Percentage receiving interviews = 30%  \n   - Number of interviewees = \\( 100 \\times 30\\% = 100 \\times 0.30 = 30 \\)  \n\n2. **Calculate the number of interviewees getting job offers:**  \n   - Percentage getting job offers from interviewees = 20%  \n   - Number of job offer recipients = \\( 30 \\times 20\\% = 30 \\times 0.20 = 6 \\)\n\n3. **Calculate how many of these job offer recipients actually accept the position:**  \n   - Fraction accepting jobs offered to interviewees = \\( \\frac{1}{3} \\)  \n   - Number accepted into position = \\( 6 \\times \\frac{1}{3} = 2 \\)\n\nSo, 2 people accept their positions. \n\n### Output:\n**2**",
+        "sampler_3": "8",
+        "aggregator": "VOTE: {'2': 2, '8': 1} (2/3)\n#### 2",
+        "sampler_1": "Let's break it down step by step:\n\n**Step 1:** Determine how many out of 100 people receive interviews.\n\n- 30% of 100 people receive interviews: \\( 100 \\times \\frac{30}{100} = 30 \\) people\n\n**Step 2:** Calculate how many of these interviewed people get a job offer.\n\n- 20% of those who receive interviews get a job offer: \\( 30 \\times \\frac{20}{100} = 6 \\) people\n\n**Step 3:** Find out how many of those offered jobs actually accept the position.\n\n- A third of those who get a job offer accept the position: \\( 6 \\div 3 = 2 \\) people\n\nSo, **2** people accept the position."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "GIVEN: \n- 100 people apply for a job at Google.\n- 30% of applicants receive interviews.\n- 40% of those who receive interviews get a job offer.\n- A quarter of those who receive a job offer accept the position.",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "sampler_2": "Step 1: Calculate the number of people receiving interviews.\n```markdown\nNumber receiving interviews = Total applicants * Interview percentage\n                           = 100 * 30%\n                           = 100 * 0.3\n                           = 30\n```\n\nStep 2: Calculate the number of people getting a job offer.\n```markdown\nNumber getting job offer = Number receiving interviews * Job offer percentage\n                         = 30 * 20%\n                         = 30 * 0.2\n                         = 6\n```\n\nStep 3: Calculate the number of people accepting the position.\n```markdown\nNumber accepting position = Number getting job offer * Acceptance rate\n                          = 6 * (1/3)\n                          = 6 * 0.333...\n                          \u2248 2\n```\n\nThe answer is `<2>`.",
+        "sampler_3": "30 * 100 = 300 interviewees\n\n300 * .20 = 60 people get a job offer\n\n60 / 4 = 15 people accept the position.\n\n#### 15",
+        "aggregator": "VOTE: {'7.5': 1, '2': 1, '15': 1} (1/3)\n#### 2",
+        "sampler_1": "#### 7.5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

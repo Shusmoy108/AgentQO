@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-467",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 4 sheets per room * 2 = 8 pillow cases per room",
+  "reference_key": "8",
+  "final_key_plus": "1200",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "RESULT: 8 pillow cases per room * 2 = 16 towel pieces per room",
+    "verifier": "The proposed solution is correct. The calculation is:\n\n- Sheets per room = 2\n- Comforters per room = 1\n- Pillow cases per room = 2 * 2 = 4 (twice as many as sheets)\n- Towels per room = 4 * 2 = 8\n\nTotal items per room = 2 + 1 + 4 + 8 = 15\n\nFor 80 rooms: Total items = 15 * 80 = 1200\n\nFinal answer: 1200",
+    "step_3": "RESULT: (8 + 2*8 + 2*8 + 2*(8*2)) * 80 = 5760",
+    "aggregator": "#### 5760"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "8",
+      "reference_key": "8",
+      "key_differs": false,
+      "text": "RESULT: 9 sheets per room * 2 = 8 pillow cases per room",
+      "quality": 0.0,
+      "final_key": "1120",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "RESULT: 16 towel pieces per room",
+        "verifier": "The proposed solution states that there are 1456 pieces of laundry in 80 rooms.\n\nTo verify this, let's break down the calculation:\n\n- Each room has 2 sheets.\n- There are twice as many pillow cases as sheets, so each room has \\(2 \\times 2 = 4\\) pillow cases.\n- There are twice as many towel sets as pillow cases, so each room has \\(4 \\times 2 = 8\\) towels.\n\nNow, let's calculate the total number of items per room:\n- Sheets: 2\n- Pillow cases: 4\n- Towels: 8\n\nTotal items per room = 2 (sheets) + 4 (pillow cases) + 8 (towels) = 14 items.\n\nFor 80 rooms, the total number of items would be:\n\\[ 80 \\text{ rooms} \\times 14 \\text{ items/room} = 1120 \\text{ items}. \\]\n\nTherefore, the correct answer is 1120 pieces of laundry.",
+        "step_3": "RESULT: 80 rooms * (9 sheets + 8 pillow cases + 16 towels) = 1456 pieces of laundry",
+        "aggregator": "1456 pieces of laundry."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "8",
+      "key_differs": true,
+      "text": "RESULT: None",
+      "quality": 1.0,
+      "final_key": "1200",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "RESULT: 400",
+        "verifier": "The proposed solution is correct. The calculation is:\n\n- Sheets per room = 2\n- Comforters per room = 1\n- Pillow cases per room = 2 * (sheets) = 2 * 2 = 4\n- Towels per room = 2 * (pillow cases) = 2 * 4 = 8\n\nTotal items per room = 2 + 1 + 4 + 8 = 15\n\nFor 80 rooms: Total items = 15 * 80 = 1200\n\nFinal answer: 1200",
+        "step_3": "RESULT: 6400",
+        "aggregator": "#### 6400"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

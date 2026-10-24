@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-399",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "Alice is 7 years older than Beth, so her age is 25 + 7 = 32 years old.\nRESULT: 32",
+  "reference_key": "32",
+  "final_key_plus": "12",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "The difference between the ages of Alice and Erica is 32 - 30 = 2 years. RESULT: 2",
+    "aggregator": "The difference between the ages of Alice and Erica is 2 years. #### 2",
+    "verifier": "VERDICT: incorrect\n\nThe correct calculation should be:\n\n1. Erica's age = 30 years\n2. Beth's age = Erica's age + 5 = 30 + 5 = 35 years\n3. Alice's age = Beth's age + 7 = 35 + 7 = 42 years\n4. Difference between Alice's and Erica's ages = Alice's age - Erica's age = 42 - 30 = 12 years\n\nTherefore, the difference between the ages of Alice and Erica is 12 years.\n\n#### 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "33",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "Alice is 7 years older than Beth, so her age is 25 + 7 = 32 years old.\nRESULT: 33",
+      "quality": 1.0,
+      "final_key": "12",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Alice is 7 years older than Beth, who is 5 years older than Erica. If Erica is 30 years old:\n\nBeth's age = Erica's age + 5 = 30 + 5 = 35 years old.\n\nAlice's age = Beth's age + 7 = 35 + 7 = 42 years old.\n\nThe difference between Alice's and Erica's ages is:\n\nAlice's age - Erica's age = 42 - 30 = 12 years.",
+        "aggregator": "The difference between Alice's and Erica's ages is 12 years. #### 12",
+        "verifier": "VERDICT: incorrect\n\nThe correct calculation should be:\n\n- Erica is 30 years old.\n- Beth is 5 years older than Erica, so Beth is \\(30 + 5 = 35\\) years old.\n- Alice is 7 years older than Beth, so Alice is \\(35 + 7 = 42\\) years old.\n\nThe difference between Alice's and Erica's ages is \\(42 - 30 = 12\\) years."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "8",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "Carry out step 2 only.\n\nStep 2: Calculate Alice's age by adding 7 years to Beth's age (which is now 25).\nAlice's age = Beth's age + 7\n        = 25 + 7\n        = 32 years old\n\nNext step is to find the difference between Alice's and Erica's ages.\n\nRESULT: Difference between Alice\u2019s and Erica\u2019s ages is 8 years.",
+      "quality": 0.0,
+      "final_key": "-4",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 8 years.",
+        "aggregator": "The difference between the ages of Alice and Erica is 8 years.\n\n#### 8",
+        "verifier": "VERDICT: incorrect\n\n#### -4"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

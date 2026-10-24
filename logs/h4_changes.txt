@@ -1,0 +1,90 @@
+=== 2026-10-24T05:50:23Z  Step 0, branch h4-complete ===
+0edc3c4 placement_test: add H4 options (--small-share, --ignore-eos, --prefix-tokens, --repeat-id, --pause, --prefix-metrics) scripts/placement_test.py
+- --small-share F: n_small = round(requests*F); order shuffled by random.Random(seed*1000+concurrency).
+  Default (flag absent) keeps the original strict alternation, so C3-C6 command lines behave as before.
+- --ignore-eos (default on, --no-ignore-eos to disable): sends ignore_eos=true; after each level the run
+  stops with "FAIL: ..." if any request has completion_tokens != max_tokens. (Changes the request body of
+  default runs; C3-C6 already got exactly 128 tokens every time, so outputs are unaffected.)
+- --prefix-tokens N: fixed handbook text grown sentence by sentence until /tokenize on the small server
+  reports >= N tokens; the measured count is recorded (e.g. 206 for N=200). --shared-prefix unchanged.
+- --repeat-id, --pause (default 10 s between levels), --prefix-metrics (vLLM /metrics prefix_cache
+  queries/hits deltas per level and model -> placement_{tag}_prefix_cache.json).
+- New per-request CSV always written: placement_{tag}_requests.csv. Extended runs (any of the three
+  new tag options) get tag <config>_s{share}_t{max_tokens}_p{prefix}_r{repeat}_c{levels}.
+- Smoke tests: logs/h4_smoke_step0.txt (extended options exit 0; default options exit 0, same table
+  and summary CSV columns as data/placement/placement_split.csv).
+- Not tested: the --ignore-eos failure path (could not make vLLM stop early with ignore_eos on).
+=== 2026-10-24T05:52:18Z  P1 analysis definitions, fixed BEFORE any shared-GPU data exists or any fit is run ===
+- L_iso for a shared cell (model m, small_share, max_tokens, concurrency) = median over repeats of the
+  separate-placement p50 (p95 for the p95 fits) in the same (m, small_share, max_tokens, concurrency) cell.
+- "total requests in flight" in B1 = the concurrency level of the cell.
+- Fits: scipy least_squares on log latency, all parameters bounded >= 0; bootstrap CIs: 1000 resamples
+  of fit cells, numpy default_rng(0). Concurrency-1 cells are excluded from fitting, kept in MAPE.
+- MAPE: mean |pred - measured| / measured over every held-out (cell, model), concurrency 1 included.
+- Direction accuracy (judged number): over held-out (small_share, max_tokens, concurrency) conditions with
+  concurrency >= 4, measured slowdown = shared p50 / L_iso averaged over the held-out repeats; a tie in
+  the predicted slowdowns counts as wrong. Reason: at concurrency 1 there is no overlap, so every model
+  predicts identical slowdowns for both models and the criterion would be decided by this evaluation
+  choice, not by the data. The all-conditions number (concurrency 1 included) is reported as well.
+=== 2026-10-24T05:56:29Z  P2/P3/P4 definitions, fixed BEFORE those experiments run ===
+- P2 adds a separate-placement baseline (config "separate", small_share 0.5, max_tokens 128, concurrency
+  1,4,16,32, 3 repeats, data/h4/p2/) because the grid has no concurrency-32 level. Slowdown(model, conc,
+  repeat) = shared p50 in that repeat / median over the 3 baseline repeats of the separate p50 (same model,
+  conc). Reported as mean and range over the 3 repeats. Order: separate baseline, then shared without MPS
+  (config shared_nomps), then shared with MPS (config shared_mps), each 3 repeats (seeds 0,1,2).
+- P2 judging: "With MPS ... below 2.0x" holds if the mean small slowdown is < 2.0 at each of concurrency
+  4, 16 and 32. "Without MPS ... within 10%" holds if the no-MPS mean slowdown, averaged over concurrency
+  4, 16, 32, is within 10% of 3.07 (small) and of 1.75 (large).
+- P3 judging, separate placement: holds if, for both models at concurrency 16 and at 32, the mean over
+  repeats of p50 with prefix 2000 is <= 0.8 x the same with prefix 0, AND the prefix-cache hit rate
+  (sum of hit tokens / sum of query tokens over all prefix-2000 levels at concurrency 16 and 32, per
+  server) is > 0.80 for both servers.
+- P3 judging, shared placement: small slowdown(prefix) = shared p50 / separate p50 (means over repeats,
+  same prefix, same concurrency); holds if the mean over concurrency 4, 16, 32 of slowdown(2000) is
+  <= 0.9 x the same mean of slowdown(0).
+- P3 settings: --prefix-tokens 2000 (real count measured and recorded), --max-tokens 16, --small-share 0.5,
+  concurrency 1,4,16,32, 3 repeats, --prefix-metrics, data/h4/p3/. Prefix caching: enable_prefix_caching=True
+  in both servers startup logs (vLLM V1 default; not passed explicitly).
+- P4 token lengths for the simulation: completion tokens per node from the generation cache replay of
+  the same 64 eval problems under ec_top2 (C9 generations; read only, no timing taken from it).
+=== 2026-10-24T05:57:51Z  P4 measurement definitions, fixed BEFORE P4 runs ===
+- Per run (placement, K, repeat): p50/p95 of the 64 per-problem end-to-end latencies; problems per
+  GPU-hour = 64 / (last end - first start, in hours) / GPUs (S=2, C=1, CM=1); accuracy = mean correct.
+  Reported numbers are means over the 2 repeats.
+- Goal check uses K=16: placement P meets it if mean p95(P) <= 1.5 x mean p95(S). The "actual best" is
+  the 1-GPU placement (C or CM) that meets it with the lower p95, else S. A recommendation is "correct"
+  if it equals the actual best. Prediction error = predicted p95 / mean measured p95 - 1 at K=16.
+2026-10-24T06:13:28Z P1a time estimate from separate repeat 0 (1275 s): separate total ~64 min, shared ~93 min, grid ~2.6 h < 4 h -> max_tokens 512 kept for all repeats
+=== 2026-10-24T12:31:01Z  BUG in my P2 chain script (not in vLLM/MPS); P2 rerun from scratch ===
+P2 attempt 1 stopped at "MPS gpu check failed" (12:15:46 UTC): under MPS, nvidia-smi --query-compute-apps
+also lists nvidia-cuda-mps-server (58 MiB), so the check counted 3 processes and expected 2. Both vLLM
+servers had in fact started under MPS (shown as M+C) and were healthy. No MPS measurement was taken.
+Fix: gpu_check now counts only VLLM processes (in /tmp/p2.sh and /tmp/master.sh).
+Attempt-1 data (separate baseline and shared_nomps, 3 repeats each, complete) moved unchanged to
+data/h4/p2_failed_attempt1/ and kept; P2 is rerun from scratch into data/h4/p2/, with a new
+preregistration entry (same text) appended before it starts. Log of attempt 1: logs/h4_p2_mps_attempt1.txt.
+=== 2026-10-24T12:32:04Z  P2 attempt 2 aborted at setup (no measurement taken) ===
+Restoring the pre-P2 state, serve.sh mps_off reported "MPS STILL RUNNING" because it checked 3 s after
+"quit" with pgrep -f; /tmp/mps_log/control.log shows the daemon exited with status 0 at 12:31:15.
+My restore command did not stop on that error, so p2.sh started without the 8001 server and failed its
+first GPU check (12:31:23, "setup failed", H4_P2_EXIT=1) before any request was sent; it had already
+appended the P2 preregistration text a second time. master.sh then stopped ("P2 failed; stopping").
+Fix: mps_off now waits up to 30 s for the exact processes nvidia-cuda-mps-control/-server to exit.
+Logs kept as logs/h4_p2_mps_attempt2.txt and logs/h4_master_attempt2.txt. P2 attempt 3 follows, with
+its own preregistration entry (same text).
+2026-10-24T12:33:21Z serve.sh mps_off: pgrep -x cannot match names >15 chars (Linux comm limit), so the 12:32 check could not see a running daemon; MPS was confirmed off by pgrep -a (status: no MPS daemon). Changed to pgrep -f "^nvidia-cuda-mps-control" / "^...-server" before P2 attempt 3 reaches its MPS phase.
+=== 2026-10-24T12:54:31Z  BUG in my P2 chain script; P2 attempt 3 stopped before any MPS measurement ===
+After both vLLM servers started under MPS (12:45:37, nvidia-smi shows both as M+C), the line
+  nvidia-smi | grep -q "M+C" || fail "processes not shown as M+C"
+failed: with set -o pipefail, grep -q exits at the first match, nvidia-smi gets SIGPIPE (status 141) and the
+pipeline counts as failed. Fix: all such checks now use [ "$(nvidia-smi | grep -c "M+C")" -ge 2 ] (or = 0),
+in /tmp/p2.sh and /tmp/master.sh; no other "| grep -q" remains in the chain scripts.
+Attempt 3 had complete separate-baseline and shared_nomps data (3 repeats each); moved unchanged to
+data/h4/p2_failed_attempt3/, log to logs/h4_p2_mps_attempt3.txt, logs/h4_master_attempt3.txt.
+P2 rerun from scratch (attempt 4) with a new preregistration entry (same text).
+=== 2026-10-24T13:45:34Z  BUG in h4_fit.py p3-report (analysis only, no measurement affected) ===
+The P3 hit-rate lookup globbed files tagged p<measured count> (p2007), but files are tagged with the
+requested count (p2000), so hit_rate_c16_32 came out empty ({}). Fix: read every separate *_prefix_cache.json
+and select on the measured prefix_tokens stored inside. Original report kept as logs/h4_p3_report.txt and
+data/h4/p3/p3_report_before_fix.json; corrected output in logs/h4_p3_report_fixed.txt and p3_report.json.
+The latency part of the verdict is unchanged by this fix.

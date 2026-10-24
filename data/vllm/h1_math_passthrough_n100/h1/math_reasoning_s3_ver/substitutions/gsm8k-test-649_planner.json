@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-649",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of likes three weeks after the initial post.\n2. Determine the total number of likes before the recent increase.\n3. Add the recent 20000 likes to the total from step 2.",
+  "reference_key": null,
+  "final_key_plus": "180000",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "To calculate the number of likes three weeks after the initial post:\n\nInitial number of likes = 2000\n\nNumber of likes three weeks later = Initial number of likes * 70\n= 2000 * 70\n= 140,000\n\nRESULT: 140,000",
+    "step_3": "RESULT: 180,000",
+    "aggregator": "#### 180,000",
+    "verifier": "VERDICT: passthrough\n#### 180000",
+    "step_2": "To determine the total number of likes before the recent increase:\n\nTotal likes before recent increase = Number of likes three weeks later + Recent increase\n= 140,000 + 20,000\n= 160,000\n\nRESULT: 160,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: \n1. Calculate the number of English books by taking half of the total number of books.\n2. Calculate the number of German books by finding 10% of the total number of books.\n3. Subtract the sum of English and German books from the total number of books to find the number of Spanish books.",
+      "quality": 0.0,
+      "final_key": "140000",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "To calculate the number of English books:\n\n- Total number of books = 400 (as given in the problem statement)\n\nStep 1: Calculate the number of English books.\n\nEnglish books = Total number of books / 2\n\nRESULT: 200",
+        "step_3": "To calculate the number of Spanish books:\n\nTotal number of books - (Number of English books + Number of German books) = Number of Spanish books\n\nRESULT: 100",
+        "aggregator": "The total number of Instagram likes is 140000.\n\n#### 140000",
+        "verifier": "VERDICT: passthrough\n#### 140000",
+        "step_2": "RESULT: 100"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the number of likes three weeks after the initial post.\n2. Determine the total number of likes before the recent increase.\n3. Subtract the recent 20000 likes from the total from step 2.",
+      "quality": 0.0,
+      "final_key": "140000",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "To calculate the number of likes three weeks after the initial post:\n\nInitial number of likes = 2000\n\nNumber of likes three weeks later = Initial number of likes * 70\n= 2000 * 70\n= 140,000\n\nRESULT: 140,000",
+        "step_3": "To find the total number of likes now:\n\nTotal likes now = Total likes before recent increase - Recent increase\n= 160,000 - 20,000\n= 140,000\n\nRESULT: 140,000",
+        "aggregator": "#### 140,000",
+        "verifier": "VERDICT: passthrough\n#### 140000",
+        "step_2": "To determine the total number of likes before the recent increase:\n\nTotal likes before recent increase = Number of likes three weeks later + Recent increase\n= 140,000 + 20,000\n= 160,000\n\nRESULT: 160,000"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

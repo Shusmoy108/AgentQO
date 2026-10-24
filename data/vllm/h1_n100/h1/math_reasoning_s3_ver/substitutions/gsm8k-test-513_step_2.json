@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "RESULT: $400",
+  "reference_key": "400",
+  "final_key_plus": "150",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "Calculation for step 3:\nRemaining money after buying clothes = $500 - $100 = $400\n\nRESULT: $400\nStep 4:\nAmount spent on CDs = 25/100 * $400 = $100\n\nRESULT: $300\nFinal result:\nMoney left after buying clothes and CDs = Remaining money after buying clothes - Amount spent on CDs\n= $400 - $100 = $300\n\nRESULT: $300",
+    "aggregator": "Julie has $300 left. #### 300",
+    "verifier": "VERDICT: incorrect\n\n#### 150"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "401",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "RESULT: 401",
+      "quality": 0.0,
+      "final_key": "375",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "To calculate the amount spent on CDs:\n\nCalculation for step 3:\nAmount spent on CDs = 25/100 * (Total money - Amount spent on clothes)\n= 25/100 * ($500 - $100)\n= 25/100 * $400\n= 0.25 * $400\n= $100\n\nRESULT: $100",
+        "aggregator": "Julie has $100 left after spending on clothes and CDs. #### 100",
+        "verifier": "VERDICT: incorrect\n\n#### 375"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "300",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "Calculation for carry out step 2:\nNew remaining money after clothes = $500 - ($100)\nNew remaining money after clothes (carrying forward): $400 - ($100)\n\nRESULT: $300",
+      "quality": 0.0,
+      "final_key": "375",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: $300 - ($75) = $225",
+        "aggregator": "Julie has $225 left. #### 225",
+        "verifier": "VERDICT: incorrect\n\n#### 375"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

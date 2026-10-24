@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate 20% of $500 spent on clothes.\n2. Subtract the amount spent on clothes from $500 to find the remaining money.\n3. Calculate 25% of the remaining money spent on CDs.",
+  "reference_key": null,
+  "final_key_plus": "400",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: $400 - (400 \\times \\frac{25}{100}) = $400 - $100 = $300\n\nJulie has $300 left after spending on clothes and CDs.",
+    "verifier": "VERDICT: incorrect\n\n#### 400",
+    "step_1": "Julie spent 20% of $500 on clothes, which is calculated as follows:\n\n\\( \\text{Amount spent on clothes} = 500 \\times \\frac{20}{100} = 500 \\times 0.20 = \\$100 \\)\n\nRESULT: $100",
+    "step_2": "RESULT: $400",
+    "aggregator": "#### 300"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: \n1. Calculate the total amount of sugar needed for 8 batches of suckers by multiplying the amount of sugar per batch by 8.\n2. Add the result from step 1 to the amount of sugar needed for one batch of fudge.\n3. The final sum will be the total amount of sugar required for both tasks.",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 2.25 cups",
+        "verifier": "VERDICT: correct\n#### 300",
+        "step_1": "To calculate the total amount of sugar needed for 8 batches of suckers, we multiply the amount of sugar per batch by 8.\n\nAmount of sugar per batch = 1/4 cup\nTotal amount of sugar for 8 batches = (1/4) * 8 = 2 cups\n\nRESULT: 2 cups",
+        "step_2": "To add the result from step 1 to the amount of sugar needed for one batch of fudge:\n\nStep 1: Total amount of sugar for 8 batches of suckers = 2 cups\n\nStep 2: Amount of sugar needed for one batch of fudge = 1/4 cup\n\nResult: \n\nRESULT: 2 + 1/4 = 2.25 cups",
+        "aggregator": "Julie had $500 initially. After spending 20% on clothes, she has:\n\n$500 - (20/100 * $500) = $400\n\nThen, she spends 25% of the remaining $400 on CDs:\n\n$400 - (25/100 * $400) = $300\n\nSo, Julie has $300 left.\n\n#### 300"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate 20% of $500 spent on clothes.\n2. Subtract the amount spent on clothes from $500 to find the remaining money.\n3. Calculate 25% of the remaining money spent on DVDs.",
+      "quality": 0.0,
+      "final_key": "400",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: $400 - (400 \\times \\frac{25}{100}) = $400 - $100 = $300\n\nJulie has $300 left after spending on clothes and CDs.",
+        "verifier": "VERDICT: incorrect\n\n#### 400",
+        "step_1": "Julie spent 20% of $500 on clothes, which is calculated as follows:\n\n\\( \\text{Amount spent on clothes} = 500 \\times \\frac{20}{100} = 500 \\times 0.20 = \\$100 \\)\n\nRESULT: $100",
+        "step_2": "RESULT: $400",
+        "aggregator": "#### 300"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

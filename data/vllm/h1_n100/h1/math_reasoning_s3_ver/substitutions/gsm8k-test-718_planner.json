@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-718",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of people who receive interviews: 100 * 30%\n2. Calculate the number of people who receive a job offer: (number from step 1) * 20%\n3. Calculate the number of people who accept the position: (number from step 2) / 3",
+  "reference_key": null,
+  "final_key_plus": "4",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: 2 people accept the position.",
+    "verifier": "VERDICT: incorrect\n\n#### 4",
+    "step_1": "Calculation:\n100 people * 30% = 30 people receive interviews RESULT: 30",
+    "step_2": "RESULT: 6 people receive a job offer.",
+    "aggregator": "#### 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: \n1. Calculate the height of the second tree by adding 5 feet to the height of the shortest tree.\n2. Sum the heights of the first and second trees.\n3. Multiply the sum from step 2 by 2 to find the height of the tallest tree.",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "To find the height of the tallest tree, we multiply the sum of the heights of the first and second trees by 2.\n\nSUM of heights of the first and second trees = 18 feet\n\nRESULT: 36 feet",
+        "verifier": "VERDICT: correct\n#### 2.",
+        "step_1": "To calculate the height of the second tree:\n\nHeight of the shortest tree = 4 feet\n\nHeight of the second tree = Height of the shortest tree + 5 feet\nHeight of the second tree = 4 feet + 5 feet\nHeight of the second tree = 9 feet\n\nRESULT: 9 feet",
+        "step_2": "SUM of heights of the first and second trees = Height of the first tree + Height of the second tree\nRESULT: 18 feet",
+        "aggregator": "To find the number of people who accept the position:\n\n- First, calculate the number of people receiving interviews: \\(100 \\times 0.30 = 30\\)\n- Then, calculate the number of people receiving a job offer: \\(30 \\times 0.20 = 6\\)\n- Finally, calculate the number of people accepting the position: \\(6 \\div 3 = 2\\)\n\nThe final answer is: #### 2."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the number of people who receive interviews: 100 * 30%\n2. Calculate the number of people who receive a job offer: (number from step 1) * 20%\n3. Calculate the number of people who accept the position: (number from step 2) / 4",
+      "quality": 0.0,
+      "final_key": "0.5",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 1.5 people accept the position.",
+        "verifier": "VERDICT: incorrect\n\n#### 0.5",
+        "step_1": "Calculation:\n100 people * 30% = 30 people receive interviews RESULT: 30",
+        "step_2": "RESULT: 6 people receive a job offer.",
+        "aggregator": "#### 1.5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

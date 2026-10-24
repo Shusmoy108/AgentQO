@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 100",
+  "reference_key": "100",
+  "final_key_plus": "100",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "aggregator": "Julie has $100 left after spending on clothes and CDs.\n\n#### 100",
+    "verifier": "VERDICT: passthrough\n#### 100",
+    "step_2": "RESULT: 400",
+    "step_3": "To calculate the amount spent on CDs:\n\nAmount spent on CDs = Remaining money * Percentage spent on CDs\n\n= (Remaining money) * (Percentage spent on CDs / 100)\n\n= 400 * (25 / 100)\n\n= 400 * 0.25\n\n= 100\n\nRESULT: 100"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "101",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "RESULT: 101",
+      "quality": 0.0,
+      "final_key": "299",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "Julie has $399 - $99.75 = $399 - $100 = $299 left.\n\n#### 299",
+        "verifier": "VERDICT: passthrough\n#### 299",
+        "step_2": "RESULT: 399",
+        "step_3": "To calculate the amount spent on CDs:\n\nStep 3 Calculation:\nAmount spent on CDs = Remaining money after buying clothes \u00d7 Percentage spent on CDs\n= $399 \u00d7 25%\n= $399 \u00d7 0.25\n= $99.75\n\nRESULT: 99.75"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "400",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "To calculate 20% of $500:\n\n\\( 500 \\times \\frac{20}{100} = 500 \\times 0.20 = \\$100 \\)\n\nSo Julie spent $100 on clothes.\n\nRESULT: $400",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "Julie has $300 left. #### 300",
+        "verifier": "VERDICT: passthrough\n#### 300",
+        "step_2": "To find out how much money remains after buying clothes, we subtract the amount spent on clothes from the initial amount:\n\n\\( 500 - 100 = \\$400 \\)\n\nRESULT: $400",
+        "step_3": "To find out how much money Julie has left after buying CDs, we need to calculate 25% of the remaining $400:\n\n\\( 400 \\times \\frac{25}{100} = 400 \\times 0.25 = \\$100 \\)\n\nRESULT: $300"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

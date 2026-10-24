@@ -1,0 +1,42 @@
+workflow math_reasoning_s3_ver; output order: ['verifier', 'aggregator', 'step_3', 'step_2', 'step_1', 'planner']
+  plan all_small        upgrades none
+  plan all_large        upgrades all
+  plan ec_top2          upgrades ['planner', 'verifier']
+  plan ec_top3          upgrades ['planner', 'step_3', 'verifier']
+  plan output_top1      upgrades ['verifier']
+  plan output_top2      upgrades ['aggregator', 'verifier']
+  plan output_top3      upgrades ['aggregator', 'step_3', 'verifier']
+
+all_small          acc=0.667  cost_units=  6.0  large_calls=0.0
+all_large          acc=1.000  cost_units= 24.0  large_calls=6.0
+ec_top2            acc=1.000  cost_units= 12.0  large_calls=2.0
+ec_top3            acc=1.000  cost_units= 15.0  large_calls=3.0
+output_top1        acc=0.333  cost_units=  9.0  large_calls=1.0
+output_top2        acc=0.667  cost_units= 12.0  large_calls=2.0
+output_top3        acc=0.667  cost_units= 15.0  large_calls=3.0
+
+plan                  acc      gain vs small [95% CI]   %gain   %cost
+all_large           1.000      +0.333 [+0.000,+1.000]    100%    100%
+ec_top2             1.000      +0.333 [+0.000,+1.000]    100%     33%
+ec_top3             1.000      +0.333 [+0.000,+1.000]    100%     50%
+all_small           0.667      +0.000 [+0.000,+0.000]      0%      0%
+output_top2         0.667      +0.000 [+0.000,+0.000]      0%     33%
+output_top3         0.667      +0.000 [+0.000,+0.000]      0%     50%
+output_top1         0.333      -0.333 [-1.000,+0.000]   -100%     17%
+
+ec_top2 - output_top2 = +0.333  95% CI [+0.000, +1.000]  (1 wins, 0 losses)
+
+ec_top3 - output_top3 = +0.333  95% CI [+0.000, +1.000]  (1 wins, 0 losses)
+
+HTTP calls: 5  cache hits: 121  misses: 5
+
+verifier vs aggregator (per plan):  changed / fixed / broke / aggregator acc -> final acc
+  all_small           1/3    1    0   0.33 -> 0.67
+  all_large           1/3    1    0   0.67 -> 1.00
+  ec_top2             2/3    2    0   0.33 -> 1.00
+  ec_top3             1/3    1    0   0.67 -> 1.00
+  output_top1         2/3    0    0   0.33 -> 0.33
+  output_top2         1/3    0    0   0.67 -> 0.67
+  output_top3         2/3    1    0   0.33 -> 0.67
+Artifacts in /tmp/smoke_e1
+SMOKE_E1_EXIT=0

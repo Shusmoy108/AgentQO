@@ -1,0 +1,57 @@
+{
+  "task_id": "gsm8k-test-408",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of words in the book.\n2. Determine how long it will take Toby to read the book.\n3. Compute the total time including travel and compare it to the time until the airport to find out how many minutes early Toby will be.",
+  "reference_key": null,
+  "final_key_plus": "15",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_2": "To calculate how many minutes early Toby will be:\n\nEarliness = Plan departure time - Actual arrival time\n          = 60 minutes - 40 minutes\n          = 20 minutes\n\nRESULT: 20",
+    "step_1": "To calculate the total number of words in the book, we multiply the number of pages by the average number of words per page:\n\nTotal words = Number of pages \u00d7 Words per page\n            = 45 pages \u00d7 200 words/page\n            = 9000 words\n\nNow, let's determine how long it will take Toby to read this amount of text:\n\nTime to read = Total words \u00f7 Reading speed\n             = 9000 words \u00f7 300 words/minute\n             = 30 minutes\n\nToby needs 30 minutes to read the book. Since he leaves after finishing the book, we add the time it takes him to get to the airport (10 minutes) to his reading time:\n\nTotal time = Time to read + Travel time\n           = 30 minutes + 10 minutes\n           = 40 minutes\n\nHe should arrive at the airport in 40 minutes. If he plans to leave in 60 minutes, he will be:\n\nEarly by = 60 minutes - 40 minutes\n         = 20 minutes\n\nRESULT: 20",
+    "aggregator": "Toby will be 20 minutes early. #### 20",
+    "verifier": "The proposed solution states that Toby will be 20 minutes early. Let me recompute it:\n\nToby reads at a rate of 300 words per minute, so for 45 pages (which is 9750 words), it would take him \\( \\frac{9750}{300} = 32.5 \\) minutes.\n\nHe needs to finish before leaving in 60 minutes, but since he already spent 10 minutes getting to the airport, he has \\( 60 - 10 = 50 \\) minutes left after reaching the airport.\n\nSo, the time he spends reading is \\( 50 - 32.5 = 17.5 \\) minutes.\n\nSince he was supposed to spend 32.5 minutes reading, he will be \\( 32.5 - 17.5 = 15 \\) minutes late instead of being on time.\n\nTherefore, Toby will actually be 15 minutes late, not 20 minutes early.\n\nFinal answer: 15",
+    "step_3": "Earliness = 60 minutes - 40 minutes\n         = 20 minutes\n\nRESULT: 20"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: \n1. Calculate the number of management employees by finding 20% of the total number of employees (50).\n2. Determine the number of management employees who oversee the entire company by calculating 30% of the management employees found in step 1.\n3. The result from step 2 is the final answer for the number of employees who oversee the company.",
+      "quality": 0.0,
+      "final_key": "23",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "To determine the number of management employees who oversee the entire company, we need to find 30% of the management employees calculated in step 1.\n\n\\[ \\text{Management Employees Overseeing the Company} = \\text{Management Employees} \\times \\frac{\\text{Percentage}}{100} \\]\n\nGiven that the management employees are 10 and the percentage is 30%, we have:\n\n\\[ \\text{Management Employees Overseeing the Company} = 10 \\times \\frac{30}{100} = 10 \\times 0.3 = 3 \\]\n\nRESULT: 3",
+        "step_1": "To calculate 20% of the total number of employees, we use the formula:\n\n\\[ \\text{Number of Management Employees} = \\text{Total Number of Employees} \\times \\frac{\\text{Percentage}}{100} \\]\n\nGiven that the total number of employees is 50 and the percentage is 20%, we have:\n\n\\[ \\text{Number of Management Employees} = 50 \\times \\frac{20}{100} = 50 \\times 0.2 = 10 \\]\n\nRESULT: 10",
+        "aggregator": "Toby will be 3 minutes early. #### 3",
+        "verifier": "The proposed solution states that Toby will be 3 minutes early. Let me recompute it:\n\nToby reads at a rate of 300 words per minute, so for 45 pages (which is 9750 words), it would take him \\( \\frac{9750}{300} = 32.5 \\) minutes.\n\nHe needs to finish before leaving in 60 minutes, but since he leaves after finishing, we subtract his reading time from the total time needed to reach the airport plus his travel time. The total time required is 60 + 10 = 70 minutes.\n\nSo, the actual time available for reading is \\( 70 - 32.5 = 37.5 \\) minutes.\n\nSince he can't read half a minute, we round down to 37 minutes.\n\nTherefore, he will be \\( 60 - 37 = 23 \\) minutes late.\n\nFinal answer: 23",
+        "step_3": "RESULT: 3"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of words in the book.\n2. Determine how long it will take Toby to read the book.\n3. Compute the total time including travel and compare it to the time until the airport to determine if Toby is late.",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "To determine how many minutes early Toby will be, we subtract the actual time needed to finish the book from the time he has available before leaving:\n\nAvailable time - Time to read = Early arrival time\n                             - 30 minutes = 0 minutes\n\nRESULT: 0",
+        "step_1": "To calculate the total number of words in the book, we multiply the number of pages by the average number of words per page:\n\nTotal words = Number of pages \u00d7 Words per page\n            = 45 pages \u00d7 200 words/page\n            = 9000 words\n\nNow, let's determine how long it will take Toby to read this amount of text:\n\nTime to read = Total words / Reading speed\n             = 9000 words / 300 words/minute\n             = 30 minutes\n\nToby needs 30 minutes to read the entire book. Since he leaves his house after finishing the book, he won't need any additional time for travel or waiting at the airport.\n\nRESULT: 30 minutes early",
+        "aggregator": "Toby will finish the book in \\( \\frac{45 \\text{ pages} \\times 200 \\text{ words/page}}{300 \\text{ words/minute}} = 30 \\text{ minutes} \\).\n\nHe needs to travel for 10 minutes, so he will take \\( 30 + 10 = 40 \\) minutes to complete his task.\n\nSince he leaves in 60 minutes, he will be \\( 60 - 40 = 20 \\) minutes early.",
+        "verifier": "The proposed solution is correct. Toby will indeed be 20 minutes early because he finishes the book in 40 minutes (30 minutes to read it plus 10 minutes to get to the airport), which is 20 minutes before he needs to leave. Therefore, the final answer is:\n\nFinal answer: 20",
+        "step_3": "RESULT: 0"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

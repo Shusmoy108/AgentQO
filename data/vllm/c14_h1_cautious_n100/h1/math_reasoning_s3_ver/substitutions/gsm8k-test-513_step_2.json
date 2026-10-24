@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "RESULT: $400",
+  "reference_key": "400",
+  "final_key_plus": "300",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "aggregator": "Julie has $300 left. #### 300",
+    "verifier": "The proposed solution is correct. Julie initially had $500. After spending 20% on clothes, she had:\n\n\\[ 500 - (500 \\times 0.20) = 500 - 100 = 400 \\]\n\nThen, she spent 25% of the remaining $400 on CDs:\n\n\\[ 400 - (400 \\times 0.25) = 400 - 100 = 300 \\]\n\nSo, Julie has $300 left.\n\nFinal answer: 300",
+    "step_3": "Calculation for step 3:\nRemaining money after buying clothes = $500 - $100 = $400\n\nRESULT: $400\nStep 4:\nAmount spent on CDs = 25/100 * $400 = $100\n\nRESULT: $300\nFinal result:\nMoney left after buying clothes and CDs = Remaining money after buying clothes - Amount spent on CDs\n= $400 - $100 = $300\n\nRESULT: $300"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "401",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "RESULT: 401",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "Julie has $100 left after spending on clothes and CDs. #### 100",
+        "verifier": "The proposed solution is correct. Julie started with $500 and spent 20% on clothes, which is $100 (500 * 0.20). After that, she had $400 left. Then, she spent 25% of the remaining $400 on CDs, which is $100 (400 * 0.25). Therefore, the amount of money Julie had left is indeed $100.\n\nFinal answer: 100",
+        "step_3": "To calculate the amount spent on CDs:\n\nCalculation for step 3:\nAmount spent on CDs = 25/100 * (Total money - Amount spent on clothes)\n= 25/100 * ($500 - $100)\n= 25/100 * $400\n= 0.25 * $400\n= $100\n\nRESULT: $100"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "300",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "Calculation for carry out step 2:\nNew remaining money after clothes = $500 - ($100)\nNew remaining money after clothes (carrying forward): $400 - ($100)\n\nRESULT: $300",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "Julie has $225 left. #### 225",
+        "verifier": "The proposed solution is correct. Julie started with $500 and spent 20% on clothes, which is $100 (500 * 0.20). After spending $100, she had $400 left. Then, she spent 25% of the remaining $400 on CDs, which is $100 ($400 * 0.25). Therefore, after buying the CDs, she had $300 left.\n\nFinal answer: 300",
+        "step_3": "RESULT: $300 - ($75) = $225"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

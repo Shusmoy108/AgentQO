@@ -1,0 +1,51 @@
+{
+  "task_id": "gsm8k-test-1049",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "To calculate the number of German books:\n\nNumber of German books = Total number of books * 10%\nNumber of German books = 50 * 0.10\nNumber of German books = 5\n\nRESULT: 5",
+  "reference_key": "5",
+  "final_key_plus": "20",
+  "q_plus": 1.0,
+  "q_minus": 0.5,
+  "consequence": 0.5,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "aggregator": "There are 20 Spanish books. #### 20",
+    "verifier": "There are 20 Spanish books.\n\nThe proposed solution is correct. The calculation is straightforward:\n\n- Total books = 50\n- Books in English = 50 / 2 = 25\n- Books in German = 50 * 10% = 5\n- Remaining books (Spanish) = 50 - 25 - 5 = 20\n\nFinal answer: 20",
+    "step_3": "To find the number of Spanish books:\n\nSpanish books = Total number of books - (English books + German books)\nSpanish books = 50 - (25 + 5)\nSpanish books = 50 - 30\nSpanish books = 20\n\nRESULT: 20"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "To calculate the number of German books:\n\nNumber of German books = Total number of books * 10%\nNumber of German books = 50 * 0.10\nNumber of German books = 5\n\nRESULT: 6",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "There are 20 Spanish books. #### 20",
+        "verifier": "There are 20 Spanish books.\n\nThe proposed solution is correct. The calculation is straightforward:\n\n- Total books = 50\n- Books in English = 50 / 2 = 25\n- Books in German = 50 * 10% = 5\n- Remaining books (Spanish) = 50 - 25 - 5 = 20\n\nFinal answer: 20",
+        "step_3": "To find the number of Spanish books:\n\nSpanish books = Total number of books - (English books + German books)\nSpanish books = 50 - (25 + 5)\nSpanish books = 50 - 30\nSpanish books = 20\n\nRESULT: 20"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "100",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "result_2: To calculate the number of German books:\n\nNumber of German books = Total number of books * (10/100)\nNumber of German books = 50 * (10/100)\nNumber of German books = <<(50 * (10/100))>>\n\nRESULT: <number>",
+      "quality": 0.0,
+      "final_key": "24",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "There are 4 Spanish books. #### 4",
+        "verifier": "There are 25 books that are not English (half of 50). Out of these, 2.5% are German (10% - 5%). So, 1 book is German. That leaves 24 Spanish books.\n\nFinal answer: 24",
+        "step_3": "RESULT: 4.5"
+      }
+    }
+  ],
+  "invariant_violations": []
+}

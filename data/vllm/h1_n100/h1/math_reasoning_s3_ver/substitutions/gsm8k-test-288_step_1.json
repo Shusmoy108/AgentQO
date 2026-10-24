@@ -1,0 +1,54 @@
+{
+  "task_id": "gsm8k-test-288",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 6000",
+  "reference_key": "6000",
+  "final_key_plus": "4",
+  "q_plus": 0.0,
+  "q_minus": 0.5,
+  "consequence": -0.5,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "To determine the number of trucks needed:\n\n1. Total weight of 80 flagstones = 80 * 75 = 6000 pounds\n2. Number of trucks required = 6000 / 2000 = 3\n\nSince 6000 divided by 2000 equals exactly 3 without any remainder, no rounding up is necessary.\n\nRESULT: 3",
+    "aggregator": "#### 3",
+    "verifier": "VERDICT: incorrect\n\n#### 4",
+    "step_2": "RESULT: 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6001",
+      "reference_key": "6000",
+      "key_differs": true,
+      "text": "RESULT: 6001",
+      "quality": 0.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "To determine the number of trucks needed:\n\n1. Total weight of 80 flagstones = 80 * 75 = 6000 pounds\n2. Number of trucks required = 6000 / 2000 = 3\n\nSince 6000 is exactly divisible by 2000 without any remainder, no rounding up is necessary.\n\nRESULT: 3",
+        "aggregator": "#### 3",
+        "verifier": "VERDICT: incorrect\n\n#### 4",
+        "step_2": "RESULT: 4"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "6000",
+      "key_differs": true,
+      "text": "Result: Total weight of 80 flagstones = 80 flagstones * 75 pounds/flagstone = 6000 pounds\n\nRESULT: 6000 pounds / 2000 pounds/truck = 3 trucks\n\n(Note: This calculation assumes that flagstones cannot be divided into parts for transportation as they are sold as complete units.)",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 4 trucks",
+        "aggregator": "#### 4.",
+        "verifier": "VERDICT: incorrect\n\n#### 3",
+        "step_2": "RESULT: 3 trucks"
+      }
+    }
+  ],
+  "invariant_violations": []
+}
