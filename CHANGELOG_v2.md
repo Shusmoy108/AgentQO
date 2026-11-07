@@ -285,3 +285,10 @@ Decisions (made without asking, per the q4 prompt):
   when under 10 GB (about 15 MB); it continues with a logged warning, and fails a step only
   under 2 GB free, to protect the SQLite cache.
 - Files over 20 MB are not pushed to git (they stay in the cache zip).
+
+**`scripts/v2/run_q4_all.sh`** (branch v2-q4 only; no other code changed). Drives the q4 setting
+unattended: throughput test, Q4-1..Q4-5 through the existing `run_phase.sh` / P6 scripts, with
+Ollama restarts, 5 retries with backoff (1, 2, 5, 10, 20 min), FAILURES.md, the disk check, the
+2026-11-15 23:00 UTC deadline, per-step packaging and push to v2-q4, and FINAL (upload and cache
+zips, checksums, UPLOAD_TO_CLAUDE.md). `--dry-run` prints the plan and each step's commands.
+It uses the python3 already on PATH (Homebrew's has no numpy), so Homebrew is appended to PATH.
