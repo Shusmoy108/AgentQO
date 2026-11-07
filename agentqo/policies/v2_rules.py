@@ -6,6 +6,8 @@ budgets k = 1..n. Labels are the rows of labels_v2.csv, keyed by agent.
 
 from __future__ import annotations
 
+import math
+
 from itertools import combinations
 from typing import Callable, Dict, FrozenSet, Iterable, List, Mapping, Sequence
 
@@ -109,6 +111,18 @@ def independence_multiplicative(measured: Mapping[Plan, float]) -> Estimator:
             out *= measured[frozenset({v})] / base
         return _clip(out)
     return estimate
+
+
+def _logit(p: float) -> float:
+    p = min(0.99, max(0.01, p))
+    return math.log(p / (1 - p))
+
+
+def logit_additive(measured: Mapping[Plan, float]) -> Estimator:
+    """E4: single-agent changes added in log-odds, accuracies clipped to [0.01, 0.99]."""
+    base = _logit(measured[frozenset()])
+    gain = {next(iter(p)): _logit(a) - base for p, a in measured.items() if len(p) == 1}
+    return lambda plan: 1 / (1 + math.exp(-(base + sum(gain[v] for v in plan))))
 
 
 def top_singles(measured: Mapping[Plan, float], agents: Iterable[str], m: int) -> List[str]:

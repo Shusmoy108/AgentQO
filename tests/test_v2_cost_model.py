@@ -8,7 +8,7 @@ import sys
 import pytest
 
 from agentqo.metrics.cost_model import (api_usd, estimated_throughput_costs, gpu_usd, large_small_ratio, load_prices,
-                                        measured_throughput_costs, price_plans, rank_agreement, tokens_per_second)
+                                        fit_token_rates, measured_throughput_costs, price_plans, rank_agreement)
 from agentqo.metrics.io import mark_done, resolve_output_dir
 from scripts.v2.model_env import exports, load_models
 
@@ -99,23 +99,37 @@ def test_model_configs_have_every_spec_entry():
     assert env["VLLM_LARGE_MODEL"] == "Qwen/Qwen2.5-14B-Instruct" and "OLLAMA_LARGE_MODEL" not in env
 
 
-def test_throughput_gpu_cost_measured_and_estimated():
+def test_throughput_gpu_cost_measured():
     """FIX 5: GPUs reserved x wall / problems; separate = 2 GPUs, shared = 1."""
     summary = [{"plan": "all_small", "placement": "separate", "repeat": "0", "n": "10", "throughput_per_s": "0.5"},
                {"plan": "all_small", "placement": "shared", "repeat": "0", "n": "10", "throughput_per_s": "0.5"}]
     m = {r["placement"]: r for r in measured_throughput_costs(summary, 3600)}
     assert m["separate"]["gpu_seconds_per_problem"] == 4.0 and m["shared"]["gpu_seconds_per_problem"] == 2.0
     assert m["separate"]["gpu_usd_throughput"] == pytest.approx(4.0) and m["separate"]["source"] == "measured"
-    calls = [{"plan": "all_small", "repeat": "0", "fidelity": "small", "completion_tokens": "1000"}]
-    tps = tokens_per_second([(summary, calls)])
-    assert tps[("separate", "small")] == pytest.approx(1000 / 20) and ("separate", "large") not in tps
-    tps[("separate", "large")] = tps[("shared", "large")] = 25.0
-    rows = price_plans([call("p", "a", "small", tout=100), call("p", "a", "large", tout=100)], PRICES)
-    estimated_throughput_costs(rows, tps, 3600)
-    r = rows[0]
-    assert r["gpu_usd_throughput_separate"] == pytest.approx(2 * max(100 / 50, 100 / 25))
-    assert r["gpu_usd_throughput_shared"] == pytest.approx(1 * (100 / 50 + 100 / 25))
-    assert math.isnan(r["gpu_usd_throughput_shared_mps"]) and r["gpu_usd_throughput_source"] == "estimated"
+
+
+def test_token_rates_recover_prefill_and_decode_and_flag_fallbacks():
+    """A11: per-call latency = alpha p + beta c gives the shape; the run's wall gives the scale."""
+    a_true, b_true = 0.001, 0.02
+    calls, n = [], 0
+    for i in range(40):
+        p, c = 100 + 37 * i, 10 + (i * 13) % 90
+        calls.append({"plan": "all_small", "repeat": "0", "model": "S", "fidelity": "small",
+                      "prompt_tokens": p, "completion_tokens": c, "latency_s": 4 * (a_true * p + b_true * c)})
+        n += a_true * p + b_true * c
+    wall = n  # one busy GPU: the calls' GPU time adds up to the wall time
+    summary = [{"plan": "all_small", "placement": "separate", "repeat": "0", "n": "20", "throughput_per_s": 20 / wall}]
+    rates = fit_token_rates([(summary, calls)])
+    r = rates[("S", "separate")]
+    assert r["a"] == pytest.approx(a_true, rel=1e-6) and r["b"] == pytest.approx(b_true, rel=1e-6)
+    rows = price_plans([{**call("p", "t", "small", tin=1000, tout=100), "model": "S"},
+                        {**call("p", "t", "large", tin=1000, tout=100), "model": "L"}], PRICES)
+    estimated_throughput_costs(rows, {**rates, ("L", "separate"): {"a": 0.002, "b": 0.04}}, 3600)
+    row = rows[0]
+    assert row["gpu_cost_basis_separate"] == "estimated_rates"
+    assert row["gpu_usd_throughput_separate"] == pytest.approx(2 * max(1000 * a_true + 100 * b_true, 1000 * 0.002 + 100 * 0.04))
+    assert row["gpu_cost_basis_shared"] == "fallback_latency"  # no shared rates: flagged, latency price
+    assert row["gpu_usd_throughput_shared"] == pytest.approx(row["gpu_seconds_shared"])
 
 
 def test_rank_agreement_for_a3():

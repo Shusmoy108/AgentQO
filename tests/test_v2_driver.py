@@ -80,6 +80,12 @@ def test_math_phases_run_end_to_end_and_resume(tmp_path):
     assert "regret_hypervolume" in json.loads((p6 / "pareto_estimated/pareto_summary.json").read_text())
     text = (results / "P6/SUMMARY.md").read_text()
     assert "### pareto_front.csv" in text and "UNFINISHED" not in text
+    # A11: rates from the P5 runs, a basis flag on every GPU cost, and hypotheses.md says which.
+    assert (p6 / "cost/token_rates.csv").read_text().count("\n") >= 3
+    costs = (p6 / "cost/plan_costs.csv").read_text()
+    assert "estimated_rates" in costs and "fallback_latency" in costs  # no P5 run under shared_mps
+    hyp = (results / "P6/hypotheses/hypotheses.md").read_text()
+    assert "## Cost basis" in hyp and "fallback_latency" in hyp and "## Hypotheses" in text
 
     # A repeat finds every step finished: no new directories, a new zip name.
     before = sorted(p.name for p in p6.iterdir())
@@ -180,3 +186,29 @@ def test_provenance_records_commit_and_refuses_dirty_lease_runs(tmp_path):
     summary = json.loads((repo / "results/v2/P1/summary.json").read_text())
     assert summary["git_commit"] == head and summary["dirty"] is True and summary["packaged_at"]["dirty"] is True
     assert f"`{head}` **(dirty working tree)**" in (repo / "results/v2/P1/SUMMARY.md").read_text()
+
+
+def test_lease_runs_need_the_tag_or_a_logged_deviation(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / "scripts/v2").mkdir(parents=True)
+    (repo / "prereg").mkdir()
+    git(repo, "init", "-b", "work")
+    shutil.copy2(ROOT / "scripts/v2/summarize_phase.py", repo / "scripts/v2/summarize_phase.py")
+    (repo / "prereg/v2_amendments.md").write_text("D1 lease-time deviation: fix\n")
+    (repo / ".gitignore").write_text("results/\n")
+    git(repo, "add", ".")
+    git(repo, "commit", "-m", "base")
+    prov = lambda **env: subprocess.run(["python3", "scripts/v2/summarize_phase.py", "provenance", "results/v2/P1",
+                                         "--refuse-dirty", "--lease"], cwd=repo, capture_output=True, text=True,
+                                        env={**os.environ, **env})
+    assert "not found" in prov().stderr
+    git(repo, "tag", "v2-lease1-start")
+    assert prov().returncode == 0
+    (repo / "x.txt").write_text("x")
+    git(repo, "add", "x.txt")
+    git(repo, "commit", "-m", "lease-time change")
+    assert "is not v2-lease1-start" in prov().stderr
+    assert prov(V2_DEVIATION="D9").returncode != 0  # not logged
+    assert prov(V2_DEVIATION="D1").returncode == 0
+    last = json.loads((repo / "results/v2/P1/provenance.jsonl").read_text().splitlines()[-1])
+    assert last["deviation"] == "D1" and last["lease_tag_commit"] != last["commit"]

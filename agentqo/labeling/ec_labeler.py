@@ -457,6 +457,9 @@ class ECLabeler:
                 "invariant_violations": violations,
             })
             if self.realistic:
+                # E3 (exploratory): small and large outputs identical after whitespace
+                # normalisation; a skip on this is exact, as every downstream prompt is the same.
+                records[-1]["outputs_identical"] = " ".join(base_text.split()) == " ".join(ref_text.split())
                 records[-1].update(self._realistic_fields(
                     records[-1], base, plus, maker, ref_text, ref_key, substituted, sample, final_key,
                     workflow, sample_keys, sample_calls, skip_plus, reference,

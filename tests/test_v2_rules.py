@@ -103,7 +103,7 @@ def test_estimator_table_splits_held_out_from_inputs():
     by = {r["estimator"]: r for r in rows}
     assert by["pairwise_corrected"]["n_held_out"] == 64 - 1 - 6 - 3
     assert by["pairwise_corrected"]["mae_held_out"] < by["independence_additive"]["mae_held_out"]
-    assert len(detail) == 3 * 64 and set(thresholds) == {"p25", "p50", "p75"}
+    assert len(detail) == 4 * 64 and set(thresholds) == {"p25", "p50", "p75"}
     assert 0 <= by["independence_additive"]["feasibility_wrong_p50"] <= 1
 
 
@@ -126,3 +126,16 @@ def test_h1c_share_and_top2():
 def test_plan_labels_round_trip():
     for text in ("none", "all", "aggregator,planner"):
         assert plan_label(parse_upgraded(text, AGENTS), AGENTS) == text
+
+
+def test_logit_additive_estimator_e4():
+    import math
+    from agentqo.policies.v2_rules import logit_additive
+    a, b = frozenset({"a"}), frozenset({"b"})
+    measured = {frozenset(): 0.5, a: 0.75, b: 0.5}
+    est = logit_additive(measured)
+    assert est(frozenset()) == pytest.approx(0.5) and est(a) == pytest.approx(0.75)
+    assert est(a | b) == pytest.approx(0.75)  # b adds nothing in log-odds
+    two = logit_additive({frozenset(): 0.5, a: 0.75, b: 0.75})(a | b)
+    assert two == pytest.approx(1 / (1 + math.exp(-2 * math.log(3))))  # log-odds add
+    assert 0 < logit_additive({frozenset(): 0.0, a: 1.0})(a) < 1  # clipped, finite

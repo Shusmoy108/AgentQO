@@ -26,6 +26,7 @@ def per_problem_rows(records: Sequence[Dict[str, Any]]) -> List[Dict[str, Any]]:
             "base_key": r["base_key"], "sample_keys": r["sample_keys"],
             "consequence_by_strategy": r["consequence_by_strategy"], "consequence_real": r["consequence_real"],
             "skipped_plus": r["skipped_plus"], "has_descendants": r["has_descendants"],
+            "outputs_identical": r.get("outputs_identical"),
         }
         for prefix, calls in (("base", r["calls_base"]), ("plus", r["calls_plus"]), ("samples", r["calls_samples"])):
             row.update({f"{prefix}_{t}": calls.get(t, 0.0) for t in TIERS})
@@ -73,3 +74,26 @@ def strategy_rows(records: Sequence[Dict[str, Any]]) -> List[Dict[str, Any]]:
             pool.setdefault((r["node_id"], "resample_disagree"), []).append(r["consequence_real"])
     return [{"agent": a, "strategy": s, "n": len(v), "consequence": float(np.mean(v))}
             for (a, s), v in pool.items()]
+
+
+def skip_variants(per_problem: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
+    """Offline, from full-mode per-problem rows: rerun share and per-agent UV error of
+    skipping Q+ (taking Q+ = baseline) under the key rule (A1/A10) and the exact-text rule (E3)."""
+    truth = lambda r: str(r) in ("True", "1", "1.0")
+    rules = {"key": lambda r: truth(r["baseline_agrees"]) and r["base_key"] not in (None, "") and r["agent"] != "planner",
+             "exact": lambda r: truth(r["outputs_identical"])}
+    by_agent: Dict[str, List[Dict[str, Any]]] = {}
+    for r in per_problem:
+        by_agent.setdefault(r["agent"], []).append(r)
+    full = sum(truth(r["has_descendants"]) for r in per_problem)
+    out: Dict[str, Any] = {"reruns_full": full}
+    for name, skip in rules.items():
+        used = sum(truth(r["has_descendants"]) and not skip(r) for r in per_problem)
+        err = {}
+        for agent, rows in by_agent.items():
+            gain = [float(r["q_plus"]) - float(r["baseline_correct"]) for r in rows]
+            fast = [0.0 if skip(r) else g for r, g in zip(rows, gain)]
+            err[agent] = abs(float(np.mean(fast)) - float(np.mean(gain)))
+        out[name] = {"reruns_used": used, "share": used / full if full else float("nan"),
+                     "uv_abs_error": err, "max_uv_abs_error": max(err.values(), default=float("nan"))}
+    return out

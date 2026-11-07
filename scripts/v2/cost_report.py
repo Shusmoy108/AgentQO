@@ -6,19 +6,21 @@
 
 With --placement (P5 run directories) it also writes the throughput GPU cost (FIX 5):
 measured per (plan, placement) in placement_costs.csv, and estimated per plan from the
-P5 tokens/s in plan_costs.csv (gpu_usd_throughput_<placement>, labelled "estimated").
+P5 prefill/decode rates in plan_costs.csv (gpu_usd_throughput_<placement>, with
+gpu_cost_basis_<placement> = estimated_rates or fallback_latency), and token_rates.csv (A11).
 """
 
 from __future__ import annotations
 
 import argparse
 import sys
+from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
 from agentqo.metrics.cost_model import (GPUS_RESERVED, estimated_throughput_costs, large_small_ratio, load_prices,  # noqa: E402
-                                        measured_throughput_costs, price_plans, rank_agreement, tokens_per_second)
+                                        fit_token_rates, measured_throughput_costs, price_plans, rank_agreement)
 from agentqo.metrics.io import args_config, mark_done, read_csv, resolve_output_dir, write_csv, write_json  # noqa: E402
 
 
@@ -43,19 +45,25 @@ def main() -> None:
     summary = {"n_plans": len(rows), "api_large_small_ratio": large_small_ratio(rows),
                "a3_kendall_tau_latency_vs_units": rank_agreement(rows, "gpu_usd_latency", "cost_units")}
     dirs = [Path(d) for d in args.placement.split(",") if d]
-    runs = [(read_csv(d / "placement_summary.csv"), read_csv(d / "placement_calls.csv"))
-            for d in dirs if (d / "placement_summary.csv").exists()]
+    runs = []
+    for d in dirs:
+        if (d / "placement_summary.csv").exists():
+            summ = [{**r, "run": d.name} for r in read_csv(d / "placement_summary.csv")]
+            runs.append((summ, read_csv(d / "placement_calls.csv")))
+    rate = prices["gpu_hour_usd"]
+    rates = fit_token_rates(runs) if runs else {}
     if runs:
-        rate = prices["gpu_hour_usd"]
         write_csv(out / "placement_costs.csv", measured_throughput_costs([r for s_, _ in runs for r in s_], rate))
-        tps = tokens_per_second(runs)
-        estimated_throughput_costs(rows, tps, rate)
-        summary["tokens_per_s"] = {f"{p}/{t}": v for (p, t), v in sorted(tps.items())}
-        summary["gpu_usd_throughput"] = "estimated from P5 tokens/s; measured per placement run in placement_costs.csv"
-        for placement in GPUS_RESERVED:  # A3: GPU-time ranking vs the 1-vs-4 cost units
-            summary[f"a3_kendall_tau_{placement}"] = rank_agreement(rows, f"gpu_usd_throughput_{placement}", "cost_units")
-    else:
-        summary["gpu_usd_throughput"] = "not available: no P5 placement runs given"
+    write_csv(out / "token_rates.csv", [{"model": m, "placement": p, **v} for (m, p), v in sorted(rates.items())],
+              fieldnames=["model", "placement", "a", "b", "alpha_latency", "beta_latency", "n_calls"])
+    estimated_throughput_costs(rows, rates, rate)
+    summary["p5_runs"] = [d.name for d in dirs if (d / "placement_summary.csv").exists()]
+    summary["gpu_cost_basis"] = {p: dict(sorted(Counter(r[f"gpu_cost_basis_{p}"] for r in rows).items()))
+                                 for p in GPUS_RESERVED}
+    for placement in GPUS_RESERVED:  # A3: GPU-time ranking vs the 1-vs-4 cost units
+        summary[f"a3_kendall_tau_{placement}"] = rank_agreement(rows, f"gpu_usd_throughput_{placement}", "cost_units")
+        summary[f"a3_basis_{placement}"] = ("fallback" if any(r[f"gpu_cost_basis_{placement}"] != "estimated_rates"
+                                                               for r in rows) else "estimated_rates")
     write_csv(out / "plan_costs.csv", rows)
     write_json(out / "cost_summary.json", summary)
     mark_done(out)

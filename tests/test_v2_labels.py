@@ -211,3 +211,17 @@ def test_gsm8k_v2_label_and_eval_pools_are_disjoint_and_keep_session1_order():
     assert lab[:100] == [p["qid"] for p in split["dev"]] and ev[:200] == [p["qid"] for p in split["eval"]]
     assert len(set(lab)) == 200 and len(set(ev)) == 400 and not set(lab) & set(ev)
     assert ev[200:] == [p["qid"] for p in session1_extra()[500:700]]
+
+
+def test_exact_skip_variant_is_exact_and_key_rule_matches_disagree_only():
+    """E3: skipping only on identical text never changes UV; the offline key rule
+    reproduces the --disagree-only rerun count."""
+    from agentqo.labeling.labels_v2 import skip_variants
+    wf = create_math_reasoning_workflow(3)
+    b1, _, tm1 = fake_backend()
+    full = label(wf, b1, tm1, 12, realistic=True)
+    b2, _, tm2 = fake_backend()
+    fast = label(wf, b2, tm2, 12, disagree_only=True)
+    out = skip_variants(per_problem_rows(full.records))
+    assert out["exact"]["max_uv_abs_error"] == 0.0
+    assert out["key"]["reruns_used"] == sum(r["reruns_used"] for r in labels_rows(fast.records))

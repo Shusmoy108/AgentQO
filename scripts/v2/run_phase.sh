@@ -6,14 +6,16 @@
 #   P2  Qwen 1.5B/7B plans:  math all_subsets (eval_ext 400), HotpotQA all_subsets (eval 400)
 #   P3  Qwen 3B/14B math:    labels (label 200) + all_subsets (eval_ext 400)
 #   P4  Granite 2B/8B math:  labels (label 200, inside the Session 1 LABEL 500) + all_subsets
-#   P5  Placement timing under V2_PLACEMENT (separate|shared|shared_mps), one run per placement
+#   P5  Placement timing under V2_PLACEMENT (separate|shared|shared_mps), one run per placement;
+#       with V2_P5_CAL=qwen_hotpot|qwen3_14_math|granite_math, a calibration set (A11) instead
 #   P6  Offline analysis of every setting that has data (M1, M4, M5, M7, H5a)
 #   final  Zip everything, with the SQLite cache
 #
 # Environment: V2_BACKEND (vllm|ollama|fake), V2_N (cap on problems, for test runs),
 # V2_RESULTS, V2_LOGS, V2_CACHE, V2_WORKERS, V2_PUSH=0 (no git), V2_DRY=1 (print each
 # command's --dry-run), V2_SETTINGS (limit P1/P2 to e.g. "math"), V2_PLACEMENT,
-# V2_P5_PLANS, V2_VMS ("gpu_a=local gpu_b=cc@host").
+# V2_P5_PLANS, V2_P5_CAL, V2_VMS ("gpu_a=local gpu_b=cc@host"), V2_DEVIATION (id of a lease-time
+# deviation logged in prereg/v2_amendments.md, needed to run vllm phases off the v2-lease1-start tag).
 set -euo pipefail
 
 phase=${1:?usage: run_phase.sh P1|P2|P3|P4|P5|P6|final}
@@ -41,7 +43,7 @@ echo "=== $phase start $(date -u +%FT%TZ) commit $(git rev-parse HEAD) backend $
 # refuses a dirty tree; test runs record the dirty flag instead.
 if [ "${V2_DRY:-0}" != 1 ]; then
   refuse=()
-  [ "$BACKEND" = vllm ] && refuse=(--refuse-dirty)
+  [ "$BACKEND" = vllm ] && refuse=(--refuse-dirty --lease)  # lease: the v2-lease1-start commit, or V2_DEVIATION
   "$PY" scripts/v2/summarize_phase.py provenance "$RESULTS/$phase" ${refuse[@]+"${refuse[@]}"}
 fi
 
@@ -78,13 +80,12 @@ analyze() {  # setting workflow labels_phase plans_phase
     return 0
   fi
   local d=${DRY[@]+"${DRY[@]}"}
-  # FIX 5: P5 placement runs (Qwen 1.5B/7B math) give the throughput GPU cost.
-  local p5="" p
-  if [ "$s" = math_q15_7 ] || [ "$s" = hotpot_q15_7 ]; then
-    for p in separate shared shared_mps; do
-      [ -f "$RESULTS/P5/$p/placement_summary.csv" ] && p5="${p5:+$p5,}$RESULTS/P5/$p"
-    done
-  fi
+  # A7/A11: every P5 run (main sweep and calibration sets) feeds the per-model
+  # prefill/decode rates; rates are keyed by model, so other models' runs are ignored.
+  local p5="" f
+  for f in "$RESULTS"/P5/*/placement_summary.csv; do
+    [ -f "$f" ] && p5="${p5:+$p5,}$(dirname "$f")"
+  done
   "$PY" scripts/v2/cost_report.py --calls "$pl/h3_calls.csv" --output-dir "$OUT/$s/cost" ${p5:+--placement "$p5"} $d
   "$PY" scripts/v2/rules_report.py --workflow "$wf" --labels "$lab/labels_v2.csv" --plans "$pl/h3_plans.csv" \
     --labels-disagree "$fast/labels_v2.csv" --output-dir "$OUT/$s/rules" $d
@@ -131,13 +132,26 @@ case "$phase" in
     plans math_granite math gsm8k eval_ext "$(cap 400)" 512
     ;;
   P5)
-    use_models qwen_small qwen_large
     placement=${V2_PLACEMENT:?set V2_PLACEMENT to separate, shared or shared_mps to match the running servers}
     vms=()
     for vm in ${V2_VMS:-}; do vms+=(--vm "$vm"); done
-    "$PY" scripts/v2/run_placement.py --backend "$BACKEND" --placement "$placement" \
-      --plans "${V2_P5_PLANS:-all_small,only_planner,only_aggregator,only_verifier,planner+verifier,aggregator+verifier,all_large}" \
-      --n-tasks "$(cap 64)" --k 16 --repeats 3 --output-dir "$OUT/$placement" \
+    # V2_P5_CAL (A11) runs a calibration set instead of the main sweep: all_small and
+    # all_large, K = 16, 64 problems, under the placement the servers are in (separate, shared).
+    case "${V2_P5_CAL:-}" in
+      "")           models=(qwen_small qwen_large); task=(--workflow math); tok=256; out="$OUT/$placement"
+                    plans=${V2_P5_PLANS:-all_small,only_planner,only_aggregator,only_verifier,planner+verifier,aggregator+verifier,all_large} ;;
+      qwen_hotpot)  models=(qwen_small qwen_large); task=(--workflow hotpot --dataset hotpotqa --split eval); tok=384 ;;
+      qwen3_14_math) models=(qwen3b qwen14b); task=(--workflow math); tok=256 ;;
+      granite_math) models=(granite_small granite_large); task=(--workflow math); tok=512 ;;
+      *) echo "unknown V2_P5_CAL ${V2_P5_CAL}" >&2; exit 2 ;;
+    esac
+    if [ -n "${V2_P5_CAL:-}" ]; then
+      plans=all_small,all_large
+      out="$OUT/cal_${V2_P5_CAL}_$placement"
+    fi
+    use_models "${models[@]}"
+    "$PY" scripts/v2/run_placement.py --backend "$BACKEND" --placement "$placement" "${task[@]}" \
+      --plans "$plans" --max-tokens "$tok" --n-tasks "$(cap 64)" --k 16 --repeats 3 --output-dir "$out" \
       ${vms[@]+"${vms[@]}"} ${EXTRA[@]+"${EXTRA[@]}"} ${DRY[@]+"${DRY[@]}"}
     ;;
   P6)
@@ -145,6 +159,7 @@ case "$phase" in
     analyze hotpot_q15_7 hotpot P1 P2
     analyze math_q3_14 math P3 P3
     analyze math_granite math P4 P4
+    "$PY" scripts/v2/hypotheses_report.py --p6 "$OUT" --output-dir "$OUT/hypotheses" ${DRY[@]+"${DRY[@]}"}
     ;;
   final)
     ;;

@@ -8,10 +8,12 @@ Two GPU prices:
 - gpu_usd_latency (the original M1 column): each call is charged its latency on
   the whole GPU (gpu_seconds), or its memory fraction of a shared GPU
   (gpu_seconds_shared). Under batching this overcounts GPU time; kept for comparison.
-- gpu_usd_throughput (FIX 5): GPUs reserved x wall-clock seconds / problems completed.
+- gpu_usd_throughput (FIX 5, A7): GPUs reserved x wall-clock seconds / problems completed.
   Measured directly for P5 placement runs (measured_throughput_costs). For quality
-  phases it is estimated from each plan's output tokens and the tokens/s that P5
-  measured per model and placement (estimated_throughput_costs), labelled "estimated".
+  phases it is estimated (A11): GPU time per call = a_m x prompt_tokens + b_m x
+  completion_tokens, with a_m, b_m fitted per model and placement from P5 per-call data
+  (fit_token_rates). A plan or placement without fitted rates falls back to the latency
+  price and says so in gpu_cost_basis_<placement> = "fallback_latency".
 """
 
 from __future__ import annotations
@@ -20,6 +22,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping
 
+import numpy as np
 import yaml
 
 
@@ -43,6 +46,7 @@ def gpu_usd(seconds: float, gpu_hour_usd: float) -> float:
 def price_plans(calls: Iterable[Mapping[str, Any]], prices: Mapping[str, Any]) -> List[Dict[str, Any]]:
     totals: Dict[str, Dict[str, float]] = defaultdict(lambda: defaultdict(float))
     problems: Dict[str, set] = defaultdict(set)
+    models: Dict[str, Dict[str, str]] = defaultdict(dict)
     for c in calls:
         plan, tier = c["plan"], c["fidelity"]
         tin, tout, lat = float(c["prompt_tokens"]), float(c["completion_tokens"]), float(c["latency_s"])
@@ -52,6 +56,9 @@ def price_plans(calls: Iterable[Mapping[str, Any]], prices: Mapping[str, Any]) -
         t["tokens_out"] += tout
         t["api_usd"] += api_usd(prices, tier, tin, tout)
         t[f"tokens_out_{tier}"] += tout
+        t[f"tokens_in_{tier}"] += tin
+        if c.get("model"):
+            models[plan][tier] = c["model"]
         t["gpu_seconds"] += lat
         t["gpu_seconds_shared"] += lat * prices["shared_memory_fraction"][tier]
         t["cost_units"] += prices["cost_units"][tier]
@@ -59,7 +66,9 @@ def price_plans(calls: Iterable[Mapping[str, Any]], prices: Mapping[str, Any]) -
     for plan, t in totals.items():
         n = len(problems[plan])
         row: Dict[str, Any] = {"plan": plan, "n_problems": n, "tokens_out_small": 0.0, "tokens_out_large": 0.0,
-                               **{k: v / n for k, v in t.items()}}
+                               "tokens_in_small": 0.0, "tokens_in_large": 0.0,
+                               **{k: v / n for k, v in t.items()},
+                               "model_small": models[plan].get("small", ""), "model_large": models[plan].get("large", "")}
         row["gpu_usd_latency"] = gpu_usd(row["gpu_seconds"], prices["gpu_hour_usd"])
         for rate in prices["gpu_hour_sweep"]:
             row[f"gpu_usd_latency_{rate:g}"] = gpu_usd(row["gpu_seconds"], rate)
@@ -82,53 +91,93 @@ TIERS = ("small", "large")
 
 
 def measured_throughput_costs(summary_rows: Iterable[Mapping[str, Any]], gpu_hour_usd: float) -> List[Dict[str, Any]]:
-    """P5: per (plan, placement), GPUs reserved x wall / problems, priced; mean over repeats."""
+    """P5: per (run, plan, placement), GPUs reserved x wall / problems, priced; mean over repeats.
+    ``run`` names the P5 directory (model set and task), when the caller sets it."""
     cells: Dict[tuple, List[float]] = defaultdict(list)
     for r in summary_rows:
         tput = float(r["throughput_per_s"])  # problems completed / wall seconds
-        cells[(r["plan"], r["placement"])].append(GPUS_RESERVED[r["placement"]] / tput)
-    return [{"plan": plan, "placement": placement, "gpu_seconds_per_problem": sum(v) / len(v),
+        cells[(r.get("run", ""), r["plan"], r["placement"])].append(GPUS_RESERVED[r["placement"]] / tput)
+    return [{"run": run, "plan": plan, "placement": placement, "gpu_seconds_per_problem": sum(v) / len(v),
              "gpu_usd_throughput": gpu_usd(sum(v) / len(v), gpu_hour_usd), "source": "measured", "repeats": len(v)}
-            for (plan, placement), v in sorted(cells.items())]
+            for (run, plan, placement), v in sorted(cells.items())]
 
 
-def tokens_per_second(runs: Iterable[tuple]) -> Dict[tuple, float]:
-    """(placement, tier) -> output tokens/s, from P5 runs given as (summary_rows, call_rows).
+def fit_token_rates(runs: Iterable[tuple]) -> Dict[tuple, Dict[str, float]]:
+    """A11: (model, placement) -> {a, b, n_calls}: GPU-seconds per prompt token (a, prefill)
+    and per completion token (b, decode), from P5 runs given as (summary_rows, call_rows).
 
-    Per run (plan, repeat) the rate is the tier's output tokens over the run's wall time; the
-    highest rate over runs is kept, as the one closest to a busy GPU.
-    ponytail: output tokens only (prefill ignored), max over runs; fit a prefill term if
-    HotpotQA's long prompts make the estimates miss the P5 measurements."""
-    best: Dict[tuple, float] = {}
+    Shape: per-call latency = alpha x prompt + beta x completion (non-negative least squares).
+    Scale: a = s alpha, b = s beta, with s chosen so the calls of each run add up to the GPU
+    time the model held: the run's wall time on its own GPU (separate), or its share of the
+    one GPU's wall time by alpha/beta-weighted work (shared, shared_mps).
+    ponytail: one scale per (model, placement) over all its runs; per-run scales if the fit
+    misses the P5 measurements by more than A7's 10%."""
+    from scipy.optimize import nnls
+    runs = list(runs)
+    placement_of = {}
+    cells: Dict[tuple, List[Mapping]] = defaultdict(list)
     for summary_rows, call_rows in runs:
-        tokens: Dict[tuple, float] = defaultdict(float)
+        place = {(r["plan"], str(r["repeat"])): r["placement"] for r in summary_rows}
         for c in call_rows:
-            tokens[(c["plan"], str(c["repeat"]), c["fidelity"])] += float(c["completion_tokens"])
+            key = (c["model"], place[(c["plan"], str(c["repeat"]))])
+            cells[key].append(c)
+            placement_of[key] = key[1]
+    shape = {}
+    for key, calls in cells.items():
+        x = np.array([[float(c["prompt_tokens"]), float(c["completion_tokens"])] for c in calls])
+        y = np.array([float(c["latency_s"]) for c in calls])
+        shape[key] = nnls(x, y)[0]
+    held: Dict[tuple, float] = defaultdict(float)
+    work: Dict[tuple, float] = defaultdict(float)
+    for summary_rows, call_rows in runs:
         for r in summary_rows:
             wall = float(r["n"]) / float(r["throughput_per_s"])
-            for tier in TIERS:
-                tok = tokens.get((r["plan"], str(r["repeat"]), tier), 0.0)
-                if tok > 0:
-                    key = (r["placement"], tier)
-                    best[key] = max(best.get(key, 0.0), tok / wall)
-    return best
+            w: Dict[tuple, float] = defaultdict(float)
+            for c in call_rows:
+                if c["plan"] == r["plan"] and str(c["repeat"]) == str(r["repeat"]):
+                    al, be = shape[(c["model"], r["placement"])]
+                    w[(c["model"], r["placement"])] += al * float(c["prompt_tokens"]) + be * float(c["completion_tokens"])
+            total = sum(w.values())
+            for key, v in w.items():
+                work[key] += v
+                held[key] += wall if r["placement"] == "separate" else (wall * v / total if total else 0.0)
+    out = {}
+    for key, (al, be) in shape.items():
+        scale = held[key] / work[key] if work[key] else float("nan")
+        out[key] = {"a": al * scale, "b": be * scale, "alpha_latency": al, "beta_latency": be,
+                    "n_calls": len(cells[key])}
+    return out
 
 
-def estimated_throughput_costs(rows: List[Dict[str, Any]], tps: Mapping[tuple, float], gpu_hour_usd: float) -> None:
-    """Add gpu_usd_throughput_<placement> (estimated) to price_plans rows, in place.
+def estimated_throughput_costs(rows: List[Dict[str, Any]], rates: Mapping[tuple, Mapping[str, float]],
+                               gpu_hour_usd: float) -> None:
+    """Add gpu_usd_throughput_<placement> and gpu_cost_basis_<placement> to price_plans rows.
 
-    separate: 2 GPUs held for the busier model's time; shared: 1 GPU for both models' time.
-    NaN when P5 has no rate for a tier the plan uses."""
+    separate: 2 GPUs held for the busier model's time; shared: 1 GPU for both models' time;
+    time per tier = a_m x prompt tokens + b_m x completion tokens. Without rates for a model
+    the plan uses, the latency price stands in (memory fraction on a shared GPU) with basis
+    "fallback_latency"."""
     for row in rows:
         for placement, gpus in GPUS_RESERVED.items():
-            secs = []
+            secs, ok = [], True
             for tier in TIERS:
-                tok = float(row.get(f"tokens_out_{tier}", 0.0))
-                rate = tps.get((placement, tier))
-                secs.append(0.0 if tok == 0 else (tok / rate if rate else float("nan")))
-            busy = max(secs) if placement == "separate" else sum(secs)
-            row[f"gpu_usd_throughput_{placement}"] = gpu_usd(gpus * busy, gpu_hour_usd)
-        row["gpu_usd_throughput_source"] = "estimated"
+                tin, tout = float(row.get(f"tokens_in_{tier}", 0.0)), float(row.get(f"tokens_out_{tier}", 0.0))
+                if tin == 0 and tout == 0:
+                    secs.append(0.0)
+                    continue
+                r = rates.get((row.get(f"model_{tier}", ""), placement))
+                if not r or r["a"] != r["a"]:
+                    ok = False
+                    break
+                secs.append(r["a"] * tin + r["b"] * tout)
+            if ok:
+                busy = max(secs) if placement == "separate" else sum(secs)
+                row[f"gpu_usd_throughput_{placement}"] = gpu_usd(gpus * busy, gpu_hour_usd)
+                row[f"gpu_cost_basis_{placement}"] = "estimated_rates"
+            else:
+                lat = row["gpu_seconds"] if placement == "separate" else row["gpu_seconds_shared"]
+                row[f"gpu_usd_throughput_{placement}"] = gpu_usd(lat, gpu_hour_usd)
+                row[f"gpu_cost_basis_{placement}"] = "fallback_latency"
 
 
 def rank_agreement(rows: Iterable[Mapping[str, Any]], a: str, b: str) -> float:

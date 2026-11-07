@@ -81,13 +81,33 @@ def git_state() -> Dict:
     return {"commit": head, "dirty": tracked or untracked}
 
 
-def record_provenance(root: Path, refuse_dirty: bool) -> Dict:
-    """Append the code state at the start of a run; one line per (re)start of the phase."""
+LEASE_TAG = "v2-lease1-start"
+AMENDMENTS = Path("prereg/v2_amendments.md")
+
+
+def record_provenance(root: Path, refuse_dirty: bool, lease: bool = False, deviation: str = "") -> Dict:
+    """Append the code state at the start of a run; one line per (re)start of the phase.
+
+    lease: the run must be at the commit tagged LEASE_TAG, or name a deviation (V2_DEVIATION)
+    that is logged in prereg/v2_amendments.md."""
     state = {"started": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
              "backend": os.environ.get("V2_BACKEND", "vllm"), **git_state()}
     if refuse_dirty and state["dirty"]:
         raise SystemExit(f"refusing to run {root.name}: the working tree has uncommitted changes "
                          f"(HEAD {state['commit'][:12]}); commit them first")
+    if lease:
+        res = subprocess.run(["git", "rev-parse", "--verify", "-q", f"{LEASE_TAG}^{{commit}}"], capture_output=True, text=True)
+        tagged = res.stdout.strip()
+        state["lease_tag_commit"] = tagged or None
+        if not tagged:
+            raise SystemExit(f"refusing to run {root.name}: tag {LEASE_TAG} not found")
+        if state["commit"] != tagged:
+            logged = AMENDMENTS.exists() and deviation and deviation in AMENDMENTS.read_text()
+            if not logged:
+                raise SystemExit(f"refusing to run {root.name}: HEAD {state['commit'][:12]} is not {LEASE_TAG} "
+                                 f"({tagged[:12]}); log a lease-time deviation in {AMENDMENTS} and set "
+                                 f"V2_DEVIATION to its id")
+            state["deviation"] = deviation
     root.mkdir(parents=True, exist_ok=True)
     with (root / PROVENANCE).open("a") as fh:
         fh.write(json.dumps(state) + "\n")
@@ -139,6 +159,9 @@ def report(root: Path) -> Dict:
         for name in ("cost_summary", "rules_summary", "pareto_summary", "adaptive_summary", "routing_summary"):
             if (step / f"{name}.json").exists():
                 md += [f"### {name}", "", "```json", (step / f"{name}.json").read_text().strip(), "```", ""]
+    hyp = root / "hypotheses" / "hypotheses.md"
+    if hyp.exists():
+        md += ["", hyp.read_text().replace("# Hypotheses", "## Hypotheses", 1)]
     (root / "SUMMARY.md").write_text("\n".join(md))
     (root / "summary.json").write_text(json.dumps(summary, indent=2, default=str))
     return summary
@@ -191,6 +214,7 @@ def main() -> None:
     ap.add_argument("--where", type=Path, default=Path("."))
     ap.add_argument("--extra", nargs="*", type=Path, default=[], help="files to add as is (the cache, in the final zip)")
     ap.add_argument("--refuse-dirty", action="store_true", help="provenance: exit if the tree is dirty")
+    ap.add_argument("--lease", action="store_true", help=f"provenance: require the {LEASE_TAG} commit or a logged deviation")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     if args.dry_run:
@@ -201,7 +225,7 @@ def main() -> None:
         manifest(args.root)
         print(f"wrote {args.root}/SUMMARY.md, summary.json, MANIFEST.txt")
     elif args.command == "provenance":
-        state = record_provenance(args.root, args.refuse_dirty)
+        state = record_provenance(args.root, args.refuse_dirty, args.lease, os.environ.get("V2_DEVIATION", ""))
         print(f"code {state['commit']}{' (DIRTY)' if state['dirty'] else ''}")
     elif args.command == "zip":
         print(make_zip(args.root, args.name or args.root.name, args.where, args.extra))

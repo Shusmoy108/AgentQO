@@ -25,9 +25,11 @@ from agentqo.policies.v2_rules import (  # noqa: E402
     confident_uv_order,
     independence_additive,
     independence_multiplicative,
+    logit_additive,
     pairs_to_measure,
     pairwise_corrected,
 )
+from agentqo.labeling.labels_v2 import skip_variants  # noqa: E402
 from scripts.run_real_pipeline import WORKFLOWS  # noqa: E402
 
 
@@ -57,7 +59,8 @@ def estimator_tables(true_acc, agents, m: int):
     """Errors over all plans and over held-out plans (no estimator was given their accuracy)."""
     ests = {"independence_additive": independence_additive(true_acc),
             "independence_multiplicative": independence_multiplicative(true_acc),
-            "pairwise_corrected": pairwise_corrected(true_acc, agents, m)}
+            "pairwise_corrected": pairwise_corrected(true_acc, agents, m),
+            "logit_additive": logit_additive(true_acc)}  # E4, exploratory
     inputs = {frozenset(), *[frozenset({v}) for v in agents], *pairs_to_measure(true_acc, agents, m)}
     plans = list(true_acc)
     truth = np.array([true_acc[p] for p in plans])
@@ -133,6 +136,9 @@ def main() -> None:
         print(f"{len(true_acc)} plans of {2 ** len(agents)}: estimator errors need all_subsets, skipped")
     if args.labels_disagree:
         summary["h1c"] = h1c(read_csv(args.labels), read_csv(args.labels_disagree), wf)
+        per_problem = Path(args.labels).with_name("labels_v2_per_problem.csv")
+        if per_problem.exists():  # E3 (exploratory): exact-text skip next to the key rule, offline
+            summary["h1c"]["e3_skip_variants"] = skip_variants(read_csv(per_problem))
         write_json(out / "h1c.json", summary["h1c"])
     write_json(out / "rules_summary.json", summary)
     mark_done(out)
