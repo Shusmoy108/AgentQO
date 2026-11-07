@@ -94,3 +94,21 @@ L1  Lease commit: the final pre-lease v2-dev commit is tagged v2-lease1-start an
 
 Correction to the request behind A11: Qwen 3B/14B was not in P5 (only Qwen 1.5B/7B math
 was), so it is added as a calibration set like the other two.
+
+## Amendment added 2026-11-07 21:59:58 UTC
+
+Committed with this section (the commit carrying this timestamp registers it), before any
+q4 data exist. A1-A11 and L1 above are unchanged.
+
+A12 "Additional setting q4: Qwen2.5 1.5B/7B 4-bit via Ollama, math chain and HotpotQA chain,
+    200 label + 200 eval problems each (math eval = first 200 of eval_ext; HotpotQA eval = first 200
+    of the frozen eval list in data/splits/hotpot_v2.json). Same hypotheses and analyses as the
+    vLLM settings, except placement (H3) and throughput GPU cost, which cannot be tested on the Mac.
+    Reason: test whether findings hold under quantization and add statistical power before the
+    lease. Reported as a separate 4-bit setting, never pooled with vLLM data."
+
+### How A12 is measured
+
+| Id | Reading | Output |
+|---|---|---|
+| A12 | Runs on branch v2-q4 = tag v2-lease1-start + this amendment, no code change, driven by `scripts/v2/run_q4_all.sh`. Models: Ollama `qwen2.5:1.5b-instruct` and `qwen2.5:7b-instruct` (Q4_K_M). Own SQLite cache `data/cache/v2_q4.sqlite` (no calls reused from the dry runs). Not testable on the Mac and marked so in `hypotheses.md`: H3a, A2, H3c (placement), A3 and H4a (need GPU throughput cost). Costs are API prices and token counts only. | `results/v2_q4/`, branch v2-q4 |

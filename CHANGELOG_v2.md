@@ -259,3 +259,29 @@ A11 rates fitted on the Mac M6 run (Ollama, separate placement only, 120 calls p
 GPU-seconds per token): qwen2.5:1.5b-instruct a = 0.00477, b = 0.01621; qwen2.5:7b-instruct
 a = 0.00899, b = 0.03541. Shared and shared_mps had no Ollama run, so their costs are flagged
 fallback_latency in the dry run.
+
+## 2026-11-07 21:59:58 UTC: q4 setting (4-bit laptop run)
+
+**A12 registered** in `prereg/v2_amendments.md` before any q4 data: a separate 4-bit Ollama
+setting (Qwen2.5 1.5B/7B Q4_K_M), math and HotpotQA, label 200 + eval 200 each. Why: test
+whether findings hold under quantization and add power before the lease; never pooled with vLLM.
+
+Decisions (made without asking, per the q4 prompt):
+- q4 runs on branch v2-q4 = tag v2-lease1-start + the A12 commit, no code change.
+- Own cache `data/cache/v2_q4.sqlite`: no q4 result reuses dry-run calls made before A12.
+- Sizes via `V2_N=200` in the existing driver (`run_phase.sh`): label 200, math eval = first 200
+  of eval_ext, HotpotQA eval = first 200 of the frozen eval list.
+- `package_phase.sh` pushes to v2-lease1 by design, so `run_q4_all.sh` calls it with
+  `V2_PUSH=0` (summary, manifest, zip) and commits and pushes CSV/JSON/MD to v2-q4 itself.
+- Q4-5 runs the P6 steps directly (cost from API prices and tokens, rules, routing, adaptive,
+  Pareto on api_usd only) and then marks H3a, A2, H3c, A3, H4a "not testable on Mac" in
+  hypotheses.md and drops its GPU cost-basis table (it would only show latency fallbacks).
+- Ollama is run by the driver (`ollama serve` with OLLAMA_NUM_PARALLEL from the throughput
+  test, OLLAMA_KEEP_ALIVE=-1) instead of the brew service, so the parallel setting can be set.
+- Deadline 2026-11-15 23:00 UTC: the code cannot change, so the driver stops the running step
+  with SIGTERM once the deadline passes; every finished call is in the cache, so a re-run
+  resumes and redoes at most the problems in flight.
+- Disk: 7.8 GB free at the start. The driver deletes only results/v2_dry*/ and results/v2_t20/
+  when under 10 GB (about 15 MB); it continues with a logged warning, and fails a step only
+  under 2 GB free, to protect the SQLite cache.
+- Files over 20 MB are not pushed to git (they stay in the cache zip).
