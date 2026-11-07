@@ -294,3 +294,10 @@ zips, checksums, UPLOAD_TO_CLAUDE.md). `--dry-run` prints the plan and each step
 It uses the python3 already on PATH (Homebrew's has no numpy), so Homebrew is appended to PATH.
 
 2026-11-07 22:10:16 UTC q4 throughput test (5 math problems, all_small + all_large, fresh caches): 2/2 0.5042 calls/s, 1/1 0.4054 calls/s, cache keys identical: yes. Using OLLAMA_NUM_PARALLEL=2, V2_WORKERS=2 (rule: 2/2 only if >= 20% faster and keys identical).
+
+2026-11-07 22:41:18 UTC q4 paused: the Mac disk filled (0 GB free at 22:12 UTC; 12 GB of 13 GB swap
+in use from memory pressure). Q4-1 attempt 1 failed with `sqlite3.OperationalError: unable to open
+database file` (finished calls are in the cache); retries 1-4 found under 2 GB free. The only
+deletable dirs (results/v2_dry*/, results/v2_t20/) were already removed. The driver (pid 77266) is
+suspended with SIGSTOP before its last retry so no step is marked FAILED; `kill -CONT 77266 85750`
+resumes it. Needs the user to free disk; nothing else is deleted.
