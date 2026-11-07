@@ -2,7 +2,8 @@
 
 Rows come from the official dev file, or from the Hugging Face rows API when
 that host is down. Both are stored in one schema and sorted by id, so the
-seeded label/eval split does not depend on the source.
+seeded label/eval split does not depend on the source. The split is frozen in
+data/splits/hotpot_v2.json (committed); the loader reads ids from it.
 """
 
 from __future__ import annotations
@@ -22,8 +23,9 @@ OFFICIAL_URL = "http://curtis.ml.cmu.edu/datasets/hotpot/hotpot_dev_distractor_v
 HF_ROWS_URL = ("https://datasets-server.huggingface.co/rows?dataset=hotpotqa/hotpot_qa"
                "&config=distractor&split=validation&offset={offset}&length=100")
 N_DEV = 7405
-N_LABEL, N_EVAL = 200, 300
+N_LABEL, N_EVAL = 200, 400  # eval 300 -> 400 (amendment, FIX 4); the first 300 are unchanged
 SPLIT_SEED = 0
+SPLIT_FILE = Path(__file__).resolve().parents[2] / "data" / "splits" / "hotpot_v2.json"
 
 
 def _official_rows() -> List[Dict]:
@@ -82,8 +84,35 @@ def split_rows(rows: List[Dict], seed: int = SPLIT_SEED) -> Dict[str, List[Dict]
             "eval": [rows[i] for i in order[N_LABEL:N_LABEL + N_EVAL]]}
 
 
-def load_hotpotqa(split: str = "label", cache_dir: Path = TASK_DIR) -> List[Dict[str, str]]:
-    """[{qid, question, gold}]; ``question`` holds the question and its paragraphs."""
+def freeze_split(cache_dir: Path = TASK_DIR, path: Path = SPLIT_FILE) -> None:
+    """Write the seeded split's ids once. The committed file is the split from then on."""
+    if path.exists():
+        raise SystemExit(f"{path} exists; the split is frozen")
     parts = split_rows(_load_rows(cache_dir))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"seed": SPLIT_SEED, "n_dev": N_DEV,
+                                **{k: [r["id"] for r in v] for k, v in parts.items()}}, indent=1) + "\n")
+
+
+def frozen_rows(rows: List[Dict], path: Path = SPLIT_FILE) -> Dict[str, List[Dict]]:
+    """Rows for the frozen label/eval ids; any missing id is an error."""
+    if not path.exists():
+        raise FileNotFoundError(f"{path} is missing; the HotpotQA split must come from the committed file")
+    ids = json.loads(path.read_text())
+    by_id = {r["id"]: r for r in rows}
+    missing = [i for k in ("label", "eval") for i in ids[k] if i not in by_id]
+    if missing:
+        raise RuntimeError(f"{len(missing)} frozen HotpotQA ids are not in the dev file, e.g. {missing[:3]}")
+    return {k: [by_id[i] for i in ids[k]] for k in ("label", "eval")}
+
+
+def load_hotpotqa(split: str = "label", cache_dir: Path = TASK_DIR, split_file: Path = SPLIT_FILE) -> List[Dict[str, str]]:
+    """[{qid, question, gold}]; ``question`` holds the question and its paragraphs."""
+    parts = frozen_rows(_load_rows(cache_dir), split_file)
     rows = parts["label"] + parts["eval"] if split == "all" else parts[split]
     return [{"qid": f"hotpot-{r['id']}", "question": format_problem(r), "gold": r["answer"]} for r in rows]
+
+
+if __name__ == "__main__":
+    freeze_split()
+    print(f"wrote {SPLIT_FILE}")

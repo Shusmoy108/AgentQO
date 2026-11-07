@@ -51,7 +51,10 @@ def labels_rows(records: Sequence[Dict[str, Any]]) -> List[Dict[str, Any]]:
             "g_dis": float(gain[dis].mean()) if dis.any() else 0.0,
             "uv": float(gain.mean()), "uv_ci_low": low, "uv_ci_high": high,
             "ec_synthetic": float(np.mean(synth)) * p_err if synth else 0.0,
-            "ec_real": float(np.mean(real)) * p_err if real else 0.0,
+            # Real-error consequence only on problems with a disagreeing small resample;
+            # undefined (blank) when there are none, never 0.
+            "ec_real": float(np.mean(real)) * p_err if real else None,
+            "ec_real_n_used": len(real),
             "reruns_used": sum(r["has_descendants"] and not r["skipped_plus"] for r in recs),
             "reruns_full": sum(bool(r["has_descendants"]) for r in recs),
         })

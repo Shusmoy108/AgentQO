@@ -34,7 +34,7 @@ from agentqo.labeling.ec_labeler import ECLabeler, LabelingResult, analyze_h1_re
 from agentqo.labeling.labels_v2 import labels_rows, per_problem_rows, strategy_rows
 from agentqo.metrics.figures import save_h1_histogram
 from agentqo.metrics.io import append_results_entry, args_config, mark_done, resolve_output_dir, write_csv, write_json
-from agentqo.tasks.datasets import dev_eval_split, extended_eval, load_gsm8k
+from agentqo.tasks.datasets import dev_eval_split, extended_eval, extended_label, load_gsm8k
 from agentqo.tasks.hotpotqa import load_hotpotqa
 from agentqo.tasks.prompts import build_prompt, code_output
 from agentqo.tasks.real_task_model import RealTaskModel
@@ -91,8 +91,8 @@ def load_problems(args) -> List[Dict[str, str]]:
         return load_hotpotqa(args.split)[: args.n_tasks]
     if args.split == "eval_ext":
         return extended_eval(args.n_tasks)
-    if args.split == "label":
-        raise SystemExit("--split label is HotpotQA only; GSM8K uses dev")
+    if args.split == "label":  # GSM8K: the Session 1 LABEL order (100 dev first), disjoint from eval_ext
+        return extended_label(args.n_tasks)
     working = load_gsm8k(n=300, seed=0)
     split = dev_eval_split(working, n_dev=100, seed=0)
     pool = working if args.split == "all" else split[args.split]
@@ -178,7 +178,7 @@ def write_v2_labels(out: Path, res: LabelingResult) -> List[dict]:
     labels = labels_rows(res.records)
     write_csv(out / "labels_v2.csv", labels, fieldnames=[
         "agent", "n", "p_dis", "g_dis", "uv", "uv_ci_low", "uv_ci_high",
-        "ec_synthetic", "ec_real", "reruns_used", "reruns_full"])
+        "ec_synthetic", "ec_real", "ec_real_n_used", "reruns_used", "reruns_full"])
     write_csv(out / "labels_v2_per_problem.csv", per_problem_rows(res.records))
     write_csv(out / "labels_v2_by_strategy.csv", strategy_rows(res.records))
     used, full = sum(r["reruns_used"] for r in labels), sum(r["reruns_full"] for r in labels)

@@ -220,3 +220,27 @@ def test_run_placement_outputs_and_resume(tmp_path):
     (out / "run_only_verifier_r1.csv").unlink()
     res = subprocess.run(cmd, cwd=ROOT, check=True, capture_output=True, text=True).stdout
     assert res.count("skip ") == 3 and (out / "run_only_verifier_r1.csv").exists()
+
+
+def test_limit_gaps_for_a2():
+    from scripts.v2.pareto import limit_gaps
+    a = {"plan_set": frozenset(), "accuracy": 0.5, "cost": 1.0, "p95_latency": 1.0}
+    b = {"plan_set": frozenset({"x"}), "accuracy": 0.8, "cost": 2.0, "p95_latency": 1.0}
+    c = {"plan_set": frozenset({"x", "y"}), "accuracy": 0.9, "cost": 3.0, "p95_latency": 5.0}
+    rows = limit_gaps([a, b, c], [a, c])  # the baseline skipped b
+    assert max(r["gap"] for r in rows) == pytest.approx(0.3)
+    assert all(r["gap"] >= 0 for r in rows)
+
+
+def test_h1c_reports_a1_criteria():
+    from scripts.v2.rules_report import h1c
+    from agentqo.workflows.library import create_math_reasoning_workflow
+    wf = create_math_reasoning_workflow(3)
+    agents = list(wf.topological_order)
+    full = [{"agent": a, "uv": 0.1 * i, "uv_ci_low": 0.05 * i, "reruns_used": 4, "reruns_full": 4} for i, a in enumerate(agents)]
+    fast = [{**r, "reruns_used": 2} for r in full]
+    fast[1] = {**fast[1], "uv": fast[1]["uv"] + 0.03}
+    out = h1c(full, fast, wf)
+    assert out["share"] == 0.5 and out["a1_share_le_half"]
+    assert out["a1_max_uv_abs_diff"] == pytest.approx(0.03) and out["a1_confident_uv_same"]
+    assert out["a1_holds_without_share"] is False  # 0.03 > 0.02

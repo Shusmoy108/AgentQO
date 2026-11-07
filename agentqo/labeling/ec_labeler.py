@@ -385,9 +385,10 @@ class ECLabeler:
             ref_text = _output_as_text(reference.output)
             base_text = _output_as_text(base.node_results[nid].output)
             early_key = None if role == NodeRole.PLANNER else extract(ref_text)
-            # --disagree-only: small and large agree here, so Q+ is taken as the baseline.
-            agree_early = extract(base_text) == early_key if early_key is not None else ref_text == base_text
-            skip_plus = self.disagree_only and agree_early
+            # --disagree-only: skip the Q+ rerun only when the small and large output keys at
+            # this agent are equal; Q+ is then the baseline correctness. Agents without a
+            # comparable key (planner text, unextractable output) are never skipped.
+            skip_plus = self.disagree_only and early_key is not None and extract(base_text) == early_key
             plus = base if skip_plus else substituted(nid, reference)
             ref_final = final_key(plus)
 

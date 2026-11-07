@@ -26,19 +26,26 @@ all_subsets calls cost more per call because most plans call the 7B model.
 
 ## Per phase at full size
 
+Sizes after amendment A8 (FIX 4): math labels 200, HotpotQA eval 400.
+
 | Phase | Work | New calls | Ollama (measured rate) | H100, 10x rule | H100, Session 1 rate |
 |---|---|---|---|---|---|
-| P1 | math labels 100 + HotpotQA labels 200 | 30,870 | 14.8 h | **1.5 h** | **19 min** |
-| P2 | math all_subsets 400 + HotpotQA all_subsets 300 | 44,060 | 45.2 h | **4.5 h** | **26 min** |
-| P3 | Qwen 3B/14B math: labels 100 + all_subsets 400 | 44,190 | - | **~7.5 h** | **~55 min** |
-| P4 | Granite 2B/8B math, max_tokens 512 | 44,190 | - | **~7.5 h** | **~55 min** |
+| P1 | math labels 200 + HotpotQA labels 200 | 43,540 | 20.9 h | **2.1 h** | **26 min** |
+| P2 | math all_subsets 400 + HotpotQA all_subsets 400 | 48,240 | 49.7 h | **5.0 h** | **29 min** |
+| P3 | Qwen 3B/14B math: labels 200 + all_subsets 400 | 56,860 | - | **~8.7 h** | **~70 min** |
+| P4 | Granite 2B/8B math (labels 200, max_tokens 512) | 56,860 | - | **~8.7 h** | **~70 min** |
 | P5 | 7 plans x 64 problems x 3 repeats x 3 placements, K=16 | 24,192 | ~18 h | **~1.8 h** + server restarts | n/a (latency-bound) |
 | P6 | offline analysis, all settings | 0 | ~1 min | **< 5 min** | **< 5 min** |
 | final | zip with SQLite cache | 0 | - | **< 5 min** | **< 5 min** |
-| **Total** | | ~187,000 | | **~23 h** | **~4.5 h** (P5 at 1.8 h) |
+| **Total** | | ~230,000 | | **~26 h** | **~5 h** (P5 at 1.8 h) |
+
+The first 100 math label problems and the first 200 math eval problems are the Session 1
+ones, so on the H100 their Qwen 1.5B/7B calls replay from the Session 1 vLLM cache if it is
+copied over; the table does not count that saving. HotpotQA calls per problem were measured
+before FIX 1; the new prompts are about the same length.
 
 Assumptions behind the rows without a direct measurement:
-- P3 and P4 make the same number of calls as P1+P2 math. Their time is twice the Qwen
+- P3 and P4 make the same number of calls as P1+P2 math (labels 200). Their time is twice the Qwen
   1.5B/7B math time: 14B decodes about 2x slower than 7B, and Granite has a 512-token cap
   against Qwen's 256. Not measured; only `qwen2.5:3b` has a local Ollama build.
 - P5 runs in real time against live servers and bypasses the cache, so it scales with
@@ -49,7 +56,7 @@ Assumptions behind the rows without a direct measurement:
 
 ## Advice for the lease
 
-- Run P1 and P2 first. The 10x rule puts the full lease at about a day of GPU time,
+- Run P1 and P2 first. The 10x rule puts the full lease at just over a day of GPU time,
   and the Session 1 rate at about half a working day. Either way it fits, with P5 last
   because it needs the servers re-placed.
 - Start vLLM with `--max-model-len 8192` for HotpotQA (prompts up to 3,281 tokens).

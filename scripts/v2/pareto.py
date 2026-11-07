@@ -117,6 +117,26 @@ def two_step(points: Sequence[Mapping], n_agents: int) -> List[Mapping]:
     return chosen
 
 
+def limit_gaps(points: Sequence[Mapping], baseline: Sequence[Mapping]) -> List[dict]:
+    """A2: on a grid of (cost limit, p95 limit) = deciles 10..100 of the candidates' cost
+    and p95, the most accurate joint choice minus the most accurate two-step choice that
+    fits both limits. Pairs where the two-step baseline has nothing feasible are left out."""
+    costs = [p["cost"] for p in points]
+    lats = [p["p95_latency"] for p in points]
+    rows = []
+    for qc in range(10, 101, 10):
+        for ql in range(10, 101, 10):
+            c, l = float(np.percentile(costs, qc)), float(np.percentile(lats, ql))
+            fits = lambda pool: [p for p in pool if p["cost"] <= c and p["p95_latency"] <= l]
+            two = max((p["accuracy"] for p in fits(baseline)), default=None)
+            if two is None:
+                continue
+            joint = max(p["accuracy"] for p in fits(points))
+            rows.append({"cost_pct": qc, "p95_pct": ql, "cost_limit": c, "p95_limit_s": l,
+                         "joint_accuracy": joint, "two_step_accuracy": two, "gap": joint - two})
+    return rows
+
+
 def constrained_best(points: Sequence[Mapping], limit: float) -> List[dict]:
     """H3a: best-accuracy plan per placement under the latency limit."""
     rows = []
@@ -128,17 +148,20 @@ def constrained_best(points: Sequence[Mapping], limit: float) -> List[dict]:
     return rows
 
 
-def budget_best(acc: Mapping[FrozenSet[str], float], costs: Sequence[Mapping], topo, fracs) -> List[dict]:
-    """H4a: best plan at the same relative budget under API and GPU pricing."""
+def budget_best(acc: Mapping[FrozenSet[str], float], costs: Sequence[Mapping], topo, fracs,
+                gpu_col: str = "gpu_usd_throughput_separate") -> List[dict]:
+    """H4a: best plan at the same relative budget under API and GPU pricing (separate placement)."""
     rows = []
     for frac in fracs:
         row = {"budget_fraction": frac}
-        for column in ("api_usd", "gpu_usd"):
+        for column in ("api_usd", gpu_col):
             by = {parse_plan_name(c["plan"], topo): float(c[column]) for c in costs}
             low, high = by[frozenset()], by[frozenset(topo)]
             ok = [p for p in by if p in acc and by[p] <= low + frac * (high - low)]
             best = max(ok, key=lambda p: (acc[p], -by[p]))
             row[f"{column}_plan"], row[f"{column}_accuracy"] = plan_name(best, topo), acc[best]
+        row["gpu_column"] = gpu_col
+        row["gpu_usd_plan"], row["gpu_usd_accuracy"] = row.pop(f"{gpu_col}_plan"), row.pop(f"{gpu_col}_accuracy")
         row["differs"] = row["api_usd_plan"] != row["gpu_usd_plan"]
         rows.append(row)
     return rows
@@ -153,7 +176,9 @@ def main() -> None:
     ap.add_argument("--costs", required=True, help="plan_costs.csv from cost_report.py")
     ap.add_argument("--calls", required=True, help="h3_calls.csv: per-agent latency")
     ap.add_argument("--interference", default="configs/v2_interference.yaml")
-    ap.add_argument("--cost-metric", choices=["gpu_usd", "api_usd"], default="gpu_usd")
+    ap.add_argument("--cost-metric", choices=["gpu_usd_throughput", "gpu_usd_latency", "api_usd"],
+                    default="gpu_usd_throughput",
+                    help="gpu_usd_throughput (FIX 5) falls back to gpu_usd_latency when plan_costs.csv has no P5 rates")
     ap.add_argument("--k", type=int, default=16, help="problems in flight")
     ap.add_argument("--limit-factor", type=float, default=1.5, help="H3a: limit = factor x separate all_small p95")
     ap.add_argument("--budget-fractions", default="0.25,0.5,0.75")
@@ -182,8 +207,13 @@ def main() -> None:
     model = LatencyModel(read_csv(args.calls), wf)
     betas = yaml.safe_load(Path(args.interference).read_text())["placements"]
     rate_col = "gpu_seconds_shared"
+    metric = args.cost_metric
+    have_tput = all(str(c.get("gpu_usd_throughput_separate", "")) not in ("", "nan") for c in cost_rows)
+    if metric == "gpu_usd_throughput" and not have_tput:
+        print("WARNING: no throughput GPU cost (no P5 runs); using gpu_usd_latency")
+        metric = "gpu_usd_latency"
 
-    points = []
+    points, skipped = [], set()
     missing = [p for p in accuracy if p not in costs]
     if missing:
         print(f"WARNING: {len(missing)} plans have no cost row and are left out")
@@ -193,13 +223,21 @@ def main() -> None:
         separate_p95 = model.p95(plan, {"small": 1.0, "large": 1.0})
         for placement in PLACEMENTS:
             p95 = model.p95(plan, model.factors(plan, betas[placement], args.k))
-            cost = float(costs[plan][args.cost_metric])
-            if args.cost_metric == "gpu_usd" and placement != "separate":
+            if metric == "gpu_usd_throughput":
+                cost = float(costs[plan][f"gpu_usd_throughput_{placement}"])
+            else:
+                cost = float(costs[plan][metric])
+            if metric == "gpu_usd_latency" and placement != "separate":
                 # The GPU is shared by memory fraction, and calls run slower by the predicted factor.
                 cost *= float(costs[plan][rate_col]) / float(costs[plan]["gpu_seconds"]) * (p95 / separate_p95)
+            if cost != cost:  # NaN: no P5 throughput for this placement
+                skipped.add(placement)
+                continue
             points.append({"plan": plan_name(plan, topo), "plan_set": plan, "placement": placement,
                            "accuracy": acc, "cost": cost, "p95_latency": p95})
 
+    if skipped:
+        print(f"WARNING: no {metric} for placements {sorted(skipped)} (no P5 run); left out")
     cost_max, lat_max = max(p["cost"] for p in points), max(p["p95_latency"] for p in points)
     front, baseline = pareto_front(points), two_step(points, len(topo))
     hv_joint, hv_two = hypervolume(front, cost_max, lat_max), hypervolume(baseline, cost_max, lat_max)
@@ -208,16 +246,23 @@ def main() -> None:
     write_csv(out / "pareto_front.csv", sorted(front, key=lambda p: -p["accuracy"]), fieldnames=fields)
     write_csv(out / "two_step_baseline.csv", baseline, fieldnames=fields)
 
+    gaps = limit_gaps(points, baseline)
+    write_csv(out / "limit_gaps.csv", gaps)
     all_small = next(p for p in points if p["plan"] == "all_small" and p["placement"] == "separate")
     limit = args.limit_factor * all_small["p95_latency"]
     con = constrained_best(points, limit)
     write_csv(out / "constrained_best.csv", con)
     fracs = [float(x) for x in args.budget_fractions.split(",")]
-    budgets = budget_best(accuracy, cost_rows, topo, fracs)
+    budgets = budget_best(accuracy, cost_rows, topo, fracs,
+                          "gpu_usd_throughput_separate" if have_tput else "gpu_usd_latency")
     write_csv(out / "budget_best.csv", budgets)
 
-    summary = {"cost_metric": args.cost_metric, "k": args.k, "n_candidates": len(points), "n_front": len(front),
+    summary = {"cost_metric": metric, "cost_metric_requested": args.cost_metric,
+               "placements_left_out": sorted(skipped), "k": args.k, "n_candidates": len(points), "n_front": len(front),
                "hypervolume_joint": hv_joint, "hypervolume_two_step": hv_two,
+               "a2_hv_strictly_higher": hv_joint > hv_two + 1e-12,
+               "a2_max_limit_gap": max((g["gap"] for g in gaps), default=float("nan")),
+               "a2_gap_ge_2_points": any(g["gap"] >= 0.02 - 1e-12 for g in gaps),
                "h3a_limit_s": limit, "h3a_best_differs": len({r["plan"] for r in con if r["placement"] in ("separate", "shared")}) > 1,
                "h4a_any_budget_differs": any(b["differs"] for b in budgets)}
 

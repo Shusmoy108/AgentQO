@@ -4,6 +4,7 @@
     python3 scripts/v2/summarize_phase.py report results/v2/P1
     python3 scripts/v2/summarize_phase.py zip results/v2/P1 --name P1
     python3 scripts/v2/summarize_phase.py copy results/v2/P1 /path/to/worktree/results/v2/P1
+    python3 scripts/v2/summarize_phase.py provenance results/v2/P1 [--refuse-dirty]
 """
 
 from __future__ import annotations
@@ -29,6 +30,7 @@ KEY_TABLES = {
     "rule_plans.csv": (None, False, 16),
     "estimator_errors.csv": (None, False, 6),
     "pareto_front.csv": ("accuracy", True, 10),
+    "placement_costs.csv": (None, False, 30),
     "constrained_best.csv": (None, False, 3),
     "budget_best.csv": (None, False, 6),
     "latency_check.csv": (None, False, 30),
@@ -63,19 +65,57 @@ def table(path: Path) -> str:
     return "\n".join(out) + "\n"
 
 
-def git_commit() -> str:
-    res = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True)
-    return res.stdout.strip() or "unknown"
+# Code paths that decide what a run does; untracked files elsewhere (zips, notes) do not.
+CODE_PATHS = ("agentqo", "scripts", "configs", "data/splits", "tests")
+PROVENANCE = "provenance.jsonl"
+
+
+def git_state() -> Dict:
+    """Full HEAD commit and whether the tree differs from it (tracked changes anywhere,
+    or untracked files under CODE_PATHS)."""
+    def run(*a):
+        return subprocess.run(["git", *a], capture_output=True, text=True)
+    head = run("rev-parse", "HEAD").stdout.strip() or "unknown"
+    tracked = run("diff", "--quiet", "HEAD").returncode != 0
+    untracked = bool(run("ls-files", "--others", "--exclude-standard", "--", *CODE_PATHS).stdout.strip())
+    return {"commit": head, "dirty": tracked or untracked}
+
+
+def record_provenance(root: Path, refuse_dirty: bool) -> Dict:
+    """Append the code state at the start of a run; one line per (re)start of the phase."""
+    state = {"started": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+             "backend": os.environ.get("V2_BACKEND", "vllm"), **git_state()}
+    if refuse_dirty and state["dirty"]:
+        raise SystemExit(f"refusing to run {root.name}: the working tree has uncommitted changes "
+                         f"(HEAD {state['commit'][:12]}); commit them first")
+    root.mkdir(parents=True, exist_ok=True)
+    with (root / PROVENANCE).open("a") as fh:
+        fh.write(json.dumps(state) + "\n")
+    return state
+
+
+def read_provenance(root: Path) -> List[Dict]:
+    path = root / PROVENANCE
+    return [json.loads(x) for x in path.read_text().splitlines() if x.strip()] if path.exists() else []
 
 
 def report(root: Path) -> Dict:
     """Write SUMMARY.md and summary.json. A step is a directory holding run_config.v2.json."""
     steps = sorted(p.parent for p in root.rglob("run_config.v2.json"))
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    summary: Dict = {"phase": root.name, "generated": now, "git_commit": git_commit(),
-                     "backend": os.environ.get("V2_BACKEND", "vllm"), "steps": []}
+    runs, packaged = read_provenance(root), git_state()
+    run_commits = sorted({r["commit"] for r in runs})
+    summary: Dict = {"phase": root.name, "generated": now, "backend": os.environ.get("V2_BACKEND", "vllm"),
+                     "git_commit": run_commits[0] if len(run_commits) == 1 else (run_commits or ["unknown"]),
+                     "dirty": any(r["dirty"] for r in runs) if runs else None,
+                     "runs": runs, "packaged_at": packaged, "steps": []}
     md = [f"# Phase {root.name}", "",
-          f"Generated {now} at commit `{summary['git_commit']}`, backend `{summary['backend']}`.", ""]
+          f"Generated {now}, backend `{summary['backend']}`.", "",
+          "Code run: " + (", ".join(f"`{c}`" for c in run_commits) or "unknown (no provenance.jsonl)")
+          + (" **(dirty working tree)**" if summary["dirty"] else "")
+          + (f"; packaged at `{packaged['commit']}`" + (" (dirty)" if packaged["dirty"] else "") + "."), ""]
+    if len(run_commits) > 1:
+        md += ["**Resumed at more than one commit; see `provenance.jsonl`.**", ""]
     if summary["backend"] != "vllm":
         md += [f"**Test run on `{summary['backend']}`: not a reported result.**", ""]
     md += ["| step | status |", "|---|---|"]
@@ -96,7 +136,7 @@ def report(root: Path) -> Dict:
         md += [f"## {step.relative_to(root)}", ""]
         for path in tables:
             md += [f"### {path.name}", "", table(path)]
-        for name in ("cost_summary", "rules_summary", "pareto_summary", "adaptive_summary"):
+        for name in ("cost_summary", "rules_summary", "pareto_summary", "adaptive_summary", "routing_summary"):
             if (step / f"{name}.json").exists():
                 md += [f"### {name}", "", "```json", (step / f"{name}.json").read_text().strip(), "```", ""]
     (root / "SUMMARY.md").write_text("\n".join(md))
@@ -144,12 +184,13 @@ def copy_for_git(root: Path, dest: Path) -> int:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("command", choices=["report", "zip", "copy"])
+    ap.add_argument("command", choices=["report", "zip", "copy", "provenance"])
     ap.add_argument("root", type=Path)
     ap.add_argument("dest", nargs="?", type=Path)
     ap.add_argument("--name", default="")
     ap.add_argument("--where", type=Path, default=Path("."))
     ap.add_argument("--extra", nargs="*", type=Path, default=[], help="files to add as is (the cache, in the final zip)")
+    ap.add_argument("--refuse-dirty", action="store_true", help="provenance: exit if the tree is dirty")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     if args.dry_run:
@@ -159,6 +200,9 @@ def main() -> None:
         report(args.root)
         manifest(args.root)
         print(f"wrote {args.root}/SUMMARY.md, summary.json, MANIFEST.txt")
+    elif args.command == "provenance":
+        state = record_provenance(args.root, args.refuse_dirty)
+        print(f"code {state['commit']}{' (DIRTY)' if state['dirty'] else ''}")
     elif args.command == "zip":
         print(make_zip(args.root, args.name or args.root.name, args.where, args.extra))
     else:

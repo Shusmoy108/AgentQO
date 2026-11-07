@@ -22,6 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 from agentqo.metrics.io import args_config, mark_done, read_csv, resolve_output_dir, write_csv, write_json  # noqa: E402
 from agentqo.policies.v2_rules import (  # noqa: E402
     all_rules,
+    confident_uv_order,
     independence_additive,
     independence_multiplicative,
     pairs_to_measure,
@@ -76,12 +77,26 @@ def estimator_tables(true_acc, agents, m: int):
     return summary, detail, thresholds
 
 
-def h1c(full: List[dict], fast: List[dict]) -> dict:
+def h1c(full: List[dict], fast: List[dict], wf=None) -> dict:
+    """Original H1c and its replacement A1: UV change per agent, top-2 agents and the
+    confident_uv budget-1/2 picks, full labels against --disagree-only labels."""
     top2 = lambda rows: {r["agent"] for r in sorted(rows, key=lambda r: -float(r["uv"]))[:2]}
     used, total = sum(int(r["reruns_used"]) for r in fast), sum(int(r["reruns_full"]) for r in fast)
-    return {"reruns_used": used, "reruns_full": total, "share": used / total if total else float("nan"),
-            "top2_full": sorted(top2(full)), "top2_disagree_only": sorted(top2(fast)),
-            "top2_same": top2(full) == top2(fast)}
+    f_by, d_by = {r["agent"]: r for r in full}, {r["agent"]: r for r in fast}
+    uv_diff = {a: abs(float(f_by[a]["uv"]) - float(d_by[a]["uv"])) for a in f_by if a in d_by}
+    share = used / total if total else float("nan")
+    out = {"reruns_used": used, "reruns_full": total, "share": share,
+           "top2_full": sorted(top2(full)), "top2_disagree_only": sorted(top2(fast)),
+           "top2_same": top2(full) == top2(fast),
+           "a1_uv_abs_diff": uv_diff, "a1_max_uv_abs_diff": max(uv_diff.values(), default=float("nan")),
+           "a1_share_le_half": share <= 0.5}
+    if wf is not None:
+        picks = lambda by: {k: sorted(confident_uv_order(by, wf)[:k]) for k in (1, 2)}
+        out["a1_confident_uv_full"], out["a1_confident_uv_disagree_only"] = picks(f_by), picks(d_by)
+        out["a1_confident_uv_same"] = picks(f_by) == picks(d_by)
+        out["a1_holds_without_share"] = (out["a1_max_uv_abs_diff"] <= 0.02 and out["top2_same"]
+                                         and out["a1_confident_uv_same"])
+    return out
 
 
 def main() -> None:
@@ -117,7 +132,7 @@ def main() -> None:
     elif args.plans:
         print(f"{len(true_acc)} plans of {2 ** len(agents)}: estimator errors need all_subsets, skipped")
     if args.labels_disagree:
-        summary["h1c"] = h1c(read_csv(args.labels), read_csv(args.labels_disagree))
+        summary["h1c"] = h1c(read_csv(args.labels), read_csv(args.labels_disagree), wf)
         write_json(out / "h1c.json", summary["h1c"])
     write_json(out / "rules_summary.json", summary)
     mark_done(out)

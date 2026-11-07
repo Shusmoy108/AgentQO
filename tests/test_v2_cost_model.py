@@ -7,7 +7,8 @@ import sys
 
 import pytest
 
-from agentqo.metrics.cost_model import api_usd, gpu_usd, large_small_ratio, load_prices, price_plans
+from agentqo.metrics.cost_model import (api_usd, estimated_throughput_costs, gpu_usd, large_small_ratio, load_prices,
+                                        measured_throughput_costs, price_plans, rank_agreement, tokens_per_second)
 from agentqo.metrics.io import mark_done, resolve_output_dir
 from scripts.v2.model_env import exports, load_models
 
@@ -35,8 +36,9 @@ def test_plan_row_is_mean_per_problem():
     assert row["cost_units"] == (1 + 4 + 1) / 2
     assert row["gpu_seconds"] == 3.0
     assert row["gpu_seconds_shared"] == pytest.approx((2 * .25 + 2 * .55 + 2 * .25) / 2)
-    assert row["gpu_usd_4"] == pytest.approx(3.0 * 4 / 3600)
-    assert row["gpu_usd"] == row["gpu_usd_2"]
+    assert row["gpu_usd_latency_4"] == pytest.approx(3.0 * 4 / 3600)
+    assert row["gpu_usd_latency"] == row["gpu_usd_latency_2"]
+    assert row["tokens_out_small"] == 100 and row["tokens_out_large"] == 50
 
 
 def test_large_small_ratio_for_h4b():
@@ -95,3 +97,29 @@ def test_model_configs_have_every_spec_entry():
     assert cfg["max_tokens"] == {"qwen_math": 256, "granite": 512, "hotpotqa": 384}
     env = exports("qwen3b", "qwen14b", cfg)
     assert env["VLLM_LARGE_MODEL"] == "Qwen/Qwen2.5-14B-Instruct" and "OLLAMA_LARGE_MODEL" not in env
+
+
+def test_throughput_gpu_cost_measured_and_estimated():
+    """FIX 5: GPUs reserved x wall / problems; separate = 2 GPUs, shared = 1."""
+    summary = [{"plan": "all_small", "placement": "separate", "repeat": "0", "n": "10", "throughput_per_s": "0.5"},
+               {"plan": "all_small", "placement": "shared", "repeat": "0", "n": "10", "throughput_per_s": "0.5"}]
+    m = {r["placement"]: r for r in measured_throughput_costs(summary, 3600)}
+    assert m["separate"]["gpu_seconds_per_problem"] == 4.0 and m["shared"]["gpu_seconds_per_problem"] == 2.0
+    assert m["separate"]["gpu_usd_throughput"] == pytest.approx(4.0) and m["separate"]["source"] == "measured"
+    calls = [{"plan": "all_small", "repeat": "0", "fidelity": "small", "completion_tokens": "1000"}]
+    tps = tokens_per_second([(summary, calls)])
+    assert tps[("separate", "small")] == pytest.approx(1000 / 20) and ("separate", "large") not in tps
+    tps[("separate", "large")] = tps[("shared", "large")] = 25.0
+    rows = price_plans([call("p", "a", "small", tout=100), call("p", "a", "large", tout=100)], PRICES)
+    estimated_throughput_costs(rows, tps, 3600)
+    r = rows[0]
+    assert r["gpu_usd_throughput_separate"] == pytest.approx(2 * max(100 / 50, 100 / 25))
+    assert r["gpu_usd_throughput_shared"] == pytest.approx(1 * (100 / 50 + 100 / 25))
+    assert math.isnan(r["gpu_usd_throughput_shared_mps"]) and r["gpu_usd_throughput_source"] == "estimated"
+
+
+def test_rank_agreement_for_a3():
+    rows = [{"a": i, "b": i} for i in range(5)]
+    assert rank_agreement(rows, "a", "b") == pytest.approx(1.0)
+    assert rank_agreement([{"a": i, "b": -i} for i in range(5)], "a", "b") == pytest.approx(-1.0)
+    assert math.isnan(rank_agreement(rows[:2], "a", "b"))

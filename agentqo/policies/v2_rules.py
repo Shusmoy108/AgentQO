@@ -50,7 +50,11 @@ def output_order(workflow) -> List[str]:
 
 
 def _by(labels: Labels, column: str, topo: Sequence[str]) -> List[str]:
-    return sorted(topo, key=lambda n: (-float(labels[n][column]), topo.index(n)))
+    # A blank value (ec_real with no disagreeing resample) is undefined and ranks last.
+    def val(n):
+        v = labels[n].get(column)
+        return float(v) if v not in (None, "") else float("-inf")
+    return sorted(topo, key=lambda n: (-val(n), topo.index(n)))
 
 
 def confident_uv_order(labels: Labels, workflow) -> List[str]:

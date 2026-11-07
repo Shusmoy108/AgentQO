@@ -103,27 +103,38 @@ HOTPOT_AGGREGATOR = """Answer a multi-hop question from the findings.
 {problem}
 Findings:
 {findings}
-State the answer in as few words as possible; for a yes/no question answer yes or no.
+Question: {question}
+Answer this question in as few words as possible, using the findings. A question that asks
+who, what, which, where, when or how many is answered by a name, title, place, date, number or
+short phrase: copy it from the findings. Only a question asking whether something is true is
+answered by yes or no.
 End with: Final answer: <short answer>"""
 
 HOTPOT_VERIFIER = """Check another agent's answer to a multi-hop question.
 {problem}
 Proposed answer:
 {proposed}
-Re-read the question and the paragraphs and find the answer yourself. Only change the answer if you find a specific reading mistake, and name the mistake in one sentence. If you cannot point to a specific mistake, repeat the original answer exactly. End with: Final answer: <short answer>"""
+Question: {question}
+Does the proposed answer answer this question, and do the paragraphs support it? Write KEEP if
+so. Write CHANGE only if a paragraph states something that contradicts it, and quote that
+sentence. After KEEP, repeat the proposed short answer exactly. After CHANGE, give the
+corrected answer as the shortest span that answers the question (a name, title, place, date,
+number or short phrase; yes or no only if the question asks whether something is true).
+End with: Final answer: <short answer>"""
 
 
 def _hotpot_prompt(node: "NodeSpec", results: Dict[str, "NodeResult"], workflow: "Workflow", problem: str) -> str:
     role, plan = node.role, _text(results, _planner_id(workflow) or "")
+    question = problem.split("\n", 1)[0].removeprefix("Question: ")
     if role == NodeRole.PLANNER:
         return HOTPOT_PLANNER.format(problem=problem)
     if role == NodeRole.RESEARCHER:
         return HOTPOT_HOP.format(problem=problem, plan=plan, i=node.node_id.split("_")[1],
                                  prior=_results_block(results, _chain(workflow, node.node_id)))
     if role == NodeRole.AGGREGATOR:
-        return HOTPOT_AGGREGATOR.format(problem=problem, findings=_results_block(results, _chain(workflow, node.node_id)))
+        return HOTPOT_AGGREGATOR.format(problem=problem, question=question, findings=_results_block(results, _chain(workflow, node.node_id)))
     if role == NodeRole.VERIFIER:
-        return HOTPOT_VERIFIER.format(problem=problem, proposed=_results_block(results, list(node.inputs)))
+        return HOTPOT_VERIFIER.format(problem=problem, question=question, proposed=_results_block(results, list(node.inputs)))
     raise ValueError(f"no HotpotQA template for role {role}")
 
 

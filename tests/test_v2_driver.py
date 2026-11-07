@@ -155,3 +155,28 @@ def test_package_commits_text_only_and_never_forces(tmp_path):
     assert git(remote, "rev-parse", "v2-lease1~1") == first  # appended, not rewritten
     assert (repo / "results_v2_P1_2.zip").exists()
     assert not list(tmp_path.glob("tmp*")) and git(repo, "worktree", "list").count("\n") == 0
+
+
+def test_provenance_records_commit_and_refuses_dirty_lease_runs(tmp_path):
+    """FIX 3: the full HEAD of the code run, a dirty flag, and no lease phase from a dirty tree."""
+    repo = tmp_path / "repo"
+    (repo / "scripts/v2").mkdir(parents=True)
+    git(repo, "init", "-b", "work")
+    shutil.copy2(ROOT / "scripts/v2/summarize_phase.py", repo / "scripts/v2/summarize_phase.py")
+    (repo / ".gitignore").write_text("results/\n")
+    git(repo, "add", ".")
+    git(repo, "commit", "-m", "base")
+    head = git(repo, "rev-parse", "HEAD")
+    prov = lambda *a: subprocess.run(["python3", "scripts/v2/summarize_phase.py", "provenance", "results/v2/P1", *a],
+                                     cwd=repo, capture_output=True, text=True)
+    assert prov("--refuse-dirty").returncode == 0
+    (repo / "scripts/v2/new_helper.py").write_text("x = 1\n")  # untracked code makes the tree dirty
+    assert prov().returncode == 0
+    refused = prov("--refuse-dirty")
+    assert refused.returncode != 0 and "uncommitted" in refused.stderr
+    runs = [json.loads(x) for x in (repo / "results/v2/P1/provenance.jsonl").read_text().splitlines()]
+    assert [r["dirty"] for r in runs] == [False, True] and all(r["commit"] == head for r in runs)
+    subprocess.run(["python3", "scripts/v2/summarize_phase.py", "report", "results/v2/P1"], cwd=repo, check=True)
+    summary = json.loads((repo / "results/v2/P1/summary.json").read_text())
+    assert summary["git_commit"] == head and summary["dirty"] is True and summary["packaged_at"]["dirty"] is True
+    assert f"`{head}` **(dirty working tree)**" in (repo / "results/v2/P1/SUMMARY.md").read_text()

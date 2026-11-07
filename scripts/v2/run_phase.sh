@@ -2,10 +2,10 @@
 # M10: one driver for the lease. Re-running a phase resumes it.
 #   scripts/v2/run_phase.sh P1|P2|P3|P4|P5|P6|final
 #
-#   P1  Qwen 1.5B/7B labels: math (dev 100), HotpotQA (label 200), full and --disagree-only
-#   P2  Qwen 1.5B/7B plans:  math all_subsets (eval_ext 400), HotpotQA all_subsets (eval 300)
-#   P3  Qwen 3B/14B math:    labels + all_subsets
-#   P4  Granite 2B/8B math:  labels + all_subsets
+#   P1  Qwen 1.5B/7B labels: math (label 200 = Session 1 dev 100 + 100), HotpotQA (label 200), full and --disagree-only
+#   P2  Qwen 1.5B/7B plans:  math all_subsets (eval_ext 400), HotpotQA all_subsets (eval 400)
+#   P3  Qwen 3B/14B math:    labels (label 200) + all_subsets (eval_ext 400)
+#   P4  Granite 2B/8B math:  labels (label 200, inside the Session 1 LABEL 500) + all_subsets
 #   P5  Placement timing under V2_PLACEMENT (separate|shared|shared_mps), one run per placement
 #   P6  Offline analysis of every setting that has data (M1, M4, M5, M7, H5a)
 #   final  Zip everything, with the SQLite cache
@@ -36,7 +36,14 @@ export AGENTQO_VERIFIER=cautious  # the Session 1 math verifier that helps; Hotp
 
 mkdir -p "$LOGS" "$RESULTS/$phase"
 exec > >(tee -a "$LOGS/$phase.log") 2>&1
-echo "=== $phase start $(date -u +%FT%TZ) commit $(git rev-parse --short HEAD) backend $BACKEND"
+echo "=== $phase start $(date -u +%FT%TZ) commit $(git rev-parse HEAD) backend $BACKEND"
+# Provenance: the commit of the code actually run. A lease phase (vllm, not a dry run)
+# refuses a dirty tree; test runs record the dirty flag instead.
+if [ "${V2_DRY:-0}" != 1 ]; then
+  refuse=()
+  [ "$BACKEND" = vllm ] && refuse=(--refuse-dirty)
+  "$PY" scripts/v2/summarize_phase.py provenance "$RESULTS/$phase" ${refuse[@]+"${refuse[@]}"}
+fi
 
 cap() { echo "${V2_N:-$1}"; }
 OUT="$RESULTS/$phase"
@@ -71,14 +78,22 @@ analyze() {  # setting workflow labels_phase plans_phase
     return 0
   fi
   local d=${DRY[@]+"${DRY[@]}"}
-  "$PY" scripts/v2/cost_report.py --calls "$pl/h3_calls.csv" --output-dir "$OUT/$s/cost" $d
+  # FIX 5: P5 placement runs (Qwen 1.5B/7B math) give the throughput GPU cost.
+  local p5="" p
+  if [ "$s" = math_q15_7 ] || [ "$s" = hotpot_q15_7 ]; then
+    for p in separate shared shared_mps; do
+      [ -f "$RESULTS/P5/$p/placement_summary.csv" ] && p5="${p5:+$p5,}$RESULTS/P5/$p"
+    done
+  fi
+  "$PY" scripts/v2/cost_report.py --calls "$pl/h3_calls.csv" --output-dir "$OUT/$s/cost" ${p5:+--placement "$p5"} $d
   "$PY" scripts/v2/rules_report.py --workflow "$wf" --labels "$lab/labels_v2.csv" --plans "$pl/h3_plans.csv" \
     --labels-disagree "$fast/labels_v2.csv" --output-dir "$OUT/$s/rules" $d
-  "$PY" scripts/v2/routing_offline.py --labels-per-problem "$lab/labels_v2_per_problem.csv" --output-dir "$OUT/$s/routing" $d
+  "$PY" scripts/v2/routing_offline.py --labels-per-problem "$lab/labels_v2_per_problem.csv" \
+    --labels "$lab/labels_v2.csv" --workflow "$wf" --output-dir "$OUT/$s/routing" $d
   "$PY" scripts/v2/adaptive_check.py --per-problem "$pl/h3_per_problem.csv" --output-dir "$OUT/$s/adaptive" $d
   [ -n "$d" ] && return 0
   # Measured placement runs feed H3c, and their separate-placement calls set the latency base.
-  local calls="$pl/h3_calls.csv" measured="" p
+  local calls="$pl/h3_calls.csv" measured=""
   if [ "$s" = math_q15_7 ]; then
     for p in separate shared shared_mps; do
       local f="$RESULTS/P5/$p/placement_summary.csv"
@@ -97,22 +112,22 @@ analyze() {  # setting workflow labels_phase plans_phase
 case "$phase" in
   P1)
     use_models qwen_small qwen_large
-    wants math && labels math_q15_7 math gsm8k dev "$(cap 100)" 256
+    wants math && labels math_q15_7 math gsm8k label "$(cap 200)" 256
     wants hotpot && labels hotpot_q15_7 hotpot hotpotqa label "$(cap 200)" 384
     ;;
   P2)
     use_models qwen_small qwen_large
     wants math && plans math_q15_7 math gsm8k eval_ext "$(cap 400)" 256
-    wants hotpot && plans hotpot_q15_7 hotpot hotpotqa eval "$(cap 300)" 384
+    wants hotpot && plans hotpot_q15_7 hotpot hotpotqa eval "$(cap 400)" 384
     ;;
   P3)
     use_models qwen3b qwen14b
-    labels math_q3_14 math gsm8k dev "$(cap 100)" 256
+    labels math_q3_14 math gsm8k label "$(cap 200)" 256
     plans math_q3_14 math gsm8k eval_ext "$(cap 400)" 256
     ;;
   P4)
     use_models granite_small granite_large
-    labels math_granite math gsm8k dev "$(cap 100)" 512
+    labels math_granite math gsm8k label "$(cap 200)" 512
     plans math_granite math gsm8k eval_ext "$(cap 400)" 512
     ;;
   P5)

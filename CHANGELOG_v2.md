@@ -115,3 +115,81 @@ test accepts None (the fake's good plans equal the reference).
 
 **Pre-registration.** `prereg/v2_lease1.md` committed with the hypotheses as given and a
 table of how each is measured; later changes go in `prereg/v2_amendments.md`.
+
+## 2026-11-07 (pre-lease fixes; amendments in `prereg/v2_amendments.md`)
+
+**FIX 1, HotpotQA aggregator and verifier (bug fix, A5).** Cause: the aggregator
+prompt put the question ~1,500 tokens above the answer slot (before 10 paragraphs), and
+its last instruction was "for a yes/no question answer yes or no". The 7B model answered
+"Yes" as if confirming the findings (e.g. hops found "The Frost Report", aggregator wrote
+"Final answer: Yes"). The extractor was not at fault: it read "Final answer: Yes"
+correctly. Fix (`agentqo/tasks/prompts.py`): both prompts restate the question just
+before the instruction, ask for the shortest span (name, title, place, date, number,
+short phrase), and allow yes/no only for a question asking whether something is true. The
+verifier now writes KEEP or CHANGE, may change only when a paragraph contradicts the
+answer, and must give a short span. A first variant that listed yes/no question openers
+(Is, Are, Was, ...) still gave 32% yes/no aggregator answers on non-yes/no questions and was
+dropped. Before/after numbers are below under "Acceptance".
+
+**FIX 1, frozen HotpotQA split.** `data/splits/hotpot_v2.json` holds the label (200)
+and eval (400) ids, written once by `python3 -m agentqo.tasks.hotpotqa` from the seeded
+split; the loader reads ids from it and fails if the file or any row is missing.
+`.gitignore` now ignores `data/*` except `data/splits/`. Label ids and the first 300 eval
+ids are the same as before.
+
+**FIX 2, disagree-only definition.** A Q+ rerun is skipped only when the small and the
+large output keys at the agent are equal (Q+ = baseline correctness); agents without a
+comparable key (the planner, or an output with no extractable key) are never skipped.
+Before, the planner was skipped when its text matched exactly. Real-error consequence
+was already undefined (None) when no disagreeing resample exists, but `ec_real` reported
+0 for an agent with none at all; it is now blank, and `labels_v2.csv` gains
+`ec_real_n_used`. Rules rank a blank `ec_real` last.
+
+**FIX 3, provenance.** `run_phase.sh` calls `summarize_phase.py provenance` at the start
+of every (re)start of a phase: one line in `provenance.jsonl` with the full HEAD commit and
+a dirty flag (tracked changes anywhere, or untracked files under agentqo/, scripts/,
+configs/, data/splits/, tests/). With `V2_BACKEND=vllm` (a lease phase) a dirty tree
+refuses to run. SUMMARY.md and summary.json report the commits run, the dirty flag, and
+the commit at packaging time; a phase resumed at more than one commit is flagged.
+
+**FIX 4, sample sizes (A8).** GSM8K pools now follow the Session 1 F4/F5 order exactly
+(checked against the Session 1 LABEL 500 and EVAL2 300 id lists): `--split label` for
+GSM8K = 100 dev + Session 1 extra[0:400], first n; `eval_ext` = EVAL 200 + Session 1
+EVAL2 (extra[500:800]). Before, `eval_ext` drew its extra 200 with a different seed and
+overlapped the Session 1 LABEL problems; the first 200 eval problems are unchanged. Phases:
+P1/P3/P4 math labels 200 (`label`), HotpotQA eval 400.
+
+**FIX 5, GPU cost from throughput (A7).** `cost_model.py`: the per-call column is renamed
+`gpu_usd_latency` (and `gpu_usd_latency_<rate>`, `gpu_usd_latency_shared_<rate>`). New:
+`measured_throughput_costs` (P5: GPUs reserved x wall / problems; separate 2, shared 1),
+`tokens_per_second` (per placement and model, from P5 calls), `estimated_throughput_costs`
+(`gpu_usd_throughput_<placement>`, labelled estimated), `rank_agreement` (Kendall tau-b).
+`cost_report.py --placement` writes `placement_costs.csv` and the A3 taus. `pareto.py`
+uses `gpu_usd_throughput` by default (falls back to `gpu_usd_latency` with a warning
+when no P5 data exist; placements without P5 data are left out, not priced NaN), and H4a
+uses the separate-placement throughput cost. Simplification, marked in the code: output
+tokens only (prefill ignored), max rate over runs.
+
+**A2 output.** `pareto.py` writes `limit_gaps.csv` (joint minus two-step accuracy on a
+decile grid of cost and p95 limits) and `a2_*` keys in `pareto_summary.json`.
+
+**A1 output.** `h1c.json` adds per-agent UV change, max change, the confident_uv
+budget-1/2 picks in both modes, and whether the rerun share is at most 0.5.
+
+**A4 output.** `routing_offline.py --labels --workflow` marks the one primary row
+(`samples_disagree` for the confident_uv budget-1 agent) and writes `routing_summary.json`.
+Known gap: the planner has 3 samples (Session 1 cost cap), not 5.
+
+**FIX 1 acceptance (Ollama, Qwen 1.5B/7B, 40 HotpotQA label problems, cautious verifier).**
+
+| | EM | F1 | yes/no on the 39 non-yes/no questions (final / aggregator) | verifier changed the answer |
+|---|---|---|---|---|
+| all_large before | 0.250 | 0.352 | 51% / 54% | 7.5% |
+| all_large after | **0.475** | **0.635** | **0% / 0%** | 17.5% |
+| all_small after | 0.225 | 0.411 | 0% / 0% | 17.5% |
+
+Thresholds (EM >= 0.25 or F1 >= 0.40; under 10% yes/no) are met. The one yes/no question
+(gold "no") is now answered "no" by all_large (before: "yes"). The verifier's net effect is
+-2.5 EM points on all_large (aggregator EM 0.500, final 0.475) and +7.5 on all_small. The
+probe script is a scratch file, not part of the repo; the numbers come from the same
+executor, prompts and cache as the phases.

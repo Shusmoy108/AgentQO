@@ -1,6 +1,7 @@
 """M3 realistic labels and M8 HotpotQA, on the fake server."""
 
 import json
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -12,7 +13,7 @@ from agentqo.executor import FidelityPlan, WorkflowExecutor
 from agentqo.labeling.ec_labeler import ECLabeler
 from agentqo.labeling.labels_v2 import labels_rows, per_problem_rows, strategy_rows
 from agentqo.tasks.answers import extract_hotpot_answer
-from agentqo.tasks.hotpotqa import N_EVAL, N_LABEL, format_problem, split_rows
+from agentqo.tasks.hotpotqa import N_EVAL, N_LABEL, format_problem, frozen_rows, split_rows
 from agentqo.tasks.prompts import build_prompt, code_output
 from agentqo.tasks.real_task_model import RealTaskModel
 from agentqo.workflows.dag import LARGE_FIDELITY, SMALL_FIDELITY
@@ -87,6 +88,38 @@ def test_disagree_only_saves_reruns_and_matches_on_disagreements():
             assert r["q_plus"] == by_key[(r["task_id"], r["node_id"])]["q_plus"]
 
 
+def test_disagree_only_skips_only_on_equal_keys_and_keeps_uv():
+    """FIX 2: skip Q+ only when small and large keys agree; never for the planner.
+    With the fake backend equal keys give equal downstream answers, so UV per agent
+    is identical in full and disagree-only mode."""
+    wf = create_math_reasoning_workflow(3)
+    b1, _, tm1 = fake_backend()
+    full = label(wf, b1, tm1, 12, realistic=True)
+    b2, _, tm2 = fake_backend()
+    fast = label(wf, b2, tm2, 12, disagree_only=True)
+    by_key = {(r["task_id"], r["node_id"]): r for r in full.records}
+    for r in fast.records:
+        if r["node_id"] == "planner":
+            assert not r["skipped_plus"]
+        if r["skipped_plus"]:
+            assert r["base_key"] == r["reference_key"] is not None
+            assert by_key[(r["task_id"], r["node_id"])]["q_plus"] == r["q_base"]
+    f_uv = {r["agent"]: r["uv"] for r in labels_rows(full.records)}
+    d_uv = {r["agent"]: r["uv"] for r in labels_rows(fast.records)}
+    assert f_uv == pytest.approx(d_uv)
+
+
+def test_ec_real_excludes_problems_without_a_disagreeing_resample():
+    base = {"code_node": False, "q_base": 0.0, "q_plus": 1.0, "baseline_agrees": False, "p_err": 0.5,
+            "consequence_by_strategy": {"swap_other_task": 1.0}, "has_descendants": True, "skipped_plus": False}
+    recs = [{**base, "node_id": "a", "task_id": "t1", "consequence_real": 1.0},
+            {**base, "node_id": "a", "task_id": "t2", "consequence_real": None},
+            {**base, "node_id": "b", "task_id": "t1", "consequence_real": None}]
+    rows = {r["agent"]: r for r in labels_rows(recs)}
+    assert rows["a"]["ec_real"] == pytest.approx(0.5) and rows["a"]["ec_real_n_used"] == 1  # not (1+0)/2
+    assert rows["b"]["ec_real"] is None and rows["b"]["ec_real_n_used"] == 0
+
+
 def test_realistic_mode_does_not_change_the_existing_labels():
     wf = create_math_reasoning_workflow(3)
     b1, _, tm1 = fake_backend()
@@ -132,7 +165,12 @@ def test_hotpot_chain_shape_and_prompts():
     assert all("[T0] A sentence on 0. Another one." in p for p in prompts.values())
     assert "hop 2 only" in prompts["hop_2"] and rec.node_results["hop_1"].output["text"] in prompts["hop_2"]
     assert rec.node_results["hop_1"].output["text"] in prompts["aggregator"]
-    assert "repeat the original answer exactly" in prompts["verifier"]
+    assert "repeat the proposed short answer exactly" in prompts["verifier"]
+    # FIX 1: the question is restated next to the answer slot, and yes/no is conditional.
+    question = HOTPOT[0]["question"].split("\n", 1)[0].removeprefix("Question: ")
+    for nid in ("aggregator", "verifier"):
+        assert f"Question: {question}\nAnswer" in prompts[nid] or f"Question: {question}\nDoes" in prompts[nid]
+        assert "whether something is true" in prompts[nid]
 
 
 def test_hotpot_labels_run_end_to_end():
@@ -148,3 +186,28 @@ def test_hotpot_split_is_fixed_and_disjoint():
     assert a == b
     label_ids, eval_ids = {r["id"] for r in a["label"]}, {r["id"] for r in a["eval"]}
     assert len(label_ids) == N_LABEL and len(eval_ids) == N_EVAL and not label_ids & eval_ids
+
+
+def test_hotpot_frozen_split_reads_ids_and_fails_on_missing(tmp_path):
+    rows = [{"id": f"{i:05d}"} for i in range(10)]
+    f = tmp_path / "split.json"
+    f.write_text(json.dumps({"label": ["00003", "00001"], "eval": ["00007"]}))
+    parts = frozen_rows(rows, f)
+    assert [r["id"] for r in parts["label"]] == ["00003", "00001"] and [r["id"] for r in parts["eval"]] == ["00007"]
+    with pytest.raises(RuntimeError, match="not in the dev file"):
+        frozen_rows(rows[:5], f)
+    with pytest.raises(FileNotFoundError):
+        frozen_rows(rows, tmp_path / "nope.json")
+
+
+@pytest.mark.skipif(not (Path("data/tasks/gsm8k_test.jsonl").exists() and Path("data/tasks/split.json").exists()),
+                    reason="GSM8K working set not downloaded")
+def test_gsm8k_v2_label_and_eval_pools_are_disjoint_and_keep_session1_order():
+    """FIX 4: label 200 = Session 1 dev 100 + the next 100 of Session 1 LABEL; eval_ext 400 =
+    Session 1 EVAL 200 + EVAL2[:200]. No overlap."""
+    from agentqo.tasks.datasets import _dev_eval, extended_eval, extended_label, session1_extra
+    split = _dev_eval(Path("data/tasks"))
+    lab, ev = [p["qid"] for p in extended_label(200)], [p["qid"] for p in extended_eval(400)]
+    assert lab[:100] == [p["qid"] for p in split["dev"]] and ev[:200] == [p["qid"] for p in split["eval"]]
+    assert len(set(lab)) == 200 and len(set(ev)) == 400 and not set(lab) & set(ev)
+    assert ev[200:] == [p["qid"] for p in session1_extra()[500:700]]

@@ -51,19 +51,38 @@ def load_gsm8k(
     return problems
 
 
-def extended_eval(n: int, seed: int = 0, cache_dir: Path = TASK_DIR) -> List[Dict[str, str]]:
-    """The frozen eval split, then GSM8K test problems outside the 300 working set.
-
-    The first 200 are the Session 1 eval problems, so old plans stay comparable
-    and the old cache is reused. A fixed 400-problem check needs the rest.
-    """
-    working = load_gsm8k(n=300, seed=seed, cache_dir=cache_dir)
+def session1_extra(cache_dir: Path = TASK_DIR) -> List[Dict[str, str]]:
+    """GSM8K test rows outside the 300 working set, in the Session 1 F4/F5 order (numpy
+    seed 1). Session 1 used [0:400] for LABEL (after the 100 dev), [400:500] for VALID and
+    [500:800] for EVAL2; 1,019 rows in all."""
+    working = load_gsm8k(n=300, seed=0, cache_dir=cache_dir)
     used = {p["qid"] for p in working}
     rows = _gsm8k_rows("test", cache_dir)
-    extra = [{"qid": f"gsm8k-test-{i}", "question": rows[i]["question"], "gold": gsm8k_gold(rows[i]["answer"])}
-             for i in np.random.default_rng(seed).permutation(len(rows))
-             if f"gsm8k-test-{i}" not in used]
-    return (dev_eval_split(working, n_dev=100, seed=seed, cache_dir=cache_dir)["eval"] + extra)[:n]
+    rest = [i for i in range(len(rows)) if f"gsm8k-test-{i}" not in used]
+    return [{"qid": f"gsm8k-test-{rest[j]}", "question": rows[rest[j]]["question"],
+             "gold": gsm8k_gold(rows[rest[j]]["answer"])} for j in np.random.default_rng(1).permutation(len(rest))]
+
+
+def _dev_eval(cache_dir: Path) -> Dict[str, List[Dict[str, str]]]:
+    return dev_eval_split(load_gsm8k(n=300, seed=0, cache_dir=cache_dir), n_dev=100, seed=0, cache_dir=cache_dir)
+
+
+def extended_label(n: int, cache_dir: Path = TASK_DIR) -> List[Dict[str, str]]:
+    """v2 label set: the Session 1 LABEL 500 order (100 dev, then extra[0:400]), first n.
+    n = 200 is the 100 Session 1 dev problems + 100 new ones; never in extended_eval."""
+    if n > 500:
+        raise ValueError("the Session 1 LABEL set has 500 problems")
+    return (_dev_eval(cache_dir)["dev"] + session1_extra(cache_dir)[:400])[:n]
+
+
+def extended_eval(n: int, cache_dir: Path = TASK_DIR) -> List[Dict[str, str]]:
+    """v2 eval set: the 200 Session 1 EVAL problems, then Session 1 EVAL2 (extra[500:800]).
+
+    The first 200 are unchanged, so old plans stay comparable and the cache is reused.
+    Disjoint from extended_label and from Session 1 VALID by construction."""
+    if n > 500:
+        raise ValueError("EVAL + EVAL2 has 500 problems")
+    return (_dev_eval(cache_dir)["eval"] + session1_extra(cache_dir)[500:800])[:n]
 
 
 def dev_eval_split(
