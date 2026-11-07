@@ -28,6 +28,8 @@ import numpy as np
 from agentqo.tasks.answers import extract_gsm8k_number
 
 _KEY = re.compile(r"(?:RESULT:|####)\s*(-?[\d,]+(?:\.\d+)?)")
+_ANSWER = re.compile(r"(?:FINDING:|Final answer:)\s*([^<\s][^<\n]*)")
+HOTPOT_MARK = "multi-hop question"
 PLAN_OK, PLAN_BAD = "[plan-ok", "[plan-bad]"
 _TAG = re.compile(r"\[plan-ok:(\w+)\]")
 
@@ -86,6 +88,7 @@ class FakeServer:
             PLAN_BAD not in prompt
             and all(t == tag_ok for t in _TAG.findall(upstream))
             and all(k.replace(",", "") == gold for k in _KEY.findall(upstream))
+            and all(a.strip() == gold for a in _ANSWER.findall(upstream))
         )
         own_error = rng.random() < err
 
@@ -107,6 +110,9 @@ class FakeServer:
 
         ok = upstream_ok and not own_error
         value = gold if ok else _wrong(gold, rng)
+        if HOTPOT_MARK in prompt:
+            label = "FINDING" if "FINDING:" in prompt else "Final answer"
+            return f"Reading the paragraphs.\n{label}: {value}", ok
         if "RESULT: <number>" in prompt:
             return f"Computing this step gives {value}.\nRESULT: {value}", ok
         return f"Working through the problem, the total is {value}.\n#### {value}", ok
@@ -125,7 +131,7 @@ class FakeServer:
 def _upstream(prompt: str) -> str:
     """Everything after the problem statement: what the node was given."""
     for marker in ("Plan:", "Results so far:", "Step results:", "Proposed solution:",
-                   "Solution:", "Notes:", "Your work so far"):
+                   "Solution:", "Notes:", "Your work so far", "Findings:", "Proposed answer:"):
         i = prompt.find(marker)
         if i >= 0:
             return prompt[i:]

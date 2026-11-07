@@ -14,7 +14,7 @@ import numpy as np
 from agentqo.backends.base import NodeResult
 from agentqo.backends.vllm_http import _output_as_text
 from agentqo.simulator.task_model import TaskInstance, TaskModel
-from agentqo.tasks.answers import extract_gsm8k_number, f1
+from agentqo.tasks.answers import extract_gsm8k_number, extract_hotpot_answer, f1, normalize_answer
 
 if TYPE_CHECKING:
     from agentqo.workflows.dag import Fidelity, NodeSpec, Workflow
@@ -64,7 +64,7 @@ class RealTaskModel(TaskModel):
     def extract(self, text: str) -> Optional[str]:
         if self.dataset == "gsm8k":
             return extract_gsm8k_number(text)
-        return text.strip() or None
+        return extract_hotpot_answer(text)
 
     def score_text(self, text: str, gold: Any) -> float:
         pred = self.extract(text)
@@ -72,7 +72,12 @@ class RealTaskModel(TaskModel):
             return 0.0
         if self.dataset == "gsm8k":
             return float(pred == str(gold))
-        return f1(pred, str(gold))
+        return float(pred == normalize_answer(str(gold)))  # exact match after normalization
+
+    def f1_text(self, text: str, gold: Any) -> float:
+        """HotpotQA token F1 on the extracted answer (0 for GSM8K, which has none)."""
+        pred = self.extract(text) if self.dataset == "hotpotqa" else None
+        return f1(pred, str(gold)) if pred else 0.0
 
     def compute_quality(
         self,

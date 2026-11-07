@@ -38,6 +38,46 @@ def _cell(value: Any) -> Any:
     return json.dumps(value, default=str)
 
 
+V2_CONFIG = "run_config.v2.json"
+V2_DONE = "DONE"
+
+
+def resolve_output_dir(base: Any, config: Mapping[str, Any], create: bool = True) -> "tuple[Path, bool]":
+    """Pick the directory for a v2 run; never reuses one holding another run.
+
+    The same config resumes in the same directory (the cache makes replays
+    free). Anything else takes the next free ``name_2``, ``name_3``... Returns
+    (directory, already_finished). ``create=False`` is for --dry-run.
+    """
+    base = Path(base)
+    wanted = json.loads(json.dumps(config, sort_keys=True, default=str))
+    cand, i = base, 1
+    while cand.exists():
+        saved = cand / V2_CONFIG
+        if saved.exists() and json.loads(saved.read_text()) == wanted:
+            return cand, (cand / V2_DONE).exists()
+        i += 1
+        cand = base.with_name(f"{base.name}_{i}")
+    if create:
+        cand.mkdir(parents=True)
+        (cand / V2_CONFIG).write_text(json.dumps(wanted, indent=2, sort_keys=True))
+    return cand, False
+
+
+def mark_done(out: Any) -> None:
+    (Path(out) / V2_DONE).write_text("")
+
+
+def args_config(args: Any, drop: Iterable[str] = ("dry_run", "workers", "output_dir")) -> Dict[str, Any]:
+    """argparse namespace as a run config, minus settings that do not change results."""
+    return {k: v for k, v in vars(args).items() if k not in set(drop)}
+
+
+def read_csv(path: Any) -> "list[dict]":
+    with Path(path).open(newline="") as fh:
+        return list(csv.DictReader(fh))
+
+
 RESULTS_HEADER = """# AgentQO Results
 
 ## Environment

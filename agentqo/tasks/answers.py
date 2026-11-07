@@ -11,6 +11,9 @@ _NUM = r"-?\$?\s*-?\d[\d,]*(?:\.\d+)?"
 _HASH = re.compile(r"####\s*(" + _NUM + ")")
 _BOXED = re.compile(r"\\boxed\{\s*(" + _NUM + r")\s*\}")
 _ANY = re.compile(_NUM)
+_FINAL = re.compile(r"final answer\s*:\s*(.+)", re.IGNORECASE)
+_HOT_HASH = re.compile(r"####\s*(.+)")
+_FINDING = re.compile(r"FINDING\s*:\s*(.+)", re.IGNORECASE)
 
 
 def _canon(raw: str) -> Optional[str]:
@@ -40,6 +43,17 @@ def extract_gsm8k_number(text: str) -> Optional[str]:
         if found:
             return _canon(found[-1])
     return None
+
+
+def extract_hotpot_answer(text: str) -> Optional[str]:
+    """Normalized short answer: last "Final answer:", else "####", else "FINDING:", else last line."""
+    if not text or not text.strip():
+        return None
+    for pattern in (_FINAL, _HOT_HASH, _FINDING):
+        found = pattern.findall(text)
+        if found:
+            return normalize_answer(found[-1]) or None
+    return normalize_answer(text.strip().splitlines()[-1]) or None
 
 
 def gsm8k_gold(answer_field: str) -> str:

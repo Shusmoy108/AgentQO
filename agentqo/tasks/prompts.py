@@ -84,6 +84,49 @@ Solution:
 Restate only the final answer. End with "#### <number>"."""
 
 
+# HotpotQA chain. {problem} holds the question and its paragraphs.
+HOTPOT_PLANNER = """You are planning how to answer a multi-hop question from the paragraphs below. Do not answer it.
+{problem}
+Write a numbered plan of at most 2 hops: what to find first, then what to find next.
+Start your answer with "PLAN:"."""
+
+HOTPOT_HOP = """Answer one hop of a multi-hop question using only the paragraphs.
+{problem}
+Plan:
+{plan}
+Findings so far:
+{prior}
+Carry out hop {i} only. Quote the fact you used in one sentence.
+End with "FINDING: <short phrase>"."""
+
+HOTPOT_AGGREGATOR = """Answer a multi-hop question from the findings.
+{problem}
+Findings:
+{findings}
+State the answer in as few words as possible; for a yes/no question answer yes or no.
+End with: Final answer: <short answer>"""
+
+HOTPOT_VERIFIER = """Check another agent's answer to a multi-hop question.
+{problem}
+Proposed answer:
+{proposed}
+Re-read the question and the paragraphs and find the answer yourself. Only change the answer if you find a specific reading mistake, and name the mistake in one sentence. If you cannot point to a specific mistake, repeat the original answer exactly. End with: Final answer: <short answer>"""
+
+
+def _hotpot_prompt(node: "NodeSpec", results: Dict[str, "NodeResult"], workflow: "Workflow", problem: str) -> str:
+    role, plan = node.role, _text(results, _planner_id(workflow) or "")
+    if role == NodeRole.PLANNER:
+        return HOTPOT_PLANNER.format(problem=problem)
+    if role == NodeRole.RESEARCHER:
+        return HOTPOT_HOP.format(problem=problem, plan=plan, i=node.node_id.split("_")[1],
+                                 prior=_results_block(results, _chain(workflow, node.node_id)))
+    if role == NodeRole.AGGREGATOR:
+        return HOTPOT_AGGREGATOR.format(problem=problem, findings=_results_block(results, _chain(workflow, node.node_id)))
+    if role == NodeRole.VERIFIER:
+        return HOTPOT_VERIFIER.format(problem=problem, proposed=_results_block(results, list(node.inputs)))
+    raise ValueError(f"no HotpotQA template for role {role}")
+
+
 def _text(results: Dict[str, "NodeResult"], nid: str) -> str:
     return _output_as_text(results[nid].output) if nid in results else "(not available)"
 
@@ -113,6 +156,8 @@ def build_prompt(node: "NodeSpec", inputs: Dict[str, "NodeResult"], task_context
     workflow: "Workflow" = task_context["workflow"]
     results = {**task_context.get("results", {}), **inputs}
     problem = _problem(task_context)
+    if (getattr(task_context.get("task"), "metadata", None) or {}).get("dataset") == "hotpotqa":
+        return _hotpot_prompt(node, results, workflow, problem)
     role = node.role
     plan_id = _planner_id(workflow)
     plan = _text(results, plan_id) if plan_id else "(no plan)"

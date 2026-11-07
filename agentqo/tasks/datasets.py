@@ -51,6 +51,21 @@ def load_gsm8k(
     return problems
 
 
+def extended_eval(n: int, seed: int = 0, cache_dir: Path = TASK_DIR) -> List[Dict[str, str]]:
+    """The frozen eval split, then GSM8K test problems outside the 300 working set.
+
+    The first 200 are the Session 1 eval problems, so old plans stay comparable
+    and the old cache is reused. A fixed 400-problem check needs the rest.
+    """
+    working = load_gsm8k(n=300, seed=seed, cache_dir=cache_dir)
+    used = {p["qid"] for p in working}
+    rows = _gsm8k_rows("test", cache_dir)
+    extra = [{"qid": f"gsm8k-test-{i}", "question": rows[i]["question"], "gold": gsm8k_gold(rows[i]["answer"])}
+             for i in np.random.default_rng(seed).permutation(len(rows))
+             if f"gsm8k-test-{i}" not in used]
+    return (dev_eval_split(working, n_dev=100, seed=seed, cache_dir=cache_dir)["eval"] + extra)[:n]
+
+
 def dev_eval_split(
     problems: List[Dict[str, str]],
     n_dev: int = 100,

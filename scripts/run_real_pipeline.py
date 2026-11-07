@@ -31,13 +31,16 @@ from agentqo.backends.probe import HFHiddenStateProbe, PlaceholderProbe
 from agentqo.backends.vllm_http import VLLMHTTPBackend, VLLMHTTPConfig
 from agentqo.experiments.suite import SuiteMember
 from agentqo.labeling.ec_labeler import ECLabeler, LabelingResult, analyze_h1_results
+from agentqo.labeling.labels_v2 import labels_rows, per_problem_rows, strategy_rows
 from agentqo.metrics.figures import save_h1_histogram
-from agentqo.metrics.io import append_results_entry, write_csv, write_json
-from agentqo.tasks.datasets import dev_eval_split, load_gsm8k
+from agentqo.metrics.io import append_results_entry, args_config, mark_done, resolve_output_dir, write_csv, write_json
+from agentqo.tasks.datasets import dev_eval_split, extended_eval, load_gsm8k
+from agentqo.tasks.hotpotqa import load_hotpotqa
 from agentqo.tasks.prompts import build_prompt, code_output
 from agentqo.tasks.real_task_model import RealTaskModel
 from agentqo.workflows.library import (
     create_complex_workflow,
+    create_hotpot_chain_workflow,
     create_math_reasoning_workflow,
     create_self_consistency_workflow,
 )
@@ -46,6 +49,7 @@ WORKFLOWS = {
     "math": ("Math 3-step + verifier", lambda: create_math_reasoning_workflow(3, include_verifier=True)),
     "sc": ("Self-consistency k=3", lambda: create_self_consistency_workflow(3)),
     "complex": ("Complex + formatter", lambda: create_complex_workflow(2, 2)),
+    "hotpot": ("HotpotQA chain", create_hotpot_chain_workflow),
 }
 
 
@@ -81,6 +85,14 @@ def make_probe(args):
 
 
 def load_problems(args) -> List[Dict[str, str]]:
+    if getattr(args, "dataset", "gsm8k") == "hotpotqa":
+        if args.split not in ("label", "eval", "all"):
+            raise SystemExit(f"HotpotQA splits are label, eval, all; got {args.split}")
+        return load_hotpotqa(args.split)[: args.n_tasks]
+    if args.split == "eval_ext":
+        return extended_eval(args.n_tasks)
+    if args.split == "label":
+        raise SystemExit("--split label is HotpotQA only; GSM8K uses dev")
     working = load_gsm8k(n=300, seed=0)
     split = dev_eval_split(working, n_dev=100, seed=0)
     pool = working if args.split == "all" else split[args.split]
@@ -161,13 +173,33 @@ def write_h1_artifacts(out: Path, member: SuiteMember, res: LabelingResult) -> d
     return summary
 
 
+def write_v2_labels(out: Path, res: LabelingResult) -> List[dict]:
+    """M3 tables for one workflow (in out/, so a one-workflow run has them at the top)."""
+    labels = labels_rows(res.records)
+    write_csv(out / "labels_v2.csv", labels, fieldnames=[
+        "agent", "n", "p_dis", "g_dis", "uv", "uv_ci_low", "uv_ci_high",
+        "ec_synthetic", "ec_real", "reruns_used", "reruns_full"])
+    write_csv(out / "labels_v2_per_problem.csv", per_problem_rows(res.records))
+    write_csv(out / "labels_v2_by_strategy.csv", strategy_rows(res.records))
+    used, full = sum(r["reruns_used"] for r in labels), sum(r["reruns_full"] for r in labels)
+    print(f"Q+ reruns: used {used} of {full} (saved {full - used})")
+    return labels
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--config", default=None,
                     help="YAML of flag values (e.g. configs/phase_b.yaml); explicit flags win")
     ap.add_argument("--backend", choices=["fake", "ollama", "vllm"], default="fake")
     ap.add_argument("--n-tasks", type=int, default=10)
-    ap.add_argument("--split", choices=["dev", "eval", "all"], default="dev")
+    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "eval_ext"], default="dev",
+                    help="label: HotpotQA only; eval_ext: GSM8K eval then fresh test problems")
+    ap.add_argument("--dataset", choices=["gsm8k", "hotpotqa"], default="gsm8k")
+    ap.add_argument("--realistic", action="store_true",
+                    help="M3: write labels_v2*.csv with real-error consequences and K sample keys")
+    ap.add_argument("--disagree-only", action="store_true",
+                    help="M3: rerun descendants for Q+ only where small and large disagree (implies --realistic)")
+    ap.add_argument("--dry-run", action="store_true", help="with --realistic: print the work, make no calls")
     ap.add_argument("--workflows", default="math,sc,complex")
     ap.add_argument("--stage", choices=["all", "smoke", "h1", "h2", "h3"], default="all",
                     help="h2/h3 relabel from the cache first (no new calls if cached)")
@@ -196,8 +228,24 @@ def main() -> None:
             ap.error(f"unknown keys in {pre.config}: {sorted(unknown)}")
         ap.set_defaults(**cfg)
     args = ap.parse_args()
+    if ("hotpot" in args.workflows) != (args.dataset == "hotpotqa"):
+        ap.error("--workflows hotpot and --dataset hotpotqa go together")
+    v2 = args.realistic or args.disagree_only
+    if v2 and "," in args.workflows:
+        ap.error("--realistic labels one workflow per output directory")
+    if args.dry_run and not v2:
+        ap.error("--dry-run is for --realistic runs")
 
     out = Path(args.output_dir or f"data/real/{args.backend}")
+    if v2:
+        out, finished = resolve_output_dir(out, args_config(args), create=not args.dry_run)
+        if args.dry_run:
+            print(f"would label {args.workflows} on {args.n_tasks} {args.dataset} {args.split} problems "
+                  f"with {args.backend}, C={args.corruptions} K={args.k} disagree_only={args.disagree_only}, into {out}")
+            return
+        if finished:
+            print(f"already finished: {out}")
+            return
     problems = load_problems(args)
     backend = build_backend(args, problems)
     write_json(out / "run_config.json", {**vars(args), "backend_info": backend.get_info(),
@@ -205,7 +253,8 @@ def main() -> None:
     members = []
     for key in args.workflows.split(","):
         display, make = WORKFLOWS[key.strip()]
-        members.append(SuiteMember(workflow=make(), task_model=RealTaskModel(problems), display_name=display))
+        members.append(SuiteMember(workflow=make(), task_model=RealTaskModel(problems, dataset=args.dataset),
+                                   display_name=display))
 
     if args.stage == "smoke":
         run_smoke(backend, members[0], problems)
@@ -217,10 +266,13 @@ def main() -> None:
     for m in members:
         m.task_model.reset()
         labeler = ECLabeler(backend, m.task_model, mode="substitute", n_corruptions=args.corruptions,
-                            k_samples=args.k, max_workers=args.workers)
+                            k_samples=args.k, max_workers=args.workers,
+                            realistic=args.realistic, disagree_only=args.disagree_only)
         res = labeler.label_workflow(m.workflow, num_tasks=len(problems), base_seed=args.seed)
         labeling[m.workflow.name] = res
         h1[m.workflow.name] = write_h1_artifacts(out, m, res)
+        if v2:
+            write_v2_labels(out, res)
         s = h1[m.workflow.name]
         print(f"\nH1 {m.display_name}: holds={s['h1_holds']} range={s['range']:.3f} cv={s['cv']:.3f} "
               f"baseline_acc={s['baseline_accuracy']:.2f} key_change={s['key_change_rate']}")
@@ -252,6 +304,10 @@ def main() -> None:
                 )
 
     write_json(out / "pipeline_summary.json", {"h1": h1, "h2": h2, "h3": h3})
+    if v2:  # v2 phases keep their own SUMMARY.md; RESULTS.md stays the Session 1 log.
+        mark_done(out)
+        print(f"\nArtifacts in {out}")
+        return
     append_results_entry(
         {"fake": "DRY", "ollama": "LOCAL", "vllm": "R-H1"}[args.backend],
         {"backend": args.backend, "n_tasks": len(problems), "split": args.split,

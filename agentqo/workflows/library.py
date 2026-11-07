@@ -169,6 +169,19 @@ def create_multihop_qa_workflow(
     return builder.build(answer_nodes=["verifier", "aggregator"])
 
 
+def create_hotpot_chain_workflow(fidelities: Optional[List[Fidelity]] = None) -> Workflow:
+    """HotpotQA chain: planner -> hop_1 -> hop_2 -> aggregator -> verifier."""
+    fidelities = fidelities or list(DEFAULT_FIDELITIES)
+    builder = WorkflowBuilder(name="hotpot_chain", description="Multi-hop QA over given paragraphs")
+    builder.add_planner("planner", description="Decide what each hop must find", fidelities=fidelities)
+    builder.add_researcher("hop_1", inputs=["planner"], description="Find the first fact", fidelities=fidelities)
+    builder.add_researcher("hop_2", inputs=["hop_1"], description="Find the second fact", fidelities=fidelities)
+    builder.add_aggregator("aggregator", inputs=["hop_2"], description="State the answer", fidelities=fidelities)
+    builder.add_verifier("verifier", inputs=["aggregator"], optional=True,
+                         description="Check the answer (cautious)", fidelities=fidelities)
+    return builder.build(answer_nodes=["verifier", "aggregator"])
+
+
 def create_self_consistency_workflow(
     k: int = 3,
     k_max: Optional[int] = None,

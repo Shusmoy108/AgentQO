@@ -100,6 +100,17 @@ class LabelingResult:
     traces: List[Dict[str, Any]] = field(default_factory=list)
 
 
+def _add_calls(total: Dict[str, float], results: Dict[str, NodeResult], sign: float = 1.0) -> None:
+    """Accumulate tokens and seconds per tier: small_in, small_out, small_s, large_in, ..."""
+    for r in results.values():
+        tier = r.fidelity_used
+        if tier not in ("small", "large"):  # code nodes and plain forced text cost nothing
+            continue
+        for suffix, key in (("in", "prompt_tokens"), ("out", "completion_tokens"), ("s", "latency_s")):
+            name = f"{tier}_{suffix}"
+            total[name] = total.get(name, 0.0) + sign * float(r.metadata.get(key) or 0)
+
+
 def compute_bootstrap_ci(
     data: np.ndarray,
     confidence: float = 0.95,
@@ -140,6 +151,8 @@ class ECLabeler:
         n_corruptions: int = 3,
         k_samples: int = 5,
         max_workers: int = 32,
+        realistic: bool = False,
+        disagree_only: bool = False,
     ) -> None:
         from agentqo.simulator.task_model import MockBackend
 
@@ -158,6 +171,8 @@ class ECLabeler:
         self.n_corruptions = n_corruptions
         self.k_samples = k_samples
         self.max_workers = max_workers
+        self.realistic = realistic or disagree_only
+        self.disagree_only = disagree_only
 
     def label_workflow(
         self,
@@ -368,7 +383,12 @@ class ECLabeler:
             role = workflow.nodes[nid].role
             reference = run_node(nid, LARGE_FIDELITY, temperature=0.0)
             ref_text = _output_as_text(reference.output)
-            plus = substituted(nid, reference)
+            base_text = _output_as_text(base.node_results[nid].output)
+            early_key = None if role == NodeRole.PLANNER else extract(ref_text)
+            # --disagree-only: small and large agree here, so Q+ is taken as the baseline.
+            agree_early = extract(base_text) == early_key if early_key is not None else ref_text == base_text
+            skip_plus = self.disagree_only and agree_early
+            plus = base if skip_plus else substituted(nid, reference)
             ref_final = final_key(plus)
 
             def sample(temp: float, idx: int, nid=nid) -> NodeResult:
@@ -387,15 +407,30 @@ class ECLabeler:
             q_m = float(np.mean([r.final_quality for r in minus_runs]))
 
             ref_key = None if role == NodeRole.PLANNER else extract(ref_text)
+            sample_keys: List[Optional[str]] = []
+            sample_calls: Dict[str, float] = {}
+            affected = {nid, *workflow.get_descendants(nid)}
+
+            def sample_key(idx: int, nid=nid) -> Optional[str]:
+                r = sample(0.7, idx, nid=nid)
+                _add_calls(sample_calls, {nid: r})
+                sample_keys.append(extract(_output_as_text(r.output)))
+                return sample_keys[-1]
+
+            def sample_final(idx: int, nid=nid) -> Optional[str]:
+                run = substituted(nid, sample(0.7, idx, nid=nid))
+                _add_calls(sample_calls, {n: x for n, x in run.node_results.items() if n in affected})
+                sample_keys.append(final_key(run))
+                return sample_keys[-1]
+
             p = estimate_p_err(
                 keyed=ref_key is not None,
                 k=self.k_samples,
-                sample_key=lambda idx: extract(_output_as_text(sample(0.7, idx).output)),
-                sample_final_key=lambda idx: final_key(substituted(nid, sample(0.7, idx))),
+                sample_key=sample_key,
+                sample_final_key=sample_final,
                 reference_key=ref_key,
                 reference_final_key=ref_final,
             )
-            base_text = _output_as_text(base.node_results[nid].output)
             agrees = (extract(base_text) == ref_key) if ref_key is not None else (final_key(base) == ref_final)
             violations = []
             for rec in [plus, *minus_runs]:
@@ -420,6 +455,11 @@ class ECLabeler:
                 ],
                 "invariant_violations": violations,
             })
+            if self.realistic:
+                records[-1].update(self._realistic_fields(
+                    records[-1], base, plus, maker, ref_text, ref_key, substituted, sample, final_key,
+                    workflow, sample_keys, sample_calls, skip_plus, reference,
+                ))
         trace = {
             "task_id": task.task_id,
             "gold": task.ground_truth,
@@ -440,6 +480,44 @@ class ECLabeler:
             },
         }
         return {"records": records, "trace": trace}
+
+    @staticmethod
+    def _realistic_fields(rec, base, plus, maker, ref_text, ref_key, substituted, sample, final_key,
+                          workflow, sample_keys, sample_calls, skip_plus, reference) -> Dict[str, Any]:
+        """M3: what real errors do, next to what synthetic corruptions do."""
+        nid, q_plus = rec["node_id"], rec["q_plus"]
+        by_strategy: Dict[str, List[float]] = {}
+        for c in rec["corruptions"]:
+            by_strategy.setdefault(c["strategy"], []).append(q_plus - c["quality"])
+        q_real = None
+        if "resample_disagree" not in by_strategy:
+            # Planners have no key and the rotation may skip keyed nodes, so sample directly.
+            text = (_output_as_text(sample(1.0, 1001, nid=nid).output) if ref_key is None
+                    else maker._try("resample_disagree", ref_text, ref_key, 0))
+            if text is not None and text != ref_text:
+                q_real = float(substituted(nid, text).final_quality)
+        real = by_strategy.pop("resample_disagree", None)
+        base_calls: Dict[str, float] = {}
+        plus_calls: Dict[str, float] = {}
+        _add_calls(base_calls, base.node_results)
+        _add_calls(plus_calls, plus.node_results)
+        if skip_plus:  # Priced as if v ran large: same tokens as the plan it stands in for.
+            _add_calls(plus_calls, {nid: reference})
+            _add_calls(plus_calls, {nid: base.node_results[nid]}, sign=-1.0)
+        base_node = _output_as_text(base.node_results[nid].output)
+        return {
+            "q_base": float(base.final_quality),
+            "base_key": maker.extract(base_node) if ref_key is not None else final_key(base),
+            "sample_keys": sample_keys,
+            "consequence_by_strategy": {s: float(np.mean(v)) for s, v in by_strategy.items()},
+            "consequence_real": float(np.mean(real)) if real else (q_plus - q_real if q_real is not None else None),
+            "skipped_plus": bool(skip_plus),
+            "has_descendants": bool(workflow.get_descendants(nid)),
+            "code_node": bool(reference.metadata.get("code_node")),
+            "calls_base": base_calls,
+            "calls_plus": plus_calls,
+            "calls_samples": sample_calls,
+        }
 
     def _forced_quality(
         self,

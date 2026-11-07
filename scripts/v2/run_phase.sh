@@ -1,0 +1,153 @@
+#!/usr/bin/env bash
+# M10: one driver for the lease. Re-running a phase resumes it.
+#   scripts/v2/run_phase.sh P1|P2|P3|P4|P5|P6|final
+#
+#   P1  Qwen 1.5B/7B labels: math (dev 100), HotpotQA (label 200), full and --disagree-only
+#   P2  Qwen 1.5B/7B plans:  math all_subsets (eval_ext 400), HotpotQA all_subsets (eval 300)
+#   P3  Qwen 3B/14B math:    labels + all_subsets
+#   P4  Granite 2B/8B math:  labels + all_subsets
+#   P5  Placement timing under V2_PLACEMENT (separate|shared|shared_mps), one run per placement
+#   P6  Offline analysis of every setting that has data (M1, M4, M5, M7, H5a)
+#   final  Zip everything, with the SQLite cache
+#
+# Environment: V2_BACKEND (vllm|ollama|fake), V2_N (cap on problems, for test runs),
+# V2_RESULTS, V2_LOGS, V2_CACHE, V2_WORKERS, V2_PUSH=0 (no git), V2_DRY=1 (print each
+# command's --dry-run), V2_SETTINGS (limit P1/P2 to e.g. "math"), V2_PLACEMENT,
+# V2_P5_PLANS, V2_VMS ("gpu_a=local gpu_b=cc@host").
+set -euo pipefail
+
+phase=${1:?usage: run_phase.sh P1|P2|P3|P4|P5|P6|final}
+ROOT=$(git -C "$(dirname "$0")" rev-parse --show-toplevel)
+cd "$ROOT"
+BACKEND=${V2_BACKEND:-vllm}
+RESULTS=${V2_RESULTS:-results/v2}
+LOGS=${V2_LOGS:-logs/v2}
+WORKERS=${V2_WORKERS:-32}
+PY=${PYTHON:-python3}
+DRY=()
+[ "${V2_DRY:-0}" = 1 ] && DRY=(--dry-run)
+case "$BACKEND" in
+  ollama) CACHE=${V2_CACHE:-data/cache/v2_ollama.sqlite}; EXTRA=(--allow-missing-logprobs) ;;
+  fake)   CACHE=${V2_CACHE:-data/cache/v2_fake.sqlite};   EXTRA=() ;;
+  *)      CACHE=${V2_CACHE:-data/cache/vllm.sqlite};      EXTRA=() ;;
+esac
+export V2_BACKEND=$BACKEND V2_CACHE=$CACHE
+export AGENTQO_VERIFIER=cautious  # the Session 1 math verifier that helps; HotpotQA is always cautious
+
+mkdir -p "$LOGS" "$RESULTS/$phase"
+exec > >(tee -a "$LOGS/$phase.log") 2>&1
+echo "=== $phase start $(date -u +%FT%TZ) commit $(git rev-parse --short HEAD) backend $BACKEND"
+
+cap() { echo "${V2_N:-$1}"; }
+OUT="$RESULTS/$phase"
+
+use_models() {  # small large
+  eval "$("$PY" scripts/v2/model_env.py "$1" "$2")"
+  if [ "$BACKEND" = vllm ] && [ ${#DRY[@]} -eq 0 ]; then
+    "$PY" scripts/v2/model_env.py --check-servers "$1" "$2"
+  fi
+}
+
+labels() {  # setting workflow dataset split n max_tokens
+  local common=(--backend "$BACKEND" --cache "$CACHE" --workflows "$2" --dataset "$3" --split "$4"
+                --n-tasks "$5" --max-tokens "$6" --workers "$WORKERS" --stage h1 --k 5
+                ${EXTRA[@]+"${EXTRA[@]}"} ${DRY[@]+"${DRY[@]}"})
+  "$PY" scripts/run_real_pipeline.py "${common[@]}" --realistic --output-dir "$OUT/$1/labels"
+  "$PY" scripts/run_real_pipeline.py "${common[@]}" --disagree-only --output-dir "$OUT/$1/labels_disagree"
+}
+
+plans() {  # setting workflow dataset split n max_tokens
+  "$PY" scripts/run_real_h3.py --backend "$BACKEND" --cache "$CACHE" --workflow "$2" --dataset "$3" --split "$4" \
+    --n-tasks "$5" --max-tokens "$6" --workers "$WORKERS" --plans all_subsets --output-dir "$OUT/$1/plans" \
+    ${EXTRA[@]+"${EXTRA[@]}"} ${DRY[@]+"${DRY[@]}"}
+}
+
+wants() { case " ${V2_SETTINGS:-math hotpot} " in *" $1 "*) return 0 ;; *) return 1 ;; esac; }
+
+analyze() {  # setting workflow labels_phase plans_phase
+  local s=$1 wf=$2 lab="$RESULTS/$3/$1/labels" fast="$RESULTS/$3/$1/labels_disagree" pl="$RESULTS/$4/$1/plans"
+  if [ ! -f "$pl/DONE" ] || [ ! -f "$lab/DONE" ]; then
+    echo "skip $s: labels or plans not finished"
+    return 0
+  fi
+  local d=${DRY[@]+"${DRY[@]}"}
+  "$PY" scripts/v2/cost_report.py --calls "$pl/h3_calls.csv" --output-dir "$OUT/$s/cost" $d
+  "$PY" scripts/v2/rules_report.py --workflow "$wf" --labels "$lab/labels_v2.csv" --plans "$pl/h3_plans.csv" \
+    --labels-disagree "$fast/labels_v2.csv" --output-dir "$OUT/$s/rules" $d
+  "$PY" scripts/v2/routing_offline.py --labels-per-problem "$lab/labels_v2_per_problem.csv" --output-dir "$OUT/$s/routing" $d
+  "$PY" scripts/v2/adaptive_check.py --per-problem "$pl/h3_per_problem.csv" --output-dir "$OUT/$s/adaptive" $d
+  [ -n "$d" ] && return 0
+  # Measured placement runs feed H3c, and their separate-placement calls set the latency base.
+  local calls="$pl/h3_calls.csv" measured="" p
+  if [ "$s" = math_q15_7 ]; then
+    for p in separate shared shared_mps; do
+      local f="$RESULTS/P5/$p/placement_summary.csv"
+      [ -f "$f" ] && measured="${measured:+$measured,}$f"
+    done
+    [ -f "$RESULTS/P5/separate/placement_calls.csv" ] && calls="$RESULTS/P5/separate/placement_calls.csv"
+  fi
+  local joint=(--workflow "$wf" --costs "$OUT/$s/cost/plan_costs.csv" --calls "$calls")
+  [ -n "$measured" ] && joint+=(--measured "$measured")
+  "$PY" scripts/v2/pareto.py "${joint[@]}" --plans "$pl/h3_plans.csv" --output-dir "$OUT/$s/pareto"
+  "$PY" scripts/v2/pareto.py "${joint[@]}" --cost-metric api_usd --plans "$pl/h3_plans.csv" --output-dir "$OUT/$s/pareto_api"
+  "$PY" scripts/v2/pareto.py "${joint[@]}" --plans "$OUT/$s/rules/plan_estimates.csv" --estimator pairwise_corrected \
+    --true-plans "$pl/h3_plans.csv" --output-dir "$OUT/$s/pareto_estimated"
+}
+
+case "$phase" in
+  P1)
+    use_models qwen_small qwen_large
+    wants math && labels math_q15_7 math gsm8k dev "$(cap 100)" 256
+    wants hotpot && labels hotpot_q15_7 hotpot hotpotqa label "$(cap 200)" 384
+    ;;
+  P2)
+    use_models qwen_small qwen_large
+    wants math && plans math_q15_7 math gsm8k eval_ext "$(cap 400)" 256
+    wants hotpot && plans hotpot_q15_7 hotpot hotpotqa eval "$(cap 300)" 384
+    ;;
+  P3)
+    use_models qwen3b qwen14b
+    labels math_q3_14 math gsm8k dev "$(cap 100)" 256
+    plans math_q3_14 math gsm8k eval_ext "$(cap 400)" 256
+    ;;
+  P4)
+    use_models granite_small granite_large
+    labels math_granite math gsm8k dev "$(cap 100)" 512
+    plans math_granite math gsm8k eval_ext "$(cap 400)" 512
+    ;;
+  P5)
+    use_models qwen_small qwen_large
+    placement=${V2_PLACEMENT:?set V2_PLACEMENT to separate, shared or shared_mps to match the running servers}
+    vms=()
+    for vm in ${V2_VMS:-}; do vms+=(--vm "$vm"); done
+    "$PY" scripts/v2/run_placement.py --backend "$BACKEND" --placement "$placement" \
+      --plans "${V2_P5_PLANS:-all_small,only_planner,only_aggregator,only_verifier,planner+verifier,aggregator+verifier,all_large}" \
+      --n-tasks "$(cap 64)" --k 16 --repeats 3 --output-dir "$OUT/$placement" \
+      ${vms[@]+"${vms[@]}"} ${EXTRA[@]+"${EXTRA[@]}"} ${DRY[@]+"${DRY[@]}"}
+    ;;
+  P6)
+    analyze math_q15_7 math P1 P2
+    analyze hotpot_q15_7 hotpot P1 P2
+    analyze math_q3_14 math P3 P3
+    analyze math_granite math P4 P4
+    ;;
+  final)
+    ;;
+  *)
+    echo "unknown phase $phase" >&2
+    exit 2
+    ;;
+esac
+
+if [ ${#DRY[@]} -gt 0 ]; then
+  echo "=== $phase dry run done"
+  exit 0
+fi
+cp "$LOGS/$phase.log" "$OUT/run.log.txt"
+if [ "$phase" = final ]; then
+  for p in P1 P2 P3 P4 P5 P6; do
+    [ -d "$RESULTS/$p" ] && cp -R "$RESULTS/$p" "$OUT/"
+  done
+fi
+scripts/v2/package_phase.sh "$phase"
+echo "=== $phase done $(date -u +%FT%TZ)"
