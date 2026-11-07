@@ -193,3 +193,14 @@ Thresholds (EM >= 0.25 or F1 >= 0.40; under 10% yes/no) are met. The one yes/no 
 -2.5 EM points on all_large (aggregator EM 0.500, final 0.475) and +7.5 on all_small. The
 probe script is a scratch file, not part of the repo; the numbers come from the same
 executor, prompts and cache as the phases.
+
+**Dry runs after the fixes (Ollama, 20 problems, P1/P2/P6 for math and HotpotQA, V2_PUSH=0).**
+All phases exit 0 with no unfinished steps; provenance records clean commits (`74dc70e` for
+P1/P2, `a6d9f17` for P6). HotpotQA eval all_large accuracy 0.40 (0.15 before FIX 1),
+all_small 0.10. FIX 2 check on math: 47 Q+ reruns skipped; on 6 of them the full rerun
+gave a different correctness despite equal keys, so UV differs by up to 0.10 (aggregator)
+between modes. Equal keys do not mean equal downstream text on real models, so Q+ =
+baseline is exact only on the fake backend. Top-2 agents and confident_uv budget-1/2 picks
+agree in both settings. Rerun share 0.59 (math) and 0.825 (HotpotQA). Throughput GPU cost
+ran from the M6 separate-placement output only, so shared placements are left out of the
+dry-run Pareto (A3 tau separate: math 0.53, HotpotQA 0.56).
