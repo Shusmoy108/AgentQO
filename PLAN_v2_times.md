@@ -35,9 +35,10 @@ Sizes after amendment A8 (FIX 4): math labels 200, HotpotQA eval 400.
 | P3 | Qwen 3B/14B math: labels 200 + all_subsets 400 | 56,860 | - | **~8.7 h** | **~70 min** |
 | P4 | Granite 2B/8B math (labels 200, max_tokens 512) | 56,860 | - | **~8.7 h** | **~70 min** |
 | P5 | 7 plans x 64 problems x 3 repeats x 3 placements, K=16 | 24,192 | ~18 h | **~1.8 h** + server restarts | n/a (latency-bound) |
+| P5 cal | A11 calibration: 3 model/task sets x 2 placements x 2 plans x 3 repeats x 64 problems | ~13,800 | ~10 h | **~1-1.5 h** + 6 server restarts | n/a (latency-bound) |
 | P6 | offline analysis, all settings | 0 | ~1 min | **< 5 min** | **< 5 min** |
 | final | zip with SQLite cache | 0 | - | **< 5 min** | **< 5 min** |
-| **Total** | | ~230,000 | | **~26 h** | **~5 h** (P5 at 1.8 h) |
+| **Total** | | ~244,000 | | **~27.5 h** | **~6.5 h** (P5 and P5 cal at ~3 h) |
 
 The first 100 math label problems and the first 200 math eval problems are the Session 1
 ones, so on the H100 their Qwen 1.5B/7B calls replay from the Session 1 vLLM cache if it is
@@ -52,6 +53,9 @@ Assumptions behind the rows without a direct measurement:
   latency, not throughput. Taken from the M6 run: mean plan wall 325 s per 20 problems, times
   64/20 problems, 7 plans, 3 repeats, 3 placements, / 10. Switching placement means
   restarting vLLM (~2-5 min each in Session 1), which isn't counted.
+- P5 cal (A11) is timed like P5: the M6 run's mean plan wall (325 s per 20 problems on Ollama)
+  x 64/20 x 2 plans x 3 repeats x 6 (set, placement) pairs / 10. Qwen 14B and Granite 8B are
+  slower than Qwen 7B, hence the range. Each set needs its own servers in both placements.
 - P6 grows with bootstrap resamples and plan count, not model calls.
 
 ## Advice for the lease

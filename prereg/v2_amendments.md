@@ -52,3 +52,45 @@ A9  Provenance (FIX 3): every phase records the full commit of the code run and 
 | A5 | HotpotQA dry-run outputs from before FIX 1 are not used anywhere. | - |
 | A7 | separate: 2 GPUs held for the busier model's output tokens / its P5 tokens/s; shared and shared_mps: 1 GPU for both models' time. Tokens/s per (placement, model) = highest over P5 runs of output tokens / run wall time. HotpotQA reuses the math P5 rates of the same models. Settings with no P5 run for their models (Qwen 3B/14B, Granite) fall back to gpu_usd_latency, and their outputs say so. | `plan_costs.csv`, `placement_costs.csv`, `cost_summary.json` |
 | A8 | GSM8K label 200 = the Session 1 LABEL order (100 dev, then the Session 1 F4 extra problems); eval 400 = Session 1 EVAL 200 + the first 200 of Session 1 EVAL2. HotpotQA ids are in `data/splits/hotpot_v2.json`. | `agentqo/tasks/datasets.py`, `data/splits/hotpot_v2.json` |
+
+## Amendments added 2026-11-07 18:14:08 UTC
+
+Committed with this section (the commit carrying this timestamp registers it). A1-A9
+above are unchanged; A1 stays registered as written.
+
+A10 New hypothesis (A1 is not edited): "H1c-b: skipping Q+ reruns where the small and large
+    output keys agree changes no top-2 agent and no confident_uv budget-1/2 pick, in every
+    setting." Added on 2026-11-07, after the Ollama dry run showed that A1's UV-equality
+    condition fails because equal keys do not imply equal downstream text: 6 of 47 skipped
+    reruns changed correctness (20 Qwen 1.5B/7B math problems, max UV change 0.10).
+E3  Exploratory: an exact skip variant that skips only when the small and large outputs are
+    identical after whitespace normalisation; its rerun share and UV error are reported next
+    to the key-based rule.
+E4  Exploratory: a logit-additive plan estimator (sum of single-agent changes in log-odds,
+    with accuracy clipped to [0.01, 0.99]) next to additive, multiplicative and pairwise.
+    The multiplicative proxy is unstable when baseline accuracy is low: in the HotpotQA dry
+    run (all_small accuracy 0.10) its MAE was 0.28 over all plans (0.35 held out).
+A11 Definition refinement of A7, before lease data: GPU time per call = a_m x prompt_tokens +
+    b_m x completion_tokens, with a_m, b_m fitted per model and placement from P5 per-call
+    data (prefill and decode rates), instead of output tokens only. P5 adds calibration runs
+    so every model and task has measured rates: Granite 2B/8B math, HotpotQA Qwen 1.5B/7B and
+    Qwen 3B/14B math, each all_small and all_large, separate and shared, K = 16, 64 problems.
+    No cost in Pareto or A3 may fall back to per-call latency without a "fallback" flag in the
+    output; P6 hypotheses.md says which costs are measured and which are fallback.
+L1  Lease commit: the final pre-lease v2-dev commit is tagged v2-lease1-start and all lease
+    phases run at that commit. Any code change during the lease is a new commit, logged here
+    as a lease-time deviation (id, UTC time, reason, affected phases), and the affected
+    phases are rerun. The driver refuses a vllm phase off the tag unless V2_DEVIATION names
+    a deviation id that appears in this file.
+
+### How these are measured
+
+| Id | Reading | Output |
+|---|---|---|
+| A10 | Top-2 = the two highest-UV agents; confident_uv picks at budgets 1 and 2; full labels against --disagree-only labels, in each of the four settings. | `h1c.json` (`top2_same`, `a1_confident_uv_same`) |
+| E3 | Computed offline from the full-mode labels: Q+ taken as the baseline wherever the small and large outputs at the agent are identical after collapsing whitespace (planner included). UV error = abs(UV with skips - full UV) per agent. The key rule is computed the same way, next to it. | `h1c.json` (`e3_skip_variants`) |
+| E4 | Same held-out plans and MAE as H2a. | `estimator_errors.csv` (`logit_additive`) |
+| A11 | Shape: non-negative least squares of per-call latency on prompt and completion tokens, per (model, placement). Scale: the calls of each P5 run add up to the GPU time the model held (separate: the run's wall time; shared: the wall time split by alpha/beta-weighted work), one scale per (model, placement). Plan time per tier = a_m x prompt + b_m x completion; separate = 2 GPUs x the busier tier; shared = 1 GPU x both. Rates are pooled over tasks per model. Calibration runs use 3 repeats, like the main sweep. A placement or model without rates (e.g. shared_mps outside the Qwen 1.5B/7B math sweep) gets the latency price with basis `fallback_latency`. | `token_rates.csv`, `plan_costs.csv` (`gpu_cost_basis_*`), `cost_summary.json` (`a3_basis_*`), `hypotheses.md` |
+
+Correction to the request behind A11: Qwen 3B/14B was not in P5 (only Qwen 1.5B/7B math
+was), so it is added as a calibration set like the other two.

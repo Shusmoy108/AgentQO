@@ -204,3 +204,58 @@ baseline is exact only on the fake backend. Top-2 agents and confident_uv budget
 agree in both settings. Rerun share 0.59 (math) and 0.825 (HotpotQA). Throughput GPU cost
 ran from the M6 separate-placement output only, so shared placements are left out of the
 dry-run Pareto (A3 tau separate: math 0.53, HotpotQA 0.56).
+
+## 2026-11-07 (A3 prompt: A10, E3, E4, A11, lease tag)
+
+**A10.** New hypothesis H1c-b in `prereg/v2_amendments.md` (top-2 agents and confident_uv
+budget-1/2 picks unchanged by key-based skipping); A1 left as registered.
+
+**E3 (exploratory).** `ec_labeler.py` records `outputs_identical` (small and large text equal
+after collapsing whitespace) on realistic records; `labels_v2.skip_variants` computes, from
+the full-mode per-problem labels, the rerun share and per-agent UV error of the key rule and
+of the exact rule; `rules_report.py` writes them to `h1c.json` (`e3_skip_variants`). The
+offline key rule reproduces the --disagree-only rerun counts (tested on the fake backend,
+and 59/100 on the math dry run). The exact rule is exact by construction: identical text
+gives identical downstream prompts, and the fake-backend test checks UV error 0.
+
+**E4 (exploratory).** `v2_rules.logit_additive`, in `estimator_errors.csv` next to the others.
+
+**A11.** `cost_model.fit_token_rates`: per (model, placement), NNLS of per-call latency on
+prompt and completion tokens gives the prefill/decode shape; one scale per (model, placement)
+makes each P5 run's calls add up to the GPU time the model held. `estimated_throughput_costs`
+now uses a_m x prompt + b_m x completion per tier and the model name from the calls, and
+sets `gpu_cost_basis_<placement>` to `estimated_rates` or `fallback_latency` (latency price,
+memory fraction when shared). The output-tokens-only `tokens_per_second` is removed.
+`cost_report.py` writes `token_rates.csv`, cost-basis counts and `a3_basis_*`; `pareto.py`
+no longer switches silently: every candidate has `cost_basis`, `budget_best.csv` has
+`gpu_cost_basis`, the summary has `cost_basis_counts` and `any_fallback`. Placements without
+rates are now priced by the flagged fallback instead of left out.
+
+**P5 calibration sets.** `V2_P5_CAL=qwen_hotpot|qwen3_14_math|granite_math` runs all_small and
+all_large, K = 16, 64 problems, 3 repeats, under the running placement, into
+`P5/cal_<set>_<placement>`. P6 feeds every P5 run to the rate fit (rates are keyed by model).
+Qwen 3B/14B was not in P5 before; it is now a calibration set.
+
+**hypotheses.md.** `scripts/v2/hypotheses_report.py` (run at the end of P6) writes
+`P6/hypotheses/hypotheses.md` and `.json`: the values behind each hypothesis and amendment
+per setting, and a cost-basis table (estimated vs fallback per placement; measured only in
+`placement_costs.csv`). SUMMARY.md of P6 embeds it.
+
+**Lease tag.** `summarize_phase.py provenance --lease` (used for vllm phases) refuses to run
+unless HEAD is the `v2-lease1-start` commit, or `V2_DEVIATION` names an id present in
+`prereg/v2_amendments.md`; provenance records the tag commit and the deviation.
+
+**Dry run (Ollama, 20 problems, commit 8f90567, clean; P1/P2 replayed from the cache).**
+
+| | math Qwen 1.5B/7B | HotpotQA Qwen 1.5B/7B |
+|---|---|---|
+| E3 exact-skip: reruns used / full (share), max UV error | 88/100 (0.88), 0.000 | 77/80 (0.963), 0.000 |
+| Key-skip (A1/A10): reruns used / full (share), max UV error | 59/100 (0.59), 0.100 | 66/80 (0.825), 0.050 |
+| E4 logit_additive MAE held-out (all) | 0.099 (0.086) | 0.207 (0.160) |
+| additive / multiplicative / pairwise MAE held-out | 0.132 / 0.177 / 0.095 | 0.113 / 0.348 / 0.102 |
+| A10 top-2 and confident_uv picks unchanged | yes | yes |
+
+A11 rates fitted on the Mac M6 run (Ollama, separate placement only, 120 calls per model;
+GPU-seconds per token): qwen2.5:1.5b-instruct a = 0.00477, b = 0.01621; qwen2.5:7b-instruct
+a = 0.00899, b = 0.03541. Shared and shared_mps had no Ollama run, so their costs are flagged
+fallback_latency in the dry run.
