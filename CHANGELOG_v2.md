@@ -292,3 +292,5 @@ Ollama restarts, 5 retries with backoff (1, 2, 5, 10, 20 min), FAILURES.md, the 
 2026-11-15 23:00 UTC deadline, per-step packaging and push to v2-q4, and FINAL (upload and cache
 zips, checksums, UPLOAD_TO_CLAUDE.md). `--dry-run` prints the plan and each step's commands.
 It uses the python3 already on PATH (Homebrew's has no numpy), so Homebrew is appended to PATH.
+
+2026-11-07 22:10:16 UTC q4 throughput test (5 math problems, all_small + all_large, fresh caches): 2/2 0.5042 calls/s, 1/1 0.4054 calls/s, cache keys identical: yes. Using OLLAMA_NUM_PARALLEL=2, V2_WORKERS=2 (rule: 2/2 only if >= 20% faster and keys identical).
