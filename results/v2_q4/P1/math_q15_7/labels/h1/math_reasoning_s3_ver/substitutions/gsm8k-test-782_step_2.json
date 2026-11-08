@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-782",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "RESULT: 10 rides on each of the two other days.",
+  "reference_key": "10",
+  "final_key_plus": "95",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: 10 rides on each of the two other days, so that's an additional 2 * 10 = 20 rides.\n\nNow add up all the rides:\n5 regular days * 15 rides/day + 2 extra days * 10 rides/day = 75 + 20 = 95 rides in total for the week.",
+    "aggregator": "#### 95\n\nEnd with \"#### 95\".",
+    "verifier": "The proposed solution is correct. They ride their bikes 95 times a week.\n\nFinal answer: 95"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "11",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 11 rides on each of the two other days.",
+      "quality": 0.0,
+      "final_key": "47",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 15 + (11 * 2) = 47 rides per week.",
+        "aggregator": "#### 47",
+        "verifier": "The proposed solution is correct. They ride their bikes 47 times a week.\n\nFinal answer: 47"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "12",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 6 rides per day on the other two days plus twice that (which is another double of 6 for those two regular ride days). So, RESULT: 12 rides on each of the over-weekend days.",
+      "quality": 0.0,
+      "final_key": "27",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 15 + 12 = 27 rides per week.",
+        "aggregator": "#### 27",
+        "verifier": "Aggregator's solution is correct. They ride their bikes 27 times a week.\n\nRe-reading the problem:\nChase and Rider can ride their bikes thrice a day for 5 days; but on two other days, they ride twice the times they do on usual days (which means 6 times instead of 3).\n\nCalculation:\nFor the 5 regular days: \\(5 \\times 3 = 15\\) rides.\nFor the 2 extra days: \\(2 \\times 6 = 12\\) rides.\n\nTotal for the week: \\(15 + 12 = 27\\) rides.\n\nFinal answer: 27"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "75",
+      "reference_key": "10",
+      "key_differs": true,
+      "text": "RESULT: 75",
+      "quality": 0.0,
+      "final_key": "75",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 75",
+        "aggregator": "#### 75",
+        "verifier": "The proposed solution is correct. They ride their bikes 75 times a week.\n\nRe-reading the problem:\nChase and Rider can ride their bikes thrice a day for 5 days; but on two other days, they ride twice the times they do on usual days (which means 6 times instead of 3).\n\nCalculating:\n- For 5 days: \\(3 \\times 5 = 15\\) rides\n- On the two extra days: \\(2 \\times 6 = 12\\) rides\n\nTotal for the week: \\(15 + 12 = 75\\) rides.\n\nFinal answer: 75"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "6",
+  "sample_keys": [
+    "7",
+    "6",
+    "60",
+    "27",
+    "15"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1092.0,
+    "small_out": 317.0,
+    "small_s": 21.153358541429043
+  },
+  "calls_plus": {
+    "small_in": 908.0,
+    "small_out": 246.0,
+    "small_s": 13.715595001121983,
+    "large_in": 240.0,
+    "large_out": 15.0,
+    "large_s": 2.0919255840126425
+  },
+  "calls_samples": {
+    "small_in": 1200.0,
+    "small_out": 350.0,
+    "small_s": 22.275323709473014
+  }
+}

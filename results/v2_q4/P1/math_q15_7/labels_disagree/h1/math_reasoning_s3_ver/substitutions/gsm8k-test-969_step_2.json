@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-969",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "Step_2: Total number of people getting a phone is John (1), his 2 kids (2), and his wife (1). So, 1 + 2 + 1 = 4 phones in total.\n\nRESULT: 4",
+  "reference_key": "4",
+  "final_key_plus": "1800",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "The correct calculation should be:\n- The first two phones cost $600 each.\n- Each subsequent phone is half price, so they cost $300 each.\n\nTotal cost = 2 * $600 + 2 * ($600 / 2) = $1200 + $600 = $1800\n\nFinal answer: $1800",
+    "aggregator": "#### 2400",
+    "step_3": "step_3: Calculate the cost for each subsequent phone as half price and sum up all costs to find the total amount paid:\n\n2 * $600 (first two phones) + 4 * ($600 / 2) = $1200 + $1200 = $2400\n\nRESULT: $2400"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "5",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "Step_2: Total number of people getting a phone is John (1), his 2 kids (2), and his wife (1). So, 1 + 2 + 1 = 4 phones in total.\n\nRESULT: 5",
+      "quality": 1.0,
+      "final_key": "1800",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "The correct calculation should be:\n- The first two phones cost $600 each.\n- Each subsequent phone is half price, so they cost $300 each.\n\nTotal cost = 2 * $600 + 2 * ($600 / 2) = $1200 + $600 = $1800\n\nFinal answer: $1800",
+        "aggregator": "#### 2400",
+        "step_3": "step_3: Calculate the cost for each subsequent phone as half price and sum up all costs to find the total amount paid:\n\n2 * $600 (first two phones) + 4 * ($600 / 2) = $1200 + $1200 = $2400\n\nRESULT: $2400"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "step_2 RESULT: The total number of phones John is buying is:\n2 (first two regular) + n (additional children plus wife, let's say for simplicity \"5\" if counting all family members),\nSo adding these up gives 3 full-price initial entries + a series where each subsequent phone costs half the price.\n\nRESULT: $1200 + (4 * $600 / 2)\nExplanation: There's 2 fixed first phones at full rate ($600 total) plus additional cost proportional to their number which, being split into odd tiers and doubling from previous rates with further factors,\nFirstly he'd account for 2 extra phones in sequence thus costing twice the increment per second price bracket entry; \nSo for each phone after that there would be a multiplier 1+ half its price factor divided by two added to them (i.e: a double up until all were halved),\nAnd here we should conclude adding:\n$200 + $600 * n / 2\nfor additional phones.",
+      "quality": 0.0,
+      "final_key": "2400",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "The correct calculation should be:\n- The first two phones cost $600 each.\n- Each subsequent phone is half price, so they cost $300 each.\n\nTotal cost = 2 * $600 + 4 * $300 = $1200 + $1200 = $2400\n\nFinal answer: $2400",
+        "aggregator": "$2700. #### 2700",
+        "step_3": "RESULT: $1200 + ($600 * 5) / 2 = $1200 + $1500 = $2700"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "13",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "RESULT: 13",
+      "quality": 0.0,
+      "final_key": "2400",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "The correct calculation should be:\n- The first two phones cost $600 each.\n- Each subsequent phone is half price, so they cost $300 each.\n\nTotal cost = 2 * $600 + 4 * $300 = $1200 + $1200 = $2400\n\nFinal answer: 2400",
+        "aggregator": "#### 4800",
+        "step_3": "RESULT: $4800"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "1800",
+  "sample_keys": [
+    "300",
+    "1500",
+    "1500",
+    "1800",
+    "1800"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1191.0,
+    "small_out": 371.0,
+    "small_s": 23.0600538731087
+  },
+  "calls_plus": {
+    "small_in": 919.0,
+    "small_out": 268.0,
+    "small_s": 18.47080404101871,
+    "large_in": 217.0,
+    "large_out": 51.0,
+    "large_s": 7.343187249964103
+  },
+  "calls_samples": {
+    "small_in": 1085.0,
+    "small_out": 279.0,
+    "small_s": 34.18275654199533
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-1114",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Initial amount: $21\nSavings from allowance: $11\nTotal before expenses: $21 + $11 = $32\nRESULT: 32",
+  "reference_key": "32",
+  "final_key_plus": "8",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.8,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "The correct calculation should be:\n- Raymond starts with $21.\n- He saves $11 from his allowance: \\( 21 + 11 = 32 \\).\n- He spends $5 on a comic book: \\( 32 - 5 = 27 \\).\n- He spends $19 on a puzzle: \\( 27 - 19 = 8 \\).\n\nSo, Raymond has $8 left.",
+    "aggregator": "Raymond has $8 left. #### 8",
+    "step_2": "Total savings - Comic book cost - Puzzle cost = $32 - $5 - $19 = $8 RESULT: $8",
+    "step_3": "Initial amount + Savings - Comic book cost - Puzzle cost = $21 + $11 - $5 - $19 = $8 RESULT: $8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "33",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "Initial amount: $21\nSavings from allowance: $11\nTotal before expenses: $21 + $11 = $32\nRESULT: 33",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "The correct calculation should be:\nInitial amount: $21\nSaved from allowance: +$11\nSpent on comic book: -$5\nSpent on puzzle: -$19\n\nFinal amount = 21 + 11 - 5 - 19 = 8\n\nSo the answer is: Final answer: 8",
+        "aggregator": "#### 29",
+        "step_2": "Comic book cost: $5\nPuzzle cost: $19\nTotal spent on comic and puzzle: $5 + $19 = $24\n\nSubtract total expenses from initial amount:\n$32 - $24 = $8\n\nAdd the remaining money to what he initially had:\n$8 + $21 = $29\n\nRESULT: 29",
+        "step_3": "$8 + $21 = $29\n\nRESULT: 29"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "18",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "RESULT: $18",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "The correct calculation should be:\n- Raymond starts with $21.\n- He saves $11 from his allowance: \\( 21 + 11 = 32 \\).\n- He spends $5 on a comic book: \\( 32 - 5 = 27 \\).\n- He spends $19 on a puzzle: \\( 27 - 19 = 8 \\).\n\nSo, the correct amount of money Raymond has left is $8.",
+        "aggregator": "Raymond has $20 left. #### 20",
+        "step_2": "PLAN: First, calculate the total amount of money Raymond saved by adding his initial allowance to the savings he made from it. Then, subtract the cost of the comic book and the puzzle from this total to find out how much money he has left after these expenses. Finally, add the remaining amount to what he initially had to determine the final amount of money Raymond has left.\nRESULT: $18",
+        "step_3": "RESULT: $20"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "2",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "PLAN:  \n1. Determine the number of babies dressed in each color.\n\nTotal octuplets = 8\n\nNumber dressed in purple = 3/4 * 8 = 6\nNumber dressed in blue = 1/4 * 8 = 2\n\nRESULT: 6 babies are dressed in purple and 2 in blue.",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "The correct calculation should be:\n- Raymond starts with $21.\n- He saves $11 from his allowance: \\( 21 + 11 = 32 \\).\n- He spends $5 on a comic book: \\( 32 - 5 = 27 \\).\n- He spends $19 on a puzzle: \\( 27 - 19 = 8 \\).\n\nSo, Raymond has $8 left.",
+        "aggregator": "Raymond has $6 left. #### 6",
+        "step_2": "RESULT: 6",
+        "step_3": "RESULT: 6"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "32",
+  "sample_keys": [
+    "8",
+    "46",
+    "32",
+    "8",
+    "8"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": true,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1024.0,
+    "small_out": 264.0,
+    "small_s": 16.382999207125977
+  },
+  "calls_plus": {
+    "small_in": 842.0,
+    "small_out": 242.0,
+    "small_s": 14.875578206963837,
+    "large_in": 182.0,
+    "large_out": 38.0,
+    "large_s": 2.9094558339565992
+  },
+  "calls_samples": {
+    "small_in": 910.0,
+    "small_out": 322.0,
+    "small_s": 18.98861820809543
+  }
+}

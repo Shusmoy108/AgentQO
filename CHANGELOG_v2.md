@@ -304,3 +304,7 @@ resumes it. Needs the user to free disk; nothing else is deleted.
 
 2026-11-08 04:38:43 UTC q4 resumed: 16 GB free disk (swap down to 2.2 GB). The suspended driver (pid 77266) was killed with SIGKILL (not TERM, so its trap would not run FINAL early) and restarted with the same nohup caffeinate command (new pid 15829), so Q4-1 gets a fresh retry budget. Cache data/cache/v2_q4.sqlite passed integrity_check (35 calls kept); the throughput result (2/2) is reused from logs/v2_q4/parallel.txt.
 Note: Q4-1 provenance after this restart says DIRTY only because CHANGELOG_v2.md had the line above uncommitted; no code differs from 161e50e.
+
+2026-11-08 06:08:27 UTC q4 disk: free space fell to 6 GB during Q4-1 (other apps, not q4). At the user's request, deleted the Claude desktop VM image ~/Library/Application Support/Claude/vm_bundles/claudevm.bundle/rootfs.img (~9.4 GB, not in use). Nothing under the repo was deleted.
+
+2026-11-08 08:03:18 UTC q4 disk: at the user's request, force-quit the hung Docker Desktop and deleted its disk image ~/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw (47 GB; all Docker images, containers and volumes on this Mac). Not used by q4. Nothing under the repo was deleted.

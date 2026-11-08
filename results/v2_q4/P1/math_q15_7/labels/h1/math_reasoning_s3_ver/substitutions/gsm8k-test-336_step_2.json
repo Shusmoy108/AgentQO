@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-336",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: NEW PRICE AFTER INCREASE = ORIGINAL PRICE * (1 + INCREASE RATE)\nNEW PRICE AFTER INCREASE = $8 * (1 + 0.50) = $8 * 1.50 = $12\nRESULT: $12",
+  "reference_key": "12",
+  "final_key_plus": "25",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: FINAL VALUE = NEW PRICE AFTER INCREASE * NUMBER OF SHARES\nFINAL VALUE = $12 * 8 = $96\n\nRESULT: $96",
+    "aggregator": "#### 96",
+    "verifier": "The final value of all Maria's shares is $96.\n\nMistake: The stock price increases by 50% after it has already increased by 25%. This means the increase should be calculated based on the new, higher price."
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "13",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "step_2: NEW PRICE AFTER INCREASE = ORIGINAL PRICE * (1 + INCREASE RATE)\nNEW PRICE AFTER INCREASE = $8 * (1 + 0.50) = $8 * 1.50 = $12\nRESULT: 13",
+      "quality": 0.0,
+      "final_key": "25",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: FINAL VALUE = NEW PRICE AFTER INCREASE * NUMBER OF SHARES\nFINAL VALUE = $12 * 8 = $96\n\nRESULT: $96",
+        "aggregator": "#### 96",
+        "verifier": "The final value of all Maria's shares is $96.\n\nMistake: The stock price increases by 50% after it has already increased by 25%. This means the increase should be calculated based on the new, higher price."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "12.8",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "new_stock_price_increase = ORIGINAL_PRICE * 0.50\nRESULT: $12.80",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: $9.60",
+        "aggregator": "The final value of all Maria's shares is $9.60. #### 9.60",
+        "verifier": "The final value of all Maria's shares is $9.60.\n\nMistake: The stock price increases by 50% first and then decreases by 25%, which means it should be recalculated as follows:\n- First year increase: \\(8 \\times (1 + 0.5) = 8 \\times 1.5 = $12\\)\n- Second year decrease: \\(12 \\times (1 - 0.25) = 12 \\times 0.75 = $9\\)\n\nFinal answer: $9"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "6",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 6 rides per day on two other days.",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: $51.20",
+        "aggregator": "The final value of all Maria's shares is $51.20. #### 51.20",
+        "verifier": "The final value of all Maria's shares is $51.20.\n\nMistake: The stock price increases by 50% first and then decreases by 25%, which means it should be recalculated as follows:\n- First year increase: \\(8 \\times (1 + 0.5) = 8 \\times 1.5 = $12\\)\n- Second year decrease: \\(12 \\times (1 - 0.25) = 12 \\times 0.75 = $9\\)\n\nSo, the final value of all Maria's shares is $9.\n\nFinal answer: $9"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "108",
+  "sample_keys": [
+    "96",
+    "136",
+    "120",
+    "96",
+    "120"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1086.0,
+    "small_out": 215.0,
+    "small_s": 13.843066250905395
+  },
+  "calls_plus": {
+    "small_in": 923.0,
+    "small_out": 201.0,
+    "small_s": 12.998319793259725,
+    "large_in": 223.0,
+    "large_out": 58.0,
+    "large_s": 4.237348375143483
+  },
+  "calls_samples": {
+    "small_in": 1115.0,
+    "small_out": 177.0,
+    "small_s": 11.505287418141961
+  }
+}

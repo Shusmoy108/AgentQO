@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-336",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total initial investment: 8 shares * $8/share.\n2. Compute the stock price after the first year increase: Initial price * 150%.\n3. Compute the final value of all shares after the second year decrease: Price after first year * 75%.",
+  "reference_key": null,
+  "final_key_plus": "8",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "INITIAL INVESTMENT = 8 SHARES * $8/SHARE = $64\n\nRESULT: $64",
+    "step_2": "RESULT: $105.60",
+    "verifier": "The final value of all Maria's shares is $78.24.\n\nMistake: The stock price increased by 50% first and then decreased by 25%, but these percentages were applied to different values. The initial purchase price was $8 per share, so the increase should be calculated on $8, not the final value of the shares after both changes.",
+    "step_3": "RESULT: $78.24",
+    "aggregator": "The final value of all Maria's shares is $78.24. #### 78.24"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: 1. Calculate the number of chocolate bars produced in the second week by dividing the first week's production by 2.\n   2. Calculate the number of chocolate bars produced in the third week by multiplying the first week's production by 3.\n   3. Subtract the total production from the previous weeks (first, second, and third) from the monthly production to find out how many are produced in the fourth week.",
+      "quality": 1.0,
+      "final_key": "72",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 40",
+        "step_2": "RESULT: 120",
+        "verifier": "The final value of all Maria's shares is $60.\n\nMistake: The stock price increases by 50% first year and then decreases by 25% in the second year. This means the total percentage change over two years is not -25%, but rather a net increase of 12.5%. Therefore, the final value should be calculated as follows:\n\nInitial investment: $8 per share \u00d7 8 shares = $64\nFirst year increase: 50% of $64 = $32\nSecond year decrease: 25% of ($64 + $32) = 25% of $96 = $24\n\nFinal value: $64 + $32 - $24 = $72\n\nFinal answer: $72",
+        "step_3": "RESULT: 60",
+        "aggregator": "The final value of all Maria's shares is $60. #### 60"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total initial investment: 8 shares * $8/share.\n2. Compute the stock price after the first year increase: Initial price * 150%.\n3. Compute the final value of all shares after the second year decrease: Price after first year * 67%.",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "INITIAL INVESTMENT = 8 SHARES * $8/SHARE = $64\n\nRESULT: $64",
+        "step_2": "RESULT: $105.60",
+        "verifier": "The final value of all Maria's shares is $70.56.\n\nMistake: The stock price increases by 50% first and then decreases by 25%, which means it should be recalculated as follows:\n- First year increase: \\(8 \\times (1 + 0.5) = 8 \\times 1.5 = $12\\)\n- Second year decrease: \\(12 \\times (1 - 0.25) = 12 \\times 0.75 = $9\\)\n\nSo, the final value of all Maria's shares is $9.\n\nFinal answer: $9",
+        "step_3": "RESULT: $70.56",
+        "aggregator": "The final value of all Maria's shares is $70.56. #### 70.56"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:  \n1. Calculate the total number of rides for the five regular days by multiplying the daily rides by three (since they ride thrice as much on these days).\n2. Determine the additional rides on the two other days by doubling the usual day's rides.\n3. Sum up all the rides from steps 1 and 2 to get the total weekly rides.",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 45",
+        "step_2": "RESULT: 90",
+        "verifier": "The final value of all Maria's shares is $135.\n\nMistake: The stock price increases by 50% first and then decreases by 25%, which means it should be recalculated as follows:\n- First year increase: \\(8 \\times (1 + 0.5) = 8 \\times 1.5 = 12\\)\n- Second year decrease: \\(12 \\times (1 - 0.25) = 12 \\times 0.75 = 9\\)\n\nSo, the final value of all Maria's shares is $9.\n\nFinal answer: $9",
+        "step_3": "RESULT: 135",
+        "aggregator": "The final value of all Maria's shares is $135. #### 135"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "25",
+  "sample_keys": [
+    "8",
+    "25",
+    "72"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1086.0,
+    "small_out": 215.0,
+    "small_s": 13.843066250905395
+  },
+  "calls_plus": {
+    "large_in": 122.0,
+    "large_out": 64.0,
+    "large_s": 6.188863415969536,
+    "small_in": 910.0,
+    "small_out": 148.0,
+    "small_s": 9.854547583730891
+  },
+  "calls_samples": {
+    "small_in": 3475.0,
+    "small_out": 965.0,
+    "small_s": 58.246948580490425
+  }
+}

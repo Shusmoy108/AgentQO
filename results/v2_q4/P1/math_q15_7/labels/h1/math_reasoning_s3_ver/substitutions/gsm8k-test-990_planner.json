@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-990",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the temperature change during low setting: \\(3 \\text{ hours} \\times -2^\\circ\\text{C/hour}\\).\n2. Calculate the temperature change during high setting: \\(4 \\text{ hours} \\times -3^\\circ\\text{C/hour}\\).\n3. Sum the changes from steps 1 and 2, then subtract the warming effect over 2 hours: \\(2 \\text{ hours} \\times 2^\\circ\\text{C/hour}\\).",
+  "reference_key": null,
+  "final_key_plus": "-6",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: -9",
+    "step_2": "RESULT: -16",
+    "verifier": "The proposed solution is correct. The air conditioner cools 2 degrees per hour on low and 3 degrees per hour on high. It ran for 3 hours at low, then 4 hours at high, and was off for 2 hours.\n\n- For the first 3 hours: \\(3 \\text{ hours} \\times 2 \\text{ degrees/hour} = 6 \\text{ degrees lower}\\)\n- For the next 4 hours: \\(4 \\text{ hours} \\times 3 \\text{ degrees/hour} = 12 \\text{ degrees higher}\\)\n\nThe net effect is a decrease of \\(6 - 12 = -6\\) degrees. The room started at 0 degrees, so after these operations, the final temperature is \\(0 - 6 = -6\\) degrees.\n\nFinal answer: -6",
+    "step_3": "RESULT: -4.",
+    "aggregator": "-4."
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: First, calculate the amount of hay needed for the sheep by finding twice the amount each goat needs and then subtracting 3 pounds. Next, sum up the hay required for all goats and sheep to find the total amount of hay Nate needs. Finally, express the total in pounds.",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 3",
+        "step_2": "RESULT: 6",
+        "verifier": "The final temperature was 9 degrees lower than the starting temperature.\n\nFinal answer: 9",
+        "step_3": "RESULT: 9",
+        "aggregator": "The final temperature was 9 degrees lower than the starting temperature. #### 9"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the temperature change during low setting: \\(3 \\text{ hours} \\times -2^\\circ\\text{C/hour}\\).\n2. Calculate the temperature change during high setting: \\(4 \\text{ hours} \\times -3^\\circ\\text{C/hour}\\).\n3. Sum the changes from steps 1 and 2, then subtract the warming effect over 2 hours: \\(1 \\text{ hour} \\times 0^\\circ\\text{C/hour}\\).",
+      "quality": 0.0,
+      "final_key": "16",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: -9",
+        "step_2": "RESULT: -12",
+        "verifier": "The correct calculation should be as follows:\n\n1. For 3 hours on low setting: \\(2 \\text{ degrees/hour} \\times 3 \\text{ hours} = 6 \\text{ degrees}\\)\n2. For 4 hours on high setting: \\(3 \\text{ degrees/hour} \\times 4 \\text{ hours} = 12 \\text{ degrees}\\)\n3. After turning off for 2 hours, the room warms up by 2 degrees.\n\nSo, the total change in temperature is:\n\\[6 \\text{ degrees (low)} + 12 \\text{ degrees (high)} - 2 \\text{ degrees (warmer due to no air conditioner)} = 16 \\text{ degrees}\\]\n\nThe final answer: 16",
+        "step_3": "RESULT: -21",
+        "aggregator": "-21"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: Calculate the total number of Junebugs removed over the week, then divide by the number of days to find the average.",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 24",
+        "step_2": "PLAN: Calculate the total number of Junebugs removed over the week, then divide by the number of days to find the average.\n\nResults so far:\nstep_1: RESULT: 24\n\nCarry out step 2 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "verifier": "Final answer: 12",
+        "step_3": "PLAN: Calculate the total number of Junebugs removed over the week, then divide by the number of days to find the average.\n\nResults so far:\nstep_1: RESULT: 24\n\nCarry out step 2 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "aggregator": "RESULT: 12\n\n#### 12"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "16",
+  "sample_keys": [
+    "14",
+    "6",
+    "6"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1141.0,
+    "small_out": 232.0,
+    "small_s": 15.579182167770341
+  },
+  "calls_plus": {
+    "large_in": 160.0,
+    "large_out": 109.0,
+    "large_s": 8.083550125127658,
+    "small_in": 1165.0,
+    "small_out": 198.0,
+    "small_s": 10.415430624969304
+  },
+  "calls_samples": {
+    "small_in": 3804.0,
+    "small_out": 871.0,
+    "small_s": 54.28034874983132
+  }
+}

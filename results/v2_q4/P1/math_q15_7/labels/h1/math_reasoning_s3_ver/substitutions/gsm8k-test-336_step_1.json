@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-336",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Initial total cost = 8 shares * $8/share = $64\nRESULT: 64",
+  "reference_key": "64",
+  "final_key_plus": "9",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: Calculate the final value of all Maria's shares by applying the second year decrease to the increased price from step 2, then multiply this result by the number of shares.\n\nFinal Value = New Stock Price * (1 - Decrease Percentage)  \n= $12 * (1 - 0.25)  \n= $12 * 0.75  \n= $9\n\nRESULT: 9",
+    "step_2": "PLAN: 2. Determine the new stock price after the first year increase by finding 50% more than the original price.\n\nNew Stock Price = Original Price + (Original Price * 50%)  \n= $8 + ($8 * 0.5)  \n= $8 + $4  \n= $12\n\nRESULT: 12",
+    "aggregator": "The final value of all Maria's shares is $9. #### 9",
+    "verifier": "Final answer: 9"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "65",
+      "reference_key": "64",
+      "key_differs": true,
+      "text": "Initial total cost = 8 shares * $8/share = $64\nRESULT: 65",
+      "quality": 0.0,
+      "final_key": "96",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "Final value of all Maria's shares = New stock price after first year * Number of shares\n                                = $12/share * 8 shares\n                                = $96\n\nRESULT: 96",
+        "step_2": "PLAN: 1. Calculate the initial total cost of the stock by multiplying the number of shares by the price per share. 2. Determine the new stock price after the first year increase by finding 50% more than the original price.\n\nInitial total cost = $64\n\nNew stock price = Initial price + (50% of Initial price)\n                = $8 + ($8 * 0.5)\n                = $8 + $4\n                = $12\n\nRESULT: 12",
+        "aggregator": "The final value of all Maria's shares is $96. #### 96",
+        "verifier": "The final value of all Maria's shares is $96.\n\nMistake: The stock price increases by 50% first, which means it becomes \\(8 \\times (1 + 0.5) = 8 \\times 1.5 = 12\\) dollars per share. Then, when the price decreases by 25%, it is reduced to \\(12 \\times (1 - 0.25) = 12 \\times 0.75 = 9\\) dollars per share. Maria originally bought 8 shares at $8 each, so the total value of her shares after two years would be \\(8 \\times 9 = 72\\), not $96 as initially calculated."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "80",
+      "reference_key": "64",
+      "key_differs": true,
+      "text": "RESULT: $80",
+      "quality": 0.0,
+      "final_key": "96",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: $96",
+        "step_2": "RESULT: $120",
+        "aggregator": "The final value of all Maria's shares is $96. #### 96",
+        "verifier": "The final value of all Maria's shares is $96.\n\nMistake: The stock price increases by 50% first, which means it becomes \\(8 \\times (1 + 0.5) = 8 \\times 1.5 = 12\\) dollars per share. Then, when the price decreases by 25%, it is reduced to \\(12 \\times (1 - 0.25) = 12 \\times 0.75 = 9\\) dollars per share. Maria originally bought 8 shares at $8 each, so the total value of her shares after two years would be \\(8 \\times 9 = 72\\), not $96 as initially calculated."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "15",
+      "reference_key": "64",
+      "key_differs": true,
+      "text": "PLAN:  \n1. Calculate the total number of rides for the five regular days by multiplying the daily rides by three (since they ride thrice as much on these days).\n\nRESULT: 5 * 3 = 15 rides per day on usual days.",
+      "quality": 0.0,
+      "final_key": "96",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "PLAN:  \n1. Calculate the total number of rides for the five regular days by multiplying the daily rides by three (since they ride thrice as much on these days).\n\nRESULT: 5 * 3 = 15 rides per day on usual days.\n\nEnd with \"RESULT: <number>\".",
+        "step_2": "PLAN:  \n1. Calculate the total number of rides for the five regular days by multiplying the daily rides by three (since they ride thrice as much on these days).\n\nRESULT: 5 * 3 = 15 rides per day on usual days.",
+        "aggregator": "PLAN:\n1. Calculate the total number of rides for the five regular days by multiplying the daily rides by three (since they ride thrice as much on these days).\n\nRESULT: 5 * 3 = 15 rides per day on usual days.\n\nEnd with \"RESULT: <number>\".\nState the final answer. End with \"#### <number>\":\n\nFinal value of all Maria's shares is $8 \\times 8 \\times (1 + 0.5) \\times (1 - 0.25) = \\$96$.",
+        "verifier": "Final value of all Maria's shares is $8 \\times 8 \\times (1 + 0.5) \\times (1 - 0.25) = \\$96$.\n\nThe mistake in the provided solution was that it incorrectly calculated the stock price increase and decrease without properly applying the percentage changes to the initial investment amount of $8 per share for each year. The correct calculation should have been:\n- First year: \\(8 \\times (1 + 0.5) = \\$12\\) per share\n- Second year: \\(12 \\times (1 - 0.25) = \\$9\\) per share\n\nSo, the final value of all Maria's shares is $96."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "64",
+  "sample_keys": [
+    "64",
+    "48",
+    "64",
+    "64",
+    "64"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1086.0,
+    "small_out": 215.0,
+    "small_s": 13.843066250905395
+  },
+  "calls_plus": {
+    "small_in": 1027.0,
+    "small_out": 272.0,
+    "small_s": 17.42517387587577,
+    "large_in": 205.0,
+    "large_out": 22.0,
+    "large_s": 2.0859977090731263
+  },
+  "calls_samples": {
+    "small_in": 1025.0,
+    "small_out": 294.0,
+    "small_s": 18.911991458153352
+  }
+}

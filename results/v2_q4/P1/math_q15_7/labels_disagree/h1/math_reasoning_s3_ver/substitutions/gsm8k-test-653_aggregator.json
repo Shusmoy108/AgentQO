@@ -1,0 +1,94 @@
+{
+  "task_id": "gsm8k-test-653",
+  "node_id": "aggregator",
+  "role": "aggregator",
+  "reference": "Sally's bank account increased by $420 - $200 = $220 this week. Since her weekly wage should be $300, but she only received $220, the amount withheld from her wage is $300 - $220 = $80. #### 80",
+  "reference_key": "80",
+  "final_key_plus": "80",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "The proposed solution is correct. Sally's wage was withheld by $80 because her bank account increased by $220 instead of the expected $300. Therefore, the amount withheld from Sally\u2019s wage is indeed 80 dollars.\n\nFinal answer: 80"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "81",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "Sally's bank account increased by $420 - $200 = $220 this week. Since her weekly wage should be $300, but she only received $220, the amount withheld from her wage is $300 - $220 = $80. #### 81",
+      "quality": 1.0,
+      "final_key": "80",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "The proposed solution is correct. Sally's wage was withheld by $80 because her bank account increased by $220 from $200, indicating an overpayment of $300 - $220 = $80.\n\nFinal answer: 80"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "60",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "The wages that are absent in Sally's case represent 60 dollars of her intended earnings for this week. \n\n#### 60",
+      "quality": 0.0,
+      "final_key": "60",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "The proposed solution is correct. Sally's wage was withheld by $60.\n\nFinal answer: 60"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "1200",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "Jessica will pay $450 on her student loans, $300 on her credit card, and $750 on her mortgage each month if she wants to pay 50% more than the minimum payments.\n\n#### 1200.",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "The proposed solution is incorrect. Sally's bank account should have increased by $300 (her weekly wage) for her to end up with $420 after receiving no other money. Therefore, the amount withheld from her wage was $300 - $200 = $100.\n\nFinal answer: 100"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "60",
+  "sample_keys": [
+    "60",
+    "60",
+    "60",
+    "60",
+    "60"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1424.0,
+    "small_out": 341.0,
+    "small_s": 20.931514540221542
+  },
+  "calls_plus": {
+    "small_in": 1342.0,
+    "small_out": 333.0,
+    "small_s": 20.73186874948442,
+    "large_in": 133.0,
+    "large_out": 70.0,
+    "large_s": 5.605115332873538
+  },
+  "calls_samples": {
+    "small_in": 665.0,
+    "small_out": 66.0,
+    "small_s": 4.865140832727775
+  }
+}

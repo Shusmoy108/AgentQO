@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-653",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 220",
+  "reference_key": "220",
+  "final_key_plus": "7",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.6,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: 7",
+    "step_2": "RESULT: 7",
+    "aggregator": "The total amount of wages Sally was supposed to receive is $300 per week. If her bank account now holds $420, and she started with $200, then the difference between what she should have received and what she actually has is $7.\n\n#### 7",
+    "verifier": "The proposed solution is correct. Sally's wage should have been $300 per week, but she now has $420 after receiving no other money into her bank account this week. The difference between what she was supposed to receive and what she actually has is $7.\n\nFinal answer: 7"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "221",
+      "reference_key": "220",
+      "key_differs": true,
+      "text": "RESULT: 221",
+      "quality": 0.0,
+      "final_key": "79",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 79",
+        "step_2": "RESULT: 79",
+        "aggregator": "The amount of wages withheld from Sally's wage is $79. #### 79",
+        "verifier": "The proposed solution is correct. The amount of wages withheld from Sally's wage is indeed $79.\n\nFinal answer: 79"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "40",
+      "reference_key": "220",
+      "key_differs": true,
+      "text": "PLAN:  \n2. Determine how much of this deduction is due to the withheld portion of her weekly wage by dividing the difference found in step 1 by her expected weekly wage.\n\nRESULT: $40",
+      "quality": 1.0,
+      "final_key": "80",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "PLAN:  \n3. Conclude with the final answer, which will be the amount of money that was withheld from Sally's wage.\n\nRESULT: $40",
+        "step_2": "PLAN:  \n3. Conclude with the final answer, which will be the amount of money that was withheld from Sally's wage.\n\nRESULT: $40",
+        "aggregator": "#### 40",
+        "verifier": "The proposed solution is 40 dollars withheld from Sally's wage.\n\nTo recompute:\n1. Initial bank balance = $200\n2. Final bank balance = $420\n3. Total increase in balance = $420 - $200 = $220\n\nIf the total increase should be equal to her weekly wage, then the amount withheld is:\n$220 (total increase) - $300 (weekly wage) = -$80\n\nThe mistake was that the solution assumed a positive increase in balance when it should have been subtracting from the initial balance. The correct answer is 80 dollars withheld."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "450",
+      "reference_key": "220",
+      "key_differs": true,
+      "text": "PLAN:  \n1. Calculate the increased amount for each debt by adding 50% to the minimum payment.\n\n   - Student loans: $300 + (50/100 * $300) = $450\n   - Credit card: $200 + (50/100 * $200) = $300\n   - Mortgage: $500 + (50/100 * $500) = $750\n\nRESULT: 450",
+      "quality": 0.0,
+      "final_key": "280",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 280",
+        "step_2": "PLAN:\n1. Calculate the increased amount for each debt by adding 50% to the minimum payment.\n\n   - Student loans: $300 + (50/100 * $300) = $450\n   - Credit card: $200 + (50/100 * $200) = $300\n   - Mortgage: $500 + (50/100 * $500) = $750\n\nRESULT: 450",
+        "aggregator": "#### 280",
+        "verifier": "The proposed solution is 280 dollars withheld from Sally's wage.\n\nRecomputing:\n- Initial bank balance: $200\n- Current bank balance: $420\n- Total change in balance: $420 - $200 = $220\n\nIf the total change should be equal to her weekly wage minus what was withheld, then:\n\n$300 (weekly wage) - 280 (amount withheld) = $20\n\nThis confirms that the proposed solution of 280 dollars is correct."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "2",
+  "sample_keys": [
+    "2",
+    "220",
+    "-200",
+    "220",
+    "-220"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1424.0,
+    "small_out": 341.0,
+    "small_s": 20.931514540221542
+  },
+  "calls_plus": {
+    "small_in": 996.0,
+    "small_out": 222.0,
+    "small_s": 13.515291916904971,
+    "large_in": 227.0,
+    "large_out": 7.0,
+    "large_s": 1.683709125034511
+  },
+  "calls_samples": {
+    "small_in": 1135.0,
+    "small_out": 267.0,
+    "small_s": 17.457844958873466
+  }
+}

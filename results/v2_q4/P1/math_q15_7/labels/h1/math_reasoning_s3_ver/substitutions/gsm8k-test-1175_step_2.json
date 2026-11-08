@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-1175",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "TEAM B SCORED 4 GOALS IN THE SECOND HALF, SO TEAM A SCORED 1/4 * 4 = 1 GOAL.\n\nRESULT: 1",
+  "reference_key": "1",
+  "final_key_plus": "11",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "TEAM A SCORED 4 + 1 = 5 GOALS IN THE SECOND HALF, AND TEAM B SCORED 2 + 4 = 6 GOALS IN TOTAL.\n\nRESULT: 5 + 6 = 11 GOALS.",
+    "aggregator": "#### 11",
+    "verifier": "The total number of goals scored by both teams is 11.\n\nFinal answer: 11"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "2",
+      "reference_key": "1",
+      "key_differs": true,
+      "text": "TEAM B SCORED 4 GOALS IN THE SECOND HALF, SO TEAM A SCORED 1/4 * 4 = 1 GOAL.\n\nRESULT: 2",
+      "quality": 0.0,
+      "final_key": "11",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "TEAM A SCORED 4 + 1 = 5 GOALS IN THE SECOND HALF, AND TEAM B SCORED 2 + 4 = 6 GOALS IN TOTAL.\n\nRESULT: 5 + 6 = 11\n\nThe total number of goals scored in the match is 11.",
+        "aggregator": "#### 11",
+        "verifier": "The total number of goals scored by both teams is 11.\n\nFinal answer: 11"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "3",
+      "reference_key": "1",
+      "key_differs": true,
+      "text": "TEAM A SCORED 4 GOALS IN THE SECOND HALF, WHICH IS 1/4 OF TEAM B'S TOTAL FIRST HALF GOALS, MADE IT BE 2 - (1/4) * 2 = 1.5. RESULT: 3",
+      "quality": 0.0,
+      "final_key": "15",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "TEAM A SCORED 4 + 1.5 = 5 GOALS IN THE SECOND HALF, AND TEAM B SCORED 2 + 4 * 2 = 10 GOALS IN TOTAL. RESULT: 15",
+        "aggregator": "#### 15",
+        "verifier": "The proposed solution is correct. The total number of goals scored by both teams in the match is 15.\n\nFinal answer: 15"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "140",
+      "reference_key": "1",
+      "key_differs": true,
+      "text": "silver_coins = gold_coins - 30\ntotal_coins = gold_coins + silver_coins\nRESULT: 140",
+      "quality": 0.0,
+      "final_key": "6.5",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "silver_coins = gold_coins - 30\ngold_coins = 140\nresult: 110\n\nNow, let's calculate the number of goals scored by team A in the second half:\ngoals_A_second_half = (1/4) * goals_B_first_half\ngoals_B_first_half = 2\ngoals_A_second_half = (1/4) * 2 = 0.5\n\nTotal goals scored by both teams:\ntotal_goals = goals_A_first_half + goals_B_first_half + goals_A_second_half\ntotal_goals = 4 + 2 + 0.5 = 6.5\n\nRESULT: 6.5",
+        "aggregator": "The total number of goals scored in the match is 6.5. #### 6.5",
+        "verifier": "The total number of goals scored in the match is 6.5.\n\nFinal answer: 6.5"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "0.5",
+  "sample_keys": [
+    "0",
+    "2",
+    "9",
+    "0.5",
+    "5"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1418.0,
+    "small_out": 327.0,
+    "small_s": 20.436731834197417
+  },
+  "calls_plus": {
+    "small_in": 1062.0,
+    "small_out": 198.0,
+    "small_s": 12.535610792925581,
+    "large_in": 264.0,
+    "large_out": 36.0,
+    "large_s": 2.465028000064194
+  },
+  "calls_samples": {
+    "small_in": 1320.0,
+    "small_out": 159.0,
+    "small_s": 10.341700042132288
+  }
+}

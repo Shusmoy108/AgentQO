@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-196",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total amount of carrots distributed: 40 restaurants * 2 pounds/restaurant.\n2. Subtract the distributed amount from the initial quantity of carrots: 200 pounds - (total from step 1).\n3. The result from step 2 represents the unused carrots.",
+  "reference_key": null,
+  "final_key_plus": "160",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "RESULT: 40",
+    "step_2": "RESULT: 160",
+    "verifier": "The proposed solution is correct. Each of the 40 restaurants will receive 2 pounds of carrots, so the total amount distributed is \\(40 \\times 2 = 80\\) pounds. Since there are 200 pounds available and only 80 pounds are used, the remaining amount that will not be used is \\(200 - 80 = 160\\) pounds.\n\nFinal answer: 160 pounds",
+    "step_3": "RESULT: 160 pounds",
+    "aggregator": "#### 160 pounds"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: Calculate the total number of vlogs Emma has already made, subtract that from 72 to find out how many more vlogs she needs to make.",
+      "quality": 1.0,
+      "final_key": "120",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 0",
+        "step_2": "PLAN: Calculate the total number of vlogs Emma has already made, subtract that from 72 to find out how many more vlogs she needs to make.\n\nRESULT: 72",
+        "verifier": "The total amount of carrots distributed is 40 restaurants * 2 pounds/restaurant = 80 pounds. Since only 200 pounds are available, the number of pounds not used is 200 pounds - 80 pounds = 120 pounds.\n\nFinal answer: 120",
+        "step_3": "RESULT: 0",
+        "aggregator": "#### 0"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total amount of carrots distributed: 40 restaurants * 2 pounds/restaurant.\n2. Subtract the distributed amount from the initial quantity of carrots: 200 pounds - (total from step 1).\n3. The result from step 2 represents the unused carrots, plus 2 extra pounds due to rounding.",
+      "quality": 0.0,
+      "final_key": "0",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 40",
+        "step_2": "RESULT: 168",
+        "verifier": "The correct calculation should be:\n\n200 pounds of carrots / 40 restaurants = 5 pounds per restaurant\n\nSince each restaurant is supposed to receive 2 pounds, we need to find out how many pounds are left over after distributing the required amount.\n\n5 pounds (per restaurant) * 40 restaurants - 200 pounds = 200 pounds - 200 pounds = 0 pounds\n\nThe mistake in the original solution was that it incorrectly divided the total by the number of restaurants instead of calculating how much each restaurant should receive. The correct answer is: Final answer: 0 pounds.",
+        "step_3": "RESULT: 168 - (total from step 1) = 168 - 40 = 128 pounds of carrots will not be used.",
+        "aggregator": "#### 128 pounds."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: First, calculate the total number of hot dogs needed for the party. Then, determine how many additional packs are required and their cost.",
+      "quality": 0.0,
+      "final_key": "0",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 0",
+        "step_2": "PLAN: Calculate the total number of hot dogs needed for the party.\n\nRESULT: 400\n\nNow, determine how many additional packs are required and their cost.\n\nAdditional Packs Required = Total Hot Dogs Needed / Number of Packed Hot Dogs per Pack\nSince each pack contains 20 hot dogs:\nAdditional Packs Required = 400 / 20 = 20 packs\n\nCost per Pack = $1.50\n\nTotal Cost = Additional Packs Required * Cost per Pack\nTotal Cost = 20 * $1.50 = $30.00",
+        "verifier": "The correct calculation is as follows:\n\nTotal weight of carrots = 200 pounds\nNumber of restaurants = 40\n\nEach restaurant receives:\n\\[ \\frac{200}{40} = 5 \\text{ pounds per restaurant} \\]\n\nSince each restaurant gets exactly 5 pounds, and there are 40 restaurants, the total amount distributed is:\n\\[ 40 \\times 5 = 200 \\text{ pounds} \\]\n\nTherefore, no carrots will be left unused.\n\nFinal answer: 0 pounds",
+        "step_3": "Additional Packs Required = 400 / 20 = 20 packs\n\nCost per Pack = $1.50\n\nTotal Cost = Additional Packs Required * Cost per Pack\nTotal Cost = 20 * $1.50 = $30.00",
+        "aggregator": "#### 0 pounds"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "0",
+  "sample_keys": [
+    "120",
+    "120",
+    "0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 922.0,
+    "small_out": 211.0,
+    "small_s": 13.372747207293287
+  },
+  "calls_plus": {
+    "large_in": 114.0,
+    "large_out": 63.0,
+    "large_s": 6.215604125056416,
+    "small_in": 807.0,
+    "small_out": 121.0,
+    "small_s": 9.45758174895309
+  },
+  "calls_samples": {
+    "small_in": 2969.0,
+    "small_out": 863.0,
+    "small_s": 63.890824207570404
+  }
+}

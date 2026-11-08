@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-1026",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "RESULT: 1440 pounds of ore per day for 40 dwarves with steel pickaxes.",
+  "reference_key": "40",
+  "final_key_plus": "43200",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "\\[ \\text{Total ore mined by 40 dwarves in a month} = 1440 \\text{ pounds/day} \\times 30 \\text{ days} \\]\n\\[ = 43200 \\text{ pounds} \\]\n\nRESULT: 43200 pounds",
+    "aggregator": "#### 43200",
+    "verifier": "The proposed solution is correct. The calculation shows that 40 dwarves can mine 43,200 pounds of ore in a month with steel pickaxes.\n\nFinal answer: 43200"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "40",
+      "reference_key": "40",
+      "key_differs": false,
+      "text": "RESULT: 41 pounds of ore per day for 40 dwarves with steel pickaxes.",
+      "quality": 1.0,
+      "final_key": "43200",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 14,400 pounds of ore.",
+        "aggregator": "#### 14,400 pounds.",
+        "verifier": "Aggregator's solution is correct. The calculation shows that 40 dwarves can mine 14,400 pounds of ore in a month with steel pickaxes.\n\nRe-reading and recomputing:\n- One dwarf mines 12 pounds per day.\n- With an iron pickaxe: \\(12 \\times 2 = 24\\) pounds per day.\n- With a steel pickaxe: \\(24 + 50\\% \\times 24 = 36\\) pounds per day.\n- For 40 dwarves with steel pickaxes in 30 days:\n\\[40 \\times 36 \\times 30 = 43,200 \\text{ pounds}\\]\n\nThe aggregator's solution is accurate."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "36",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "CALCULATION:\n\\[\n\\begin{aligned}\n&\\text{One dwarf mines 12 pounds per day without a pickaxe}\\\\\n&\\text{He can mine twice as much with an iron pickaxe}\\\\  \\\\\n& \\quad = 24 \\text{ pounds/day} \\\\\n& \\text{With a steel pickaxe, he mines 50% more than the iron pickaxe} \\end{aligned}\n\\]\n\\[\n\\begin{aligned}\n& \\quad = 12 \\times (1 + 0.5) \\\\\n& = 12 \\times 1.5 \\\\\n& = 18 + 1.5 \\\\ \\text{Result: } &= 36\n\\end{aligned} RESULT: 36 pounds of ore",
+      "quality": 0.0,
+      "final_key": "4320",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 4320 pounds of ore",
+        "aggregator": "#### 4320 pounds of ore.",
+        "verifier": "Aggregator's solution is correct. The calculation shows that 40 dwarves can mine 4320 pounds of ore in a month with steel pickaxes over 30 days.\n\nFinal answer: 4320 pounds of ore."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "1200",
+      "reference_key": "40",
+      "key_differs": true,
+      "text": "step_2: Calculate the additional distance Polly can throw the javelin by holding the gemstone.\n\nWhen Polly holds the sapphire gemstone, she can throw the javelin three times farther than when not holding it. \n\nAdditional distance = 3 * 400 feet = 1200 feet\n\nRESULT: 1200 feet",
+      "quality": 0.0,
+      "final_key": "1440",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "To calculate how much ore 40 dwarves can mine in a day using their steel pickaxes:\n\n\\[ \\text{Total ore per day} = 40 \\times 36 \\text{ pounds/day} \\]\n\\[ = 1440 \\text{ pounds/day} \\]\n\nRESULT: 1440 pounds of ore",
+        "aggregator": "#### 1440 pounds.",
+        "verifier": "The proposed solution is correct. The calculation shows that 40 dwarves can mine 1440 pounds of ore in a month with steel pickaxes.\n\nFinal answer: 1440 pounds."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "36",
+  "sample_keys": [
+    "36",
+    "36",
+    "36",
+    "36",
+    "36"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1494.0,
+    "small_out": 374.0,
+    "small_s": 25.878027957864106
+  },
+  "calls_plus": {
+    "small_in": 1125.0,
+    "small_out": 348.0,
+    "small_s": 23.687266249675304,
+    "large_in": 367.0,
+    "large_out": 24.0,
+    "large_s": 2.8530195420607924
+  },
+  "calls_samples": {
+    "small_in": 1835.0,
+    "small_out": 51.0,
+    "small_s": 3.7350612925365567
+  }
+}

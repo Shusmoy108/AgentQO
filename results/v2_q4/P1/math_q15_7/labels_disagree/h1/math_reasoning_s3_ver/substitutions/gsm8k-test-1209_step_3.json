@@ -1,0 +1,98 @@
+{
+  "task_id": "gsm8k-test-1209",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "step_3: RESULT: 20 liters",
+  "reference_key": "20",
+  "final_key_plus": "29",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "The total amount of water removed from the air is calculated as follows:\n\n1. Low setting for 3 days: \\( 1 \\text{ liter/day} \\times 3 \\text{ days} = 3 \\text{ liters} \\)\n2. Medium setting for 3 days: \\( 2 \\times 1 \\text{ liter/day} \\times 3 \\text{ days} = 6 \\text{ liters} \\)\n3. High setting for 5 days: \\( 2 \\times (2 \\times 1 \\text{ liter/day}) \\times 5 \\text{ days} = 20 \\text{ liters} \\)\n\nAdding these together gives the total amount of water removed:\n\\[ 3 \\text{ liters} + 6 \\text{ liters} + 20 \\text{ liters} = 29 \\text{ liters} \\]\n\nFinal answer: 29.",
+    "aggregator": "#### 20."
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "step_3: RESULT: 21 liters",
+      "quality": 0.0,
+      "final_key": "21",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "The total amount of water that the dehumidifier removed from the air in Brian's basement is 21 liters.\n\nFinal answer: 21",
+        "aggregator": "The total amount of water that the dehumidifier removed from the air in Brian's basement is 21 liters. #### 21"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "29",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "LOW setting: 3 days * 1 liter/day = 3 liters\nMEDIUM setting: 3 days * 2 liters/day = 6 liters\nHIGHEST setting: 5 days * 4 liters/day = 20 liters (since the medium setting removes twice as much per day, high is thus twice that amount)\n\nRESULT: 3 + 6 + 20 = 29 liters",
+      "quality": 1.0,
+      "final_key": "29",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "The total amount of water removed from the air is 29 liters.\n\nFinal answer: 29",
+        "aggregator": "The total amount of water removed from the air in Brian's basement over the course of 11 days (3 low, 3 medium, and 5 high) is 29 liters.\n\n#### 29"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "100",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "RESULT: $100",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "The total amount of water removed from the air is 100 liters.\n\nFinal answer: 100",
+        "aggregator": "#### 100"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "15",
+  "sample_keys": [
+    "15",
+    "50",
+    "19",
+    "40",
+    "15"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 1.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1696.0,
+    "small_out": 318.0,
+    "small_s": 19.532580624800175
+  },
+  "calls_plus": {
+    "small_in": 1371.0,
+    "small_out": 293.0,
+    "small_s": 18.759680540766567,
+    "large_in": 327.0,
+    "large_out": 11.0,
+    "large_s": 0.9078474999405444
+  },
+  "calls_samples": {
+    "small_in": 1635.0,
+    "small_out": 116.0,
+    "small_s": 7.763129542116076
+  }
+}

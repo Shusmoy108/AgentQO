@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-2",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "RESULT: $200,000",
+  "reference_key": "200000",
+  "final_key_plus": "165000",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "The correct calculation should be:\nInitial cost of the house + repairs = $80,000 + $50,000 = $130,000\nIncrease in value due to renovations = 150% of initial cost = 1.5 * $130,000 = $195,000\nTotal profit = Increase in value - Initial cost + repairs = $195,000 - $80,000 + $50,000 = $165,000\n\nFinal answer: 165,000",
+    "aggregator": "#### 120,000",
+    "step_3": "step_3: Profit = Total cost after repairs - Initial purchase price\n= $200,000 - $80,000\n= $120,000\n\nRESULT: $120,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "200001",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "RESULT: 200001",
+      "quality": 1.0,
+      "final_key": "70000",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "The proposed solution is correct. Josh bought the house for $80,000 and put in $50,000 in repairs, increasing its value by 150%. The increase in value due to the repairs is calculated as follows:\n\n\\[ \\text{Increase in Value} = \\$50,000 \\times 1.5 = \\$75,000 \\]\n\nAdding this increase to the original price of the house gives:\n\n\\[ \\text{Total Cost} = \\$80,000 + \\$75,000 = \\$155,000 \\]\n\nThe profit is then calculated by subtracting the total cost from the selling price (which is $155,000):\n\n\\[ \\text{Profit} = \\$155,000 - \\$155,000 = \\$70,000 \\]\n\nSo, Josh made a profit of $70,000.",
+        "aggregator": "Josh made a profit of $70,000. #### 70000",
+        "step_3": "RESULT: 70000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "130000",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "Total cost after repairs = Original price + Repair costs = $80,000 + $50,000 = $130,000 RESULT: $130,000",
+      "quality": 0.0,
+      "final_key": "120000",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "Final answer: 120,000",
+        "aggregator": "#### 50,000",
+        "step_3": "step_3: Profit = Total cost after repairs - Initial purchase price = $130,000 - $80,000 = $50,000 RESULT: $50,000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "12",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "COMMISSION FROM WALL STREET JOURNAL:\n10 copies * $15/copy * 8% = $12\n\nRESULT: $12",
+      "quality": 0.0,
+      "final_key": "165000",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "The correct calculation should be:\nInitial cost of the house + repair costs = $80,000 + $50,000 = $130,000\nIncrease in value due to repairs = 150% of initial cost = 1.5 * $130,000 = $195,000\nTotal profit = Increase in value - Initial cost + Repair costs = $195,000 - $80,000 + $50,000 = $165,000\n\nFinal answer: 165,000",
+        "aggregator": "#### 150,000",
+        "step_3": "Total cost after repairs = Original price + Increase in value due to repairs\n= $80,000 + $120,000\n= $200,000\n\nRESULT: $200,000"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "200000",
+  "sample_keys": [
+    "200000",
+    "320000",
+    "200000",
+    "200000",
+    "200000"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": -1.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": true,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1201.0,
+    "small_out": 374.0,
+    "small_s": 38.577729956945404
+  },
+  "calls_plus": {
+    "small_in": 958.0,
+    "small_out": 319.0,
+    "small_s": 33.094440165907145,
+    "large_in": 243.0,
+    "large_out": 11.0,
+    "large_s": 1.065542999887839
+  },
+  "calls_samples": {
+    "small_in": 1215.0,
+    "small_out": 221.0,
+    "small_s": 13.637915001949295
+  }
+}
