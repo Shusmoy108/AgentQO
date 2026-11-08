@@ -301,3 +301,6 @@ database file` (finished calls are in the cache); retries 1-4 found under 2 GB f
 deletable dirs (results/v2_dry*/, results/v2_t20/) were already removed. The driver (pid 77266) is
 suspended with SIGSTOP before its last retry so no step is marked FAILED; `kill -CONT 77266 85750`
 resumes it. Needs the user to free disk; nothing else is deleted.
+
+2026-11-08 04:38:43 UTC q4 resumed: 16 GB free disk (swap down to 2.2 GB). The suspended driver (pid 77266) was killed with SIGKILL (not TERM, so its trap would not run FINAL early) and restarted with the same nohup caffeinate command (new pid 15829), so Q4-1 gets a fresh retry budget. Cache data/cache/v2_q4.sqlite passed integrity_check (35 calls kept); the throughput result (2/2) is reused from logs/v2_q4/parallel.txt.
+Note: Q4-1 provenance after this restart says DIRTY only because CHANGELOG_v2.md had the line above uncommitted; no code differs from 161e50e.
