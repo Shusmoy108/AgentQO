@@ -1,8 +1,8 @@
 # Phase P1
 
-Generated 2026-11-08 15:58 UTC, backend `ollama`.
+Generated 2026-11-09 11:59 UTC, backend `ollama`.
 
-Code run: `161e50eff6b9182a2e7acde8125dfaad6bb0d9f3`, `e9fdd85b46dc1194203b064ed3bb1de131740027` **(dirty working tree)**; packaged at `d0c6d3095709c4c822abd412a70cbaae67a6fa6f` (dirty).
+Code run: `161e50eff6b9182a2e7acde8125dfaad6bb0d9f3`, `182c9fff5a4fda2efdac0174040d07483428433a`, `e9fdd85b46dc1194203b064ed3bb1de131740027` **(dirty working tree)**; packaged at `182c9fff5a4fda2efdac0174040d07483428433a` (dirty).
 
 **Resumed at more than one commit; see `provenance.jsonl`.**
 
@@ -10,8 +10,70 @@ Code run: `161e50eff6b9182a2e7acde8125dfaad6bb0d9f3`, `e9fdd85b46dc1194203b064ed
 
 | step | status |
 |---|---|
+| hotpot_q15_7/labels | finished |
+| hotpot_q15_7/labels_disagree | finished |
 | math_q15_7/labels | finished |
 | math_q15_7/labels_disagree | finished |
+
+## hotpot_q15_7/labels
+
+### labels_v2.csv
+
+| agent | n | p_dis | g_dis | uv | uv_ci_low | uv_ci_high | ec_synthetic | ec_real | ec_real_n_used | reruns_used | reruns_full |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| planner | 200 | 0.455 | 0 | 0 | -0.05 | 0.045 | 0.009 | -0.007 | 200 | 200 | 200 |
+| hop_1 | 200 | 0.905 | 0.017 | 0.01 | -0.045 | 0.06 | 0.014 | 0.045 | 200 | 200 | 200 |
+| hop_2 | 200 | 0.82 | -0.006 | -0.01 | -0.045 | 0.025 | -0.004 | 0.011 | 195 | 200 | 200 |
+| aggregator | 200 | 0.595 | 0.244 | 0.135 | 0.08 | 0.19 | 0.095 | 0.139 | 184 | 200 | 200 |
+| verifier | 200 | 0.395 | 0.228 | 0.09 | 0.04 | 0.145 | 0.183 | 0.139 | 178 | 0 | 0 |
+
+### labels_v2_by_strategy.csv
+
+| agent | strategy | n | consequence |
+|---|---|---|---|
+| planner | swap_other_task | 200 | 0.015 |
+| planner | llm_subtle_wrong | 137 | 0.029 |
+| planner | resample_disagree | 200 | -0.015 |
+| hop_1 | swap_other_task | 200 | 0.015 |
+| hop_1 | resample_disagree | 200 | 0.05 |
+| hop_2 | swap_other_task | 200 | -0.005 |
+| hop_2 | resample_disagree | 195 | 0.013 |
+| aggregator | swap_other_task | 200 | 0.157 |
+| verifier | swap_other_task | 199 | 0.407 |
+| verifier | resample_disagree | 178 | 0.309 |
+| aggregator | resample_disagree | 184 | 0.228 |
+| hop_1 | llm_subtle_wrong | 1 | 0 |
+| verifier | llm_subtle_wrong | 1 | 0 |
+
+## hotpot_q15_7/labels_disagree
+
+### labels_v2.csv
+
+| agent | n | p_dis | g_dis | uv | uv_ci_low | uv_ci_high | ec_synthetic | ec_real | ec_real_n_used | reruns_used | reruns_full |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| planner | 200 | 0.455 | 0 | 0 | -0.05 | 0.045 | 0.009 | -0.007 | 200 | 200 | 200 |
+| hop_1 | 200 | 0.905 | 0.017 | 0.015 | -0.035 | 0.065 | 0.018 | 0.05 | 200 | 182 | 200 |
+| hop_2 | 200 | 0.82 | -0.006 | -0.005 | -0.035 | 0.025 | 0 | 0.015 | 195 | 164 | 200 |
+| aggregator | 200 | 0.595 | 0.244 | 0.145 | 0.095 | 0.2 | 0.101 | 0.146 | 184 | 119 | 200 |
+| verifier | 200 | 0.395 | 0.228 | 0.09 | 0.04 | 0.145 | 0.183 | 0.139 | 178 | 0 | 0 |
+
+### labels_v2_by_strategy.csv
+
+| agent | strategy | n | consequence |
+|---|---|---|---|
+| planner | swap_other_task | 200 | 0.015 |
+| planner | llm_subtle_wrong | 137 | 0.029 |
+| planner | resample_disagree | 200 | -0.015 |
+| hop_1 | swap_other_task | 200 | 0.02 |
+| hop_1 | resample_disagree | 200 | 0.055 |
+| hop_2 | swap_other_task | 200 | 0 |
+| hop_2 | resample_disagree | 195 | 0.018 |
+| aggregator | swap_other_task | 200 | 0.167 |
+| verifier | swap_other_task | 199 | 0.407 |
+| verifier | resample_disagree | 178 | 0.309 |
+| aggregator | resample_disagree | 184 | 0.239 |
+| hop_1 | llm_subtle_wrong | 1 | 0 |
+| verifier | llm_subtle_wrong | 1 | 0 |
 
 ## math_q15_7/labels
 
