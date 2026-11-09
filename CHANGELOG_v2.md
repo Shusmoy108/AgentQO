@@ -310,3 +310,5 @@ Note: Q4-1 provenance after this restart says DIRTY only because CHANGELOG_v2.md
 2026-11-08 08:03:18 UTC q4 disk: at the user's request, force-quit the hung Docker Desktop and deleted its disk image ~/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw (47 GB; all Docker images, containers and volumes on this Mac). Not used by q4. Nothing under the repo was deleted.
 
 2026-11-08 23:15:08 UTC q4 disk: at the user's request, removed iOS Simulator runtimes 18.0, 18.4, 18.5 (kept 26.2) and unavailable simulator devices; free disk 37 GB -> 55 GB. 2.2 GB of one old device's FileProvider folder is macOS-protected and was left. Nothing under the repo was deleted.
+
+2026-11-09 19:58:15 UTC q4 complete: Q4-1..Q4-5 all DONE (no failures, not paused); FINAL wrote ~/AgentQO_results/v2_q4/results_v2_q4_UPLOAD.zip (3.9 MB), results_v2_q4_CACHE.zip (89 MB, stays on the Mac), CHECKSUMS.txt and UPLOAD_TO_CLAUDE.md. Results commit 130657e on v2-q4.
