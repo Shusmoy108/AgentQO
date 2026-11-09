@@ -308,3 +308,5 @@ Note: Q4-1 provenance after this restart says DIRTY only because CHANGELOG_v2.md
 2026-11-08 06:08:27 UTC q4 disk: free space fell to 6 GB during Q4-1 (other apps, not q4). At the user's request, deleted the Claude desktop VM image ~/Library/Application Support/Claude/vm_bundles/claudevm.bundle/rootfs.img (~9.4 GB, not in use). Nothing under the repo was deleted.
 
 2026-11-08 08:03:18 UTC q4 disk: at the user's request, force-quit the hung Docker Desktop and deleted its disk image ~/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw (47 GB; all Docker images, containers and volumes on this Mac). Not used by q4. Nothing under the repo was deleted.
+
+2026-11-08 23:15:08 UTC q4 disk: at the user's request, removed iOS Simulator runtimes 18.0, 18.4, 18.5 (kept 26.2) and unavailable simulator devices; free disk 37 GB -> 55 GB. 2.2 GB of one old device's FileProvider folder is macOS-protected and was left. Nothing under the repo was deleted.
