@@ -107,14 +107,28 @@ def test_dry_run_writes_nothing(tmp_path):
 
 @pytest.mark.skipif(not HOTPOT, reason="HotpotQA not downloaded")
 def test_hotpot_phases_run_end_to_end(tmp_path):
-    phase(tmp_path, "P1", V2_SETTINGS="hotpot")
-    phase(tmp_path, "P2", V2_SETTINGS="hotpot")
+    phase(tmp_path, "P1", V2_SETTINGS="hotpot hotpot_iso")
+    phase(tmp_path, "P2", V2_SETTINGS="hotpot hotpot_iso")
     results = tmp_path / "results"
-    plans = (results / "P2/hotpot_q15_7/plans/h3_plans.csv").read_text().splitlines()
-    assert len(plans) == 33 and "f1" in plans[0]
-    assert "f1" in (results / "P2/hotpot_q15_7/plans/h3_per_problem.csv").read_text().splitlines()[0]
+    for s in ("hotpot_q15_7", "hotpot_iso_q15_7"):  # A13: isolated runs after hotpot, own directories
+        plans = (results / f"P2/{s}/plans/h3_plans.csv").read_text().splitlines()
+        assert len(plans) == 33 and "f1" in plans[0]
+        assert "f1" in (results / f"P2/{s}/plans/h3_per_problem.csv").read_text().splitlines()[0]
     phase(tmp_path, "P6")
-    assert (results / "P6/hotpot_q15_7/pareto/pareto_front.csv").exists()
+    for s in ("hotpot_q15_7", "hotpot_iso_q15_7"):
+        assert (results / f"P6/{s}/pareto/pareto_front.csv").exists()
+    assert "hotpot_iso_q15_7" in (results / "P6/hypotheses/hypotheses.md").read_text()
+
+
+def test_p4_runs_granite_hotpot_after_math():
+    """A14: P4 = Granite math, then Granite hotpot and hotpot_iso (labels 200, 32 plans on 400, 512 tokens)."""
+    text = (ROOT / "scripts/v2/run_phase.sh").read_text()
+    p4 = text[text.index("  P4)"):text.index("  P5)")]
+    assert p4.index("math_granite") < p4.index("for wf in hotpot hotpot_iso")
+    assert p4.index("export AGENTQO_HOTPOT_SPAN=1") < p4.index("for wf in") < p4.index("unset AGENTQO_HOTPOT_SPAN")
+    assert p4.index("math_granite") < p4.index("export AGENTQO_HOTPOT_SPAN=1")
+    assert 'labels ${wf}_granite $wf hotpotqa label "$(cap 200)" 512' in p4
+    assert 'plans ${wf}_granite $wf hotpotqa eval "$(cap 400)" 512' in p4
 
 
 def git(cwd, *args):

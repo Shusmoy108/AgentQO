@@ -148,7 +148,7 @@ def main() -> None:
     ap.add_argument("--probe-layer", type=int, default=None)
     ap.add_argument("--probe-pool", default="mean")
     args = ap.parse_args()
-    if (args.workflow == "hotpot") != (args.dataset == "hotpotqa"):
+    if args.workflow.startswith("hotpot") != (args.dataset == "hotpotqa"):
         ap.error("--workflow hotpot and --dataset hotpotqa go together")
     all_subsets = args.plans == "all_subsets"
     if args.dry_run and not all_subsets:

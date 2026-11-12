@@ -17,7 +17,8 @@ from agentqo.tasks.hotpotqa import N_EVAL, N_LABEL, format_problem, frozen_rows,
 from agentqo.tasks.prompts import build_prompt, code_output
 from agentqo.tasks.real_task_model import RealTaskModel
 from agentqo.workflows.dag import LARGE_FIDELITY, SMALL_FIDELITY
-from agentqo.workflows.library import create_hotpot_chain_workflow, create_math_reasoning_workflow
+from agentqo.workflows.library import (create_hotpot_chain_isolated_workflow, create_hotpot_chain_workflow,
+                                      create_math_reasoning_workflow)
 from tests._real_fixtures import PROBLEMS, fake_backend
 
 HOTPOT = [{"qid": f"hotpot-{i}", "gold": f"answer {i}",
@@ -171,6 +172,52 @@ def test_hotpot_chain_shape_and_prompts():
     for nid in ("aggregator", "verifier"):
         assert f"Question: {question}\nAnswer" in prompts[nid] or f"Question: {question}\nDoes" in prompts[nid]
         assert "whether something is true" in prompts[nid]
+
+
+def _hotpot_prompts(wf):
+    backend, _ = hotpot_backend(small_err=0.0)
+    tm = RealTaskModel(HOTPOT, dataset="hotpotqa")
+    rec = WorkflowExecutor(backend, tm).run_workflow(wf, tm.generate_task(wf, None),
+                                                    FidelityPlan(default_fidelity=SMALL_FIDELITY), seed=0)
+    return rec, {n: r.metadata["prompt"] for n, r in rec.node_results.items()}
+
+
+def test_hotpot_chain_isolated_drops_paragraphs_only_downstream():
+    """A13: same DAG; aggregator and verifier see the question and hop outputs, no paragraphs."""
+    iso, base = create_hotpot_chain_isolated_workflow(), create_hotpot_chain_workflow()
+    assert iso.name == "hotpot_chain_isolated" and list(iso.topological_order) == list(base.topological_order)
+    rec, p = _hotpot_prompts(iso)
+    _, pb = _hotpot_prompts(base)  # the fake server keys gold on full problem text, so no quality check
+    para, question = "[T0] A sentence on 0. Another one.", HOTPOT[0]["question"].split("\n", 1)[0]
+    for nid in ("planner", "hop_1", "hop_2"):
+        assert p[nid] == pb[nid] and para in p[nid]
+    for nid in ("aggregator", "verifier"):
+        assert para not in p[nid] and "Paragraphs:" not in p[nid] and question in p[nid]
+        for hop in ("hop_1", "hop_2"):
+            assert rec.node_results[hop].output["text"] in p[nid]
+    assert p["aggregator"] == pb["aggregator"].replace(HOTPOT[0]["question"], question)
+    assert "do the findings support it" in p["verifier"] and "only if a finding states" in p["verifier"] and "repeat the proposed short answer exactly" in p["verifier"]
+
+
+def test_hotpot_span_line_only_when_flagged(monkeypatch):
+    """A14: the Granite-only line goes into aggregator and verifier, nowhere else; off by default."""
+    from agentqo.tasks.prompts import HOTPOT_SPAN_LINE
+    for make in (create_hotpot_chain_workflow, create_hotpot_chain_isolated_workflow):
+        monkeypatch.delenv("AGENTQO_HOTPOT_SPAN", raising=False)
+        _, off = _hotpot_prompts(make())
+        monkeypatch.setenv("AGENTQO_HOTPOT_SPAN", "1")
+        _, on = _hotpot_prompts(make())
+        assert not any(HOTPOT_SPAN_LINE in t for t in off.values())
+        for nid in on:
+            if nid in ("aggregator", "verifier"):
+                assert on[nid] == off[nid].replace("End with: Final answer:", HOTPOT_SPAN_LINE + "\nEnd with: Final answer:")
+            else:
+                assert on[nid] == off[nid]
+
+
+def test_hotpot_iso_is_registered():
+    from scripts.run_real_pipeline import WORKFLOWS
+    assert WORKFLOWS["hotpot_iso"][1]().name == "hotpot_chain_isolated"
 
 
 def test_hotpot_labels_run_end_to_end():

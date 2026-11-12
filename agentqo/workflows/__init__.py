@@ -9,6 +9,7 @@ from agentqo.workflows.dag import (
 )
 from agentqo.workflows.library import (
     create_hotpot_chain_workflow,
+    create_hotpot_chain_isolated_workflow,
     create_math_reasoning_workflow,
     create_multihop_qa_workflow,
     create_self_consistency_workflow,
@@ -23,6 +24,7 @@ __all__ = [
     "Workflow",
     "WorkflowBuilder",
     "create_hotpot_chain_workflow",
+    "create_hotpot_chain_isolated_workflow",
     "create_math_reasoning_workflow",
     "create_multihop_qa_workflow",
     "create_self_consistency_workflow",

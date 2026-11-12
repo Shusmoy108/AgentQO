@@ -112,3 +112,25 @@ A12 "Additional setting q4: Qwen2.5 1.5B/7B 4-bit via Ollama, math chain and Hot
 | Id | Reading | Output |
 |---|---|---|
 | A12 | Runs on branch v2-q4 = tag v2-lease1-start + this amendment, no code change, driven by `scripts/v2/run_q4_all.sh`. Models: Ollama `qwen2.5:1.5b-instruct` and `qwen2.5:7b-instruct` (Q4_K_M). Own SQLite cache `data/cache/v2_q4.sqlite` (no calls reused from the dry runs). Not testable on the Mac and marked so in `hypotheses.md`: H3a, A2, H3c (placement), A3 and H4a (need GPU throughput cost). Costs are API prices and token counts only. | `results/v2_q4/`, branch v2-q4 |
+
+## Amendment added 2026-11-12 06:52:05 UTC
+
+Committed with this section (the commit carrying this timestamp registers it), before any
+hotpot_chain_isolated or Granite HotpotQA data exist. A1-A12 and L1 above are unchanged.
+
+A13 "New workflow hotpot_chain_isolated: same as hotpot_chain, except the aggregator and verifier see
+    only the question and the hop outputs (no paragraphs). Prediction: hop_1 and/or hop_2 have upgrade
+    value with 95% CI above 0, and the structural rule's regret at budgets 1-2 is smaller than in
+    hotpot_chain. Reason: in hotpot_chain the aggregator re-reads all paragraphs and can repair hop
+    errors (laptop q4: hop upgrade values about 0)."
+
+A14 "Second model family on every task: Granite 3.1 2B/8B on hotpot_chain and hotpot_chain_isolated
+    (labels 200, all 32 plans on 400 eval problems, max_tokens 512), in addition to math. All
+    hypotheses apply per family and are reported per family, never pooled."
+
+### How A13 and A14 are measured
+
+| Id | Reading | Output |
+|---|---|---|
+| A13 | Workflow key `hotpot_iso` (`create_hotpot_chain_isolated_workflow`). Same DAG, planner and hop prompts as hotpot_chain. Aggregator: the hotpot_chain prompt with the paragraphs removed (question + findings). Verifier: question + hop outputs + proposed answer; its two references to paragraphs read "findings", since it has none. Qwen 1.5B/7B setting `hotpot_iso_q15_7`: labels in P1 and plans in P2, each after the HotpotQA step (VM-A), same sizes and max_tokens 384 as hotpot_q15_7. Upgrade value = UV per agent in `labels_v2.csv` with its 95% CI; structural-rule regret at budgets 1-2 from `rule_plans.csv`, compared with hotpot_q15_7 in the same family. | `P1/hotpot_iso_q15_7/`, `P2/hotpot_iso_q15_7/`, `P6/hotpot_iso_q15_7/` |
+| A14 | P4 (VM-B), after Granite math: `hotpot_granite` and `hotpot_iso_granite`, labels 200 (full and --disagree-only) and all 32 plans on the 400 frozen HotpotQA eval problems, max_tokens 512. P6 analyses each separately; `hypotheses.md` has one column per (task, family). Granite only: the aggregator and verifier prompts of both HotpotQA workflows get one extra line before the answer slot, "The final answer is the span alone, not a sentence." (`AGENTQO_HOTPOT_SPAN=1`, set in P4), because in the dry run Granite wrote the final answer as a sentence (all_large EM 0.00 on hotpot_chain). Comparisons within a family use identical prompts; raw accuracy across families includes this prompt difference and is not a registered test. No new P5 calibration set: A11 pools token rates over tasks per model, so Granite HotpotQA GPU costs use the Granite rates from the `granite_math` calibration set. | `P4/hotpot_granite/`, `P4/hotpot_iso_granite/`, `P6/hypotheses/hypotheses.md` |

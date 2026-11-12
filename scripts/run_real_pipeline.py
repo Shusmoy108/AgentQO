@@ -40,6 +40,7 @@ from agentqo.tasks.prompts import build_prompt, code_output
 from agentqo.tasks.real_task_model import RealTaskModel
 from agentqo.workflows.library import (
     create_complex_workflow,
+    create_hotpot_chain_isolated_workflow,
     create_hotpot_chain_workflow,
     create_math_reasoning_workflow,
     create_self_consistency_workflow,
@@ -50,6 +51,7 @@ WORKFLOWS = {
     "sc": ("Self-consistency k=3", lambda: create_self_consistency_workflow(3)),
     "complex": ("Complex + formatter", lambda: create_complex_workflow(2, 2)),
     "hotpot": ("HotpotQA chain", create_hotpot_chain_workflow),
+    "hotpot_iso": ("HotpotQA chain, isolated aggregator/verifier", create_hotpot_chain_isolated_workflow),
 }
 
 

@@ -285,3 +285,47 @@ Decisions (made without asking, per the q4 prompt):
   when under 10 GB (about 15 MB); it continues with a logged warning, and fails a step only
   under 2 GB free, to protect the SQLite cache.
 - Files over 20 MB are not pushed to git (they stay in the cache zip).
+
+## 2026-11-12 06:52:05 UTC: A13 hotpot_chain_isolated, A14 Granite on HotpotQA (branch v2-dev)
+
+**A13 and A14 registered** in `prereg/v2_amendments.md` before any data for them.
+
+Code:
+- `create_hotpot_chain_isolated_workflow` (key `hotpot_iso`): same DAG as hotpot_chain, name
+  `hotpot_chain_isolated`. `prompts._hotpot_isolated_prompt`: the aggregator gets the hotpot_chain
+  prompt with the paragraphs replaced by the question line. The verifier gets the question, the hop
+  outputs and the proposed answer; its two references to paragraphs read "findings", because it
+  has none. Planner and hop prompts are unchanged (tested byte-identical).
+- `run_real_h3.py` accepts any `hotpot*` workflow with `--dataset hotpotqa`.
+- `run_phase.sh`: P1/P2 add `hotpot_iso_q15_7` after the HotpotQA steps (VM-A); P4 adds
+  `hotpot_granite` and `hotpot_iso_granite` after Granite math (VM-B), labels 200, all 32 plans on
+  400, max_tokens 512. The default `V2_SETTINGS` is now "math hotpot hotpot_iso", and P4 honours it.
+  P6 analyses the three new settings; `hypotheses_report.py` lists them (one column per task and family).
+- `configs/v2_models.yaml`: Ollama tags `granite3.1-dense:2b` / `:8b` for Mac dry runs.
+- Granite-only short-span line (decision made with the user after the dry run): `AGENTQO_HOTPOT_SPAN=1`, exported
+  in P4 around the Granite HotpotQA steps, adds "The final answer is the span alone, not a
+  sentence." to the HotpotQA aggregator and verifier prompts. Qwen prompts are unchanged, so q4
+  and the Qwen lease settings use the same prompts as before. Within-family comparisons (A13)
+  use identical prompts; raw Qwen vs Granite accuracy includes this difference.
+- Tests: isolated prompts (no paragraphs downstream, hop outputs present, upstream unchanged),
+  registry, span line (only with the flag, only aggregator/verifier), driver P4 order, and the
+  fake-backend HotpotQA driver test now runs hotpot and hotpot_iso. pytest: 184 passed.
+- `PLAN_v2_times.md`: A13/A14 rows; total ~41 h (10x rule) / ~8.2 h (Session 1 rate).
+
+**Dry run (Ollama, 10 HotpotQA eval problems, all_small / all_large, cache
+`data/cache/v2_dry_a13.sqlite`, uncommitted tree on v2-dev).** The A13/A14 checks (EM > 0, short spans, no wrong yes/no) pass.
+
+| setting | all_small EM / F1 | all_large EM / F1 | wrong yes/no | mean answer words |
+|---|---|---|---|---|
+| Qwen 1.5B/7B hotpot_chain_isolated | 0.20 / 0.31 | 0.50 / 0.71 | 0 | 3.6 / 2.9 |
+| Granite 2B/8B hotpot_chain, no span line | 0.30 / 0.34 | 0.00 / 0.26 | 0 | 8.0 / 10.4 |
+| Granite 2B/8B hotpot_chain_isolated, no span line | 0.20 / 0.28 | 0.10 / 0.35 | 0 | 8.3 / 10.3 |
+| Granite 2B/8B hotpot_chain, span line | 0.40 / 0.47 | 0.30 / 0.53 | 0 | 4.9 / 5.5 |
+| Granite 2B/8B hotpot_chain_isolated, span line | 0.30 / 0.33 | 0.30 / 0.56 | 0 | 2.6 / 4.9 |
+
+Without the span line Granite answered in sentences ("Diplazium has more species than Mahonia.").
+The first Granite dry run was stopped by Claude Code at 2/10 problems (Mac memory low) and
+resumed from the cache. Docs outside the repo were not changed.
+
+**Tag.** `v2-lease1-start` moved from 55c6590 to the commit carrying this entry. To avoid a force-push,
+the old remote tag was deleted and the new one pushed.

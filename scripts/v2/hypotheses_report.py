@@ -23,7 +23,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
 from agentqo.metrics.io import args_config, mark_done, resolve_output_dir, write_json  # noqa: E402
 
-SETTINGS = ("math_q15_7", "hotpot_q15_7", "math_q3_14", "math_granite")
+# A14: one column per (task, family); families are never pooled.
+SETTINGS = ("math_q15_7", "hotpot_q15_7", "hotpot_iso_q15_7", "math_q3_14",
+            "math_granite", "hotpot_granite", "hotpot_iso_granite")
 
 
 def _json(path: Path) -> Dict[str, Any]:

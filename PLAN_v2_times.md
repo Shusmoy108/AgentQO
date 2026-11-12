@@ -36,9 +36,11 @@ Sizes after amendment A8 (FIX 4): math labels 200, HotpotQA eval 400.
 | P4 | Granite 2B/8B math (labels 200, max_tokens 512) | 56,860 | - | **~8.7 h** | **~70 min** |
 | P5 | 7 plans x 64 problems x 3 repeats x 3 placements, K=16 | 24,192 | ~18 h | **~1.8 h** + server restarts | n/a (latency-bound) |
 | P5 cal | A11 calibration: 3 model/task sets x 2 placements x 2 plans x 3 repeats x 64 problems | ~13,800 | ~10 h | **~1-1.5 h** + 6 server restarts | n/a (latency-bound) |
+| P1+P2 A13 | Qwen 1.5B/7B hotpot_chain_isolated: labels 200 + all_subsets 400 (VM-A, after HotpotQA) | 34,920 | 26.9 h | **2.7 h** | **21 min** |
+| P4 A14 | Granite 2B/8B hotpot_chain + hotpot_chain_isolated: labels 200 + all_subsets 400 each, max_tokens 512 (VM-B, after Granite math) | 69,840 | - | **~10.8 h** | **~83 min** |
 | P6 | offline analysis, all settings | 0 | ~1 min | **< 5 min** | **< 5 min** |
 | final | zip with SQLite cache | 0 | - | **< 5 min** | **< 5 min** |
-| **Total** | | ~244,000 | | **~27.5 h** | **~6.5 h** (P5 and P5 cal at ~3 h) |
+| **Total** | | ~349,000 | | **~41 h** | **~8.2 h** (P5 and P5 cal at ~3 h) |
 
 The first 100 math label problems and the first 200 math eval problems are the Session 1
 ones, so on the H100 their Qwen 1.5B/7B calls replay from the Session 1 vLLM cache if it is
@@ -46,6 +48,11 @@ copied over; the table does not count that saving. HotpotQA calls per problem we
 before FIX 1; the new prompts are about the same length.
 
 Assumptions behind the rows without a direct measurement:
+- A13/A14 (added 2026-11-12): calls per problem as measured for HotpotQA (labels 91.0, all_subsets
+  41.8), so one HotpotQA setting = 18,200 + 16,720 calls. The isolated prompts are shorter
+  (no paragraphs in two of five nodes), so this is an upper bound. Granite HotpotQA is timed
+  as twice the Qwen HotpotQA time, as for Granite math (512-token cap). Per VM: VM-A +2.7 h
+  (10x rule) or +21 min (Session 1 rate); VM-B +10.8 h or +83 min. VM-B now carries the most work.
 - P3 and P4 make the same number of calls as P1+P2 math (labels 200). Their time is twice the Qwen
   1.5B/7B math time: 14B decodes about 2x slower than 7B, and Granite has a 512-token cap
   against Qwen's 256. Not measured; only `qwen2.5:3b` has a local Ollama build.

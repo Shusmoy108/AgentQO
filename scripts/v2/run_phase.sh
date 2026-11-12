@@ -2,10 +2,12 @@
 # M10: one driver for the lease. Re-running a phase resumes it.
 #   scripts/v2/run_phase.sh P1|P2|P3|P4|P5|P6|final
 #
-#   P1  Qwen 1.5B/7B labels: math (label 200 = Session 1 dev 100 + 100), HotpotQA (label 200), full and --disagree-only
-#   P2  Qwen 1.5B/7B plans:  math all_subsets (eval_ext 400), HotpotQA all_subsets (eval 400)
+#   P1  Qwen 1.5B/7B labels: math (label 200 = Session 1 dev 100 + 100), HotpotQA (label 200), full and --disagree-only,
+#       then HotpotQA isolated (A13, label 200)
+#   P2  Qwen 1.5B/7B plans:  math all_subsets (eval_ext 400), HotpotQA all_subsets (eval 400), then HotpotQA isolated (A13)
 #   P3  Qwen 3B/14B math:    labels (label 200) + all_subsets (eval_ext 400)
-#   P4  Granite 2B/8B math:  labels (label 200, inside the Session 1 LABEL 500) + all_subsets
+#   P4  Granite 2B/8B:       math labels (label 200, inside the Session 1 LABEL 500) + all_subsets, then (A14)
+#       HotpotQA and HotpotQA isolated: labels 200 + all_subsets (eval 400), max_tokens 512
 #   P5  Placement timing under V2_PLACEMENT (separate|shared|shared_mps), one run per placement;
 #       with V2_P5_CAL=qwen_hotpot|qwen3_14_math|granite_math, a calibration set (A11) instead
 #   P6  Offline analysis of every setting that has data (M1, M4, M5, M7, H5a)
@@ -13,7 +15,7 @@
 #
 # Environment: V2_BACKEND (vllm|ollama|fake), V2_N (cap on problems, for test runs),
 # V2_RESULTS, V2_LOGS, V2_CACHE, V2_WORKERS, V2_PUSH=0 (no git), V2_DRY=1 (print each
-# command's --dry-run), V2_SETTINGS (limit P1/P2 to e.g. "math"), V2_PLACEMENT,
+# command's --dry-run), V2_SETTINGS (limit P1/P2/P4 to e.g. "math"; default "math hotpot hotpot_iso"), V2_PLACEMENT,
 # V2_P5_PLANS, V2_P5_CAL, V2_VMS ("gpu_a=local gpu_b=cc@host"), V2_DEVIATION (id of a lease-time
 # deviation logged in prereg/v2_amendments.md, needed to run vllm phases off the v2-lease1-start tag).
 set -euo pipefail
@@ -71,7 +73,7 @@ plans() {  # setting workflow dataset split n max_tokens
     ${EXTRA[@]+"${EXTRA[@]}"} ${DRY[@]+"${DRY[@]}"}
 }
 
-wants() { case " ${V2_SETTINGS:-math hotpot} " in *" $1 "*) return 0 ;; *) return 1 ;; esac; }
+wants() { case " ${V2_SETTINGS:-math hotpot hotpot_iso} " in *" $1 "*) return 0 ;; *) return 1 ;; esac; }
 
 analyze() {  # setting workflow labels_phase plans_phase
   local s=$1 wf=$2 lab="$RESULTS/$3/$1/labels" fast="$RESULTS/$3/$1/labels_disagree" pl="$RESULTS/$4/$1/plans"
@@ -115,11 +117,13 @@ case "$phase" in
     use_models qwen_small qwen_large
     wants math && labels math_q15_7 math gsm8k label "$(cap 200)" 256
     wants hotpot && labels hotpot_q15_7 hotpot hotpotqa label "$(cap 200)" 384
+    wants hotpot_iso && labels hotpot_iso_q15_7 hotpot_iso hotpotqa label "$(cap 200)" 384
     ;;
   P2)
     use_models qwen_small qwen_large
     wants math && plans math_q15_7 math gsm8k eval_ext "$(cap 400)" 256
     wants hotpot && plans hotpot_q15_7 hotpot hotpotqa eval "$(cap 400)" 384
+    wants hotpot_iso && plans hotpot_iso_q15_7 hotpot_iso hotpotqa eval "$(cap 400)" 384
     ;;
   P3)
     use_models qwen3b qwen14b
@@ -128,8 +132,18 @@ case "$phase" in
     ;;
   P4)
     use_models granite_small granite_large
-    labels math_granite math gsm8k label "$(cap 200)" 512
-    plans math_granite math gsm8k eval_ext "$(cap 400)" 512
+    if wants math; then
+      labels math_granite math gsm8k label "$(cap 200)" 512
+      plans math_granite math gsm8k eval_ext "$(cap 400)" 512
+    fi
+    export AGENTQO_HOTPOT_SPAN=1  # A14: Granite-only short-span line in the HotpotQA aggregator/verifier
+    for wf in hotpot hotpot_iso; do  # A14: Granite on both HotpotQA workflows, after math
+      if wants $wf; then
+        labels ${wf}_granite $wf hotpotqa label "$(cap 200)" 512
+        plans ${wf}_granite $wf hotpotqa eval "$(cap 400)" 512
+      fi
+    done
+    unset AGENTQO_HOTPOT_SPAN
     ;;
   P5)
     placement=${V2_PLACEMENT:?set V2_PLACEMENT to separate, shared or shared_mps to match the running servers}
@@ -159,6 +173,9 @@ case "$phase" in
     analyze hotpot_q15_7 hotpot P1 P2
     analyze math_q3_14 math P3 P3
     analyze math_granite math P4 P4
+    analyze hotpot_iso_q15_7 hotpot_iso P1 P2
+    analyze hotpot_granite hotpot P4 P4
+    analyze hotpot_iso_granite hotpot_iso P4 P4
     "$PY" scripts/v2/hypotheses_report.py --p6 "$OUT" --output-dir "$OUT/hypotheses" ${DRY[@]+"${DRY[@]}"}
     ;;
   final)

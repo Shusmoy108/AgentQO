@@ -123,9 +123,24 @@ number or short phrase; yes or no only if the question asks whether something is
 End with: Final answer: <short answer>"""
 
 
+# A14: Granite writes the final answer as a sentence; AGENTQO_HOTPOT_SPAN=1 (set by run_phase.sh
+# for the Granite HotpotQA settings only) adds this line to the aggregator and verifier prompts.
+HOTPOT_SPAN_LINE = "The final answer is the span alone, not a sentence."
+_FINAL = "End with: Final answer: <short answer>"
+
+
 def _hotpot_prompt(node: "NodeSpec", results: Dict[str, "NodeResult"], workflow: "Workflow", problem: str) -> str:
+    text = _hotpot_prompt_base(node, results, workflow, problem)
+    if os.environ.get("AGENTQO_HOTPOT_SPAN") == "1" and node.role in (NodeRole.AGGREGATOR, NodeRole.VERIFIER):
+        text = text.replace(_FINAL, f"{HOTPOT_SPAN_LINE}\n{_FINAL}")
+    return text
+
+
+def _hotpot_prompt_base(node: "NodeSpec", results: Dict[str, "NodeResult"], workflow: "Workflow", problem: str) -> str:
     role, plan = node.role, _text(results, _planner_id(workflow) or "")
     question = problem.split("\n", 1)[0].removeprefix("Question: ")
+    if workflow.name == "hotpot_chain_isolated" and role in (NodeRole.AGGREGATOR, NodeRole.VERIFIER):
+        return _hotpot_isolated_prompt(node, results, workflow, question)
     if role == NodeRole.PLANNER:
         return HOTPOT_PLANNER.format(problem=problem)
     if role == NodeRole.RESEARCHER:
@@ -136,6 +151,18 @@ def _hotpot_prompt(node: "NodeSpec", results: Dict[str, "NodeResult"], workflow:
     if role == NodeRole.VERIFIER:
         return HOTPOT_VERIFIER.format(problem=problem, question=question, proposed=_results_block(results, list(node.inputs)))
     raise ValueError(f"no HotpotQA template for role {role}")
+
+
+def _hotpot_isolated_prompt(node, results, workflow, question: str) -> str:
+    """A13: the same aggregator/verifier prompts with the paragraphs removed. The verifier
+    checks against the hop outputs instead, so its wording says findings, not paragraphs."""
+    findings = _results_block(results, _chain(workflow, node.node_id))
+    if node.role == NodeRole.AGGREGATOR:
+        return HOTPOT_AGGREGATOR.format(problem=f"Question: {question}", question=question, findings=findings)
+    verifier = (HOTPOT_VERIFIER.replace("do the paragraphs support it", "do the findings support it")
+                .replace("only if a paragraph states", "only if a finding states"))
+    return verifier.format(problem=f"Question: {question}\nFindings:\n{findings}", question=question,
+                           proposed=_results_block(results, list(node.inputs)))
 
 
 def _text(results: Dict[str, "NodeResult"], nid: str) -> str:
