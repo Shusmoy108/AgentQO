@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-1013",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate Janet's total earnings per hour by adding her hourly wage and tips.\n2. Determine the total amount Janet needs to save for the down payment, which is 20% of the car's cost.\n3. Calculate the number of weeks Janet needs to work by dividing the total savings needed by her weekly earnings (total earnings per hour multiplied by 40 hours).",
+  "reference_key": null,
+  "final_key_plus": "2",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "Janet's total earnings per hour = Hourly wage + Hourly tips\n                         = $10 + $15\n                         = $25\nRESULT: $25",
+    "step_2": "RESULT: $2000 (20% of $10000)\n\nEND: $2000",
+    "aggregator": "5",
+    "step_3": "RESULT: $2000 / ($25 * 40 hours) = 200 / 40 = 5 weeks\nRESULT: 5 weeks\n\nJanet will need to work for 5 weeks to save the down payment for the car.",
+    "verifier": "Janet earns $10 + $15 = $25 per hour. To save for a $10,000 down payment, she needs to save 20%, which is $10,000 * 0.20 = $2,000. \n\nTo find out how many weeks she needs to work, we first calculate her weekly savings: $25/hour * 40 hours/week = $1000/week. \n\nNow, we divide the down payment amount she needs to save by her weekly savings: $2,000 / $1000/week = 2 weeks.\n\nFinal answer: 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n\n1. Determine the total number of bandages used over the three days.\n   - Day 1: 38 bandages were used.\n   - Day 2: 10 fewer than Day 1, so 38 - 10 = 28 bandages were used.\n   - Day 3: Half a pack was used, and since one pack contains 50 bandages, half a pack contains 25 bandages.\n   - Total used: 38 (Day 1) + 28 (Day 2) + 25 (Day 3) = 91 bandages.\n\n2. Calculate the initial number of bandages by adding the remaining bandages to the total used.\n   - Remaining bandages at the end of Day 3: 78.\n   - Initial bandages = 91 (total used) + 78 (remaining) = 169 bandages.\n\n3. Confirm the starting number of bandages on the first day.\n   - The starting number of bandages on the first day is 169.\n\nIn summary, the nurses started with 169 bandages on the first day.",
+      "quality": 0.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 91 bandages were used in total over the three days.",
+        "step_2": "RESULT: 169 bandages initially.\n\n(Note: The provided plan and calculations about bandages are unrelated to the problem about Janet saving for a car downpayment. The correct approach to solve the problem about Janet's savings should be as follows.)\n\nCorrect Plan:\n\n1. Calculate Janet's total weekly earnings from wages and tips.\n   - Wages: $10/hour * 40 hours/week = $400/week\n   - Tips: $15/hour * 40 hours/week = $600/week\n   - Total weekly earnings: $400 + $600 = $1000/week\n\n2. Determine the total amount Janet wants to save for the down payment.\n   - 20% of $10000 = 0.20 * $10000 = $2000\n\n3. Calculate the number of weeks required to save the down payment.\n   - $2000 (down payment) / $1000/week (total weekly earnings) = 2 weeks\n\nEnd with \"RESULT: 2 weeks\".",
+        "aggregator": "#### 2",
+        "step_3": "RESULT: 2 weeks\n\nCalculation:\n$2000 (down payment) / $1000/week (total weekly earnings) = 2 weeks",
+        "verifier": "Janet earns $10 + $15 = $25 per hour. To save for a $10,000 down payment, she needs to save 20%, which is $10,000 * 20% = $2,000. \n\nTo calculate the number of weeks she needs to work, divide the down payment amount by her total weekly earnings and then by the number of hours she works per week: $2,000 / ($25 * 40 hours) = 20 weeks.\n\nFinal answer: 20"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate Janet's total earnings per hour by adding her hourly wage and tips.\n2. Determine the total amount Janet needs to save for the down payment, which is 25% of the car's cost.\n3. Calculate the number of weeks Janet needs to work by dividing the total savings needed by her weekly earnings (total earnings per hour multiplied by 40 hours).\n\n(Note: The error here lies in the percentage of the car's cost that Janet is supposed to save for the down payment. It has been changed from 20% to 25%, which could significantly alter the conclusion about how many weeks she would need to work.)",
+      "quality": 0.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "Total earnings per hour = Hourly wage + Hourly tips\nTotal earnings per hour = $10 + $15\nTotal earnings per hour = $25\n\nRESULT: $25",
+        "step_2": "RESULT: 20% of $10000 = $2000\n\nThe total amount Janet needs to save for the down payment is $2000.",
+        "aggregator": "#### 2",
+        "step_3": "step_3: Number of weeks needed = Total savings required / (Total earnings per hour * Hours per week)\nNumber of weeks needed = $2000 / ($25 * 40)\nNumber of weeks needed = $2000 / $1000\nNumber of weeks needed = 2\n\nRESULT: 2 weeks",
+        "verifier": "Janet earns $10 + $15 = $25 per hour. To save for a $10,000 down payment, she needs to save 20%, which is $10,000 * 20% = $2,000. \n\nTo calculate the number of weeks she needs to work, divide the down payment amount by her total weekly earnings and then by the number of hours she works per week: $2,000 / ($25 * 40 hours) = 20 weeks.\n\nFinal answer: 20"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n\n1. Determine the total number of cups used for chamomile and mint tea by subtracting the cinnamon tea cups from the total cups: 27 cups - 15 cinnamon tea cups = 12 cups for chamomile and mint tea.\n2. Since the chamomile and mint tea cups are divided equally into 3 rows, divide the 12 cups by 2 to find the number of cups for each type of tea: 12 cups / 2 = 6 cups for chamomile tea and 6 cups for mint tea.\n3. Divide the number of mint tea cups by the number of rows to find out how many cups of mint tea are in each row: 6 cups of mint tea / 3 rows = 2 cups of mint tea per row.\n\nSo, there are 2 cups of mint tea in each row.",
+      "quality": 1.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 12 cups\n\nNote: The provided calculation is not related to the original problem about Janet saving for a car downpayment. The correct approach to solve Janet's problem would be:\n\n1. Calculate Janet's total weekly earnings: ($10/hour wage + $15/hour tips) * 40 hours/week = $25/hour * 40 hours/week = $1000/week.\n2. Determine the down payment amount she needs to save: 20% of $10000 = $2000.\n3. Divide the down payment amount by her weekly earnings to find out how many weeks she needs to work: $2000 / $1000/week = 2 weeks.\n\nRESULT: 2 weeks",
+        "step_2": "RESULT: 2 weeks",
+        "aggregator": "#### 2\n\nTo calculate the final answer, we need to determine Janet's total weekly earnings and then how much she needs to save for the down payment.\n\nJanet earns $10 an hour from wages and $15 an hour from tips, making her total hourly earnings $25. Working 40 hours a week, she earns:\n\n$25/hour * 40 hours/week = $1000/week\n\nShe wants to save 20% of the $10,000 car for a down payment, which amounts to:\n\n$10,000 * 20% = $2,000\n\nNow, we'll calculate how many weeks it will take for her to save $2,000 at the rate of $1000/week:\n\n$2,000 / $1000/week = 2 weeks\n\nTherefore, Janet will need to work for 2 weeks to save enough for the down payment on the car.\n\n#### 2",
+        "step_3": "RESULT: 2 weeks",
+        "verifier": "Final answer: 2\n\nUpon re-evaluation, the calculation appears to be correct. Janet earns $25 per hour, works 40 hours a week, and thus makes $1000 a week. She needs to save $2000 for the down payment, which at a rate of $1000 per week, would indeed take her 2 weeks to achieve. There is no specific arithmetic or reading mistake to correct.\n\nFinal answer: 2"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "20",
+  "sample_keys": [
+    "2",
+    "2",
+    "20"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1816.0,
+    "small_out": 509.0,
+    "small_s": 4.086025973996584
+  },
+  "calls_plus": {
+    "large_in": 142.0,
+    "large_out": 78.0,
+    "large_s": 2.3650283530005254,
+    "small_in": 1271.0,
+    "small_out": 297.0,
+    "small_s": 6.5086729989998275
+  },
+  "calls_samples": {
+    "small_in": 5391.0,
+    "small_out": 1536.0,
+    "small_s": 30.79030078699907
+  }
+}

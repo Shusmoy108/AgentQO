@@ -9,3 +9,4 @@
 2026-11-16T15:06:20Z VM-B GATE P4: hotpot_granite: labels done; 32 plans, small 0.435 large 0.517 best 0.520 | hotpot_iso_granite: labels done; 32 plans, small 0.410 large 0.542 best 0.542 | math_granite: labels done; 64 plans, small 0.472 large 0.743 best 0.750
 2026-11-16T15:39:08Z VM-A GATE P2b: math_tiers: labels done; 729 plans, small 0.470 large 0.815 best 0.905
 2026-11-16T16:35:49Z VM-A GATE P2c: complex_q15_7: labels done; 1024 plans, small 0.500 large 0.795 best 0.880
+2026-11-16T17:09:33Z VM-B GATE P4b: hotpot_phi: labels done; 32 plans, small 0.427 large 0.500 best 0.540 | math_phi: labels done; 64 plans, small 0.745 large 0.950 best 0.960

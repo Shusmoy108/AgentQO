@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-900",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Determine the number of pages Denise read today by adding 5 to the number of pages Daniel read yesterday.\n2. Calculate the total number of pages Denise read over the two days by adding the pages she read yesterday to the pages she read today.\n3. Calculate the total number of pages Daniel read over the two days by adding the pages he read yesterday to the pages he read today (which is zero), and then find the difference between the total pages read by Denise and Daniel.",
+  "reference_key": null,
+  "final_key_plus": "2",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "Denise read 5 more pages than Daniel yesterday, so she read 13 + 5 = 18 pages today.\n\nRESULT: 18 - 13 = 5 pages more than Daniel.",
+    "step_2": "RESULT: Denise read a total of 10 (yesterday) + 18 (today) = 28 pages, while Daniel read a total of 13 (yesterday) + 0 (today) = 13 pages. Therefore, Denise read 28 - 13 = 15 pages more than Daniel.\nRESULT: 15",
+    "aggregator": "#### 15",
+    "step_3": "RESULT: 15",
+    "verifier": "Denise read 5 more pages than Daniel yesterday, which means she read 10 + 5 = 15 pages. Daniel read 13 pages yesterday. Therefore, Denise read 15 - 13 = 2 pages more than Daniel.\n\nFinal answer: 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n\n1. Calculate Melissa's total daily earnings by multiplying her daily pay rate by the number of days she works.\n2. Calculate Melissa's total parking expenses by multiplying the daily parking cost by the number of days she works.\n3. Subtract the total parking expenses from the total daily earnings to find her net earnings for the 3 days.\n4. Calculate the total number of hours Melissa worked over the 3 days.\n5. Divide the net earnings by the total number of hours worked to find Melissa's jury pay per hour after expenses.\n\nStep-by-step breakdown:\n\n1. Total daily earnings: $15/day * 3 days = $45\n2. Total parking expenses: $3/day * 3 days = $9\n3. Net earnings for 3 days: $45 - $9 = $36\n4. Total hours worked: 6 hours/day * 3 days = 18 hours\n5. Jury pay per hour after expenses: $36 / 18 hours = $2/hour\n\nMelissa makes $2 per hour after expenses for her jury duty.",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: $45",
+        "step_2": "RESULT: $9",
+        "aggregator": "#### 36",
+        "step_3": "RESULT: $36",
+        "verifier": "Denise read 5 more pages than Daniel yesterday, which means she read 10 + 5 = 15 pages. Daniel read 13 pages yesterday. Therefore, Denise read 15 - 13 = 2 pages more than Daniel.\n\nFinal answer: 2"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the number of pages Denise read today by adding 5 to the number of pages Daniel read yesterday.\n2. Calculate the total number of pages Denise read over the two days by adding the pages she read yesterday to the pages she read today (which is mistakenly stated as zero).\n3. Calculate the total number of pages Daniel read over the two days by adding the pages he read yesterday to the pages he read today (which is zero), and then find the difference between the total pages read by Denise and Daniel.\n\n(Note: The error is in step 2, where it incorrectly states that Denise read zero pages today, which changes the conclusion of the total pages read by Denise.)",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: Denise read 18 pages today (13 pages from Daniel yesterday + 5 pages).\n\nDenise read 10 pages yesterday, so in total, she read 10 + 18 = 28 pages over the two days.\n\nDaniel read 13 pages yesterday and 0 pages today, so in total, he read 13 + 0 = 13 pages over the two days.\n\nRESULT: Denise read 28 - 13 = 15 pages more than Daniel.",
+        "step_2": "RESULT: 15",
+        "aggregator": "#### 15",
+        "step_3": "RESULT: 15\n\nCalculation for clarity:\nDenise's total pages = 10 (yesterday) + 18 (today) = 28 pages\nDaniel's total pages = 13 (yesterday) + 0 (today) = 13 pages\nDifference = Denise's total pages - Daniel's total pages = 28 - 13 = 15 pages\n\nRESULT: 15",
+        "verifier": "Denise read 5 more pages than Daniel yesterday, which means she read 10 + 5 = 15 pages. Daniel read 13 pages yesterday. Therefore, Denise read 15 - 13 = 2 pages more than Daniel.\n\nFinal answer: 2"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n\n1. Calculate the total number of employees going on the tour by multiplying the number of groups by the number of employees in each group.\n2. Calculate the total number of tour guides by multiplying the number of groups by the number of tour guides per group.\n3. Add the total number of employees and the total number of tour guides to get the overall total number of people going on the tour.\n\nStep-by-step breakdown:\n\n1. Total number of employees = Number of groups \u00d7 Number of employees per group\n   Total number of employees = 3 groups \u00d7 200 employees/group = 600 employees\n2. Total number of tour guides = Number of groups \u00d7 Number of tour guides per group\n   Total number of tour guides = 3 groups \u00d7 7 tour guides/group = 21 tour guides\n3. Overall total number of people = Total number of employees + Total number of tour guides\n   Overall total number of people = 600 employees + 21 tour guides = 621 people\n\nThe overall total number of people going on the tour is 621.",
+      "quality": 1.0,
+      "final_key": "15",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 600",
+        "step_2": "RESULT: 21\nThis is the total number of tour guides going on the tour, calculated by multiplying the number of groups (3) by the number of tour guides per group (7).",
+        "aggregator": "#### 621\n\nHowever, the provided information does not seem to directly relate to the question about Denise and Daniel's reading habits. The final answer regarding the number of pages Denise read more than Daniel is not provided in the steps. Let's calculate it:\n\nDenise read 10 pages yesterday and 5 more than Daniel's 13 pages today, so she read 10 + (13 + 5) = 28 pages today. In total, Denise read 10 + 28 = 38 pages.\nDaniel read 13 pages yesterday and 0 pages today, so he read a total of 13 pages.\n\nDenise read 38 pages and Daniel read 13 pages, so Denise read 38 - 13 = 25 pages more than Daniel.\n\n#### 25",
+        "step_3": "RESULT: 621\nThe overall total number of people going on the tour, including both employees and tour guides, is 621.",
+        "verifier": "Denise read 10 pages yesterday and 18 pages today (5 more than Daniel's 13 pages), so she read a total of 10 + 18 = 28 pages.\nDaniel read 13 pages yesterday and 0 pages today, so he read a total of 13 pages.\n\nDenise read 28 pages and Daniel read 13 pages, so Denise read 28 - 13 = 15 pages more than Daniel.\n\n#### 15\nFinal answer: 15"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "-3",
+  "sample_keys": [
+    "-3",
+    "-3",
+    "-3"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1397.0,
+    "small_out": 275.0,
+    "small_s": 2.261509419002323
+  },
+  "calls_plus": {
+    "large_in": 132.0,
+    "large_out": 101.0,
+    "large_s": 3.0557190039999114,
+    "small_in": 1242.0,
+    "small_out": 209.0,
+    "small_s": 4.592482117001055
+  },
+  "calls_samples": {
+    "small_in": 4300.0,
+    "small_out": 857.0,
+    "small_s": 16.558948851001333
+  }
+}
