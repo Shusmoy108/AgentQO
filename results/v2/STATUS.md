@@ -10,3 +10,4 @@
 2026-11-16T15:39:08Z VM-A GATE P2b: math_tiers: labels done; 729 plans, small 0.470 large 0.815 best 0.905
 2026-11-16T16:35:49Z VM-A GATE P2c: complex_q15_7: labels done; 1024 plans, small 0.500 large 0.795 best 0.880
 2026-11-16T17:09:33Z VM-B GATE P4b: hotpot_phi: labels done; 32 plans, small 0.427 large 0.500 best 0.540 | math_phi: labels done; 64 plans, small 0.745 large 0.950 best 0.960
+2026-11-16T17:12:04Z SPARE TIME (GATE P4b): all queued phases done (VM-A 16:35Z, VM-B 17:04Z). To the GPU cutoff 2026-11-19T06:00Z: ~60.8 h per VM. Remaining registered work: P5 ~1.8 h + P5 cal ~1-1.5 h + D-L2-h4grid refit ~1 h + E1 (inside the 6 h registered reserve) + P6 <10 min + final zip <5 min => ~6.5-7 h. Projected spare after P5, E1 and P6: ~54 h per VM (both VMs idle until P5 starts). Nothing unregistered will start on spare time; waiting for a NEXT block. Disk: VM-A 91 GB, VM-B 66 GB free.

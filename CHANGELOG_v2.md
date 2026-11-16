@@ -466,3 +466,6 @@ Operational choices made during the lease (no code change; the tag is what runs)
   Fix (Mac tooling only, no code at the tag): that file is committed as h3_calls.csv.gz (15 MB, gzip -9); the
   uncompressed file stays in the P2b zip and the Mac mirror. tools/mac_sync.sh now gzips any file > 95 MB in the
   git copy before commit, so P2c/P4b cannot hit the limit. Sync loop restarted with the 6 h backup schedule kept.
+- 17:15Z GATE P4b: VM-B queue done 17:04Z (VM-A 16:35Z). Spare-time line written to STATUS.md: ~60.8 h to the
+  06:00Z cutoff, ~6.5-7 h of registered work left (P5, P5 cal, h4 refit, E1, P6, final) -> ~54 h spare per VM.
+  Nothing unregistered started.
