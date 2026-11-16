@@ -1,6 +1,6 @@
 {
   "phase": "P5",
-  "generated": "2026-11-16 19:20 UTC",
+  "generated": "2026-11-16 21:09 UTC",
   "backend": "vllm",
   "git_commit": "252a12bfb53acc15c4530509b778daeba2a5dd19",
   "dirty": false,
@@ -18,6 +18,20 @@
       "commit": "252a12bfb53acc15c4530509b778daeba2a5dd19",
       "dirty": false,
       "lease_tag_commit": "252a12bfb53acc15c4530509b778daeba2a5dd19"
+    },
+    {
+      "started": "2026-11-16T20:10:32Z",
+      "backend": "vllm",
+      "commit": "252a12bfb53acc15c4530509b778daeba2a5dd19",
+      "dirty": false,
+      "lease_tag_commit": "252a12bfb53acc15c4530509b778daeba2a5dd19"
+    },
+    {
+      "started": "2026-11-16T21:08:34Z",
+      "backend": "vllm",
+      "commit": "252a12bfb53acc15c4530509b778daeba2a5dd19",
+      "dirty": false,
+      "lease_tag_commit": "252a12bfb53acc15c4530509b778daeba2a5dd19"
     }
   ],
   "packaged_at": {
@@ -25,6 +39,31 @@
     "dirty": false
   },
   "steps": [
+    {
+      "step": "cal_qwen_hotpot_shared",
+      "finished": true,
+      "config": {
+        "allow_missing_logprobs": false,
+        "backend": "vllm",
+        "cache": ":memory:",
+        "dataset": "hotpotqa",
+        "k": 16,
+        "max_tokens": 384,
+        "n_tasks": 64,
+        "placement": "shared",
+        "plans": "all_small,all_large",
+        "probe": "placeholder",
+        "probe_layer": null,
+        "probe_model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "probe_pool": "mean",
+        "repeats": 3,
+        "split": "eval",
+        "vm": [
+          "gpu_a=local"
+        ],
+        "workflow": "hotpot"
+      }
+    },
     {
       "step": "separate",
       "finished": true,
@@ -112,6 +151,131 @@
         "max_tokens": 256,
         "n_tasks": 64,
         "placement": "shared",
+        "plans": "all_small,only_planner,only_aggregator,only_verifier,planner+verifier,aggregator+verifier,all_large",
+        "probe": "placeholder",
+        "probe_layer": null,
+        "probe_model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "probe_pool": "mean",
+        "repeats": 3,
+        "split": "eval",
+        "vm": [
+          "gpu_a=local"
+        ],
+        "workflow": "math"
+      }
+    },
+    {
+      "step": "shared_k1",
+      "finished": true,
+      "config": {
+        "allow_missing_logprobs": false,
+        "backend": "vllm",
+        "cache": ":memory:",
+        "dataset": "gsm8k",
+        "k": 1,
+        "max_tokens": 256,
+        "n_tasks": 64,
+        "placement": "shared",
+        "plans": "all_small,only_planner,only_aggregator,only_verifier,planner+verifier,aggregator+verifier,all_large",
+        "probe": "placeholder",
+        "probe_layer": null,
+        "probe_model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "probe_pool": "mean",
+        "repeats": 3,
+        "split": "eval",
+        "vm": [
+          "gpu_a=local"
+        ],
+        "workflow": "math"
+      }
+    },
+    {
+      "step": "shared_k32",
+      "finished": true,
+      "config": {
+        "allow_missing_logprobs": false,
+        "backend": "vllm",
+        "cache": ":memory:",
+        "dataset": "gsm8k",
+        "k": 32,
+        "max_tokens": 256,
+        "n_tasks": 64,
+        "placement": "shared",
+        "plans": "all_small,only_planner,only_aggregator,only_verifier,planner+verifier,aggregator+verifier,all_large",
+        "probe": "placeholder",
+        "probe_layer": null,
+        "probe_model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "probe_pool": "mean",
+        "repeats": 3,
+        "split": "eval",
+        "vm": [
+          "gpu_a=local"
+        ],
+        "workflow": "math"
+      }
+    },
+    {
+      "step": "shared_mps",
+      "finished": true,
+      "config": {
+        "allow_missing_logprobs": false,
+        "backend": "vllm",
+        "cache": ":memory:",
+        "dataset": "gsm8k",
+        "k": 16,
+        "max_tokens": 256,
+        "n_tasks": 64,
+        "placement": "shared_mps",
+        "plans": "all_small,only_planner,only_aggregator,only_verifier,planner+verifier,aggregator+verifier,all_large",
+        "probe": "placeholder",
+        "probe_layer": null,
+        "probe_model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "probe_pool": "mean",
+        "repeats": 3,
+        "split": "eval",
+        "vm": [
+          "gpu_a=local"
+        ],
+        "workflow": "math"
+      }
+    },
+    {
+      "step": "shared_mps_k1",
+      "finished": true,
+      "config": {
+        "allow_missing_logprobs": false,
+        "backend": "vllm",
+        "cache": ":memory:",
+        "dataset": "gsm8k",
+        "k": 1,
+        "max_tokens": 256,
+        "n_tasks": 64,
+        "placement": "shared_mps",
+        "plans": "all_small,only_planner,only_aggregator,only_verifier,planner+verifier,aggregator+verifier,all_large",
+        "probe": "placeholder",
+        "probe_layer": null,
+        "probe_model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "probe_pool": "mean",
+        "repeats": 3,
+        "split": "eval",
+        "vm": [
+          "gpu_a=local"
+        ],
+        "workflow": "math"
+      }
+    },
+    {
+      "step": "shared_mps_k32",
+      "finished": true,
+      "config": {
+        "allow_missing_logprobs": false,
+        "backend": "vllm",
+        "cache": ":memory:",
+        "dataset": "gsm8k",
+        "k": 32,
+        "max_tokens": 256,
+        "n_tasks": 64,
+        "placement": "shared_mps",
         "plans": "all_small,only_planner,only_aggregator,only_verifier,planner+verifier,aggregator+verifier,all_large",
         "probe": "placeholder",
         "probe_layer": null,

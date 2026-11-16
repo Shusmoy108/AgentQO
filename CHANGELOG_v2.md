@@ -478,3 +478,12 @@ Operational choices made during the lease (no code change; the tag is what runs)
   runs comes from its background log (no VM-A -> VM-B ssh key; none added). Phi-3.5-mini downloaded to
   VM-A for the phi_math separate cal. mac_sync: block gates P5-<block> push the P5 folder (VM-B: P5_vmB).
   X items: X4 and parts of X1/X2 need code changes, so they are not run; exact changes in STATUS.md.
+- 2026-11-16T20:12:40Z X3 STARTED/RESUMED on VM-B (resumes from the lease cache)
+- 20:12Z NEXT block 5: X3 (L2-X) started on VM-B's idle GPU, before P6 (V2_DEVIATION=L2-X; code at the tag):
+  Qwen2.5-7B :8001 0.25, Granite-3.1-8B :8002 0.27, Phi-4 :8003 0.40 on one H100, by model id; smoke 5 problems
+  (all_small/all_large/all_xl), labels 200 (Qwen7B->Granite8B, Qwen7B->Phi-4), 729 plans x 200, into results/v2/X3/.
+  P5 priority: VM-B's lq.sh srv_start now kills X3 (session + run_real_* processes) and stops its servers before
+  any other block starts servers on VM-B, so no P5/H4 latency run shares VM-B's GPU with X3. A watcher on VM-B
+  (x3watch) resumes X3 from the cache after 3 idle minutes (no servers, no blocks, GPU < 1 GB). Start, pause and
+  resume times are copied from VM-B's x3_events.log into STATUS.md and here.
+- 2026-11-16T21:09:24Z X3 PAUSED on VM-B before B-serve-Q7_8002_8192 starts its servers (X3 servers stopped, GPU freed)

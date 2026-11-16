@@ -20,3 +20,6 @@
 2026-11-16T19:14:01Z VM-A GATE P5-separate: separate: placement done | separate_k1: placement done | separate_k32: placement done
 2026-11-16T19:31:11Z VM-B GATE P5-cal_shared: cal_granite_hotpot_shared: placement done | cal_granite_math_shared: placement done | cal_phi_math_shared: placement done | cal_qwen3_14_math_shared: placement done
 2026-11-16T20:09:22Z VM-A GATE P5-shared: separate: placement done | separate_k1: placement done | separate_k32: placement done | shared: placement done | shared_k1: placement done | shared_k32: placement done
+2026-11-16T20:12:40Z X3 STARTED/RESUMED on VM-B (resumes from the lease cache)
+2026-11-16T21:09:24Z X3 PAUSED on VM-B before B-serve-Q7_8002_8192 starts its servers (X3 servers stopped, GPU freed)
+2026-11-16T21:09:51Z VM-A GATE P5-shared_mps: cal_qwen_hotpot_shared: placement done | separate: placement done | separate_k1: placement done | separate_k32: placement done | shared: placement done | shared_k1: placement done | shared_k32: placement done | shared_mps: placement done | shared_mps_k1: placement done | shared_mps_k32: placement done
