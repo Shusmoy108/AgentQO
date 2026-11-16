@@ -446,3 +446,9 @@ Operational choices made during the lease (no code change; the tag is what runs)
   No VM-A -> VM-B SSH key was installed, so run_placement.py's VM-B power logger (which SSHes) is not used:
   P5 runs with V2_VMS="gpu_a=local", and VM-B's power during P5 comes from its continuous 1 s nvidia-smi log
   (logs/v2/power_vmB.csv), cut to each P5 run's time window. Both VMs log power for the whole lease.
+- 13:30Z NEXT block received and applied: (1) network check VM-A -> VM-B vLLM ports OK, in STATUS.md;
+  (2) clocks recorded in P0/env.txt (chrony, offset < 1 us, no change needed); (3) h4 refit with
+  placement_test.py logged as lease-time deviation D-L2-h4grid in prereg/v2_amendments.md, to run after
+  P5's main blocks on shared and shared_mps per V2_P5_CAL model pair (+ separate cells as the L_iso
+  baseline h4_fit needs); (4) Python 3.12 build and the root-disk incident in P0/env.txt; (5) at GATE P4b,
+  a "spare time" line in STATUS.md; nothing unregistered starts on spare time.

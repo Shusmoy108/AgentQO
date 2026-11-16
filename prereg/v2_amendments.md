@@ -205,3 +205,18 @@ L2 (lease structure, given with A16/A17): Lease 1 runs 2026-11-16 12:00 UTC to 2
 | A17 | Setting `complex_q15_7`, phase P2c (VM-A, after P2b), workflow key `complex` (complex_r2_s2_ver), GSM8K, AGENTQO_VERIFIER=cautious, max_tokens 256. Labels 200 (full and --disagree-only) on the label split; 1,024 plans on the first 200 of eval_ext. (a), (b) read as in A16, from `estimator_errors.csv` of the standard P6 analysis (binary plans, m = 3). | `P2c/complex_q15_7/`, `P6/complex_q15_7/rules/estimator_errors.csv` |
 | P0 | `math_tiers` (plans all_small, all_large, all_xl) and `complex_q15_7` join the P0 smoke test (V2_P0=tiers, complex), same rule as A13-A15. | `P0/math_tiers/`, `P0/complex_q15_7/` |
 | L2 | Before a cuttable setting starts on a VM, `run_phase.sh` compares its 10x-rule hours from PLAN_v2_times.md (Phi hotpot 11, Phi math 16.5, A17 23 at 200 / 12.5 at 100, A16 19, Granite isolated 5.5) with the hours left to 2026-11-19 12:00 UTC minus a 4 h reserve (P5, P5 cal, P6, final). On each VM the later cuttable settings come earlier in the cut order, so a setting needs only its own hours; a setting cut for time also cuts the not-yet-started settings before it in the order on its VM. A17 drops to the first 100 eval problems if 200 does not fit and 100 does. Each cut or reduction is written to `results/v2/P0/skips.tsv` or `reduced.tsv`, FAILURES.md and this file (`D-P0-<setting>`, `D-P0-complex_q15_7-n100`). E1 and the P5 K=1 runs are not run by `run_phase.sh` and are cut by hand at their place in the order. A setting moved to the other VM is recorded with `smoke_check.py moved` (skips file only; not a deviation). The check sees one VM's clock, not the other VM's queue; across VMs the operator keeps the order. | `results/v2/P0/`, FAILURES.md |
+
+## Lease-time deviation D-L2-h4grid (2026-11-16 13:30:14 UTC)
+
+lease-time deviation. Time: 2026-11-16 13:30:14 UTC. Id: D-L2-h4grid. Affected phase: P5 (adds data only).
+Reason: P5's run_placement.py output has per-problem start/end times and per-call latency, but not the
+per-request start/end timing that scripts/h4_fit.py needs to refit the directed interference model
+(AgentIconq betas). The refit therefore uses the Session 1 grid tool scripts/placement_test.py, unchanged
+at the tag v2-lease1-start (no code change, so V2_DEVIATION is not needed to run it).
+What runs: after P5's main placement blocks, for each model pair in V2_P5_CAL (Qwen 1.5B/7B for the main
+sweep, plus qwen_hotpot's pair = Qwen 1.5B/7B, qwen3_14_math = Qwen 3B/14B, granite_math = Granite 2B/8B),
+placement_test.py per-request grids in separate placement (L_iso) and in shared and shared_mps
+placements, then h4_fit.py fit (and fit-mps for shared_mps) per model pair, compared with Session 1
+(shared 2.392 / 0.991, MPS 2.072 / 0.332). Separate-placement grid cells are run only as the L_iso
+baseline h4_fit requires. This adds data; it does not replace any P5 measurement, does not change the
+H3c hold-out split (P6/hypotheses/h3c_split.json), and its fits are not used by any registered verdict.
