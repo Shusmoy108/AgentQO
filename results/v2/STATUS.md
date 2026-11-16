@@ -3,3 +3,4 @@
 2026-11-16T13:28:05Z VM-A GATE P1: hotpot_iso_q15_7: labels done | hotpot_q15_7: labels done | math_q15_7: labels done
 2026-11-16T13:30:32Z NETCHECK P5 separate: VM-A -> VM-B 10.56.2.39:8001 OK (Qwen2.5-3B), :8002 OK (Qwen2.5-14B). CLOCK: both VMs chrony-synced to ns4.tacc.utexas.edu, offset < 1 us (< 100 ms required). NEXT block 1 applied at the P1/P2 boundary.
 2026-11-16T13:34:24Z NEXT block 2 applied: P5 separate uses http://10.56.2.39:<port> from VM-A; curl check from VM-A will be repeated right before the first separate run. Earlier checks (13:10Z, 13:30Z) all OK on the ports in use.
+2026-11-16T13:49:56Z VM-A GATE P2: hotpot_iso_q15_7: 32 plans, small 0.292 large 0.527 best 0.527 | hotpot_q15_7: 32 plans, small 0.312 large 0.490 best 0.505 | math_q15_7: 64 plans, small 0.490 large 0.820 best 0.830
