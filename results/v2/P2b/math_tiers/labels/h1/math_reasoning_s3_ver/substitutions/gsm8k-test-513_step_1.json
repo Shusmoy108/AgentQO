@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Step 1: Calculate the amount spent on clothes, which is 20% of $500.\nCalculation: 20% of $500 = 0.20 * $500 = $100\n\nRESULT: $100",
+  "reference_key": "100",
+  "final_key_plus": "300",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: $400",
+    "step_2": "Step 2: Subtract the amount spent on clothes from $500 to find out how much money remains after buying clothes.\n\nCalculation: Remaining money after buying clothes = $500 - $100 = $400\n\nRESULT: $400",
+    "aggregator": "Julie had $400 left.",
+    "verifier": "To solve this problem, let's break down Julie's spending step by step:\n\n1. **Initial amount**: Julie starts with $500.\n\n2. **Spending on clothes**:\n   - Julie spends 20% of her initial amount on clothes.\n   - Calculation: \\( 500 \\times 0.20 = 100 \\)\n   - Amount left after buying clothes: \\( 500 - 100 = 400 \\)\n\n3. **Spending on CDs**:\n   - From the remaining $400, she spends 25% on CDs.\n   - Calculation: \\( 400 \\times 0.25 = 100 \\)\n   - Amount left after buying CDs: \\( 400 - 100 = 300 \\)\n\nTherefore, Julie has $300 left.\n\nFinal answer: $300"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "101",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "Step 1: Calculate the amount spent on clothes, which is 20% of $500.\nCalculation: 20% of $500 = 0.20 * $500 = $100\n\nRESULT: 101",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Step 3: Calculate the amount spent on CDs, which is 25% of the remaining money after buying clothes.\n\nCalculation: Amount spent on CDs = 25% of $400 = 0.25 * $400 = $100\n\nRESULT: 100",
+        "step_2": "Step 2: Subtract the amount spent on clothes from $500 to find out how much money remains after buying clothes.\n\nCalculation: Remaining money after clothes = $500 - $100 = $400\n\nRESULT: 400",
+        "aggregator": "Julie has $100 left. #### 100",
+        "verifier": "The proposed solution is correct. Julie initially had $500. After spending 20% on clothes, she had:\n\n\\[ 500 - (500 \\times 0.20) = 500 - 100 = 400 \\]\n\nThen, she spent 25% of the remaining $400 on CDs:\n\n\\[ 400 - (400 \\times 0.25) = 400 - 100 = 300 \\]\n\nSo, Julie had $300 left.\n\nFinal answer: 300"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "500",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "To calculate the amount spent on clothes:\n\n- Amount spent = 20% of $500\n- Calculation: (20/100) \u00d7 $500\n\nNow I will perform this calculation.",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Amount spent on CDs = 25% of ($500 - $100)\nCalculation: (25/100) \u00d7 ($500 - $100)\n\nRESULT: $75",
+        "step_2": "Calculation for step 2:\n\n- Amount spent on clothes = (20/100) \u00d7 $500\n- Result: $100\n\nRESULT: $100",
+        "aggregator": "Julie has $75 left. #### 75",
+        "verifier": "The proposed solution is correct. Julie started with $500, spent 20% on clothes, which is $100 (500 * 0.20), leaving her with $400 ($500 - $100). Then she spent 25% of the remaining $400 on CDs, which is $100 ($400 * 0.25), leaving her with $300 ($400 - $100).\n\nFinal answer: 300"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "84",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "RESULT: 84",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 379",
+        "step_2": "RESULT: 416",
+        "aggregator": "Julie had $379 left. #### 379",
+        "verifier": "The proposed solution is correct. Julie started with $500 and spent 20% on clothes, which is $100 (500 * 0.20). After spending that amount, she had $400 left. Then, she spent 25% of the remaining $400 on CDs, which is $100 (400 * 0.25). Therefore, after buying the CDs, she had $300 ($400 - $100) left.\n\nFinal answer: 300"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "100",
+  "sample_keys": [
+    "100",
+    "100",
+    "100",
+    "100",
+    "100"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1142.0,
+    "small_out": 358.0,
+    "small_s": 1.5891127450004205
+  },
+  "calls_plus": {
+    "small_in": 947.0,
+    "small_out": 364.0,
+    "small_s": 3.6822844069999974,
+    "large_in": 199.0,
+    "large_out": 59.0,
+    "large_s": 1.5724709749993053
+  },
+  "calls_samples": {
+    "small_in": 995.0,
+    "small_out": 302.0,
+    "small_s": 2.5413379669998903
+  }
+}

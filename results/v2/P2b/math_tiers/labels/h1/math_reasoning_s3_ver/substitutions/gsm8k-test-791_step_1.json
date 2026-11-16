@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-791",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Step 1: Subtract the number of people who got off at the first stop from the initial number of people on the train.\nCalculation: 172 - 47 = 125\n\nRESULT: 125",
+  "reference_key": "125",
+  "final_key_plus": "100",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: 125 - 38 = 87\n\nFinal Result: There are 87 people left on the train after both stops.",
+    "step_2": "RESULT: 125",
+    "aggregator": "There are 87 people left on the train. #### 87",
+    "verifier": "The correct calculation is as follows:\n\n- Initially, there were 172 people.\n- After 47 people got off, there were \\(172 - 47 = 125\\) people left.\n- Then, 13 more people got on, so there were \\(125 + 13 = 138\\) people.\n- Finally, 38 people got off, leaving \\(138 - 38 = 100\\) people.\n\nSo, the number of people left on the train is **100**."
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "126",
+      "reference_key": "125",
+      "key_differs": true,
+      "text": "Step 1: Subtract the number of people who got off at the first stop from the initial number of people on the train.\nCalculation: 172 - 47 = 125\n\nRESULT: 126",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 125 - 38 = 87",
+        "step_2": "RESULT: 125",
+        "aggregator": "The number of people left on the train is 87.\n\n#### 87",
+        "verifier": "The proposed solution is correct. The initial number of people on the train was 172. After 47 people got off, there were \\(172 - 47 = 125\\) people left. Then, 13 more people got on, making the total \\(125 + 13 = 138\\). Finally, after another 38 people got off, the number of people remaining on the train is \\(138 - 38 = 100\\).\n\nFinal answer: 100"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "100",
+      "reference_key": "125",
+      "key_differs": true,
+      "text": "RESULT: 172 - 47 = 125\n\nNow add the number of people getting on:\n\n125 + 13 = 138\n\nFinally, subtract the number of people getting off at the second stop:\n\n138 - 38 = 100\n\nTherefore, RESULT: 100",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 100",
+        "step_2": "RESULT: 100",
+        "aggregator": "#### 100",
+        "verifier": "The correct calculation is as follows:\n\nInitial number of people = 172\nAfter the first stop: 172 - 47 + 13 = 138\nAfter the second stop: 138 - 38 = 100\n\nFinal answer: 100"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "30",
+      "reference_key": "125",
+      "key_differs": true,
+      "text": "Johnny's initial total amount is calculated as follows:\n\nInitial allowance + Extra amount = Initial total\n$20 + $10 = $30\n\nRESULT: $30",
+      "quality": 0.0,
+      "final_key": "52",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: $52",
+        "step_2": "RESULT: $40",
+        "aggregator": "The number of people left on the train is **52**.",
+        "verifier": "The proposed solution is correct.\n\nFinal answer: 52"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "97",
+  "sample_keys": [
+    "100",
+    "138",
+    "138",
+    "125",
+    "100"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1073.0,
+    "small_out": 277.0,
+    "small_s": 1.2654076409999107
+  },
+  "calls_plus": {
+    "small_in": 978.0,
+    "small_out": 269.0,
+    "small_s": 2.5732511079988853,
+    "large_in": 211.0,
+    "large_out": 50.0,
+    "large_s": 1.42204640700038
+  },
+  "calls_samples": {
+    "small_in": 1055.0,
+    "small_out": 441.0,
+    "small_s": 4.33834732700052
+  }
+}
