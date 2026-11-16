@@ -220,8 +220,9 @@ def test_hotpot_iso_is_registered():
     assert WORKFLOWS["hotpot_iso"][1]().name == "hotpot_chain_isolated"
 
 
-def test_hotpot_labels_run_end_to_end():
-    wf = create_hotpot_chain_workflow()
+@pytest.mark.parametrize("make", [create_hotpot_chain_workflow, create_hotpot_chain_isolated_workflow])
+def test_hotpot_labels_run_end_to_end(make):
+    wf = make()  # A13: the isolated workflow labels end to end on the fake backend too
     backend, _ = hotpot_backend()
     res = label(wf, backend, RealTaskModel(HOTPOT, dataset="hotpotqa"), 8, realistic=True)
     assert {r["agent"] for r in labels_rows(res.records)} == set(wf.nodes)

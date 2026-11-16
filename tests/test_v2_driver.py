@@ -226,3 +226,65 @@ def test_lease_runs_need_the_tag_or_a_logged_deviation(tmp_path):
     assert prov(V2_DEVIATION="D1").returncode == 0
     last = json.loads((repo / "results/v2/P1/provenance.jsonl").read_text().splitlines()[-1])
     assert last["deviation"] == "D1" and last["lease_tag_commit"] != last["commit"]
+
+
+def test_smoke_check_fails_on_zero_or_wrong_yes_no(tmp_path):
+    """P0 (A13-A15): a setting fails if nothing is correct, or a non-yes/no question gets yes/no."""
+    from scripts.v2.smoke_check import problems, record_skip, skipped
+    ok = {"all_small": [{"task_id": "a", "gold": "Paris", "pred": "paris", "correct": 1.0}],
+          "all_large": [{"task_id": "b", "gold": "yes", "pred": "yes", "correct": 1.0}]}
+    assert problems(ok) == []
+    zero = {p: [{**t, "correct": 0.0} for t in ts] for p, ts in ok.items()}
+    assert "scores 0" in problems(zero)[0]
+    yn = {"all_small": ok["all_small"] + [{"task_id": "c", "gold": "Lyon", "pred": "Yes.", "correct": 0.0}]}
+    assert "yes/no answers to non-yes/no" in problems(yn)[0]
+    assert problems({}) == ["no all_small/all_large traces"]
+    (tmp_path / "prereg").mkdir()
+    skips = tmp_path / "P0/skips.tsv"
+    record_skip("math_phi", "P0 smoke test: scores 0", skips, root=tmp_path)
+    assert skipped(skips) == {"math_phi"}
+    assert "`math_phi` skipped" in (tmp_path / "FAILURES.md").read_text()
+    assert "Lease-time deviation D-P0-math_phi" in (tmp_path / "prereg/v2_amendments.md").read_text()
+
+
+@pytest.mark.skipif(not HOTPOT, reason="HotpotQA not downloaded")
+def test_p0_smoke_then_skip_gates_the_setting(tmp_path, monkeypatch):
+    """P0 smoke-tests a new setting once; a skipped setting is never run."""
+    out = phase(tmp_path, "P0", V2_P0="qwen")
+    assert (tmp_path / "results/P0/hotpot_iso_q15_7/smoke/h3_traces.json").exists()
+    assert "smoke hotpot_iso_q15_7 not judged (fake backend)" in out
+    skips = tmp_path / "results/P0/skips.tsv"
+    skips.write_text("hotpot_iso_q15_7\ttime short\t2026-11-16\n")
+    out = phase(tmp_path, "P1", V2_SETTINGS="hotpot_iso")
+    assert "skip hotpot_iso_q15_7: time short" in out and not (tmp_path / "results/P1/hotpot_iso_q15_7").exists()
+
+
+def test_p4b_runs_phi_math_then_hotpot():
+    """A15: Phi math, then Phi hotpot_chain (labels 200, all plans on 400, 512 tokens); P6 analyses both."""
+    text = (ROOT / "scripts/v2/run_phase.sh").read_text()
+    p4b = text[text.index("  P4b)"):text.index("  P5)")]
+    assert "use_models phi_small phi_large" in p4b
+    assert p4b.index("labels math_phi") < p4b.index("plans math_phi") < p4b.index("labels hotpot_phi")
+    assert 'plans hotpot_phi hotpot hotpotqa eval "$(cap 400)" 512' in p4b and "hotpot_iso" not in p4b
+    assert "analyze math_phi math P4b P4b" in text and "analyze hotpot_phi hotpot P4b P4b" in text
+    assert "vllm.sqlite}" not in text  # Session 1 cache name is never the default
+
+
+def test_lease_logs_do_not_make_the_tree_dirty(tmp_path):
+    """A P0 skip appended to the amendments or FAILURES.md during the lease must not block later phases."""
+    repo = tmp_path / "repo"
+    (repo / "scripts/v2").mkdir(parents=True)
+    (repo / "prereg").mkdir()
+    git(repo, "init", "-b", "work")
+    shutil.copy2(ROOT / "scripts/v2/summarize_phase.py", repo / "scripts/v2/summarize_phase.py")
+    (repo / "prereg/v2_amendments.md").write_text("A1\n")
+    (repo / ".gitignore").write_text("results/\n")
+    git(repo, "add", ".")
+    git(repo, "commit", "-m", "base")
+    prov = lambda: subprocess.run(["python3", "scripts/v2/summarize_phase.py", "provenance", "results/v2/P1",
+                                   "--refuse-dirty"], cwd=repo, capture_output=True, text=True)
+    (repo / "prereg/v2_amendments.md").write_text("A1\nLease-time deviation D-P0-x\n")
+    (repo / "FAILURES.md").write_text("- x skipped\n")
+    assert prov().returncode == 0
+    (repo / "scripts/v2/summarize_phase.py").write_text("# changed\n" + (repo / "scripts/v2/summarize_phase.py").read_text())
+    assert prov().returncode != 0

@@ -329,3 +329,50 @@ resumed from the cache. Docs outside the repo were not changed.
 
 **Tag.** `v2-lease1-start` moved from 55c6590 to the commit carrying this entry. To avoid a force-push,
 the old remote tag was deleted and the new one pushed.
+
+## 2026-11-16 04:06:51 UTC: A13 restated, A14 revised, A15 Phi, P0 smoke test, fresh caches (branch v2-dev)
+
+**Registered** in `prereg/v2_amendments.md` under one timestamp, before any lease data. No model
+was run on the Mac (no Ollama, no vLLM); all checks below use the fake backend.
+
+Choices made without asking (as instructed), each also stated in the amendment:
+- A13 was already registered on 2026-11-12 with the same text, and its code was already built
+  and tested. The text is restated with the new timestamp; the 2026-11-12 registration stands.
+- A14 differs from the 2026-11-12 text by "max-model-len 8192" and the validation sentence, so it
+  is appended as a superseding text.
+- Phi: max_tokens 512 for math too (A15 gives none; follows Granite). The A14 short-span line is
+  turned on for Phi HotpotQA, as for Granite, because the code cannot change after the tag. No Phi
+  P5 calibration set, so Phi GPU cost uses the latency fallback.
+- Phi runs as a new phase **P4b** (VM-B, after P4), not inside P4, because it needs different vLLM
+  servers and `use_models` checks them.
+- "Scores 0" = none of the 10 smoke answers (5 problems x all_small + all_large) is correct. A
+  per-plan rule would skip a 1.5B/2B setting about 1 time in 4-6 by chance at EM 0.2-0.3.
+- The smoke test uses the first 5 label problems, which the labels step runs anyway.
+
+Hugging Face (API metadata only, nothing downloaded): microsoft/Phi-3.5-mini-instruct and
+microsoft/phi-4 exist, gated=false, license mit.
+
+Code:
+- `configs/v2_models.yaml`: `phi_small`, `phi_large`, max_tokens `phi: 512`.
+- `scripts/v2/run_phase.sh`: phase **P0** (`V2_P0=qwen|granite|phi`) smoke-tests the five new settings
+  (Qwen isolated, Granite hotpot, Granite isolated, Phi math, Phi hotpot). `labels`/`plans` call
+  `ready`, which smoke-tests a new setting P0 has not checked, and returns without running for a
+  setting in `results/v2/P0/skips.tsv`. Phase **P4b**: Phi math, then Phi hotpot_chain. P6
+  analyses `math_phi` and `hotpot_phi`; `final` copies P0 and P4b. The fake backend's smoke run
+  is not judged (it cannot answer real problems).
+- New `scripts/v2/smoke_check.py`: `check` (the P0 rule) and `skip` (by hand, e.g. time short).
+  Both write `skips.tsv`, `FAILURES.md` and a `D-P0-<setting>` deviation in the amendments.
+- `summarize_phase.git_state`: `prereg/v2_amendments.md` and `FAILURES.md` no longer make the
+  tree dirty, so a P0 skip logged during the lease does not stop later lease phases.
+- `run_real_h3.py`: each `h3_traces.json` entry also has `pred` (the extracted final answer).
+- Session 1 caches no longer exist: the vLLM cache default is now `data/cache/v2_lease1.sqlite`
+  (was `vllm.sqlite`, the Session 1 name); nothing looks for a Session 1 cache.
+- `hypotheses_report.py`: columns `math_phi`, `hotpot_phi`.
+- Tests: smoke rule (score 0, wrong yes/no, missing traces) and skip logging; P0 on the fake
+  backend then a skip gating P1; P4b order; lease logs do not dirty the tree; the HotpotQA
+  labels test now also runs hotpot_chain_isolated end to end on the fake backend.
+- During development, two fake-backend runs (before the "not judged" rule) appended stray
+  `D-P0-hotpot_iso_q15_7` lines to the amendments and created FAILURES.md; both were reverted
+  before this entry and never committed.
+- `PLAN_v2_times.md`: q4 call counts; total ~427,000 calls, ~67 h (10x rule) / ~11.3 h
+  (Session 1 rate); VM-B ~46 h / ~6.0 h.

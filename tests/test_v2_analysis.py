@@ -64,7 +64,7 @@ def test_all_subsets_run_outputs_and_resume(tmp_path):
     # Shared prefixes are generated once: far fewer requests than 64 * 6 per problem.
     assert sum(c["cache_hit"] == "False" for c in calls) <= (2 + 4 + 8 + 16 + 32 + 64) * 4
     trace = json.loads((out / "h3_traces.json").read_text())["all_small"][0]
-    assert set(trace) == {"task_id", "gold", "correct", "keys"}  # format unchanged
+    assert set(trace) == {"task_id", "gold", "correct", "keys", "pred"}  # + pred, the final answer (P0 smoke check)
     assert "already finished" in h3(tmp_path, *args)
     assert (out.parent / "plans_2").exists() is False
     h3(tmp_path, "--n-tasks", "3", "--output-dir", str(out))

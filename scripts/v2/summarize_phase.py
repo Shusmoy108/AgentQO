@@ -68,6 +68,7 @@ def table(path: Path) -> str:
 # Code paths that decide what a run does; untracked files elsewhere (zips, notes) do not.
 CODE_PATHS = ("agentqo", "scripts", "configs", "data/splits", "tests")
 PROVENANCE = "provenance.jsonl"
+LEASE_LOGS = ("prereg/v2_amendments.md", "FAILURES.md")
 
 
 def git_state() -> Dict:
@@ -76,7 +77,8 @@ def git_state() -> Dict:
     def run(*a):
         return subprocess.run(["git", *a], capture_output=True, text=True)
     head = run("rev-parse", "HEAD").stdout.strip() or "unknown"
-    tracked = run("diff", "--quiet", "HEAD").returncode != 0
+    # Lease-time logs (P0 smoke skips) are appended during the lease; they never change what runs.
+    tracked = run("diff", "--quiet", "HEAD", "--", ".", *(f":(exclude){f}" for f in LEASE_LOGS)).returncode != 0
     untracked = bool(run("ls-files", "--others", "--exclude-standard", "--", *CODE_PATHS).stdout.strip())
     return {"commit": head, "dirty": tracked or untracked}
 

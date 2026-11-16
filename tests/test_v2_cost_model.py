@@ -93,8 +93,9 @@ def test_model_configs_have_every_spec_entry():
         "qwen3b": "Qwen/Qwen2.5-3B-Instruct", "qwen14b": "Qwen/Qwen2.5-14B-Instruct",
         "granite_small": "ibm-granite/granite-3.1-2b-instruct",
         "granite_large": "ibm-granite/granite-3.1-8b-instruct",
+        "phi_small": "microsoft/Phi-3.5-mini-instruct", "phi_large": "microsoft/phi-4",  # A15
     }
-    assert cfg["max_tokens"] == {"qwen_math": 256, "granite": 512, "hotpotqa": 384}
+    assert cfg["max_tokens"] == {"qwen_math": 256, "granite": 512, "hotpotqa": 384, "phi": 512}
     env = exports("qwen3b", "qwen14b", cfg)
     assert env["VLLM_LARGE_MODEL"] == "Qwen/Qwen2.5-14B-Instruct" and "OLLAMA_LARGE_MODEL" not in env
 

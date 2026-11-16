@@ -208,6 +208,7 @@ def main() -> None:
             "correct": float(rec.final_quality), "units": units, "n_large": n_large, "lat": lat, "calls": calls,
             "f1": task_model.f1_text(answer, task.ground_truth),
             "trace": {"task_id": task.task_id, "gold": task.ground_truth, "correct": float(rec.final_quality),
+                      "pred": task_model.extract(answer),
                       "keys": {nid: task_model.extract(_output_as_text(r.output))
                                for nid, r in rec.node_results.items()}},
         }

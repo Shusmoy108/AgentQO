@@ -134,3 +134,42 @@ A14 "Second model family on every task: Granite 3.1 2B/8B on hotpot_chain and ho
 |---|---|---|
 | A13 | Workflow key `hotpot_iso` (`create_hotpot_chain_isolated_workflow`). Same DAG, planner and hop prompts as hotpot_chain. Aggregator: the hotpot_chain prompt with the paragraphs removed (question + findings). Verifier: question + hop outputs + proposed answer; its two references to paragraphs read "findings", since it has none. Qwen 1.5B/7B setting `hotpot_iso_q15_7`: labels in P1 and plans in P2, each after the HotpotQA step (VM-A), same sizes and max_tokens 384 as hotpot_q15_7. Upgrade value = UV per agent in `labels_v2.csv` with its 95% CI; structural-rule regret at budgets 1-2 from `rule_plans.csv`, compared with hotpot_q15_7 in the same family. | `P1/hotpot_iso_q15_7/`, `P2/hotpot_iso_q15_7/`, `P6/hotpot_iso_q15_7/` |
 | A14 | P4 (VM-B), after Granite math: `hotpot_granite` and `hotpot_iso_granite`, labels 200 (full and --disagree-only) and all 32 plans on the 400 frozen HotpotQA eval problems, max_tokens 512. P6 analyses each separately; `hypotheses.md` has one column per (task, family). Granite only: the aggregator and verifier prompts of both HotpotQA workflows get one extra line before the answer slot, "The final answer is the span alone, not a sentence." (`AGENTQO_HOTPOT_SPAN=1`, set in P4), because in the dry run Granite wrote the final answer as a sentence (all_large EM 0.00 on hotpot_chain). Comparisons within a family use identical prompts; raw accuracy across families includes this prompt difference and is not a registered test. No new P5 calibration set: A11 pools token rates over tasks per model, so Granite HotpotQA GPU costs use the Granite rates from the `granite_math` calibration set. | `P4/hotpot_granite/`, `P4/hotpot_iso_granite/`, `P6/hypotheses/hypotheses.md` |
+
+## Amendments added 2026-11-16 04:06:51 UTC
+
+Committed with this section (the commit carrying this timestamp registers it), before any lease
+data exist (no vLLM data for any v2 setting, no Phi data of any kind). A1-A12, L1 and the
+2026-11-12 section are unchanged except where A14 below supersedes the 2026-11-12 A14 text.
+
+A13 (restated; text identical to the 2026-11-12 registration, which stands; given again with this
+    timestamp as requested)
+    "New workflow hotpot_chain_isolated: same as hotpot_chain, except the aggregator and verifier
+    see only the question and the hop outputs (no paragraphs). Prediction: hop_1 and/or hop_2 have
+    upgrade value with 95% CI above 0, and the structural rule's regret at budgets 1-2 is smaller
+    than in hotpot_chain. Reason: in hotpot_chain the aggregator re-reads all paragraphs and can
+    repair hop errors (laptop q4: hop upgrade values about 0)."
+
+A14 (supersedes the 2026-11-12 A14 text; adds max-model-len 8192 and the validation sentence)
+    "Second model family on every task: Granite 3.1 2B/8B on hotpot_chain and hotpot_chain_isolated
+    (labels 200, all 32 plans x 400 eval problems, max_tokens 512, max-model-len 8192), in addition
+    to math. All hypotheses apply per family and are reported per family, never pooled.
+    Validation of new code: the 5-problem vLLM smoke test in lease P0, not a Mac run."
+
+A15 "Third model family: microsoft/Phi-3.5-mini-instruct (small) and microsoft/phi-4 (large), MIT
+    license, no gating. Math (labels 200, all 64 plans x 400) and hotpot_chain (labels 200, all 32
+    plans x 400; max_tokens 512, max-model-len 8192). Same hypotheses, reported per family, never
+    pooled. Runs last on VM-B; skipped with a logged reason if time runs short or the P0 smoke test
+    fails. Validation: 5-problem vLLM smoke test in lease P0."
+    Hugging Face check (2026-11-16 04:06:51 UTC, API metadata only, nothing downloaded): both ids exist;
+    microsoft/Phi-3.5-mini-instruct gated=false, license mit; microsoft/phi-4 gated=false, license
+    mit. Phi is not skipped.
+
+### How A13-A15 and the P0 smoke test are measured
+
+| Id | Reading | Output |
+|---|---|---|
+| A13 | As read on 2026-11-12 (workflow key `hotpot_iso`, setting `hotpot_iso_q15_7` in P1/P2 on VM-A), now gated by the P0 smoke test. | `P1/hotpot_iso_q15_7/`, `P2/hotpot_iso_q15_7/`, `P6/hotpot_iso_q15_7/` |
+| A14 | As read on 2026-11-12 (P4 on VM-B after Granite math: `hotpot_granite`, then `hotpot_iso_granite`; short-span line `AGENTQO_HOTPOT_SPAN=1`), plus: vLLM servers started with `--max-model-len 8192`; both settings gated by the P0 smoke test. The 2026-11-12 Ollama dry run on the Mac stays in CHANGELOG_v2.md as background; it is not the validation. | `P0/`, `P4/hotpot_granite/`, `P4/hotpot_iso_granite/` |
+| A15 | Config keys `phi_small` / `phi_large` in `configs/v2_models.yaml`. Phase P4b (VM-B, after P4): `math_phi` (labels 200 full and --disagree-only, all 64 plans on eval_ext 400), then `hotpot_phi` (labels 200, all 32 plans on the 400 frozen HotpotQA eval problems). max_tokens 512 for both tasks (A15 gives 512 for HotpotQA and no math value; 512 follows Granite math). `--max-model-len 8192`. HotpotQA uses the A14 short-span line (`AGENTQO_HOTPOT_SPAN=1`), as Granite does: the code freezes at the tag, so a Phi failure to give short spans could not be fixed during the lease. Within-family comparisons use identical prompts; raw accuracy across families includes this difference and is not a registered test. No P5 calibration set for Phi, so its GPU costs carry `gpu_cost_basis = fallback_latency`. `hypotheses.md` has one column each for `math_phi` and `hotpot_phi`. Skipped by hand if time runs short: `scripts/v2/smoke_check.py skip <setting> "<reason>"`, which logs it as below. | `P0/`, `P4b/math_phi/`, `P4b/hotpot_phi/`, `P6/math_phi/`, `P6/hotpot_phi/` |
+| P0 | Settings new since Session 1: `hotpot_iso_q15_7`, `hotpot_granite`, `hotpot_iso_granite`, `math_phi`, `hotpot_phi`. Each is run on the first 5 problems of its label split with plans all_small and all_large, same max_tokens and prompts as its main run (`V2_P0=qwen\|granite\|phi` picks the servers running). It fails if it scores 0 (none of the 10 answers correct, all_small and all_large together) or if any answer normalizes to yes/no where the gold does not. A failed setting is skipped for the rest of the lease: a line in `results/v2/P0/skips.tsv`, in `FAILURES.md`, and a lease-time deviation `D-P0-<setting>` appended to this file. A new setting that P0 did not check is smoke-tested right before its first labels/plans step, so none runs unchecked. These two log files are excluded from the dirty-tree check, so appending to them does not stop later lease phases. | `results/v2/P0/<setting>/smoke/`, `results/v2/P0/skips.tsv`, `FAILURES.md` |
+| caches | Session 1 caches no longer exist. The vLLM cache default is the new file `data/cache/v2_lease1.sqlite`; no code looks for a Session 1 cache, and every call is generated fresh. | - |
