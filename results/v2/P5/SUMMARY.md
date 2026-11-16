@@ -1,11 +1,14 @@
 # Phase P5
 
-Generated 2026-11-16 21:09 UTC, backend `vllm`.
+Generated 2026-11-16 21:21 UTC, backend `vllm`.
 
 Code run: `252a12bfb53acc15c4530509b778daeba2a5dd19`; packaged at `252a12bfb53acc15c4530509b778daeba2a5dd19`.
 
 | step | status |
 |---|---|
+| cal_granite_math_separate | finished |
+| cal_qwen3_14_math_separate | finished |
+| cal_qwen_hotpot_separate | finished |
 | cal_qwen_hotpot_shared | finished |
 | separate | finished |
 | separate_k1 | finished |
@@ -16,6 +19,45 @@ Code run: `252a12bfb53acc15c4530509b778daeba2a5dd19`; packaged at `252a12bfb53ac
 | shared_mps | finished |
 | shared_mps_k1 | finished |
 | shared_mps_k32 | finished |
+
+## cal_granite_math_separate
+
+### placement_summary.csv
+
+| plan | placement | k | repeat | n | p50_s | p95_s | p99_s | throughput_per_s | accuracy |
+|---|---|---|---|---|---|---|---|---|---|
+| all_small | separate | 16 | 0 | 64 | 2.049 | 3.446 | 3.826 | 6.054 | 0.594 |
+| all_small | separate | 16 | 1 | 64 | 1.998 | 3.585 | 4.138 | 5.885 | 0.609 |
+| all_small | separate | 16 | 2 | 64 | 2.051 | 3.386 | 4.211 | 6.056 | 0.562 |
+| all_large | separate | 16 | 0 | 64 | 4.597 | 7.251 | 8.754 | 2.547 | 0.812 |
+| all_large | separate | 16 | 1 | 64 | 4.428 | 7.216 | 8.704 | 2.62 | 0.797 |
+| all_large | separate | 16 | 2 | 64 | 4.365 | 7.026 | 8.701 | 2.586 | 0.781 |
+
+## cal_qwen3_14_math_separate
+
+### placement_summary.csv
+
+| plan | placement | k | repeat | n | p50_s | p95_s | p99_s | throughput_per_s | accuracy |
+|---|---|---|---|---|---|---|---|---|---|
+| all_small | separate | 16 | 0 | 64 | 1.883 | 2.808 | 2.992 | 7.018 | 0.703 |
+| all_small | separate | 16 | 1 | 64 | 1.96 | 2.758 | 2.879 | 7.092 | 0.719 |
+| all_small | separate | 16 | 2 | 64 | 1.916 | 2.731 | 2.863 | 7.189 | 0.734 |
+| all_large | separate | 16 | 0 | 64 | 7.24 | 10.328 | 12.07 | 1.612 | 0.812 |
+| all_large | separate | 16 | 1 | 64 | 7.477 | 10.155 | 11.861 | 1.67 | 0.844 |
+| all_large | separate | 16 | 2 | 64 | 7.469 | 10.243 | 12.097 | 1.643 | 0.844 |
+
+## cal_qwen_hotpot_separate
+
+### placement_summary.csv
+
+| plan | placement | k | repeat | n | p50_s | p95_s | p99_s | throughput_per_s | accuracy |
+|---|---|---|---|---|---|---|---|---|---|
+| all_small | separate | 16 | 0 | 64 | 0.959 | 1.596 | 1.649 | 14.451 | 0.328 |
+| all_small | separate | 16 | 1 | 64 | 0.607 | 0.978 | 1.167 | 21.924 | 0.312 |
+| all_small | separate | 16 | 2 | 64 | 0.587 | 0.971 | 1.072 | 22.9 | 0.312 |
+| all_large | separate | 16 | 0 | 64 | 2.706 | 4.25 | 4.977 | 5.117 | 0.562 |
+| all_large | separate | 16 | 1 | 64 | 1.234 | 1.697 | 2.044 | 10.984 | 0.531 |
+| all_large | separate | 16 | 2 | 64 | 1.194 | 1.711 | 2.047 | 11.141 | 0.547 |
 
 ## cal_qwen_hotpot_shared
 
