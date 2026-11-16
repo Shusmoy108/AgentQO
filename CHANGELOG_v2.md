@@ -457,3 +457,8 @@ Operational choices made during the lease (no code change; the tag is what runs)
   on VM-B, had no answer). P5 separate calls VM-B at http://10.56.2.39:<port>, and the same curl check from
   VM-A runs right before the first separate run (result to STATUS.md and here). Items 2-5 of NEXT block 1
   stand (clock, D-L2-h4grid, env.txt done; spare-time line at GATE P4b pending).
+- 13:55Z NEXT block 3 (disk projection): du of /mnt/data and the clone's results/, logs/, data/cache/ on both VMs;
+  growth sampled 13:43-13:53Z (VM-A P2 7.4 KB/call, VM-B P3 14.4 KB/call; prefetch done, so only run data grows).
+  Projected /mnt/data free: VM-A 93 -> ~91 (P2b) -> ~88 (P2c) -> ~84 GB (P5 + final zip); VM-B 69 -> ~69 (P3)
+  -> ~66 (P4) -> ~63 GB (P4b), at a conservative 15 / 29 KB per call. Nothing projected below 25 GB, so no trace
+  packing or cache deletion was done. Details in STATUS.md. Re-check at each GATE.
