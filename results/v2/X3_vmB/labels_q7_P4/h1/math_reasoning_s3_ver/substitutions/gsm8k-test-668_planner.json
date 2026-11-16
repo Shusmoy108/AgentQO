@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-668",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of management employees by finding 20% of the total 50 employees.\n2. Determine the number of management employees who oversee the entire company by calculating 30% of the management employees found in step 1.\n3. The result from step 2 gives the number of employees who oversee the company.",
+  "reference_key": null,
+  "final_key_plus": "3",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 10",
+    "verifier": "First, calculate the number of management employees: 20% of 50 employees is \\(0.20 \\times 50 = 10\\) management employees.\n\nNext, determine how many of these management employees oversee the entire company: 30% of 10 is \\(0.30 \\times 10 = 3\\).\n\nFinal answer: 3",
+    "step_2": "RESULT: 3",
+    "step_3": "RESULT: 3",
+    "aggregator": "#### 3"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the number of rows for red tulips by dividing the total red tulips by the number of red tulips per row.\n2. Calculate the number of rows for blue tulips by dividing the total blue tulips by the number of blue tulips per row.\n3. Add the number of rows for red tulips and blue tulips to get the total number of rows.",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 10",
+        "verifier": "First, calculate the number of management employees: \\( 50 \\times 20\\% = 10 \\) management employees.\n\nNext, calculate how many of these management employees oversee the entire company: \\( 10 \\times 30\\% = 3 \\).\n\nFinal answer: 3",
+        "step_2": "RESULT: 5",
+        "step_3": "RESULT: 15",
+        "aggregator": "#### 15"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the number of management employees by finding 20% of the total 50 employees.\n2. Determine the number of management employees who oversee the entire company by calculating 30% of the total employees found in step 1.\n3. The result from step 2 gives the number of employees who oversee the company.",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 10",
+        "verifier": "First, calculate the number of management employees: 20% of 50 employees is \\(0.20 \\times 50 = 10\\) management employees.\n\nNext, determine how many of these management employees oversee the entire company: 30% of 10 is \\(0.30 \\times 10 = 3\\).\n\nFinal answer: 3",
+        "step_2": "RESULT: 3",
+        "step_3": "RESULT: 3",
+        "aggregator": "#### 3"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate how much money Ava gave to Jayden: $90 / 2.\n2. Add the amount given by Ava to Jayden's initial amount: $70 + (amount from step 1).\n3. Subtract the total amount from steps 1 and 2 from the cost of the camera to find out how much more Jayden needs.",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 45",
+        "verifier": "The proposed solution of 135 is incorrect. The problem states there are 50 employees, and 20% of them are in management, which is 10 employees. Out of these 10, only 30% oversee the entire company, which is 3 employees.\n\nFinal answer: 3",
+        "step_2": "RESULT: 115",
+        "step_3": "RESULT: 250 - 115 = 135",
+        "aggregator": "#### 135"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "3",
+  "sample_keys": [
+    "3",
+    "3",
+    "3"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 943.0,
+    "small_out": 168.0,
+    "small_s": 1.6139994799996202
+  },
+  "calls_plus": {
+    "large_in": 111.0,
+    "large_out": 69.0,
+    "large_s": 2.10271026800001,
+    "small_in": 841.0,
+    "small_out": 101.0,
+    "small_s": 1.342376989992772
+  },
+  "calls_samples": {
+    "small_in": 2859.0,
+    "small_out": 514.0,
+    "small_s": 7.18145674698826
+  }
+}

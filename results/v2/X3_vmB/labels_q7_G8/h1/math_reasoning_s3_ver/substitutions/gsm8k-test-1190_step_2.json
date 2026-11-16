@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-1190",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: On the first day, they ordered one bulk pack of 50 bandages, used 38, so 50 - 38 = 12 bandages were added. On the second day, they used 28 bandages. On the third day, they ordered two bulk packs of 100 bandages (2 * 50) and used half a pack (25 bandages), so 100 + 100 - 25 = 175 bandages were added.\n\nRESULT: 175",
+  "reference_key": "175",
+  "final_key_plus": "19",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: 78 + 12 + 28 + 175 - 50 - 25 = 193",
+    "aggregator": "#### 193",
+    "verifier": "Let's break down the problem step by step:\n\n1. **First Day**: \n   - Bandages used: 38\n   - Bandages ordered: 50\n   - Net bandages added: \\(50 - 38 = 12\\)\n\n2. **Second Day**:\n   - Bandages used: \\(38 - 10 = 28\\)\n   - Net bandages added: \\(-28\\)\n\n3. **Third Day**:\n   - Bandages ordered: \\(2 \\times 50 = 100\\)\n   - Bandages used: \\(50 / 2 = 25\\)\n   - Net bandages added: \\(100 - 25 = 75\\)\n\n4. **Total Net Bandages Added Over Three Days**:\n   - Total net bandages added: \\(12 - 28 + 75 = 59\\)\n\n5. **Final Bandages Count**:\n   - Final count: 78\n   - Initial bandages: \\(78 - 59 = 19\\)\n\nThe original answer of 193 is incorrect. The mistake was in the final calculation where the total net bandages added were not correctly subtracted from the final count.\n\nFinal answer: 19"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "176",
+      "reference_key": "175",
+      "key_differs": true,
+      "text": "step_2: On the first day, they ordered one bulk pack of 50 bandages, used 38, so 50 - 38 = 12 bandages were added. On the second day, they used 28 bandages. On the third day, they ordered two bulk packs of 100 bandages (2 * 50) and used half a pack (25 bandages), so 100 + 100 - 25 = 175 bandages were added.\n\nRESULT: 176",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 78 + 12 + 28 + 175 - 78 = 205",
+        "aggregator": "#### 205",
+        "verifier": "Let's break down the problem step by step:\n\n1. **First Day**: \n   - Bandages used: 38\n   - Bandages ordered: 50\n   - Net bandages added: \\(50 - 38 = 12\\)\n\n2. **Second Day**:\n   - Bandages used: \\(38 - 10 = 28\\)\n   - Net bandages added: \\(-28\\)\n\n3. **Third Day**:\n   - Bandages ordered: \\(2 \\times 50 = 100\\)\n   - Bandages used: \\(50 / 2 = 25\\)\n   - Net bandages added: \\(100 - 25 = 75\\)\n\n4. **Total Net Bandages Added Over Three Days**:\n   - First day: +12\n   - Second day: -28\n   - Third day: +75\n   - Total net: \\(12 - 28 + 75 = 69\\)\n\n5. **Final Condition**:\n   - At the end of the third day, they had 78 bandages.\n   - Therefore, the initial number of bandages before any usage or ordering is \\(78 - 69 = 9\\).\n\nThe proposed solution of 205 is incorrect. The mistake was in the final calculation where the total net bandages added (69) was subtracted from 78 instead of being added.\n\nFinal answer: 9"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "91",
+      "reference_key": "175",
+      "key_differs": true,
+      "text": "Step_2: Over the three days, they added 50 + 50 = 100 bandages (one pack on the first day and two packs on the third day). They used 38 bandages on the first day, 28 bandages on the second day, and half a pack (25 bandages) on the third day. Therefore, the total used is 38 + 28 + 25 = 91 bandages.\n\nRESULT: 91",
+      "quality": 0.0,
+      "final_key": "69",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 78 + 91 - 100 = 69",
+        "aggregator": "#### 69",
+        "verifier": "Let's break down the problem step by step:\n\n1. **First Day**: \n   - Bandages used: 38\n   - Bandages ordered: 50\n   - Total after first day: \\(38 + 50 = 88\\)\n\n2. **Second Day**:\n   - Bandages used: \\(38 - 10 = 28\\)\n   - Total before use: 88\n   - Total after second day: \\(88 - 28 = 60\\)\n\n3. **Third Day**:\n   - Bandages ordered: 2 bulk packs = \\(2 \\times 50 = 100\\)\n   - Bandages used: Half a pack = \\(50 / 2 = 25\\)\n   - Total before use: \\(60 + 100 = 160\\)\n   - Total after third day: \\(160 - 25 = 135\\)\n\nHowever, we know from the problem statement that they had 78 bandages left at the end of the third day. This means there is a discrepancy.\n\nRechecking the steps:\n- The calculation for the total after the third day should be correct as per the given usage and ordering.\n- The discrepancy suggests a mistake in the initial assumption about the starting number of bandages.\n\nGiven the final count of 78 bandages, we can backtrack:\n- Before using 25 bandages on the third day: \\(78 + 25 = 103\\)\n- Before ordering 100 bandages on the third day: \\(103 - 100 = 3\\)\n- Before using 28 bandages on the second day: \\(3 + 28 = 31\\)\n- Before ordering 50 bandages on the first day: \\(31 - 50 = -19\\)\n\nThis negative value indicates an error in the problem setup or interpretation. Given the logical flow, the correct initial count should align with the provided final count.\n\nFinal answer: 69"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "80",
+      "reference_key": "175",
+      "key_differs": true,
+      "text": "RESULT: 80",
+      "quality": 0.0,
+      "final_key": "14",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 4",
+        "aggregator": "#### 4",
+        "verifier": "Let's break down the problem step by step:\n\n1. **First Day**: The nurses used 38 bandages and ordered one bulk pack (50 bandages). So, the total number of bandages added is 50.\n2. **Second Day**: They used 10 fewer bandages than the first day, so they used \\(38 - 10 = 28\\) bandages. This means they have \\(50 + (50 - 38 - 28) = 50 + 8 = 58\\) bandages left after the second day.\n3. **Third Day**: They ordered two bulk packs (100 bandages) and used half a pack (25 bandages). So, the net addition of bandages is \\(100 - 25 = 75\\).\n\nAdding these up, the total number of bandages before the third day was \\(x\\) (initial amount), and after all transactions, they had 78 bandages left.\n\nSo, we can set up the equation:\n\\[ x + 50 - 38 + 50 - 28 + 75 = 78 \\]\nSimplifying the left side:\n\\[ x + 130 - 66 = 78 \\]\n\\[ x + 64 = 78 \\]\n\\[ x = 78 - 64 \\]\n\\[ x = 14 \\]\n\nThe initial number of bandages they started with on the first day is 14. The previous answer of 4 is incorrect because it does not match the detailed calculation above.\n\nFinal answer: 14"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "41",
+  "sample_keys": [
+    "67",
+    "19",
+    "49",
+    "59",
+    "59"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 1.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1446.0,
+    "small_out": 567.0,
+    "small_s": 4.9077803830005
+  },
+  "calls_plus": {
+    "small_in": 1174.0,
+    "small_out": 410.0,
+    "small_s": 6.87847569799851,
+    "large_in": 274.0,
+    "large_out": 125.0,
+    "large_s": 2.349845689997892
+  },
+  "calls_samples": {
+    "small_in": 1290.0,
+    "small_out": 816.0,
+    "small_s": 11.101316302996565
+  }
+}

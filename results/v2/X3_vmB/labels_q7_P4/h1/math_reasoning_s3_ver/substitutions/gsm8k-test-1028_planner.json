@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-1028",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the remaining amount Tom needs to pay for the bedroom set after using the $1000 from selling his old bedroom. Subtract $1000 from $3000.\n2. Determine the monthly payment by calculating 10% of the remaining amount from step 1.\n3. The result from step 2 is the amount Tom has to pay per month.",
+  "reference_key": null,
+  "final_key_plus": "200",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 2000",
+    "verifier": "The initial calculation of the reduced cost is correct, but there seems to be a misunderstanding in applying the 10% monthly interest rate. The 10% should be applied to the remaining balance each month, not fixed at $200. Let's compute it step by step:\n\n1. Initial cost of the bedroom set: $3000\n2. Amount received from selling old bedroom set: $1000\n3. Reduced cost: $3000 - $1000 = $2000\n\nNow, applying 10% monthly interest on the remaining balance:\n- First month: $2000 * 10% = $200\n\nTherefore, the monthly payment is indeed $200, but this is the amount he pays each month after accounting for the interest.\n\nFinal answer: 200",
+    "step_2": "RESULT: 200",
+    "step_3": "RESULT: 200",
+    "aggregator": "Tom initially pays $3000 for the bedroom set but uses $1000 from selling his old one, reducing the amount to $2000. With a 10% monthly interest rate, he needs to pay $200 per month. #### 200"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the number of silver coins by subtracting 30 from the number of gold coins (70 - 30).\n2. Calculate the total number of coins by adding the number of gold coins to the number of silver coins.\n3. State the total number of coins without performing the final addition step.",
+      "quality": 0.0,
+      "final_key": "110",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 40",
+        "verifier": "Tom first pays $2000 ($3000 - $1000) upfront for the bedroom set. To find the monthly payment with 10% interest, we need to consider the remaining amount and the interest rate correctly. The correct calculation should be the remaining amount of $2000 plus the 10% interest per month, which means the monthly payment is actually $2000 * 1.10 / 12 = $183.33, not $200. The previous answer incorrectly simplified the division without applying the interest first.\n\nFinal answer: 110",
+        "step_2": "RESULT: 110",
+        "step_3": "RESULT: 110",
+        "aggregator": "Tom first pays $2000 ($3000 - $1000) upfront for the bedroom set. With a 10% monthly interest, he needs to calculate the monthly payment on this remaining amount. The monthly payment is $2000 / 10 = $200. However, since the step result indicates a different calculation leading to $110, we will use that as the correct monthly payment based on the provided information.\n\n#### 110"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the remaining amount Tom needs to pay for the bedroom set after using the $1000 from selling his old bedroom. Subtract $1000 from $4000.\n2. Determine the monthly payment by calculating 10% of the remaining amount from step 1.\n3. The result from step 2 is the amount Tom has to pay per month.",
+      "quality": 1.0,
+      "final_key": "200",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 2000",
+        "verifier": "The initial calculation of the reduced cost is correct, but there seems to be a misunderstanding in applying the 10% monthly interest rate. The 10% should be applied to the remaining balance each month, not fixed at $200. Let's compute it step by step:\n\n1. Initial cost of the bedroom set: $3000\n2. Amount received from selling old bedroom set: $1000\n3. Reduced cost: $3000 - $1000 = $2000\n\nNow, applying 10% monthly interest on the remaining balance:\n- First month: $2000 * 10% = $200\n\nTherefore, the monthly payment is indeed $200, but this is the amount he pays each month after accounting for the interest.\n\nFinal answer: 200",
+        "step_2": "RESULT: 200",
+        "step_3": "RESULT: 200",
+        "aggregator": "Tom initially pays $3000 for the bedroom set but uses $1000 from selling his old one, reducing the amount to $2000. With a 10% monthly interest rate, he needs to pay $200 per month. #### 200"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the distance James swims initially (60% of 20 miles).\n2. Determine the time taken to swim this distance (distance / speed).\n3. Compute the rest and final swim times, summing them to find the total time.",
+      "quality": 1.0,
+      "final_key": "200",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "RESULT: 12",
+        "verifier": "The initial calculation of the reduced price is correct: $3000 - $1000 = $2000. However, the application of the 10% monthly interest rate to the entire $2000 without considering it as a loan balance that decreases each month is incorrect. The correct approach would be to apply the 10% interest to the remaining balance each month.\n\nFinal answer: 200",
+        "step_2": "RESULT: 2",
+        "step_3": "RESULT: 5",
+        "aggregator": "Tom initially pays $3000 for the bedroom set but uses $1000 from selling his old one, reducing the amount to $2000. With a 10% monthly interest rate, he needs to pay $2000 * 10% = $200 per month. #### 200"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "200",
+  "sample_keys": [
+    "200",
+    "200",
+    "183.33"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1096.0,
+    "small_out": 324.0,
+    "small_s": 2.8792044229994644
+  },
+  "calls_plus": {
+    "large_in": 129.0,
+    "large_out": 76.0,
+    "large_s": 2.338624346999495,
+    "small_in": 1035.0,
+    "small_out": 266.0,
+    "small_s": 2.7739236380002694
+  },
+  "calls_samples": {
+    "small_in": 3628.0,
+    "small_out": 1093.0,
+    "small_s": 13.047211563007295
+  }
+}
