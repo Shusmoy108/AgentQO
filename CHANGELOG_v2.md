@@ -469,3 +469,12 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 17:15Z GATE P4b: VM-B queue done 17:04Z (VM-A 16:35Z). Spare-time line written to STATUS.md: ~60.8 h to the
   06:00Z cutoff, ~6.5-7 h of registered work left (P5, P5 cal, h4 refit, E1, P6, final) -> ~54 h spare per VM.
   Nothing unregistered started.
+- 18:20Z NEXT block 4: L2-X registered and pushed (6f612c7b) before any X data. P5 started now (P1-P4 done):
+  Mac orchestrator tools/p5_orch.sh drives VM blocks (/mnt/data/p5.sh, lease tooling outside the tree):
+  separate -> shared (VM-B runs the shared cal sets on its own GPU meanwhile) -> shared_mps -> qwen_hotpot
+  shared cal -> separate cal sets (VM-B serves each large model). K=16 via run_phase.sh P5; K=1/32 (E2)
+  via run_placement.py into P5/<placement>_k1|_k32. granite_hotpot and phi_math cal sets run with
+  run_placement.py (run_phase's V2_P5_CAL lists only the three registered sets). VM-B power in separate
+  runs comes from its background log (no VM-A -> VM-B ssh key; none added). Phi-3.5-mini downloaded to
+  VM-A for the phi_math separate cal. mac_sync: block gates P5-<block> push the P5 folder (VM-B: P5_vmB).
+  X items: X4 and parts of X1/X2 need code changes, so they are not run; exact changes in STATUS.md.
