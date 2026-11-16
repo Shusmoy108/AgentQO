@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-990",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 6",
+  "reference_key": "6",
+  "final_key_plus": "2",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.2,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: 8",
+    "aggregator": "The final temperature was 8 degrees lower than the starting temperature. #### 8",
+    "verifier": "The proposed solution is correct. The air conditioner cooled the room by \\(2 \\times 3 = 6\\) degrees initially, then heated it back up by \\(3 \\times 4 = 12\\) degrees when it was turned to high. Over the 2-hour period without the air conditioner, the room warmed by \\(2 \\times 2 = 4\\) degrees. Therefore, the net cooling effect of the air conditioner over the entire period is \\(6 - 12 + 4 = -2\\) degrees, meaning the room ended up 2 degrees cooler than the starting temperature.\n\nFinal answer: 2",
+    "step_2": "To calculate the total cooling effect of using the air conditioner on high for 4 hours:\n\nCooling per hour on high = 3 degrees\nTime on high = 4 hours\n\nTotal cooling effect on high = 3 * 4 = 12 degrees\n\nNow, let's calculate the total heating effect due to the room warming up without the air conditioner over the same period:\n\nHeating rate = 2 degrees per hour\nTime without AC = 2 hours\n\nTotal heating effect = 2 * 2 = 4 degrees\n\nFinally, we determine the net change in temperature by subtracting the heating effect from the cooling effect:\n\nNet change in temperature = Total cooling effect - Total heating effect\n                           = 12 - 4 = 8 degrees\n\nRESULT: 8"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "7",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "RESULT: 7",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 8",
+        "aggregator": "The final temperature was 8 degrees lower than the starting temperature. #### 8",
+        "verifier": "The proposed solution is correct. The air conditioner cooled the room by \\(2 \\times 3 = 6\\) degrees initially, then heated it back up by \\(3 \\times 4 = 12\\) degrees when it was turned to high. Over the 2-hour period without the air conditioner, the room warmed by \\(2 \\times 2 = 4\\) degrees. Therefore, the net cooling effect of the air conditioner over the entire period is \\(6 - 12 + 4 = -2\\) degrees, meaning the room ended up 2 degrees cooler than the starting temperature.\n\nFinal answer: 2",
+        "step_2": "To calculate the total cooling effect of using the air conditioner on high for 4 hours:\n\nCooling per hour on high = 3 degrees\nTime on high = 4 hours\n\nTotal cooling effect on high = 3 * 4 = 12 degrees\n\nNow, let's calculate the total heating effect due to the room warming up without the air conditioner over the same period:\n\nHeating rate = 2 degrees per hour\nTime without AC = 2 hours\n\nTotal heating effect = 2 * 2 = 4 degrees\n\nFinally, we determine the net change in temperature by subtracting the heating effect from the cooling effect:\n\nNet change in temperature = Total cooling effect - Total heating effect\n                           = 12 - 4 = 8 degrees\n\nRESULT: 8"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "7",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "The air conditioner runs on low for 3 hours cooling the room by:\n2 degrees/hour \u00d7 3 hours = 6 degrees\n\nNow calculate the remaining time where it's on high for 5 hours (as low + high for 3 + 4):\n(2 degrees/hour - 3 degrees/hour) \u00d7 (5 hours) = -7 degrees\n\nRESULT: 6 degrees minus the heat buildup of -58 degrees equals:\nRESULT: 7 degrees",
+      "quality": 0.0,
+      "final_key": "19",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 19 degrees",
+        "aggregator": "The final temperature was 19 degrees lower than the starting temperature. #### 19",
+        "verifier": "The proposed solution is correct. The final temperature was indeed 19 degrees lower than the starting temperature.\n\nFinal answer: 19",
+        "step_2": "The air conditioner turns back on high for 4 hours, which is 3 degrees/hour \u00d7 4 hours = 12 degrees.\n\nRESULT: 12 degrees"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "206",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "RESULT: 206",
+      "quality": 0.0,
+      "final_key": "24",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "To find how many degrees lower the final temperature is compared to the starting temperature:\n\nFinal temperature decrease = Net change in temperature\nFinal temperature decrease = -24 degrees\n\nRESULT: -24",
+        "aggregator": "The final temperature was 24 degrees lower than the starting temperature. #### -24",
+        "verifier": "The proposed solution is correct. The final temperature was indeed 24 degrees lower than the starting temperature.\n\nFinal answer: 24",
+        "step_2": "To calculate the total cooling effect of using the air conditioner on low for 3 hours:\n\nCooling per hour (low) = -2 degrees\nTime (low) = 3 hours\n\nTotal cooling effect (low) = Cooling per hour * Time\nTotal cooling effect (low) = (-2) * 3 = -6 degrees\n\nNext, we need to calculate the total heating effect due to the room warming up without the air conditioner over the same period:\n\nHeating per hour (no AC) = +2 degrees\nTime (no AC) = 9 hours (3 hours low + 4 hours high)\n\nTotal heating effect (no AC) = Heating per hour * Time\nTotal heating effect (no AC) = (+2) * 9 = +18 degrees\n\nNow, let's determine the net change in temperature:\n\nNet change in temperature = Total cooling effect - Total heating effect\nNet change in temperature = -6 - 18 = -24 degrees\n\nRESULT: -24"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "-6",
+  "sample_keys": [
+    "6",
+    "-6",
+    "6",
+    "6",
+    "6"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1443.0,
+    "small_out": 305.0,
+    "small_s": 1.382576755999935
+  },
+  "calls_plus": {
+    "small_in": 1132.0,
+    "small_out": 371.0,
+    "small_s": 2.4373532179999984,
+    "large_in": 215.0,
+    "large_out": 5.0,
+    "large_s": 0.09105549199989582
+  },
+  "calls_samples": {
+    "small_in": 1075.0,
+    "small_out": 332.0,
+    "small_s": 3.093135891999964
+  }
+}

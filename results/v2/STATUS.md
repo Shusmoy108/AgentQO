@@ -1,2 +1,3 @@
 2026-11-16T13:11:20Z VM-A GATE P0: complex_q15_7: smoke all_small=0.40 all_large=0.80 | hotpot_iso_q15_7: smoke all_small=0.40 all_large=0.40 | math_tiers: smoke all_small=0.60 all_large=0.80 all_xl=0.80
 2026-11-16T13:12:01Z VM-B GATE P0: hotpot_granite: smoke all_small=0.80 all_large=0.60 | hotpot_iso_granite: smoke all_small=0.80 all_large=0.40 | hotpot_phi: smoke all_small=0.60 all_large=0.80 | math_phi: smoke all_small=0.80 all_large=1.00
+2026-11-16T13:28:05Z VM-A GATE P1: hotpot_iso_q15_7: labels done | hotpot_q15_7: labels done | math_q15_7: labels done

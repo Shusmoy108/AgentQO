@@ -109,3 +109,16 @@ Assumptions behind the rows without a direct measurement:
 - The time-budget cut runs by itself on the vllm backend (V2_LEASE_END defaults to the lease end).
 - Start vLLM with `--max-model-len 8192` for HotpotQA (prompts up to 3,281 tokens), for every family (A14, A15).
 - Set `V2_WORKERS=32` (the default), as in Session 1. The Mac runs used 1.
+
+## Lease 2 measured rates (2026-11-16, vLLM 0.32.0, H100, V2_WORKERS=32, co-located servers 0.25/0.55)
+
+| When (UTC) | VM | Work | Measured |
+|---|---|---|---|
+| 13:04-13:11 | A, B | P0 smoke, 7 settings | P0 on VM-A 3.5 min incl. tiers; VM-B 7 min incl. 2 server swaps; server start 1-3 min |
+| 13:12-13:15 | A | P1 math labels, Qwen 1.5B/7B | ~42 new calls/s (8,109 calls in 192 s) |
+| 13:14-13:15 | B | P3 math labels, Qwen 3B/14B | ~55 new calls/s (first ~70 s) |
+
+At ~40 calls/s the full plan (~830,000 calls) needs ~6 h of GPU time across both VMs, close to the
+Session 1 estimate (~16 h incl. P5) and far under the 10x-rule bound. The run_phase.sh budget check keeps
+its registered 10x-rule hours (no V2_HOURS_* overrides); with V2_LEASE_END=2026-11-19T06:00Z and a
+6 h reserve it cuts nothing unless a phase stalls for days. No cut in the L2 order is expected.

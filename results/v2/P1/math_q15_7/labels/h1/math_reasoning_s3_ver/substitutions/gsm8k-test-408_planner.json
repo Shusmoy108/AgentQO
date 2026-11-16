@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-408",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of words in the book.\n2. Determine how long it will take Toby to read the book.\n3. Compute the total time including travel and compare it to the time until the airport to find out how many minutes early Toby will be.",
+  "reference_key": null,
+  "final_key_plus": "17.5",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "aggregator": "Toby will be 20 minutes early. #### 20",
+    "step_3": "RESULT: 20 minutes",
+    "step_2": "To calculate how many minutes early Toby will be:\n\n- Total time needed to finish the book and travel to the airport: 40 minutes\n- Time available before leaving: 60 minutes\n\nRESULT: 20 minutes",
+    "step_1": "To calculate the total number of words in the book, we multiply the number of pages by the average number of words per page:\n\nTotal words = Number of pages \u00d7 Words per page\n            = 45 pages \u00d7 200 words/page\n            = 9000 words\n\nNow, let's determine how long it will take Toby to read this amount of text:\n\nTime to read = Total words \u00f7 Reading speed\n             = 9000 words \u00f7 300 words/minute\n             = 30 minutes\n\nToby needs 30 minutes to read the book. Since he leaves after finishing the book, we add his travel time (10 minutes) to the reading time:\n\nTotal time = Time to read + Travel time\n           = 30 minutes + 10 minutes\n           = 40 minutes\n\nHe needs 40 minutes to finish the book and travel to the airport. If he plans to leave in 60 minutes, he will be:\n\nEarly by = Total time needed - Time available\n         = 40 minutes - 60 minutes\n         = -20 minutes\n\nRESULT: -20 minutes",
+    "verifier": "The proposed solution states that Toby will be 20 minutes early. Let me recompute it:\n\nToby reads at a rate of 300 words per minute, so for 45 pages (which is 9750 words), it would take him \\( \\frac{9750}{300} = 32.5 \\) minutes.\n\nHe needs to finish before leaving in 60 minutes, but since he already spent 10 minutes getting to the airport, he has \\( 60 - 10 = 50 \\) minutes left after reaching the airport.\n\nSo, the total time he spends on the book is \\( 32.5 + 10 = 42.5 \\) minutes.\n\nTherefore, he will be \\( 60 - 42.5 = 17.5 \\) minutes late.\n\nFinal answer: 17.5"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: \n1. Calculate the number of management employees by finding 20% of 50.\n2. Determine the number of management employees who oversee the entire company by calculating 30% of the management employees found in step 1.\n3. The result from step 2 is the final answer for the number of employees who oversee the company.",
+      "quality": 0.0,
+      "final_key": "15",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "Toby will be 3 minutes early. #### 3",
+        "step_3": "RESULT: 3",
+        "step_2": "To determine the number of management employees who oversee the entire company, we need to calculate 30% of the management employees found in step 1.\n\n\\[ \\text{Management employees overseeing the entire company} = 10 \\times \\frac{30}{100} = 10 \\times 0.3 = 3 \\]\n\nRESULT: 3",
+        "step_1": "To calculate 20% of 50:\n\n\\[ \\text{Number of management employees} = 50 \\times \\frac{20}{100} = 50 \\times 0.2 = 10 \\]\n\nRESULT: 10",
+        "verifier": "The proposed solution states that Toby will be 3 minutes early. Let me recompute it:\n\nToby reads at a rate of 300 words per minute, so for 45 pages (which is 9750 words), it would take him \\( \\frac{9750}{300} = 32.5 \\) minutes.\n\nHe needs to finish before leaving in 60 minutes, but since he already spent 10 minutes getting to the airport, he has \\( 60 - 10 = 50 \\) minutes left after reaching the airport.\n\nSo, the time he spends reading is \\( 50 - 32.5 = 17.5 \\) minutes.\n\nSince he was supposed to spend 32.5 minutes reading, he will be \\( 32.5 - 17.5 = 15 \\) minutes late instead of being on time.\n\nTherefore, Toby will actually be 15 minutes late, not 3 minutes early.\n\nFinal answer: 15"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of words in the book.\n2. Determine how long it will take Toby to read the book.\n3. Compute the total time including travel and compare it to the time until the airport to determine if Toby is late.",
+      "quality": 0.0,
+      "final_key": "7.5",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "Toby will be 40 minutes early. #### 40",
+        "step_3": "To determine how long it will take Toby to read the book, we use his reading speed:\n\nTime to read = Total words / Reading speed\nTime to read = 9000 words / 300 words/minute\n\nRESULT: 30 minutes\n\nNow, let's add up all the times involved:\n\n- Time to read the book: 30 minutes\n- Travel time to the airport: 10 minutes\n- Time until the airport: 60 minutes\n\nTotal time required: 30 + 10 + 60 = 100 minutes\n\nToby plans to leave in 60 minutes, but he needs 100 minutes for everything. Therefore, he will be **40 minutes** early.",
+        "step_2": "RESULT: 9000 words",
+        "step_1": "To calculate the total number of words in the book, we multiply the number of pages by the average number of words per page:\n\nTotal words = Number of pages \u00d7 Words per page\nTotal words = 45 pages \u00d7 200 words/page\n\nRESULT: 9000 words",
+        "verifier": "The proposed solution states that Toby will be 40 minutes early. Let me recompute it:\n\nToby reads at a rate of 300 words per minute, so for 45 pages (which is 9750 words), it would take him \\( \\frac{9750}{300} = 32.5 \\) minutes.\n\nHe needs to finish before leaving in 60 minutes, but since he already spent 10 minutes getting to the airport, he has \\( 60 - 10 = 50 \\) minutes left after reaching the airport.\n\nSo, the total time he spends on the book is \\( 32.5 + 10 = 42.5 \\) minutes.\n\nTherefore, he will be \\( 50 - 42.5 = 7.5 \\) minutes late, not 40 minutes early.\n\nFinal answer: 7.5"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:  \n1. Calculate Joey's new score after scoring 26 points.\n2. Add Marcy's score (which is 10 points) to her initial score.\n3. Subtract Marcy's final score from Joey's final score to find out by how many points Joey is winning.",
+      "quality": 0.0,
+      "final_key": "7.5",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "Toby will be 16 minutes early. #### 16",
+        "step_3": "RESULT: 16",
+        "step_2": "RESULT: 10",
+        "step_1": "To calculate Joey's new score after scoring 26 points, we need to know his initial score. However, this information is not provided in the given plan or problem statement. Without knowing Joey's initial score, it's impossible to determine his new score after adding 26 points. Therefore, I cannot proceed with the calculation for Joey's new score.\n\nRESULT: None",
+        "verifier": "The proposed solution states that Toby will be 16 minutes early. Let me recompute it:\n\nToby reads at a rate of 300 words per minute, so for 45 pages (which is 9750 words), it would take him \\( \\frac{9750}{300} = 32.5 \\) minutes.\n\nHe needs to finish before leaving in 60 minutes, but since he already spent 10 minutes getting to the airport, he has \\( 60 - 10 = 50 \\) minutes left after reaching the airport.\n\nSo, the total time he spends on the book is \\( 32.5 + 10 = 42.5 \\) minutes.\n\nTherefore, he will be \\( 50 - 42.5 = 7.5 \\) minutes late, not 16 minutes early.\n\nFinal answer: 7.5"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "30",
+  "sample_keys": [
+    "15",
+    "7.5",
+    "7.5"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1782.0,
+    "small_out": 565.0,
+    "small_s": 2.4806282569998075
+  },
+  "calls_plus": {
+    "large_in": 154.0,
+    "large_out": 57.0,
+    "large_s": 0.7811887420000403,
+    "small_in": 1513.0,
+    "small_out": 507.0,
+    "small_s": 3.5414159259998996
+  },
+  "calls_samples": {
+    "small_in": 4473.0,
+    "small_out": 1522.0,
+    "small_s": 16.196843371000114
+  }
+}

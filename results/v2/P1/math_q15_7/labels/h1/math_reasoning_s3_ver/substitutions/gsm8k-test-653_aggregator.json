@@ -1,0 +1,94 @@
+{
+  "task_id": "gsm8k-test-653",
+  "node_id": "aggregator",
+  "role": "aggregator",
+  "reference": "Sally's bank account increased by $420 - $200 = $220 this week. Since her weekly wage should be $300 but her account only increased by $220, the amount withheld from her wage is $300 - $220 = $80.\n\n#### 80",
+  "reference_key": "80",
+  "final_key_plus": "80",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "The proposed solution correctly calculates that Sally was paid $80 less than what she should have been for the week. The mistake lies in the initial calculation where it subtracted $220 instead of adding $220 to determine the withholding amount. Therefore, the correct answer is:\n\nFinal answer: 80"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "81",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "Sally's bank account increased by $420 - $200 = $220 this week. Since her weekly wage should be $300 but her account only increased by $220, the amount withheld from her wage is $300 - $220 = $80.\n\n#### 81",
+      "quality": 1.0,
+      "final_key": "80",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "The proposed solution correctly calculates that Sally was paid $80 less than what she should have been for the week. The mistake lies in the initial calculation where it subtracted $220 instead of adding it when determining the withholding amount. Therefore, the correct answer is:\n\nFinal answer: 80"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "780",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "Sally's total earnings for the week need to equal what she currently has minus what was initially in her account plus any deductions:\n\nTotal current balance = $420 ($120 increase)\nInitial bank deposit = $200\n\nAmount earned (Wage) - Amount Deducted = $0\n$300 (Wage) - Amount Deducted = 0\n\nTherefore,\n\n$300 - Amount Deducted = $0 (since it equals Sally's net change)\n\nSo, the amount deducted, i.e., the withholding from Sally's wage, is the total earning that doesn't match up with the current account balance.\n\n#### 780",
+      "quality": 0.0,
+      "final_key": "360",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "The proposed solution correctly calculates the amount withheld by subtracting the initial deposit from the current balance and then adding back the wage to find the difference, which represents the amount withheld. The calculation is as follows:\n\n\\[ \\text{Amount Earned} - \\text{Amount Deducted} = \\text{Current Balance} \\]\n\\[ \\$300 - \\text{Amount Deducted} = \\$420 \\]\n\nSolving for the amount deducted gives us:\n\n\\[ \\text{Amount Deducted} = \\$300 - \\$420 = -\\$120 \\]\n\nThis indicates that there was an error in the interpretation of the problem statement. The correct approach would involve finding out how much Sally actually earned before the deduction occurred, considering the initial deposit and the final balance. Let's recalculate using the correct method:\n\nLet \\( E \\) be the actual amount earned before the deduction. Then:\n\n\\[ E - \\text{Deduction} = 420 \\]\n\\[ E + \\text{Deduction} = 300 \\]\n\nAdding these two equations together eliminates the deduction term:\n\n\\[ 2E = 720 \\]\n\\[ E = 360 \\]\n\nSo,"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "50",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "Jessica pays $18000 per year in total for her debts if she wants to pay 50% more than the minimum monthly payments.",
+      "quality": 0.0,
+      "final_key": "120",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "To determine how much was withheld from Sally's wage, we need to calculate the difference between her expected wage and what she actually received.\n\nExpected wage = $300\nActual amount received = $420\n\nWithheld amount = Expected wage - Actual amount received\nWithheld amount = $300 - $420\nWithheld amount = -$120\n\nThe negative value indicates that Sally received $120 less than she expected. Therefore, the correct answer is:\n\nFinal answer: $120"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "180",
+  "sample_keys": [
+    "0",
+    "120",
+    "480",
+    "180",
+    "80"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1215.0,
+    "small_out": 254.0,
+    "small_s": 1.2233444390001296
+  },
+  "calls_plus": {
+    "small_in": 1147.0,
+    "small_out": 231.0,
+    "small_s": 1.6412625280001976,
+    "large_in": 132.0,
+    "large_out": 71.0,
+    "large_s": 1.0064202470002783
+  },
+  "calls_samples": {
+    "small_in": 660.0,
+    "small_out": 516.0,
+    "small_s": 6.494744048999564
+  }
+}
