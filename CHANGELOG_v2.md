@@ -452,3 +452,8 @@ Operational choices made during the lease (no code change; the tag is what runs)
   P5's main blocks on shared and shared_mps per V2_P5_CAL model pair (+ separate cells as the L_iso
   baseline h4_fit needs); (4) Python 3.12 build and the root-disk incident in P0/env.txt; (5) at GATE P4b,
   a "spare time" line in STATUS.md; nothing unregistered starts on spare time.
+- 13:40Z NEXT block 2: confirms VM-A -> VM-B HTTP (VM-B servers bind 0.0.0.0). Note: no earlier check in this
+  lease failed (13:10Z :8002 Granite 8B OK; 13:30Z :8001 Qwen 3B and :8002 Qwen 14B OK; only :8003, unused
+  on VM-B, had no answer). P5 separate calls VM-B at http://10.56.2.39:<port>, and the same curl check from
+  VM-A runs right before the first separate run (result to STATUS.md and here). Items 2-5 of NEXT block 1
+  stand (clock, D-L2-h4grid, env.txt done; spare-time line at GATE P4b pending).
