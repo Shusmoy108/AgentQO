@@ -106,10 +106,26 @@ def frozen_rows(rows: List[Dict], path: Path = SPLIT_FILE) -> Dict[str, List[Dic
     return {k: [by_id[i] for i in ids[k]] for k in ("label", "eval")}
 
 
+N_EXTRA = 600
+
+
+def extra_rows(rows: List[Dict], path: Path = SPLIT_FILE, n: int = N_EXTRA, seed: int = SPLIT_SEED) -> List[Dict]:
+    """L2-X X2: the next n dev rows in the split's seeded order (rows sorted by id) that are in
+    neither frozen split; disjoint from label and eval by construction."""
+    ids = json.loads(Path(path).read_text())
+    used = set(ids["label"]) | set(ids["eval"])
+    order = np.random.default_rng(seed).permutation(len(rows))
+    return [rows[i] for i in order if rows[i]["id"] not in used][:n]
+
+
 def load_hotpotqa(split: str = "label", cache_dir: Path = TASK_DIR, split_file: Path = SPLIT_FILE) -> List[Dict[str, str]]:
-    """[{qid, question, gold}]; ``question`` holds the question and its paragraphs."""
-    parts = frozen_rows(_load_rows(cache_dir), split_file)
-    rows = parts["label"] + parts["eval"] if split == "all" else parts[split]
+    """[{qid, question, gold}]; ``question`` holds the question and its paragraphs.
+    split: label, eval, all (label + eval), or extra (L2-X X2: 600 rows outside both)."""
+    if split == "extra":
+        rows = extra_rows(_load_rows(cache_dir), split_file)
+    else:
+        parts = frozen_rows(_load_rows(cache_dir), split_file)
+        rows = parts["label"] + parts["eval"] if split == "all" else parts[split]
     return [{"qid": f"hotpot-{r['id']}", "question": format_problem(r), "gold": r["answer"]} for r in rows]
 
 

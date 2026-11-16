@@ -34,7 +34,7 @@ from agentqo.labeling.ec_labeler import ECLabeler, LabelingResult, analyze_h1_re
 from agentqo.labeling.labels_v2 import labels_rows, per_problem_rows, strategy_rows
 from agentqo.metrics.figures import save_h1_histogram
 from agentqo.metrics.io import append_results_entry, args_config, mark_done, resolve_output_dir, write_csv, write_json
-from agentqo.tasks.datasets import dev_eval_split, extended_eval, extended_label, load_gsm8k
+from agentqo.tasks.datasets import dev_eval_split, extended_eval, extended_eval_x2, extended_label, load_gsm8k
 from agentqo.tasks.hotpotqa import load_hotpotqa
 from agentqo.tasks.prompts import build_prompt, code_output
 from agentqo.tasks.real_task_model import RealTaskModel
@@ -88,11 +88,13 @@ def make_probe(args):
 
 def load_problems(args) -> List[Dict[str, str]]:
     if getattr(args, "dataset", "gsm8k") == "hotpotqa":
-        if args.split not in ("label", "eval", "all"):
-            raise SystemExit(f"HotpotQA splits are label, eval, all; got {args.split}")
+        if args.split not in ("label", "eval", "all", "extra"):
+            raise SystemExit(f"HotpotQA splits are label, eval, all, extra; got {args.split}")
         return load_hotpotqa(args.split)[: args.n_tasks]
     if args.split == "eval_ext":
         return extended_eval(args.n_tasks)
+    if args.split == "eval_x2":  # L2-X X2: GSM8K test problems in neither label 200 nor eval_ext 400
+        return extended_eval_x2(args.n_tasks)
     if args.split == "label":  # GSM8K: the Session 1 LABEL order (100 dev first), disjoint from eval_ext
         return extended_label(args.n_tasks)
     working = load_gsm8k(n=300, seed=0)
@@ -194,7 +196,7 @@ def main() -> None:
                     help="YAML of flag values (e.g. configs/phase_b.yaml); explicit flags win")
     ap.add_argument("--backend", choices=["fake", "ollama", "vllm"], default="fake")
     ap.add_argument("--n-tasks", type=int, default=10)
-    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "eval_ext"], default="dev",
+    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "eval_ext", "eval_x2", "extra"], default="dev",
                     help="label: HotpotQA only; eval_ext: GSM8K eval then fresh test problems")
     ap.add_argument("--dataset", choices=["gsm8k", "hotpotqa"], default="gsm8k")
     ap.add_argument("--realistic", action="store_true",

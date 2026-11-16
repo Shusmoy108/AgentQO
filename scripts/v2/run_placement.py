@@ -12,11 +12,12 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures as cf
+import os
 import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import List
+from typing import Dict, List
 
 import numpy as np
 
@@ -66,6 +67,31 @@ class PowerLoggers:
             fh.close()
 
 
+def build_plans(names: List[str], workflow, tiers: List[str]) -> Dict[str, FidelityPlan]:
+    """Plan name -> FidelityPlan. Two tiers (small,large): upgraded agents run large, as before.
+    L2-X X1(ii): with a third tier (V2_TIERS=small,large,xl, A16) the names and plans are those of
+    run_real_h3.tier_plans, so math_tiers plans time exactly as P2b ran them."""
+    if list(tiers) == ["small", "large"]:
+        topo = list(workflow.topological_order)
+        return {n: FidelityPlan(assignments={a: LARGE_FIDELITY for a in parse_plan_name(n, topo)},
+                                default_fidelity=SMALL_FIDELITY) for n in names}
+    from scripts.run_real_h3 import tier_plans
+    every = tier_plans(workflow, tiers)
+    missing = [n for n in names if n not in every]
+    if missing:
+        raise SystemExit(f"not tier plans for tiers {tiers}: {missing[:3]}")
+    return {n: every[n] for n in names}
+
+
+def call_row(plan: str, task_id: str, node_id: str, r, repeat: int) -> Dict:
+    """One placement_calls.csv row; request_start_s/request_end_s (epoch s) are L2-X X1(i)."""
+    return {"plan": plan, "task_id": task_id, "node_id": node_id, "model": r.metadata.get("model"),
+            "fidelity": r.fidelity_used, "prompt_tokens": r.metadata.get("prompt_tokens", 0),
+            "completion_tokens": r.metadata.get("completion_tokens", 0),
+            "latency_s": r.metadata.get("latency_s", 0.0), "repeat": repeat,
+            "request_start_s": r.metadata.get("request_start_s"), "request_end_s": r.metadata.get("request_end_s")}
+
+
 def run_one(workflow, problems, executor, task_model, plan, k: int):
     task_model.reset()
     tasks = [task_model.generate_task(workflow, None) for _ in problems]
@@ -106,8 +132,7 @@ def main() -> None:
     args = ap.parse_args()
 
     workflow = WORKFLOWS[args.workflow][1]()
-    topo = list(workflow.topological_order)
-    plans = {name: parse_plan_name(name, topo) for name in args.plans.split(",")}
+    plans = build_plans(args.plans.split(","), workflow, os.environ.get("V2_TIERS", "small,large").split(","))
     out, finished = resolve_output_dir(args.output_dir, args_config(args), create=not args.dry_run)
     runs = [(n, r) for n in plans for r in range(args.repeats)]
     if args.dry_run:
@@ -130,7 +155,7 @@ def main() -> None:
             if path.exists():
                 print(f"skip {path.name}: already written", flush=True)
                 continue
-            plan = FidelityPlan(assignments={n: LARGE_FIDELITY for n in plans[name]}, default_fidelity=SMALL_FIDELITY)
+            plan = plans[name]
             done, wall = run_one(workflow, problems, executor, task_model, plan, args.k)
             rows, calls = [], []
             for task, s, e, rec in done:
@@ -140,11 +165,7 @@ def main() -> None:
                 rows.append({"plan": name, "placement": args.placement, "k": args.k, "repeat": repeat,
                              "task_id": task.task_id, "start_s": s, "end_s": e, "latency_s": e - s,
                              "correct": float(rec.final_quality), "wall_s": wall})
-                calls += [{"plan": name, "task_id": task.task_id, "node_id": n, "model": r.metadata.get("model"),
-                           "fidelity": r.fidelity_used, "prompt_tokens": r.metadata.get("prompt_tokens", 0),
-                           "completion_tokens": r.metadata.get("completion_tokens", 0),
-                           "latency_s": r.metadata.get("latency_s", 0.0), "repeat": repeat}
-                          for n, r in nodes.items()]
+                calls += [call_row(name, task.task_id, n, r, repeat) for n, r in nodes.items()]
             # Calls first: the run file is the resume marker, so it must land last.
             write_csv(out / f"calls_{name}_r{repeat}.csv", calls)
             write_csv(path, rows)

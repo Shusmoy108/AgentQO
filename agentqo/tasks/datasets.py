@@ -85,6 +85,15 @@ def extended_eval(n: int, cache_dir: Path = TASK_DIR) -> List[Dict[str, str]]:
     return (_dev_eval(cache_dir)["eval"] + session1_extra(cache_dir)[500:800])[:n]
 
 
+def extended_eval_x2(n: Optional[int] = None, cache_dir: Path = TASK_DIR) -> List[Dict[str, str]]:
+    """L2-X X2: GSM8K test problems in neither the 200 label problems (extended_label) nor the
+    400 eval problems (extended_eval) the lease used; 719 of the 1,319, in the session1_extra
+    order (extra[100:500] then extra[700:])."""
+    used = {p["qid"] for p in extended_label(200, cache_dir) + extended_eval(400, cache_dir)}
+    pool = [p for p in session1_extra(cache_dir) if p["qid"] not in used]
+    return pool[:n] if n else pool
+
+
 def dev_eval_split(
     problems: List[Dict[str, str]],
     n_dev: int = 100,

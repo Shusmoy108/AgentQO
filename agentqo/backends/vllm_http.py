@@ -183,7 +183,9 @@ class VLLMHTTPBackend:
             "logprobs": True,
             "top_logprobs": 1,
         }
+        request_start_s = time.time()  # L2-X X1: wall-clock request start/end (epoch s), for per-request timing
         data, latency, cache_hit = self._request(payload, fidelity)
+        request_end_s = time.time()
 
         text = _extract_text(data)
         has_logprobs = _has_logprobs(data)
@@ -208,6 +210,8 @@ class VLLMHTTPBackend:
             metadata={
                 "model": model,
                 "latency_s": latency,
+                "request_start_s": request_start_s,
+                "request_end_s": request_end_s,
                 "correctness_unknown": unknown,
                 "embedding_kind": "placeholder",
                 "base_url": self._base_for(fidelity),
@@ -299,7 +303,10 @@ class VLLMHTTPBackend:
         task = task_context.get("task")
         task_id = getattr(task, "task_id", "") or str(task_context.get("problem", ""))
         sample = task_context.get("sample_index", 0)
-        return crc32(f"{task_id}|{node.node_id}|{sample}".encode()) & 0x7FFFFFFF
+        # L2-X X4: AGENTQO_SEED_SALT gives a replicate with different request seeds; unset = the registered seeds.
+        salt = os.environ.get("AGENTQO_SEED_SALT", "")
+        material = f"{salt}|{task_id}|{node.node_id}|{sample}" if salt else f"{task_id}|{node.node_id}|{sample}"
+        return crc32(material.encode()) & 0x7FFFFFFF
 
     def _resolve_model(self, fidelity: "Fidelity") -> str:
         name = fidelity.name
