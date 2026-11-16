@@ -1,0 +1,94 @@
+{
+  "task_id": "gsm8k-test-653",
+  "node_id": "aggregator",
+  "role": "aggregator",
+  "reference": "Sally was shorted by 20 dollars from her wage this week. #### 20",
+  "reference_key": "20",
+  "final_key_plus": "80",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "First, let's determine how much Sally earned this week. We know that her bank account started with $200 and ended with $420. The difference between these amounts is the total amount earned:\n\n\\[ \\text{Total earnings} = \\$420 - \\$200 = \\$220 \\]\n\nSally's weekly wage should have been $300. To find out how much was withheld, we subtract her total earnings from her expected earnings:\n\n\\[ \\text{Withheld amount} = \\$300 - \\$220 = \\$80 \\]\n\nThe proposed answer of 20 dollars is incorrect. Final answer: 80"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "Sally was shorted by 20 dollars from her wage this week. #### 21",
+      "quality": 1.0,
+      "final_key": "80",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "First, let's determine how much Sally earned this week. We know that her bank account started with $200 and ended with $420. Therefore, the total amount added to her bank account is:\n\n\\[ \\text{Total amount added} = \\text{Ending balance} - \\text{Starting balance} = \\$420 - \\$200 = \\$220 \\]\n\nSally's weekly wage should be $300. To find out how much was withheld, we subtract the total amount added to her bank account from her expected weekly wage:\n\n\\[ \\text{Withheld amount} = \\text{Expected weekly wage} - \\text{Total amount added} = \\$300 - \\$220 = \\$80 \\]\n\nThe proposed answer of $21 is incorrect. The correct amount withheld from Sally\u2019s wage is $80.\n\nFinal answer: 80"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "40",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "#### 40",
+      "quality": 0.0,
+      "final_key": "40",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "Recomputing the answer:\nSally's bank account increased by $220 ($420 - $200) during the week.\nHer weekly wage should have been $300, but it was not enough to cover the increase in her bank account.\nTo find out how much was withheld, we subtract the increase in her bank account from the difference between her expected wage and the actual amount in her bank account:\n$220 (increase in bank account) = $300 (expected wage) - $420 (current bank account balance)\nFinal answer: 40"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "10500",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "#### 10500####",
+      "quality": 0.0,
+      "final_key": "220",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "Recomputed: Sally's bank account increased by $220 ($420 - $200) during the week. Given that her weekly wage should be $300, the amount withheld would be the difference between what she was supposed to earn and what her account increased by, which is $220.\n\nFinal answer: 220"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "20",
+  "sample_keys": [
+    "20",
+    "20",
+    "20",
+    "20",
+    "20"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": null,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1059.0,
+    "small_out": 190.0,
+    "small_s": 1.1298589959994843
+  },
+  "calls_plus": {
+    "small_in": 941.0,
+    "small_out": 211.0,
+    "small_s": 2.8707803549996243,
+    "large_in": 133.0,
+    "large_out": 21.0,
+    "large_s": 0.641636698000184
+  },
+  "calls_samples": {
+    "small_in": 665.0,
+    "small_out": 25.0,
+    "small_s": 0.6270109710003453
+  }
+}

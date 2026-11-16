@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-1190",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of bandages used over the three days by determining the usage for each day and summing them up.\n2. Determine the total number of bandages received through orders by adding the bandages from all ordered bulk packs.\n3. Use the information about the bandages left at the end of the third day to find out how many bandages were there initially by adding the bandages used and subtracting the bandages left from the total received through orders.",
+  "reference_key": null,
+  "final_key_plus": "2",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "To solve this problem, let's break it down step by step:\n\n- **First Day:** \n  - Used: 38 bandages\n  - Ordered: 1 bulk pack (50 bandages)\n  - Remaining after first day: \\( 38 + 50 = 88 \\) bandages\n\n- **Second Day:** \n  - Used: 38 - 10 = 28 bandages\n  - Remaining after second day: \\( 88 - 28 = 60 \\) bandages\n\n- **Third Day:** \n  - Ordered: 2 bulk packs (100 bandages)\n  - Used: Half a pack (25 bandages)\n  - Remaining after third day: \\( 60 + 100 - 25 = 135 \\) bandages\n\nHowever, we know from the problem statement that they ended up with 78 bandages at the end of the third day. This means there is a discrepancy.\n\nLet's recheck the remaining bandages calculation:\n- After the first day, they have 88 bandages.\n- After the second day, they have 60 bandages.\n- After ordering 2",
+    "step_2": "step_2: They ordered one bulk pack on the first day and two bulk packs on the third day, totaling 1 + 2 = 3 bulk packs. Each bulk pack contains 50 bandages, so they received 3 * 50 = 150 bandages through orders.\n\nRESULT: 150",
+    "step_3": "step_3: To find the initial number of bandages, we add the bandages received through orders to the bandages used and subtract the bandages left at the end of the third day: 150 (received) + 91 (used) - 78 (left) = 163\n\nRESULT: 163",
+    "aggregator": "#### 163",
+    "step_1": "On the first day, they used 38 bandages and ordered one bulk pack (50 bandages).\nOn the second day, they used 38 - 10 = 28 bandages.\nOn the third day, they ordered two bulk packs (100 bandages) and used half a pack (25 bandages).\n\nTotal bandages used = 38 + 28 + 25 = 91\n\nRESULT: 91"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: 1. Calculate the total revenue from selling eggplants = 20 * $3.\n2. Let x be the price per ear of corn. Then calculate the total revenue from corn = 25 * x.\n3. Set up the equation for total revenue = (total revenue from eggplants) + (total revenue from corn) = $135.",
+      "quality": 0.0,
+      "final_key": "2",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "To solve this problem, let's break it down step by step:\n\n- **First Day**: \n  - Used: 38 bandages.\n  - Ordered: 1 bulk pack (50 bandages).\n  - Remaining after first day: \\( 38 + 50 = 88 \\) bandages.\n\n- **Second Day**:\n  - Used: 38 - 10 = 28 bandages.\n  - Remaining after second day: \\( 88 - 28 = 60 \\) bandages.\n\n- **Third Day**:\n  - Ordered: 2 bulk packs (100 bandages).\n  - Used: Half a pack (25 bandages).\n  - Remaining after third day: \\( 60 + 100 - 25 = 135 \\) bandages.\n\nHowever, we know that at the end of the third day, they had 78 bandages left. This means there is a discrepancy. Let's recheck the calculations:\n\n- After the first day, they have 88 bandages.\n- After the second day, they have 60 bandages.\n- After ordering 2 bulk packs and using half a pack",
+        "step_2": "RESULT: 25x",
+        "step_3": "RESULT: 60x + 25x = 135\nRESULT: 85x = 135\nRESULT: x = 135 / 85\nRESULT: 1.5941176470588235",
+        "aggregator": "#### 159",
+        "step_1": "RESULT: 60"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of bandages used over the three days by determining the usage for each day and summing them up.\n2. Determine the total number of bandages received through orders by adding the bandages from all ordered bulk packs.\n3. Use the information about the bandages left at the end of the third day to find out how many bandages were there initially by adding the bandages used and subtracting the bandages **boxed** left from the total received through orders.",
+      "quality": 0.0,
+      "final_key": "135",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "To solve this problem, let's break it down step by step:\n\n1. **First Day**: \n   - Used: 38 bandages.\n   - Ordered: 1 bulk pack (50 bandages).\n   - Remaining after first day: \\( 38 + 50 = 88 \\) bandages.\n\n2. **Second Day**:\n   - Used: 38 - 10 = 28 bandages.\n   - Remaining after second day: \\( 88 - 28 = 60 \\) bandages.\n\n3. **Third Day**:\n   - Ordered: 2 bulk packs (100 bandages).\n   - Used: Half a pack (25 bandages).\n   - Remaining after third day: \\( 60 + 100 - 25 = 135 \\) bandages.\n\nHowever, we know that at the end of the third day, they had 78 bandages left. This indicates there is an inconsistency. Let's recheck the remaining calculation:\n\n- After ordering 2 bulk packs and using half a pack, the correct remaining should be \\( 60 + 100 - 25 = 135",
+        "step_2": "RESULT: 70",
+        "step_3": "RESULT: 91 - 78 + 70 = 83",
+        "aggregator": "#### 83",
+        "step_1": "On the first day, they used 38 bandages and ordered one bulk pack (50 bandages).\nOn the second day, they used 38 - 10 = 28 bandages.\nOn the third day, they ordered two bulk packs (2 * 50 = 100 bandages) and used half a pack (50 / 2 = 25 bandages).\n\nRESULT: 38 + 28 + 25 = 91"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: 1. Calculate the cooking time for pork based on the given information.\n      2. Calculate the combined cooking time for rice and pork.\n      3. Determine the cooking time for beans using the combined time from step 2.\n      4. Sum up the cooking times for rice, pork, and beans to get the total time.",
+      "quality": 0.0,
+      "final_key": "38",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "To solve this problem, let's break it down step by step:\n\n- **First Day:** \n  - Used: 38 bandages.\n  - Ordered: 1 bulk pack (50 bandages).\n  - Remaining after first day: \\( 38 + 50 = 88 \\) bandages.\n\n- **Second Day:** \n  - Used: 38 - 10 = 28 bandages.\n  - Remaining after second day: \\( 88 - 28 = 60 \\) bandages.\n\n- **Third Day:** \n  - Ordered: 2 bulk packs (100 bandages).\n  - Used: Half a pack (25 bandages).\n  - Remaining after third day: \\( 60 + 100 - 25 = 135 \\) bandages.\n\nHowever, we know from the problem statement that they ended up with 78 bandages at the end of the third day. This indicates there is an inconsistency in the given information or our interpretation. \n\nGiven the final number of bandages (78), let's recheck the steps:\n\n- **First Day:** \n  - Used: 38 bandages.",
+        "step_2": "It seems there was a mix-up in the problem statement and the plan provided. The original problem is about bandages and nursing supplies, not cooking times for different foods. Let's correct the approach and focus on the bandage usage and ordering pattern.\n\nGiven:\n- Each bulk pack contains 50 bandages.\n- On the first day, they used 38 bandages and ordered one bulk pack (totaling 50).\n- On the second day, they used 28 bandages (10 fewer than the first day).\n- On the third day, they ordered two bulk packs (100 bandages) but only used half a pack (25 bandages).\n- At the end of the third day, they had 78 bandages left.\n\nLet's calculate how many bandages they started with on the first day:\n\n1. **First Day**: Used 38 bandages, ordered 50 more.\n   - Bandages at the end of the first day = 38 - 38 + 50 = 50 bandages.\n\n2. **Second Day**: Used 28 bandages.\n   - Bandages at the end of the second day = 50 - 28 =",
+        "step_3": "RESULT: 22",
+        "aggregator": "#### 118",
+        "step_1": "RESULT: 58"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "1",
+  "sample_keys": [
+    "2",
+    "60",
+    "78"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1526.0,
+    "small_out": 600.0,
+    "small_s": 3.2521801869993396
+  },
+  "calls_plus": {
+    "large_in": 170.0,
+    "large_out": 100.0,
+    "large_s": 2.7305011469998135,
+    "small_in": 1512.0,
+    "small_out": 505.0,
+    "small_s": 8.865678041999217
+  },
+  "calls_samples": {
+    "small_in": 5250.0,
+    "small_out": 1776.0,
+    "small_s": 30.624998520000645
+  }
+}
