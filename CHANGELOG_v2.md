@@ -418,3 +418,31 @@ Code:
   + reduction + cut, cascade cut, moved settings, phase order; pairwise on tier options.
 - `PLAN_v2_times.md`: sized to the 72 h lease. ~830,000 calls; ~109 h at the 10x rule (VM-A
   ~51 h, VM-B ~54 h, both within 72 h with ~14-16 h slack) or ~16 h at the Session 1 rate.
+
+## Lease 2 operations log (Chameleon KVM@TACC, 2026-11-16 to 2026-11-19; code at tag v2-lease1-start = 252a12b)
+
+Operational choices made during the lease (no code change; the tag is what runs):
+- 2026-11-16 12:55Z The CC image on these VMs is Ubuntu 22.04 with Python 3.10; vLLM 0.32.0 needs >= 3.11.
+  Python 3.12 installed with uv into /mnt/data/python, venv /mnt/data/venv. vLLM 0.32.0+cu129 and torch
+  2.13.0+cu129 (the pinned versions) installed; torchcodec removed (CUDA 13 only).
+- Everything large lives on /mnt/data (clone /mnt/data/AgentQO, HF_HOME=/mnt/data/hf, caches /mnt/data/cache).
+  13:01Z The first model prefetch ran in a tmux session without HF_HOME and wrote 23 GB to ~/.cache on the
+  root disk (root fell to 1-3 GB free); moved into /mnt/data/hf/hub and the prefetch restarted with the env.
+- The VMs have no git credentials (no tokens on the VMs), so phases run with V2_PUSH=0 and package_phase.sh
+  zips on the VM; the Mac pulls every 5 min and pushes each gated phase's CSV/JSON/MD to v2-lease1 from a
+  Mac worktree (same summarize_phase.py copy filter). VM-B's P0 goes to results/v2/P0_vmB (both VMs run P0).
+- Phases run from a per-VM queue (/mnt/data/queue_{A,B}.sh, outside the tree): server start/stop per phase,
+  3 retries with 2/5/15 min backoff (dead servers restarted between tries), failures to results/v2/FAILURES.md.
+- Server ports: small 8001, large 8002, xl (14B, A16) 8003; VLLM_ENDPOINTS keyed by model id.
+  --max-model-len: 8192 for any server that serves HotpotQA in that phase (Qwen P0/P1/P2, Granite, Phi),
+  4096 for math-only phases (P2b, P2c, P3). max-model-len only bounds context length; outputs are unchanged.
+- P0 on VM-A runs qwen, tiers and complex under one 3-server config (1.5B 0.15 / 7B 0.30 / 14B 0.45),
+  so the 14B server starts once for P0; P1/P2 then use 0.25 / 0.55.
+- Time budget: V2_LEASE_END=2026-11-19T06:00Z (the GPU cutoff), V2_RESERVE_HOURS=6 (P5, P5 cal, E1).
+- No sqlite3 CLI on the image; cache backups use Python's sqlite3 Connection.backup (same online backup API).
+- Model prefetch covers P5 too: VM-A also gets Qwen 3B and Granite 2B/8B (small side of separate placement,
+  both sides of shared), VM-B also gets Qwen 7B (large side of separate placement).
+- 13:10Z VM-A reaches VM-B's vLLM ports over the private network (10.56.2.39), so separate placement works.
+  No VM-A -> VM-B SSH key was installed, so run_placement.py's VM-B power logger (which SSHes) is not used:
+  P5 runs with V2_VMS="gpu_a=local", and VM-B's power during P5 comes from its continuous 1 s nvidia-smi log
+  (logs/v2/power_vmB.csv), cut to each P5 run's time window. Both VMs log power for the whole lease.
