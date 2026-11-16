@@ -487,3 +487,9 @@ Operational choices made during the lease (no code change; the tag is what runs)
   (x3watch) resumes X3 from the cache after 3 idle minutes (no servers, no blocks, GPU < 1 GB). Start, pause and
   resume times are copied from VM-B's x3_events.log into STATUS.md and here.
 - 2026-11-16T21:09:24Z X3 PAUSED on VM-B before B-serve-Q7_8002_8192 starts its servers (X3 servers stopped, GPU freed)
+- 23:05Z NEXT block 6: STATUS NOW lines pushed (02f9b2ab). X code changes approved and made on branch
+  v2-lease2-x (eeb54603, from the tag; separate clone /mnt/data/AgentQO-x on both VMs; tag clone untouched):
+  per-request start/end, A16 tier plans in run_placement, GSM8K eval_x2 (719) and HotpotQA extra (600),
+  AGENTQO_SEED_SALT. 6 new tests; full suite 195 passed, 8 skipped. Recorded in prereg/v2_amendments.md
+  as D-L2-X-code. X3 milestone gates (smoke, labels) pushed; their "FAILED/partial" text is a gate-file
+  format slip, corrected in STATUS.md.

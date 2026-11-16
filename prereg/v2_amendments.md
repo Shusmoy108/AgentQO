@@ -268,3 +268,41 @@ X3 Cross-family model choice on math: tiers small/large/xl = Qwen2.5-7B / Granit
 X4 Seed replicate of math_q15_7 and hotpot_q15_7: NOT config-only, so not run. Request seeds are
    fixed per (task, node, sample) in VLLMHTTPBackend._seed and run_real_h3.py passes seed=0, so a
    new cache with the same code would reproduce the same seeded requests. Exact change in STATUS.md.
+
+### L2-X lease-time deviation: code change for X items (2026-11-16 23:02:12 UTC)
+
+lease-time deviation: code change for X items. Id: D-L2-X-code. Approved by the PI's NEXT block
+(2026-11-16 ~22:30 UTC). Branch v2-lease2-x, cut from tag v2-lease1-start, commit
+eeb54603bbdfa1f760bbde86d6cd16a12388e034 (pushed, no force). Run from a separate clone
+/mnt/data/AgentQO-x on each VM; the tag clone /mnt/data/AgentQO that runs every registered phase is
+untouched. X1, X2 and X4 run on the GPU only after P6, from this commit, with V2_DEVIATION=D-L2-X-code,
+writing to results/v2/X1, X2, X4 (X3 needs no code change and keeps running at the tag).
+Changes (each with a unit test in tests/test_v2_lease2_x.py; full suite 195 passed, 8 skipped,
+vs 189 passed, 8 skipped at the tag):
+- X1(i): VLLMHTTPBackend records wall-clock request_start_s / request_end_s (epoch s) per request;
+  run_placement.py writes them to placement_calls.csv.
+- X1(ii): run_placement.py times A16 tier plans (V2_TIERS=small,large,xl) via run_real_h3.tier_plans;
+  binary plans are built exactly as before.
+- X2: GSM8K split eval_x2 = the 719 test problems in neither label 200 nor eval_ext 400
+  (session1_extra order); HotpotQA split extra = the next 600 dev rows in the frozen split's seeded
+  order outside label/eval. Checked on the real data: 719 and 600 problems, 0 overlap.
+- X4: AGENTQO_SEED_SALT salts the per-request seed (unset = registered seeds); X4 also uses its own
+  cache file, so nothing is reused.
+X scope with this change: X1 adds per-request start/end timestamps and math_tiers (A16, shared:
+Pareto-front plans + 100 random, seed 0); X2 = all plans of math_q15_7, math_granite, math_phi on
+eval_x2 (719) and of hotpot_q15_7, hotpot_iso_q15_7 on HotpotQA extra (600), replacing the
+eval_ext-500 partial X2; X4 = all plans of math_q15_7 (eval_ext 400) and hotpot_q15_7 (eval 400)
+with AGENTQO_SEED_SALT=1 and cache data/cache/x4_seed1.sqlite. Order after P6: X1 -> X2 -> X3 (if not
+finished) -> X4, split across both VMs.
+
+git diff --stat v2-lease1-start eeb54603:
+```
+ agentqo/backends/vllm_http.py |   9 +++-
+ agentqo/tasks/datasets.py     |   9 ++++
+ agentqo/tasks/hotpotqa.py     |  22 +++++++--
+ scripts/run_real_h3.py        |   2 +-
+ scripts/run_real_pipeline.py  |  10 +++--
+ scripts/v2/run_placement.py   |  39 ++++++++++++----
+ tests/test_v2_lease2_x.py     | 101 ++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 174 insertions(+), 18 deletions(-)
+```
