@@ -220,3 +220,51 @@ placements, then h4_fit.py fit (and fit-mps for shared_mps) per model pair, comp
 (shared 2.392 / 0.991, MPS 2.072 / 0.332). Separate-placement grid cells are run only as the L_iso
 baseline h4_fit requires. This adds data; it does not replace any P5 measurement, does not change the
 H3c hold-out split (P6/hypotheses/h3c_split.json), and its fits are not used by any registered verdict.
+
+## L2-X: lease-time exploratory extensions, registered 2026-11-16 18:16:57 UTC, before any X data exists
+
+Status: EXPLORATORY. No X result changes, replaces or enters any registered verdict (H1-H6, A1-A17,
+H3c split). Each X item writes only to its own folder results/v2/X1..X4/, is included in
+results_v2_UPLOAD.zip and FINAL/data_check.md, and is listed in P6/search_ground_truth.md.
+Code: tag v2-lease1-start, unchanged. Only config/env change: V2_TIERS, VLLM_ENDPOINTS,
+VLLM_{SMALL,LARGE,XL}_MODEL, plan lists, seeds, problem ranges, output dirs, cache path. An item (or
+part) that needs a code change is not run; the exact change is written to STATUS.md.
+Order: after P6, X1 -> X2 -> X3 -> X4, while time allows before the new-GPU-work cutoff
+2026-11-19 06:00 UTC; time left is recomputed and logged in STATUS.md after each item. Work is split
+across VM-A and VM-B so neither idles; X1 "separate" uses both. Common settings: AGENTQO_VERIFIER=
+cautious; AGENTQO_HOTPOT_SPAN=1 for Granite/Phi HotpotQA only (as P4/P4b); max_tokens as the quality
+phases (Qwen math/complex 256, Qwen HotpotQA 384, Granite/Phi 512); vLLM memory 0.25 small / 0.55 large.
+
+X1 Latency ground truth for every plan, no cache hits (scripts/v2/run_placement.py, as P5).
+   Settings and plans: math_q15_7 (64), hotpot_q15_7 (32), hotpot_iso_q15_7 (32), math_q3_14 (64),
+   math_granite (64), math_phi (64): all plans, placements separate (small on VM-A, large on VM-B
+   at 10.56.2.39) and shared (both on one GPU), K=16, the first 64 problems of P5's split (GSM8K
+   eval; HotpotQA eval), 2 repeats (3 if time allows). complex_q15_7 (A17): shared only, every plan
+   on the true accuracy-cost Pareto front (P6/complex_q15_7/pareto) plus 100 other plans drawn at
+   random with seed 0, K=16, 64 problems, 2 repeats.
+   Measured: per plan and repeat p50/p95/p99 latency, throughput, accuracy (placement_summary.csv);
+   per call prompt/completion tokens, latency and model (placement_calls.csv); per problem start/end
+   time; nvidia-smi 1 s power logs (run_placement --vm on the driving VM; on the other VM the
+   background log logs/v2/power_vm<V>.csv, clocks chrony-synced < 1 us).
+   Not config-only, so not run: (i) per-request start/end timestamps (run_placement records
+   per-problem start/end and per-call latency only); (ii) math_tiers (A16) plans, because
+   run_placement builds binary small/large plans only. Exact changes go to STATUS.md.
+
+X2 More eval problems (scripts/run_real_h3.py --plans all_subsets, lease cache).
+   Config-only part: math_q15_7, math_granite and math_phi, all 64 plans on eval_ext 500 (the
+   frozen eval_ext order; problems 1-400 are cache hits, 401-500 are new: 100 more problems).
+   Measured: per-plan accuracy on problems 401-500 and on 1-500, Pareto front change.
+   Not config-only, so not run: GSM8K test problems beyond eval_ext's 500 cap (~619 more), and 600
+   more HotpotQA dev problems outside the frozen label/eval split.
+
+X3 Cross-family model choice on math: tiers small/large/xl = Qwen2.5-7B / Granite-3.1-8B / Phi-4
+   (VLLM_SMALL/LARGE/XL_MODEL, V2_TIERS=small,large,xl, VLLM_ENDPOINTS by model id), all three on one
+   H100, max_tokens 512. First a 5-problem smoke test (label split) with plans all_small, all_large,
+   all_xl; a family that scores 0 stops X3. Then labels 200 (label split, --realistic) for
+   Qwen7B->Granite8B and Qwen7B->Phi-4, and all 3^6 = 729 plans on eval_ext 200.
+   Measured: per-plan accuracy and API cost, per-agent label UV per pair, Pareto front vs single-
+   family settings.
+
+X4 Seed replicate of math_q15_7 and hotpot_q15_7: NOT config-only, so not run. Request seeds are
+   fixed per (task, node, sample) in VLLMHTTPBackend._seed and run_real_h3.py passes seed=0, so a
+   new cache with the same code would reproduce the same seeded requests. Exact change in STATUS.md.
