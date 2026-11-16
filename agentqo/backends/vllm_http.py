@@ -46,6 +46,7 @@ class VLLMHTTPConfig:
     api_key: str = "EMPTY"
     small_model: str = "Qwen/Qwen2.5-1.5B-Instruct"
     large_model: str = "Qwen/Qwen2.5-7B-Instruct"
+    xl_model: str = "Qwen/Qwen2.5-14B-Instruct"  # A16: the third tier
     max_tokens: int = 512
     temperature: float = 0.7
     # Samplers (self-consistency branches) use this; other roles use temperature.
@@ -55,7 +56,7 @@ class VLLMHTTPConfig:
     embedding_dim: int = 256
     # Optional map: fidelity.name or fidelity.model_id -> served model id.
     model_map: Dict[str, str] = field(default_factory=dict)
-    # Optional map: fidelity.name -> base URL (one server per model).
+    # Optional map: served model id or fidelity.name -> base URL (one server per model).
     endpoints: Dict[str, str] = field(default_factory=dict)
     allow_missing_logprobs: bool = False
 
@@ -67,6 +68,7 @@ class VLLMHTTPConfig:
             api_key=os.environ.get("VLLM_API_KEY", "EMPTY"),
             small_model=os.environ.get("VLLM_SMALL_MODEL", cls.small_model),
             large_model=os.environ.get("VLLM_LARGE_MODEL", cls.large_model),
+            xl_model=os.environ.get("VLLM_XL_MODEL", cls.xl_model),
             endpoints=json.loads(os.environ.get("VLLM_ENDPOINTS", "{}")),
             max_tokens=int(os.environ.get("VLLM_MAX_TOKENS", "512")),
             temperature=float(os.environ.get("VLLM_TEMPERATURE", "0.7")),
@@ -126,6 +128,7 @@ class VLLMHTTPBackend:
             "endpoints": dict(self.config.endpoints),
             "small_model": self.config.small_model,
             "large_model": self.config.large_model,
+            "xl_model": self.config.xl_model,
             "embedding_dim": self._embedding_dim,
             "embeddings": "placeholder",
             "status": "ready",
@@ -307,6 +310,8 @@ class VLLMHTTPBackend:
             return self.config.model_map[mid]
         if name == "large" or mid in {"llm-70b", "large"}:
             return self.config.large_model
+        if name == "xl":
+            return self.config.xl_model
         return self.config.small_model
 
     def _build_prompt(
@@ -353,8 +358,12 @@ class VLLMHTTPBackend:
         return False, True
 
     def _base_for(self, fidelity: Optional["Fidelity"]) -> str:
-        if fidelity is not None and fidelity.name in self.config.endpoints:
-            return self.config.endpoints[fidelity.name]
+        if fidelity is not None:  # the served model's own server first, then the tier's
+            model = self._resolve_model(fidelity)
+            if model in self.config.endpoints:
+                return self.config.endpoints[model]
+            if fidelity.name in self.config.endpoints:
+                return self.config.endpoints[fidelity.name]
         return self.config.base_url
 
     def _url(self, path: str, fidelity: Optional["Fidelity"] = None) -> str:

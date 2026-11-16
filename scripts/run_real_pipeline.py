@@ -66,7 +66,7 @@ def build_backend(args, problems):
         from agentqo.backends.fake_server import FakeServer
 
         # Per-node error rates; about 50% / 20% final-answer error for small / large.
-        request_fn = FakeServer(problems, {config.small_model: 0.10, config.large_model: 0.03})
+        request_fn = FakeServer(problems, {config.small_model: 0.10, config.large_model: 0.03, config.xl_model: 0.02})
     if args.backend == "ollama":
         from agentqo.backends.ollama_backend import OllamaBackend, ollama_config
 

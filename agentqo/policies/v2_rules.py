@@ -131,7 +131,9 @@ def top_singles(measured: Mapping[Plan, float], agents: Iterable[str], m: int) -
 
 
 def pairs_to_measure(measured: Mapping[Plan, float], agents: Iterable[str], m: int = 3) -> List[Plan]:
-    return [frozenset(p) for p in combinations(top_singles(measured, agents, m), 2)]
+    """Pairs of the top-m options that exist as plans. Binary: every pair. A16 tiers (options
+    "agent=tier"): a pair naming one agent at two tiers is not a plan and is dropped."""
+    return [p for p in map(frozenset, combinations(top_singles(measured, agents, m), 2)) if p in measured]
 
 
 def pairwise_corrected(measured: Mapping[Plan, float], agents: Iterable[str], m: int = 3) -> Estimator:

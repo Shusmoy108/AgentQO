@@ -139,3 +139,20 @@ def test_logit_additive_estimator_e4():
     two = logit_additive({frozenset(): 0.5, a: 0.75, b: 0.75})(a | b)
     assert two == pytest.approx(1 / (1 + math.exp(-2 * math.log(3))))  # log-odds add
     assert 0 < logit_additive({frozenset(): 0.0, a: 1.0})(a) < 1  # clipped, finite
+
+
+def test_pairwise_on_tier_options_drops_same_agent_pairs():
+    """A16: options are agent=tier; a pair naming one agent twice is not a plan and is not measured."""
+    from itertools import product
+    from agentqo.policies.v2_rules import pairs_to_measure, pairwise_corrected
+    agents, tiers = ["a", "b"], ["large", "xl"]
+    acc = {}
+    for c in product([None, *tiers], repeat=2):
+        plan = frozenset(f"{n}={t}" for n, t in zip(agents, c) if t)
+        acc[plan] = 0.5 + 0.1 * len(plan) + (0.05 if plan == frozenset({"a=xl", "b=xl"}) else 0)
+    acc[frozenset({"a=xl"})] = 0.7  # a=xl and a=large are the top two singles
+    options = ["a=large", "a=xl", "b=large", "b=xl"]
+    pairs = pairs_to_measure(acc, options, 3)
+    assert pairs and all(len({o.split("=")[0] for o in p}) == 2 for p in pairs)
+    est = pairwise_corrected(acc, options, 3)
+    assert abs(est(frozenset({"a=xl", "b=large"})) - acc[frozenset({"a=xl", "b=large"})]) < 1e-9

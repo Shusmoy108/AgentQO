@@ -376,3 +376,45 @@ Code:
   before this entry and never committed.
 - `PLAN_v2_times.md`: q4 call counts; total ~427,000 calls, ~67 h (10x rule) / ~11.3 h
   (Session 1 rate); VM-B ~46 h / ~6.0 h.
+
+## 2026-11-16 04:27:11 UTC: A16 multi-tier, A17 10-agent workflow, 72 h lease plan and time-budget cut (branch v2-dev)
+
+**Registered** A16, A17 and L2 (lease structure: 2026-11-16 12:00 to 2026-11-19 12:00 UTC, VM
+order, cut order) in `prereg/v2_amendments.md`, before any lease data. No model was run on the
+Mac; all checks use the fake backend.
+
+Choices made without asking (as instructed), each also stated in the amendment:
+- A16 1.5B->7B labels are the P1 `math_q15_7` labels (same problems and models); only 1.5B->14B
+  labels are run.
+- "MAE over the 729 plans" is read as in H2a: held-out plans, with all-plans MAE next to it;
+  (a) needs both independence estimators >= 5 points; (b) needs pairwise below both.
+- 14B API price 4.00/20.00 USD per million tokens (7B price x 14/7), cost units 8.
+- A17 eval = first 200 of eval_ext, max_tokens 256, GSM8K, cautious verifier.
+- First request said "A17 on VM-B after P4b, before Phi"; the follow-up moved it to VM-A after A16
+  (phase P2c), which is what is built.
+- Hours for the cut check are the conservative 10x-rule estimates, with a 4 h reserve; a cut also
+  cuts the earlier settings in the cut order on that VM, so the order holds. E1 and the P5 K=1
+  runs are outside `run_phase.sh` and are cut by hand.
+
+Code:
+- `XL_FIDELITY` (tier `xl`), `VLLM_XL_MODEL`; `VLLM_ENDPOINTS` may be keyed by served model id
+  (checked before tier names), so the same servers serve 1.5B/7B, 1.5B/14B and 1.5B/7B/14B.
+  `model_env.py` takes an optional third model and checks its server.
+- `run_real_h3.py --tiers` (default `$V2_TIERS` or small,large): `tier_plans` enumerates every
+  tier per agent (small,large is exactly the old 64-plan list and order); plans run per problem in
+  sequence, so shared prefixes are generated once. `h3_plans.csv` has `tier_<agent>` columns for
+  all_subsets runs. `--plans all_xl` for the A16 smoke test. The dry run counts distinct prompts
+  per problem from the DAG.
+- `pairs_to_measure` drops pairs that are not plans (same agent twice); binary results unchanged.
+- New `scripts/v2/tiers_report.py` (A16 a, b, c). `configs/v2_prices.yaml`: xl prices;
+  `price_plans` treats a tier missing from the shared-memory split as a whole GPU.
+- `run_phase.sh`: P2b (A16) and P2c (A17) on VM-A; P0 options `tiers` and `complex`; `budget`
+  (time-budget cut and A17 200->100 reduction, default lease end on vllm, `V2_HOURS_<setting>`
+  overrides); smoke runs marked once per setting (`SMOKED`), so a later step never re-runs a
+  smoke test with different servers; P6 analyses `complex_q15_7` and runs `tiers_report.py`.
+- `smoke_check.py`: `reduce` and `moved`; `--root` for FAILURES.md and the amendments (tests
+  write to a temp dir, never the repo); `check` judges every plan in the traces.
+- Tests: tier enumeration and order, xl routing by model id, A16 phase + P6 on fake, A17 1,024 plans
+  + reduction + cut, cascade cut, moved settings, phase order; pairwise on tier options.
+- `PLAN_v2_times.md`: sized to the 72 h lease. ~830,000 calls; ~109 h at the 10x rule (VM-A
+  ~51 h, VM-B ~54 h, both within 72 h with ~14-16 h slack) or ~16 h at the Session 1 rate.

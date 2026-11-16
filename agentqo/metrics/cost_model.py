@@ -60,7 +60,7 @@ def price_plans(calls: Iterable[Mapping[str, Any]], prices: Mapping[str, Any]) -
         if c.get("model"):
             models[plan][tier] = c["model"]
         t["gpu_seconds"] += lat
-        t["gpu_seconds_shared"] += lat * prices["shared_memory_fraction"][tier]
+        t["gpu_seconds_shared"] += lat * prices["shared_memory_fraction"].get(tier, 1.0)
         t["cost_units"] += prices["cost_units"][tier]
     rows = []
     for plan, t in totals.items():

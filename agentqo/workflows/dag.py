@@ -93,7 +93,17 @@ LARGE_FIDELITY = Fidelity(
     num_gpus=2,
     gpu_type="sim",
 )
+# A16: a third tier (Qwen2.5 14B in the multi-tier setting).
+XL_FIDELITY = Fidelity(
+    name="xl",
+    cost=8.0,
+    base_error_rate=0.03,
+    model_id="llm-xl",
+    num_gpus=2,
+    gpu_type="sim",
+)
 DEFAULT_FIDELITIES = [SMALL_FIDELITY, LARGE_FIDELITY]
+TIER_FIDELITIES = {f.name: f for f in (SMALL_FIDELITY, LARGE_FIDELITY, XL_FIDELITY)}
 
 
 @dataclass

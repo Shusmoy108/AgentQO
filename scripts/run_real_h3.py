@@ -16,7 +16,8 @@ Extra plans, built only when named in --plans (the default set above is unchange
   struct_top1/3/4  the k nodes with the largest downstream reach, ordered as struct_top2
   qplus_top2       aggregator + planner (top two by single-upgrade accuracy, Q+)
 
---plans all_subsets (M2) runs every small/large assignment (2^n plans) with
+--plans all_subsets (M2) runs every small/large assignment (2^n plans), or with
+--tiers small,large,xl (A16; default $V2_TIERS or small,large) every tier per agent (3^n), with
 5000-resample CIs (seed 0) against all_small. It is resumable through the cache
 and never reuses a directory holding a different run. Every plan set also
 writes h3_per_problem.csv and h3_calls.csv (per-call tokens and latency for M1).
@@ -36,9 +37,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from concurrent.futures import ThreadPoolExecutor
-from itertools import combinations
+from itertools import combinations, product
 from pathlib import Path
 from typing import Dict, List
 
@@ -53,7 +55,7 @@ from agentqo.backends.vllm_http import _output_as_text  # noqa: E402
 from agentqo.metrics.io import args_config, mark_done, resolve_output_dir, write_csv, write_json  # noqa: E402
 from agentqo.policies.v2_rules import plan_name  # noqa: E402
 from agentqo.tasks.real_task_model import RealTaskModel, answer_node  # noqa: E402
-from agentqo.workflows.dag import LARGE_FIDELITY, SMALL_FIDELITY  # noqa: E402
+from agentqo.workflows.dag import LARGE_FIDELITY, SMALL_FIDELITY, TIER_FIDELITIES, XL_FIDELITY  # noqa: E402
 from scripts.run_real_pipeline import WORKFLOWS, build_backend, load_problems  # noqa: E402
 
 
@@ -88,6 +90,39 @@ def all_subset_plans(workflow) -> Dict[str, FidelityPlan]:
             else:
                 plans[plan_name(nodes, topo)] = _upgrade(nodes)
     return plans
+
+
+def tier_plans(workflow, tiers) -> Dict[str, FidelityPlan]:
+    """A16: every assignment of a tier to each agent (len(tiers)^n plans). small,large is
+    exactly all_subset_plans. Otherwise fewest non-small agents first, then cheaper tiers, as in
+    the binary order; all plans of one problem run in sequence, so every shared prefix is
+    generated once whatever the order. Names: all_<tier>, else agent=tier joined by + in
+    topological order, small agents left out."""
+    tiers = list(tiers)
+    if tiers == ["small", "large"]:
+        return all_subset_plans(workflow)
+    if tiers[0] != "small" or not set(tiers) <= set(TIER_FIDELITIES):
+        raise ValueError(f"tiers must start with small and come from {sorted(TIER_FIDELITIES)}: {tiers}")
+    topo = list(workflow.topological_order)
+    combos = sorted(product(range(len(tiers)), repeat=len(topo)),
+                    key=lambda c: (sum(i > 0 for i in c), sum(c), c))
+    plans = {}
+    for c in combos:
+        if len(set(c)) == 1:
+            plans[f"all_{tiers[c[0]]}"] = FidelityPlan(default_fidelity=TIER_FIDELITIES[tiers[c[0]]])
+            continue
+        up = {n: TIER_FIDELITIES[tiers[i]] for n, i in zip(topo, c) if i}
+        plans["+".join(f"{n}={f.name}" for n, f in up.items())] = FidelityPlan(assignments=up, default_fidelity=SMALL_FIDELITY)
+    return plans
+
+
+def max_calls(workflow, n_tiers: int) -> int:
+    """Distinct prompts per problem if no two tiers ever give the same output: a node's prompt
+    depends on its own tier and its ancestors' (126 for the binary math chain)."""
+    anc: Dict[str, set] = {}
+    for n in workflow.topological_order:
+        anc[n] = set().union(*[anc[i] | {i} for i in workflow.nodes[n].inputs])
+    return sum(n_tiers ** (len(a) + 1) for a in anc.values())
 
 
 def make_plans(workflow, ec: Dict[str, float], extra: bool = False) -> Dict[str, FidelityPlan]:
@@ -132,6 +167,8 @@ def main() -> None:
                     help="comma list to run a subset, e.g. all_small,only_verifier; or all_subsets (M2)")
     ap.add_argument("--workers", type=int, default=1, help="problems in flight")
     ap.add_argument("--dry-run", action="store_true", help="with all_subsets: print the work, make no calls")
+    ap.add_argument("--tiers", default=os.environ.get("V2_TIERS", "small,large"),
+                    help="with all_subsets: tiers per agent, small first (A16: small,large,xl)")
     ap.add_argument("--h1-summary", default="", help="h1_summary.json from run_real_pipeline.py")
     ap.add_argument("--compare", action="append", default=[], metavar="A:B",
                     help="paired difference of plan A minus plan B, as in C11 (repeatable)")
@@ -159,10 +196,10 @@ def main() -> None:
     workflow = make()
     if all_subsets:
         out, finished = resolve_output_dir(out, args_config(args), create=not args.dry_run)
-        n = len(workflow.nodes)
+        n, n_tiers = len(workflow.nodes), len(args.tiers.split(","))
         if args.dry_run:
-            print(f"would run {2 ** n} plans of {workflow.name} on {args.n_tasks} {args.dataset} {args.split} problems "
-                  f"with {args.backend}: at most {2 ** (n + 1) - 2} calls per problem, into {out}")
+            print(f"would run {n_tiers ** n} plans of {workflow.name} on {args.n_tasks} {args.dataset} {args.split} problems "
+                  f"with {args.backend}: at most {max_calls(workflow, n_tiers)} calls per problem, into {out}")
             return
         if finished:
             print(f"already finished: {out}")
@@ -177,9 +214,11 @@ def main() -> None:
         summary = json.loads(Path(args.h1_summary).read_text())
         ec = {nid: float(d["ec"]) for nid, d in summary["by_node"].items()}
 
-    plans = all_subset_plans(workflow) if all_subsets else make_plans(workflow, ec, extra=bool(args.plans))
+    plans = tier_plans(workflow, args.tiers.split(",")) if all_subsets else make_plans(workflow, ec, extra=bool(args.plans))
     if args.plans and not all_subsets:
         keep = {p.strip() for p in args.plans.split(",") if p.strip()}
+        if "all_xl" in keep:  # A16 smoke test: the third tier everywhere
+            plans["all_xl"] = FidelityPlan(default_fidelity=XL_FIDELITY)
         keep.add("all_small")  # the reference for paired differences
         missing = keep - set(plans)
         if missing:
@@ -240,12 +279,15 @@ def main() -> None:
         n_large = float(np.mean([r["n_large"] for r in results]))
         rows.append({
             "plan": name,
-            "upgraded": ",".join(sorted(plan.assignments)) or ("all" if name == "all_large" else "none"),
+            "upgraded": ",".join(sorted(plan.assignments)) or ("none" if name == "all_small" else "all"),
             "accuracy": float(np.mean(correct)),
             "cost_units": cost,
             "large_calls": n_large,
             "latency_s": float(np.mean([r["lat"] for r in results])),
             **({"f1": float(np.mean([r["f1"] for r in results]))} if args.dataset == "hotpotqa" else {}),
+            # A16: the tier of every agent, so tier plans need no name parsing
+            **({f"tier_{n}": plan.get_fidelity(workflow.nodes[n]).name for n in workflow.topological_order}
+               if all_subsets else {}),
         })
         print(f"{name:<18} acc={np.mean(correct):.3f}  cost_units={cost:5.1f}  large_calls={n_large:.1f}", flush=True)
 

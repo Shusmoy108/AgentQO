@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 # M10: one driver for the lease. Re-running a phase resumes it.
-#   scripts/v2/run_phase.sh P0|P1|P2|P3|P4|P4b|P5|P6|final
+#   scripts/v2/run_phase.sh P0|P1|P2|P2b|P2c|P3|P4|P4b|P5|P6|final
+#
+#   Lease 1: 2026-11-16 12:00 UTC to 2026-11-19 12:00 UTC (72 h). VM-A: P1, P2, P2b (A16), P2c (A17).
+#   VM-B: P3, P4, P4b (Phi). Whichever VM finishes first takes the next unstarted setting from the
+#   other VM; on the other VM, first run: scripts/v2/smoke_check.py moved SETTING VM-A (or VM-B).
 #
 #   P0  Smoke test of the settings added by A13-A15, 5 problems (label split), plans all_small and
-#       all_large, under V2_P0=qwen|granite|phi (the servers running). A setting that scores 0 or gives
+#       all_large (and all_xl for A16), under V2_P0=qwen|tiers|complex|granite|phi (the servers running). A setting that scores 0 or gives
 #       a yes/no answer to a non-yes/no question is skipped for the rest of the lease (results/v2/P0/
 #       skips.tsv, FAILURES.md, a lease-time deviation in prereg/v2_amendments.md). A new setting
 #       that P0 has not checked is smoke-tested right before its first labels/plans step.
@@ -11,6 +15,11 @@
 #   P1  Qwen 1.5B/7B labels: math (label 200 = Session 1 dev 100 + 100), HotpotQA (label 200), full and --disagree-only,
 #       then HotpotQA isolated (A13, label 200)
 #   P2  Qwen 1.5B/7B plans:  math all_subsets (eval_ext 400), HotpotQA all_subsets (eval 400), then HotpotQA isolated (A13)
+#   P2b A16 (VM-A, after P2): math chain, each agent on Qwen 1.5B, 7B or 14B: labels 200 for 1.5B->14B
+#       (1.5B->7B is P1 math_q15_7), all 729 plans on eval_ext 200. Servers 1.5B, 7B, 14B.
+#   P2c A17 (VM-A, after P2b; stop the 14B server and restore the 1.5B/7B memory split first):
+#       complex_r2_s2_ver (10 agents), Qwen 1.5B/7B, labels 200 + all 1,024 plans on eval_ext 200
+#       (100 if the time budget says so)
 #   P3  Qwen 3B/14B math:    labels (label 200) + all_subsets (eval_ext 400)
 #   P4  Granite 2B/8B:       math labels (label 200, inside the Session 1 LABEL 500) + all_subsets, then (A14)
 #       HotpotQA and HotpotQA isolated: labels 200 + all_subsets (eval 400), max_tokens 512
@@ -20,6 +29,16 @@
 #       with V2_P5_CAL=qwen_hotpot|qwen3_14_math|granite_math, a calibration set (A11) instead
 #   P6  Offline analysis of every setting that has data (M1, M4, M5, M7, H5a)
 #   final  Zip everything, with the SQLite cache
+#
+# Time budget (A16 amendment): a cuttable setting starts only if its estimated hours (10x rule, see
+# PLAN_v2_times.md) fit in the time left before V2_LEASE_END (default for vllm: the lease end,
+# 2026-11-19T12:00Z) minus V2_RESERVE_HOURS (default 4: P5, P5 cal, P6, final). Otherwise it is
+# skipped, or A17 first drops to 100 eval problems, and logged (FAILURES.md + a lease-time deviation).
+# Cut order: Phi hotpot, Phi math, A17 200->100, A17, A16, E1, P5 K=1 runs, Granite isolated. On each VM
+# the later cuttable settings are cut earlier in that order, so a setting only needs its own hours;
+# a setting cut for time also cuts the not-yet-started settings before it in the order on its VM.
+# E1 and the P5 K=1 runs are not run by this driver; cut them by hand in that order with
+# smoke_check.py skip. Override an estimate with V2_HOURS_<setting> (e.g. V2_HOURS_math_phi=10).
 #
 # Session 1 caches no longer exist and are never looked for: the vllm cache is a new file and
 # every call is generated fresh.
@@ -47,6 +66,7 @@ case "$BACKEND" in
   *)      CACHE=${V2_CACHE:-data/cache/v2_lease1.sqlite}; EXTRA=() ;;  # not the Session 1 vllm.sqlite
 esac
 export V2_BACKEND=$BACKEND V2_CACHE=$CACHE
+export V2_TIERS=small,large  # all_subsets tiers; only P2b (A16) sets small,large,xl
 export AGENTQO_VERIFIER=cautious  # the Session 1 math verifier that helps; HotpotQA is always cautious
 
 mkdir -p "$LOGS" "$RESULTS/$phase"
@@ -63,31 +83,73 @@ fi
 cap() { echo "${V2_N:-$1}"; }
 OUT="$RESULTS/$phase"
 
-use_models() {  # small large
-  eval "$("$PY" scripts/v2/model_env.py "$1" "$2")"
+use_models() {  # small large [xl]
+  eval "$("$PY" scripts/v2/model_env.py "$@")"
   if [ "$BACKEND" = vllm ] && [ ${#DRY[@]} -eq 0 ]; then
-    "$PY" scripts/v2/model_env.py --check-servers "$1" "$2"
+    "$PY" scripts/v2/model_env.py --check-servers "$@"
   fi
 }
 
 # P0 (A13-A15): settings new since Session 1 get a 5-problem smoke test before their first step.
-NEW_SETTINGS=" hotpot_iso_q15_7 hotpot_granite hotpot_iso_granite math_phi hotpot_phi "
+NEW_SETTINGS=" hotpot_iso_q15_7 hotpot_granite hotpot_iso_granite math_phi hotpot_phi math_tiers complex_q15_7 "
 SKIPS="$RESULTS/P0/skips.tsv"
+LOG_ROOT=${V2_LOG_ROOT:-.}  # FAILURES.md and prereg/v2_amendments.md live here (tests point it elsewhere)
 skipped() { [ -f "$SKIPS" ] && cut -f1 "$SKIPS" | grep -qx "$1"; }
 
-smoke() {  # setting workflow dataset max_tokens
+smoke() {  # setting workflow dataset max_tokens [plans]
   local d="$RESULTS/P0/$1/smoke"
-  if skipped "$1" || [ -f "$d/DONE" ]; then return 0; fi
-  if [ ${#DRY[@]} -gt 0 ]; then echo "would smoke-test $1 (5 problems, all_small,all_large)"; return 0; fi
+  if skipped "$1" || [ -f "$d/SMOKED" ]; then return 0; fi  # once per setting
+  if [ ${#DRY[@]} -gt 0 ]; then echo "would smoke-test $1 (5 problems, ${5:-all_small,all_large})"; return 0; fi
   "$PY" scripts/run_real_h3.py --backend "$BACKEND" --cache "$CACHE" --workflow "$2" --dataset "$3" --split label \
-    --n-tasks "$(cap 5)" --max-tokens "$4" --workers "$WORKERS" --plans all_small,all_large --output-dir "$d" \
+    --n-tasks "$(cap 5)" --max-tokens "$4" --workers "$WORKERS" --plans "${5:-all_small,all_large}" --output-dir "$d" \
     ${EXTRA[@]+"${EXTRA[@]}"} || echo "smoke run of $1 failed"
   # The fake server cannot answer real problems, so only a real backend's smoke run is judged.
-  if [ "$BACKEND" = fake ]; then echo "smoke $1 not judged (fake backend)"; return 0; fi
-  "$PY" scripts/v2/smoke_check.py check "$1" "$d" --skips "$SKIPS"
+  if [ "$BACKEND" = fake ]; then echo "smoke $1 not judged (fake backend)"; touch "$d/SMOKED"; return 0; fi
+  "$PY" scripts/v2/smoke_check.py check "$1" "$d" --skips "$SKIPS" --root "$LOG_ROOT"
+  touch "$d/SMOKED"
 }
 
-ready() {  # setting workflow dataset max_tokens; false if the setting is skipped
+LEASE_END=${V2_LEASE_END:-}
+[ "$BACKEND" = vllm ] && LEASE_END=${V2_LEASE_END:-2026-11-19T12:00Z}
+REDUCED="$RESULTS/P0/reduced.tsv"
+reduced() { [ ! -f "$REDUCED" ] || awk -F'\t' -v s="$1" '$1 == s {n = $2} END {print n}' "$REDUCED"; }
+CUT_ORDERS=("complex_q15_7 math_tiers" "hotpot_phi math_phi hotpot_iso_granite")  # VM-A, VM-B; cut first -> last
+started() { compgen -G "$RESULTS/P[1-9]*/$1" >/dev/null; }
+less() { "$PY" -c 'import sys; sys.exit(not float(sys.argv[1]) < float(sys.argv[2]))' "$1" "$2"; }
+
+budget() {  # setting default_hours [n_reduced default_hours_reduced]
+  # Decided once, before the setting starts on this VM; a started setting runs to the end.
+  if [ -z "$LEASE_END" ] || skipped "$1" || [ -n "$(reduced "$1")" ] || [ -d "$OUT/$1" ]; then return 0; fi
+  local h="V2_HOURS_$1" hr="V2_HOURS_$1_n${3:-}" left why
+  h=${!h:-$2}
+  left=$("$PY" -c 'import sys, datetime as d
+end = d.datetime.fromisoformat(sys.argv[1].replace("Z", "+00:00"))
+print(round((end - d.datetime.now(d.timezone.utc)).total_seconds() / 3600 - float(sys.argv[2]), 1))' \
+    "$LEASE_END" "${V2_RESERVE_HOURS:-4}")
+  less "$left" "$h" || return 0
+  why="time budget: needs ~$h h, $left h left before $LEASE_END after a ${V2_RESERVE_HOURS:-4} h reserve"
+  if [ -n "${3:-}" ]; then
+    hr=${!hr:-$4}
+    if ! less "$left" "$hr"; then
+      if [ ${#DRY[@]} -gt 0 ]; then echo "would reduce $1 to $3 eval problems: $why"; return 0; fi
+      "$PY" scripts/v2/smoke_check.py reduce "$1" "$3 $why; $3 problems need ~$hr h" --skips "$SKIPS" --root "$LOG_ROOT"
+      return 0
+    fi
+  fi
+  if [ ${#DRY[@]} -gt 0 ]; then echo "would cut $1: $why"; return 0; fi
+  "$PY" scripts/v2/smoke_check.py skip "$1" "$why" --skips "$SKIPS" --root "$LOG_ROOT"
+  local order s
+  for order in "${CUT_ORDERS[@]}"; do
+    case " $order " in *" $1 "*) ;; *) continue ;; esac
+    for s in $order; do
+      [ "$s" = "$1" ] && break
+      skipped "$s" || started "$s" || "$PY" scripts/v2/smoke_check.py skip "$s" \
+        "cut with $1 (earlier in the cut order); $why" --skips "$SKIPS" --root "$LOG_ROOT"
+    done
+  done
+}
+
+ready() {  # setting workflow dataset max_tokens [plans]; false if the setting is skipped
   case "$NEW_SETTINGS" in *" $1 "*) smoke "$@" ;; esac
   if skipped "$1"; then echo "skip $1: $(awk -F'\t' -v s="$1" '$1 == s {r = $2} END {print r}' "$SKIPS")"; return 1; fi
 }
@@ -152,6 +214,10 @@ case "$phase" in
     case "${V2_P0:?set V2_P0 to qwen, granite or phi to match the running servers}" in
       qwen)    use_models qwen_small qwen_large
                ready hotpot_iso_q15_7 hotpot_iso hotpotqa 384 || true ;;
+      tiers)   use_models qwen_small qwen_large qwen14b  # A16
+               ready math_tiers math gsm8k 256 all_small,all_large,all_xl || true ;;
+      complex) use_models qwen_small qwen_large  # A17
+               ready complex_q15_7 complex gsm8k 256 || true ;;
       granite) use_models granite_small granite_large
                export AGENTQO_HOTPOT_SPAN=1  # as in P4
                ready hotpot_granite hotpot hotpotqa 512 || true
@@ -175,6 +241,26 @@ case "$phase" in
     wants hotpot && plans hotpot_q15_7 hotpot hotpotqa eval "$(cap 400)" 384
     wants hotpot_iso && plans hotpot_iso_q15_7 hotpot_iso hotpotqa eval "$(cap 400)" 384
     ;;
+  P2b)
+    budget math_tiers 19  # A16
+    use_models qwen_small qwen_large qwen14b
+    if ready math_tiers math gsm8k 256 all_small,all_large,all_xl; then
+      use_models qwen_small qwen14b  # labels: each agent's gain 1.5B -> 14B
+      labels math_tiers math gsm8k label "$(cap 200)" 256
+      use_models qwen_small qwen_large qwen14b
+      export V2_TIERS=small,large,xl
+      plans math_tiers math gsm8k eval_ext "$(cap 200)" 256
+      export V2_TIERS=small,large
+    fi
+    ;;
+  P2c)
+    budget complex_q15_7 23 100 12.5  # A17: 200 eval problems, else 100 (same labels), else cut
+    use_models qwen_small qwen_large  # the 14B server is stopped; 1.5B/7B back on their own split
+    n=$(reduced complex_q15_7)
+    [ -n "$n" ] && echo "complex_q15_7: plans on the first $n eval problems (time budget)"
+    labels complex_q15_7 complex gsm8k label "$(cap 200)" 256
+    plans complex_q15_7 complex gsm8k eval_ext "$(cap "${n:-200}")" 256
+    ;;
   P3)
     use_models qwen3b qwen14b
     labels math_q3_14 math gsm8k label "$(cap 200)" 256
@@ -189,6 +275,7 @@ case "$phase" in
     export AGENTQO_HOTPOT_SPAN=1  # A14: Granite-only short-span line in the HotpotQA aggregator/verifier
     for wf in hotpot hotpot_iso; do  # A14: Granite on both HotpotQA workflows, after math
       if wants $wf; then
+        [ $wf = hotpot_iso ] && budget hotpot_iso_granite 5.5  # last in the cut order
         labels ${wf}_granite $wf hotpotqa label "$(cap 200)" 512
         plans ${wf}_granite $wf hotpotqa eval "$(cap 400)" 512
       fi
@@ -197,11 +284,13 @@ case "$phase" in
     ;;
   P4b)
     use_models phi_small phi_large  # A15: runs last on VM-B
+    budget math_phi 16.5
     if wants math; then
       labels math_phi math gsm8k label "$(cap 200)" 512
       plans math_phi math gsm8k eval_ext "$(cap 400)" 512
     fi
     export AGENTQO_HOTPOT_SPAN=1  # A15: the A14 short-span line, as for Granite
+    budget hotpot_phi 11  # first in the cut order
     if wants hotpot; then
       labels hotpot_phi hotpot hotpotqa label "$(cap 200)" 512
       plans hotpot_phi hotpot hotpotqa eval "$(cap 400)" 512
@@ -241,6 +330,17 @@ case "$phase" in
     analyze hotpot_iso_granite hotpot_iso P4 P4
     analyze math_phi math P4b P4b
     analyze hotpot_phi hotpot P4b P4b
+    analyze complex_q15_7 complex P2c P2c
+    t="$RESULTS/P2b/math_tiers"  # A16: tier plans have their own analysis
+    if [ -f "$t/plans/DONE" ] && [ -f "$t/labels/DONE" ]; then
+      large="$RESULTS/P1/math_q15_7/labels/labels_v2.csv"
+      [ -f "$large" ] || large=""
+      "$PY" scripts/v2/tiers_report.py --plans "$t/plans/h3_plans.csv" --calls "$t/plans/h3_calls.csv" \
+        ${large:+--labels-large "$large"} --labels-xl "$t/labels/labels_v2.csv" --output-dir "$OUT/math_tiers/tiers" \
+        ${DRY[@]+"${DRY[@]}"}
+    else
+      echo "skip math_tiers: labels or plans not finished"
+    fi
     "$PY" scripts/v2/hypotheses_report.py --p6 "$OUT" --output-dir "$OUT/hypotheses" ${DRY[@]+"${DRY[@]}"}
     ;;
   final)
@@ -257,7 +357,7 @@ if [ ${#DRY[@]} -gt 0 ]; then
 fi
 cp "$LOGS/$phase.log" "$OUT/run.log.txt"
 if [ "$phase" = final ]; then
-  for p in P0 P1 P2 P3 P4 P4b P5 P6; do
+  for p in P0 P1 P2 P2b P2c P3 P4 P4b P5 P6; do
     [ -d "$RESULTS/$p" ] && cp -R "$RESULTS/$p" "$OUT/"
   done
 fi

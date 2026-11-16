@@ -2,11 +2,12 @@
 api_usd_per_million:
   small: {input: 0.10, output: 0.50}
   large: {input: 2.00, output: 10.00}
+  xl: {input: 4.00, output: 20.00}  # A16: Qwen 14B, large x 14B/7B
 # gpu_hour_usd prices the gpu_usd column; the sweep adds gpu_usd_<rate> columns.
 gpu_hour_usd: 2
 gpu_hour_sweep: [1, 2, 4]
 # Old cost units, kept so v2 tables line up with the Session 1 numbers.
-cost_units: {small: 1, large: 4}
+cost_units: {small: 1, large: 4, xl: 8}
 # Shared-GPU split: vLLM --gpu-memory-utilization used in Session 1 P1
 # (small 0.25, second large server 0.55 on one GPU).
-shared_memory_fraction: {small: 0.25, large: 0.55}
+shared_memory_fraction: {small: 0.25, large: 0.55}  # xl (A16) is never in a shared placement: 1

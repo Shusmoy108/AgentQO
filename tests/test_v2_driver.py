@@ -238,7 +238,7 @@ def test_smoke_check_fails_on_zero_or_wrong_yes_no(tmp_path):
     assert "scores 0" in problems(zero)[0]
     yn = {"all_small": ok["all_small"] + [{"task_id": "c", "gold": "Lyon", "pred": "Yes.", "correct": 0.0}]}
     assert "yes/no answers to non-yes/no" in problems(yn)[0]
-    assert problems({}) == ["no all_small/all_large traces"]
+    assert problems({}) == ["no traces"]
     (tmp_path / "prereg").mkdir()
     skips = tmp_path / "P0/skips.tsv"
     record_skip("math_phi", "P0 smoke test: scores 0", skips, root=tmp_path)
@@ -288,3 +288,117 @@ def test_lease_logs_do_not_make_the_tree_dirty(tmp_path):
     assert prov().returncode == 0
     (repo / "scripts/v2/summarize_phase.py").write_text("# changed\n" + (repo / "scripts/v2/summarize_phase.py").read_text())
     assert prov().returncode != 0
+
+
+def test_tier_plans_enumerate_every_assignment_in_binary_order():
+    """A16: 3^6 tier plans; small,large is exactly the binary all_subsets list."""
+    from scripts.run_real_h3 import all_subset_plans, max_calls, tier_plans
+    from scripts.run_real_pipeline import WORKFLOWS
+    wf = WORKFLOWS["math"][1]()
+    assert list(tier_plans(wf, ["small", "large"])) == list(all_subset_plans(wf))
+    plans = tier_plans(wf, ["small", "large", "xl"])
+    names = list(plans)
+    assert len(plans) == 729 and len(set(names)) == 729
+    assert names[0] == "all_small" and names[-1] == "all_xl" and "all_large" in names
+    ups = [len(p.assignments) for n, p in plans.items() if not n.startswith("all_")]
+    assert ups == sorted(ups)  # fewest non-small agents first
+    assert plans["planner=xl+verifier=large"].get_fidelity(wf.nodes["planner"]).name == "xl"
+    assert max_calls(wf, 2) == 126 and max_calls(wf, 3) == 1092
+    assert max_calls(WORKFLOWS["complex"][1](), 2) == 1850
+    with pytest.raises(ValueError):
+        tier_plans(wf, ["large", "xl"])
+
+
+def test_xl_tier_routes_by_model_id():
+    """A16: the xl tier resolves to VLLM_XL_MODEL; endpoints keyed by model id win over tier names."""
+    from agentqo.backends.vllm_http import VLLMHTTPBackend, VLLMHTTPConfig
+    from agentqo.workflows.dag import LARGE_FIDELITY, SMALL_FIDELITY, XL_FIDELITY
+    from scripts.v2.model_env import exports, load_models
+    cfg = VLLMHTTPConfig(large_model="Qwen/Qwen2.5-14B-Instruct",
+                         endpoints={"Qwen/Qwen2.5-14B-Instruct": "http://xl:3", "small": "http://s:1"})
+    b = VLLMHTTPBackend(cfg)
+    assert b._resolve_model(XL_FIDELITY) == "Qwen/Qwen2.5-14B-Instruct"
+    assert b._base_for(LARGE_FIDELITY) == "http://xl:3" and b._base_for(XL_FIDELITY) == "http://xl:3"
+    assert b._base_for(SMALL_FIDELITY) == "http://s:1"
+    env = exports("qwen_small", "qwen_large", load_models(), "qwen14b")
+    assert env["VLLM_XL_MODEL"] == "Qwen/Qwen2.5-14B-Instruct"
+    assert "VLLM_XL_MODEL" not in exports("qwen_small", "qwen_large", load_models())
+
+
+@pytest.mark.skipif(not GSM8K, reason="GSM8K working set not downloaded")
+def test_a16_tiers_phase_and_analysis(tmp_path):
+    """A16 on the fake backend: smoke with all_xl, labels, 729 plans with tier columns, P6 tiers report."""
+    results = tmp_path / "results"
+    out = phase(tmp_path, "P2b", V2_N="2")
+    assert "smoke math_tiers not judged" in out
+    assert "all_xl" in (results / "P0/math_tiers/smoke/h3_plans.csv").read_text()
+    plans = (results / "P2b/math_tiers/plans/h3_plans.csv").read_text().splitlines()
+    assert len(plans) == 730 and "tier_planner" in plans[0] and "tier_verifier" in plans[0]
+    calls = (results / "P2b/math_tiers/plans/h3_calls.csv").read_text()
+    assert "Qwen/Qwen2.5-14B-Instruct" in calls and ",xl," in calls
+    assert (results / "P2b/math_tiers/labels/labels_v2.csv").exists()
+    phase(tmp_path, "P6", V2_N="2")
+    summary = json.loads((results / "P6/math_tiers/tiers/tiers_summary.json").read_text())
+    assert summary["n_plans"] == 729 and summary["n_options"] == 12 and 0 < summary["front_share"] <= 1
+    assert {"a16_a_independence_mae_ge_5pt", "a16_b_pairwise_lower", "a16_c_front_share_le_10pct"} <= set(summary)
+    assert "independence_additive" in (results / "P6/math_tiers/tiers/tier_estimator_errors.csv").read_text()
+
+
+@pytest.mark.skipif(not GSM8K, reason="GSM8K working set not downloaded")
+def test_a17_complex_phase_reduce_and_cut(tmp_path):
+    """A17 (P2c) on the fake backend: 1,024 plans of the 10-agent workflow. Too little time for 200
+    eval problems drops it to 100 (logged); too little for 100 cuts it (logged) before it starts."""
+    logs = tmp_path / "repo"
+    (logs / "prereg").mkdir(parents=True)
+    far = {"V2_LEASE_END": "2999-01-01T00:00Z", "V2_LOG_ROOT": str(logs), "V2_N": "2"}
+
+    cut = tmp_path / "cut"
+    cut.mkdir()
+    out = phase(cut, "P2c", **far, V2_HOURS_complex_q15_7="1e9", V2_HOURS_complex_q15_7_n100="1e9")
+    assert "skip complex_q15_7: time budget" in out and not (cut / "results/P2c/complex_q15_7").exists()
+    assert "D-P0-complex_q15_7 " in (logs / "prereg/v2_amendments.md").read_text()
+
+    red = tmp_path / "red"
+    red.mkdir()
+    out = phase(red, "P2c", **far, V2_HOURS_complex_q15_7="1e9")
+    assert "REDUCE complex_q15_7 to 100" in out and "plans on the first 100 eval problems" in out
+    assert "D-P0-complex_q15_7-n100" in (logs / "prereg/v2_amendments.md").read_text()
+    assert (red / "results/P0/reduced.tsv").read_text().startswith("complex_q15_7\t100\t")
+    plans = (red / "results/P2c/complex_q15_7/plans/h3_plans.csv").read_text().splitlines()
+    assert len(plans) == 1025 and "tier_formatter" in plans[0]
+    assert (red / "results/P2c/complex_q15_7/labels_disagree/labels_v2.csv").exists()
+    assert "1e9" not in phase(red, "P2c", **far, V2_HOURS_complex_q15_7="1e9")  # decided once, not re-checked
+
+
+def test_time_cut_takes_earlier_settings_in_the_cut_order(tmp_path):
+    """Cutting A16 for time also cuts A17 (earlier in the cut order, VM-A); VM-B settings are untouched."""
+    logs = tmp_path / "repo"
+    (logs / "prereg").mkdir(parents=True)
+    out = phase(tmp_path, "P2b", V2_LEASE_END="2000-01-01T00:00Z", V2_LOG_ROOT=str(logs))
+    skips = (tmp_path / "results/P0/skips.tsv").read_text()
+    assert skips.startswith("math_tiers\ttime budget") and "complex_q15_7\tcut with math_tiers" in skips
+    assert "phi" not in skips and "skip math_tiers" in out
+
+
+def test_moved_setting_is_not_started(tmp_path):
+    """A setting taken by the other VM goes to skips.tsv only (not a deviation)."""
+    logs = tmp_path / "repo"
+    (logs / "prereg").mkdir(parents=True)
+    subprocess.run(["python3", "scripts/v2/smoke_check.py", "moved", "math_phi", "VM-A", "--skips",
+                    str(tmp_path / "results/P0/skips.tsv"), "--root", str(logs)], cwd=ROOT, check=True)
+    out = phase(tmp_path, "P4b", V2_SETTINGS="math", V2_DRY="1")
+    assert "skip math_phi: moved to VM-A" in out and not (logs / "FAILURES.md").exists()
+
+
+def test_vm_a_runs_a16_then_a17_and_vm_b_ends_with_phi():
+    """VM-A: P1, P2, P2b (A16), P2c (A17); VM-B: P3, P4, P4b (Phi)."""
+    text = (ROOT / "scripts/v2/run_phase.sh").read_text()
+    assert text.index("  P2)") < text.index("  P2b)") < text.index("  P2c)") < text.index("  P3)")
+    assert "P4a" not in text
+    p2b = text[text.index("  P2b)"):text.index("  P2c)")]
+    assert "use_models qwen_small qwen14b" in p2b and 'eval_ext "$(cap 200)"' in p2b and "V2_TIERS=small,large,xl" in p2b
+    p2c = text[text.index("  P2c)"):text.index("  P3)")]
+    assert p2c.index("budget complex_q15_7 23 100 12.5") < p2c.index("labels complex_q15_7")
+    assert "use_models qwen_small qwen_large" in p2c and "qwen14b" not in p2c
+    p4b = text[text.index("  P4b)"):text.index("  P5)")]
+    assert p4b.index("budget math_phi") < p4b.index("labels math_phi") < p4b.index("budget hotpot_phi")
