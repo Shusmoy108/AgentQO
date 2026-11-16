@@ -493,3 +493,11 @@ Operational choices made during the lease (no code change; the tag is what runs)
   AGENTQO_SEED_SALT. 6 new tests; full suite 195 passed, 8 skipped. Recorded in prereg/v2_amendments.md
   as D-L2-X-code. X3 milestone gates (smoke, labels) pushed; their "FAILED/partial" text is a gate-file
   format slip, corrected in STATUS.md.
+- 2026-11-16T23:19:06Z TIMING_LOCK created on VM-A by D-L2-h4grid
+- 2026-11-16T23:19:06Z TIMING_LOCK D-L2-h4grid: no X3/non-timing GPU job running on VM-A (confirmed)
+- 23:25Z NEXT block 7: timing lock replaces X3's idle-time watcher. /mnt/data/tlock.sh acquire|release on both
+  VMs (acquire writes /mnt/data/TIMING_LOCK, then waits until X3 has stopped); the VM-B X3 controller stops
+  X3 and its servers whenever a lock exists and resumes it only with no lock and an idle GPU for 3 min; x.sh
+  B-x3 refuses to start under a lock. h4grid lock taken 23:19Z on both VMs (released per VM by
+  tools/h4_unlock.sh); X1 takes it in stage3_orch.sh. Overlap check: none (STATUS.md). L2-X update recorded
+  before any X2 data: X2 = eval_x2 (719) + HotpotQA extra (600).

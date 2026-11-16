@@ -306,3 +306,19 @@ git diff --stat v2-lease1-start eeb54603:
  tests/test_v2_lease2_x.py     | 101 ++++++++++++++++++++++++++++++++++++++++++
  7 files changed, 174 insertions(+), 18 deletions(-)
 ```
+
+### L2-X update: X2 problem sets and the timing lock (2026-11-16 23:20:30 UTC, before any X2 data)
+
+X2 now uses the GSM8K split eval_x2 (719 test problems in neither label 200 nor eval_ext 400) for
+math_q15_7, math_granite and math_phi, and the HotpotQA split extra (600 dev rows outside the frozen
+label/eval split) for hotpot_q15_7 and hotpot_iso_q15_7, all plans each, from v2-lease2-x eeb54603
+(D-L2-X-code). This replaces the earlier X2 plan (all 64 plans on eval_ext 500, i.e. 100 new problems).
+No X2 data exists on either VM at this time (checked: no results/v2/X2 directory on VM-A or VM-B).
+Timing lock (PI NEXT block 7): every latency-measuring run (D-L2-h4grid, any remaining P5 step, all
+of X1) creates /mnt/data/TIMING_LOCK on both VMs before its first server starts and removes it on each
+VM only after that VM's last timing run; X3 and any other non-timing GPU job start or resume only when
+no lock exists, and stop their servers before the lock is confirmed (tlock.sh acquire waits for that).
+Check of the runs so far: X3's calls on VM-B span 20:15:07-21:09:21 UTC (none after its 21:09:24
+pause); VM-B's timing servers came up at 21:10:19 (P5 separate cal) and 21:35:05 (h4grid), and VM-B's
+P5 shared cal ended 19:27; during X3's window only VM-A's own GPU ran timing (P5 shared_mps). No overlap,
+so no h4grid or P5 point is rerun.

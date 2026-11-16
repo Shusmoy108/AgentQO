@@ -30,3 +30,8 @@
 2026-11-16T22:43:21Z VM-B GATE X3-smoke: FAILED/partial (exit smoke all_small=0.6 all_large=0.6 all_xl=1.0) no settings
 2026-11-16T23:02:12Z CORRECTION: the 22:43Z 'GATE X3-labels/X3-smoke ... FAILED/partial' lines are a gate-file format slip (my note text was read as an exit code). X3 smoke and both label sets finished normally; X3 plans 40/200, paused.
 2026-11-16T23:02:12Z D-L2-X-code: X code change committed on v2-lease2-x eeb54603 (tests 195 passed, 8 skipped), cloned to /mnt/data/AgentQO-x on both VMs; X1/X2/X4 run from it after P6.
+2026-11-16T23:19:06Z TIMING_LOCK created on VM-A by D-L2-h4grid
+2026-11-16T23:19:06Z TIMING_LOCK D-L2-h4grid: no X3/non-timing GPU job running on VM-A (confirmed)
+2026-11-16T23:19:11Z TIMING_LOCK created on VM-B by D-L2-h4grid
+2026-11-16T23:19:11Z TIMING_LOCK D-L2-h4grid: no X3/non-timing GPU job running on VM-B (confirmed)
+2026-11-16T23:20:30Z OVERLAP CHECK: X3 calls on VM-B 20:15:07-21:09:21Z (none after the 21:09:24Z pause); VM-B timing servers from 21:10:19Z (P5 separate cal) and 21:35:05Z (h4grid); no overlap with any P5 or h4grid timing window, nothing rerun. TIMING_LOCK held on both VMs for h4grid since 23:19Z; released per VM after its last h4grid block (VM-A: A-h4shared-q15_7, VM-B: B-h4shared). X1 takes the lock on both VMs before its first server.
