@@ -19,3 +19,4 @@
   X4 seed: agentqo/backends/vllm_http.py VLLMHTTPBackend._seed returns crc32(task|node|sample); add an env salt, e.g. crc32(f"{os.environ.get('AGENTQO_SEED_SALT','')}|{task_id}|{node}|{sample}") when set, and run X4 with AGENTQO_SEED_SALT=1 and a separate V2_CACHE file.
 2026-11-16T19:14:01Z VM-A GATE P5-separate: separate: placement done | separate_k1: placement done | separate_k32: placement done
 2026-11-16T19:31:11Z VM-B GATE P5-cal_shared: cal_granite_hotpot_shared: placement done | cal_granite_math_shared: placement done | cal_phi_math_shared: placement done | cal_qwen3_14_math_shared: placement done
+2026-11-16T20:09:22Z VM-A GATE P5-shared: separate: placement done | separate_k1: placement done | separate_k32: placement done | shared: placement done | shared_k1: placement done | shared_k32: placement done
