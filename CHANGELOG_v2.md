@@ -462,3 +462,7 @@ Operational choices made during the lease (no code change; the tag is what runs)
   Projected /mnt/data free: VM-A 93 -> ~91 (P2b) -> ~88 (P2c) -> ~84 GB (P5 + final zip); VM-B 69 -> ~69 (P3)
   -> ~66 (P4) -> ~63 GB (P4b), at a conservative 15 / 29 KB per call. Nothing projected below 25 GB, so no trace
   packing or cache deletion was done. Details in STATUS.md. Re-check at each GATE.
+- 15:45Z P2b push to GitHub was rejected: results/v2/P2b/math_tiers/plans/h3_calls.csv is 120 MB (> 100 MB limit).
+  Fix (Mac tooling only, no code at the tag): that file is committed as h3_calls.csv.gz (15 MB, gzip -9); the
+  uncompressed file stays in the P2b zip and the Mac mirror. tools/mac_sync.sh now gzips any file > 95 MB in the
+  git copy before commit, so P2c/P4b cannot hit the limit. Sync loop restarted with the 6 h backup schedule kept.
