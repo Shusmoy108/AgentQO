@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-268",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: $1125 (calculated as $75 per ad * 15 ads)",
+  "reference_key": "15",
+  "final_key_plus": "1375",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: $250 (from newspaper ads) + $1125 (from television ads) = $1375\n\nRESULT: $1375",
+    "verifier": "aggregator: $1375\n\nThe real estate agent spent $5 on each newspaper ad and bought 50 ads, so the total cost for newspaper ads is $5 * 50 = $250.\n\nFor television ads, the cost is $75 per ad, and the agent bought 15 ads, so the total cost for television ads is $75 * 15 = $1125.\n\nAdding both costs together, the total amount spent on all ads is $250 + $1125 = $1375.\n\nFinal answer: $1375",
+    "aggregator": "$1375#### 1375"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "15",
+      "reference_key": "15",
+      "key_differs": false,
+      "text": "step_2: RESULT: 16 (calculated as $75 per ad * 15 ads)",
+      "quality": 1.0,
+      "final_key": "1375",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $1375",
+        "verifier": "aggregator: step_3: RESULT: $1375\n\nFinal answer: $1375",
+        "aggregator": "step_3: RESULT: $1375\n\n#### 1375"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1375",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "step_2: RESULT: $1125\n\nCarry out step 3 to get the total expenditure.\n\nRESULT: $1375",
+      "quality": 1.0,
+      "final_key": "1375",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: $1375",
+        "verifier": "aggregator: step_3: RESULT: $1375\n\nFinal answer: $1375",
+        "aggregator": "step_3: RESULT: $1375\n\n#### 1375"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "18",
+      "reference_key": "15",
+      "key_differs": true,
+      "text": "step_2: RESULT: 18",
+      "quality": 1.0,
+      "final_key": "1375",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $250 (newspaper) + $1125 (television) = $1375\nRESULT: $1375",
+        "verifier": "aggregator: step_3: RESULT: $5 (cost per newspaper ad) * 50 (newspaper ads) + $75 (cost per television ad) * 15 (television ads) = $250 (newspaper) + $1125 (television) = $1375\n\nFinal answer: $1375",
+        "aggregator": "step_3: RESULT: $250 (newspaper) + $1125 (television) = $1375\n\n#### $1375"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "1375",
+  "sample_keys": [
+    "1125",
+    "1375",
+    "1125",
+    "1375",
+    "1375"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1365.0,
+    "small_out": 240.0,
+    "small_s": 1.4599367930022709
+  },
+  "calls_plus": {
+    "small_in": 1099.0,
+    "small_out": 361.0,
+    "small_s": 3.9861190430019633,
+    "large_in": 292.0,
+    "large_out": 26.0,
+    "large_s": 0.45503360200018506
+  },
+  "calls_samples": {
+    "small_in": 1460.0,
+    "small_out": 148.0,
+    "small_s": 1.9796914030002881
+  }
+}

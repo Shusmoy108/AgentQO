@@ -1,0 +1,94 @@
+{
+  "task_id": "gsm8k-test-990",
+  "node_id": "aggregator",
+  "role": "aggregator",
+  "reference": "The final temperature was 18 degrees lower than the starting temperature. #### 18",
+  "reference_key": "18",
+  "final_key_plus": "18",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "aggregator: The final temperature was 18 degrees lower than the starting temperature. #### 18\n\nchecker: The problem states that the air conditioner cools the room by 2 degrees an hour on low and 3 degrees an hour on high. It then ran for 3 hours on low, 4 hours on high, and 2 hours off.\n\nCalculation:\n- Low setting: 3 hours * 2 degrees/hour = 6 degrees cooler\n- High setting: 4 hours * 3 degrees/hour = 12 degrees cooler\n- Total cooling: 6 degrees (low) + 12 degrees (high) = 18 degrees cooler\n\nFinal answer: 18 degrees"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "19",
+      "reference_key": "18",
+      "key_differs": true,
+      "text": "The final temperature was 18 degrees lower than the starting temperature. #### 19",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: The final temperature was 18 degrees lower than the starting temperature. #### 18\n\nFinal answer: 18"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "18",
+      "key_differs": true,
+      "text": "3 hours on low \u00d7 2 degrees/hour = 6 degrees cooled\n4 hours on high \u00d7 3 degrees/hour = 12 degrees cooled\nTotal cooling: 6 + 12 = 18 degrees\nStarting temperature warmed up by 2 degrees every hour for a total of 8 degrees (3 + 4 + 2).\nFinal temperature is 8 degrees more than the starting temperature.\nDecrease in temperature: 18 degrees (cooled) - 8 degrees (warmed up) = 10 degrees\n#### 10",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "Re-reading the problem, the calculation for the total cooling is correct: 3 hours on low \u00d7 2 degrees/hour = 6 degrees cooled, and 4 hours on high \u00d7 3 degrees/hour = 12 degrees cooled, totaling 18 degrees cooled. The room warmed up by 8 degrees (3 + 4 + 2) over the course of the day. The final temperature is indeed 8 degrees more than the starting temperature. Therefore, the decrease in temperature is 18 degrees (cooled) - 8 degrees (warmed up) = 10 degrees.\n\nFinal answer: 10 degrees"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "60",
+      "reference_key": "18",
+      "key_differs": true,
+      "text": "step_1: Calculate the number of Junebugs removed on Tuesday and Wednesday.\nSince she removed twice as many on Tuesday and Wednesday as she did on Monday,\nTuesday: 39 * 2 = 78 Junebugs\nWednesday: 39 * 2 = 78 Junebugs\n\nstep_2: Sum up the total number of Junebugs removed from Monday to Friday.\nTotal: 39 (Monday) + 78 (Tuesday) + 78 (Wednesday) + 48 (Thursday) + 57 (Friday) = 300 Junebugs\n\nstep_3: Calculate the average number of Junebugs removed per day.\nAverage: 300 Junebugs / 5 days = 60 Junebugs per day\n\n#### 60",
+      "quality": 1.0,
+      "final_key": "14",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: step_1: Calculate the net cooling effect.\nLow setting cooling: 2 degrees/hour * 3 hours = 6 degrees\nHigh setting cooling: 3 degrees/hour * 4 hours = 12 degrees\nTotal cooling: 6 degrees + 12 degrees = 18 degrees\n\nstep_2: Consider the warming period.\n2 degrees/hour * 2 hours = 4 degrees\n\nstep_3: Net cooling effect.\nNet cooling: 18 degrees - 4 degrees = 14 degrees\n\nFinal answer: 14"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "18",
+  "sample_keys": [
+    "18",
+    "18",
+    "18",
+    "18",
+    "18"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1904.0,
+    "small_out": 527.0,
+    "small_s": 2.9959378769999603
+  },
+  "calls_plus": {
+    "small_in": 1736.0,
+    "small_out": 488.0,
+    "small_s": 3.22162619700066,
+    "large_in": 177.0,
+    "large_out": 19.0,
+    "large_s": 0.32650499300052616
+  },
+  "calls_samples": {
+    "small_in": 885.0,
+    "small_out": 117.0,
+    "small_s": 1.9319316460005211
+  }
+}

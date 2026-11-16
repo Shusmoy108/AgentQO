@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-990",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cooling effect of the air conditioner on low for 3 hours: 2 degrees/hour * 3 hours = 6 degrees.\n2. Calculate the total cooling effect of the air conditioner on high for 4 hours: 3 degrees/hour * 4 hours = 12 degrees.\n3. Calculate the total warming effect of the room without the air conditioner for 2 hours: 2 degrees/hour * 2 hours = 4 degrees.\n4. Subtract the total warming effect from the total cooling effect to find the final temperature relative to the starting temperature: (6 degrees + 12 degrees) - 4 degrees = 14 degrees.\n\nThe final temperature is 14 degrees lower than the starting temperature.",
+  "reference_key": null,
+  "final_key_plus": "12",
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "aggregator": "step_3: 2 degrees/hour * 2 hours = 4 degrees\n\nRESULT: 4\n#### 4",
+    "step_1": "2 degrees/hour * 3 hours = 6 degrees\n\nRESULT: 6",
+    "step_3": "step_3: 2 degrees/hour * 2 hours = 4 degrees\n\nRESULT: 4",
+    "verifier": "aggregator: step_3: 2 degrees/hour * 2 hours = 4 degrees\n\nThe calculation for the temperature change when the air conditioner was on low for 3 hours is correct. However, the subsequent temperature change when the air conditioner was on high for 4 hours needs to be calculated separately.\n\naggregator: step_4: 3 degrees/hour * 4 hours = 12 degrees\n\nThe total temperature change when the air conditioner was on high for 4 hours is 12 degrees.\n\naggregator: step_5: 4 degrees (low) + 12 degrees (high) = 16 degrees\n\nThe total temperature change over the 7 hours (3 low + 4 high) is 16 degrees.\n\naggregator: step_6: 2 degrees/hour * 2 hours (off) = 4 degrees\n\nThe temperature change when the air conditioner was off for 2 hours is 4 degrees.\n\naggregator: step_7: 16 degrees (total change) - 4 degrees (off time) = 12 degrees\n\nThe final temperature is 12 degrees lower than the starting temperature.\n\nFinal answer: 12",
+    "step_2": "step_2: 3 degrees/hour * 4 hours = 12 degrees\n\nRESULT: 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the amount of hay needed for one goat: 5 pounds.\n2. Determine the hay requirement for one sheep: Twice the amount a goat needs, minus 3 pounds. So, 2 * 5 - 3 = 10 - 3 = 7 pounds.\n3. Compute the total hay needed for all goats: 15 goats * 5 pounds each = 75 pounds.\n4. Compute the total hay needed for all sheep: 12 sheep * 7 pounds each = 84 pounds.\n5. Add the total hay needed for goats and sheep to find the overall requirement: 75 pounds + 84 pounds = 159 pounds.",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "3. Compute the total cooling for the room during the high setting: 3 degrees/hour * 4 hours = 12 degrees.\n\nRESULT: 12\n\nStep 4: 4. Calculate the net cooling effect after the high setting: 12 degrees (high) - 6 degrees (low) = 6 degrees.\n\nRESULT: 6\n\nStep 5: 5. Determine the final temperature considering the room would have warmed up 2 degrees an hour without the air conditioner: 6 degrees (net cooling) + 2 degrees/hour * 2 hours (off) = 10 degrees.\n\nRESULT: 10\n\nStep 6: 6. Find the difference between the final temperature and the starting temperature: 10 degrees (final) - 0 degrees (starting) = 10 degrees.\n\nRESULT: 10\n\n#### 10",
+        "step_1": "1. Calculate the amount of cooling per hour for low setting: 2 degrees.\nRESULT: 2",
+        "step_3": "3. Compute the total cooling for the room during the low setting: 2 degrees/hour * 3 hours = 6 degrees.\n\nRESULT: 6",
+        "verifier": "Re-reading the problem, there's no mistake in the calculation. The final temperature, considering the net cooling effect and the time the air conditioner was off, is indeed 10 degrees lower than the starting temperature.\n\nFinal answer: 10",
+        "step_2": "2. Determine the hay requirement for one sheep: Twice the amount a goat needs, minus 3 pounds. So, 2 * 5 - 3 = 10 - 3 = 7 pounds.\n\nRESULT: 7"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the total cooling impact of the air conditioner on low for 3 hours: 2 degrees/hour * 3 hours = 6 degrees.\n2. Compute the total cooling impact of the air conditioner on high for 4 hours: 3 degrees/hour * 4 hours = 12 degrees.\n3. Compute the total warming impact of the room without the air conditioner for 2 hours: 2 degrees/hour * 2 hours = 4 degrees.\n4. Subtract the total warming impact from the total cooling impact to determine the final temperature relative to the initial temperature: (6 degrees + 12 degrees) - 4 degrees = 14 degrees.\n\nThe final temperature is 14 degrees higher than the starting temperature.",
+      "quality": 1.0,
+      "final_key": "14",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "14 degrees\n#### 14",
+        "step_1": "RESULT: 6 degrees",
+        "step_3": "step_3: RESULT: 4 degrees\n\nFinal calculation: (6 degrees + 12 degrees) - 4 degrees = 14 degrees\n\nRESULT: 14 degrees",
+        "verifier": "aggregator: 14 degrees\n\nRe-reading the problem, the calculation remains accurate. The air conditioner cooled the room by 2 degrees per hour on low for 3 hours, resulting in a total cooling of 6 degrees. On high, it cooled by 3 degrees per hour for 4 hours, adding another 12 degrees. The room then warmed up for 2 hours at a rate of 2 degrees per hour, contributing 4 degrees back to the room.\n\nAdding these together, the total cooling effect is 6 + 12 - 4 = 14 degrees.\n\nFinal answer: 14 degrees",
+        "step_2": "step_2: RESULT: 12 degrees"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the number of Junebugs Rita removed on Tuesday and Wednesday combined. Since she removed twice as many on these days as she did on Monday, that's 2 * 39 = 78 Junebugs.\n\n2. Sum up all the Junebugs removed from Monday to Friday: 39 (Monday) + 78 (Tuesday and Wednesday) + 48 (Thursday) + 57 (Friday) = 222 Junebugs.\n\n3. To find the average, divide the total number of Junebugs by the number of days, which is 5. So, 222 Junebugs \u00f7 5 days = 44.4 Junebugs per day.\n\nPLAN:\n1. Compute Tuesday and Wednesday's Junebugs (twice Monday's count).\n2. Sum up all Junebugs removed from Monday to Friday.\n3. Calculate the average by dividing the total Junebugs by the number of days.",
+      "quality": 1.0,
+      "final_key": "14",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "1. Calculate the total cooling effect of the air conditioner on low setting:\n   3 hours * 2 degrees/hour = 6 degrees\n\n2. Calculate the total cooling effect of the air conditioner on high setting:\n   4 hours * 3 degrees/hour = 12 degrees\n\n3. Calculate the total cooling effect of the air conditioner:\n   6 degrees (low) + 12 degrees (high) = 18 degrees\n\n4. Account for the room warming up when the air conditioner is off:\n   2 degrees/hour * 2 hours (off) = 4 degrees\n\n5. Calculate the net cooling effect:\n   18 degrees (total cooling) - 4 degrees (warming) = 14 degrees\n\n6. Determine the final temperature relative to the starting temperature:\n   14 degrees cooler than the starting temperature\n\n#### 14",
+        "step_1": "1. Tuesday and Wednesday's Junebugs = 2 * 39 = 78\n\nRESULT: 78",
+        "step_3": "3. Average Junebugs per day = Total Junebugs \u00f7 Number of days\nRESULT: 44.4",
+        "verifier": "Re-reading the problem, there's no mistake in the calculations. The air conditioner cooled the room by 14 degrees relative to the starting temperature, as the net cooling effect is 14 degrees after accounting for the room warming up when the air conditioner is off.\n\nFinal answer: 14",
+        "step_2": "2. Sum up all Junebugs removed from Monday to Friday: 39 (Monday) + 78 (Tuesday and Wednesday) + 48 (Thursday) + 57 (Friday) = 222\n\nRESULT: 222"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "18",
+  "sample_keys": [
+    "6",
+    "14",
+    "12"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1904.0,
+    "small_out": 527.0,
+    "small_s": 2.9959378769999603
+  },
+  "calls_plus": {
+    "large_in": 169.0,
+    "large_out": 171.0,
+    "large_s": 2.8878764290002437,
+    "small_in": 1489.0,
+    "small_out": 365.0,
+    "small_s": 3.731953846000579
+  },
+  "calls_samples": {
+    "small_in": 5841.0,
+    "small_out": 1456.0,
+    "small_s": 21.08481927699995
+  }
+}

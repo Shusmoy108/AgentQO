@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-1175",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Team B's first half goals = 4 - 2 = 2 goals.\nRESULT: 2",
+  "reference_key": "2",
+  "final_key_plus": "25",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "aggregator: step_1: Team A's first half goals = 4.\nstep_2: Team B's first half goals = Team A's first half goals - 2 = 4 - 2 = 2.\nstep_3: Team B's total goals = 2 (first half) + 8 (second half) = 10 goals.\nstep_4: Team A's second half goals = 1/4 * Team B's second half goals = 1/4 * 4 = 1 goal.\nstep_5: Total goals for Team A = 4 (first half) + 1 (second half) = 5 goals.\nstep_6: Total goals for Team B = 2 (first half) + 8 (second half) = 10 goals.\n\nFinal answer: 25",
+    "step_2": "step_2: 2. Team B's second half goals = 4 * 2 = 8 goals.\nRESULT: 8",
+    "aggregator": "step_3: Team B's total goals = 2 (first half) + 8 (second half) = 10 goals.\nRESULT: 10\n#### 10",
+    "step_3": "step_3: 3. Team B's total goals = 2 (first half) + 8 (second half) = 10 goals.\nRESULT: 10"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "3",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "1. Team B's first half goals = 4 - 2 = 2 goals.\nRESULT: 3",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: step_3: Team B's total goals = 2 (first half) + 8 (second half) = 10 goals.\n\nFinal answer: 10",
+        "step_2": "step_2: 2. Team B's second half goals = 4 * 2 = 8 goals.\nRESULT: 4",
+        "aggregator": "step_3: Team B's total goals = 2 (first half) + 8 (second half) = 10 goals.\n\nRESULT: 5\n\n#### 5",
+        "step_3": "step_3: 3. Team B's total goals = 2 (first half) + 8 (second half) = 10 goals.\nRESULT: 5"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "2000",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "RESULT: $2000",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: step_3: RESULT: 10 goals\n\nFinal answer: 10",
+        "step_2": "step_2: RESULT: 8 goals",
+        "aggregator": "step_3: RESULT: 10 goals\n\nFinal answer: #### 10",
+        "step_3": "step_3: RESULT: 10 goals"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "40",
+      "reference_key": "2",
+      "key_differs": true,
+      "text": "Silver coins = 70 - 30 = 40\n\nRESULT: 40",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: 10\n\nFinal answer: 10",
+        "step_2": "step_2: Compute team B's second half goals.\nTeam B's second half goals = 4 * 2 = 8 goals.\n\nRESULT: 8",
+        "aggregator": "10\n#### 10",
+        "step_3": "step_3: Team B's total goals = First half goals + Second half goals\nTeam B's total goals = 2 + 8 = 10 goals.\n\nRESULT: 10"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "2",
+  "sample_keys": [
+    "2",
+    "2",
+    "2",
+    "2",
+    "2"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": null,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2258.0,
+    "small_out": 782.0,
+    "small_s": 3.8338084980014173
+  },
+  "calls_plus": {
+    "small_in": 1733.0,
+    "small_out": 672.0,
+    "small_s": 6.420701375000135,
+    "large_in": 536.0,
+    "large_out": 25.0,
+    "large_s": 0.45508109599995805
+  },
+  "calls_samples": {
+    "small_in": 2680.0,
+    "small_out": 104.0,
+    "small_s": 1.5834949350009992
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-1114",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Raymond had $21 initially and saved $11 from his allowance.\n\nRESULT: $32",
+  "reference_key": "32",
+  "final_key_plus": "8",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.4,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: $27 (result of step 2) - $19 (puzzle cost) = $8\n\nRESULT: $8",
+    "verifier": "aggregator: step_1: Raymond starts with $21\nstep_2: Raymond saves $11 from his allowance, so he now has $21 + $11 = $32\nstep_3: Raymond spends $5 on a comic book, leaving him with $32 - $5 = $27\nstep_4: Raymond then spends $19 on a puzzle, so he has $27 - $19 = $8 left\n\nFinal answer: $8",
+    "aggregator": "step_3: $27 (result of step 2) - $19 (puzzle cost) = $8\n\nRESULT: $8\n#### 8",
+    "step_2": "step_2: $32 (initial amount + allowance) - $5 (comic book) = $27\n\nRESULT: $27"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "33",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "Raymond had $21 initially and saved $11 from his allowance.\n\nRESULT: 33",
+      "quality": 0.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "3. $28 - $19 (puzzle) = $9\n\nRESULT: 9",
+        "verifier": "aggregator: RESULT: 9\n#### 9\nUpon re-evaluation, the calculation seems correct. Raymond started with $21, saved $11, spent $5 on a comic book, and $19 on a puzzle. The total spent is $5 + $19 = $24. Subtracting this from his initial amount, Raymond has $21 - $24 = -$3 left, which doesn't make sense in this context as he can't have a negative amount. The mistake likely lies in the subtraction order. The correct order is: $21 - $24 = -$3, which is incorrect. The correct calculation is: $21 - ($5 + $19) = $21 - $24 = -$3. This indicates a mistake in the subtraction order. The correct subtraction should be: $21 - $5 - $19 = $21 - $24 = -$3. This is still incorrect because it shows a negative result, which is not possible. The correct calculation should be: $21 - ($5 + $19) = $21 - $24 = -$3, which is incorrect due to the negative result. The correct subtraction should be: $21 - $5 - $19 = $21 - $24 = -$3, which is incorrect because it shows a negative result. The correct calculation should be: $21 - ($5 + $19) = $21 - $24 = -$3, which is incorrect due to the negative result. The correct subtraction should be: $21 - $5 - $19 = $21 - $24 = -$3, which is incorrect because it shows a negative result. The correct calculation should be: $21 - ($5 + $19) = $21 - $24 = -$3, which is incorrect due to the negative result. The correct subtraction should be: $21 - $5 - $19 = $21 - $24 = -$3, which is incorrect because it shows a negative result. The correct calculation should be: $21 - ($5 + $19) = $21 - $24 = -$3, which is incorrect due to the negative result. The correct subtraction should be: $21 -",
+        "aggregator": "RESULT: 9\n#### 9",
+        "step_2": "2. $33 - $5 (comic book) = $28\n\nRESULT: 28"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "8",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "RESULT: $21\n\nNext steps:\n1. Add the amount saved ($11) to the initial amount ($21): $21 + $11 = $32\n2. Subtract the cost of the comic book ($5) from the total after step 1: $32 - $5 = $27\n3. Subtract the cost of the puzzle ($19) from the result of step 2: $27 - $19 = $8\n\nRESULT: Raymond has $8 left.",
+      "quality": 1.0,
+      "final_key": "8",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. $27 - $19 = $8\n\nRESULT: $8",
+        "verifier": "aggregator: step_3: 3. $21 + $11 - $5 - $19 = $8\n\nRESULT: $8\n\nFinal answer: $8",
+        "aggregator": "step_3: 3. $27 - $19 = $8\n\nRESULT: $8\n#### 8",
+        "step_2": "2. $32 - $5 = $27\n\nRESULT: $27"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "2",
+      "reference_key": "32",
+      "key_differs": true,
+      "text": "RESULT: 2",
+      "quality": 0.0,
+      "final_key": "7",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 26 - 19 = 7\nRESULT: 7",
+        "verifier": "aggregator: step_3: RESULT: 21 + 11 - 5 - 19 = 7\n\nFinal answer: 7",
+        "aggregator": "step_3: RESULT: 21 + 11 - 5 - 19 = 7\n\n#### 7",
+        "step_2": "step_2: RESULT: 21 + 11 - 5 = 26\nRESULT: 26"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "8",
+  "sample_keys": [
+    "32",
+    "32",
+    "8",
+    "32",
+    "1"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 1.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1482.0,
+    "small_out": 387.0,
+    "small_s": 2.2720849170000292
+  },
+  "calls_plus": {
+    "small_in": 1063.0,
+    "small_out": 362.0,
+    "small_s": 3.8728046140004153,
+    "large_in": 262.0,
+    "large_out": 25.0,
+    "large_s": 0.4498530529999698
+  },
+  "calls_samples": {
+    "small_in": 1310.0,
+    "small_out": 291.0,
+    "small_s": 4.4344871439998315
+  }
+}

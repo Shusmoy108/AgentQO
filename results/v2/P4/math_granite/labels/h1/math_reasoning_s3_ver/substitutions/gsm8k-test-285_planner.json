@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-285",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Determine Ann's brother's current age by multiplying Ann's age by 2.\n2. Calculate Ann's brother's age in 3 years by adding 3 to his current age.\n3. Present the final answer.",
+  "reference_key": null,
+  "final_key_plus": "21",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_1": "RESULT: 18",
+    "aggregator": "step_3: step_2: RESULT: 21\nRESULT: Ann's brother will be 21 years old in 3 years.\n#### 21",
+    "step_2": "step_2: RESULT: 21\nEnd with \"RESULT: <number>\".",
+    "verifier": "aggregator: step_3: step_2: RESULT: 21\n\nFinal answer: 21",
+    "step_3": "step_2: RESULT: 21\nRESULT: Ann's brother will be 21 years old in 3 years."
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the initial commission for the first $1000 in sales:\n   Commission for $1000 = 30% of $1000 = 0.30 * $1000 = $300\n\n2. Determine the additional commission for the remaining $1500 (since $2500 - $1000 = $1500):\n   Additional commission = 10% of $1500 = 0.10 * $1500 = $150\n\n3. Add the initial and additional commissions to find the total amount earned:\n   Total commission = Initial commission + Additional commission\n   Total commission = $300 + $150 = $450\n\nPLAN: The total amount of money Antonella earned is $450.",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "1. Calculate the initial commission for the first $1000 in sales:\n   Commission for $1000 = 30% of $1000 = 0.30 * $1000 = $300\n\nRESULT: $300",
+        "aggregator": "RESULT: $450\n#### 450",
+        "step_2": "step_2: 2. Determine the additional commission for the remaining $1500 (since $2500 - $1000 = $1500):\n   Additional commission = 10% of $1500 = 0.10 * $1500 = $150\n\nRESULT: $150",
+        "verifier": "aggregator: RESULT: $18\n\nFinal answer: 18",
+        "step_3": "3. Add the initial and additional commissions to find the total amount earned:\n   Total commission = Initial commission + Additional commission\n   Total commission = $300 + $150 = $450\n\nRESULT: $450"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Estimate Ann's brother's current age by multiplying Ann's age by 2.\n2. Forecast Ann's brother's age in 3 years by subtracting 3 from his current age.\n3. Display the final answer.",
+      "quality": 1.0,
+      "final_key": "21",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Ann's brother is currently 9 * 2 = 18 years old.\nRESULT: 18",
+        "aggregator": "step_3: RESULT: 15\n\nAnn's brother is currently twice her age, which means he is 18 years old (9 years * 2). In 3 years, he will be 18 + 3 = 21 years old.\n\n#### 21",
+        "step_2": "step_2: 2. Ann's brother's age in 3 years will be 18 - 3 = 15 years old.\nRESULT: 15",
+        "verifier": "aggregator: step_3: RESULT: 18\n\nUpon re-evaluation, the mistake lies in the initial calculation. Ann's brother is indeed twice her age, making him 18 years old (9 years * 2). In 3 years, he will be 18 + 3 = 21 years old.\n\nFinal answer: 21",
+        "step_3": "RESULT: 15"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of tomatoes from the tomato plants: 5 plants * 22 tomatoes/plant = 110 tomatoes.\n2. Calculate the total number of eggplants from the eggplant plants: 8 plants * 4 eggplants/plant = 32 eggplants.\n3. Add the total tomatoes and eggplants to find the overall yield: 110 tomatoes + 32 eggplants = 142 fruits.\n\nPLAN:\n1. Compute the tomato yield: 5 plants * 22 tomatoes/plant.\n2. Compute the eggplant yield: 8 plants * 4 eggplants/plant.\n3. Sum the tomato and eggplant yields to get the total fruits.",
+      "quality": 1.0,
+      "final_key": "21",
+      "final_differs": false,
+      "descendants": {
+        "step_1": "1. Compute the tomato yield: 5 plants * 22 tomatoes/plant = 110 tomatoes.\n\nRESULT: 110 tomatoes.",
+        "aggregator": "RESULT: 142 fruits. #### 142",
+        "step_2": "2. Compute the eggplant yield: 8 plants * 4 eggplants/plant = 32 eggplants.\n\nRESULT: 32 eggplants.",
+        "verifier": "aggregator: The problem states Ann is 9 years old and her brother is twice her age. So, her brother is 9 * 2 = 18 years old. In 3 years, he will be 18 + 3 = 21 years old.\n\nFinal answer: 21",
+        "step_3": "3. Sum the tomato and eggplant yields to get the total fruits: 110 tomatoes + 32 eggplants = 142 fruits.\n\nRESULT: 142 fruits."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "21",
+  "sample_keys": [
+    "21",
+    "21",
+    "21"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 956.0,
+    "small_out": 149.0,
+    "small_s": 0.940357264999875
+  },
+  "calls_plus": {
+    "large_in": 106.0,
+    "large_out": 55.0,
+    "large_s": 0.9424524570003996,
+    "small_in": 806.0,
+    "small_out": 117.0,
+    "small_s": 1.798763470999802
+  },
+  "calls_samples": {
+    "small_in": 3148.0,
+    "small_out": 560.0,
+    "small_s": 8.193186703998435
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "task_id": "gsm8k-test-668",
+  "node_id": "aggregator",
+  "role": "aggregator",
+  "reference": "4 employees oversee the company. #### 4",
+  "reference_key": "4",
+  "final_key_plus": "4",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "aggregator: 4 employees oversee the company. #### 4\n\nRe-reading the problem, the calculation remains accurate. The 20% of employees who are management (10 employees) oversee 30% of these managers, which is 3 employees. Therefore, the final answer remains 4 employees overseeing the company.\n\nFinal answer: 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "5",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "4 employees oversee the company. #### 5",
+      "quality": 0.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: 4 employees oversee the company.\n\nRe-reading the problem, the calculation remains accurate. The 20% of employees who are management (10 employees) oversee 30% of these (3 employees). Therefore, the final answer remains 4 employees overseeing the company.\n\nFinal answer: 4"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "0.3",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "step_3: (20% of 50) / 100 = 1\nstep_4: (1 * 30%) = 0.3\n\nFinal answer: #### 0.3",
+      "quality": 0.0,
+      "final_key": "0.3",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: step_3: (20% of 50) / 100 = 1\nstep_4: (1 * 30%) = 0.3\n\nFinal answer: 0.3\n\nUpon re-reading the problem, I found no arithmetic or reading mistake. The calculation is correct. The number of employees who oversee the company is 0.3, which is 30% of the 20% management staff. Therefore, the final answer remains:\n\nFinal answer: 0.3"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "115",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "step_3: RESULT: $70 (initial amount) + $45 (Ava's contribution) = $115 (total amount)\n\n#### $115",
+      "quality": 1.0,
+      "final_key": "3",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: step_1: Calculate 20% of 50 employees for management.\n20% of 50 = 0.20 * 50 = 10 employees are management.\n\nstep_2: Calculate 30% of the management employees for overseers.\n30% of 10 = 0.30 * 10 = 3 employees oversee the company.\n\nFinal answer: 3 employees oversee the company."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "3",
+  "sample_keys": [
+    "3",
+    "3",
+    "3",
+    "3",
+    "3"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1183.0,
+    "small_out": 247.0,
+    "small_s": 1.4474252080008227
+  },
+  "calls_plus": {
+    "small_in": 1002.0,
+    "small_out": 209.0,
+    "small_s": 1.3090084290006416,
+    "large_in": 115.0,
+    "large_out": 11.0,
+    "large_s": 0.1891815549997773
+  },
+  "calls_samples": {
+    "small_in": 575.0,
+    "small_out": 254.0,
+    "small_s": 3.009481890000643
+  }
+}

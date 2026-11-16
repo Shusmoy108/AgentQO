@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-524",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: RESULT: 24",
+  "reference_key": "24",
+  "final_key_plus": "3",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: RESULT: 36 red tulips \u00f7 6 = 6 rows\nRESULT: 6",
+    "verifier": "aggregator: step_3: RESULT: 24 blue tulips \u00f7 8 = 3 rows\n\nJackson will plant 3 rows of blue tulips.\n\nFinal answer: 6 (red tulips) and 3 (blue tulips) rows.",
+    "aggregator": "step_3: RESULT: 36 red tulips \u00f7 6 = 6 rows\n\nJackson will plant 6 rows of red tulips.\n\n#### 6"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "25",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "step_2: RESULT: 25",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 6 (red tulips) \u00f7 6 = 1 row\nRESULT: 1",
+        "verifier": "aggregator: step_3: step_3: RESULT: 36 (red tulips) \u00f7 6 = 6 rows\nRESULT: 6\n\nFinal answer: 6",
+        "aggregator": "step_3: step_3: RESULT: 36 (red tulips) \u00f7 6 = 6 rows\nRESULT: 6\n\n#### 6"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "step_2: RESULT: 24\nRESULT: 36\nstep_3: 36 red tulips \u00f7 6 = 6 rows\nstep_4: 24 blue tulips \u00f7 8 = 3 rows\nstep_5: 6 rows (red) + 3 rows (blue) = 9 rows\nLoop_Tree/generate_text.py\ndef get_sql_query(database_name, table_name, column_names):\n    \"\"\"\n    This function takes a database name, table name, and a list of column names\n    and returns a SQL query as a string.\n\n    Args:\n    database_name (str): The name of the database.\n    table_name (str): The name of the table.\n    column_names (list): A list of column names to be included in the SELECT statement.\n\n    Returns:\n    sql_query (str): A formatted SQL query string.\n    \"\"\"\n    sql_query = f\"SELECT {', '.join(column_names)} FROM {database_name}.{table_name};\"\n    return sql_query\n\n# Example usage:\n# print(get_sql_query(\"my_database\", \"my_table\", [\"id\", \"name\", \"age\"]))\n# Output: \"SELECT id, name, age FROM my_database.my_table;\"\n\ndef get_unique_users_by_device(user_data):\n    \"\"\"\n    This function takes a list of dictionaries, where each dictionary represents a\n    user's data. The data includes device information about the users.\n    The function finds and returns the number of unique devices each user owns.\n\n    Args:\n        user_data (list): List of dictionaries, where each dictionary contains\n                           user data with device information.\n\n    Returns:\n        unique_counts (dict): A dictionary mapping user IDs to the number of unique\n                              devices each user owns.\n    \"\"\"\n    unique_counts = {}\n    for user in user_data:\n        user_devices = set()\n        for device in user['devices']:\n            device_id = device['device_id']\n            user_devices.add(device_id)\n        unique_count = len(user_devices)\n        unique_counts[user['id']] = unique_count\n    return unique_counts\n\n# Example usage:\n# user_data = [\n#     {\"id\": 1, \"devices\": [{\"device_",
+      "quality": 1.0,
+      "final_key": "9",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "36 red tulips \u00f7 6 = 6 rows\n\nRESULT: 6",
+        "verifier": "Re-reading the problem, there's no mistake in the calculations. Jackson will indeed plant 6 rows of red tulips and 3 rows of blue tulips, totaling 9 rows of flowers.\n\nFinal answer: 9",
+        "aggregator": "6 red tulips form 6 rows.\n\nStep results:\nstep_4: 24 blue tulips \u00f7 8 = 3 rows\n\nRESULT: 3\n\n#### 6 blue tulips form 3 rows.\n\nTotal rows of flowers: 6 (red) + 3 (blue) = 9 rows.\n\n#### 9"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "7",
+      "reference_key": "24",
+      "key_differs": true,
+      "text": "step_2: 2. The carrots weigh 3 pounds less than the sweet potatoes. So, the weight of the carrots is 10 - 3 = 7 pounds.\n\nRESULT: 7 pounds",
+      "quality": 0.0,
+      "final_key": "6",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "step_3: RESULT: 6 rows (red tulips)\n\nRESULT: 6",
+        "verifier": "aggregator: step_3: RESULT: 6 rows (red tulips)\n\nFinal answer: 6",
+        "aggregator": "step_3: RESULT: 6 rows (red tulips)\n\nFinal answer: 6\n#### 6"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "3",
+  "sample_keys": [
+    "9",
+    "3",
+    "3",
+    "9",
+    "9"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1588.0,
+    "small_out": 376.0,
+    "small_s": 2.1656643769993025
+  },
+  "calls_plus": {
+    "small_in": 1215.0,
+    "small_out": 341.0,
+    "small_s": 1.9558968219989765,
+    "large_in": 348.0,
+    "large_out": 10.0,
+    "large_s": 0.17297740599951794
+  },
+  "calls_samples": {
+    "small_in": 1740.0,
+    "small_out": 483.0,
+    "small_s": 6.774385800000346
+  }
+}

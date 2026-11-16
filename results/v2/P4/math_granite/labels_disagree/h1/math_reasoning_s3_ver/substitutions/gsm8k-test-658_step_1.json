@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-658",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. Beans' cooking time = (Pork's cooking time + Rice's cooking time) / 2 = (50 minutes + 30 minutes) / 2 = 25 minutes.\n\nRESULT: 25",
+  "reference_key": "25",
+  "final_key_plus": "105",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: 3. Sum up all cooking times (105 minutes).\n\nCalculation:\nTotal time = Rice + Beans + Pork\nTotal time = 30 minutes + 25 minutes + 50 minutes\nTotal time = 105 minutes\n\nRESULT: 105 minutes",
+    "verifier": "aggregator: 105 minutes\n\nFinal answer: 105 minutes",
+    "aggregator": "105 minutes\n#### 105",
+    "step_2": "step_2: 2. Determine pork's cooking time (50 minutes).\n\nCalculation:\nPork = Rice + 20 minutes\nPork = 30 minutes + 20 minutes\nPork = 50 minutes\n\nRESULT: 50 minutes"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "26",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "1. Beans' cooking time = (Pork's cooking time + Rice's cooking time) / 2 = (50 minutes + 30 minutes) / 2 = 25 minutes.\n\nRESULT: 26",
+      "quality": 0.0,
+      "final_key": "95",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "3. Sum up all cooking times (105 minutes).\n\nRESULT: 105",
+        "verifier": "aggregator: step_1: 1. Calculate time for beans (30 minutes / 2 = 15 minutes).\nstep_2: 2. Calculate time for pork (30 minutes + 20 minutes = 50 minutes).\nstep_3: 3. Sum up all cooking times (30 minutes + 15 minutes + 50 minutes = 95 minutes).\n\nFinal answer: 95 minutes",
+        "aggregator": "step_3: 3. Sum up all cooking times (105 minutes).\n\nRESULT: 105\n#### 105",
+        "step_2": "step_2: 2. Pork's cooking time = Rice's cooking time + 20 minutes = 30 minutes + 20 minutes = 50 minutes.\n\nRESULT: 50"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "50",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "30 (rice) + 20 (pork excess) = 50 minutes.\n\nRESULT: 50 minutes.",
+      "quality": 0.0,
+      "final_key": "105",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 105 minutes.",
+        "verifier": "aggregator: step_3: RESULT: 105 minutes.\n\nFinal answer: 105 minutes.\n\n(No mistake found in the re-computation. The original answer remains accurate.)",
+        "aggregator": "step_3: RESULT: 105 minutes.\n\nFinal answer: 105 minutes. #### 105",
+        "step_2": "step_2: 25 (beans)\n\nRESULT: 25 minutes."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "10.5",
+      "reference_key": "25",
+      "key_differs": true,
+      "text": "1. Annual profit from selling lemons: 7 lemons * $1.5/lemon = $10.5\n\nRESULT: 10.5",
+      "quality": 0.0,
+      "final_key": "95",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "3. Sum up all cooking times (105 minutes).\n\nRESULT: 105",
+        "verifier": "aggregator: step_1: 1. Calculate time for beans (30 minutes / 2 = 15 minutes).\nstep_2: 2. Calculate time for pork (30 minutes + 20 minutes = 50 minutes).\nstep_3: 3. Sum up all cooking times (30 minutes + 15 minutes + 50 minutes = 95 minutes).\n\nFinal answer: 95 minutes",
+        "aggregator": "step_3: 3. Sum up all cooking times (105 minutes).\n\nRESULT: 105\n#### 105",
+        "step_2": "2. Calculate pork's cooking time (50 minutes).\n\nRESULT: 50"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "25",
+  "sample_keys": [
+    "25",
+    "25",
+    "25",
+    "2",
+    "25"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": true,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1940.0,
+    "small_out": 438.0,
+    "small_s": 2.5589406950011835
+  },
+  "calls_plus": {
+    "small_in": 1530.0,
+    "small_out": 415.0,
+    "small_s": 2.416967901001044,
+    "large_in": 410.0,
+    "large_out": 55.0,
+    "large_s": 0.9570193789995756
+  },
+  "calls_samples": {
+    "small_in": 2050.0,
+    "small_out": 116.0,
+    "small_s": 1.8582795570000599
+  }
+}

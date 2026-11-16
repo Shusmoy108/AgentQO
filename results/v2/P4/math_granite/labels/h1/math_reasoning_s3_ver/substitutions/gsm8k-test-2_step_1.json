@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-2",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $200,000",
+  "reference_key": "200000",
+  "final_key_plus": "70000",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "aggregator: $70,000\n\nFinal answer: $70,000",
+    "step_2": "step_2: RESULT: Selling price = $200,000, Total cost = $130,000, Profit = Selling price - Total cost = $200,000 - $130,000 = $70,000.\n\nRESULT: $70,000",
+    "aggregator": "$70,000\n#### 70000",
+    "step_3": "step_3: RESULT: Profit = Selling price - Total cost = $200,000 - $130,000 = $70,000.\n\nRESULT: $70,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "200001",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "RESULT: 200001",
+      "quality": 0.0,
+      "final_key": "200000",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: RESULT: $200,000\n\nFinal answer: $200,000",
+        "step_2": "step_2: RESULT: $130,000 (Total cost) + $200,000 (Selling price) = $330,000 (Total revenue)\n\nRESULT: $330,000",
+        "aggregator": "RESULT: $200,000\n#### 200000",
+        "step_3": "step_3: RESULT: $330,000 (Total revenue) - $130,000 (Total cost) = $200,000 (Profit)\n\nRESULT: $200,000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "1. RESULT: The new value of the house after repairs is $200,000. This value is calculated by multiplying the original purchase price of $80,000 by 2.5, representing a 150% increase.\n\n2. Next step:\n2. Determine the total cost and selling price.",
+      "quality": 1.0,
+      "final_key": "70000",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: RESULT: $70,000\n\nFinal answer: $70,000",
+        "step_2": "2. RESULT: The total cost of the house, including the purchase price and repair costs, is $130,000. The selling price, after the 150% increase in value, is $200,000.\n\n3. Compute the profit.\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "aggregator": "RESULT: $70,000\n#### 70000",
+        "step_3": "3. RESULT: The profit Josh made is $200,000 (selling price) - $130,000 (total cost) = $70,000.\n\nRESULT: $70,000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "3",
+      "reference_key": "200000",
+      "key_differs": true,
+      "text": "RESULT: $3.00",
+      "quality": 0.0,
+      "final_key": "200000",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: RESULT: $200,000\n\nFinal answer: $200,000",
+        "step_2": "step_2: RESULT: $130,000 (Total cost) + $200,000 (New value) = $330,000 (Selling price)\n\nRESULT: $330,000",
+        "aggregator": "RESULT: $200,000\n#### 200,000",
+        "step_3": "step_3: RESULT: $330,000 (Selling price) - $130,000 (Total cost) = $200,000 (Profit)\n\nRESULT: $200,000"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "200000",
+  "sample_keys": [
+    "200000",
+    "200000",
+    "200000",
+    "200000",
+    "200000"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 1.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1756.0,
+    "small_out": 425.0,
+    "small_s": 2.6501791110013073
+  },
+  "calls_plus": {
+    "small_in": 1376.0,
+    "small_out": 414.0,
+    "small_s": 2.5563104860011663,
+    "large_in": 380.0,
+    "large_out": 11.0,
+    "large_s": 0.19331726800010074
+  },
+  "calls_samples": {
+    "small_in": 1900.0,
+    "small_out": 106.0,
+    "small_s": 1.7443329990001075
+  }
+}

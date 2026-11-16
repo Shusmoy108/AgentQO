@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-1125",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 30 ounces",
+  "reference_key": "30",
+  "final_key_plus": "90",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "aggregator: step_3: RESULT: 90 small bags (900 M&M / 10 M&M/bag)\n\nFinal answer: 90",
+    "step_2": "step_2: RESULT: 900 M&M (30 ounces * 30 M&M/ounce)\n\nCarry out step 3. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "aggregator": "step_3: RESULT: 90 small bags (900 M&M / 10 M&M/bag)\n\n#### 90",
+    "step_3": "step_3: RESULT: 90 small bags (900 M&M / 10 M&M/bag)"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "31",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "RESULT: 31 ounces",
+      "quality": 1.0,
+      "final_key": "90",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: step_3: RESULT: 90 small bags\n\nFinal answer: 90",
+        "step_2": "step_2: RESULT: 900 M&M\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "aggregator": "step_3: RESULT: 90 small bags\n\n#### 90",
+        "step_3": "step_3: RESULT: 90 small bags"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "10",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "30 ounces (result of 3 large bags * 10 ounces each)",
+      "quality": 1.0,
+      "final_key": "90",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: step_3: 90 small bags (result of 900 M&M / 10 M&M/bag)\n\nFinal answer: 90",
+        "step_2": "step_2: 900 M&M (result of 30 ounces * 30 M&M/ounce)\nRESULT: 900",
+        "aggregator": "step_3: 90 small bags (result of 900 M&M / 10 M&M/bag)\n\n#### 90",
+        "step_3": "step_3: 90 small bags (result of 900 M&M / 10 M&M/bag)\nRESULT: 90"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "28",
+      "reference_key": "30",
+      "key_differs": true,
+      "text": "RESULT: 28 animals in total.",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: 30\n\nFinal answer: 30",
+        "step_2": "step_2: RESULT: 900 M&M / 30 M&M/ounce = 30 ounces\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "aggregator": "30\n#### 30",
+        "step_3": "step_3: RESULT: 30 ounces / 10 M&M/bag = 30 small bags\n\nRESULT: 30"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "30",
+  "sample_keys": [
+    "30",
+    "30",
+    "30",
+    "30",
+    "30"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1560.0,
+    "small_out": 348.0,
+    "small_s": 2.241742549999799
+  },
+  "calls_plus": {
+    "small_in": 1238.0,
+    "small_out": 339.0,
+    "small_s": 2.1587120200001664,
+    "large_in": 322.0,
+    "large_out": 9.0,
+    "large_s": 0.18719242499992106
+  },
+  "calls_samples": {
+    "small_in": 1610.0,
+    "small_out": 45.0,
+    "small_s": 0.7970936759984397
+  }
+}

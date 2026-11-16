@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $100",
+  "reference_key": "100",
+  "final_key_plus": "100",
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "aggregator: step_3: RESULT: $500 * 0.20 = $100\n\nFinal answer: Julie had $100 spent on clothes.\n\nRemaining amount: $500 - $100 = $400\n\nStep 2: RESULT: $400 * 0.25 = $100\n\nFinal answer: Julie had $100 left.\n\nNo specific arithmetic or reading mistake found. The original answer is correct. Final answer: 100",
+    "step_2": "step_2: RESULT: $400\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+    "aggregator": "step_3: RESULT: $400 * 0.25 = $100\n\nFinal answer: Julie had $100 left. #### 100",
+    "step_3": "step_3: RESULT: $400 * 0.25 = $100\n\nRESULT: $100"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "101",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "RESULT: 101",
+      "quality": 0.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: step_3: RESULT: $500 * 0.20 = $100\n\nFinal answer: Julie had $100 spent on clothes.\n\nRemaining amount: $500 - $100 = $400\n\nStep 2: RESULT: $400 * 0.25 = $100\n\nFinal answer: Julie had $100 left.\n\nNo specific arithmetic or reading mistake found. The original answer is correct. Final answer: 100",
+        "step_2": "step_2: RESULT: $400\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "aggregator": "step_3: RESULT: $400 * 0.25 = $100\n\nFinal answer: Julie had $100 left. #### 100",
+        "step_3": "step_3: RESULT: $400 * 0.25 = $100\n\nRESULT: $100"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "1. RESULT: Julie spent $100 on clothes.\n\nNext step: Compute the remaining amount post-clothes purchase.\n\nPlan:\n1. Calculate the remaining money after buying clothes: $500 - $100 = $400.\n\nRESULTS so far:\n1. RESULT: Julie spent $100 on clothes.\n2. Remaining money after buying clothes: $400.\n\nCarry out step 2 only. Show the calculation briefly.\n\nEnd with \"Result: <number>\".",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: step_1: 1. REVIEW: The problem states Julie had $500 initially.\nstep_2: 2. CALCULATION: Remaining money after clothes = $500 - ($500 * 0.20) = $500 - $100 = $400\nstep_3: 3. CALCULATION: Money spent on CDs = $400 * 0.25 = $100\nstep_4: 4. RESULT: Julie spent $100 on CDs.\n\nFinal answer: Julie had $300 left after spending on clothes and CDs.\n\nFinal answer: $300",
+        "step_2": "2. RESULT: Julie had $400 left after buying clothes.\n\nEnd with \"RESULT: <number>\".\nRESULT: $400",
+        "aggregator": "step_2: 2. CALCULATION: Remaining money after clothes = $500 - ($500 * 0.20)\nstep_3: 3. RESULT: Julie spent $100 on CDs.\n\nFinal answer: Julie had $300 left after spending on clothes and CDs.\n\n#### $300",
+        "step_3": "3. RESULT: Julie spent $100 on CDs.\n\nEnd with \"RESULT: <number>\"."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "4",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "RESULT: 4 rides per day.",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: step_4: RESULT: $300 (amount left)\n\nFinal Answer: #### $300\n\nNo specific arithmetic or reading mistake was found in the original solution. The calculation is correct. Julie had $300 left after spending 20% on clothes and 25% on CDs.",
+        "step_2": "step_2: RESULT: $400 (remaining after buying clothes)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "aggregator": "step_4: RESULT: $300 (amount left)\n\nFinal Answer: #### $300",
+        "step_3": "step_3: RESULT: $100 (spent on CDs)\n\nCarry out step 4. Show the calculation briefly.\nEnd with \"RESULT: <number>\".\n\nstep_4: RESULT: $300 (amount left)"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "100",
+  "sample_keys": [
+    "100",
+    "100",
+    "100",
+    "100",
+    "100"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": -1.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1419.0,
+    "small_out": 334.0,
+    "small_s": 1.9125673779981298
+  },
+  "calls_plus": {
+    "small_in": 1106.0,
+    "small_out": 412.0,
+    "small_s": 4.489037786001063,
+    "large_in": 302.0,
+    "large_out": 7.0,
+    "large_s": 0.1694517910000286
+  },
+  "calls_samples": {
+    "small_in": 1510.0,
+    "small_out": 103.0,
+    "small_s": 1.7456923639992965
+  }
+}

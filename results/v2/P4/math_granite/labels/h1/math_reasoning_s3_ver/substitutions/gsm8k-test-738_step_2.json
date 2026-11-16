@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-738",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Alice's books = 10 + 6 = 16\nRESULT: 16",
+  "reference_key": "16",
+  "final_key_plus": "4",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "aggregator": "step_3: Clara's books - Alice's books = 20 - (6 + (20/2))\nRESULT: 4\n#### 4",
+    "verifier": "aggregator: step_3: Clara's books - Alice's books = 20 - (6 + (20/2))\n\nFinal answer: 4",
+    "step_3": "step_3: Difference = Clara's books - Alice's books\nRESULT: 4"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "17",
+      "reference_key": "16",
+      "key_differs": true,
+      "text": "step_2: Alice's books = 10 + 6 = 16\nRESULT: 17",
+      "quality": 1.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_3: Clara's books - Alice's books = 20 - (6 + (20/2))\nRESULT: 4\n#### 4",
+        "verifier": "aggregator: step_3: Clara's books - Alice's books = 20 - (6 + (20/2))\n\nFinal answer: 4",
+        "step_3": "step_3: Difference = Clara's books - Alice's books\nRESULT: 4"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "4",
+      "reference_key": "16",
+      "key_differs": true,
+      "text": "step_2: RESULT: 16\nCarry out step 2 only. Show the calculation briefly.\nCarry out step 3.\n\nEND: RESULT: 4",
+      "quality": 0.0,
+      "final_key": "-1",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "20 - 16 = 4\n\n#### 4",
+        "verifier": "aggregator: 20 / 2 = 10 (Clara's books)\nSteven's books = Clara's books / 2 = 10 / 2 = 5\nAlice's books = Steven's books + 6 = 5 + 6 = 11\nDifference = Clara's books - Alice's books = 10 - 11 = -1\n\nFinal answer: -1",
+        "step_3": "Carry out step 3 only. Show the calculation briefly.\n\nRESULT: 20 - 16 = 4"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "4",
+      "reference_key": "16",
+      "key_differs": true,
+      "text": "step_2: 2. Determine the number of pillow cases per room: Twice as many as sheets, so 2 * 2 = 4 pillow cases.\n\nRESULT: 4",
+      "quality": 1.0,
+      "final_key": "4",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_3: RESULT: 20 - 16 = 4\n\n#### 4",
+        "verifier": "aggregator: step_3: RESULT: 20 - 16 = 4\n\nFinal answer: 4",
+        "step_3": "step_3: RESULT: 20 - 16 = 4"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "16",
+  "sample_keys": [
+    "16",
+    "3",
+    "16",
+    "16",
+    "16"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1594.0,
+    "small_out": 437.0,
+    "small_s": 2.534247803000653
+  },
+  "calls_plus": {
+    "small_in": 1160.0,
+    "small_out": 322.0,
+    "small_s": 2.8358236889998807,
+    "large_in": 344.0,
+    "large_out": 25.0,
+    "large_s": 0.4412133289997655
+  },
+  "calls_samples": {
+    "small_in": 1720.0,
+    "small_out": 79.0,
+    "small_s": 1.3508700430020326
+  }
+}

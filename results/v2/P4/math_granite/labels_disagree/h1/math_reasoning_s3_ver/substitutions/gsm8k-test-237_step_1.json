@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-237",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Johnny initially had $20 from his allowance.\n\nRESULT: $20",
+  "reference_key": "20",
+  "final_key_plus": "90",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: After a year, his $30 investment tripled, so he had 3 * $30 = $90.\n\nRESULT: 90",
+    "verifier": "aggregator: 90\n\nFinal answer: 90",
+    "aggregator": "90\n#### 90",
+    "step_2": "step_2: He added an extra $10, making his total $20 + $10 = $30.\n\nRESULT: 30"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "Johnny initially had $20 from his allowance.\n\nRESULT: 21",
+      "quality": 1.0,
+      "final_key": "90",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: After a year, his $30 investment tripled, so he had 3 * $30 = $90.\n\nRESULT: 23",
+        "verifier": "aggregator: step_1: Johnny started with $20 allowance and added $10, making it $30.\nstep_2: He invested this $30, which tripled in a year, so we calculate 3 * $30 = $90.\n\nFinal answer: 90",
+        "aggregator": "step_3: After a year, his $30 investment tripled, so he had 3 * $30 = $90.\n\nRESULT: 23\n#### 90",
+        "step_2": "step_2: He added an extra $10, making his total $20 + $10 = $30.\n\nRESULT: 22"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "1. RESULT: Johnny initially had $20.\n\n(End of response for step 1)",
+      "quality": 1.0,
+      "final_key": "90",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. RESULT: Johnny's $30 investment tripled, so he had 3 * $30 = $90.\n\nRESULT: $90",
+        "verifier": "aggregator: RESULT: $90\n\nFinal answer: $90",
+        "aggregator": "RESULT: $90\n#### 90",
+        "step_2": "step_2: 2. RESULT: Johnny's total after adding the extra $10 is $30.\n\n(End of response for step 2)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\"."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "1000",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "1. Calculate Janet's total weekly earnings:\n   - Wages: $10/hour * 40 hours/week = $400\n   - Tips: $15/hour * 40 hours/week = $600\n   - Total weekly earnings: $400 (wages) + $600 (tips) = $1000\n\nRESULT: $1000",
+      "quality": 1.0,
+      "final_key": "90",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "3. After a year, his $30 investment tripled, so he had 3 * $30 = $90.\n\nRESULT: $90",
+        "verifier": "aggregator: RESULT: $90 #### 90\n\nFinal answer: $90",
+        "aggregator": "RESULT: $90 #### 90",
+        "step_2": "2. Johnny's total after adding the extra $10:\n   - Initial amount: $20\n   - Additional amount: $10\n   - Total: $20 + $10 = $30\n\nRESULT: $30"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "20",
+  "sample_keys": [
+    "20",
+    "20",
+    "20",
+    "20",
+    "20"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": true,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1123.0,
+    "small_out": 190.0,
+    "small_s": 1.1337918290000744
+  },
+  "calls_plus": {
+    "small_in": 926.0,
+    "small_out": 168.0,
+    "small_s": 1.004591791999701,
+    "large_in": 197.0,
+    "large_out": 22.0,
+    "large_s": 0.4061551770000733
+  },
+  "calls_samples": {
+    "small_in": 985.0,
+    "small_out": 62.0,
+    "small_s": 1.1122879710001143
+  }
+}

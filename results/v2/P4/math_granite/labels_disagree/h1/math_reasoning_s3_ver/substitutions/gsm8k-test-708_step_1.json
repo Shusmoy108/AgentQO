@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-708",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $12",
+  "reference_key": "12",
+  "final_key_plus": "168",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.6,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: $168",
+    "verifier": "aggregator: step_3: RESULT: $168\n\nFinal answer: $168",
+    "aggregator": "step_3: RESULT: $168\n\n#### 168",
+    "step_2": "step_2: RESULT: 7 days/week * 2 weeks = 14 days\n\nCarry out step 3.\n\nRESULT: $12/day * 14 days = $168"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "13",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 13",
+      "quality": 1.0,
+      "final_key": "168",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: $168",
+        "verifier": "aggregator: step_3: RESULT: $168\n\nFinal answer: $168",
+        "aggregator": "step_3: RESULT: $168\n\n#### 168",
+        "step_2": "step_2: RESULT: 14 days (7 days/week * 2 weeks)\n\nCarry out step 3.\n\nRESULT: $168 (12 dollars/day * 14 days)"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "8",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 8",
+      "quality": 1.0,
+      "final_key": "168",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: $12/day * 14 days = $168.\nRESULT: $168.",
+        "verifier": "aggregator: RESULT: $168.\n\nFinal answer: $168.",
+        "aggregator": "RESULT: $168.\n#### 168",
+        "step_2": "step_2: RESULT: 14 days * $12/day = $168.\nRESULT: $168."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "1",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "1. Compute daily water removal for low setting: 1 liter/day.\n\nRESULT: 1",
+      "quality": 0.0,
+      "final_key": "256",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "3. Compute total charge for 2 weeks: $12/day * 14 days = $168.\n\nRESULT: 3",
+        "verifier": "aggregator: 1\n#### 256\n\nMistake: The original calculation incorrectly multiplied the daily rate by 7 for one week, then by 7 again for the second week, resulting in 49 * 49 = 2401. The correct approach is to multiply the daily rate by the total number of days in two weeks, which is 14 (7 days/week * 2 weeks).\n\nFinal answer: 256",
+        "aggregator": "3\n#### 168",
+        "step_2": "2. Calculate total days for 2 weeks: 14 days.\n\nRESULT: 2"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "12",
+  "sample_keys": [
+    "168",
+    "12",
+    "2",
+    "168",
+    "12"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.5
+  },
+  "consequence_real": null,
+  "skipped_plus": true,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1188.0,
+    "small_out": 250.0,
+    "small_s": 1.4877314010009286
+  },
+  "calls_plus": {
+    "small_in": 936.0,
+    "small_out": 244.0,
+    "small_s": 1.444368738000776,
+    "large_in": 252.0,
+    "large_out": 6.0,
+    "large_s": 0.13704564599993319
+  },
+  "calls_samples": {
+    "small_in": 1260.0,
+    "small_out": 290.0,
+    "small_s": 3.59290222799973
+  }
+}

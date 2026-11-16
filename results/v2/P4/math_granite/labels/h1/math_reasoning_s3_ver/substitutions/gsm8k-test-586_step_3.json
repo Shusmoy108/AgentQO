@@ -1,0 +1,98 @@
+{
+  "task_id": "gsm8k-test-586",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "step_3: 3. Total calories burned: 1000 calories (aerobics) + 600 calories (running) = 1600 calories.\n\nRESULT: 1600\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+  "reference_key": "4",
+  "final_key_plus": "800",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "aggregator: step_4: 4. Water intake: 1600 calories * (100 ml / 200 calories) = 800 ml.\n\nThe calculation is correct. Hannah needs to drink 800 ml of water.\n\nFinal answer: 800",
+    "aggregator": "step_4: 4. Water intake: 1600 calories * (100 ml / 200 calories) = 800 ml.\n\nRESULT: 800\n\n#### 800"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4",
+      "reference_key": "4",
+      "key_differs": false,
+      "text": "step_3: 3. Total calories burned: 1000 calories (aerobics) + 600 calories (running) = 1600 calories.\n\nRESULT: 5\n\nCarry out step 4 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+      "quality": 1.0,
+      "final_key": "800",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: step_4: 4. Water intake: 1600 calories * (100 ml / 200 calories) = 800 ml.\n\nThe calculation is correct. Hannah needs to drink 800 ml of water.\n\nFinal answer: 800",
+        "aggregator": "step_4: 4. Water intake: 1600 calories * (100 ml / 200 calories) = 800 ml.\n\nRESULT: 800\n#### 800"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "1600",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "3. step_3: Sum calories from both activities (1600 calories).\n\nRESULT: 1600",
+      "quality": 1.0,
+      "final_key": "800",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: First, let's calculate the total calories burned. Hannah spends 2 hours aerobics, burning 500 calories/hour, so that's 1000 calories. She also spends 1 hour running, burning 600 calories/hour, so that's an additional 600 calories. Adding these together gives 1600 calories.\n\nNext, we apply the water intake ratio. For every 200 calories, she needs 100 ml of water. With 1600 calories, she needs 1600 / 200 = 8 sets of 200 calories. Therefore, she needs 8 * 100 ml = 800 ml of water.\n\nFinal answer: 800 ml of water.",
+        "aggregator": "1600 calories * (100 ml / 200 calories) = 800 ml of water\n#### 800"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "70000",
+      "reference_key": "4",
+      "key_differs": true,
+      "text": "step_3: RESULT: Profit = Selling price - Total cost = $200,000 - $130,000 = $70,000.\n\nRESULT: $70,000",
+      "quality": 0.0,
+      "final_key": "150000",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: #### 150000\n\nHannah's total calorie expenditure can be calculated by multiplying the time spent on each activity by its respective calorie burn rate. For aerobics, she burns 500 calories/hour for 2 hours, so that's 1000 calories. For running, she burns 600 calories/hour for 1 hour, adding another 600 calories.\n\nTotal calories burned = 1000 (from aerobics) + 600 (from running) = 1600 calories.\n\nAccording to the given rule, Hannah needs to drink 100 ml of water for every 200 calories. To find out how much water she needs to drink, we divide the total calories by 200.\n\nWater needed = Total calories / 200 = 1600 / 200 = 8 ml.\n\nFinal answer: 8000 ml.",
+        "aggregator": "#### 100000"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "1600",
+  "sample_keys": [
+    "1600",
+    "1600",
+    "1600",
+    "1600",
+    "1600"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1884.0,
+    "small_out": 584.0,
+    "small_s": 3.416319741000734
+  },
+  "calls_plus": {
+    "small_in": 1469.0,
+    "small_out": 460.0,
+    "small_s": 3.9118862870000157,
+    "large_in": 489.0,
+    "large_out": 79.0,
+    "large_s": 1.3602155389999098
+  },
+  "calls_samples": {
+    "small_in": 2445.0,
+    "small_out": 220.0,
+    "small_s": 3.168256458000542
+  }
+}

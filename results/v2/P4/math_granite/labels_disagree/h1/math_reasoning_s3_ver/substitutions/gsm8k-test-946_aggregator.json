@@ -1,0 +1,94 @@
+{
+  "task_id": "gsm8k-test-946",
+  "node_id": "aggregator",
+  "role": "aggregator",
+  "reference": "The bakery has 450 loaves of bread. #### 450",
+  "reference_key": "450",
+  "final_key_plus": "450",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "aggregator: step_2: Re-calculate the number of loaves the bakery has.\nBakery loaves = 7 * Sam's loaves - 40\nBakery loaves = 7 * 70 - 40\nBakery loaves = 490 - 40\nBakery loaves = 450\n\nFinal answer: 450"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "451",
+      "reference_key": "450",
+      "key_differs": true,
+      "text": "The bakery has 450 loaves of bread. #### 451",
+      "quality": 1.0,
+      "final_key": "450",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: The bakery has 450 loaves of bread.\n\nFinal answer: 450"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "530",
+      "reference_key": "450",
+      "key_differs": true,
+      "text": "Step_2: Calculate the total loaves of bread the bakery has.\n\nAdd 40 to seven times the number Sam had last Friday.\n\nso, 7 * 70 + 40 = 490 + 40 = 530\n\n#### 530",
+      "quality": 0.0,
+      "final_key": "530",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: Step_2: Re-calculate the total loaves of bread the bakery has.\n\nFirst, calculate seven times the number Sam had last Friday: 7 * 70 = 490.\n\nThen, add 40 to this result: 490 + 40 = 530.\n\nFinal answer: 530"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "48",
+      "reference_key": "450",
+      "key_differs": true,
+      "text": "step_3: RESULT: 8 (high chairs) + (5 * 8) (regular chairs) = 48 chairs.\n\n#### 48",
+      "quality": 1.0,
+      "final_key": "450",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: step_1: Calculate the number of loaves the bakery has.\n\nThe bakery has 7 times as many loaves as Sam had last Friday, which was 70 loaves. So, the bakery initially has 7 * 70 = 490 loaves.\n\nNext, we subtract 40 from this total to account for the 40 loaves the bakery has less than Sam.\n\nSo, the bakery has 490 - 40 = 450 loaves of bread.\n\nFinal answer: 450"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "450",
+  "sample_keys": [
+    "450",
+    "450",
+    "450",
+    "450",
+    "450"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": true,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1287.0,
+    "small_out": 338.0,
+    "small_s": 2.1861017539995373
+  },
+  "calls_plus": {
+    "small_in": 1166.0,
+    "small_out": 253.0,
+    "small_s": 1.6184343409995563,
+    "large_in": 121.0,
+    "large_out": 21.0,
+    "large_s": 0.36830036899937113
+  },
+  "calls_samples": {
+    "small_in": 605.0,
+    "small_out": 363.0,
+    "small_s": 4.8004939140000715
+  }
+}

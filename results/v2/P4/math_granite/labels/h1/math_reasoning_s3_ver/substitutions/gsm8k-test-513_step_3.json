@@ -1,0 +1,97 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "3. RESULT: Julie spent $100 on CDs.",
+  "reference_key": "100",
+  "final_key_plus": "300",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "aggregator: step_1: 1. REVIEW: The problem states Julie had $500.\nstep_2: 2. CALCULATION: Remaining money after clothes = $500 - ($500 * 0.20) = $400\nstep_3: 3. RESULT: Julie spent 25% of the remaining $400 on CDs.\nstep_4: 4. CALCULATION: Amount spent on CDs = $400 * 0.25 = $100\nstep_5: 5. RESULT: Julie has $400 - $100 = $300 left.\n\nFinal answer: $300",
+    "aggregator": "step_2: 2. CALCULATION: Remaining money after clothes = $500 - ($500 * 0.20) = $400\nstep_3: 3. RESULT: Julie spent $100 on CDs.\n\n#### $200"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "300",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "step_3: 3. RESULT: Julie spent another $100 on CDs.\nEND.\nRESULT: $300.",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: step_3: 3. RESULT: Julie spent another $100 on CDs.\nEND.\n\nRESULT: $300.\n\nFinal answer: $300.",
+        "aggregator": "step_3: 3. RESULT: Julie spent another $100 on CDs.\nEND.\nRESULT: $300.\n#### 300"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "300",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "3: 3. RESULT: Julie spent $100 on CDs (0.25 * $400).\nEND.\nRESULT: $300.",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "Final answer: <300>",
+        "aggregator": "step_1: 1. Calculate 20% of $500 for clothes: $500 * 0.20 = $100.\nstep_2: 2. Subtract the amount spent on clothes from the initial amount: $500 - $100 = $400.\nstep_3: 3. Calculate 25% of the remaining $400 for CDs: $400 * 0.25 = $100.\nstep_4: 4. Subtract the amount spent on CDs from the remaining money: $400 - $100 = $300.\n\n#### 300"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "14",
+      "reference_key": "100",
+      "key_differs": true,
+      "text": "step_3: RESULT: $448 (Total cost = $32 * 14).",
+      "quality": 1.0,
+      "final_key": "300",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "Re-reading the problem, I find no arithmetic or reading mistake. The calculation is correct. Julie has $300 left.\n\nFinal answer: $300",
+        "aggregator": "step_1: Julie spent 20% of $500 on clothes.\n20% of $500 = 0.20 * $500 = $100\n\nstep_2: Calculate remaining money after buying clothes.\nRemaining money = $500 - $100 = $400\n\nstep_3: Julie then spent 25% of the remaining $400 on CDs.\n25% of $400 = 0.25 * $400 = $100\n\nstep_4: Calculate the final amount of money Julie has left.\nFinal amount = $400 - $100 = $300\n\n#### $300"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "300",
+  "sample_keys": [
+    "300",
+    "300",
+    "300",
+    "300",
+    "300"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1419.0,
+    "small_out": 334.0,
+    "small_s": 1.9125673779981298
+  },
+  "calls_plus": {
+    "small_in": 1086.0,
+    "small_out": 463.0,
+    "small_s": 4.243849675999627,
+    "large_in": 349.0,
+    "large_out": 16.0,
+    "large_s": 0.2889455300000918
+  },
+  "calls_samples": {
+    "small_in": 1745.0,
+    "small_out": 172.0,
+    "small_s": 1.7095910929992897
+  }
+}

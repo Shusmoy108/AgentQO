@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-920",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the number of dogs Larry has by multiplying the number of cats by 3 (since he has 3 times as many dogs as cats).\n2. Determine the number of rabbits by subtracting 2 from the number of dogs (since he has 2 fewer rabbits than dogs).\n3. Find the number of fish by multiplying the number of rabbits by 3 (since he has three times the number of fish as rabbits).\n4. Calculate the number of gerbils by dividing the number of fish by 3 (since his collection of gerbils is 1/3 the number of fish).\n5. Sum up all the pets to find the total number of pets Larry has.\n\nNote: The final step of summing up all the pets is not explicitly listed in the computation steps as per the instruction, but it is implied that this should be done to find the total number of pets.",
+  "reference_key": null,
+  "final_key_plus": "21",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 0.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "1. Larry has 3 times as many dogs as cats. Since he has 3 cats, the number of dogs is 3 * 3 = 9.\n\nRESULT: 9",
+    "aggregator": "step_3: 21. The number of fish is three times the number of rabbits. So, the number of fish is 7 * 3 = 21.\n\n#### 21",
+    "step_2": "step_2: 2. Larry has 2 fewer rabbits than dogs. So, the number of rabbits is 9 - 2 = 7.\n\nRESULT: 7",
+    "verifier": "aggregator: step_3: 21. The number of fish is three times the number of rabbits. So, the number of fish is 7 * 3 = 21.\n\nFinal answer: 21",
+    "step_3": "step_3: 3. The number of fish is three times the number of rabbits. So, the number of fish is 7 * 3 = 21.\n\nRESULT: 21"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, determine the total number of pencils that should ideally be in the box. This is calculated by multiplying the number of pencils per pair (2) by the number of pairs (20). So, 2 * 20 = 40 pencils.\n\n2. Next, account for the missing pencils. Since 4 pencils are missing, subtract this number from the total number of pencils that should be in the box. So, 40 - 4 = 36 pencils.\n\n3. Finally, calculate the number of pairs of pencils in the box. Divide the adjusted total number of pencils by 2, as each pair consists of two pencils. Therefore, 36 / 2 = 18 pairs of pencils.",
+      "quality": 1.0,
+      "final_key": "47",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 40 pencils.",
+        "aggregator": "step_1: Larry has 3 cats.\nstep_2: He has 3 times as many dogs as cats, so he has 3 * 3 = 9 dogs.\nstep_3: He has 2 fewer rabbits than dogs, so he has 9 - 2 = 7 rabbits.\nstep_4: He has a fish tank with three times the number of fish as rabbits, so he has 3 * 7 = 21 fish.\nstep_5: He has a collection of gerbils that's 1/3 the number of fish he has, so he has 21 / 3 = 7 gerbils.\n\nTotal pets Larry has: 3 (cats) + 9 (dogs) + 7 (rabbits) + 21 (fish) + 7 (gerbils) = 47 pets.\n\n#### 47",
+        "step_2": "step_2: RESULT: 36 pencils.\n\nEnd with \"RESULT: <number>\".",
+        "verifier": "Final answer: 47",
+        "step_3": "step_3: RESULT: 18 pairs of pencils."
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the number of dogs Larry has by multiplying the number of cats by 3 (since he has 3 times as many dogs as cats).\n2. Determine the number of rabbits by subtracting 2 from the number of dogs (since he has 2 fewer rabbits than dogs).\n3. Find the number of fish by multiplying the number of rabbits by 3 (since he has three times the number of fish as rabbits).\n4. Calculate the number of gerbils by dividing the number of fish by 4 (since his collection of gerbils is 1/4 the number of fish).\n5. Sum up all the pets to find the total number of pets Larry has. (Note: This step is crucial for obtaining the total count, not just the individual species.)",
+      "quality": 1.0,
+      "final_key": "47",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 9 dogs (3 cats * 3)",
+        "aggregator": "step_1: Larry has 3 cats.\nstep_2: He has 3 times as many dogs as cats, so that's 3 * 3 = 9 dogs.\nstep_3: He has 2 fewer rabbits than dogs, so that's 9 - 2 = 7 rabbits.\nstep_4: He has a fish tank with three times the number of fish as rabbits, so that's 7 * 3 = 21 fish.\nstep_5: He has a collection of gerbils that's 1/3 the number of fish he has, so that's 21 / 3 = 7 gerbils.\n\nFinal answer: Larry has 3 cats + 9 dogs + 7 rabbits + 21 fish + 7 gerbils = 47 pets.\n#### 47",
+        "step_2": "step_2: RESULT: 5 rabbits (9 dogs - 2)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+        "verifier": "aggregator: step_1: Larry has 3 cats.\nstep_2: He has 3 times as many dogs as cats, so that's 3 * 3 = 9 dogs.\nstep_3: He has 2 fewer rabbits than dogs, so that's 9 - 2 = 7 rabbits.\nstep_4: He has a fish tank with three times the number of fish as rabbits, so that's 7 * 3 = 21 fish.\nstep_5: He has a collection of gerbils that's 1/3 the number of fish he has, so that's 21 / 3 = 7 gerbils.\n\nFinal answer: Larry has 3 cats + 9 dogs + 7 rabbits + 21 fish + 7 gerbils = 47 pets.\n\nFinal answer: 47",
+        "step_3": "step_3: RESULT: 15 fish (5 rabbits * 3)"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the total number of roller coaster rides: Pam rode 2 times and Fred rode 4 times. So, the total roller coaster rides is 2 (Pam) + 4 (Fred) = 6 rides.\n\n2. Calculate the total number of luge rides: Both Pam and Fred decided to ride the luge 2 times each. So, the total luge rides is 2 (Pam) + 2 (Fred) = 4 rides.\n\n3. Calculate the total number of tickets used: Each ride costs 6 tickets. So, the total tickets used for roller coaster rides is 6 rides * 6 tickets/ride = 36 tickets. The total tickets used for luge rides is 4 rides * 6 tickets/ride = 24 tickets. Therefore, the total tickets used that day is 36 tickets (roller coaster) + 24 tickets (luge) = 60 tickets.\n\nPLAN: 1. Compute total roller coaster rides, 2. Compute total luge rides, 3. Compute total tickets used.",
+      "quality": 1.0,
+      "final_key": "47",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 5 rides (2 from Pam + 3 from Fred)",
+        "aggregator": "step_1: Larry has 3 cats.\nstep_2: He has 3 times as many dogs as cats, so that's 3 * 3 = 9 dogs.\nstep_3: He has 2 fewer rabbits than dogs, so that's 9 - 2 = 7 rabbits.\nstep_4: He has a fish tank with three times the number of fish as rabbits, so that's 3 * 7 = 21 fish.\nstep_5: He has a collection of gerbils that's 1/3 the number of fish he has, so that's 21 / 3 = 7 gerbils.\n\nTotal pets Larry has: 3 (cats) + 9 (dogs) + 7 (rabbits) + 21 (fish) + 7 (gerbils) = 47 pets.\n\n#### 47",
+        "step_2": "step_2: RESULT: 4 rides (2 from Pam + 2 from Fred)",
+        "verifier": "Final answer: 47",
+        "step_3": "step_3: RESULT: 60 tickets (36 from roller coaster + 24 from luge)"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "47",
+  "sample_keys": [
+    "21",
+    "21",
+    "21"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0,
+    "llm_subtle_wrong": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2246.0,
+    "small_out": 613.0,
+    "small_s": 3.6357040680013597
+  },
+  "calls_plus": {
+    "large_in": 172.0,
+    "large_out": 214.0,
+    "large_s": 3.3195208829993135,
+    "small_in": 1742.0,
+    "small_out": 232.0,
+    "small_s": 2.277086285999758
+  },
+  "calls_samples": {
+    "small_in": 5418.0,
+    "small_out": 1041.0,
+    "small_s": 8.490833590001785
+  }
+}

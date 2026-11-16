@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-869",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total cost of the 5 phones by multiplying the price of one phone by the number of phones: $700 * 5 = $3500.\n2. Subtract the total cost from the amount given by the buyer to find the change: $4000 - $3500 = $500.\n3. The seller will give back $500 in change.",
+  "reference_key": null,
+  "final_key_plus": "3000",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "aggregator": "step_3: RESULT: The seller will give back $500 in change.\nEND: $500\n#### $500",
+    "step_1": "RESULT: $3500",
+    "step_3": "step_3: RESULT: The seller will give back $500 in change.\nEND: $500",
+    "verifier": "aggregator: step_3: RESULT: The seller will give back $3000 in change.\nEND: $3000\n\nFinal answer: $3000",
+    "step_2": "step_2: RESULT: $4000 - $3500 = $500"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the amount of apples Peter and Paul will take:\n   - Peter's share = 1/4 * 12 kg = 3 kg\n   - Paul's share = 1/3 * 12 kg = 4 kg\n\n2. Sum the shares of Peter and Paul to find the total amount taken:\n   - Total taken by Peter and Paul = 3 kg + 4 kg = 7 kg\n\n3. Subtract the total taken by Peter and Paul from the initial amount to find out how much James will have:\n   - James's remaining apples = 12 kg - 7 kg = 5 kg\n\nPLAN: The final answer is 5 kg of apples will be left for James.",
+      "quality": 0.0,
+      "final_key": "2800",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "The seller will give back $2800 in change.\n\n#### 2800",
+        "step_1": "1. Calculate the amount of apples Peter and Paul will take:\n   - Peter's share = 1/4 * 12 kg = 3 kg\n   - Paul's share = 1/3 * 12 kg = 4 kg\n\nRESULT: 3 kg + 4 kg = 7 kg",
+        "step_3": "3. Subtract the total taken by Peter and Paul from the initial amount to find out how much James will have:\n   - James's remaining apples = 12 kg - 7 kg = 5 kg\n\nRESULT: 5 kg",
+        "verifier": "aggregator: The seller will give back $2800 in change.\n\nFinal answer: $2800",
+        "step_2": "2. Sum the shares of Peter and Paul to find the total amount taken:\n   - Total taken by Peter and Paul = 3 kg + 4 kg = 7 kg\n\nRESULT: 7 kg"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Compute the aggregate cost of the 5 phones by multiplying the price of one phone by the number of phones: $700 * 5 = $3500.\n2. Deduct the total cost from the amount the buyer provided to ascertain the change: $3500 - $4000 = -$500.\n3. The seller will owe the buyer $500 as change.",
+      "quality": 0.0,
+      "final_key": "1000",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "step_3: RESULT: The seller will give back $500 in change.\n#### 500",
+        "step_1": "RESULT: $3500",
+        "step_3": "RESULT: The seller will give back $500 in change.",
+        "verifier": "aggregator: step_3: RESULT: The seller will give back $1000 in change.\n#### 1000\n\nFinal answer: 1000",
+        "step_2": "step_2: RESULT: $4000 - $3500 = $500\n\nEnd with \"RESULT: $500\"."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. First, calculate the total number of dumplings eaten by the females. Since there are 6 females and each ate 3 dumplings, the total for females is 6 * 3 = 18 dumplings.\n\n2. Next, determine the number of dumplings eaten by the males. Each male ate 1 more dumpling than each female, so each male ate 3 + 1 = 4 dumplings. With 8 males, the total for males is 8 * 4 = 32 dumplings.\n\n3. Finally, add the dumplings eaten by both males and females to find the total number of dumplings Larry cooked. So, 18 (females) + 32 (males) = 50 dumplings.",
+      "quality": 1.0,
+      "final_key": "500",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "50\n#### 50",
+        "step_1": "RESULT: 18",
+        "step_3": "step_3: RESULT: 18 (females) + 32 (males) = 50 dumplings.\n\nRESULT: 50",
+        "verifier": "aggregator: 50\n\nThe seller bought 5 phones at $700 each, so the total cost is 5 * $700 = $3500. The seller gave $4000 in dollar bills. To find the change, subtract the total cost from the amount given: $4000 - $3500 = $500.\n\nFinal answer: $500",
+        "step_2": "step_2: RESULT: 32\n\nCarry out step 3.\n\nEnd with \"RESULT: <number>\"."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "500",
+  "sample_keys": [
+    "500",
+    "500",
+    "500"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1339.0,
+    "small_out": 307.0,
+    "small_s": 1.804329974999746
+  },
+  "calls_plus": {
+    "large_in": 121.0,
+    "large_out": 98.0,
+    "large_s": 1.6307468350005365,
+    "small_in": 1011.0,
+    "small_out": 133.0,
+    "small_s": 1.603504620999047
+  },
+  "calls_samples": {
+    "small_in": 3818.0,
+    "small_out": 854.0,
+    "small_s": 11.436266101996807
+  }
+}

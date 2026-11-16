@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-990",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 6 degrees",
+  "reference_key": "6",
+  "final_key_plus": "18",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "step_3: 3. Sum the cooling from both settings (18 degrees).\n\nRESULT: 18",
+    "verifier": "aggregator: 18 degrees\n\nRe-reading the problem, the calculation remains accurate. The air conditioner cooled the room by 2 degrees per hour on low for 3 hours, resulting in a total cooling of 6 degrees. On high, it cooled by 3 degrees per hour for 4 hours, adding another 12 degrees. The room then warmed up for 2 hours at a rate of 2 degrees per hour, contributing 4 degrees back to the room.\n\nAdding these together, the net cooling effect is 6 + 12 - 4 = 14 degrees. The room's temperature was initially 2 degrees warmer than the desired temperature. Therefore, the final temperature is 2 - 14 = -12 degrees, which is 18 degrees lower than the starting temperature.\n\nFinal answer: 18 degrees",
+    "aggregator": "18 degrees\n#### 18",
+    "step_2": "step_2: 2. Compute high-setting cooling (12 degrees).\n\nRESULT: 12"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "7",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "RESULT: 7 degrees",
+      "quality": 0.0,
+      "final_key": "24",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 24 degrees",
+        "verifier": "aggregator: step_3: RESULT: 24 degrees\n\nFinal answer: 24 degrees",
+        "aggregator": "step_3: RESULT: 24 degrees\n\nFinal answer: #### 24",
+        "step_2": "step_2: RESULT: 12 degrees\n\nCarry out step 3. Show the calculation briefly.\n\nEND:\nRESULT: 24 degrees"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "2 degrees (2 degrees/hour * 3 hours)\n\nRESULT: 2",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: 18 degrees (2 degrees/hour * 3 hours + 3 degrees/hour * 4 hours)\n\nRESULT: 18",
+        "verifier": "aggregator: 18 degrees\n\nRe-reading the problem, the calculation remains accurate. The air conditioner cooled the room by 2 degrees per hour on low for 3 hours, resulting in a total cooling of 6 degrees. On high, it cooled by 3 degrees per hour for 4 hours, adding another 12 degrees. The room then warmed up for 2 hours at a rate of 2 degrees per hour, contributing 4 degrees back to the room.\n\nAdding these together, the net cooling effect is 6 + 12 - 4 = 14 degrees. The room's temperature was initially 2 degrees warmer than the desired temperature. Therefore, the final temperature is 2 - 14 = -12 degrees, which is 18 degrees lower than the starting temperature.\n\nFinal answer: 18 degrees",
+        "aggregator": "18 degrees\n#### 18",
+        "step_2": "step_2: 3 degrees (3 degrees/hour * 4 hours)\n\nRESULT: 3"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "78",
+      "reference_key": "6",
+      "key_differs": true,
+      "text": "RESULT: 78 Junebugs (Tuesday and Wednesday combined)",
+      "quality": 0.0,
+      "final_key": "18",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: RESULT: 18 degrees (total cooling)",
+        "verifier": "aggregator: step_3: RESULT: 18 degrees (total cooling)\n\nFinal answer: 18 degrees",
+        "aggregator": "step_3: RESULT: 18 degrees (total cooling)\n\n#### 18",
+        "step_2": "step_2: RESULT: 12 degrees (high-setting cooling)\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\"."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "6",
+  "sample_keys": [
+    "6",
+    "6",
+    "6",
+    "4",
+    "6"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": true,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1904.0,
+    "small_out": 527.0,
+    "small_s": 2.9959378769999603
+  },
+  "calls_plus": {
+    "small_in": 1480.0,
+    "small_out": 508.0,
+    "small_s": 2.8692140020002626,
+    "large_in": 424.0,
+    "large_out": 6.0,
+    "large_s": 0.1517177960004119
+  },
+  "calls_samples": {
+    "small_in": 2120.0,
+    "small_out": 180.0,
+    "small_s": 2.926772032000372
+  }
+}

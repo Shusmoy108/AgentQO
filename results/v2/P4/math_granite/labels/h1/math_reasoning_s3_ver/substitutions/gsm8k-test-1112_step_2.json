@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-1112",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Total taken by Peter and Paul = 3 kg + 4 kg = 7 kg\nRESULT: 7 kg",
+  "reference_key": "7",
+  "final_key_plus": "5",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.6,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "aggregator": "step_3: RESULT: 12 kg - 7 kg = 5 kg\n\n#### 5",
+    "verifier": "aggregator: step_3: RESULT: 12 kg - 7 kg = 5 kg\n\nFinal answer: 5 kg",
+    "step_3": "step_3: RESULT: 12 kg - 7 kg = 5 kg\nEND: 5 kg"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "8",
+      "reference_key": "7",
+      "key_differs": true,
+      "text": "step_2: Total taken by Peter and Paul = 3 kg + 4 kg = 7 kg\nRESULT: 8 kg",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_3: RESULT: 12 kg - 7 kg = 5 kg\n\n#### 5",
+        "verifier": "aggregator: step_3: RESULT: 12 kg - 7 kg = 5 kg\n\nFinal answer: 5 kg",
+        "step_3": "step_3: RESULT: 12 kg - 7 kg = 5 kg\nEND: 5 kg"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "5",
+      "reference_key": "7",
+      "key_differs": true,
+      "text": "step_2: RESULT: 7 kg (3 kg + 4 kg) in total taken by Peter and Paul.\n\nEND WITH \"RESULT: 5 kg\".",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "5 kg. #### 5",
+        "verifier": "aggregator: 5 kg. #### 5\n\nRe-reading the problem, I find no arithmetic or reading mistake. Pierre, Paul, and Jacques initially bought 12 kg of apples. Peter wants a quarter of that, which is 12 kg * 1/4 = 3 kg. Paul wants 1/3 of the total, which is 12 kg * 1/3 = 4 kg. Adding Peter's and Paul's shares, we get 3 kg + 4 kg = 7 kg.\n\nThe remaining apples for James would be the initial total minus the shares of Peter and Paul, which is 12 kg - 7 kg = 5 kg.\n\nFinal answer: 5 kg. #### 5",
+        "step_3": "step_3: RESULT: 12 kg (initial amount) - 7 kg (total taken by Peter and Paul) = 5 kg (remaining for James).\n\nRESULT: 5 kg."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "24",
+      "reference_key": "7",
+      "key_differs": true,
+      "text": "step_2: 2. Calculate bi-monthly checks for church donations.\n- Church donations: 2 checks per month\n- Total church checks per year: 2 checks/month * 12 months = 24 checks per year\n\nRESULT: 24",
+      "quality": 1.0,
+      "final_key": "5",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_1: Pierre, Paul, and Jacques initially have 12 kg of apples.\nstep_2: Peter takes a quarter of the apples, which is 12 kg * 1/4 = 3 kg.\nstep_3: Paul takes 1/3 of the remaining apples, which is (12 kg - 3 kg) * 1/3 = 4 kg.\nstep_4: Now, subtract the apples taken by Peter and Paul from the initial amount.\nstep_5: 12 kg - 3 kg - 4 kg = 5 kg.\n\n#### 5",
+        "verifier": "Re-reading the problem, there's no mistake in the calculation. Pierre, Paul, and Jacques initially have 12 kg of apples. Peter takes 3 kg, and Paul takes 4 kg, leaving 5 kg for James. Final answer: 5 kg.",
+        "step_3": "step_3: RESULT: 5 kg of apples will be left for James."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "5",
+  "sample_keys": [
+    "5",
+    "7",
+    "3",
+    "7",
+    "5"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1440.0,
+    "small_out": 412.0,
+    "small_s": 2.403199248000419
+  },
+  "calls_plus": {
+    "small_in": 1082.0,
+    "small_out": 274.0,
+    "small_s": 2.452570707000632,
+    "large_in": 305.0,
+    "large_out": 33.0,
+    "large_s": 0.5833557100004327
+  },
+  "calls_samples": {
+    "small_in": 1525.0,
+    "small_out": 216.0,
+    "small_s": 3.4426057600021522
+  }
+}

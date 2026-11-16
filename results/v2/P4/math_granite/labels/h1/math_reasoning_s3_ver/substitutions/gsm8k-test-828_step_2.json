@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-828",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "Carry out step 2 only. Show the calculation briefly.\n\nThe total cost of the jeans is $60 and the bag costs $20, so the total spent is $60 + $20 = $80.\n\nRESULT: $80",
+  "reference_key": "80",
+  "final_key_plus": "60",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "aggregator": "step_1: Mulan starts with $40.\nstep_2: Her father gives her an additional $100, making her total $140.\nstep_3: She spends $30 on each pair of jeans, so for two pairs, it's $30 * 2 = $60.\nstep_4: She also buys a bag for $20.\nstep_5: Total spent = $60 (jeans) + $20 (bag) = $80.\nstep_6: Money left = Total initial amount - Total spent = $140 - $80 = $60.\n\n#### $60",
+    "verifier": "Final answer: $60",
+    "step_3": "RESULT: $40"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "81",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "Carry out step 2 only. Show the calculation briefly.\n\nThe total cost of the jeans is $60 and the bag costs $20, so the total spent is $60 + $20 = $80.\n\nRESULT: 81",
+      "quality": 0.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "step_3: RESULT: 40\n\nAfter her father's gift, Mulan starts with $100. She then spends $30 on each pair of jeans, which totals $60. Additionally, she buys a bag for $20.\n\nTotal spent = $60 (jeans) + $20 (bag) = $80\n\nMoney left = Initial amount - Total spent\nMoney left = $100 - $80 = $20\n\n#### 20",
+        "verifier": "Final answer: $20",
+        "step_3": "RESULT: 40"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "60",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "step_2: RESULT: $60 (total cost of jeans and bag)\n\nEnd with \"RESULT: <number>\".",
+      "quality": 0.0,
+      "final_key": "40",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "step_3: RESULT: $40 (Mulan has $40 left)\n\n#### $40",
+        "verifier": "aggregator: step_3: RESULT: $40 (Mulan has $40 left)\n\nFinal answer: $40",
+        "step_3": "step_3: RESULT: $40 (Mulan has $40 left)"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "4",
+      "reference_key": "80",
+      "key_differs": true,
+      "text": "step_2: RESULT: $2 (daily savings goal)\n\nCarry out step 3.\n\nstep_3: RESULT: 8 \u00f7 2 = 4 days\n\nEnd with \"RESULT: <number>\".\n\nRESULT: 4 days",
+      "quality": 1.0,
+      "final_key": "60",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_2: Calculate total cost of jeans and bag.\nTotal cost = 2 * $30 + $20 = $80\n\nstep_3: Calculate remaining money after purchase.\nRemaining money = Initial amount - Total cost\nRemaining money = $40 - $80 = -$40\n\n#### -$40\n\nMulan does not have enough money to make the purchase. She would need an additional $40 to cover the cost of the jeans and bag.",
+        "verifier": "aggregator: step_1: Review initial information.\nMulan starts with $40 and her father gives her an additional $100, making her total amount $140.\n\nstep_2: Calculate total cost of jeans and bag.\nTotal cost = 2 * $30 + $20 = $80\n\nstep_3: Calculate remaining money after purchase.\nRemaining money = Initial amount - Total cost\nRemaining money = $140 - $80 = $60\n\nFinal answer: $60",
+        "step_3": "RESULT: 4 days"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "80",
+  "sample_keys": [
+    "3",
+    "80",
+    "80",
+    "80",
+    "80"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 1.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1400.0,
+    "small_out": 363.0,
+    "small_s": 2.1448009440009628
+  },
+  "calls_plus": {
+    "small_in": 1141.0,
+    "small_out": 310.0,
+    "small_s": 2.0722095929995703,
+    "large_in": 267.0,
+    "large_out": 60.0,
+    "large_s": 1.0259806079993723
+  },
+  "calls_samples": {
+    "small_in": 1335.0,
+    "small_out": 79.0,
+    "small_s": 1.3241406230008579
+  }
+}

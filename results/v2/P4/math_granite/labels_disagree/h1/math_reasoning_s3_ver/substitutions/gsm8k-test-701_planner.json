@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-701",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of seats needed: Aiden and his 12 friends make 13 people, and they will meet 7 more friends at the cinema, making a total of 20 people. Each seat can hold one person, so they will need 20 seats.\n2. Determine the total number of drinks and snacks needed: Each seat can hold two drinks and three snacks. Therefore, for 20 seats, they will need 20 seats * 2 drinks/seat = 40 drinks and 20 seats * 3 snacks/seat = 60 snacks.\n3. Calculate the total cost of drinks and snacks: Each drink and snack costs $2. So, the total cost for drinks will be 40 drinks * $2/drink and the total cost for snacks will be 60 snacks * $2/snack. Add these two amounts together to find the overall cost.",
+  "reference_key": null,
+  "final_key_plus": "200",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "aggregator": "RESULT: $200\n#### 200",
+    "step_1": "RESULT: 20 seats\n\nNext step:\n\nPLAN:\n2. Determine the total number of drinks and snacks needed: Each seat can hold two drinks and three snacks. Therefore, for 20 seats, they will need 20 seats * 2 drinks/seat = 40 drinks and 20 seats * 3 snacks/seat = 60 snacks.\n\nCarry out step 2 only. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".",
+    "step_3": "step_3: RESULT: 40 drinks * $2/drink = $80 and 60 snacks * $2/snack = $120\nOverall total: $80 (drinks) + $120 (snacks) = $200\nRESULT: $200",
+    "verifier": "aggregator: RESULT: $200\n\nFinal answer: $200",
+    "step_2": "step_2: RESULT: 40 drinks (20 seats * 2 drinks/seat) and 60 snacks (20 seats * 3 snacks/seat)"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the cost per flower for the first package option (3 for $2.50):\n   - Total flowers in the package: 3\n   - Cost per flower: $2.50 / 3 = $0.8333 (rounded to three decimal places)\n\n2. Calculate the cost per flower for the second package option (2 for $1):\n   - Total flowers in the package: 2\n   - Cost per flower: $1 / 2 = $0.50\n\n3. Compare the two options to find the better deal and calculate the savings for 18 flowers:\n   - For the first option, the cost for 18 flowers would be 18 / 3 * $0.8333 = $4.9998 (rounded to three decimal places)\n   - For the second option, the cost for 18 flowers would be 18 / 2 * $0.50 = $4.50\n   - Savings by choosing the better deal: $4.9998 - $4.50 = $0.4998 (rounded to three decimal places)\n\nPLAN: First, determine the cost per flower for each package option. Then, compare these costs to find the cheaper option. Finally, calculate the savings for buying 18 flowers at the cheaper price.",
+      "quality": 0.0,
+      "final_key": "0.5",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "The group has spent a total of $0.50 on snacks and drinks.\n#### 0.50",
+        "step_1": "RESULT: $0.8333",
+        "step_3": "step_3: RESULT: $0.4998\n\nEND.",
+        "verifier": "aggregator: The group has spent a total of $0.50 on snacks and drinks.\n\nFinal answer: $0.50",
+        "step_2": "step_2: RESULT: $0.50"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of seats needed: Aiden and his 12 friends constitute 13 people, and they are expected to greet 7 additional friends at the cinema, adding up to 20 people. Given each seat accommodates one person, they will necessitate 20 seats.\n2. Assess the total quantity of beverages and refreshments required: Each seat can accommodate two beverages and three pieces of refreshments. Consequently, for 20 seats, they will need 20 seats * 2 beverages/seat = 40 beverages and 20 seats * 3 refreshments/seat = 60 refreshments.\n3. Compute the total expense for beverages and refreshments: Each beverage and refreshment is priced at $2. Thus, the total expenditure for beverages will be 40 beverages * $2/beverage, and the total cost for refreshments will be 60 refreshments * $2/refreshment. Sum these two figures to determine the overall outlay.",
+      "quality": 0.0,
+      "final_key": "228",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "Final RESULT: $200 #### 200",
+        "step_1": "RESULT: 20 seats\n\nNext step:\n\nPLAN:\n2. Assess the total quantity of beverages and refreshments required: Each seat can accommodate two beverages and three pieces of refreshments. Consequently, for 20 seats, they will need 20 seats * 2 beverages/seat = 40 beverages and 20 seats * 3 refreshments/seat = 60 refreshments.\n\nResults so far:\n1. 20 seats\n\nCarry out step 2 only. Show the calculation briefly.\n\nEnd with \"RESULT: <number>\".",
+        "step_3": "3. Compute the total expense for beverages and refreshments:\n- Beverages: 40 beverages * $2/beverage = $80\n- Refreshments: 60 refreshments * $2/refreshment = $120\n\nRESULT: $80 (for beverages) + $120 (for refreshments) = $200\n\nFinal RESULT: $200",
+        "verifier": "aggregator: Re-reading the problem, the calculation seems correct. Each seat holds one person, two drinks, and three snacks, totaling 6 items per seat. With 19 people (Aiden and his 12 friends plus 7 more), that's 19 seats. Each item costs $2, so for 19 seats, the total cost would be 19 * 6 * $2 = $228.\n\nFinal answer: $228",
+        "step_2": "2. Assess the total quantity of beverages and refreshments required:\n- Beverages: 20 seats * 2 beverages/seat = 40 beverages\n- Refreshments: 20 seats * 3 refreshments/seat = 60 refreshments\n\nRESULT: 40 beverages, 60 refreshments"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "1. Calculate the time for each runner of the less well-rounded team:\n   - First runner: 60 seconds\n   - Second runner: 60 seconds - 3 seconds = 57 seconds\n   - Third runner: 57 seconds - 3 seconds = 54 seconds\n   - Fourth runner: 54 seconds - 3 seconds = 51 seconds\n\n2. Sum the times for all four runners of the less well-rounded team:\n   - Total time for less well-rounded team = 60 + 57 + 54 + 51 = 222 seconds\n\n3. Compare the total time of the less well-rounded team with the well-rounded team's time:\n   - Difference in time = 222 seconds (less well-rounded team) - 200 seconds (well-rounded team) = 22 seconds\n\nThe faster team will win by 22 seconds.",
+      "quality": 0.0,
+      "final_key": "528",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "22 seconds\n#### 22",
+        "step_1": "1. Calculate the time for each runner of the less well-rounded team:\n   - First runner: 60 seconds\n   - Second runner: 60 seconds - 3 seconds = 57 seconds\n   - Third runner: 57 seconds - 3 seconds = 54 seconds\n   - Fourth runner: 54 seconds - 3 seconds = 51 seconds\n\nRESULT: 60, 57, 54, 51 seconds",
+        "step_3": "3. Compare the total time of the less well-rounded team with the well-rounded team's time:\n   - Difference in time = 222 seconds (less well-rounded team) - 200 seconds (well-rounded team) = 22 seconds\n\nRESULT: 22 seconds",
+        "verifier": "aggregator: 22 seconds\n\nRe-reading the problem, I confirm the calculation is correct. Each seat holds one person, two drinks, and three snacks, totaling 6 items per seat. With 22 people (19 original friends + 3 additional friends), there are 22 seats. Each seat requires 6 items, so the total number of items needed is 22 seats * 6 items/seat = 132 items.\n\nSince each drink costs $2 and each snack costs $2, the cost per item is $2 (for drink) + $2 (for snack) = $4 per item.\n\nTherefore, the total cost for snacks and drinks is 132 items * $4/item = $528.\n\nFinal answer: $528",
+        "step_2": "2. Sum the times for all four runners of the less well-rounded team:\n   - Total time for less well-rounded team = 60 + 57 + 54 + 51 = 222 seconds\n\nRESULT: 222 seconds"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "200",
+  "sample_keys": [
+    "256",
+    "190",
+    "152"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2017.0,
+    "small_out": 394.0,
+    "small_s": 2.274923314001171
+  },
+  "calls_plus": {
+    "large_in": 178.0,
+    "large_out": 221.0,
+    "large_s": 3.7826916180001717,
+    "small_in": 1934.0,
+    "small_out": 267.0,
+    "small_s": 4.160901805998947
+  },
+  "calls_samples": {
+    "small_in": 5901.0,
+    "small_out": 1611.0,
+    "small_s": 19.973576624999623
+  }
+}

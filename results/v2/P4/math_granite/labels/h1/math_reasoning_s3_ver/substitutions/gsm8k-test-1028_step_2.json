@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-1028",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "2. Monthly payment = $2000 * 0.10 = $200\n\nRESULT: $200",
+  "reference_key": "200",
+  "final_key_plus": "200",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "aggregator": "step_3: RESULT: $200 + $2000 = $2200\n\nFinal answer: #### $2200",
+    "verifier": "aggregator: step_3: RESULT: $3000 (initial cost of the new bedroom set) - $1000 (value of the old bedroom set) = $2000\n\nNext, calculate the monthly payment for the remaining balance:\n\naggregator: step_4: RESULT: $2000 * 10% = $200\n\nFinal answer: $200 per month.",
+    "step_3": "step_3: RESULT: $200 + $2000 = $2200\n\nRESULT: $2200"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "201",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "2. Monthly payment = $2000 * 0.10 = $200\n\nRESULT: 201",
+      "quality": 1.0,
+      "final_key": "200",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_3: RESULT: $2000 + $200 = $2200\n\nFinal answer: #### 2200",
+        "verifier": "aggregator: step_3: RESULT: $3000 (initial cost of the new bedroom set) - $1000 (value of the old bedroom set) = $2000\n\nNext, Tom needs to pay 10% of the remaining $2000 each month for the bedroom set.\n\nFinal answer: 2000 * 0.10 = $200 per month.\n\nFinal answer: 200",
+        "step_3": "step_3: RESULT: $2000 + $200 = $2200\n\nRESULT: 2200"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "5",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "step_2: 4 inches + 1 inch = 5 inches.\n\nRESULT: 5 inches.",
+      "quality": 0.0,
+      "final_key": "220",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "step_3: RESULT: $2200\n\nTom initially had to pay $3000 for the new bedroom set. After selling his old bedroom for $1000, he used this to cover part of the new set's cost, leaving him with $2200 to pay for the remaining amount.\n\nSince he has to pay 10% a month for the bedroom set, we calculate the monthly payment as follows:\n\n$2200 * 10% = $220\n\n#### $220",
+        "verifier": "aggregator: step_3: RESULT: $220\n\nUpon re-evaluation, the calculation for the monthly payment remains the same. Tom's remaining balance after using the $1000 from the sale of his old bedroom is indeed $2200. The 10% monthly payment on this remaining balance is calculated as follows:\n\n$2200 * 10% = $220\n\nFinal answer: $220",
+        "step_3": "step_3: RESULT: $2200"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "3",
+      "reference_key": "200",
+      "key_differs": true,
+      "text": "step_2: RESULT: 6 hours\n\nCarry out step 3 only. Show the calculation briefly.\nEnd with \"RESULT: <number>\".",
+      "quality": 0.0,
+      "final_key": "2200",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "step_3: Tom has $2000 remaining after using the $1000 from selling his old bedroom set. He then has to pay 10% per month for the remaining $2000.\n\nCalculation:\n$2000 (remaining amount) + ($2000 * 10%) = $2000 + $200 = $2200 (Total monthly payment)\n\n#### $2200",
+        "verifier": "aggregator: step_3: Tom has $2000 remaining after using the $1000 from selling his old bedroom set. He then has to pay 10% per month for the remaining $2000.\n\nCalculation:\n$2000 (remaining amount) + ($2000 * 10%) = $2000 + $200 = $2200 (Total monthly payment)\n\nFinal answer: $2200",
+        "step_3": "step_3: RESULT: $2000 (Remaining amount) + $200 (Monthly payment) = $2200 (Total monthly payment)\nRESULT: $2200"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "200",
+  "sample_keys": [
+    "200",
+    "3",
+    "0.1",
+    "200",
+    "200"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": null,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1682.0,
+    "small_out": 463.0,
+    "small_s": 2.448428476001027
+  },
+  "calls_plus": {
+    "small_in": 1275.0,
+    "small_out": 377.0,
+    "small_s": 3.3313396650009963,
+    "large_in": 358.0,
+    "large_out": 31.0,
+    "large_s": 0.5545321170002353
+  },
+  "calls_samples": {
+    "small_in": 1790.0,
+    "small_out": 108.0,
+    "small_s": 1.6545185160002802
+  }
+}

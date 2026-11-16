@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-829",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 4,000 bars/week.",
+  "reference_key": "4000",
+  "final_key_plus": "50000",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "aggregator: RESULT: Boris produces 50,000 bars of chocolate each month.\n\n#### 50,000\n\nFinal answer: 50,000",
+    "step_2": "step_2: RESULT: 150,000 bars/month.",
+    "aggregator": "RESULT: -112,000 bars/month.\n\n#### -112,000",
+    "step_3": "step_3: RESULT: 50,000 bars/month - (8,000 + 4,000 + 150,000) bars/month = 50,000 bars/month - 162,000 bars/month = -112,000 bars/month.\n\nRESULT: -112,000 bars/month."
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "4001",
+      "reference_key": "4000",
+      "key_differs": true,
+      "text": "RESULT: 4001 bars/week.",
+      "quality": 0.0,
+      "final_key": "50000",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: RESULT: Boris produces 50,000 bars of chocolate each month.\n\n#### 50,000\n\nFinal answer: 50,000",
+        "step_2": "step_2: RESULT: 150,000 bars/month.",
+        "aggregator": "RESULT: -112,000 bars/month.\n\n#### -112,000",
+        "step_3": "step_3: RESULT: 50,000 bars/month - (8,000 + 4,000 + 150,000) bars/month = 50,000 bars/month - 162,000 bars/month = -112,000 bars/month.\n\nRESULT: -112,000 bars/month."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "12000",
+      "reference_key": "4000",
+      "key_differs": true,
+      "text": "First week production = 8,000 bars/week\nSecond week production = 4,000 bars/week\n\nRESULT: 12,000 bars",
+      "quality": 0.0,
+      "final_key": "-112000",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: -112,000 bars/month. #### -112,000\n\nRe-reading the problem, I find no arithmetic or reading mistake. Boris produces 8,000 bars in the first week, half of that in the second week (4,000), and three times that in the third week (24,000). The total for the first three weeks is 36,000 bars. Since Boris produces 50,000 bars each month, the fourth week's production would be the difference between the monthly total and the first three weeks' production, which is 50,000 - 36,000 = 14,000 bars.\n\nFinal answer: 14,000 bars",
+        "step_2": "2. Calculate the production for the third week:\n   Third week production = 50,000 bars/month * 3 = 150,000 bars/month.\n\nRESULT: 150,000 bars",
+        "aggregator": "-112,000 bars/month. #### -112,000",
+        "step_3": "3. Determine the production for the fourth week:\n   Fourth week production = 50,000 bars/month - (8,000 bars/week + 4,000 bars/week + 150,000 bars/month).\n   Fourth week production = 50,000 bars/month - (8,000 + 4,000 + 150,000) bars/month = 50,000 bars/month - 162,000 bars/month = -112,000 bars/month.\n\nRESULT: -112,000 bars/month."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "1500",
+      "reference_key": "4000",
+      "key_differs": true,
+      "text": "1. Sale price for Mr. Rogers = 75% of $2000 = 0.75 * $2000 = $1500.\n\nRESULT: $1500",
+      "quality": 0.0,
+      "final_key": "-112000",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: RESULT: -112,000 bars/month\n#### -112,000\n\nRe-reading the problem, I find no arithmetic or reading mistake. Boris produces 50,000 bars of chocolate each month. The first week is 8,000 bars, the second week is half of that, which is 4,000 bars, and the third week is three times the first week, totaling 24,000 bars. Adding these up, we get 36,000 bars for the first three weeks.\n\nThe fourth week's production is the total monthly production minus the first three weeks' production:\n\n50,000 (monthly) - 36,000 (first three weeks) = 14,000 bars\n\nFinal answer: 14,000 bars",
+        "step_2": "2. Calculate the production for the third week:\n   Third week production = 50,000 bars/month * 3 = 150,000 bars/month.\n\nRESULT: 150,000 bars/month",
+        "aggregator": "RESULT: -112,000 bars/month\n#### -112,000",
+        "step_3": "3. Determine the production for the fourth week:\n   Fourth week production = 50,000 bars/month - (8,000 bars/week + 4,000 bars/week + 150,000 bars/month).\n   Fourth week production = 50,000 bars/month - (8,000 + 4,000 + 150,000) bars/month = 50,000 bars/month - 162,000 bars/month = -112,000 bars/month.\n\nRESULT: -112,000 bars/month"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "4000",
+  "sample_keys": [
+    "4000",
+    "4000",
+    "4000",
+    "4000",
+    "4000"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2446.0,
+    "small_out": 898.0,
+    "small_s": 5.084812091999083
+  },
+  "calls_plus": {
+    "small_in": 1667.0,
+    "small_out": 523.0,
+    "small_s": 4.701835141000629,
+    "large_in": 496.0,
+    "large_out": 13.0,
+    "large_s": 0.2359423580001021
+  },
+  "calls_samples": {
+    "small_in": 2480.0,
+    "small_out": 265.0,
+    "small_s": 2.3686395549993904
+  }
+}

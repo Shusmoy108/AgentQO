@@ -1,0 +1,94 @@
+{
+  "task_id": "gsm8k-test-704",
+  "node_id": "aggregator",
+  "role": "aggregator",
+  "reference": "Gerald initially received $60 (3/5 of $100) and Julia received $40 (2/5 of $100). After spending $10 on a book, Gerald had $5 left. #### 5",
+  "reference_key": "5",
+  "final_key_plus": "60",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "aggregator: step_1: Re-read the problem and recompute Gerald's share value.\n\nGerald's share value = (3/5) * Total amount = (3/5) * $100 = $60\n\nFinal answer: $60"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "6",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "Gerald initially received $60 (3/5 of $100) and Julia received $40 (2/5 of $100). After spending $10 on a book, Gerald had $5 left. #### 6",
+      "quality": 1.0,
+      "final_key": "50",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: Gerald and Julia initially divided $100 into 3 and 2 parts, respectively. Gerald's share was $60 (3/5 of $100), and Julia's was $40 (2/5 of $100). After spending $10 on a book, Gerald had $50 left, not $5. The mistake was in the calculation of Gerald's remaining amount.\n\nFinal answer: $50"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "30",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "step_1: Multiply the total amount by the smaller part of the ratio: $100 * (2/5) = $40\nstep_2: Subtract the amount Gerald spent on a book from his initial share: $40 - $10 = $30\n\n#### $30",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: step_1: Multiply the total amount by the smaller part of the ratio: $100 * (2/5) = $40\nstep_2: Subtract the amount Gerald spent on a book from his initial share: $40 - $10 = $30\n\nFinal answer: $30"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "21",
+      "reference_key": "5",
+      "key_differs": true,
+      "text": "step_3: RESULT: 42 (Steve) + 21 (Girlfriend) = 63\n\nFinal answer: Steve needs 63 tomatoes per week. Since a vine can produce 3 tomatoes per week, the number of vines needed is 63 / 3 = 21 vines.\n\n#### 21",
+      "quality": 0.0,
+      "final_key": "3.33",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "aggregator: step_3: RESULT: 42 (Gerald) + 21 (Julia) = 63\n\nFinal answer: Gerald and Julia initially divided $100 into a ratio of 3:2, meaning Gerald received 3 parts and Julia received 2 parts. Gerald spent $10 on a book. To find out how much money Gerald had left, we first calculate the total parts: 3 (Gerald's share) + 2 (Julia's share) = 5 parts. Gerald's share is 3 parts, so we divide his $10 by the value of one part: $10 / 3 \u2248 $3.33. Therefore, Gerald had approximately $3.33 left after buying the book.\n\nFinal answer: $3.33"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "5",
+  "sample_keys": [
+    "60",
+    "54",
+    "5",
+    "5",
+    "5"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": -1.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": true,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1351.0,
+    "small_out": 389.0,
+    "small_s": 2.23651382099888
+  },
+  "calls_plus": {
+    "small_in": 1251.0,
+    "small_out": 258.0,
+    "small_s": 1.4854784099989047,
+    "large_in": 100.0,
+    "large_out": 55.0,
+    "large_s": 0.956313331000274
+  },
+  "calls_samples": {
+    "small_in": 500.0,
+    "small_out": 689.0,
+    "small_s": 10.220890267000868
+  }
+}

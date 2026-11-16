@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-2",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2:\nTotal cost = Original purchase price + Repair cost\n= $80,000 + $50,000\n= $130,000\n\nSelling price = New value of the house\n= $200,000\n\nRESULT: $130,000",
+  "reference_key": "130000",
+  "final_key_plus": "70000",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "aggregator": "Profit = Selling price - Total cost\n= $200,000 - $130,000\n= $70,000\n\n#### $70,000",
+    "verifier": "aggregator: Profit = Selling price - Total cost\n= $200,000 - $130,000\n= $70,000\n\nFinal answer: $70,000",
+    "step_3": "step_3:\nProfit = Selling price - Total cost\n= $200,000 - $130,000\n= $70,000\n\nRESULT: $70,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "130001",
+      "reference_key": "130000",
+      "key_differs": true,
+      "text": "step_2:\nTotal cost = Original purchase price + Repair cost\n= $80,000 + $50,000\n= $130,000\n\nSelling price = New value of the house\n= $200,000\n\nRESULT: 130001",
+      "quality": 1.0,
+      "final_key": "70000",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "70000\n#### 70000",
+        "verifier": "aggregator: 70000\n\nFinal answer: $70,000",
+        "step_3": "step_3:\nProfit = Selling price - Total cost\n= $200,000 - $130,000\n= $70,000\n\nRESULT: 70000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "70000",
+      "reference_key": "130000",
+      "key_differs": true,
+      "text": "step_2: RESULT: $130,000 (Total cost)\nstep_3: RESULT: $200,000 (Selling price)\n\nProfit = Selling price - Total cost\nProfit = $200,000 - $130,000\nProfit = $70,000\n\nResult: $70,000",
+      "quality": 1.0,
+      "final_key": "70000",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "Profit = $200,000 (selling price after 150% increase) - $130,000 (total cost including purchase and repairs)\nRESULT: $70,000\n#### 70,000",
+        "verifier": "aggregator: Profit = $200,000 (selling price after 150% increase) - $130,000 (total cost including purchase and repairs)\n\nFinal answer: $70,000",
+        "step_3": "Profit = Selling price - Total cost\nProfit = $200,000 - $130,000\nRESULT: $70,000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "12",
+      "reference_key": "130000",
+      "key_differs": true,
+      "text": "step_2: RESULT: $12.00",
+      "quality": 1.0,
+      "final_key": "70000",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_3: RESULT: $70,000\n\n#### $70,000",
+        "verifier": "aggregator: step_3: RESULT: $70,000\n\nFinal answer: $70,000",
+        "step_3": "step_3: RESULT: $70,000"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "70000",
+  "sample_keys": [
+    "200000",
+    "70000",
+    "70000",
+    "70000",
+    "70000"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1756.0,
+    "small_out": 425.0,
+    "small_s": 2.6501791110013073
+  },
+  "calls_plus": {
+    "small_in": 1394.0,
+    "small_out": 406.0,
+    "small_s": 3.971968287999516,
+    "large_in": 390.0,
+    "large_out": 76.0,
+    "large_s": 1.2647903759998371
+  },
+  "calls_samples": {
+    "small_in": 1950.0,
+    "small_out": 437.0,
+    "small_s": 6.466298891000406
+  }
+}

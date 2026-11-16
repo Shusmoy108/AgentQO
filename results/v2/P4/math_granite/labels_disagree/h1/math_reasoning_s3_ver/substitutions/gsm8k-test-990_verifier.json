@@ -1,0 +1,85 @@
+{
+  "task_id": "gsm8k-test-990",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "I have re-evaluated the problem and the proposed solution. The air conditioner cools the room 2 degrees an hour on low and 3 degrees an hour on high. It ran on low for 3 hours, cooling the room by 2*3 = 6 degrees. Then it was turned up to high for 4 hours, cooling the room an additional 3*4 = 12 degrees. So, the total cooling is 6 + 12 = 18 degrees.\n\nThe room warms up 2 degrees an hour with no air conditioner running. Over 2 hours, it would warm up by 2*2 = 4 degrees.\n\nTherefore, the final temperature is 18 degrees lower than the starting temperature.\n\nFinal answer: 18",
+  "reference_key": "18",
+  "final_key_plus": "18",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.6,
+  "baseline_agrees": true,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "12",
+      "reference_key": "18",
+      "key_differs": true,
+      "text": "aggregator: 6 degrees\n\nMistake: The air conditioner was running for a total of 3 + 4 + 2 = 9 hours. However, the temperature decrease was calculated based on the hours of operation only, not considering the decreasing temperature per hour as the operation proceeds.\n\nRecalculation:\n- Low setting: 3 hours * 2 degrees per hour = 6 degrees\n- High setting: 4 hours * 3 degrees per hour = 12 degrees\n- Total cooling: 6 (low) + 12 (high) = 18 degrees\n\nThe room started at the initial room temperature. After 9 hours, the final temperaturedrop is 18 degrees from the starting point. However, since the problem asks for the temperature lower than the starting temperature, we need to consider the room's initial state. If we assume the room started at 30 degrees Celsius (common initial room temperature), then 18 degrees below 30 is 12 degrees.\n\nFinal answer: 12 degrees",
+      "quality": 0.0,
+      "final_key": "12",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "14",
+      "reference_key": "18",
+      "key_differs": true,
+      "text": "Aggregator's solution: 18 degrees\n\nThe air conditioner ran on low for 3 hours, cooling the room by 2 degrees each hour. So, 3 hours * 2 degrees per hour = 6 degrees cooler.\n\nThen, it was turned up to high for 4 hours, cooling the room by 3 degrees each hour. So, 4 hours * 3 degrees per hour = 12 degrees cooler.\n\nThen, the air conditioner was off for 2 hours, during which the room warmed up by 2 degrees per hour. So, 2 hours * 2 degrees per hour = 4 degrees warmer.\n\nAdding these together: 6 degrees (from low setting) + 12 degrees (from high setting) - 4 degrees (from being off and room heating up) = 14 degrees cooler in total.\n\nFinal answer: 14 degrees",
+      "quality": 1.0,
+      "final_key": "14",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "60",
+      "reference_key": "18",
+      "key_differs": true,
+      "text": "Re-reading the problem, I find no arithmetic or reading mistake. The calculation is correct. Rita removes an average of 60 Junebugs per day.\n\nFinal answer: 60",
+      "quality": 0.0,
+      "final_key": "60",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "18",
+  "sample_keys": [
+    "18",
+    "14",
+    "18",
+    "10",
+    "2"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -0.5,
+  "skipped_plus": true,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1904.0,
+    "small_out": 527.0,
+    "small_s": 2.9959378769999603
+  },
+  "calls_plus": {
+    "small_in": 1686.0,
+    "small_out": 339.0,
+    "small_s": 1.9586563510001724,
+    "large_in": 218.0,
+    "large_out": 173.0,
+    "large_s": 2.9757912200002465
+  },
+  "calls_samples": {
+    "small_in": 1090.0,
+    "small_out": 650.0,
+    "small_s": 7.909099214000889
+  }
+}

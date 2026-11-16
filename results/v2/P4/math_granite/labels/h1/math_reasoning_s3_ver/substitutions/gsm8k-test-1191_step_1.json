@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-1191",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "1. The haircut cost is calculated as follows: 2 inches * $30/inch = $60.\n\nRESULT: $60",
+  "reference_key": "60",
+  "final_key_plus": "100",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "aggregator: 100\n\nFinal answer: $100",
+    "step_2": "step_2: 2. The total cost is the sum of the haircut cost and the color cost: $60 (haircut) + $40 (color) = $100.\n\nRESULT: $100",
+    "aggregator": "100\n#### 100",
+    "step_3": "step_3: 3. The total cost is $100.\n\nRESULT: $100"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "61",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "1. The haircut cost is calculated as follows: 2 inches * $30/inch = $60.\n\nRESULT: 61",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: 100\n\nFinal answer: $100",
+        "step_2": "2. Add the cost of the color: $60 (haircut) + $40 (color) = $100.\n\nRESULT: 100",
+        "aggregator": "100\n#### 100",
+        "step_3": "3. Sum the costs: The total cost is $60 (haircut) + $40 (color) = $100.\n\nRESULT: 100"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "100",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "RESULT: $60\n\nNext step:\n\nPLAN: Add the cost of the color ($40) to the haircut cost ($60).\n\nCalculation: $60 (haircut) + $40 (color) = $100.\n\nEND.",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: step_3: RESULT: $100\n\nFinal answer: $100",
+        "step_2": "RESULT: $100",
+        "aggregator": "step_3: RESULT: $100\n\n#### 100",
+        "step_3": "RESULT: $100"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "50",
+      "reference_key": "60",
+      "key_differs": true,
+      "text": "1. Leo collected 50 stickers last year.\n\nRESULT: 50",
+      "quality": 1.0,
+      "final_key": "100",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "aggregator: 100\n\nFinal answer: $100",
+        "step_2": "2. Add the cost of the color: $60 (haircut) + $40 (color) = $100.\n\nRESULT: 100",
+        "aggregator": "100\n#### 100",
+        "step_3": "3. Sum the costs: $60 (haircut) + $40 (color) = $100.\n\nRESULT: 100"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "60",
+  "sample_keys": [
+    "60",
+    "60",
+    "60",
+    "60",
+    "60"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1479.0,
+    "small_out": 337.0,
+    "small_s": 1.963798165001208
+  },
+  "calls_plus": {
+    "small_in": 1209.0,
+    "small_out": 293.0,
+    "small_s": 2.271606715999951,
+    "large_in": 317.0,
+    "large_out": 35.0,
+    "large_s": 0.5983667200007403
+  },
+  "calls_samples": {
+    "small_in": 1585.0,
+    "small_out": 35.0,
+    "small_s": 0.6769491060003929
+  }
+}

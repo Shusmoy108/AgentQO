@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-879",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Pedicure cost = Manicure cost * 3/4 = $100 * 3/4 = $75\nRESULT: $75",
+  "reference_key": "75",
+  "final_key_plus": "575",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "aggregator": "step_3: Total cost = Cost of hair + Cost of manicure + Cost of pedicure\nRESULT: $400 + $100 + $75 = $575\n#### 575",
+    "verifier": "aggregator: step_3: Total cost = Cost of hair + Cost of manicure + Cost of pedicure\n\nFirst, let's calculate the cost of the manicure:\n1/4 of $400 (hair) = $100\n\nNext, the cost of the pedicure:\n3/4 of the manicure cost = 3/4 * $100 = $75\n\nNow, add all the costs together:\n$400 (hair) + $100 (manicure) + $75 (pedicure) = $575\n\nFinal answer: $575",
+    "step_3": "step_3: Total cost = Cost of hair + Cost of manicure + Cost of pedicure\nRESULT: $400 + $100 + $75 = $575"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "76",
+      "reference_key": "75",
+      "key_differs": true,
+      "text": "step_2: Pedicure cost = Manicure cost * 3/4 = $100 * 3/4 = $75\nRESULT: 76",
+      "quality": 1.0,
+      "final_key": "575",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_3: Total cost = Cost of hair + Cost of manicure + Cost of pedicure\nRESULT: 400 + 100 + 75 = 575\n\n#### 575",
+        "verifier": "aggregator: step_3: Total cost = Cost of hair + Cost of manicure + Cost of pedicure\n\nFirst, let's calculate the cost of the manicure:\n1/4 of $400 (hair) = $100\n\nNext, the cost of the pedicure:\n3/4 of the manicure cost = 3/4 * $100 = $75\n\nNow, add all the costs together:\nTotal cost = Cost of hair + Cost of manicure + Cost of pedicure\nTotal cost = $400 + $100 + $75\nTotal cost = $575\n\nFinal answer: $575",
+        "step_3": "step_3: Total cost = Cost of hair + Cost of manicure + Cost of pedicure\nRESULT: 400 + 100 + 75 = 575"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "575",
+      "reference_key": "75",
+      "key_differs": true,
+      "text": "step_2: RESULT: $75\nCarry out step 3 only. Show the final result.\nRESULT: $575",
+      "quality": 1.0,
+      "final_key": "575",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_2: Iris spent $400 on her hair.\nstep_3: She spent 1/4 of that on a manicure, which equals $400 * 1/4 = $100.\nstep_4: For a pedicure, she spent 3/4 of the manicure cost, which is $100 * 3/4 = $75.\nstep_5: To find the total amount spent at the spa, add the costs of hair, manicure, and pedicure: $400 + $100 + $75 = $575.\n\n#### 575",
+        "verifier": "Final answer: $575",
+        "step_3": "RESULT: $575"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "4",
+      "reference_key": "75",
+      "key_differs": true,
+      "text": "step_2: 2. Determine the number of harvests in a year:\n- John can harvest his pineapples every 3 months.\n- In a year, there are 12 months.\n- Therefore, John can harvest his pineapples 12 months / 3 months per harvest = 4 times in a year.\n\nRESULT: 4 harvests in a year.",
+      "quality": 1.0,
+      "final_key": "575",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "step_3: RESULT: $400 + $100 + $75 = $575\n\n#### 575",
+        "verifier": "aggregator: step_3: RESULT: $400 (hair) + $100 (manicure) + $75 (pedicure) = $575\n\nFinal answer: $575",
+        "step_3": "step_3: RESULT: $400 + $100 + $75 = $575\n\nRESULT: $575"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "75",
+  "sample_keys": [
+    "75",
+    "75",
+    "75",
+    "75",
+    "75"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1631.0,
+    "small_out": 429.0,
+    "small_s": 2.51182074999997
+  },
+  "calls_plus": {
+    "small_in": 1300.0,
+    "small_out": 470.0,
+    "small_s": 4.8882980159996805,
+    "large_in": 366.0,
+    "large_out": 39.0,
+    "large_s": 0.6903504690008049
+  },
+  "calls_samples": {
+    "small_in": 1830.0,
+    "small_out": 86.0,
+    "small_s": 1.3918872669992197
+  }
+}
