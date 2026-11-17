@@ -554,3 +554,19 @@ of busy models: small+large {aggregator=large+verifier=large, planner=large+step
 step_3=large+aggregator=xl+verifier=xl, planner=xl+step_1=large+step_2=large+step_3=large+aggregator=large+
 verifier=large}; all three {step_2=large+verifier=xl, planner=xl+aggregator=large, step_1=large+step_3=xl+
 verifier=large}.
+
+### L2-X1c (b) plan rule (2026-11-17 14:15:30 UTC, before any X1c data)
+
+X1c (b) uses only A16 plans that are NOT in results/v2/X1/math_tiers/plans.txt (the 114 plans X1 timed), so X1
+math_tiers stays a clean held-out test for latsim rev2. A plan's busy set is the set of tiers its six agents use
+(unlisted agents are small). A registered plan that X1 timed is replaced by an unused plan with the same busy set
+(drawn with seed 2); if a busy set had no unused plan, the closest unused plan would be used and named. Check: 2 of
+the 9 plans in the first X1c registration were in X1 (aggregator=xl+verifier=xl; step_1=large+step_3=xl+
+verifier=large); every busy set has unused plans (small+large 51, small+xl 50, large+xl 53, all three 459), so both
+were replaced by exact busy-set matches. Final X1c (b) plans (none in X1 math_tiers):
+- small+large: aggregator=large+verifier=large; planner=large+step_2=large
+- small+xl: planner=xl+step_1=xl+aggregator=xl (replaces aggregator=xl+verifier=xl); planner=xl+step_2=xl
+- large+xl: planner=large+step_1=large+step_2=large+step_3=large+aggregator=xl+verifier=xl;
+  planner=xl+step_1=large+step_2=large+step_3=large+aggregator=large+verifier=large
+- all three: step_2=large+verifier=xl; planner=xl+aggregator=large; planner=large+step_1=xl (replaces
+  step_1=large+step_3=xl+verifier=large)
