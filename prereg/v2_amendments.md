@@ -508,3 +508,25 @@ P6/search_ground_truth.md). The timed list is therefore those 84 plans plus 100 
 remaining 940 (X1/complex_q15_7/plan_selection.json); it contains all 12 plans of the registered 2-D front. Kept as is
 (exploratory, a superset of the registered front); the 100 random plans differ from a draw over the 1,012 non-front
 plans. Cost: about +0.9 h on VM-A's X1 shared block. math_tiers is as registered (14 front plans + 100).
+
+### L2-X1b: load sweep for held-out latency validation, registered 2026-11-17 13:59:13 UTC, before any X1b data
+
+Status: EXPLORATORY under L2-X (same rules: own folder results/v2/X1b, V2_DEVIATION=D-L2-X-code, code
+v2-lease2-x c1bb8338 with per-request start/end timestamps, included in results_v2_UPLOAD.zip,
+FINAL/data_check.md and P6/search_ground_truth.md as latency ground truth).
+Reason: held-out validation of an offline whole-plan latency simulator, built in a separate session on branch
+v2-latsim and fitted only on P5 + h4grid. X1b is never used for fitting; it measures loads and plans the
+simulator has not seen.
+What: settings math_q15_7, hotpot_q15_7, math_granite, math_phi. Plans: all_small, all_large, every
+single-agent plan, plus random plans drawn with seed 1 from the rest: 8 for the math chain (6 agents, 16 plans)
+and 4 for hotpot_chain (5 agents, 11 plans; the request said 12, but the chain has 5 agents). Loads K = 4, 8
+and 32, the first 64 problems of P5's split, 2 repeats, no cache. Placements: separate (small on VM-A, large on
+VM-B at 10.56.2.39) and shared (one GPU), plus shared_mps for math_q15_7 only. Also K=1 for math_q15_7 only:
+all_small, all_large, only_verifier, aggregator+verifier, 32 problems, 1 repeat, separate and shared. Servers
+and settings as X1 (small 0.25 / large 0.55, AGENTQO_VERIFIER=cautious, max_tokens 256 math / 384 HotpotQA /
+512 Granite and Phi). Measured: per run p50/p95/p99, throughput, accuracy; per call tokens, latency and
+request start/end; nvidia-smi 1 s power logs.
+How and when: right after X1 and before X2, under TIMING_LOCK on both VMs held from X1 through X1b (X3 and X7
+paused), reusing X1's servers where possible; a gate and push per setting and placement. If X1b would push
+X7's start past 2026-11-18 14:00 UTC, only math_q15_7 and math_phi run and the cut is logged. The time left is
+recomputed and logged after X1b.
