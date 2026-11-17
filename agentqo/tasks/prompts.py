@@ -197,9 +197,82 @@ def build_prompt(node: "NodeSpec", inputs: Dict[str, "NodeResult"], task_context
     dataset = (getattr(task_context.get("task"), "metadata", None) or {}).get("dataset")
     if dataset == "hotpotqa":
         return _hotpot_prompt(node, results, workflow, problem)
+    if dataset == "mbppplus":  # L2-X7: code chain; test reports come from the sandbox
+        return _code_prompt(node, results, task_context, problem)
     if dataset == "math500":  # L2-X5: same math roles, answers in \\boxed{} (not always a number)
         return math500_prompt(_math_prompt(node, results, workflow, problem))
     return _math_prompt(node, results, workflow, problem)
+
+
+CODE_PLANNER = """You are planning how to write a Python function. Do not write code.
+Task: {problem}
+Write a numbered plan of at most 5 short steps.
+Start your answer with "PLAN:"."""
+
+CODE_CODER = """Task: {problem}
+Plan:
+{plan}
+Write the complete Python function, with any imports it needs. Do not include tests or example calls.
+Return only one ```python code block."""
+
+CODE_TESTER = """Task: {problem}
+Candidate code:
+```python
+{code}
+```
+Write 5 extra Python assert statements that check this function on typical and edge cases. Work out each
+expected result from the task, not from the code.
+Return only one ```python code block containing the assert lines."""
+
+CODE_FIXER = """Task: {problem}
+Code:
+```python
+{code}
+```
+Test results (the task's example test and the extra asserts, run on this code):
+{report}
+If a test failed because the code is wrong, fix the code. If the code is right, or a failing assert is itself
+wrong, keep the code unchanged.
+Return the complete code in one ```python code block."""
+
+CODE_VERIFIER = """Task: {problem}
+Candidate A:
+```python
+{a}
+```
+Test results for A:
+{ra}
+Candidate B (a revision of A):
+```python
+{b}
+```
+Test results for B:
+{rb}
+Pick the candidate more likely to be correct for the task. Write "PICK: A" or "PICK: B", then return the
+complete code of the picked candidate in one ```python code block."""
+
+
+def _code_prompt(node: "NodeSpec", results, task_context: Dict[str, Any], problem: str) -> str:
+    """L2-X7 code chain (planner, coder, tester, fixer, verifier). Model code runs only in the sandbox."""
+    from agentqo.tasks.mbppplus import assert_report, example_tests, extract_code, tester_asserts
+    nid = node.node_id
+    if nid == "planner":
+        return CODE_PLANNER.format(problem=problem)
+    if nid == "coder":
+        return CODE_CODER.format(problem=problem, plan=_text(results, "planner"))
+    code_of = lambda n: extract_code(_text(results, n)) or _text(results, n)  # noqa: E731
+    if nid == "tester":
+        return CODE_TESTER.format(problem=problem, code=code_of("coder"))
+    qid = ((getattr(task_context.get("task"), "metadata", None) or {}).get("qid")) or ""
+    tests = example_tests(qid) + tester_asserts(_text(results, "tester"))
+    if nid == "fixer":
+        code = code_of("coder")
+        return CODE_FIXER.format(problem=problem, code=code, report=assert_report(extract_code(_text(results, "coder")), tests))
+    if nid == "verifier":
+        return CODE_VERIFIER.format(problem=problem, a=code_of("coder"), b=code_of("fixer"),
+                                    ra=assert_report(extract_code(_text(results, "coder")), tests),
+                                    rb=assert_report(extract_code(_text(results, "fixer")), tests))
+    raise ValueError(f"no code-chain template for node {nid}")
 
 
 def math500_prompt(text: str) -> str:

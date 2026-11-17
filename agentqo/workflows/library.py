@@ -182,6 +182,21 @@ def create_hotpot_chain_workflow(fidelities: Optional[List[Fidelity]] = None, na
     return builder.build(answer_nodes=["verifier", "aggregator"])
 
 
+def create_code_workflow(fidelities: Optional[List[Fidelity]] = None) -> Workflow:
+    """L2-X7 code chain: planner -> coder -> tester (extra asserts) -> fixer (revises the code given the test
+    results) -> verifier (picks the final code). 2^5 = 32 small/large plans."""
+    fidelities = fidelities or list(DEFAULT_FIDELITIES)
+    builder = WorkflowBuilder(name="code_chain", description="Write, test, fix and pick Python code")
+    builder.add_planner("planner", description="Plan the function", fidelities=fidelities)
+    builder.add_researcher("coder", inputs=["planner"], description="Write the function", fidelities=fidelities)
+    builder.add_researcher("tester", inputs=["coder"], description="Write extra asserts", fidelities=fidelities)
+    builder.add_researcher("fixer", inputs=["coder", "tester"], description="Revise the code given the test results",
+                           fidelities=fidelities)
+    builder.add_verifier("verifier", inputs=["coder", "fixer"], optional=True,
+                         description="Pick the final code", fidelities=fidelities)
+    return builder.build(answer_nodes=["verifier", "fixer"])
+
+
 def create_hotpot_chain_isolated_workflow(fidelities: Optional[List[Fidelity]] = None) -> Workflow:
     """A13: hotpot_chain whose aggregator and verifier see only the question and the hop outputs."""
     return create_hotpot_chain_workflow(fidelities, name="hotpot_chain_isolated")

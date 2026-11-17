@@ -162,7 +162,7 @@ def main() -> None:
     ap.add_argument("--workflow", default="math", choices=list(WORKFLOWS))
     ap.add_argument("--n-tasks", type=int, default=30)
     ap.add_argument("--split", choices=["dev", "eval", "all", "label", "eval_ext", "eval_x2", "extra"], default="dev")
-    ap.add_argument("--dataset", choices=["gsm8k", "hotpotqa", "math500"], default="gsm8k")
+    ap.add_argument("--dataset", choices=["gsm8k", "hotpotqa", "math500", "mbppplus"], default="gsm8k")
     ap.add_argument("--plans", default="",
                     help="comma list to run a subset, e.g. all_small,only_verifier; or all_subsets (M2)")
     ap.add_argument("--workers", type=int, default=1, help="problems in flight")

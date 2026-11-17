@@ -39,7 +39,7 @@ class RealTaskModel(TaskModel):
     def __init__(self, problems: List[Dict[str, str]], dataset: str = "gsm8k") -> None:
         if not problems:
             raise ValueError("RealTaskModel needs at least one problem")
-        if dataset not in ("gsm8k", "hotpotqa", "math500"):
+        if dataset not in ("gsm8k", "hotpotqa", "math500", "mbppplus"):
             raise ValueError(f"unknown dataset {dataset}")
         self.problems = problems
         self.dataset = dataset
@@ -66,6 +66,9 @@ class RealTaskModel(TaskModel):
             return extract_gsm8k_number(text)
         if self.dataset == "math500":  # L2-X5: last \boxed{} only; None = unscorable
             return extract_boxed(text)
+        if self.dataset == "mbppplus":  # L2-X7: the last fenced code block
+            from agentqo.tasks.mbppplus import extract_code
+            return extract_code(text)
         return extract_hotpot_answer(text)
 
     def score_text(self, text: str, gold: Any) -> float:
@@ -76,6 +79,9 @@ class RealTaskModel(TaskModel):
             return float(pred == str(gold))
         if self.dataset == "math500":
             return float(math_equal(pred, str(gold)))
+        if self.dataset == "mbppplus":  # passes ALL MBPP+ tests, run in the sandbox
+            from agentqo.tasks.mbppplus import passes
+            return float(passes(pred, str(gold)))
         return float(pred == normalize_answer(str(gold)))  # exact match after normalization
 
     def f1_text(self, text: str, gold: Any) -> float:
