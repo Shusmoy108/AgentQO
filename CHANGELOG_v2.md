@@ -540,3 +540,7 @@ Operational choices made during the lease (no code change; the tag is what runs)
   x.sh: X5 blocks VM-agnostic (x5srv/x5smoke/x5main/x5pack), x67srv/x6srv server blocks, x7smoke/x7labels/x7plans
   never restart servers and refuse to run under a TIMING_LOCK. Accuracy-run memory splits changed only.
 - 03:50Z NEXT block 15: X4 runs early on VM-A after E1 (tools/x4_early.sh; per-setting blocks x4-<setting>), P2-identical servers (0.55/0.25, max-model-len 8192) and workers (32); X1 waits for a running X4 setting; comparison pushed per setting.
+- 2026-11-17T03:42:12Z X4 math_q15_7 vs P2: {"cells_compared": 25600, "cells_missing": 0, "flipped_cells": 2647, "flip_share": 0.1033984375, "plans_with_any_flip": 64, "max_abs_plan_delta": 0.0375, "mean_abs_plan_delta": 0.011992187500000001, "front_added": ["planner+step_1+step_2+step_3+verifier"], "front_removed": ["planner+step_1+step_3+aggregator+verifier"], "front_unchanged": false, "cost": "cost_units from P2 h3_plans.csv for both runs"}
+- 03:55Z Disk check (STATUS.md): VMs stay above 25 GB at every remaining step (VM-A ~39 GB, VM-B ~32 GB at FINAL). The Mac
+  is short (~22 GB) if every 6 h backup is kept; ACTION NEEDED raised for the Mac. A cache read during the check overlapped
+  VM-B's h4grid cell q3_14 p2 shared_nomps r2; that cell is rerun in VM-B's rerun block (p5.sh B-rerun_cal_q3_14).
