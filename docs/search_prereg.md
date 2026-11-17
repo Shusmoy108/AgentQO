@@ -43,3 +43,18 @@ X2 data must NOT be opened before this tag exists (S5 is then a true held-out te
   in docs/search_log.md before use.
 - Scalability (S-extra, simulated and labeled as such): synthetic 10/15/20/30-agent workflows,
   3 tiers, fixed budget 200 verified plans, vs a long oracle NSGA-II run.
+
+## Amendment 1 (2026-11-17T21:34:00Z): frozen hyperparameters and protocol choices — before any setting other than math_q15_7 was run
+
+Tuning on math_q15_7 only (nsga2_pairwise_m3, 30 seeds x 5 budgets; results/search/hp_generations_math_q15_7.txt):
+mean HV ratio 0.9121 / 0.9119 / 0.9119 / 0.9119 / 0.9119 for 5 / 10 / 25 / 50 / 100 generations. Ties within
+0.0002 (the 64-plan space is exhausted at any setting), so the pre-written value is kept. FROZEN:
+- all evolutionary engines: population 40, 50 generations, per-gene mutation 1/n (n = genome length);
+- NSGA-II: binary tournament (rank, crowding), uniform crossover p 0.9;
+- MOPSO (discrete): keep gene w 0.4, personal best c1 0.3, archive leader c2 0.3, then mutation 1/n;
+- GDE3: F 0.5, CR 0.9, continuous genes floored/clipped to tier indices (rounding repair);
+- active-learning variant (exploratory): 4 verification rounds, ridge (lambda 1) on pair residuals;
+- pairwise_corrected: measures all_small plus pairs of the top-m label-UV options (same-agent pairs dropped),
+  at most floor(B/2) - 1 pairs; all of them are charged to B;
+- verification choice: surrogate non-dominated fronts in order, each spread evenly along predicted cost;
+- seeds 0-29; numpy default_rng(seed), same seed for every method (common random numbers).
