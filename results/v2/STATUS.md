@@ -72,3 +72,5 @@
 2026-11-17T05:37:19Z NUMPY INSTALLED VM-B (outside TIMING_LOCK): python3-numpy 1:1.21.5-1ubuntu22.04.1; system python3 imports numpy 1.21.5
 2026-11-17T05:37:10Z TIMING_LOCK released on VM-B by D-L2-h4grid
 2026-11-17T05:39:01Z VM-B GATE P5-rerun: cal_granite_hotpot_shared: placement done | cal_granite_math_shared: placement done | cal_phi_math_shared: placement done | cal_qwen3_14_math_shared: placement done
+2026-11-17T05:39:44Z RESUME: stage 2c stopped at merge_b on a transient ssh reset (05:39Z); stage 3 then stopped (stage 2 not finished) and stage 5 was stopped by hand before it could start X7 early (it had started nothing). Stage 2d resumes: merge (5 tries) -> h4_fit -> merge -> P6; stages 3 and 5 restarted; stage 4 kept waiting.
+2026-11-17T05:40:03Z Stages 4 and 5 now start X5/X6 and X7 only on real completion (STAGE3 DONE, or VM-A's A-x4 / VM-B's B-x2 + X3 done), never because a stage-3 orchestrator died.
