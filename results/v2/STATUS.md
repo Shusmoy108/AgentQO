@@ -137,3 +137,4 @@
 2026-11-17T23:16:16Z X1c phi separate: first try stopped at the VM-A -> VM-B netcheck (23:15Z; VM-B had no server: the orchestrator assumed Phi-4 was still up from X1, but X1b's shared block stopped its servers). Nothing was measured. stage3h always serves Phi-4 on VM-B before X1c separate; locks held throughout.
 2026-11-17T23:16:22Z X1b START: full sweep (projected X7 start 2026-11-18T12:22Z, before 2026-11-18T14:00Z)
 2026-11-17T23:18:53Z VM-B GATE X1b-math_phi_shared: no settings
+2026-11-17T23:58:41Z VM-A GATE X1c-phi_separate: no settings
