@@ -194,8 +194,25 @@ def build_prompt(node: "NodeSpec", inputs: Dict[str, "NodeResult"], task_context
     workflow: "Workflow" = task_context["workflow"]
     results = {**task_context.get("results", {}), **inputs}
     problem = _problem(task_context)
-    if (getattr(task_context.get("task"), "metadata", None) or {}).get("dataset") == "hotpotqa":
+    dataset = (getattr(task_context.get("task"), "metadata", None) or {}).get("dataset")
+    if dataset == "hotpotqa":
         return _hotpot_prompt(node, results, workflow, problem)
+    if dataset == "math500":  # L2-X5: same math roles, answers in \\boxed{} (not always a number)
+        return math500_prompt(_math_prompt(node, results, workflow, problem))
+    return _math_prompt(node, results, workflow, problem)
+
+
+def math500_prompt(text: str) -> str:
+    """The GSM8K role prompt with the answer format changed to \\boxed{<answer>}."""
+    for a, b in (('"#### <number>"', "the final answer in \\boxed{<answer>}"),
+                 ("Final answer: <number>", "the final answer in \\boxed{<answer>}"),
+                 ('"RESULT: <number>"', '"RESULT: <expression>"'),
+                 ("math word problem", "math problem")):
+        text = text.replace(a, b)
+    return text
+
+
+def _math_prompt(node, results, workflow, problem: str) -> str:
     role = node.role
     plan_id = _planner_id(workflow)
     plan = _text(results, plan_id) if plan_id else "(no plan)"

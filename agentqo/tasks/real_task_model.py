@@ -14,7 +14,7 @@ import numpy as np
 from agentqo.backends.base import NodeResult
 from agentqo.backends.vllm_http import _output_as_text
 from agentqo.simulator.task_model import TaskInstance, TaskModel
-from agentqo.tasks.answers import extract_gsm8k_number, extract_hotpot_answer, f1, normalize_answer
+from agentqo.tasks.answers import extract_boxed, extract_gsm8k_number, extract_hotpot_answer, f1, math_equal, normalize_answer
 
 if TYPE_CHECKING:
     from agentqo.workflows.dag import Fidelity, NodeSpec, Workflow
@@ -39,7 +39,7 @@ class RealTaskModel(TaskModel):
     def __init__(self, problems: List[Dict[str, str]], dataset: str = "gsm8k") -> None:
         if not problems:
             raise ValueError("RealTaskModel needs at least one problem")
-        if dataset not in ("gsm8k", "hotpotqa"):
+        if dataset not in ("gsm8k", "hotpotqa", "math500"):
             raise ValueError(f"unknown dataset {dataset}")
         self.problems = problems
         self.dataset = dataset
@@ -64,6 +64,8 @@ class RealTaskModel(TaskModel):
     def extract(self, text: str) -> Optional[str]:
         if self.dataset == "gsm8k":
             return extract_gsm8k_number(text)
+        if self.dataset == "math500":  # L2-X5: last \boxed{} only; None = unscorable
+            return extract_boxed(text)
         return extract_hotpot_answer(text)
 
     def score_text(self, text: str, gold: Any) -> float:
@@ -72,6 +74,8 @@ class RealTaskModel(TaskModel):
             return 0.0
         if self.dataset == "gsm8k":
             return float(pred == str(gold))
+        if self.dataset == "math500":
+            return float(math_equal(pred, str(gold)))
         return float(pred == normalize_answer(str(gold)))  # exact match after normalization
 
     def f1_text(self, text: str, gold: Any) -> float:

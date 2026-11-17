@@ -87,6 +87,9 @@ def make_probe(args):
 
 
 def load_problems(args) -> List[Dict[str, str]]:
+    if getattr(args, "dataset", "gsm8k") == "math500":  # L2-X5: label 200 / eval 300 of MATH-500
+        from agentqo.tasks.math500 import load_math500
+        return load_math500(args.split)[: args.n_tasks]
     if getattr(args, "dataset", "gsm8k") == "hotpotqa":
         if args.split not in ("label", "eval", "all", "extra"):
             raise SystemExit(f"HotpotQA splits are label, eval, all, extra; got {args.split}")
@@ -198,7 +201,7 @@ def main() -> None:
     ap.add_argument("--n-tasks", type=int, default=10)
     ap.add_argument("--split", choices=["dev", "eval", "all", "label", "eval_ext", "eval_x2", "extra"], default="dev",
                     help="label: HotpotQA only; eval_ext: GSM8K eval then fresh test problems")
-    ap.add_argument("--dataset", choices=["gsm8k", "hotpotqa"], default="gsm8k")
+    ap.add_argument("--dataset", choices=["gsm8k", "hotpotqa", "math500"], default="gsm8k")
     ap.add_argument("--realistic", action="store_true",
                     help="M3: write labels_v2*.csv with real-error consequences and K sample keys")
     ap.add_argument("--disagree-only", action="store_true",

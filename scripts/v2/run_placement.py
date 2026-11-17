@@ -112,7 +112,7 @@ def main() -> None:
     ap.add_argument("--placement", required=True, choices=["separate", "shared", "shared_mps"])
     ap.add_argument("--plans", required=True, help="comma list of plan names, as in h3_plans.csv")
     ap.add_argument("--workflow", default="math", choices=list(WORKFLOWS))
-    ap.add_argument("--dataset", default="gsm8k", choices=["gsm8k", "hotpotqa"])
+    ap.add_argument("--dataset", default="gsm8k", choices=["gsm8k", "hotpotqa", "math500"])
     ap.add_argument("--split", default="eval")
     ap.add_argument("--n-tasks", type=int, default=64)
     ap.add_argument("--k", type=int, default=16, help="problems in flight")

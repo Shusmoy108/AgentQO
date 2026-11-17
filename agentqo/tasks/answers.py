@@ -74,6 +74,71 @@ def normalize_answer(text: str) -> str:
     return " ".join(text.split())
 
 
+# L2-X5: MATH-500. The answer is the content of the last \boxed{...} (braces balanced); no boxed
+# answer means unscorable. Equality is normalized string match or numeric equality.
+def extract_boxed(text: str) -> Optional[str]:
+    """Normalized content of the last ``\\boxed{...}`` (or ``\\fbox{...}``), else None."""
+    if not text:
+        return None
+    start = max(text.rfind("\\boxed{"), text.rfind("\\fbox{"))
+    if start < 0:
+        return None
+    i = text.index("{", start) + 1
+    depth, j = 1, i
+    while j < len(text) and depth:
+        depth += {"{": 1, "}": -1}.get(text[j], 0)
+        j += 1
+    if depth:
+        return None
+    return normalize_math(text[i:j - 1]) or None
+
+
+def _strip_text_cmd(s: str) -> str:
+    return re.sub(r"\\(?:text|textbf|mathrm|mbox)\{([^{}]*)\}", r"\1", s)
+
+
+def normalize_math(s: str) -> str:
+    """Canonical string for a MATH answer: no spaces/sizing/$/units of degrees or percent, dfrac -> frac,
+    a single leading 'x =' dropped, trailing period dropped."""
+    s = _strip_text_cmd(s.strip())
+    for a, b in (("\\left", ""), ("\\right", ""), ("\\!", ""), ("\\,", ""), ("\\;", ""), ("\\:", ""),
+                 ("\\dfrac", "\\frac"), ("\\tfrac", "\\frac"), ("^{\\circ}", ""), ("^\\circ", ""),
+                 ("\\%", ""), ("%", ""), ("$", ""), ("\\displaystyle", "")):
+        s = s.replace(a, b)
+    s = re.sub(r"\s+", "", s).rstrip(".")
+    s = re.sub(r"^[a-zA-Z]=(?=.)", "", s)
+    s = re.sub(r"\\frac(\d)(\d)", r"\\frac{\1}{\2}", s)
+    return s
+
+
+def _math_number(s: str) -> Optional[float]:
+    """Numeric value of a normalized answer: 12, -3.5, 1,000, a/b, \\frac{a}{b}, -\\frac{a}{b}; else None."""
+    s = s.replace(",", "")
+    m = re.fullmatch(r"(-?)\\frac\{(-?\d+(?:\.\d+)?)\}\{(-?\d+(?:\.\d+)?)\}", s)
+    if m:
+        den = float(m.group(3))
+        return None if den == 0 else (-1 if m.group(1) else 1) * float(m.group(2)) / den
+    m = re.fullmatch(r"(-?\d+(?:\.\d+)?)/(-?\d+(?:\.\d+)?)", s)
+    if m:
+        den = float(m.group(2))
+        return None if den == 0 else float(m.group(1)) / den
+    try:
+        return float(s)
+    except ValueError:
+        return None
+
+
+def math_equal(pred: Optional[str], gold: str) -> bool:
+    """Normalized string match, else numeric equality (relative tolerance 1e-6)."""
+    if pred is None:
+        return False
+    p, g = normalize_math(pred), normalize_math(gold)
+    if p == g:
+        return True
+    a, b = _math_number(p), _math_number(g)
+    return a is not None and b is not None and abs(a - b) <= 1e-6 * max(1.0, abs(b))
+
+
 def f1(pred: str, gold: str) -> float:
     p, g = normalize_answer(pred).split(), normalize_answer(gold).split()
     common = sum((Counter(p) & Counter(g)).values())
