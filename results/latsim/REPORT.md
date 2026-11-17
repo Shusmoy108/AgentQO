@@ -17,9 +17,9 @@ Data status at 2026-11-17 20:15 UTC:
   Failure modes so far: (1) HotpotQA, frozen: X1's prefix-cache overprediction recurs (separate median p95 error +15%,
   K=32 within 10% 0.00). (2) **New: HotpotQA shared at K=32, both versions overpredict** (median p95 error frozen
   +47%, rev1 +25%; within 10% 0.00 / 0.27). For rev1 it splits into the base (separate K=32 +8%) and interference:
-  predicted shared/separate p95 ratio 2.05 vs measured 1.83 at K=32 (K=4: 1.75 vs 1.90, K=8: 1.99 vs 1.98). The
-  h4grid betas are applied as constant slowdowns, so once both servers are saturated (hotpot's 7B is busy nearly all
-  the time at K=32) latsim keeps stacking interference that the measured runs do not show. H3c-fair is also wrong
+  predicted shared/separate p95 ratio 2.05 vs measured 1.83 at K=32 (K=4: 1.75 vs 1.90, K=8: 1.99 vs 1.98). A likely
+  cause (not yet checked): the h4grid betas are applied as constant slowdowns whenever the other server is busy, and
+  were measured at lower occupancy, so near saturation latsim adds more interference than the GPU actually shows. H3c-fair is also wrong
   there (within 10% 0.09). math_granite separate: median p95 error -3% (both); math_q15_7 shared: -0.3% (frozen) /
   -1.2% (rev1), p50 +3%.
   K=1 (scored only against the matched 32-problem re-runs, `matched/`), frozen and rev1 alike: 8/8 plans within 10%,
