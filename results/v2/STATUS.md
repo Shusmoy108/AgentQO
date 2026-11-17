@@ -90,3 +90,23 @@
 2026-11-17T09:29:54Z VM-A GATE X1-complex_q15_7_shared: no settings
 2026-11-17T10:45:21Z VM-B GATE X1-math_phi_shared: no settings
 2026-11-17T12:15:35Z VM-A GATE X1-math_tiers_shared: no settings
+2026-11-17T12:26:56Z VM-A GATE X1-hotpot_q15_7_shared: no settings
+2026-11-17T12:32:36Z VM-A GATE X1-hotpot_iso_q15_7_shared: no settings
+2026-11-17T12:55:31Z VM-A GATE X1-math_q15_7_separate: no settings
+2026-11-17T12:57:23Z X1 separate resumed at hotpot_q15_7 after a fix (srv_stop clobbered a global variable); TIMING_LOCK still held on both VMs
+2026-11-17T13:08:14Z VM-A GATE X1-hotpot_q15_7_separate: no settings
+2026-11-17T13:13:56Z VM-A GATE X1-hotpot_iso_q15_7_separate: no settings
+2026-11-17T13:20:55Z X1 CHECK after the srv_stop fix (Mac copy; no GPU, timing untouched): each block's run_config placement matches its folder, workflow/dataset/max_tokens match the setting, the plan list equals X1/<setting>/plans.txt (same order), placement_summary covers exactly those plans with n=64 and 2 repeats, and every model in the call logs belongs to the setting's pair. Result (VM | setting | placement | plans | state | check):
+  A | complex_q15_7 | shared | 184 | DONE | OK
+  A | hotpot_iso_q15_7 | shared | 32 | DONE | OK
+  A | hotpot_iso_q15_7 | separate | 32 | DONE | OK
+  A | hotpot_q15_7 | shared | 32 | DONE | OK
+  A | hotpot_q15_7 | separate | 32 | DONE | OK
+  A | math_q15_7 | shared | 64 | DONE | OK
+  A | math_q15_7 | separate | 64 | DONE | OK
+  A | math_q3_14 | separate | 64 | running | OK
+  A | math_tiers | shared | 114 | DONE | OK
+  B | math_granite | shared | 64 | DONE | OK
+  B | math_phi | shared | 64 | DONE | OK
+  B | math_q3_14 | shared | 64 | DONE | OK
+2026-11-17T13:20:55Z X1 STRAY FILES: the failed hotpot_q15_7 separate attempt (12:56Z) created only X1/srv8001/plans.txt (empty, 12:55Z); nothing in X1/hotpot_q15_7/separate. Moved to X1/hotpot_q15_7/separate/superseded_failed_1256Z/srv8001/ on VM-A and in the Mac copy.
