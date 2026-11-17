@@ -2,20 +2,26 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-17 20:00 UTC:
+Data status at 2026-11-17 20:15 UTC:
 - **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
   The lease logged "TIME LEFT after X1" at 15:54Z.
-- **X1b: in progress, 5 of 9 blocks in**: separate placement complete for all four settings, and math_q15_7 shared
-  (225 points at K=4/8/32 x 2 repeats), plus math_q15_7 K=1 separate and shared (4 plans each, 32 problems, 1
-  repeat). Still to come: math_q15_7 shared_mps, hotpot_q15_7 shared, math_granite shared, math_phi shared.
+- **X1b: in progress, 6 of 9 blocks in**: separate placement complete for all four settings, math_q15_7 shared and
+  hotpot_q15_7 shared (258 points at K=4/8/32 x 2 repeats), plus math_q15_7 K=1 separate and shared (4 plans each,
+  32 problems, 1 repeat). Still to come: math_q15_7 shared_mps, math_granite shared, math_phi shared.
   Interim, K=4/8/32 (rev1 is the held-out claim on X1b), within 10% / within 20% / MAPE p95 / tau:
-  rev1 0.689 / 0.960 / 0.076 / 0.910; frozen 0.667 / 0.907 / 0.088 / 0.905; H3c-fair 0.507 / 0.831 / 0.119 / 0.861;
-  registered H3c 0.178 / 0.347 / 0.817 / 0.680. latsim - H3c-fair within-10% (stratified bootstrap): rev1 +0.182
-  [0.102, 0.267], frozen +0.160 [0.076, 0.244], both significant. Per group, CIs excluding 0: math_q15_7 shared K=4
-  (frozen +0.31) and K=32 (+0.44 both), math_granite separate K=32 (+0.44 both), and frozen on hotpot_q15_7
-  separate K=32 (-0.36). HotpotQA repeats X1's frozen failure mode at the new loads: frozen median p95 error +15%
-  (K=32: within 10% 0.00, MAPE 0.33), rev1 +3% (K=32: 0.55, MAPE 0.11). math_granite separate: median p95 error -3%
-  (both). math_q15_7 shared: median p95 error -0.3% (frozen) / -1.2% (rev1), p50 +3%.
+  rev1 0.671 / 0.938 / 0.083 / 0.906; frozen 0.632 / 0.868 / 0.105 / 0.888; H3c-fair 0.465 / 0.767 / 0.138 / 0.861;
+  registered H3c 0.155 / 0.302 / 1.025 / 0.599. latsim - H3c-fair within-10% (stratified bootstrap): rev1 +0.205
+  [0.132, 0.283], frozen +0.167 [0.089, 0.236], both significant. Per group, CIs excluding 0: hotpot_q15_7 shared
+  K=4 (frozen +0.55), math_q15_7 shared K=4 (frozen +0.31) and K=32 (+0.44 both), math_granite separate K=32 (+0.44
+  both), and frozen on hotpot_q15_7 separate K=32 (-0.36).
+  Failure modes so far: (1) HotpotQA, frozen: X1's prefix-cache overprediction recurs (separate median p95 error +15%,
+  K=32 within 10% 0.00). (2) **New: HotpotQA shared at K=32, both versions overpredict** (median p95 error frozen
+  +47%, rev1 +25%; within 10% 0.00 / 0.27). For rev1 it splits into the base (separate K=32 +8%) and interference:
+  predicted shared/separate p95 ratio 2.05 vs measured 1.83 at K=32 (K=4: 1.75 vs 1.90, K=8: 1.99 vs 1.98). The
+  h4grid betas are applied as constant slowdowns, so once both servers are saturated (hotpot's 7B is busy nearly all
+  the time at K=32) latsim keeps stacking interference that the measured runs do not show. H3c-fair is also wrong
+  there (within 10% 0.09). math_granite separate: median p95 error -3% (both); math_q15_7 shared: -0.3% (frozen) /
+  -1.2% (rev1), p50 +3%.
   K=1 (scored only against the matched 32-problem re-runs, `matched/`), frozen and rev1 alike: 8/8 plans within 10%,
   MAPE p95 0.022 (separate 0.030, shared 0.014), tau 0.93. MAPE p50 is 0.03 separate but 0.11 shared, mostly
   all_small shared (+24%): measured p50 0.88 s shared vs 1.11 s separate on the same 32 problems with no other model
