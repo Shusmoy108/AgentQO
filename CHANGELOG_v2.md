@@ -529,3 +529,7 @@ Operational choices made during the lease (no code change; the tag is what runs)
   timeout counts as a fail. Stage 2 reordered (tools/stage2c_orch.sh replaces stage2b): per VM, h4 grid -> P5 rerun ->
   release its TIMING_LOCK -> numpy; E1 starts on VM-A as soon as VM-A's lock is released (VM-A's own GPU; VM-B's
   timing unaffected); h4_fit and P6 after all h4 grids and reruns.
+- 2026-11-17T03:05:00Z TIMING_LOCK released on VM-A by D-L2-h4grid
+- 2026-11-17T03:05:20Z TIMING_LOCK created on VM-A by D-L2-h4grid-rerun
+- 2026-11-17T03:05:20Z TIMING_LOCK D-L2-h4grid-rerun: no X3/non-timing GPU job running on VM-A (confirmed)
+- 03:08Z X7: python3-numpy 1:1.21.5-1ubuntu22.04.1 (numpy 1.21.5) installed via apt on VM-A at 03:07:42Z, right after its TIMING_LOCK release (VM-B after its own). Also: a surviving subshell of the retired h4_unlock.sh released VM-A's lock 19 s early (03:05:01Z); re-taken 03:05:20Z before VM-A's P5 rerun, nothing ran in the gap (STATUS.md).

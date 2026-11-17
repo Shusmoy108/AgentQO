@@ -491,3 +491,10 @@ front changes (plans added or removed). No X4 data exists on either VM at this t
 Sandbox timeouts during final scoring are not recorded separately: a timeout counts as a fail (the code
 does not pass all MBPP+ tests). Timeouts that appear in the fixer's and verifier's test reports can be
 counted from the label-trace prompts.
+
+### L2-X7: sandbox interpreter package (2026-11-17)
+
+python3-numpy installed from the Ubuntu 22.04 archive with apt (sudo), outside any TIMING_LOCK window, for
+the sandbox interpreter /usr/bin/python3 (the MBPP+ test harness imports numpy):
+- VM-A, 2026-11-17 03:07:42 UTC: python3-numpy 1:1.21.5-1ubuntu22.04.1 (numpy 1.21.5).
+- VM-B: installed after its TIMING_LOCK is released; version appended below when done.
