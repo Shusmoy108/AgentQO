@@ -91,3 +91,4 @@
 2026-11-17T10:45:21Z VM-B GATE X1-math_phi_shared: no settings
 2026-11-17T12:15:35Z VM-A GATE X1-math_tiers_shared: no settings
 2026-11-17T12:26:56Z VM-A GATE X1-hotpot_q15_7_shared: no settings
+2026-11-17T12:32:36Z VM-A GATE X1-hotpot_iso_q15_7_shared: no settings
