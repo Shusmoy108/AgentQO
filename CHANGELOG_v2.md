@@ -523,3 +523,9 @@ Operational choices made during the lease (no code change; the tag is what runs)
   agentqo/tasks/mbppplus.py, create_code_workflow, code prompts); MBPP+ pinned on both VMs; X7 blocks in x.sh and
   tools/stage5_orch.sh (>= 10 h rule); tools/final_guard.sh stops X work at 2026-11-19 05:30Z. Found: X4's seed salt has no
   effect under greedy decoding (temperature 0.0 for non-sampler nodes); flagged to the PI, X4 unchanged pending a decision.
+- 02:45Z NEXT block 13: X7 approved (python3-numpy via apt on both VMs outside TIMING_LOCK windows, version logged when
+  installed); X4 redefined as a greedy-decoding run-to-run replicate (L2-X amendment 721e6cf8, before any X4 data) with
+  /mnt/data/x4compare.py (per-plan accuracy change, flip share, Pareto stability vs P2); L2-X7 notes that a scoring
+  timeout counts as a fail. Stage 2 reordered (tools/stage2c_orch.sh replaces stage2b): per VM, h4 grid -> P5 rerun ->
+  release its TIMING_LOCK -> numpy; E1 starts on VM-A as soon as VM-A's lock is released (VM-A's own GPU; VM-B's
+  timing unaffected); h4_fit and P6 after all h4 grids and reruns.
