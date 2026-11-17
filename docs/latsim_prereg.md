@@ -1,6 +1,6 @@
 # latsim pre-registration: whole-plan latency predictor
 
-Frozen: tag `__TAG__`, commit `__COMMIT__` (branch v2-latsim, cut from origin/v2-lease1 a0abe77c).
+Frozen: tag `latsim-frozen-20261117T133315Z`, commit `04c5bbde1fd283ca424b0d383bdee91c4a73779d` (branch v2-latsim, cut from origin/v2-lease1 a0abe77c).
 Written and pushed before any X1, X1b or X6 latency file was opened.
 
 ## What is frozen
