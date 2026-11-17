@@ -472,3 +472,22 @@ Order: smoke on 5 label problems (all_small, all_large); stop X7 if all_small pa
 200 label problems (--realistic, --stage h1, K 5) on one VM and all 32 plans on the 178 eval problems on
 the other, in parallel. Measured: per-agent labels (p_dis, UV, EC), per-plan pass rate and API cost, the
 Pareto front, and the rate of answers with no code block and of sandbox timeouts.
+
+### L2-X update: X4 redefined (2026-11-17 02:33:28 UTC, before any X4 data)
+
+X4 redefined as a greedy-decoding run-to-run replicate: decoding is greedy (temperature 0), so the seed
+salt has no effect; X4 reruns all plans of math_q15_7 and hotpot_q15_7 on the same 400 problems with a
+fresh, separate cache, measuring serving nondeterminism (batching) on plan accuracy and Pareto-front
+stability. Evidence: P5 all_small accuracy 0.516/0.516/0.562 across repeats on the same 64 problems.
+Run: code v2-lease2-x c1bb8338 with AGENTQO_SEED_SALT=1 left set (no effect under greedy decoding; the
+salted seeds also keep every cache key distinct), cache data/cache/x4_seed1.sqlite (new, separate),
+math_q15_7 on eval_ext 400 (64 plans), hotpot_q15_7 on HotpotQA eval 400 (32 plans), Qwen 1.5B/7B, same
+max_tokens and servers as P2. Reported against P2 (same plans and problems): per-plan accuracy change,
+the share of (plan, problem) cells whose correctness flips, and whether the accuracy / API-cost Pareto
+front changes (plans added or removed). No X4 data exists on either VM at this time.
+
+### L2-X7 limitation (2026-11-17 02:33:28 UTC)
+
+Sandbox timeouts during final scoring are not recorded separately: a timeout counts as a fail (the code
+does not pass all MBPP+ tests). Timeouts that appear in the fixer's and verifier's test reports can be
+counted from the label-trace prompts.
