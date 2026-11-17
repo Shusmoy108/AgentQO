@@ -119,3 +119,4 @@
 2026-11-17T15:58:42Z VM-A GATE X1-math_phi_separate: no settings
 2026-11-17T17:22:45Z VM-A GATE X1b-math_phi_separate: no settings
 2026-11-17T17:56:32Z VM-A GATE X1b-math_q15_7_separate: no settings
+2026-11-17T18:07:50Z VM-A GATE X1b-hotpot_q15_7_separate: no settings
