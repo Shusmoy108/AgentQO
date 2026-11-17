@@ -57,3 +57,40 @@ Fit leaves out P5 runs where a model first meets the block's problems (cold vLLM
 parameters describe warm servers. Motivation: frozen X1 failure analysis (HotpotQA overpredicted on 2+-large plans) and
 P5's own cal_qwen_hotpot repeat-0 runs (p95 2.1x repeats 1-2). Fit data unchanged (P5 + h4grid); no X1 value used.
 Frozen predictions are kept and reported next to rev1's in results/latsim/REPORT.md.
+
+## Added baselines H3c-fair and mean_sum-fair (registered before any of their scores on X1 / X1b)
+
+Frozen: tag `__H3CTAG__`, commit `__H3CCOMMIT__`. Code `agentqo/latsim/h3cfair.py` (predictions) and
+`agentqo/latsim/compare.py` (analysis); predictions `results/latsim/h3cfair/predictions.csv` (every plan x
+separate / shared / shared_mps x K 1/4/8/16/32). The registered H3c result (P6 value 0.492; column `h3c`) is kept
+exactly as is; H3c-fair is an added, separately labelled baseline.
+
+Motivation: the registered H3c reads its base call latencies from P2-P4 h3_calls (measured under other load) for every
+setting but math_q15_7, so part of its X1 error is input data, not formula. H3c-fair gives it latsim's data.
+
+Definition. The registered H3c formula, unchanged (scripts/v2/pareto.py LatencyModel): per problem the longest path
+through the workflow DAG of base call latency x the factor of the call's model; p50 / p95 over the 64 problems. Factor
+= 1 + sum_o beta[o -> m] u_o overlap from the h4_fit.simulate fixed point at K, generalised from two models to n
+(identical for two). mean_sum-fair: sum over the plan's nodes of the mean base latency of (node, model); no factor.
+Check: given the registered inputs (P5 separate K=16 base, configs/v2_interference.yaml betas), H3c-fair reproduces the
+registered H3c on math_q15_7 to 2e-15 (192 of 192 values).
+
+Data (fit data only; nothing from P2-P4 latency):
+- Base latency of (workflow, problem, node, model): median of the measured calls in P5 separate-placement runs
+  (P5/separate, separate_k1, separate_k32, cal_*_separate) of the same workflow at the matching K. K with no runs:
+  linear in log2 K between the nearest measured Ks, clamped (Qwen 1.5B/7B math has K = 1/16/32; every calibration set
+  is K = 16 only, so their value is used at every K). math_tiers' 14B cells come from cal_qwen3_14_math_separate.
+- Placement enters through the factor only, as in the registered H3c, with latsim's betas (frozen params.json: h4grid,
+  quantile p50). P5 shared calibration runs are not a base: they run all_small / all_large only, so the other model is
+  idle and they contain no interference.
+- Borrowing rule (latsim's: per-model parameters from P5, tokens from the setting's h3_calls; betas from the grid pair
+  closest in log size, Phi -> q3_14, math_tiers pairs with the 14B -> q3_14): a call with no measured cell gets
+  r0 + r1 prompt_tokens + r2 completion_tokens, least squares over all of that model's P5 separate calls at that K (any
+  workflow), applied to its h3_calls tokens. This covers complex_q15_7, hotpot_iso_q15_7, hotpot_iso_granite and
+  hotpot_phi (borrowed share 1.0); every other setting has measured cells only (0.0).
+
+Analysis (compare.py), per setting x placement x K and pooled, for latsim_frozen, latsim_rev1, h3c (registered),
+h3cfair, mean_sum_fair: n, share of plans with p95 within 10% and 20%, MAPE p95, Kendall tau of predicted vs measured
+p95 within the group. Paired bootstrap of the within-10% share, latsim (frozen and rev1) minus h3cfair: 5,000 resamples
+of the group's plans with replacement, numpy default_rng(0), one generator in group order; 95% CI = 2.5 / 97.5
+percentiles; pooled CI resamples plans within each group (stratified). Measured = mean over repeats.

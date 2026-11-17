@@ -87,3 +87,23 @@ def test_cold_runs_first_use_of_each_model(tmp_path):
     calls = {("all_small", "0", "t"): [("s",)], ("only_planner", "0", "t"): [("l",), ("s",)],
              ("all_large", "0", "t"): [("l",)], ("all_small", "1", "t"): [("s",)]}
     assert cold_runs(str(tmp_path), calls) == {("all_small", "0"), ("only_planner", "0")}
+
+
+def test_h3cfair_fixed_point_matches_h4_fit_for_two_models():
+    from agentqo.latsim.h3cfair import fixed_point
+    from scripts.h4_fit import simulate as h4_simulate
+    nodes = [("s", 0.3), ("l", 0.9), ("s", 0.2), ("l", 0.5)]
+    beta = {"small": 2.4, "large": 1.0}
+    prof = {"mean": {f"n{i}": {"fidelity": "small" if m == "s" else "large", "completion_tokens": x}
+                     for i, (m, x) in enumerate(nodes)}}
+    st = h4_simulate(prof, lambda m, tok, conc: tok, 16, lambda m, uo, ov, conc: 1.0 + beta[m] * uo * ov)
+    want = {m: 1.0 + beta[m] * st["busy"]["large" if m == "small" else "small"] * st["overlap"] for m in beta}
+    got = fixed_point(nodes, {("l", "s"): 2.4, ("s", "l"): 1.0}, 16)
+    assert got["s"] == pytest.approx(want["small"]) and got["l"] == pytest.approx(want["large"])
+
+
+def test_h3cfair_k_interpolation():
+    from agentqo.latsim.h3cfair import at_k
+    by = {1: 1.0, 16: 2.0, 32: 4.0}
+    assert at_k(by, 16) == 2.0 and at_k(by, 4) == pytest.approx(1.5) and at_k(by, 64) == 4.0
+    assert at_k({16: 3.0}, 4) == 3.0
