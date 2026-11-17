@@ -60,7 +60,7 @@ Frozen predictions are kept and reported next to rev1's in results/latsim/REPORT
 
 ## Added baselines H3c-fair and mean_sum-fair (registered before any of their scores on X1 / X1b)
 
-Frozen: tag `__H3CTAG__`, commit `__H3CCOMMIT__`. Code `agentqo/latsim/h3cfair.py` (predictions) and
+Frozen: tag `h3cfair-frozen-20261117T140740Z`, commit `30f7cf66cec9c77b0d4bed0bf87d47242fab2ddc`. Code `agentqo/latsim/h3cfair.py` (predictions) and
 `agentqo/latsim/compare.py` (analysis); predictions `results/latsim/h3cfair/predictions.csv` (every plan x
 separate / shared / shared_mps x K 1/4/8/16/32). The registered H3c result (P6 value 0.492; column `h3c`) is kept
 exactly as is; H3c-fair is an added, separately labelled baseline.
