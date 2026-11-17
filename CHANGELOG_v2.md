@@ -518,3 +518,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 02:25Z NEXT block 11: X5 safeguards (no runs): MATH-500 pinned (HF 6e4ed1a2, sha256 35dc4108...), prompt check
   (/mnt/data/x5check.py: static before smoke, label traces before plans; 30/30 static ok), scorer audit after
   labels (scorer_audit.csv, unscorable_by_agent.csv). Recorded under L2-X5/X6.
+- 02:12Z PI approved the two X5 safeguard deviations (planner exemption; smoke checks built prompts, sent prompts checked from label traces before plans). No code change.
