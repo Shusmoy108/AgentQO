@@ -539,3 +539,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
   :8003) together during X7; X6 latency pauses X7 (X7_PAUSED + TIMING_LOCK) and resumes it from the cache after.
   x.sh: X5 blocks VM-agnostic (x5srv/x5smoke/x5main/x5pack), x67srv/x6srv server blocks, x7smoke/x7labels/x7plans
   never restart servers and refuse to run under a TIMING_LOCK. Accuracy-run memory splits changed only.
+- 03:50Z NEXT block 15: X4 runs early on VM-A after E1 (tools/x4_early.sh; per-setting blocks x4-<setting>), P2-identical servers (0.55/0.25, max-model-len 8192) and workers (32); X1 waits for a running X4 setting; comparison pushed per setting.
