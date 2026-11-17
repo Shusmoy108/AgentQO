@@ -506,3 +506,8 @@ Operational choices made during the lease (no code change; the tag is what runs)
   superseded_backup_overlap/ and rerun with the same servers under TIMING_LOCK (tools/stage2b_orch.sh, which
   replaces stage2_orch.sh from the g2_8 block on; h4_unlock.sh retired, stage2b releases the locks after the
   reruns). mac_sync: per-VM 6 h backup timer, deferred while that VM holds TIMING_LOCK.
+- 02:35Z NEXT block 9: L2-X5/X6 registered and pushed before any data (50f3b451). X5 code on v2-lease2-x c1bb8338
+  (agentqo/tasks/math500.py, extract_boxed/normalize_math/math_equal, math500 prompts with \boxed{}, --dataset
+  math500; 5 tests; full suite 200 passed, 8 skipped; MATH-500 reference solutions score 500/500). GSM8K/HotpotQA
+  prompts byte-identical to the tag. X5/X6 orchestrated by tools/stage4_orch.sh after stage 3; X6 shared latency
+  placement not run (7B + 32B weights exceed one 80 GB GPU in full precision).
