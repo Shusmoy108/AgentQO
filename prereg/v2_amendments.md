@@ -382,3 +382,22 @@ plans, K=16, the first 64 GSM8K eval problems, 2 repeats, placement separate (32
 VM-B), with per-request start/end and power logs (run_placement.py at c1bb8338). The shared placement
 cannot run: both models' weights alone exceed one 80 GB GPU in full precision, so it is recorded as
 not run. Results: results/v2/X6/<setting>/..., latency in results/v2/X6/latency/separate.
+
+### L2-X5/X6 corrections (2026-11-17 01:55:06 UTC, before any X5 or X6 data)
+
+1. GPU memory. The H100s have 94 GB (nvidia-smi: 95,830 MiB), not 80 GB as written above. The X6
+   shared 7B/32B latency block is dropped, for this reason: "shared 7B/32B infeasible with a usable KV
+   cache on one 94 GB H100" (a placement feasibility constraint). Their weights (~15 + ~65 GB) would
+   load but leave only ~5-8 GB of KV cache, so a shared block would measure memory pressure, not
+   interference. X6 latency runs in the separate placement only (32B on VM-A, 7B on VM-B). Evidence,
+   recorded before X6 starts (results/v2/X6/shared_feasibility/, summary in STATUS.md): one shared
+   server start of both models on one GPU with --gpu-memory-utilization 0.50 (32B) / 0.45 (7B), and one
+   with 0.75 / 0.20, with the KV-cache size, maximum concurrency / blocks or the error that vLLM reports.
+   With 94 GB the 32B quality server runs at 0.90 (~85 GB, ~19 GB KV cache).
+2. Disk for the 32B (~66 GB on VM-A). Only re-downloadable model weights past their last scheduled
+   use are deleted: VM-A's unused Phi-4 copy (X1, X2 and X3 use VM-B's), the AWQ models (last use E1)
+   and Qwen 14B on VM-A (last use X1 math_tiers), 66.1 GB, after X1 releases its timing lock. Blobs
+   are deleted only if no remaining model links to them (/mnt/data/delmodel.py; the hub keeps blobs
+   in one shared store). At least 25 GB stays free after the download (expected ~52 GB). Caches,
+   results, logs and the venv are never deleted. Every deletion is logged in STATUS.md. If that is
+   not enough when X6 is due, "ACTION NEEDED: attach another volume" is printed and X6 is skipped.

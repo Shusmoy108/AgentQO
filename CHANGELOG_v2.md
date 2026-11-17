@@ -511,3 +511,7 @@ Operational choices made during the lease (no code change; the tag is what runs)
   math500; 5 tests; full suite 200 passed, 8 skipped; MATH-500 reference solutions score 500/500). GSM8K/HotpotQA
   prompts byte-identical to the tag. X5/X6 orchestrated by tools/stage4_orch.sh after stage 3; X6 shared latency
   placement not run (7B + 32B weights exceed one 80 GB GPU in full precision).
+- 02:05Z NEXT block 10: L2-X5/X6 corrections registered (94 GB H100; X6 shared latency dropped as "shared 7B/32B
+  infeasible with a usable KV cache on one 94 GB H100", with a shared-start test as evidence before X6; disk policy
+  for the 32B). VM-A model deletion via /mnt/data/delmodel.py (shared blob store: delete only unreferenced
+  blobs; dry run 66.1 GB: Phi-4 copy, AWQ pair, Qwen 14B), after X1's lock, logged per model.
