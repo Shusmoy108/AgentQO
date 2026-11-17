@@ -2,17 +2,19 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-17 18:00 UTC:
+Data status at 2026-11-17 18:10 UTC:
 - **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
   The lease logged "TIME LEFT after X1" at 15:54Z.
-- **X1b: in progress, 2 of 9 blocks in** (math_phi and math_q15_7 separate; 96 points at K=4/8/32, 16 plans x 2
-  repeats, plus math_q15_7 K=1: 4 plans x 1 repeat x 32 problems). Shared blocks and hotpot / granite still to come.
-  Interim, K=4/8/32 (rev1 is the held-out claim here; frozen and rev1 differ by at most 0.001 here):
-  latsim within 10% 0.698, within 20% 0.979, MAPE p95 0.071, tau 0.918; H3c-fair 0.625 / 0.948 / 0.088 / 0.895;
-  registered H3c 0.250 / 0.458 / 0.632 / 0.893. latsim - H3c-fair within-10%: +0.073 [-0.052, 0.198] (not
-  significant on 96 points; math_q15_7 K=8 is the one group where H3c-fair is ahead, -0.125 [-0.44, 0.19]).
+- **X1b: in progress, 3 of 9 blocks in**: every setting's separate placement except math_granite (math_phi,
+  math_q15_7: 16 plans; hotpot_q15_7: 11 plans; K=4/8/32 x 2 repeats = 129 points), plus math_q15_7 separate K=1
+  (4 plans, 32 problems). math_granite separate and all shared / MPS blocks still to come.
+  Interim, K=4/8/32 (rev1 is the held-out claim on X1b), within 10% / within 20% / MAPE p95 / tau:
+  rev1 0.667 / 0.969 / 0.078 / 0.935; frozen 0.636 / 0.876 / 0.098 / 0.919; H3c-fair 0.566 / 0.876 / 0.109 / 0.918;
+  registered H3c 0.186 / 0.341 / 0.988 / 0.674. latsim - H3c-fair within-10%: rev1 +0.101 [-0.008, 0.209], frozen
+  +0.070 [-0.031, 0.178] (neither significant yet). HotpotQA repeats X1's frozen failure mode at the new loads: frozen
+  median p95 error +15% (K=32: within 10% 0.00, MAPE 0.33), rev1 +3% (K=32: 0.55, MAPE 0.11).
   K=1 (scored only against the matched 32-problem re-runs, `matched/`): frozen and rev1 both 4/4 plans within 10%,
-  MAPE p95 0.030 (frozen) / 0.030 (rev1), MAPE p50 0.029 / 0.028, tau 1.0.
+  MAPE p95 0.030, MAPE p50 0.029 / 0.028, tau 1.0.
   Tables: `report_tables.md`, `compare/X1b_*.csv`, `matched/X1b_k1_*`.
 - **X1c** (Phi and three-model interference grids) is not in yet. It is the fit data for the planned rev2.
 - **X6 latency: not present, and its 32B model cannot be predicted** (no 32B fit data).

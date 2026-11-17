@@ -115,15 +115,18 @@ Pooled:
 
 | placement | k | all | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau | h3c within 10% | h3c within 20% | h3c MAPE p95 | h3c Kendall tau | mean_sum within 10% | mean_sum within 20% | mean_sum MAPE p95 | mean_sum Kendall tau |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| separate | 32 |  | 32 | 0.719 | 1.000 | 0.066 | 0.927 | 0.219 | 0.469 | 0.551 | 0.903 | 0.000 | 0.000 | 0.425 | 0.923 |
-| separate | 4 |  | 32 | 0.688 | 0.969 | 0.069 | 0.911 | 0.281 | 0.438 | 0.692 | 0.927 | 0.000 | 0.000 | 0.476 | 0.923 |
-| separate | 8 |  | 32 | 0.688 | 0.969 | 0.077 | 0.911 | 0.250 | 0.469 | 0.652 | 0.935 | 0.000 | 0.000 | 0.456 | 0.940 |
-|  |  | all | 96 | 0.698 | 0.979 | 0.071 | 0.918 | 0.250 | 0.458 | 0.632 | 0.893 | 0.000 | 0.000 | 0.452 | 0.895 |
+| separate | 32 |  | 43 | 0.535 | 0.791 | 0.135 | 0.907 | 0.163 | 0.349 | 0.801 | 0.681 | 0.000 | 0.000 | 0.516 | 0.632 |
+| separate | 4 |  | 43 | 0.698 | 0.930 | 0.074 | 0.940 | 0.209 | 0.326 | 1.108 | 0.701 | 0.000 | 0.000 | 0.696 | 0.639 |
+| separate | 8 |  | 43 | 0.674 | 0.907 | 0.085 | 0.929 | 0.186 | 0.349 | 1.056 | 0.703 | 0.000 | 0.000 | 0.665 | 0.646 |
+|  |  | all | 129 | 0.636 | 0.876 | 0.098 | 0.919 | 0.186 | 0.341 | 0.988 | 0.674 | 0.000 | 0.000 | 0.626 | 0.615 |
 
 By setting:
 
 | setting | placement | k | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau | h3c within 10% | h3c within 20% | h3c MAPE p95 | h3c Kendall tau | mean_sum within 10% | mean_sum within 20% | mean_sum MAPE p95 | mean_sum Kendall tau |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| hotpot_q15_7 | separate | 32 | 11 | 0.000 | 0.182 | 0.334 | 0.782 | 0.000 | 0.000 | 1.529 | 0.745 | 0.000 | 0.000 | 0.780 | 0.745 |
+| hotpot_q15_7 | separate | 4 | 11 | 0.727 | 0.818 | 0.091 | 0.818 | 0.000 | 0.000 | 2.315 | 0.818 | 0.000 | 0.000 | 1.336 | 0.818 |
+| hotpot_q15_7 | separate | 8 | 11 | 0.636 | 0.727 | 0.109 | 0.673 | 0.000 | 0.000 | 2.231 | 0.818 | 0.000 | 0.000 | 1.275 | 0.818 |
 | math_phi | separate | 32 | 16 | 0.625 | 1.000 | 0.067 | 0.867 | 0.000 | 0.000 | 1.005 | 0.900 | 0.000 | 0.000 | 0.390 | 0.817 |
 | math_phi | separate | 4 | 16 | 0.688 | 1.000 | 0.066 | 0.917 | 0.000 | 0.000 | 1.276 | 0.933 | 0.000 | 0.000 | 0.579 | 0.850 |
 | math_phi | separate | 8 | 16 | 0.812 | 1.000 | 0.073 | 0.900 | 0.000 | 0.000 | 1.204 | 0.917 | 0.000 | 0.000 | 0.529 | 0.833 |
@@ -135,21 +138,21 @@ By plan type (latsim only):
 
 | placement | k | plan_type | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau |
 |---|---|---|---|---|---|---|---|
-| separate | 32 | 3+_large | 12 | 0.750 | 1.000 | 0.064 | 0.970 |
-| separate | 32 | all_large | 2 | 1.000 | 1.000 | 0.050 | nan |
-| separate | 32 | all_small | 2 | 1.000 | 1.000 | 0.007 | nan |
-| separate | 32 | one_large | 12 | 0.667 | 1.000 | 0.079 | 0.848 |
-| separate | 32 | two_large | 4 | 0.500 | 1.000 | 0.074 | 1.000 |
-| separate | 4 | 3+_large | 12 | 0.667 | 1.000 | 0.062 | 0.909 |
-| separate | 4 | all_large | 2 | 1.000 | 1.000 | 0.029 | nan |
-| separate | 4 | all_small | 2 | 1.000 | 1.000 | 0.007 | nan |
-| separate | 4 | one_large | 12 | 0.667 | 0.917 | 0.082 | 0.970 |
-| separate | 4 | two_large | 4 | 0.500 | 1.000 | 0.100 | 1.000 |
-| separate | 8 | 3+_large | 12 | 0.833 | 1.000 | 0.055 | 0.939 |
-| separate | 8 | all_large | 2 | 1.000 | 1.000 | 0.002 | nan |
-| separate | 8 | all_small | 2 | 0.500 | 1.000 | 0.098 | nan |
-| separate | 8 | one_large | 12 | 0.583 | 0.917 | 0.106 | 0.939 |
-| separate | 8 | two_large | 4 | 0.500 | 1.000 | 0.084 | 1.000 |
+| separate | 32 | 3+_large | 15 | 0.600 | 0.800 | 0.138 | 0.943 |
+| separate | 32 | all_large | 3 | 0.667 | 0.667 | 0.235 | 1.000 |
+| separate | 32 | all_small | 3 | 0.667 | 0.667 | 0.139 | 1.000 |
+| separate | 32 | one_large | 17 | 0.471 | 0.824 | 0.122 | 0.882 |
+| separate | 32 | two_large | 5 | 0.400 | 0.800 | 0.106 | 1.000 |
+| separate | 4 | 3+_large | 15 | 0.533 | 0.867 | 0.089 | 0.924 |
+| separate | 4 | all_large | 3 | 1.000 | 1.000 | 0.045 | 1.000 |
+| separate | 4 | all_small | 3 | 1.000 | 1.000 | 0.008 | 1.000 |
+| separate | 4 | one_large | 17 | 0.765 | 0.941 | 0.074 | 0.985 |
+| separate | 4 | two_large | 5 | 0.600 | 1.000 | 0.091 | 1.000 |
+| separate | 8 | 3+_large | 15 | 0.733 | 0.867 | 0.077 | 0.943 |
+| separate | 8 | all_large | 3 | 0.667 | 0.667 | 0.075 | 1.000 |
+| separate | 8 | all_small | 3 | 0.333 | 1.000 | 0.129 | 1.000 |
+| separate | 8 | one_large | 17 | 0.706 | 0.941 | 0.087 | 0.956 |
+| separate | 8 | two_large | 5 | 0.600 | 1.000 | 0.084 | 1.000 |
 
 ## X1b, rev1 predictions (rev1/predictions.csv)
 
@@ -157,15 +160,18 @@ Pooled:
 
 | placement | k | all | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau | h3c within 10% | h3c within 20% | h3c MAPE p95 | h3c Kendall tau | mean_sum within 10% | mean_sum within 20% | mean_sum MAPE p95 | mean_sum Kendall tau |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| separate | 32 |  | 32 | 0.719 | 1.000 | 0.072 | 0.923 | 0.219 | 0.469 | 0.551 | 0.903 | 0.000 | 0.000 | 0.425 | 0.923 |
-| separate | 4 |  | 32 | 0.688 | 0.969 | 0.069 | 0.911 | 0.281 | 0.438 | 0.692 | 0.927 | 0.000 | 0.000 | 0.476 | 0.923 |
-| separate | 8 |  | 32 | 0.688 | 0.969 | 0.079 | 0.911 | 0.250 | 0.469 | 0.652 | 0.935 | 0.000 | 0.000 | 0.456 | 0.940 |
-|  |  | all | 96 | 0.698 | 0.979 | 0.073 | 0.916 | 0.250 | 0.458 | 0.632 | 0.893 | 0.000 | 0.000 | 0.452 | 0.895 |
+| separate | 32 |  | 43 | 0.674 | 0.953 | 0.080 | 0.936 | 0.163 | 0.349 | 0.801 | 0.681 | 0.000 | 0.000 | 0.516 | 0.632 |
+| separate | 4 |  | 43 | 0.674 | 0.977 | 0.076 | 0.940 | 0.209 | 0.326 | 1.108 | 0.701 | 0.000 | 0.000 | 0.696 | 0.639 |
+| separate | 8 |  | 43 | 0.651 | 0.977 | 0.078 | 0.936 | 0.186 | 0.349 | 1.056 | 0.703 | 0.000 | 0.000 | 0.665 | 0.646 |
+|  |  | all | 129 | 0.667 | 0.969 | 0.078 | 0.935 | 0.186 | 0.341 | 0.988 | 0.674 | 0.000 | 0.000 | 0.626 | 0.615 |
 
 By setting:
 
 | setting | placement | k | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau | h3c within 10% | h3c within 20% | h3c MAPE p95 | h3c Kendall tau | mean_sum within 10% | mean_sum within 20% | mean_sum MAPE p95 | mean_sum Kendall tau |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| hotpot_q15_7 | separate | 32 | 11 | 0.545 | 0.818 | 0.106 | 0.673 | 0.000 | 0.000 | 1.529 | 0.745 | 0.000 | 0.000 | 0.780 | 0.745 |
+| hotpot_q15_7 | separate | 4 | 11 | 0.636 | 1.000 | 0.096 | 0.855 | 0.000 | 0.000 | 2.315 | 0.818 | 0.000 | 0.000 | 1.336 | 0.818 |
+| hotpot_q15_7 | separate | 8 | 11 | 0.545 | 1.000 | 0.077 | 0.745 | 0.000 | 0.000 | 2.231 | 0.818 | 0.000 | 0.000 | 1.275 | 0.818 |
 | math_phi | separate | 32 | 16 | 0.625 | 1.000 | 0.068 | 0.867 | 0.000 | 0.000 | 1.005 | 0.900 | 0.000 | 0.000 | 0.390 | 0.817 |
 | math_phi | separate | 4 | 16 | 0.688 | 1.000 | 0.066 | 0.917 | 0.000 | 0.000 | 1.276 | 0.933 | 0.000 | 0.000 | 0.579 | 0.850 |
 | math_phi | separate | 8 | 16 | 0.812 | 1.000 | 0.075 | 0.900 | 0.000 | 0.000 | 1.204 | 0.917 | 0.000 | 0.000 | 0.529 | 0.833 |
@@ -177,26 +183,29 @@ By plan type (latsim only):
 
 | placement | k | plan_type | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau |
 |---|---|---|---|---|---|---|---|
-| separate | 32 | 3+_large | 12 | 0.750 | 1.000 | 0.070 | 0.939 |
-| separate | 32 | all_large | 2 | 1.000 | 1.000 | 0.063 | nan |
-| separate | 32 | all_small | 2 | 1.000 | 1.000 | 0.014 | nan |
-| separate | 32 | one_large | 12 | 0.667 | 1.000 | 0.083 | 0.848 |
-| separate | 32 | two_large | 4 | 0.500 | 1.000 | 0.079 | 1.000 |
-| separate | 4 | 3+_large | 12 | 0.667 | 1.000 | 0.063 | 0.909 |
-| separate | 4 | all_large | 2 | 1.000 | 1.000 | 0.028 | nan |
-| separate | 4 | all_small | 2 | 1.000 | 1.000 | 0.006 | nan |
-| separate | 4 | one_large | 12 | 0.667 | 0.917 | 0.083 | 0.970 |
-| separate | 4 | two_large | 4 | 0.500 | 1.000 | 0.100 | 1.000 |
-| separate | 8 | 3+_large | 12 | 0.833 | 1.000 | 0.057 | 0.909 |
-| separate | 8 | all_large | 2 | 1.000 | 1.000 | 0.007 | nan |
-| separate | 8 | all_small | 2 | 0.500 | 1.000 | 0.097 | nan |
-| separate | 8 | one_large | 12 | 0.583 | 0.917 | 0.107 | 0.939 |
-| separate | 8 | two_large | 4 | 0.500 | 1.000 | 0.085 | 1.000 |
+| separate | 32 | 3+_large | 15 | 0.733 | 1.000 | 0.073 | 0.943 |
+| separate | 32 | all_large | 3 | 1.000 | 1.000 | 0.063 | 1.000 |
+| separate | 32 | all_small | 3 | 0.667 | 0.667 | 0.099 | 1.000 |
+| separate | 32 | one_large | 17 | 0.588 | 0.941 | 0.090 | 0.868 |
+| separate | 32 | two_large | 5 | 0.600 | 1.000 | 0.068 | 1.000 |
+| separate | 4 | 3+_large | 15 | 0.533 | 1.000 | 0.084 | 0.924 |
+| separate | 4 | all_large | 3 | 0.667 | 1.000 | 0.065 | 1.000 |
+| separate | 4 | all_small | 3 | 1.000 | 1.000 | 0.015 | 1.000 |
+| separate | 4 | one_large | 17 | 0.765 | 0.941 | 0.076 | 0.985 |
+| separate | 4 | two_large | 5 | 0.600 | 1.000 | 0.097 | 1.000 |
+| separate | 8 | 3+_large | 15 | 0.667 | 1.000 | 0.069 | 0.924 |
+| separate | 8 | all_large | 3 | 1.000 | 1.000 | 0.025 | 1.000 |
+| separate | 8 | all_small | 3 | 0.333 | 1.000 | 0.110 | 1.000 |
+| separate | 8 | one_large | 17 | 0.706 | 0.941 | 0.085 | 0.956 |
+| separate | 8 | two_large | 5 | 0.400 | 1.000 | 0.094 | 1.000 |
 
 ### X1b coverage
 
 | summary | placement | K | plans measured | plans listed | min repeats |
 |---|---|---|---|---|---|
+| X1b/hotpot_q15_7/separate_k32/placement_summary.csv | separate | 32 | 11 | 11 | 2 |
+| X1b/hotpot_q15_7/separate_k4/placement_summary.csv | separate | 4 | 11 | 11 | 2 |
+| X1b/hotpot_q15_7/separate_k8/placement_summary.csv | separate | 8 | 11 | 11 | 2 |
 | X1b/math_phi/separate_k32/placement_summary.csv | separate | 32 | 16 | 16 | 2 |
 | X1b/math_phi/separate_k4/placement_summary.csv | separate | 4 | 16 | 16 | 2 |
 | X1b/math_phi/separate_k8/placement_summary.csv | separate | 8 | 16 | 16 | 2 |
