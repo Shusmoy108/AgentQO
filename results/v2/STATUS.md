@@ -125,3 +125,8 @@
 2026-11-17T20:00:38Z VM-A GATE X1b-hotpot_q15_7_shared: no settings
 2026-11-17T20:12:19Z VM-B GATE X1b-math_granite_shared: no settings
 2026-11-17T20:40:32Z VM-A GATE X1b-math_q15_7_shared_mps: no settings
+2026-11-17T20:41:27Z X1c (a) Phi shared grid started early on VM-A (20:41Z) under the held X1 lock, while VM-B runs X1b math_phi shared on its own GPU; stage3d skips it if done.
+2026-11-17T21:09:53Z TIME LEFT after X1 (locks kept for X1b): 32.8 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-17T21:09:53Z X1b START: full sweep (projected X7 start 2026-11-18T10:15Z, before 2026-11-18T14:00Z)
+2026-11-17T21:41:53Z X1b START: full sweep (projected X7 start 2026-11-18T10:47Z, before 2026-11-18T14:00Z)
+2026-11-17T21:43:38Z VM-A GATE X1c-phi_shared: no settings
