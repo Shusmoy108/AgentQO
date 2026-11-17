@@ -25,8 +25,8 @@ PREDICTORS = ("latsim", "h3c", "mean_sum")
 
 
 def paths(pattern: str) -> List[str]:
-    """Comma-separated globs; superseded_* folders are never matched at this depth."""
-    return sorted(f for p in pattern.split(",") for f in glob.glob(p))
+    """Comma-separated globs; anything under a superseded* folder (the lease's set-aside runs) is left out."""
+    return sorted(f for p in pattern.split(",") for f in glob.glob(p) if "superseded" not in f)
 
 
 def load_measured(pattern: str, exclude_k=()) -> List[dict]:
