@@ -534,3 +534,8 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-17T03:05:20Z TIMING_LOCK D-L2-h4grid-rerun: no X3/non-timing GPU job running on VM-A (confirmed)
 - 03:08Z X7: python3-numpy 1:1.21.5-1ubuntu22.04.1 (numpy 1.21.5) installed via apt on VM-A at 03:07:42Z, right after its TIMING_LOCK release (VM-B after its own). Also: a surviving subshell of the retired h4_unlock.sh released VM-A's lock 19 s early (03:05:01Z); re-taken 03:05:20Z before VM-A's P5 rerun, nothing ran in the gap (STATUS.md).
 - 2026-11-17T03:07:34Z TIMING_LOCK released on VM-A by D-L2-h4grid
+- 03:35Z NEXT block 14: X7 runs on VM-B right after VM-B's stage-3 share and X3, in parallel with X5/X6 on VM-A
+  (stage5_orch.sh); X5 moved to VM-A (stage4_orch.sh). VM-B serves Coder 1.5B/7B and Qwen 7B (X6 small model,
+  :8003) together during X7; X6 latency pauses X7 (X7_PAUSED + TIMING_LOCK) and resumes it from the cache after.
+  x.sh: X5 blocks VM-agnostic (x5srv/x5smoke/x5main/x5pack), x67srv/x6srv server blocks, x7smoke/x7labels/x7plans
+  never restart servers and refuse to run under a TIMING_LOCK. Accuracy-run memory splits changed only.
