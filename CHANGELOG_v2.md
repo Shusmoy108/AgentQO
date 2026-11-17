@@ -557,3 +557,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-17T05:54:35Z TIMING_LOCK created on VM-B by X1
 - 2026-11-17T05:54:36Z X3 STOPPED for TIMING_LOCK (2026-11-17T05:54:35Z X1); servers stopped, GPU freed
 - 2026-11-17T05:54:40Z TIMING_LOCK X1: no X3/non-timing GPU job running on VM-B (confirmed)
+- 06:00Z P6 done (05:53Z, all 11 settings + math_tiers, hypotheses.md). P6/search_ground_truth.md written from the lease results (tools_lease/search_gt.py): 11 exhaustive settings, all per-problem complete (usable for search); true accuracy-API-cost fronts and 2D hypervolumes. X1 started 05:54Z under TIMING_LOCK on both VMs (X3 stopped cleanly first).
