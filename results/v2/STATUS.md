@@ -71,3 +71,4 @@
 2026-11-17T05:31:55Z RERUN P5 cal_qwen3_14_math_shared all_small r0-2 (VM-B; 19:14Z backup overlap); old files in superseded_backup_overlap/
 2026-11-17T05:37:19Z NUMPY INSTALLED VM-B (outside TIMING_LOCK): python3-numpy 1:1.21.5-1ubuntu22.04.1; system python3 imports numpy 1.21.5
 2026-11-17T05:37:10Z TIMING_LOCK released on VM-B by D-L2-h4grid
+2026-11-17T05:39:01Z VM-B GATE P5-rerun: cal_granite_hotpot_shared: placement done | cal_granite_math_shared: placement done | cal_phi_math_shared: placement done | cal_qwen3_14_math_shared: placement done

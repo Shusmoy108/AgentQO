@@ -253,3 +253,234 @@ X3 Cross-family model choice on math: tiers small/large/xl = Qwen2.5-7B / Granit
 X4 Seed replicate of math_q15_7 and hotpot_q15_7: NOT config-only, so not run. Request seeds are
    fixed per (task, node, sample) in VLLMHTTPBackend._seed and run_real_h3.py passes seed=0, so a
    new cache with the same code would reproduce the same seeded requests. Exact change in STATUS.md.
+
+### L2-X lease-time deviation: code change for X items (2026-11-16 23:02:12 UTC)
+
+lease-time deviation: code change for X items. Id: D-L2-X-code. Approved by the PI's NEXT block
+(2026-11-16 ~22:30 UTC). Branch v2-lease2-x, cut from tag v2-lease1-start, commit
+eeb54603bbdfa1f760bbde86d6cd16a12388e034 (pushed, no force). Run from a separate clone
+/mnt/data/AgentQO-x on each VM; the tag clone /mnt/data/AgentQO that runs every registered phase is
+untouched. X1, X2 and X4 run on the GPU only after P6, from this commit, with V2_DEVIATION=D-L2-X-code,
+writing to results/v2/X1, X2, X4 (X3 needs no code change and keeps running at the tag).
+Changes (each with a unit test in tests/test_v2_lease2_x.py; full suite 195 passed, 8 skipped,
+vs 189 passed, 8 skipped at the tag):
+- X1(i): VLLMHTTPBackend records wall-clock request_start_s / request_end_s (epoch s) per request;
+  run_placement.py writes them to placement_calls.csv.
+- X1(ii): run_placement.py times A16 tier plans (V2_TIERS=small,large,xl) via run_real_h3.tier_plans;
+  binary plans are built exactly as before.
+- X2: GSM8K split eval_x2 = the 719 test problems in neither label 200 nor eval_ext 400
+  (session1_extra order); HotpotQA split extra = the next 600 dev rows in the frozen split's seeded
+  order outside label/eval. Checked on the real data: 719 and 600 problems, 0 overlap.
+- X4: AGENTQO_SEED_SALT salts the per-request seed (unset = registered seeds); X4 also uses its own
+  cache file, so nothing is reused.
+X scope with this change: X1 adds per-request start/end timestamps and math_tiers (A16, shared:
+Pareto-front plans + 100 random, seed 0); X2 = all plans of math_q15_7, math_granite, math_phi on
+eval_x2 (719) and of hotpot_q15_7, hotpot_iso_q15_7 on HotpotQA extra (600), replacing the
+eval_ext-500 partial X2; X4 = all plans of math_q15_7 (eval_ext 400) and hotpot_q15_7 (eval 400)
+with AGENTQO_SEED_SALT=1 and cache data/cache/x4_seed1.sqlite. Order after P6: X1 -> X2 -> X3 (if not
+finished) -> X4, split across both VMs.
+
+git diff --stat v2-lease1-start eeb54603:
+```
+ agentqo/backends/vllm_http.py |   9 +++-
+ agentqo/tasks/datasets.py     |   9 ++++
+ agentqo/tasks/hotpotqa.py     |  22 +++++++--
+ scripts/run_real_h3.py        |   2 +-
+ scripts/run_real_pipeline.py  |  10 +++--
+ scripts/v2/run_placement.py   |  39 ++++++++++++----
+ tests/test_v2_lease2_x.py     | 101 ++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 174 insertions(+), 18 deletions(-)
+```
+
+### L2-X update: X2 problem sets and the timing lock (2026-11-16 23:20:30 UTC, before any X2 data)
+
+X2 now uses the GSM8K split eval_x2 (719 test problems in neither label 200 nor eval_ext 400) for
+math_q15_7, math_granite and math_phi, and the HotpotQA split extra (600 dev rows outside the frozen
+label/eval split) for hotpot_q15_7 and hotpot_iso_q15_7, all plans each, from v2-lease2-x eeb54603
+(D-L2-X-code). This replaces the earlier X2 plan (all 64 plans on eval_ext 500, i.e. 100 new problems).
+No X2 data exists on either VM at this time (checked: no results/v2/X2 directory on VM-A or VM-B).
+Timing lock (PI NEXT block 7): every latency-measuring run (D-L2-h4grid, any remaining P5 step, all
+of X1) creates /mnt/data/TIMING_LOCK on both VMs before its first server starts and removes it on each
+VM only after that VM's last timing run; X3 and any other non-timing GPU job start or resume only when
+no lock exists, and stop their servers before the lock is confirmed (tlock.sh acquire waits for that).
+Check of the runs so far: X3's calls on VM-B span 20:15:07-21:09:21 UTC (none after its 21:09:24
+pause); VM-B's timing servers came up at 21:10:19 (P5 separate cal) and 21:35:05 (h4grid), and VM-B's
+P5 shared cal ended 19:27; during X3's window only VM-A's own GPU ran timing (P5 shared_mps). No overlap,
+so no h4grid or P5 point is rerun.
+
+## L2-X5/X6: lease-time exploratory extensions, registered 2026-11-17 01:49:29 UTC, before any X5 or X6 data exists
+
+Status: EXPLORATORY, same rules as L2-X: no X5/X6 result changes or enters any registered verdict;
+own folders results/v2/X5 and results/v2/X6; V2_DEVIATION set (D-L2-X-code); both are included in
+results_v2_UPLOAD.zip, FINAL/data_check.md and P6/search_ground_truth.md. They start after X1, X2 and
+X4 (X3 continues on VM-B), and no new X work starts after 2026-11-19 00:00 UTC; the time left is
+recomputed and logged in STATUS.md after each item.
+
+Reason. Task difficulty: GSM8K is close to the ceiling for the 7B (all_large 0.82 on math_q15_7), so
+upgrade values and the Pareto front may look different when the small and large model both fail more
+often; MATH-500 tests that. Model scale: every registered pair has its large model at <= 14B; a
+7B/32B pair tests whether the findings hold when the small model is already strong and the large one
+much larger, and adds a 32B point to the latency/cost picture.
+
+Code. X5 needs a dataset loader and a scorer: branch v2-lease2-x commit
+c1bb8338fa64acd82d82f1eb0c5a5ce6cb7b019b (on top of eeb54603, D-L2-X-code), pushed, run from
+/mnt/data/AgentQO-x: agentqo/tasks/math500.py (HuggingFaceH4/MATH-500 test, 500 problems, fixed seed-0
+split label 200 / eval 300, ids in data/tasks/math500_split.json); answers.extract_boxed (content of the
+last balanced \boxed{}; none = unscorable), normalize_math and math_equal (normalized string match or
+numeric equality, rel. tol. 1e-6); RealTaskModel dataset math500; the math chain role prompts with the
+answer format \boxed{<answer>} instead of "#### <number>" (GSM8K prompts unchanged); --dataset math500.
+5 unit tests (tests/test_v2_lease2_x5.py); full suite 200 passed, 8 skipped. Check on the data: the 500
+reference solutions score 500/500 and all have a \boxed{} answer.
+git diff --stat eeb54603 c1bb8338:
+```
+ agentqo/tasks/answers.py         | 65 ++++++++++++++++++++++++++++++++++++++++
+ agentqo/tasks/math500.py         | 47 +++++++++++++++++++++++++++++
+ agentqo/tasks/prompts.py         | 19 +++++++++++-
+ agentqo/tasks/real_task_model.py |  8 +++--
+ scripts/run_real_h3.py           |  2 +-
+ scripts/run_real_pipeline.py     |  5 +++-
+ scripts/v2/run_placement.py      |  2 +-
+ tests/test_v2_lease2_x5.py       | 65 ++++++++++++++++++++++++++++++++++++++++
+ 8 files changed, 207 insertions(+), 6 deletions(-)
+```
+
+X5 harder math: math500_q15_7. MATH-500, the 6-agent math chain (math_reasoning_s3_ver),
+AGENTQO_VERIFIER=cautious, Qwen2.5-1.5B/7B-Instruct (0.25 / 0.55 on one GPU, --max-model-len 8192),
+max_tokens 1024, lease cache. Smoke test first: 5 label problems, all_small and all_large. Stop X5 (and
+log why) if smoke all_small = 0 or more than 20% of the smoke outputs are unscorable (no \boxed{}).
+Then labels on the 200 label problems (--realistic, --stage h1, K 5) and all 64 plans on the 300 eval
+problems. Measured: per-agent labels (p_dis, UV, EC), per-plan accuracy, API cost and Pareto front,
+and the unscorable rate (share of answers with no \boxed{}; per plan and overall, from h3_traces.json
+pred = null). Results: results/v2/X5/math500_q15_7/{smoke,labels,plans}.
+
+X6 larger scale: Qwen2.5-7B-Instruct (small) / Qwen2.5-32B-Instruct (large), full precision (bf16).
+The two do not fit on one H100 80 GB with KV cache (weights ~15 GB + ~65 GB), so for the quality runs
+the 32B is served alone on VM-A (--gpu-memory-utilization 0.90) and the 7B on VM-B (accuracy does not
+depend on placement), mapped by model id in VLLM_ENDPOINTS; VM-A disk is freed first by deleting
+models no longer needed there (its unused Phi-4 copy, the AWQ models after E1, Qwen 14B after X1's
+math_tiers runs), logged in STATUS.md. Settings: math_q7_32 (GSM8K, max_tokens 256, labels 200 on the
+label split, all 64 plans on eval_ext 400), hotpot_q7_32 (hotpot_chain, max_tokens 384, labels 200, all
+32 plans on HotpotQA eval 400) and, if X5 passes its smoke test, math500_q7_32 (max_tokens 1024, labels
+200, all 64 plans on the 300 eval problems). Same measures as the quality phases (labels, per-plan
+accuracy/cost, Pareto front). Then a P5-style latency block for math_q7_32 under TIMING_LOCK: the 7 P5
+plans, K=16, the first 64 GSM8K eval problems, 2 repeats, placement separate (32B on VM-A, 7B on
+VM-B), with per-request start/end and power logs (run_placement.py at c1bb8338). The shared placement
+cannot run: both models' weights alone exceed one 80 GB GPU in full precision, so it is recorded as
+not run. Results: results/v2/X6/<setting>/..., latency in results/v2/X6/latency/separate.
+
+### L2-X5/X6 corrections (2026-11-17 01:55:06 UTC, before any X5 or X6 data)
+
+1. GPU memory. The H100s have 94 GB (nvidia-smi: 95,830 MiB), not 80 GB as written above. The X6
+   shared 7B/32B latency block is dropped, for this reason: "shared 7B/32B infeasible with a usable KV
+   cache on one 94 GB H100" (a placement feasibility constraint). Their weights (~15 + ~65 GB) would
+   load but leave only ~5-8 GB of KV cache, so a shared block would measure memory pressure, not
+   interference. X6 latency runs in the separate placement only (32B on VM-A, 7B on VM-B). Evidence,
+   recorded before X6 starts (results/v2/X6/shared_feasibility/, summary in STATUS.md): one shared
+   server start of both models on one GPU with --gpu-memory-utilization 0.50 (32B) / 0.45 (7B), and one
+   with 0.75 / 0.20, with the KV-cache size, maximum concurrency / blocks or the error that vLLM reports.
+   With 94 GB the 32B quality server runs at 0.90 (~85 GB, ~19 GB KV cache).
+2. Disk for the 32B (~66 GB on VM-A). Only re-downloadable model weights past their last scheduled
+   use are deleted: VM-A's unused Phi-4 copy (X1, X2 and X3 use VM-B's), the AWQ models (last use E1)
+   and Qwen 14B on VM-A (last use X1 math_tiers), 66.1 GB, after X1 releases its timing lock. Blobs
+   are deleted only if no remaining model links to them (/mnt/data/delmodel.py; the hub keeps blobs
+   in one shared store). At least 25 GB stays free after the download (expected ~52 GB). Caches,
+   results, logs and the venv are never deleted. Every deletion is logged in STATUS.md. If that is
+   not enough when X6 is due, "ACTION NEEDED: attach another volume" is printed and X6 is skipped.
+
+### L2-X5 safeguards (2026-11-17 01:57:47 UTC, before any X5 data)
+
+Data version: HuggingFaceH4/MATH-500 test.jsonl at Hugging Face commit
+6e4ed1a2a79af7d8630a6b768ec859cb5af4d3be ("main" on 2026-11-17 01:57:47 UTC), sha256
+35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132 (500 rows); fetched at that commit,
+byte-identical to main, and pinned at /mnt/data/AgentQO-x/data/tasks/math500_test.jsonl on both VMs, so
+the loader never downloads it again. Recorded in results/v2/X5/README.md.
+Prompt check: math500_prompt() rewrites the math prompts with str.replace. Before the smoke run, every
+agent's prompt for the 5 smoke problems is built with the run's code and checked; after the labels,
+every prompt actually sent (label traces) is checked. Rule: no prompt contains "#### <number>" or
+"<number>"; every agent except the planner contains "\boxed" or "RESULT: <expression>" (the planner
+only plans and is given no answer format, so it is checked for the first part only). A violation stops
+X5 (smoke) or fails it before the plans. Static check run now: 30 prompts, 0 violations.
+Scorer audit: after the labels, results/v2/X5/scorer_audit.csv lists 40 random label problems scored
+wrong that have a prediction (seed 0; gold, pred, raw final text, a blank hand-check column) and
+unscorable_by_agent.csv the unscorable rate per agent, for a manual false-negative check later. The
+scorer is not changed during the lease.
+
+## L2-X7: lease-time exploratory extension (coding), registered 2026-11-17 02:22:33 UTC, before any X7 data exists
+
+Status: EXPLORATORY, same rules as L2-X: never changes a registered verdict; folder results/v2/X7;
+V2_DEVIATION=D-L2-X-code; included in results_v2_UPLOAD.zip, FINAL/data_check.md and
+P6/search_ground_truth.md. Runs only after X5 and X6, and only if at least 10 h remain before the
+2026-11-19 00:00 UTC stop for new X work; otherwise skipped and logged. It never delays FINAL.
+Reason: a third task type (code generation with executable checks, alongside math and multi-hop QA), to
+see whether per-agent upgrade values, the rules and the Pareto structure carry over to an agent chain
+whose intermediate outputs (code, tests, execution reports) are checked by running code.
+Task: MBPP+ (evalplus/mbppplus, test split, 378 problems), Hugging Face commit
+b2d74c91837c3f2a20c1299ae98133cbe7cfa077, file data/test-00000-of-00001-d5781c9c51e02795.parquet,
+sha256 dc20030b3788fccf617444edcb34138ef13d7e4fafd17bfcb8c1279dbb12399b; converted once to
+data/tasks/mbppplus.jsonl (rows sorted by task_id; sha256
+94b7c1db0e68c88983fbe5a2fc878dda79875c6482283b350e6530b1f5ad6572), pinned on the VMs. Split: seed-0
+permutation, label = first 200, eval = the other 178 (cap 300).
+Workflow (5 agents, 2^5 = 32 plans): planner -> coder -> tester (writes 5 extra asserts) -> fixer (revises
+the code given the sandbox results of the task's visible example test plus the tester's asserts) ->
+verifier (picks coder's or fixer's code, also given both test reports). The hidden MBPP+ tests are used
+only for scoring. Models: Qwen2.5-Coder-1.5B-Instruct (small) / Qwen2.5-Coder-7B-Instruct (large), one GPU
+(0.25 / 0.55, --max-model-len 8192), max_tokens 512. Score: the verifier's final code (last fenced block)
+passes ALL MBPP+ tests (exit code 0 in the sandbox).
+Safe execution (mandatory): model code runs only in a subprocess (never exec/eval in the agent process),
+as the non-root lease user, in a fresh temp dir, in new user/network/mount/pid namespaces (util-linux
+unshare): no network; the temp dir is bound over /mnt (hiding /mnt/data: repo, caches, results, venv);
+read-only empty tmpfs over /tmp, /var/tmp, /dev/shm, /home, /root, /run, /srv, /opt, /media; all
+capabilities dropped and no_new_privs (the mounts cannot be undone); empty environment; ulimit -v 2 GB,
+-u 64, 64 MB files, 64 open files; 10 s timeout that kills the process group; system /usr/bin/python3 -I
+(python3-numpy from Ubuntu is installed on the X7 VMs because the MBPP+ test harness imports numpy).
+Code: branch v2-lease2-x commit 88e9d762ee9a8b63c7b06bca05af5cb3840d6572 (on c1bb8338). Tests:
+tests/test_v2_lease2_x7.py, 13 tests, 8 of them sandbox tests (network blocked; writes outside the temp
+dir blocked and nothing lands on the host; repo, /mnt/data and a host canary file hidden; infinite loop
+killed; memory and process limits; empty env and mounts cannot be undone; hidden-test scoring). Mac suite
+205 passed, 16 skipped (the 8 sandbox tests need Linux); the sandbox tests and the full suite are run on
+each X7 VM before any X7 data, and X7 stops if any sandbox test fails. GSM8K/HotpotQA prompts unchanged
+(hash 1021bceca3949efc, same as the tag).
+git diff --stat c1bb8338 88e9d762:
+```
+ agentqo/tasks/mbppplus.py        | 111 +++++++++++++++++++++++++++
+ agentqo/tasks/prompts.py         |  73 ++++++++++++++++++
+ agentqo/tasks/real_task_model.py |   8 +-
+ agentqo/tasks/sandbox.py         |  77 +++++++++++++++++++
+ agentqo/workflows/library.py     |  15 ++++
+ scripts/run_real_h3.py           |   2 +-
+ scripts/run_real_pipeline.py     |   7 +-
+ scripts/v2/run_placement.py      |   2 +-
+ tests/test_v2_lease2_x7.py       | 160 +++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 451 insertions(+), 4 deletions(-)
+```
+Order: smoke on 5 label problems (all_small, all_large); stop X7 if all_small passes 0. Then labels on the
+200 label problems (--realistic, --stage h1, K 5) on one VM and all 32 plans on the 178 eval problems on
+the other, in parallel. Measured: per-agent labels (p_dis, UV, EC), per-plan pass rate and API cost, the
+Pareto front, and the rate of answers with no code block and of sandbox timeouts.
+
+### L2-X update: X4 redefined (2026-11-17 02:33:28 UTC, before any X4 data)
+
+X4 redefined as a greedy-decoding run-to-run replicate: decoding is greedy (temperature 0), so the seed
+salt has no effect; X4 reruns all plans of math_q15_7 and hotpot_q15_7 on the same 400 problems with a
+fresh, separate cache, measuring serving nondeterminism (batching) on plan accuracy and Pareto-front
+stability. Evidence: P5 all_small accuracy 0.516/0.516/0.562 across repeats on the same 64 problems.
+Run: code v2-lease2-x c1bb8338 with AGENTQO_SEED_SALT=1 left set (no effect under greedy decoding; the
+salted seeds also keep every cache key distinct), cache data/cache/x4_seed1.sqlite (new, separate),
+math_q15_7 on eval_ext 400 (64 plans), hotpot_q15_7 on HotpotQA eval 400 (32 plans), Qwen 1.5B/7B, same
+max_tokens and servers as P2. Reported against P2 (same plans and problems): per-plan accuracy change,
+the share of (plan, problem) cells whose correctness flips, and whether the accuracy / API-cost Pareto
+front changes (plans added or removed). No X4 data exists on either VM at this time.
+
+### L2-X7 limitation (2026-11-17 02:33:28 UTC)
+
+Sandbox timeouts during final scoring are not recorded separately: a timeout counts as a fail (the code
+does not pass all MBPP+ tests). Timeouts that appear in the fixer's and verifier's test reports can be
+counted from the label-trace prompts.
+
+### L2-X7: sandbox interpreter package (2026-11-17)
+
+python3-numpy installed from the Ubuntu 22.04 archive with apt (sudo), outside any TIMING_LOCK window, for
+the sandbox interpreter /usr/bin/python3 (the MBPP+ test harness imports numpy):
+- VM-A, 2026-11-17 03:07:42 UTC: python3-numpy 1:1.21.5-1ubuntu22.04.1 (numpy 1.21.5).
+- VM-B: installed after its TIMING_LOCK is released; version appended below when done.
+- VM-B, 2026-11-17 05:37:19 UTC: python3-numpy 1:1.21.5-1ubuntu22.04.1 (numpy 1.21.5), right after VM-B's TIMING_LOCK release.
