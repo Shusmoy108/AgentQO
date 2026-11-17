@@ -24,9 +24,14 @@ from scipy.stats import kendalltau
 PREDICTORS = ("latsim", "h3c", "mean_sum")
 
 
+def paths(pattern: str) -> List[str]:
+    """Comma-separated globs; superseded_* folders are never matched at this depth."""
+    return sorted(f for p in pattern.split(",") for f in glob.glob(p))
+
+
 def load_measured(pattern: str) -> List[dict]:
     acc = defaultdict(list)
-    for path in sorted(glob.glob(pattern)):
+    for path in paths(pattern):
         setting = os.path.basename(os.path.dirname(os.path.dirname(path)))
         with open(path, newline="") as f:
             for r in csv.DictReader(f):
@@ -116,7 +121,7 @@ def write_csv(path: str, rows: List[dict]) -> None:
 def coverage(pattern: str, results: str) -> List[dict]:
     """Measured plans vs each setting's plan list (plans.txt, or every plan of h3_calls)."""
     out = []
-    for path in sorted(glob.glob(pattern)):
+    for path in paths(pattern):
         setting = os.path.basename(os.path.dirname(os.path.dirname(path)))
         root = os.path.dirname(os.path.dirname(path))
         listed = os.path.join(root, "plans.txt")
@@ -138,7 +143,7 @@ def coverage(pattern: str, results: str) -> List[dict]:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--name", required=True, help="test set label, e.g. X1 or X1b")
-    ap.add_argument("--measured", required=True, help="glob of placement_summary.csv files")
+    ap.add_argument("--measured", required=True, help="comma-separated globs of placement_summary.csv files")
     ap.add_argument("--predictions", default="results/latsim/predictions.csv")
     ap.add_argument("--results", default="results/v2")
     ap.add_argument("--out", default="results/latsim")

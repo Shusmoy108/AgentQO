@@ -11,6 +11,8 @@ call:
     replay of measured arrival times lets the queue grow without bound.
   * h4grid separate levels: open loop, each request issued at its recorded start time
     (short prompts, far from saturation).
+  * rev1: runs where a model first meets the block's problems (cold prefix cache) are left
+    out, so parameters describe warm servers (see cold_runs).
 Betas: directed AgentIconq fits per pair from h4grid (shared: fit_results.json full_fit;
 MPS: mps_fit.json shared_mps). Which quantile's fit (p50 or p95) to use is chosen on P5's
 own shared / shared_mps runs.
@@ -54,7 +56,23 @@ def read_rows(path: str) -> List[dict]:
         return list(csv.DictReader(f))
 
 
-def p5_runs(results: str, separate_only: bool = True):
+def cold_runs(folder: str, calls) -> set:
+    """(plan, repeat) runs in which a model serves these problems for the first time in the
+    block: run_placement runs plans in run_config order, all repeats of a plan back to back,
+    on fresh servers, so that is repeat 0 of the first plan using each model. Its prompts
+    miss vLLM's prefix cache (P5 Qwen HotpotQA: p95 2.1x the later repeats); rev1 fits
+    warm runs only and so predicts warm (steady-state) latency."""
+    plans = json.load(open(f"{folder}/run_config.v2.json"))["plans"].split(",")
+    seen, cold = set(), set()
+    for plan in plans:
+        models = {c[0] for (p, r, _), cs in calls.items() if p == plan and r == "0" for c in cs}
+        if models - seen:
+            cold.add((plan, "0"))
+        seen |= models
+    return cold
+
+
+def p5_runs(results: str, separate_only: bool = True, skip_cold: bool = True):
     """Yield (folder, k, problems, starts) per P5 run; problems in start order, each a list
     of (model, P, C, measured latency) in call order; starts = the problems' start_s."""
     for path in sorted(glob.glob(f"{results}/P5/*/placement_calls.csv")):
@@ -65,8 +83,11 @@ def p5_runs(results: str, separate_only: bool = True):
         for c in read_rows(path):
             calls[(c["plan"], c["repeat"], c["task_id"])].append(
                 (c["model"], float(c["prompt_tokens"]), float(c["completion_tokens"]), float(c["latency_s"])))
+        cold = cold_runs(d, calls) if skip_cold else set()
         for run in sorted(glob.glob(f"{d}/run_*.csv")):
             rows = sorted(read_rows(run), key=lambda r: float(r["start_s"]))
+            if (rows[0]["plan"], rows[0]["repeat"]) in cold:
+                continue
             yield (os.path.basename(d), int(rows[0]["k"]), [calls[(r["plan"], r["repeat"], r["task_id"])] for r in rows],
                    [float(r["start_s"]) for r in rows])
 

@@ -78,3 +78,12 @@ def test_metrics_and_plan_types():
     m = metrics(rows, "x")
     assert m["x_w10"] == pytest.approx(2 / 3) and m["x_w20"] == pytest.approx(2 / 3)
     assert n_upgraded("planner+verifier") == 2 and n_upgraded("only_step_1") == 1 and n_upgraded("all_large") == -1
+
+
+def test_cold_runs_first_use_of_each_model(tmp_path):
+    import json
+    from agentqo.latsim.fit import cold_runs
+    (tmp_path / "run_config.v2.json").write_text(json.dumps({"plans": "all_small,only_planner,all_large"}))
+    calls = {("all_small", "0", "t"): [("s",)], ("only_planner", "0", "t"): [("l",), ("s",)],
+             ("all_large", "0", "t"): [("l",)], ("all_small", "1", "t"): [("s",)]}
+    assert cold_runs(str(tmp_path), calls) == {("all_small", "0"), ("only_planner", "0")}
