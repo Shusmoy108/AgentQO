@@ -519,3 +519,7 @@ Operational choices made during the lease (no code change; the tag is what runs)
   (/mnt/data/x5check.py: static before smoke, label traces before plans; 30/30 static ok), scorer audit after
   labels (scorer_audit.csv, unscorable_by_agent.csv). Recorded under L2-X5/X6.
 - 02:12Z PI approved the two X5 safeguard deviations (planner exemption; smoke checks built prompts, sent prompts checked from label traces before plans). No code change.
+- 03:15Z NEXT block 12: L2-X7 registered before data (a6784b7a); X7 code on v2-lease2-x 88e9d762 (agentqo/tasks/sandbox.py,
+  agentqo/tasks/mbppplus.py, create_code_workflow, code prompts); MBPP+ pinned on both VMs; X7 blocks in x.sh and
+  tools/stage5_orch.sh (>= 10 h rule); tools/final_guard.sh stops X work at 2026-11-19 05:30Z. Found: X4's seed salt has no
+  effect under greedy decoding (temperature 0.0 for non-sampler nodes); flagged to the PI, X4 unchanged pending a decision.
