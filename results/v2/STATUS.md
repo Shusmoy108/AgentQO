@@ -51,3 +51,5 @@
 2026-11-17T03:05:20Z TIMING_LOCK D-L2-h4grid-rerun: no X3/non-timing GPU job running on VM-A (confirmed)
 2026-11-17T03:07:42Z NUMPY INSTALLED VM-A (outside TIMING_LOCK): python3-numpy 1:1.21.5-1ubuntu22.04.1; system python3 imports numpy 1.21.5
 2026-11-17T03:07:42Z E1 starts on VM-A now (PI NEXT block 13: VM-A's GPU only; VM-B's timing unaffected)
+2026-11-17T03:07:34Z TIMING_LOCK released on VM-A by D-L2-h4grid
+2026-11-17T03:09:23Z VM-A GATE P5-rerun: cal_granite_hotpot_separate: placement done | cal_granite_math_separate: placement done | cal_phi_math_separate: placement done | cal_qwen3_14_math_separate: placement done | cal_qwen_hotpot_separate: placement done | cal_qwen_hotpot_shared: placement done | separate: placement done | separate_k1: placement done | separate_k32: placement done | shared: placement done | shared_k1: placement done | shared_k32: placement done | shared_mps: placement done | shared_mps_k1: placement done | shared_mps_k32: placement done

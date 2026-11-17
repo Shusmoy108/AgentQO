@@ -1,12 +1,14 @@
 # Phase P5
 
-Generated 2026-11-16 21:21 UTC, backend `vllm`.
+Generated 2026-11-17 03:07 UTC, backend `vllm`.
 
 Code run: `252a12bfb53acc15c4530509b778daeba2a5dd19`; packaged at `252a12bfb53acc15c4530509b778daeba2a5dd19`.
 
 | step | status |
 |---|---|
+| cal_granite_hotpot_separate | finished |
 | cal_granite_math_separate | finished |
+| cal_phi_math_separate | finished |
 | cal_qwen3_14_math_separate | finished |
 | cal_qwen_hotpot_separate | finished |
 | cal_qwen_hotpot_shared | finished |
@@ -20,6 +22,19 @@ Code run: `252a12bfb53acc15c4530509b778daeba2a5dd19`; packaged at `252a12bfb53ac
 | shared_mps_k1 | finished |
 | shared_mps_k32 | finished |
 
+## cal_granite_hotpot_separate
+
+### placement_summary.csv
+
+| plan | placement | k | repeat | n | p50_s | p95_s | p99_s | throughput_per_s | accuracy |
+|---|---|---|---|---|---|---|---|---|---|
+| all_small | separate | 16 | 0 | 64 | 3.041 | 4.753 | 5.486 | 4.596 | 0.5 |
+| all_small | separate | 16 | 1 | 64 | 3.018 | 4.599 | 6.087 | 4.644 | 0.5 |
+| all_small | separate | 16 | 2 | 64 | 3.083 | 4.512 | 5.817 | 4.595 | 0.484 |
+| all_large | separate | 16 | 0 | 64 | 5.848 | 10.839 | 10.935 | 2.344 | 0.594 |
+| all_large | separate | 16 | 1 | 64 | 5.724 | 9.225 | 10.914 | 2.401 | 0.609 |
+| all_large | separate | 16 | 2 | 64 | 5.531 | 10.38 | 11.728 | 2.311 | 0.609 |
+
 ## cal_granite_math_separate
 
 ### placement_summary.csv
@@ -32,6 +47,19 @@ Code run: `252a12bfb53acc15c4530509b778daeba2a5dd19`; packaged at `252a12bfb53ac
 | all_large | separate | 16 | 0 | 64 | 4.597 | 7.251 | 8.754 | 2.547 | 0.812 |
 | all_large | separate | 16 | 1 | 64 | 4.428 | 7.216 | 8.704 | 2.62 | 0.797 |
 | all_large | separate | 16 | 2 | 64 | 4.365 | 7.026 | 8.701 | 2.586 | 0.781 |
+
+## cal_phi_math_separate
+
+### placement_summary.csv
+
+| plan | placement | k | repeat | n | p50_s | p95_s | p99_s | throughput_per_s | accuracy |
+|---|---|---|---|---|---|---|---|---|---|
+| all_small | separate | 16 | 0 | 64 | 3.623 | 5.192 | 5.783 | 3.78 | 0.844 |
+| all_small | separate | 16 | 1 | 64 | 3.618 | 5.852 | 6.527 | 3.801 | 0.844 |
+| all_small | separate | 16 | 2 | 64 | 3.713 | 6.68 | 7.411 | 3.62 | 0.781 |
+| all_large | separate | 16 | 0 | 64 | 8.977 | 14.469 | 15.225 | 1.291 | 0.953 |
+| all_large | separate | 16 | 1 | 64 | 8.94 | 14.302 | 16.159 | 1.381 | 0.938 |
+| all_large | separate | 16 | 2 | 64 | 8.876 | 14.294 | 15.145 | 1.367 | 0.953 |
 
 ## cal_qwen3_14_math_separate
 
@@ -162,9 +190,9 @@ Code run: `252a12bfb53acc15c4530509b778daeba2a5dd19`; packaged at `252a12bfb53ac
 
 | plan | placement | k | repeat | n | p50_s | p95_s | p99_s | throughput_per_s | accuracy |
 |---|---|---|---|---|---|---|---|---|---|
-| all_small | shared | 16 | 0 | 64 | 1.341 | 2.641 | 2.885 | 9.539 | 0.609 |
-| all_small | shared | 16 | 1 | 64 | 1.335 | 2.527 | 2.672 | 8.836 | 0.484 |
-| all_small | shared | 16 | 2 | 64 | 1.401 | 2.338 | 3.342 | 9.243 | 0.547 |
+| all_small | shared | 16 | 0 | 64 | 1.449 | 2.751 | 3.174 | 9.052 | 0.484 |
+| all_small | shared | 16 | 1 | 64 | 1.427 | 2.253 | 2.672 | 9.666 | 0.484 |
+| all_small | shared | 16 | 2 | 64 | 1.349 | 2.55 | 3.006 | 9.662 | 0.5 |
 | only_planner | shared | 16 | 0 | 64 | 3.125 | 6.57 | 7.235 | 4.161 | 0.484 |
 | only_planner | shared | 16 | 1 | 64 | 3.242 | 6.579 | 6.952 | 4.118 | 0.453 |
 | only_planner | shared | 16 | 2 | 64 | 3.39 | 6.105 | 6.967 | 4.002 | 0.453 |
