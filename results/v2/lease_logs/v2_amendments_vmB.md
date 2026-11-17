@@ -484,3 +484,12 @@ the sandbox interpreter /usr/bin/python3 (the MBPP+ test harness imports numpy):
 - VM-A, 2026-11-17 03:07:42 UTC: python3-numpy 1:1.21.5-1ubuntu22.04.1 (numpy 1.21.5).
 - VM-B: installed after its TIMING_LOCK is released; version appended below when done.
 - VM-B, 2026-11-17 05:37:19 UTC: python3-numpy 1:1.21.5-1ubuntu22.04.1 (numpy 1.21.5), right after VM-B's TIMING_LOCK release.
+
+### L2-X deviation D-L2-X1-complex-front (2026-11-17 07:05:34 UTC)
+
+X1 complex_q15_7 (shared) took its front from P6/complex_q15_7/pareto_api/pareto_front.csv, which is the front over
+accuracy, API cost and p95 latency (84 plans), not the 2-D accuracy / API-cost front registered in L2-X (12 plans,
+P6/search_ground_truth.md). The timed list is therefore those 84 plans plus 100 others drawn with seed 0 from the
+remaining 940 (X1/complex_q15_7/plan_selection.json); it contains all 12 plans of the registered 2-D front. Kept as is
+(exploratory, a superset of the registered front); the 100 random plans differ from a draw over the 1,012 non-front
+plans. Cost: about +0.9 h on VM-A's X1 shared block. math_tiers is as registered (14 front plans + 100).
