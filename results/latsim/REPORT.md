@@ -2,12 +2,12 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-17 (latest fetch):
-- **X1 not complete**: 13 of 14 blocks are in (874 points). Only math_phi separate has not run yet.
-- **X1b: no data yet** (registered as L2-X1b, scheduled after X1). Its K=1 runs use 32 problems, while the frozen K=1
-  predictions are over 64; that comparison will be flagged.
-- **X1c** (Phi and three-model interference grids) is registered as new fit data for latsim. Fitting on it would be a
-  new, separately tagged revision.
+Data status at 2026-11-17 16:00 UTC:
+- **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
+  The lease logged "TIME LEFT after X1" at 15:54Z.
+- **X1b: started 15:54Z, no data yet** (L2-X1b). Its K=1 runs use 32 problems and are scored only against matched
+  re-runs of the tagged code (below).
+- **X1c** (Phi and three-model interference grids) is not in yet. It is the fit data for the planned rev2.
 - **X6 latency: not present, and its 32B model cannot be predicted** (no 32B fit data).
 
 Generated tables: `report_tables.md`, `compare/X1_by_setting.csv`, `compare/X1_bootstrap.csv`.
@@ -46,27 +46,28 @@ separately labelled baseline.
     rule): complex_q15_7, hotpot_iso_* and hotpot_phi.
 - **mean_sum-fair** sums the mean base latency over the plan's nodes, with no factor.
 
-## X1 (held out, K = 16), 874 points
+## X1 (held out for the frozen version, K = 16): complete, 938 points
 
 Pooled:
 
 | predictor | n | within 10% | within 20% | MAPE p95 | Kendall τ |
 |---|---|---|---|---|---|
-| latsim frozen | 874 | **0.696** | 0.921 | 0.081 | 0.931 |
-| latsim rev1 | 874 | **0.778** | 0.978 | 0.064 | 0.934 |
-| H3c (registered) | 760* | 0.075 | 0.121 | 1.196 | 0.779 |
-| H3c-fair | 874 | 0.423 | 0.733 | 0.143 | 0.876 |
-| mean_sum-fair | 874 | 0.014 | 0.035 | 0.576 | 0.622 |
-| sum of mean call latencies (as first registered, P2-P4 base) | 874 | 0.057 | 0.156 | 0.407 | 0.611 |
+| latsim frozen (held out) | 938 | **0.708** | 0.925 | 0.079 | 0.927 |
+| latsim rev1 (not held out on X1) | 938 | **0.783** | 0.979 | 0.063 | 0.930 |
+| H3c (registered) | 824* | 0.069 | 0.112 | 1.195 | 0.788 |
+| H3c-fair | 938 | 0.450 | 0.751 | 0.138 | 0.872 |
+| mean_sum-fair | 938 | 0.013 | 0.034 | 0.560 | 0.583 |
+| sum of mean call latencies (as first registered, P2-P4 base) | 938 | 0.053 | 0.145 | 0.413 | 0.575 |
 
 \* H3c has no prediction for math_tiers (3 tiers); H3c-fair handles n models.
 
-Pre-stated criterion (frozen latsim within-10% share above the registered H3c's on the same plans): **met**.
+Pre-stated criterion (frozen latsim's within-10% share above the registered H3c's on the same plans): **met**,
+0.708 vs 0.069.
 
 Paired bootstrap of the within-10% share, latsim minus H3c-fair (5,000 resamples of plans, seed 0, stratified when
 pooled):
-- frozen: **+0.272** [0.235, 0.309]
-- rev1: **+0.355** [0.316, 0.392]
+- frozen: **+0.258** [0.222, 0.293]
+- rev1: **+0.333** [0.295, 0.369]
 
 ### Per setting × placement (K = 16)
 
@@ -74,49 +75,56 @@ Within 10% / within 20% / MAPE p95 / Kendall τ within the setting:
 
 | setting | placement | n | latsim frozen | latsim rev1 | H3c (registered) | H3c-fair | mean_sum-fair |
 |---|---|---|---|---|---|---|---|
-| complex_q15_7 | shared | 184 | 0.80 / 0.96 / 0.064 / 0.84 | 0.81 / 0.98 / 0.061 / 0.84 | 0.00 / 0.01 / 1.125 / 0.69 | 0.53 / 0.86 / 0.103 / 0.71 | 0.00 / 0.00 / 0.699 / 0.63 |
-| hotpot_iso_q15_7 | separate | 32 | 0.31 / 0.66 / 0.147 / 0.68 | 0.81 / 1.00 / 0.055 / 0.69 | 0.00 / 0.00 / 1.875 / 0.71 | 0.13 / 0.53 / 0.207 / 0.71 | 0.38 / 0.81 / 0.139 / 0.73 |
+| complex_q15_7 | shared | 184 | 0.80 / 0.96 / 0.064 / 0.84 | 0.81 / 0.98 / 0.061 / 0.84 | 0.00 / 0.01 / 1.125 / 0.69 | 0.53 / 0.86 / 0.103 / 0.71 | 0.00 / 0.00 / 0.699 / 0.62 |
+| hotpot_iso_q15_7 | separate | 32 | 0.31 / 0.66 / 0.147 / 0.68 | 0.81 / 1.00 / 0.055 / 0.69 | 0.00 / 0.00 / 1.875 / 0.71 | 0.12 / 0.53 / 0.207 / 0.71 | 0.38 / 0.81 / 0.139 / 0.73 |
 | hotpot_iso_q15_7 | shared | 32 | 0.19 / 0.75 / 0.158 / 0.68 | 0.81 / 1.00 / 0.069 / 0.64 | 0.00 / 0.00 / 2.409 / 0.59 | 0.00 / 0.06 / 0.357 / 0.54 | 0.00 / 0.03 / 0.539 / 0.35 |
-| hotpot_q15_7 | separate | 32 | 0.28 / 0.59 / 0.181 / 0.64 | 0.75 / 0.94 / 0.067 / 0.69 | 0.00 / 0.00 / 1.962 / 0.65 | 0.53 / 0.94 / 0.094 / 0.55 | 0.00 / 0.13 / 0.299 / 0.48 |
+| hotpot_q15_7 | separate | 32 | 0.28 / 0.59 / 0.181 / 0.64 | 0.75 / 0.94 / 0.067 / 0.69 | 0.00 / 0.00 / 1.962 / 0.65 | 0.53 / 0.94 / 0.094 / 0.55 | 0.00 / 0.12 / 0.299 / 0.48 |
 | hotpot_q15_7 | shared | 32 | 0.06 / 0.38 / 0.217 / 0.73 | 0.69 / 0.91 / 0.092 / 0.71 | 0.00 / 0.00 / 2.529 / 0.67 | 0.09 / 0.44 / 0.246 / 0.42 | 0.00 / 0.00 / 0.614 / 0.20 |
 | math_granite | separate | 64 | 0.78 / 0.98 / 0.063 / 0.72 | 0.80 / 0.98 / 0.063 / 0.72 | 0.00 / 0.00 / 0.978 / 0.73 | 0.48 / 0.89 / 0.106 / 0.57 | 0.00 / 0.00 / 0.388 / 0.65 |
 | math_granite | shared | 64 | 0.80 / 1.00 / 0.059 / 0.64 | 0.80 / 1.00 / 0.060 / 0.64 | 0.00 / 0.00 / 1.334 / 0.30 | 0.42 / 0.72 / 0.154 / 0.26 | 0.00 / 0.00 / 0.686 / 0.35 |
+| math_phi | separate | 64 | 0.88 / 0.98 / 0.052 / 0.80 | 0.84 / 0.98 / 0.053 / 0.81 | 0.00 / 0.00 / 1.179 / 0.79 | 0.81 / 0.98 / 0.066 / 0.76 | 0.00 / 0.02 / 0.344 / 0.72 |
 | math_phi | shared | 64 | 0.73 / 1.00 / 0.074 / 0.68 | 0.73 / 1.00 / 0.072 / 0.68 | 0.00 / 0.00 / 1.467 / 0.59 | 0.44 / 0.81 / 0.133 / 0.55 | 0.00 / 0.00 / 0.666 / 0.45 |
 | math_q15_7 | separate | 64 | 0.89 / 0.98 / 0.054 / 0.85 | 0.86 / 0.98 / 0.056 / 0.85 | 0.69 / 0.94 / 0.079 / 0.76 | 0.69 / 0.94 / 0.079 / 0.76 | 0.00 / 0.00 / 0.394 / 0.79 |
-| math_q15_7 | shared | 64 | 0.83 / 0.98 / 0.055 / 0.80 | 0.83 / 0.98 / 0.054 / 0.79 | 0.20 / 0.48 / 0.201 / 0.70 | 0.27 / 0.69 / 0.151 / 0.70 | 0.00 / 0.00 / 0.690 / 0.56 |
-| math_q3_14 | separate | 64 | 0.95 / 0.98 / 0.042 / 0.91 | 0.94 / 0.98 / 0.042 / 0.91 | 0.00 / 0.00 / 1.098 / 0.87 | 0.75 / 0.94 / 0.068 / 0.83 | 0.00 / 0.00 / 0.304 / 0.87 |
+| math_q15_7 | shared | 64 | 0.83 / 0.98 / 0.055 / 0.79 | 0.83 / 0.98 / 0.054 / 0.79 | 0.20 / 0.48 / 0.201 / 0.70 | 0.27 / 0.69 / 0.151 / 0.70 | 0.00 / 0.00 / 0.690 / 0.56 |
+| math_q3_14 | separate | 64 | 0.95 / 0.98 / 0.042 / 0.90 | 0.94 / 0.98 / 0.042 / 0.91 | 0.00 / 0.00 / 1.098 / 0.87 | 0.75 / 0.94 / 0.068 / 0.83 | 0.00 / 0.00 / 0.304 / 0.87 |
 | math_q3_14 | shared | 64 | 0.84 / 1.00 / 0.050 / 0.78 | 0.84 / 1.00 / 0.049 / 0.78 | 0.00 / 0.00 / 1.426 / 0.47 | 0.44 / 0.69 / 0.139 / 0.49 | 0.00 / 0.00 / 0.625 / 0.58 |
 | math_tiers | shared | 114 | 0.53 / 0.95 / 0.094 / 0.78 | 0.54 / 0.95 / 0.092 / 0.78 | - | 0.22 / 0.49 / 0.212 / 0.65 | 0.00 / 0.00 / 0.730 / 0.50 |
 
 On math_q15_7 separate, H3c-fair and the registered H3c are identical, because the registered H3c already used P5
 separate K=16 calls there.
 
-Paired bootstrap, within-10% share, latsim minus H3c-fair (difference [95% CI]):
+Paired bootstrap, within-10% share, latsim minus H3c-fair (difference [95% CI]; bold = H3c-fair significantly better):
 
 | setting | placement | frozen − H3c-fair | rev1 − H3c-fair |
 |---|---|---|---|
 | complex_q15_7 | shared | +0.272 [0.185, 0.353] | +0.277 [0.196, 0.359] |
 | hotpot_iso_q15_7 | separate | +0.188 [0.031, 0.344] | +0.688 [0.469, 0.875] |
 | hotpot_iso_q15_7 | shared | +0.188 [0.062, 0.344] | +0.812 [0.656, 0.938] |
-| hotpot_q15_7 | separate | **−0.250 [−0.469, −0.031]** | +0.219 [−0.031, 0.469] |
-| hotpot_q15_7 | shared | −0.031 [−0.156, 0.094] | +0.594 [0.406, 0.750] |
+| hotpot_q15_7 | separate | **-0.250 [-0.469, -0.031]** | +0.219 [-0.031, 0.469] |
+| hotpot_q15_7 | shared | -0.031 [-0.156, 0.094] | +0.594 [0.406, 0.750] |
 | math_granite | separate | +0.297 [0.172, 0.438] | +0.312 [0.188, 0.438] |
 | math_granite | shared | +0.375 [0.234, 0.516] | +0.375 [0.234, 0.516] |
+| math_phi | separate | +0.062 [-0.031, 0.156] | +0.031 [-0.078, 0.141] |
 | math_phi | shared | +0.297 [0.141, 0.453] | +0.297 [0.141, 0.453] |
 | math_q15_7 | separate | +0.203 [0.062, 0.344] | +0.172 [0.031, 0.312] |
-| math_q15_7 | shared | +0.562 [0.422, 0.703] | +0.562 [0.422, 0.703] |
+| math_q15_7 | shared | +0.562 [0.421, 0.703] | +0.562 [0.406, 0.703] |
 | math_q3_14 | separate | +0.203 [0.094, 0.328] | +0.188 [0.062, 0.312] |
 | math_q3_14 | shared | +0.406 [0.266, 0.547] | +0.406 [0.266, 0.547] |
-| math_tiers | shared | +0.307 [0.202, 0.421] | +0.325 [0.211, 0.439] |
-| all, stratified | | +0.272 [0.235, 0.309] | +0.355 [0.316, 0.392] |
+| math_tiers | shared | +0.307 [0.193, 0.421] | +0.325 [0.211, 0.439] |
+| all, stratified |  | +0.258 [0.222, 0.293] | +0.333 [0.295, 0.369] |
+
+Summary over the 14 groups:
+- **Frozen** is significantly ahead of H3c-fair in 11, not different in 2 (hotpot_q15_7 shared, math_phi separate),
+  and significantly behind in 1 (hotpot_q15_7 separate).
+- **Rev1** is significantly ahead in 12 and not different in 2 (hotpot_q15_7 separate, math_phi separate).
 
 ### What the fair baseline shows
 
-- **Most of the registered H3c's X1 failure was its inputs.** With latsim's data, H3c goes from 0.08 to 0.42 within
+- **Most of the registered H3c's X1 failure was its inputs.** With latsim's data, H3c goes from 0.07 to 0.45 within
   10%. The rest of the gap is the formula: a mean-field placement factor, and no queueing or prefill effects across
   problems.
-- **H3c-fair's main weakness is shared placement.** It does better on separate math (0.48–0.75) and on
-  hotpot_q15_7 separate (0.53). Shared settings fall to 0.00–0.53, and its within-setting τ drops to 0.26–0.71.
+- **H3c-fair's main weakness is shared placement.** It does better on separate math (0.48–0.81, close to latsim on
+  math_phi separate) and on hotpot_q15_7 separate (0.53). Shared settings fall to 0.00–0.53, and its within-setting τ drops to 0.26–0.71.
 - **The one place a baseline beats a latsim version** is hotpot_q15_7 separate, where H3c-fair beats frozen latsim
   (−0.25, CI excludes 0). That is the prefix-cache error that rev1 fixed. H3c-fair's measured base absorbs it, because
   the median over P5's three repeats picks a warm repeat.
@@ -138,17 +146,18 @@ Paired bootstrap, within-10% share, latsim minus H3c-fair (difference [95% CI]):
    - Rev1 raises HotpotQA within-10% from 0.06–0.31 to 0.69–0.81. The effect is ~7% on Granite HotpotQA and nil on
      math.
 2. **Cold first plans** in a block (all_small, then the only_* plans) meet a cold server, and rev1 predicts warm.
-   - Separate one_large: within 10% 0.57, bias −3%.
-   - Separate all_small: 0.80, bias −9%.
+   - Separate one_large: within 10% 0.62, bias −4%.
+   - Separate all_small: 0.83, bias −7%.
    - A per-block cache-state model would cover this; not built.
 3. **math_tiers plans with a 14B agent**: within 10% 0.50, bias +10% (14B-free tier plans: 0.91).
    - Three models share one GPU, and the betas involving the 14B are borrowed from the Qwen 3B/14B grid.
    - Summing two betas when both other servers are busy likely overstates the slowdown. No 3-model grid exists to fit
      this.
-4. **math_phi p50** is +11% (p95 +5%). Phi's betas are borrowed.
+4. **math_phi shared**: p50 +11%, p95 +5%. In separate placement Phi is on target (p50 +1%, p95 −1%), so the error
+   sits in the borrowed Phi betas, which rev2 will replace with X1c's measured ones.
 5. **Ranking within a setting** is weaker than the pooled τ: 0.64–0.91 per setting, against 0.93 pooled, which mostly
-   reflects differences between settings. Still, it is above every baseline's within-setting τ in 10 of 13 groups
-   (frozen) and 11 of 13 (rev1).
+   reflects differences between settings. Still, it is above every baseline's within-setting τ in 11 of 14 groups
+   (frozen) and 12 of 14 (rev1).
    - hotpot_iso_q15_7 separate is an exception for both versions: the baselines reach 0.71–0.73, against latsim's
      0.68–0.69.
    - math_granite separate is an exception for both: the registered H3c reaches 0.73, against latsim's 0.72.
