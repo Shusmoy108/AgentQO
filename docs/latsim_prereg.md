@@ -118,3 +118,21 @@ percentiles; pooled CI resamples plans within each group (stratified). Measured 
    nothing from X1 or X1b; every other parameter as rev1. Tagged `latsim-rev2-<UTC>` and pushed before any rev2 score;
    reported next to frozen and rev1 as "with measured instead of borrowed interference factors", not as a held-out
    claim on X1 (X1 was open when rev2 was made).
+
+### Erratum (2026-11-17 23:30Z, found while building rev2; no code or result changes)
+
+Lines above (frozen model description, and the H3c-fair borrowing rule) say every math_tiers pair with the 14B borrows
+q3_14. The frozen code (`nearest_pair`, unchanged since the freeze) does this for 7B/14B only: for 1.5B/14B the log-size
+distance to q15_7 (|log 1.5/1.5| + |log 14/7|) and to q3_14 (|log 1.5/3| + |log 14/14|) tie at log 2, and the first
+pair in PAIRS, q15_7, wins. Every frozen, rev1 and H3c-fair prediction was made by that code, so the results stand; only
+the description was wrong. rev2 replaces both borrowed pairs with factors fitted on X1c A16.
+
+### rev2 implementation (before any rev2 score)
+
+`agentqo/latsim/rev2.py`, base `results/latsim/rev1/params.json`. Changes to shared code: `fit.folder_runs` (p5_runs
+for one folder, factored out) and `betas_for` now (a) uses a grid measured on exactly the two models when params has one
+(rev2 adds `betas["phi"]`), else `nearest_pair` as before, and (b) lets `params["pair_betas"][placement]["o->m"]`
+override a pair. With rev1's params, `betas_for` was checked identical to the rev1 tag's on all 252 two- and
+three-model sets x 3 placements. Fit: the four directed 14B pairs (14B->1.5B, 1.5B->14B, 14B->7B, 7B->14B), shared
+only, least squares on per-call log residual of closed-loop re-simulation of the 16 warm X1c A16 runs (rev1 model
+parameters fixed, start = borrowed values). Phi: X1c/phi/fit h4_fit at rev1's quantile (p50), shared and shared_mps.

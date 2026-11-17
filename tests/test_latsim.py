@@ -117,3 +117,18 @@ def test_load_measured_excludes_k(tmp_path):
                                              "all_small,separate,4,0,1,3\nall_small,separate,4,1,1,5\n")
     rows = load_measured(str(tmp_path / "*" / "*" / "placement_summary.csv"), {1})
     assert [(r["k"], r["meas_p95"], r["n_repeats"]) for r in rows] == [(4, 4.0, 2)]
+
+
+def test_rev2_exact_grid_and_pair_betas_override_borrowing():
+    from agentqo.latsim.fit import betas_for
+    phi_s, phi_l = "microsoft/Phi-3.5-mini-instruct", "microsoft/phi-4"
+    q15, q14 = "Qwen/Qwen2.5-1.5B-Instruct", "Qwen/Qwen2.5-14B-Instruct"
+    g = lambda x: {"shared": {"large_to_small": x, "small_to_large": x / 10}}
+    params = {"betas": {"q15_7": g(1.0), "q3_14": g(2.0), "g2_8": g(3.0)}}
+    assert betas_for([phi_s, phi_l], "shared", params)[(phi_l, phi_s)] == 2.0  # borrowed from q3_14
+    params["betas"]["phi"] = g(5.0)
+    assert betas_for([phi_s, phi_l], "shared", params)[(phi_l, phi_s)] == 5.0  # its own grid
+    assert betas_for([q15, q14], "shared", params)[(q14, q15)] == 1.0  # borrowed (log-size tie -> q15_7)
+    params["pair_betas"] = {"shared": {f"{q14}->{q15}": 7.0}}
+    b = betas_for([q15, q14], "shared", params)
+    assert b[(q14, q15)] == 7.0 and b[(q15, q14)] == 0.1

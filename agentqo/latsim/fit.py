@@ -79,17 +79,23 @@ def p5_runs(results: str, separate_only: bool = True, skip_cold: bool = True):
         d = os.path.dirname(path)
         if separate_only and "separate" not in os.path.basename(d):
             continue
-        calls = defaultdict(list)
-        for c in read_rows(path):
-            calls[(c["plan"], c["repeat"], c["task_id"])].append(
-                (c["model"], float(c["prompt_tokens"]), float(c["completion_tokens"]), float(c["latency_s"])))
-        cold = cold_runs(d, calls) if skip_cold else set()
-        for run in sorted(glob.glob(f"{d}/run_*.csv")):
-            rows = sorted(read_rows(run), key=lambda r: float(r["start_s"]))
-            if (rows[0]["plan"], rows[0]["repeat"]) in cold:
-                continue
-            yield (os.path.basename(d), int(rows[0]["k"]), [calls[(r["plan"], r["repeat"], r["task_id"])] for r in rows],
-                   [float(r["start_s"]) for r in rows])
+        yield from folder_runs(d, skip_cold)
+
+
+def folder_runs(d: str, skip_cold: bool = True):
+    """p5_runs for one run folder (placement_calls.csv, run_*.csv, run_config.v2.json)."""
+    path = f"{d}/placement_calls.csv"
+    calls = defaultdict(list)
+    for c in read_rows(path):
+        calls[(c["plan"], c["repeat"], c["task_id"])].append(
+            (c["model"], float(c["prompt_tokens"]), float(c["completion_tokens"]), float(c["latency_s"])))
+    cold = cold_runs(d, calls) if skip_cold else set()
+    for run in sorted(glob.glob(f"{d}/run_*.csv")):
+        rows = sorted(read_rows(run), key=lambda r: float(r["start_s"]))
+        if (rows[0]["plan"], rows[0]["repeat"]) in cold:
+            continue
+        yield (os.path.basename(d), int(rows[0]["k"]), [calls[(r["plan"], r["repeat"], r["task_id"])] for r in rows],
+               [float(r["start_s"]) for r in rows])
 
 
 def grid_levels(results: str):
@@ -223,9 +229,19 @@ def betas_for(models, placement: str, params: dict) -> Dict[tuple, float]:
         for o in models:
             if o == m:
                 continue
-            b = params["betas"][nearest_pair(o, m)][placement]
+            b = params["betas"][grid_pair(o, m, params)][placement]
             out[(o, m)] = b["large_to_small"] if SIZE_B[o] > SIZE_B[m] else b["small_to_large"]
+            # rev2: factors measured for this exact directed pair (X1c A16 runs) replace the borrowed ones
+            out[(o, m)] = params.get("pair_betas", {}).get(placement, {}).get(f"{o}->{m}", out[(o, m)])
     return out
+
+
+def grid_pair(a: str, b: str, params: dict) -> str:
+    """A grid in params["betas"] measured on exactly these two models (rev2 adds "phi"), else nearest_pair."""
+    for fam in params["betas"]:
+        if fam in FAMILIES and {a, b} == set(FAMILIES[fam]):
+            return fam
+    return nearest_pair(a, b)
 
 
 def main() -> None:
