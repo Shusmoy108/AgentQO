@@ -498,3 +498,4 @@ python3-numpy installed from the Ubuntu 22.04 archive with apt (sudo), outside a
 the sandbox interpreter /usr/bin/python3 (the MBPP+ test harness imports numpy):
 - VM-A, 2026-11-17 03:07:42 UTC: python3-numpy 1:1.21.5-1ubuntu22.04.1 (numpy 1.21.5).
 - VM-B: installed after its TIMING_LOCK is released; version appended below when done.
+- VM-B, 2026-11-17 05:37:19 UTC: python3-numpy 1:1.21.5-1ubuntu22.04.1 (numpy 1.21.5), right after VM-B's TIMING_LOCK release.
