@@ -2,17 +2,19 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-17 18:10 UTC:
+Data status at 2026-11-17 19:10 UTC:
 - **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
   The lease logged "TIME LEFT after X1" at 15:54Z.
-- **X1b: in progress, 3 of 9 blocks in**: every setting's separate placement except math_granite (math_phi,
-  math_q15_7: 16 plans; hotpot_q15_7: 11 plans; K=4/8/32 x 2 repeats = 129 points), plus math_q15_7 separate K=1
-  (4 plans, 32 problems). math_granite separate and all shared / MPS blocks still to come.
+- **X1b: in progress, 4 of 9 blocks in**: separate placement is complete for all four settings (math_phi,
+  math_q15_7, math_granite: 16 plans; hotpot_q15_7: 11 plans; K=4/8/32 x 2 repeats = 177 points), plus math_q15_7
+  separate K=1 (4 plans, 32 problems). Shared / MPS blocks (incl. shared K=1) still to come.
   Interim, K=4/8/32 (rev1 is the held-out claim on X1b), within 10% / within 20% / MAPE p95 / tau:
-  rev1 0.667 / 0.969 / 0.078 / 0.935; frozen 0.636 / 0.876 / 0.098 / 0.919; H3c-fair 0.566 / 0.876 / 0.109 / 0.918;
-  registered H3c 0.186 / 0.341 / 0.988 / 0.674. latsim - H3c-fair within-10%: rev1 +0.101 [-0.008, 0.209], frozen
-  +0.070 [-0.031, 0.178] (neither significant yet). HotpotQA repeats X1's frozen failure mode at the new loads: frozen
-  median p95 error +15% (K=32: within 10% 0.00, MAPE 0.33), rev1 +3% (K=32: 0.55, MAPE 0.11).
+  rev1 0.672 / 0.972 / 0.077 / 0.923; frozen 0.644 / 0.904 / 0.092 / 0.914; H3c-fair 0.531 / 0.847 / 0.116 / 0.882;
+  registered H3c 0.136 / 0.249 / 0.997 / 0.753. latsim - H3c-fair within-10% (stratified bootstrap): rev1 +0.141
+  [0.045, 0.232], frozen +0.113 [0.023, 0.209], both significant. Per group, the only significant differences are
+  math_granite K=32 (+0.44 for both) and frozen on hotpot_q15_7 K=32 (-0.36). HotpotQA repeats X1's frozen failure
+  mode at the new loads: frozen median p95 error +15% (K=32: within 10% 0.00, MAPE 0.33), rev1 +3% (K=32: 0.55,
+  MAPE 0.11). math_granite: median p95 error -3% (both).
   K=1 (scored only against the matched 32-problem re-runs, `matched/`): frozen and rev1 both 4/4 plans within 10%,
   MAPE p95 0.030, MAPE p50 0.029 / 0.028, tau 1.0.
   Tables: `report_tables.md`, `compare/X1b_*.csv`, `matched/X1b_k1_*`.
