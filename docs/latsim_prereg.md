@@ -50,3 +50,10 @@ plans (the H3c reference value is 0.49).
 
 Any change after the freeze gets a new tag `latsim-rev<N>-<UTC>` and is reported next to the frozen result, never instead
 of it.
+
+### rev1 (tag `latsim-rev1-20261117T134155Z`, commit 2009dcd1, 2026-11-17 13:41 UTC, after the frozen X1 scoring)
+
+Fit leaves out P5 runs where a model first meets the block's problems (cold vLLM prefix cache; `fit.cold_runs`), so
+parameters describe warm servers. Motivation: frozen X1 failure analysis (HotpotQA overpredicted on 2+-large plans) and
+P5's own cal_qwen_hotpot repeat-0 runs (p95 2.1x repeats 1-2). Fit data unchanged (P5 + h4grid); no X1 value used.
+Frozen predictions are kept and reported next to rev1's in results/latsim/REPORT.md.
