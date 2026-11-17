@@ -2,11 +2,14 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-17 16:00 UTC:
+Data status at 2026-11-17 17:30 UTC:
 - **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
   The lease logged "TIME LEFT after X1" at 15:54Z.
-- **X1b: started 15:54Z, no data yet** (L2-X1b). Its K=1 runs use 32 problems and are scored only against matched
-  re-runs of the tagged code (below).
+- **X1b: in progress, 1 of 9 blocks in** (math_phi separate, K=4/8/32, 16 plans x 2 repeats = 48 points).
+  Interim (rev1 is the held-out claim here; frozen and rev1 are identical on Phi separate): within 10% 0.708,
+  within 20% 1.000, MAPE p95 0.069, tau 0.876; H3c-fair 0.583 / 0.938 / 0.092 / 0.812; latsim - H3c-fair within-10%
+  +0.125 [-0.042, 0.292] (not significant on 48 points). Tables: `report_tables.md`, `compare/X1b_*.csv`.
+  Its K=1 runs use 32 problems and are scored only against matched re-runs of the tagged code (below).
 - **X1c** (Phi and three-model interference grids) is not in yet. It is the fit data for the planned rev2.
 - **X6 latency: not present, and its 32B model cannot be predicted** (no 32B fit data).
 

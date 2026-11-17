@@ -109,6 +109,88 @@ By plan type (latsim only):
 | X1_vmB/math_phi/shared/placement_summary.csv | shared | 16 | 64 | 64 | 2 |
 | X1_vmB/math_q3_14/shared/placement_summary.csv | shared | 16 | 64 | 64 | 2 |
 
-## X1b
+## X1b, frozen predictions (predictions.csv)
 
-No measured files yet (results/v2/X1b*/*/*/placement_summary.csv).
+Pooled:
+
+| placement | k | all | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau | h3c within 10% | h3c within 20% | h3c MAPE p95 | h3c Kendall tau | mean_sum within 10% | mean_sum within 20% | mean_sum MAPE p95 | mean_sum Kendall tau |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| separate | 32 |  | 16 | 0.625 | 1.000 | 0.067 | 0.867 | 0.000 | 0.000 | 1.005 | 0.900 | 0.000 | 0.000 | 0.390 | 0.817 |
+| separate | 4 |  | 16 | 0.688 | 1.000 | 0.066 | 0.917 | 0.000 | 0.000 | 1.276 | 0.933 | 0.000 | 0.000 | 0.579 | 0.850 |
+| separate | 8 |  | 16 | 0.812 | 1.000 | 0.073 | 0.900 | 0.000 | 0.000 | 1.204 | 0.917 | 0.000 | 0.000 | 0.529 | 0.833 |
+|  |  | all | 48 | 0.708 | 1.000 | 0.069 | 0.876 | 0.000 | 0.000 | 1.162 | 0.859 | 0.000 | 0.000 | 0.499 | 0.781 |
+
+By setting:
+
+| setting | placement | k | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau | h3c within 10% | h3c within 20% | h3c MAPE p95 | h3c Kendall tau | mean_sum within 10% | mean_sum within 20% | mean_sum MAPE p95 | mean_sum Kendall tau |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| math_phi | separate | 32 | 16 | 0.625 | 1.000 | 0.067 | 0.867 | 0.000 | 0.000 | 1.005 | 0.900 | 0.000 | 0.000 | 0.390 | 0.817 |
+| math_phi | separate | 4 | 16 | 0.688 | 1.000 | 0.066 | 0.917 | 0.000 | 0.000 | 1.276 | 0.933 | 0.000 | 0.000 | 0.579 | 0.850 |
+| math_phi | separate | 8 | 16 | 0.812 | 1.000 | 0.073 | 0.900 | 0.000 | 0.000 | 1.204 | 0.917 | 0.000 | 0.000 | 0.529 | 0.833 |
+
+By plan type (latsim only):
+
+| placement | k | plan_type | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau |
+|---|---|---|---|---|---|---|---|
+| separate | 32 | 3+_large | 6 | 0.500 | 1.000 | 0.090 | 0.867 |
+| separate | 32 | all_large | 1 | 1.000 | 1.000 | 0.051 | nan |
+| separate | 32 | all_small | 1 | 1.000 | 1.000 | 0.008 | nan |
+| separate | 32 | one_large | 6 | 0.667 | 1.000 | 0.058 | 0.733 |
+| separate | 32 | two_large | 2 | 0.500 | 1.000 | 0.062 | nan |
+| separate | 4 | 3+_large | 6 | 0.500 | 1.000 | 0.086 | 0.733 |
+| separate | 4 | all_large | 1 | 1.000 | 1.000 | 0.016 | nan |
+| separate | 4 | all_small | 1 | 1.000 | 1.000 | 0.010 | nan |
+| separate | 4 | one_large | 6 | 0.833 | 1.000 | 0.052 | 0.867 |
+| separate | 4 | two_large | 2 | 0.500 | 1.000 | 0.100 | nan |
+| separate | 8 | 3+_large | 6 | 0.667 | 1.000 | 0.086 | 0.733 |
+| separate | 8 | all_large | 1 | 1.000 | 1.000 | 0.000 | nan |
+| separate | 8 | all_small | 1 | 1.000 | 1.000 | 0.070 | nan |
+| separate | 8 | one_large | 6 | 1.000 | 1.000 | 0.073 | 0.733 |
+| separate | 8 | two_large | 2 | 0.500 | 1.000 | 0.076 | nan |
+
+## X1b, rev1 predictions (rev1/predictions.csv)
+
+Pooled:
+
+| placement | k | all | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau | h3c within 10% | h3c within 20% | h3c MAPE p95 | h3c Kendall tau | mean_sum within 10% | mean_sum within 20% | mean_sum MAPE p95 | mean_sum Kendall tau |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| separate | 32 |  | 16 | 0.625 | 1.000 | 0.068 | 0.867 | 0.000 | 0.000 | 1.005 | 0.900 | 0.000 | 0.000 | 0.390 | 0.817 |
+| separate | 4 |  | 16 | 0.688 | 1.000 | 0.066 | 0.917 | 0.000 | 0.000 | 1.276 | 0.933 | 0.000 | 0.000 | 0.579 | 0.850 |
+| separate | 8 |  | 16 | 0.812 | 1.000 | 0.075 | 0.900 | 0.000 | 0.000 | 1.204 | 0.917 | 0.000 | 0.000 | 0.529 | 0.833 |
+|  |  | all | 48 | 0.708 | 1.000 | 0.070 | 0.876 | 0.000 | 0.000 | 1.162 | 0.859 | 0.000 | 0.000 | 0.499 | 0.781 |
+
+By setting:
+
+| setting | placement | k | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau | h3c within 10% | h3c within 20% | h3c MAPE p95 | h3c Kendall tau | mean_sum within 10% | mean_sum within 20% | mean_sum MAPE p95 | mean_sum Kendall tau |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| math_phi | separate | 32 | 16 | 0.625 | 1.000 | 0.068 | 0.867 | 0.000 | 0.000 | 1.005 | 0.900 | 0.000 | 0.000 | 0.390 | 0.817 |
+| math_phi | separate | 4 | 16 | 0.688 | 1.000 | 0.066 | 0.917 | 0.000 | 0.000 | 1.276 | 0.933 | 0.000 | 0.000 | 0.579 | 0.850 |
+| math_phi | separate | 8 | 16 | 0.812 | 1.000 | 0.075 | 0.900 | 0.000 | 0.000 | 1.204 | 0.917 | 0.000 | 0.000 | 0.529 | 0.833 |
+
+By plan type (latsim only):
+
+| placement | k | plan_type | n | latsim within 10% | latsim within 20% | latsim MAPE p95 | latsim Kendall tau |
+|---|---|---|---|---|---|---|---|
+| separate | 32 | 3+_large | 6 | 0.500 | 1.000 | 0.093 | 0.867 |
+| separate | 32 | all_large | 1 | 1.000 | 1.000 | 0.055 | nan |
+| separate | 32 | all_small | 1 | 1.000 | 1.000 | 0.003 | nan |
+| separate | 32 | one_large | 6 | 0.667 | 1.000 | 0.058 | 0.733 |
+| separate | 32 | two_large | 2 | 0.500 | 1.000 | 0.062 | nan |
+| separate | 4 | 3+_large | 6 | 0.500 | 1.000 | 0.087 | 0.733 |
+| separate | 4 | all_large | 1 | 1.000 | 1.000 | 0.012 | nan |
+| separate | 4 | all_small | 1 | 1.000 | 1.000 | 0.006 | nan |
+| separate | 4 | one_large | 6 | 0.833 | 1.000 | 0.053 | 0.867 |
+| separate | 4 | two_large | 2 | 0.500 | 1.000 | 0.100 | nan |
+| separate | 8 | 3+_large | 6 | 0.667 | 1.000 | 0.088 | 0.733 |
+| separate | 8 | all_large | 1 | 1.000 | 1.000 | 0.004 | nan |
+| separate | 8 | all_small | 1 | 1.000 | 1.000 | 0.072 | nan |
+| separate | 8 | one_large | 6 | 1.000 | 1.000 | 0.074 | 0.733 |
+| separate | 8 | two_large | 2 | 0.500 | 1.000 | 0.077 | nan |
+
+### X1b coverage
+
+| summary | placement | K | plans measured | plans listed | min repeats |
+|---|---|---|---|---|---|
+| X1b/math_phi/separate_k32/placement_summary.csv | separate | 32 | 16 | 16 | 2 |
+| X1b/math_phi/separate_k4/placement_summary.csv | separate | 4 | 16 | 16 | 2 |
+| X1b/math_phi/separate_k8/placement_summary.csv | separate | 8 | 16 | 16 | 2 |
