@@ -114,3 +114,6 @@
 2026-11-17T14:04:20Z X1c scheduled (L2-X1c registered 5aa62e79 before any X1c data): tools/stage3d_orch.sh (replaces stage3c; X1 and X1b steps skip finished blocks) runs X1c after X1b under the same TIMING_LOCK on both VMs: (a) Phi-3.5-mini/Phi-4 grid, separate (VM-B serves Phi-4) then shared + MPS step on VM-A, repeat 0 only, then h4_fit; (b) A16 three-model runs on VM-A (9 tier plans by busy set, K=16, 64 problems, 2 repeats; skipped if X7 would start after 2026-11-18 14:00Z). Estimate ~1.9 h; projected X7 start ~2026-11-18 05:00-07:00Z. Locks released after X1c, then X2. /mnt/data/x1c.sh, x clone c1bb8338, V2_DEVIATION=D-L2-X-code; the VM-A model deletion and 32B download (stage 4) still wait for the lock release.
 2026-11-17T14:04:46Z VM-A GATE X1-math_q3_14_separate: no settings
 2026-11-17T14:45:10Z VM-A GATE X1-math_granite_separate: no settings
+2026-11-17T15:54:39Z TIME LEFT after X1 (locks kept for X1b): 38.1 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-17T15:54:39Z X1b START: full sweep (projected X7 start 2026-11-18T05:00Z, before 2026-11-18T14:00Z)
+2026-11-17T15:58:42Z VM-A GATE X1-math_phi_separate: no settings
