@@ -552,3 +552,8 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 05:45Z Stage 2c stopped at merge_b (transient ssh reset to VM-B); stage 3 stopped with it. Stage 5 was stopped before it could start X7 early (nothing had started). Resumed with tools/stage2d_orch.sh (merge retried 5x -> h4_fit -> merge -> P6); stages 3 and 5 restarted; stages 4 and 5 now start only on real completion of the work before them, never because an orchestrator died.
 - 2026-11-17T05:40:06Z X3 STARTED/RESUMED on VM-B (resumes from the lease cache)
 - 05:50Z merge_b fixed (per-folder, compressed, retried; tools/merge_b.sh); merge done, h4_fit and P6 running (stage2e); stage 3 waits for the STAGE2 DONE event.
+- 2026-11-17T05:54:33Z TIMING_LOCK created on VM-A by X1
+- 2026-11-17T05:54:33Z TIMING_LOCK X1: no X3/non-timing GPU job running on VM-A (confirmed)
+- 2026-11-17T05:54:35Z TIMING_LOCK created on VM-B by X1
+- 2026-11-17T05:54:36Z X3 STOPPED for TIMING_LOCK (2026-11-17T05:54:35Z X1); servers stopped, GPU freed
+- 2026-11-17T05:54:40Z TIMING_LOCK X1: no X3/non-timing GPU job running on VM-B (confirmed)

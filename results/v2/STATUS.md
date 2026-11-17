@@ -77,3 +77,10 @@
 2026-11-17T05:40:06Z X3 STARTED/RESUMED on VM-B (resumes from the lease cache)
 2026-11-17T05:48:58Z MERGE FIX: the single uncompressed upload of VM-B's results to VM-A (347 MB) was reset by the network on every try (05:39-05:45Z); tools/merge_b.sh now copies P folders one at a time with compression and retries (X folders are not needed by P6). Merge done 05:48:27Z; h4_fit started 05:48:28Z, then P6 (tools/stage2e_orch.sh). Stage 3 now waits for the STAGE2 DONE event instead of a process, so a failed stage 2 can be resumed without stopping it.
 2026-11-17T05:50:08Z VM-A GATE P5-h4grid: cal_granite_hotpot_separate: placement done | cal_granite_hotpot_shared: placement done | cal_granite_math_separate: placement done | cal_granite_math_shared: placement done | cal_phi_math_separate: placement done | cal_phi_math_shared: placement done | cal_qwen3_14_math_separate: placement done | cal_qwen3_14_math_shared: placement done | cal_qwen_hotpot_separate: placement done | cal_qwen_hotpot_shared: placement done | separate: placement done | separate_k1: placement done | separate_k32: placement done | shared: placement done | shared_k1: placement done | shared_k32: placement done | shar
+2026-11-17T05:54:31Z TIME LEFT after P6: 48.1 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-17T05:54:33Z TIMING_LOCK created on VM-A by X1
+2026-11-17T05:54:33Z TIMING_LOCK X1: no X3/non-timing GPU job running on VM-A (confirmed)
+2026-11-17T05:54:35Z TIMING_LOCK created on VM-B by X1
+2026-11-17T05:54:36Z X3 STOPPED for TIMING_LOCK (2026-11-17T05:54:35Z X1); servers stopped, GPU freed
+2026-11-17T05:54:40Z TIMING_LOCK X1: no X3/non-timing GPU job running on VM-B (confirmed)
+2026-11-17T05:55:44Z VM-A GATE P6: no settings
