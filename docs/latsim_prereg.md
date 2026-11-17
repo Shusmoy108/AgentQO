@@ -108,6 +108,9 @@ percentiles; pooled CI resamples plans within each group (stratified). Measured 
    The script stops if the measured task_ids are not exactly the first N of h3_calls. The original 64-problem
    predictions stay untouched. All other X1b loads (K = 4, 8, 32) are scored against the frozen grids as registered;
    K=1 is left out of that scoring (`--exclude-k 1`).
+   Run log: separate_k1 landed 2026-11-17 17:56Z; both re-runs were made at 17:58Z from the tags above (frozen
+   commit 04c5bbde) with no parameter change, after the task_id check passed (32 problems). shared_k1 will be re-run
+   the same way when it lands.
 2. Held-out claims: frozen on X1; rev1 (made after X1 was opened) on X1b.
 3. rev2, after X1c lands: refit only the interference factors latsim borrows (Phi-3.5-mini / Phi-4 pair; the three-model
    Qwen 1.5B / 7B / 14B setup) on X1c data only (results/v2/X1c/phi/{grid,p2,fit}, results/v2/X1c/a16_three_model/shared),

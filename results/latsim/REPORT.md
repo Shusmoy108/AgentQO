@@ -2,14 +2,18 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-17 17:30 UTC:
+Data status at 2026-11-17 18:00 UTC:
 - **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
   The lease logged "TIME LEFT after X1" at 15:54Z.
-- **X1b: in progress, 1 of 9 blocks in** (math_phi separate, K=4/8/32, 16 plans x 2 repeats = 48 points).
-  Interim (rev1 is the held-out claim here; frozen and rev1 are identical on Phi separate): within 10% 0.708,
-  within 20% 1.000, MAPE p95 0.069, tau 0.876; H3c-fair 0.583 / 0.938 / 0.092 / 0.812; latsim - H3c-fair within-10%
-  +0.125 [-0.042, 0.292] (not significant on 48 points). Tables: `report_tables.md`, `compare/X1b_*.csv`.
-  Its K=1 runs use 32 problems and are scored only against matched re-runs of the tagged code (below).
+- **X1b: in progress, 2 of 9 blocks in** (math_phi and math_q15_7 separate; 96 points at K=4/8/32, 16 plans x 2
+  repeats, plus math_q15_7 K=1: 4 plans x 1 repeat x 32 problems). Shared blocks and hotpot / granite still to come.
+  Interim, K=4/8/32 (rev1 is the held-out claim here; frozen and rev1 differ by at most 0.001 here):
+  latsim within 10% 0.698, within 20% 0.979, MAPE p95 0.071, tau 0.918; H3c-fair 0.625 / 0.948 / 0.088 / 0.895;
+  registered H3c 0.250 / 0.458 / 0.632 / 0.893. latsim - H3c-fair within-10%: +0.073 [-0.052, 0.198] (not
+  significant on 96 points; math_q15_7 K=8 is the one group where H3c-fair is ahead, -0.125 [-0.44, 0.19]).
+  K=1 (scored only against the matched 32-problem re-runs, `matched/`): frozen and rev1 both 4/4 plans within 10%,
+  MAPE p95 0.030 (frozen) / 0.030 (rev1), MAPE p50 0.029 / 0.028, tau 1.0.
+  Tables: `report_tables.md`, `compare/X1b_*.csv`, `matched/X1b_k1_*`.
 - **X1c** (Phi and three-model interference grids) is not in yet. It is the fit data for the planned rev2.
 - **X6 latency: not present, and its 32B model cannot be predicted** (no 32B fit data).
 
