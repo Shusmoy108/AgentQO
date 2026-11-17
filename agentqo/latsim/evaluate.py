@@ -29,12 +29,14 @@ def paths(pattern: str) -> List[str]:
     return sorted(f for p in pattern.split(",") for f in glob.glob(p))
 
 
-def load_measured(pattern: str) -> List[dict]:
+def load_measured(pattern: str, exclude_k=()) -> List[dict]:
     acc = defaultdict(list)
     for path in paths(pattern):
         setting = os.path.basename(os.path.dirname(os.path.dirname(path)))
         with open(path, newline="") as f:
             for r in csv.DictReader(f):
+                if int(r["k"]) in exclude_k:
+                    continue
                 acc[(setting, r["plan"], r["placement"], int(r["k"]))].append((float(r["p50_s"]), float(r["p95_s"])))
     return [{"setting": s, "plan": p, "placement": pl, "k": k, "n_repeats": len(v),
              "meas_p50": float(np.mean([x[0] for x in v])), "meas_p95": float(np.mean([x[1] for x in v]))}
@@ -147,8 +149,10 @@ def main() -> None:
     ap.add_argument("--predictions", default="results/latsim/predictions.csv")
     ap.add_argument("--results", default="results/v2")
     ap.add_argument("--out", default="results/latsim")
+    ap.add_argument("--exclude-k", default="", help="comma-separated K values to leave out (X1b K=1: matched files only)")
     args = ap.parse_args()
-    rows = join(load_measured(args.measured), load_predictions(args.predictions))
+    ex = {int(x) for x in args.exclude_k.split(",") if x}
+    rows = join(load_measured(args.measured, ex), load_predictions(args.predictions))
     os.makedirs(args.out, exist_ok=True)
     write_csv(f"{args.out}/{args.name}_per_plan.csv", rows)
     write_csv(f"{args.out}/{args.name}_by_setting.csv", grouped(rows, ("setting", "placement", "k")))

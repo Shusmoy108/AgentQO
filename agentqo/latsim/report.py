@@ -17,6 +17,7 @@ import sys
 
 TESTS = {"X1": "results/v2/X1/*/*/placement_summary.csv,results/v2/X1_vm*/*/*/placement_summary.csv",
          "X1b": "results/v2/X1b*/*/*/placement_summary.csv"}
+EXCLUDE_K = {"X1b": "1"}  # X1b K=1 ran 32 problems: scored only against the matched re-runs (matched.py)
 COLS = [("w10", "within 10%"), ("w20", "within 20%"), ("mape50", "MAPE p50"), ("mape95", "MAPE p95"),
         ("bias95", "median p95 error"), ("tau", "Kendall tau")]
 
@@ -61,8 +62,8 @@ def main(out: str = "results/latsim") -> None:
             if not os.path.exists(pred):
                 continue
             subprocess.run([sys.executable, "-m", "agentqo.latsim.evaluate", "--name", test,
-                            "--measured", pattern, "--predictions", pred, "--out", dest], check=True,
-                           stdout=subprocess.DEVNULL)
+                            "--measured", pattern, "--predictions", pred, "--out", dest,
+                            "--exclude-k", EXCLUDE_K.get(test, "")], check=True, stdout=subprocess.DEVNULL)
             md.append(f"## {test}, {name} predictions ({os.path.relpath(pred, out)})\n")
             md.append("Pooled:\n\n" + table(read(f"{dest}/{test}_pooled.csv"), ["placement", "k", "all"]) + "\n")
             md.append("By setting:\n\n" + table(read(f"{dest}/{test}_by_setting.csv"), ["setting", "placement", "k"]) + "\n")

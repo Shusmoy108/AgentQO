@@ -107,3 +107,13 @@ def test_h3cfair_k_interpolation():
     by = {1: 1.0, 16: 2.0, 32: 4.0}
     assert at_k(by, 16) == 2.0 and at_k(by, 4) == pytest.approx(1.5) and at_k(by, 64) == 4.0
     assert at_k({16: 3.0}, 4) == 3.0
+
+
+def test_load_measured_excludes_k(tmp_path):
+    from agentqo.latsim.evaluate import load_measured
+    d = tmp_path / "math_q15_7" / "separate"
+    d.mkdir(parents=True)
+    (d / "placement_summary.csv").write_text("plan,placement,k,repeat,p50_s,p95_s\nall_small,separate,1,0,1,2\n"
+                                             "all_small,separate,4,0,1,3\nall_small,separate,4,1,1,5\n")
+    rows = load_measured(str(tmp_path / "*" / "*" / "placement_summary.csv"), {1})
+    assert [(r["k"], r["meas_p95"], r["n_repeats"]) for r in rows] == [(4, 4.0, 2)]

@@ -79,10 +79,12 @@ def main() -> None:
     ap.add_argument("--name", required=True)
     ap.add_argument("--measured", required=True, help="comma-separated globs of placement_summary.csv")
     ap.add_argument("--out", default="results/latsim/compare")
+    ap.add_argument("--exclude-k", default="", help="comma-separated K values to leave out")
     args = ap.parse_args()
+    ex = {int(x) for x in args.exclude_k.split(",") if x}
     preds = load()
     by = defaultdict(list)
-    for m in load_measured(args.measured):
+    for m in load_measured(args.measured, ex):
         p = preds.get((m["setting"], m["plan"], m["placement"], m["k"]))
         if p is not None:
             by[(m["setting"], m["placement"], m["k"])].append({**m, **p})

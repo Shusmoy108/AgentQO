@@ -94,3 +94,23 @@ h3cfair, mean_sum_fair: n, share of plans with p95 within 10% and 20%, MAPE p95,
 p95 within the group. Paired bootstrap of the within-10% share, latsim (frozen and rev1) minus h3cfair: 5,000 resamples
 of the group's plans with replacement, numpy default_rng(0), one generator in group order; 95% CI = 2.5 / 97.5
 percentiles; pooled CI resamples plans within each group (stratified). Measured = mean over repeats.
+
+## PI decisions (relayed 2026-11-17 ~15:50 UTC by the lease session agentqo-a8), recorded before any X1b / X1c data
+
+1. X1b K=1 measured 32 problems (math_q15_7: all_small, all_large, only_verifier, aggregator+verifier; separate_k1 and
+   shared_k1; the first 32 problems of the GSM8K eval split, P5/X1 order), while the frozen grid predicts K=1 over 64.
+   Mismatched inputs are not compared. X1b K=1 is scored only against re-runs of the tagged code and parameters on
+   exactly those 32 problems (`agentqo/latsim/matched.py`): frozen at `latsim-frozen-20261117T133315Z` with its
+   `results/latsim/params.json` -> `results/latsim/matched/frozen_matched_k1.csv`, rev1 at
+   `latsim-rev1-20261117T134155Z` with `results/latsim/rev1/params.json` -> `rev1_matched_k1.csv`. Same model, same
+   parameters, matched inputs, not a refit. The tag's agentqo/latsim is extracted with git archive and imported from a
+   scratch folder; re-run on 64 problems it reproduces predictions.csv bit for bit (checked on P5-shaped stand-in runs).
+   The script stops if the measured task_ids are not exactly the first N of h3_calls. The original 64-problem
+   predictions stay untouched. All other X1b loads (K = 4, 8, 32) are scored against the frozen grids as registered;
+   K=1 is left out of that scoring (`--exclude-k 1`).
+2. Held-out claims: frozen on X1; rev1 (made after X1 was opened) on X1b.
+3. rev2, after X1c lands: refit only the interference factors latsim borrows (Phi-3.5-mini / Phi-4 pair; the three-model
+   Qwen 1.5B / 7B / 14B setup) on X1c data only (results/v2/X1c/phi/{grid,p2,fit}, results/v2/X1c/a16_three_model/shared),
+   nothing from X1 or X1b; every other parameter as rev1. Tagged `latsim-rev2-<UTC>` and pushed before any rev2 score;
+   reported next to frozen and rev1 as "with measured instead of borrowed interference factors", not as a held-out
+   claim on X1 (X1 was open when rev2 was made).
