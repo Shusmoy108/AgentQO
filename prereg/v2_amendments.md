@@ -322,3 +322,63 @@ Check of the runs so far: X3's calls on VM-B span 20:15:07-21:09:21 UTC (none af
 pause); VM-B's timing servers came up at 21:10:19 (P5 separate cal) and 21:35:05 (h4grid), and VM-B's
 P5 shared cal ended 19:27; during X3's window only VM-A's own GPU ran timing (P5 shared_mps). No overlap,
 so no h4grid or P5 point is rerun.
+
+## L2-X5/X6: lease-time exploratory extensions, registered 2026-11-17 01:49:29 UTC, before any X5 or X6 data exists
+
+Status: EXPLORATORY, same rules as L2-X: no X5/X6 result changes or enters any registered verdict;
+own folders results/v2/X5 and results/v2/X6; V2_DEVIATION set (D-L2-X-code); both are included in
+results_v2_UPLOAD.zip, FINAL/data_check.md and P6/search_ground_truth.md. They start after X1, X2 and
+X4 (X3 continues on VM-B), and no new X work starts after 2026-11-19 00:00 UTC; the time left is
+recomputed and logged in STATUS.md after each item.
+
+Reason. Task difficulty: GSM8K is close to the ceiling for the 7B (all_large 0.82 on math_q15_7), so
+upgrade values and the Pareto front may look different when the small and large model both fail more
+often; MATH-500 tests that. Model scale: every registered pair has its large model at <= 14B; a
+7B/32B pair tests whether the findings hold when the small model is already strong and the large one
+much larger, and adds a 32B point to the latency/cost picture.
+
+Code. X5 needs a dataset loader and a scorer: branch v2-lease2-x commit
+c1bb8338fa64acd82d82f1eb0c5a5ce6cb7b019b (on top of eeb54603, D-L2-X-code), pushed, run from
+/mnt/data/AgentQO-x: agentqo/tasks/math500.py (HuggingFaceH4/MATH-500 test, 500 problems, fixed seed-0
+split label 200 / eval 300, ids in data/tasks/math500_split.json); answers.extract_boxed (content of the
+last balanced \boxed{}; none = unscorable), normalize_math and math_equal (normalized string match or
+numeric equality, rel. tol. 1e-6); RealTaskModel dataset math500; the math chain role prompts with the
+answer format \boxed{<answer>} instead of "#### <number>" (GSM8K prompts unchanged); --dataset math500.
+5 unit tests (tests/test_v2_lease2_x5.py); full suite 200 passed, 8 skipped. Check on the data: the 500
+reference solutions score 500/500 and all have a \boxed{} answer.
+git diff --stat eeb54603 c1bb8338:
+```
+ agentqo/tasks/answers.py         | 65 ++++++++++++++++++++++++++++++++++++++++
+ agentqo/tasks/math500.py         | 47 +++++++++++++++++++++++++++++
+ agentqo/tasks/prompts.py         | 19 +++++++++++-
+ agentqo/tasks/real_task_model.py |  8 +++--
+ scripts/run_real_h3.py           |  2 +-
+ scripts/run_real_pipeline.py     |  5 +++-
+ scripts/v2/run_placement.py      |  2 +-
+ tests/test_v2_lease2_x5.py       | 65 ++++++++++++++++++++++++++++++++++++++++
+ 8 files changed, 207 insertions(+), 6 deletions(-)
+```
+
+X5 harder math: math500_q15_7. MATH-500, the 6-agent math chain (math_reasoning_s3_ver),
+AGENTQO_VERIFIER=cautious, Qwen2.5-1.5B/7B-Instruct (0.25 / 0.55 on one GPU, --max-model-len 8192),
+max_tokens 1024, lease cache. Smoke test first: 5 label problems, all_small and all_large. Stop X5 (and
+log why) if smoke all_small = 0 or more than 20% of the smoke outputs are unscorable (no \boxed{}).
+Then labels on the 200 label problems (--realistic, --stage h1, K 5) and all 64 plans on the 300 eval
+problems. Measured: per-agent labels (p_dis, UV, EC), per-plan accuracy, API cost and Pareto front,
+and the unscorable rate (share of answers with no \boxed{}; per plan and overall, from h3_traces.json
+pred = null). Results: results/v2/X5/math500_q15_7/{smoke,labels,plans}.
+
+X6 larger scale: Qwen2.5-7B-Instruct (small) / Qwen2.5-32B-Instruct (large), full precision (bf16).
+The two do not fit on one H100 80 GB with KV cache (weights ~15 GB + ~65 GB), so for the quality runs
+the 32B is served alone on VM-A (--gpu-memory-utilization 0.90) and the 7B on VM-B (accuracy does not
+depend on placement), mapped by model id in VLLM_ENDPOINTS; VM-A disk is freed first by deleting
+models no longer needed there (its unused Phi-4 copy, the AWQ models after E1, Qwen 14B after X1's
+math_tiers runs), logged in STATUS.md. Settings: math_q7_32 (GSM8K, max_tokens 256, labels 200 on the
+label split, all 64 plans on eval_ext 400), hotpot_q7_32 (hotpot_chain, max_tokens 384, labels 200, all
+32 plans on HotpotQA eval 400) and, if X5 passes its smoke test, math500_q7_32 (max_tokens 1024, labels
+200, all 64 plans on the 300 eval problems). Same measures as the quality phases (labels, per-plan
+accuracy/cost, Pareto front). Then a P5-style latency block for math_q7_32 under TIMING_LOCK: the 7 P5
+plans, K=16, the first 64 GSM8K eval problems, 2 repeats, placement separate (32B on VM-A, 7B on
+VM-B), with per-request start/end and power logs (run_placement.py at c1bb8338). The shared placement
+cannot run: both models' weights alone exceed one 80 GB GPU in full precision, so it is recorded as
+not run. Results: results/v2/X6/<setting>/..., latency in results/v2/X6/latency/separate.
