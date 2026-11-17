@@ -117,3 +117,4 @@
 2026-11-17T15:54:39Z TIME LEFT after X1 (locks kept for X1b): 38.1 h to the 2026-11-19T06:00Z new-GPU-work cutoff
 2026-11-17T15:54:39Z X1b START: full sweep (projected X7 start 2026-11-18T05:00Z, before 2026-11-18T14:00Z)
 2026-11-17T15:58:42Z VM-A GATE X1-math_phi_separate: no settings
+2026-11-17T17:22:45Z VM-A GATE X1b-math_phi_separate: no settings
