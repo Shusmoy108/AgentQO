@@ -419,3 +419,56 @@ Scorer audit: after the labels, results/v2/X5/scorer_audit.csv lists 40 random l
 wrong that have a prediction (seed 0; gold, pred, raw final text, a blank hand-check column) and
 unscorable_by_agent.csv the unscorable rate per agent, for a manual false-negative check later. The
 scorer is not changed during the lease.
+
+## L2-X7: lease-time exploratory extension (coding), registered 2026-11-17 02:22:33 UTC, before any X7 data exists
+
+Status: EXPLORATORY, same rules as L2-X: never changes a registered verdict; folder results/v2/X7;
+V2_DEVIATION=D-L2-X-code; included in results_v2_UPLOAD.zip, FINAL/data_check.md and
+P6/search_ground_truth.md. Runs only after X5 and X6, and only if at least 10 h remain before the
+2026-11-19 00:00 UTC stop for new X work; otherwise skipped and logged. It never delays FINAL.
+Reason: a third task type (code generation with executable checks, alongside math and multi-hop QA), to
+see whether per-agent upgrade values, the rules and the Pareto structure carry over to an agent chain
+whose intermediate outputs (code, tests, execution reports) are checked by running code.
+Task: MBPP+ (evalplus/mbppplus, test split, 378 problems), Hugging Face commit
+b2d74c91837c3f2a20c1299ae98133cbe7cfa077, file data/test-00000-of-00001-d5781c9c51e02795.parquet,
+sha256 dc20030b3788fccf617444edcb34138ef13d7e4fafd17bfcb8c1279dbb12399b; converted once to
+data/tasks/mbppplus.jsonl (rows sorted by task_id; sha256
+94b7c1db0e68c88983fbe5a2fc878dda79875c6482283b350e6530b1f5ad6572), pinned on the VMs. Split: seed-0
+permutation, label = first 200, eval = the other 178 (cap 300).
+Workflow (5 agents, 2^5 = 32 plans): planner -> coder -> tester (writes 5 extra asserts) -> fixer (revises
+the code given the sandbox results of the task's visible example test plus the tester's asserts) ->
+verifier (picks coder's or fixer's code, also given both test reports). The hidden MBPP+ tests are used
+only for scoring. Models: Qwen2.5-Coder-1.5B-Instruct (small) / Qwen2.5-Coder-7B-Instruct (large), one GPU
+(0.25 / 0.55, --max-model-len 8192), max_tokens 512. Score: the verifier's final code (last fenced block)
+passes ALL MBPP+ tests (exit code 0 in the sandbox).
+Safe execution (mandatory): model code runs only in a subprocess (never exec/eval in the agent process),
+as the non-root lease user, in a fresh temp dir, in new user/network/mount/pid namespaces (util-linux
+unshare): no network; the temp dir is bound over /mnt (hiding /mnt/data: repo, caches, results, venv);
+read-only empty tmpfs over /tmp, /var/tmp, /dev/shm, /home, /root, /run, /srv, /opt, /media; all
+capabilities dropped and no_new_privs (the mounts cannot be undone); empty environment; ulimit -v 2 GB,
+-u 64, 64 MB files, 64 open files; 10 s timeout that kills the process group; system /usr/bin/python3 -I
+(python3-numpy from Ubuntu is installed on the X7 VMs because the MBPP+ test harness imports numpy).
+Code: branch v2-lease2-x commit 88e9d762ee9a8b63c7b06bca05af5cb3840d6572 (on c1bb8338). Tests:
+tests/test_v2_lease2_x7.py, 13 tests, 8 of them sandbox tests (network blocked; writes outside the temp
+dir blocked and nothing lands on the host; repo, /mnt/data and a host canary file hidden; infinite loop
+killed; memory and process limits; empty env and mounts cannot be undone; hidden-test scoring). Mac suite
+205 passed, 16 skipped (the 8 sandbox tests need Linux); the sandbox tests and the full suite are run on
+each X7 VM before any X7 data, and X7 stops if any sandbox test fails. GSM8K/HotpotQA prompts unchanged
+(hash 1021bceca3949efc, same as the tag).
+git diff --stat c1bb8338 88e9d762:
+```
+ agentqo/tasks/mbppplus.py        | 111 +++++++++++++++++++++++++++
+ agentqo/tasks/prompts.py         |  73 ++++++++++++++++++
+ agentqo/tasks/real_task_model.py |   8 +-
+ agentqo/tasks/sandbox.py         |  77 +++++++++++++++++++
+ agentqo/workflows/library.py     |  15 ++++
+ scripts/run_real_h3.py           |   2 +-
+ scripts/run_real_pipeline.py     |   7 +-
+ scripts/v2/run_placement.py      |   2 +-
+ tests/test_v2_lease2_x7.py       | 160 +++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 451 insertions(+), 4 deletions(-)
+```
+Order: smoke on 5 label problems (all_small, all_large); stop X7 if all_small passes 0. Then labels on the
+200 label problems (--realistic, --stage h1, K 5) on one VM and all 32 plans on the 178 eval problems on
+the other, in parallel. Measured: per-agent labels (p_dis, UV, EC), per-plan pass rate and API cost, the
+Pareto front, and the rate of answers with no code block and of sandbox timeouts.
