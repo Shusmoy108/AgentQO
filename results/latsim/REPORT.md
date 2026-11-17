@@ -21,6 +21,11 @@ Per-plan CSVs: `X1_per_plan.csv` (frozen), `rev1/X1_per_plan.csv`.
 | latsim rev1 | `latsim-rev1-20261117T134155Z` | 2009dcd1 | the fit leaves out cold-prefix-cache P5 runs, so it predicts warm steady state. Made after scoring the frozen version on X1, prompted by its failure analysis; uses no X1 value | P5 + P5/h4grid |
 | H3c-fair, mean_sum-fair | `h3cfair-frozen-20261117T140740Z` | 30f7cf66 | registered formulas with latsim's fit data as input, plus the comparison/bootstrap code, frozen before any of their scores | P5 + P5/h4grid |
 
+Strict held-out claims (PI decision): latsim frozen on X1; latsim rev1 on X1b (rev1 was made after X1 was opened, so
+its X1 numbers are shown but are not held out). Planned rev2 (after X1c: Phi and three-model interference factors
+measured instead of borrowed, fitted on X1c only) will be shown as a labelled revision, not a held-out claim on X1.
+X1b K=1 (32 problems) is scored only against re-runs of the tagged frozen / rev1 code on those same 32 problems.
+
 The registered H3c (column `h3c`; P6 value 0.492 on P5) is kept exactly as registered. H3c-fair is an added,
 separately labelled baseline.
 
