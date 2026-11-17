@@ -95,3 +95,4 @@
 2026-11-17T12:55:31Z VM-A GATE X1-math_q15_7_separate: no settings
 2026-11-17T12:57:23Z X1 separate resumed at hotpot_q15_7 after a fix (srv_stop clobbered a global variable); TIMING_LOCK still held on both VMs
 2026-11-17T13:08:14Z VM-A GATE X1-hotpot_q15_7_separate: no settings
+2026-11-17T13:13:56Z VM-A GATE X1-hotpot_iso_q15_7_separate: no settings
