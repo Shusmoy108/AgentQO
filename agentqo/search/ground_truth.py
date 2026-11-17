@@ -149,7 +149,11 @@ def attach_latency(s: Setting) -> None:
 def pareto_mask(F: np.ndarray) -> np.ndarray:
     """F: (N, d) objectives, all minimised. True for non-dominated rows (duplicates all kept)."""
     F = np.asarray(F, float)
-    le = (F[None, :, :] <= F[:, None, :]).all(-1)
+    if F.ndim == 2 and F.shape[1] == 2 and len(F) > 256:  # O(N log N) sweep on distinct rows
+        U, inv = np.unique(F, axis=0, return_inverse=True)   # sorted by F0 then F1
+        prev_min = np.r_[np.inf, np.minimum.accumulate(U[:, 1])[:-1]]
+        return (~(prev_min <= U[:, 1]))[inv.ravel()]
+    le =(F[None, :, :] <= F[:, None, :]).all(-1)
     lt = (F[None, :, :] < F[:, None, :]).any(-1)
     return ~(le & lt).any(1)
 

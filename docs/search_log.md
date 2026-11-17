@@ -24,3 +24,31 @@ Times UTC. Choices made without asking, as instructed.
 - Fixed rules: prefix plans k = 0..n of the rule order (multi-tier: each prefix at every tier), evenly
   subsampled to B; confident_uv uses the top tier's label UV and CI.
 - Generations: math_q15_7 tuning uninformative (all tie); kept 50 (Amendment 1).
+- 2026-11-17 ~22:10Z Full run finished (results/search/results.csv, 28,050 runs: 11 settings x 17 methods x 5 budgets
+  x 30 seeds). I looked at the per-method mean HV-ratio pivot before fixing the decision rules below; the rules
+  were written before computing any S2-S4 test statistic.
+- Tie threshold for hypervolume (prereg: "differences smaller than X4 noise are ties"). Replaying X4's plan
+  accuracies instead of P2's changes the true HV by 0.66% (math_q15_7) and 1.34% (hotpot_q15_7); tau_HV = 0.0134
+  HV ratio. Regret (accuracy points) uses 0.0375 directly. A cell (setting x budget) is a WIN if the paired mean
+  difference over the 30 seeds is > tau and its 95% CI (t) excludes 0; LOSS symmetric; otherwise TIE.
+  Sensitivity: the worst-case bound (every plan shifted 3.75 points) is reported alongside.
+- Decision rules: S1 HELD if NSGA-II pairwise m3 mean HV ratio >= 0.95 at the 10% budget in every setting with
+  >= 256 plans (complex_q15_7, math_tiers). S2 per comparator over the 55 cells: BEATS if W > L and W >= 28;
+  LOSES if L > W; else TIE; S2 HELD if it beats all of (a)-(e) (each of the 3 fixed rules counted under (e)),
+  PARTIAL if some, FAILED if none. S3: Spearman over the 11 settings between independence error (MAE of the
+  additive estimate built from the eval single-upgrade plans, i.e. pure interaction) and the gap (pairwise m3
+  minus independence additive, mean HV ratio over budgets): HELD rho > 0 and p < 0.05; PARTIAL rho > 0, p >= 0.05;
+  FAILED rho <= 0. S4 (joint vs plan-first, hv3): HELD if W >= half the cells and L = 0; FAILED if W = 0 or L > W;
+  else PARTIAL. S5 pending X2.
+- Seeds barely matter on the real settings: the 50-generation archive of every evolutionary engine covers (almost)
+  the whole 32-1,024-plan space, so verification picks are deterministic given the surrogate and CIs are ~0.
+  On 32/64-plan spaces the 1/2/5% budgets all round up to the 4-plan minimum (flat curves).
+- Abacus-style and nsga2_indep_add give identical results on every real setting (same surrogate, archive = space).
+- S5 script ready (scripts/search/s5_rescore.py); refuses to run without the registration tag; reads results/v2/X2*.
+- Scalability (SIMULATED): gains and label noise scaled by 6/n; interactions sparse, expected 15 interacting agent
+  pairs per workflow with magnitudes from the 215 measured pair deltas; xl gain = large gain + measured
+  (xl - large) difference; xl cost = 2 x large cost (price ratio). Cost surrogate exact. Abacus-style uses an
+  exact Pareto DP over the independence estimate; if its front < 200 plans the rest is random (front was 28-218).
+- Status 2026-11-17T21:5xZ: complete for the 11 lease settings. Not yet available: X2 (S5), X3 (729 cross-family,
+  partial), X5, X6, X7, laptop q4. Re-run: run_search.py --settings <new> and summarize.py (SETTINGS dict needs
+  the new setting's label/plan folders added).
