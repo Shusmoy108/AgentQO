@@ -118,3 +118,4 @@
 2026-11-17T15:54:39Z X1b START: full sweep (projected X7 start 2026-11-18T05:00Z, before 2026-11-18T14:00Z)
 2026-11-17T15:58:42Z VM-A GATE X1-math_phi_separate: no settings
 2026-11-17T17:22:45Z VM-A GATE X1b-math_phi_separate: no settings
+2026-11-17T17:56:32Z VM-A GATE X1b-math_q15_7_separate: no settings
