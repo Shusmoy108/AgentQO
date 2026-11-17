@@ -501,3 +501,8 @@ Operational choices made during the lease (no code change; the tag is what runs)
   B-x3 refuses to start under a lock. h4grid lock taken 23:19Z on both VMs (released per VM by
   tools/h4_unlock.sh); X1 takes it in stage3_orch.sh. Overlap check: none (STATUS.md). L2-X update recorded
   before any X2 data: X2 = eval_x2 (719) + HotpotQA extra (600).
+- 01:45Z Cache backups overlapped timing windows (19:14Z: P5 shared all_small r0-2 on VM-A, cal_qwen3_14_math_shared
+  all_small r0-2 on VM-B; 01:16-01:22Z: 5 h4grid g2_8 separate cells). Overlapping points moved to
+  superseded_backup_overlap/ and rerun with the same servers under TIMING_LOCK (tools/stage2b_orch.sh, which
+  replaces stage2_orch.sh from the g2_8 block on; h4_unlock.sh retired, stage2b releases the locks after the
+  reruns). mac_sync: per-VM 6 h backup timer, deferred while that VM holds TIMING_LOCK.
