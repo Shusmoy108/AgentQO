@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-586",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total calories burned from aerobics.\n2. Calculate the total calories burned from running.\n3. Sum the calories burned from both activities to get the total calories burned. Then, multiply by 100 ml/200 calories to find the required water intake.",
+  "reference_key": null,
+  "final_key_plus": "800",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_1": "Total calories burned from aerobics = 2 hours * 500 calories/hour = 1000 calories\nTotal calories burned from running = 1 hour * 600 calories/hour = 600 calories\nTotal calories burned = 1000 + 600 = 1600 calories RESULT: 1600 ml",
+    "aggregator": "Hannah needs to drink 800 ml of water.",
+    "step_3": "RESULT: 800 ml",
+    "verifier": "VERDICT: correct\n\n#### 800",
+    "step_2": "RESULT: 800 ml"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:  \n1. Calculate the number of families called in the first round by multiplying the initial number of families Ali called (3) by the multiplier for each subsequent round (3).\n2. For each subsequent round, multiply the number of families called in the previous round by the same multiplier (3). Sum these results to find the total number of families called after four rounds.",
+      "quality": 0.0,
+      "final_key": "243",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "RESULT: 9.",
+        "aggregator": "Hannah needs to drink 243 ml of water.",
+        "step_3": "RESULT: 243",
+        "verifier": "VERDICT: correct\n\n#### 243",
+        "step_2": "CALCULATION: \nFor the second round: 9 * 3 = 27\nFor the third round: 27 * 3 = 81\nFor the fourth round: 81 * 3 = 243\n\nRESULT: 243"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total calories burned from aerobics.\n2. Calculate the total calories burned from running.\n3. Sum the calories burned from both activities to get the total calories burned. Then, multiply by 50 ml/200 calories to find the required water intake.",
+      "quality": 0.0,
+      "final_key": "400",
+      "final_differs": true,
+      "descendants": {
+        "step_1": "Total calories burned from aerobics = 2 hours * 500 calories/hour RESULT: 1000 calories\n\nTotal calories burned from running = 1 hour * 600 calories/hour RESULT: 600 calories\n\nTotal calories burned = Calories from aerobics + Calories from running RESULT: 1600 calories\n\nWater needed = Total calories burned * 50 ml / 200 calories RESULT: 400 ml\n\nRESULT: 400 ml",
+        "aggregator": "Hannah needs to drink 400 ml of water.",
+        "step_3": "RESULT: 400 ml",
+        "verifier": "VERDICT: correct\n\n#### 400",
+        "step_2": "RESULT: 400 ml"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: 1. Calculate the total cost of buying the house including repairs. 2. Determine the increase in value due to the renovations. 3. Add the initial purchase price, repair costs, and the calculated increase in value to find the total profit.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "step_1": "To calculate the total amount of water Hannah needs to drink:\n\n1. First, we need to determine how much water is burned per calorie burned. According to the problem, Hannah drinks 100 ml of water for every 200 calories burned.\n\n2. Next, we calculate the total number of calories burned from both activities:\n   - Aerobics: 2 hours * 500 calories/hour = 1000 calories\n   - Running: 1 hour * 600 calories/hour = 600 calories\n\n3. Adding these together gives us the total calories burned:\n   Total calories burned = 1000 + 600 = 1600 calories\n\n4. Now, we can calculate the total amount of water needed by multiplying the total calories burned by the ratio of water to calories:\n   Water needed = 1600 calories * (100 ml / 200 calories) = 800 ml\n\nRESULT: 800 ml.",
+        "aggregator": "Hannah needs to drink 800 ml of water. #### 800.",
+        "step_3": "RESULT: 800 ml.",
+        "verifier": "VERDICT: correct",
+        "step_2": "RESULT: 800 ml."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    null,
+    null,
+    "1600"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1152.0,
+    "small_out": 194.0,
+    "small_s": 1.2304780530030257
+  },
+  "calls_plus": {
+    "large_in": 140.0,
+    "large_out": 62.0,
+    "large_s": 0.4001376340020215,
+    "small_in": 1057.0,
+    "small_out": 123.0,
+    "small_s": 1.2796738180040848
+  },
+  "calls_samples": {
+    "small_in": 3354.0,
+    "small_out": 540.0,
+    "small_s": 5.2093403870021575
+  }
+}

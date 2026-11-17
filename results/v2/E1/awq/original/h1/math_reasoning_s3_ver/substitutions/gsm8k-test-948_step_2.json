@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-948",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Wall Street Journal revenue = 10 * $15 = $150 RESULT: $150",
+  "reference_key": "150",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "commission_from_New_York_Times = 6 * (10/100) * $5 RESULT: $30\ncommission_from_Wall_St_Journal = 10 * (8/100) * $15 RESULT: $90\ntotal_commission = commission_from_New_York_Times + commission_from_Wall_St_Journal RESULT: $120",
+    "verifier": "VERDICT: correct",
+    "aggregator": "#### 120"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "151",
+      "reference_key": "150",
+      "key_differs": true,
+      "text": "step_2: Wall Street Journal revenue = 10 * $15 = $150 RESULT: 151",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "commission_from_New_York_Times = 6 * (5 * 0.1)\ncommission_from_Wall_St_Journal = 10 * (15 * 0.08)\ntotal_commission = commission_from_New_York_Times + commission_from_Wall_St_Journal RESULT: 14.70",
+        "verifier": "VERDICT: correct",
+        "aggregator": "#### 14.70"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "30",
+      "reference_key": "150",
+      "key_differs": true,
+      "text": "New York Times sales total revenue: 6 copies * $5/copy = $30\n\nRESULT: $30",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "step_3: Wall Street Journal revenue = 10 * $15 = $150 RESULT: $150\ncommission_total = (6 * 0.10) + (10 * 0.08)\ncommission_total = 0.60 + 0.80\ncommission_total = $1.40 RESULT: $1.40",
+        "verifier": "VERDICT: correct",
+        "aggregator": "Cayley will earn a total commission of $1.40. #### 1.40"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "42000",
+      "reference_key": "150",
+      "key_differs": true,
+      "text": "RESULT: 42000",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "commission_from_New_York_Times = 6 * ($5 * 0.1)\ncommission_from_Wall_St_Journal = 10 * ($15 * 0.08)\ntotal_commission = commission_from_New_York_Times + commission_from_Wall_St_Journal RESULT: $7.20",
+        "verifier": "VERDICT: correct",
+        "aggregator": "#### 7.20"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "30",
+  "sample_keys": [
+    "30",
+    "30",
+    "30",
+    "30",
+    "30"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1241.0,
+    "small_out": 221.0,
+    "small_s": 1.6690597019915003
+  },
+  "calls_plus": {
+    "small_in": 993.0,
+    "small_out": 160.0,
+    "small_s": 1.576107825989311,
+    "large_in": 216.0,
+    "large_out": 28.0,
+    "large_s": 0.2736579569973401
+  },
+  "calls_samples": {
+    "small_in": 1080.0,
+    "small_out": 107.0,
+    "small_s": 1.4537294450055924
+  }
+}

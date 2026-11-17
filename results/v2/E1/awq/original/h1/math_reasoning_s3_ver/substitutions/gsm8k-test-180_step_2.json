@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-180",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: LOSER VOTES: 80 - 60 = 20\n\nRESULT: 20",
+  "reference_key": "20",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.4,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: 20",
+    "verifier": "VERDICT: correct",
+    "aggregator": "The number of votes the loser got is 20. #### 20"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "21",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "step_2: LOSER VOTES: 80 - 60 = 20\n\nRESULT: 21",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 20",
+        "verifier": "VERDICT: correct",
+        "aggregator": "The number of votes the loser got is 20. #### 20"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "60",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "WINNER VOTES: (3/4) * 80 = 60 RESULT: 60",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "WINNER VOTES: (3/4) * 80 = 60 RESULT: 60",
+        "verifier": "VERDICT: incorrect\n\nThe calculation should be based on the total number of votes being 80 and the winner getting 3/4 of them. So the loser would get 1/4 of the votes.\n\nNumber of votes the loser got = Total votes - Winner's votes\n= 80 - (3/4 * 80)\n= 80 - 60\n= 20\n\nVERDICT: correct",
+        "aggregator": "The number of votes the loser got is #### 20."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "42",
+      "reference_key": "20",
+      "key_differs": true,
+      "text": "Total value if sold at $7 each = 6 * $7 = $42 RESULT: $42",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "WINNER VOTES: (3/4) * 80 = 60\n\nRESULT: 60",
+        "verifier": "VERDICT: correct",
+        "aggregator": "The number of votes the loser got is 20. #### 20"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "60",
+  "sample_keys": [
+    "60",
+    "20",
+    "20",
+    "60",
+    "20"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 914.0,
+    "small_out": 212.0,
+    "small_s": 1.6606917600074667
+  },
+  "calls_plus": {
+    "small_in": 730.0,
+    "small_out": 86.0,
+    "small_s": 0.9575613429988152,
+    "large_in": 173.0,
+    "large_out": 27.0,
+    "large_s": 0.26722326599701773
+  },
+  "calls_samples": {
+    "small_in": 865.0,
+    "small_out": 161.0,
+    "small_s": 1.789948653007741
+  }
+}

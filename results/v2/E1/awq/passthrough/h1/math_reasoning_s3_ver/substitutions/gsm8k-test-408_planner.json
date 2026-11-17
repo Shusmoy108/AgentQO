@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-408",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the total number of words in the book.\n2. Determine how long it will take Toby to read the book.\n3. Calculate the total time including reading and travel, then compare it to the time until the airport to find out how many minutes early Toby will be.",
+  "reference_key": null,
+  "final_key_plus": "20",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### 20",
+    "step_2": "RESULT: 30 RESULT: 30\n\nNow calculate the total time for reading the book.\n\nTotal time for reading = Total number of words / Reading speed = 9000 / 300 = 30 minutes RESULT: 30\n\nAdd the travel time to the reading time:\n\nTotal time including travel = Reading time + Travel time = 30 + 10 = 40 minutes RESULT: 40\n\nFinally, subtract this from the time until the airport:\n\nTime saved = Time until airport - Total time including travel = 60 - 40 = 20 RESULT: 20\n\nToby will be 20 minutes early.",
+    "step_1": "Total number of words = Number of pages \u00d7 Words per page = 45 \u00d7 200 = 9000 RESULT: 9000",
+    "aggregator": "Toby will be 20 minutes early. #### 20",
+    "step_3": "RESULT: 20"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: First, calculate the number of management employees. Then, determine how many of these manage the entire company. Finally, find out how many employees oversee the company by applying the percentage that oversees the entire company to the total number of management employees.",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "step_2": "RESULT: 30",
+        "step_1": "RESULT: 90",
+        "aggregator": "Toby will be 30 minutes early. #### 30",
+        "step_3": "RESULT: 30"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the total number of words in the book.\n2. Determine how long it will take Toby to read the book.\n3. Calculate the total time including reading and travel, then compare it to the time from now until the airport to find out how many hours early Toby will be.",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "step_2": "RESULT: 3000",
+        "step_1": "Total number of words = Number of pages \u00d7 Words per page = 45 \u00d7 200 = 9000 RESULT: 9000",
+        "aggregator": "Toby will be 30 minutes early. #### 30",
+        "step_3": "RESULT: 3000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN: 1. Calculate Joey's new score after scoring 26 points. 2. Add Marcy's score (which is given as 10 points) to her initial score. 3. Subtract Joey's final score from Marcy's final score to determine the difference in their point totals.",
+      "quality": 0.0,
+      "final_key": "16",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 16",
+        "step_2": "RESULT: 10",
+        "step_1": "RESULT: 26",
+        "aggregator": "Toby will be 16 minutes early. #### 16",
+        "step_3": "RESULT: 16"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "20",
+  "sample_keys": [
+    "20",
+    "20",
+    "30"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1036.0,
+    "small_out": 181.0,
+    "small_s": 1.113759616004245
+  },
+  "calls_plus": {
+    "large_in": 154.0,
+    "large_out": 60.0,
+    "large_s": 0.5862643200016464,
+    "small_in": 988.0,
+    "small_out": 200.0,
+    "small_s": 2.441883830986626
+  },
+  "calls_samples": {
+    "small_in": 3041.0,
+    "small_out": 495.0,
+    "small_s": 6.309220566974545
+  }
+}

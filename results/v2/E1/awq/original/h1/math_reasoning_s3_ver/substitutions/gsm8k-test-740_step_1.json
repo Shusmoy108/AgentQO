@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-740",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Total students = 50\nStudents who like to bake = 10\nStudents who like to play basketball = 5\n\nStudents who like to play video games or play music = 50 - 10 - 5 = 35\n\nRESULT: 35",
+  "reference_key": "35",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "Students who like to play video games = 35 - (2 * 5) = 35 - 10 = 25 RESULT: 25",
+    "verifier": "VERDICT: correct",
+    "step_2": "Students who like to play video games = Students who like to play video games or play music - Students who like to play music\n= 35 - (2 * 5)\n= 35 - 10\n= 25 RESULT: 25",
+    "aggregator": "#### 25"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "36",
+      "reference_key": "35",
+      "key_differs": true,
+      "text": "Total students = 50\nStudents who like to bake = 10\nStudents who like to play basketball = 5\n\nStudents who like to play video games or play music = 50 - 10 - 5 = 35\n\nRESULT: 36",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Students who like to play video games = 35 - (2 * 5) = 35 - 10 = 25 RESULT: 25",
+        "verifier": "VERDICT: correct",
+        "step_2": "Students who like to play video games = 35 - (2 * 5) = 35 - 10 = 25 RESULT: 25",
+        "aggregator": "#### 25"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "15",
+      "reference_key": "35",
+      "key_differs": true,
+      "text": "10 (like baking) + 5 (like playing basketball) = 15 RESULT: 15",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 10",
+        "verifier": "VERDICT: correct",
+        "step_2": "To find how many students like to play video games, we use the information that the number of students who like to play video games is twice the number that prefer playing basketball.\n\nGiven:\n- Number of students who like to play basketball = 5\n- The number of students who like to play video games is twice the number who like to play basketball\n\nCalculation:\nNumber of students who like to play video games = 2 * 5 = 10 RESULT: 10",
+        "aggregator": "#### 20"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "9000",
+      "reference_key": "35",
+      "key_differs": true,
+      "text": "Total number of words = Number of pages \u00d7 Words per page = 45 \u00d7 200 = 9000 RESULT: 9000",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 40",
+        "verifier": "VERDICT: correct",
+        "step_2": "To solve for the number of students who like to play video games:\n\nLet's denote:\n- \\( V \\) as the number of students who like to play video games,\n- \\( M \\) as the number of students who like to play music.\n\nFrom the problem statement, we know:\n1. The total number of students is 50.\n2. 10 students like to bake (basketball).\n3. The rest like to either play video games or play music.\n\nFirst, calculate the number of students who like to play video games:\n\\[ V = 50 - 10 = 40 \\]\n\nNext, use the information that the number of students who like to play music (\\( M \\)) is twice the number that prefer playing basketball (\\( B \\)):\n\\[ M = 2B \\]\nSince \\( B = 5 \\):\n\\[ M = 2 \\times 5 = 10 \\]\n\nNow, verify the solution:\nThe total number of students should be the sum of those who like to play video games, those who like to play basketball, and those who like to play music:\n\\[ V + B + M = 40 + 5 + 10 = 55 \\]\n\nThis matches",
+        "aggregator": "#### 20"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "45",
+  "sample_keys": [
+    "35",
+    "45",
+    "10",
+    "10",
+    "45"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1145.0,
+    "small_out": 152.0,
+    "small_s": 0.9673002560084569
+  },
+  "calls_plus": {
+    "small_in": 1041.0,
+    "small_out": 188.0,
+    "small_s": 1.7031476970005315,
+    "large_in": 214.0,
+    "large_out": 59.0,
+    "large_s": 0.5447988970045117
+  },
+  "calls_samples": {
+    "small_in": 1070.0,
+    "small_out": 418.0,
+    "small_s": 5.209857216003002
+  }
+}

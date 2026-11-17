@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-586",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Step 1: Calculate the total calories burned.\n- Aerobics: 2 hours * 500 calories/hour = 1000 calories\n- Running: 1 hour * 600 calories/hour = 600 calories\n- Total calories burned: 1000 + 600 = 1600 calories\n\nRESULT: 1600",
+  "reference_key": "1600",
+  "final_key_plus": "80000",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: 80000",
+    "aggregator": "Hannah needs to drink 80000 ml of water.",
+    "step_2": "RESULT: 80000",
+    "verifier": "VERDICT: passthrough\n#### 80000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "1601",
+      "reference_key": "1600",
+      "key_differs": true,
+      "text": "Step 1: Calculate the total calories burned.\n- Aerobics: 2 hours * 500 calories/hour = 1000 calories\n- Running: 1 hour * 600 calories/hour = 600 calories\n- Total calories burned: 1000 + 600 = 1600 calories\n\nRESULT: 1601",
+      "quality": 0.0,
+      "final_key": "40000",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 40000",
+        "aggregator": "Hannah needs to drink 40000 ml of water.",
+        "step_2": "RESULT: 80000",
+        "verifier": "VERDICT: passthrough\n#### 40000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "2000",
+      "reference_key": "1600",
+      "key_differs": true,
+      "text": "Total calories burned = (500 calories/hour * 2 hours) + (600 calories/hour * 1 hour) RESULT: 2000 ml of water.",
+      "quality": 0.0,
+      "final_key": "1000",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 1000 ml.",
+        "aggregator": "Hannah needs to drink 1000 ml of water.",
+        "step_2": "RESULT: 1000 ml of water.",
+        "verifier": "VERDICT: passthrough\n#### 1000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "130000",
+      "reference_key": "1600",
+      "key_differs": true,
+      "text": "Total cost = Purchase price + Repair costs  \n= $80,000 + $50,000  \n= $130,000 RESULT: $130,000",
+      "quality": 1.0,
+      "final_key": "800",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "CALCULATION: Water needed per calorie = 100 / 200\nWater needed per calorie = 0.5 ml\n\nTotal water needed = 1600 * 0.5\nTotal water needed = 800 ml RESULT: 800 ml",
+        "aggregator": "Hannah needs to drink 800 ml of water. #### 800",
+        "step_2": "Total calories burned = (500 * 2) + (600 * 1)\nTotal calories burned = 1000 + 600\nTotal calories burned = 1600 RESULT: 1600",
+        "verifier": "VERDICT: passthrough\n#### 800"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "1600",
+  "sample_keys": [
+    "1600",
+    "1600",
+    "1600",
+    "1600",
+    "1600"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 986.0,
+    "small_out": 188.0,
+    "small_s": 1.1650925560024916
+  },
+  "calls_plus": {
+    "small_in": 804.0,
+    "small_out": 72.0,
+    "small_s": 0.6433853620037553,
+    "large_in": 173.0,
+    "large_out": 86.0,
+    "large_s": 0.846047320002981
+  },
+  "calls_samples": {
+    "small_in": 865.0,
+    "small_out": 404.0,
+    "small_s": 4.852054444003443
+  }
+}

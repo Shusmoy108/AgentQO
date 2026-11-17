@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-2",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Increase in value = Initial value * Percentage increase  \n= $80,000 * 1.5  \n= $120,000 RESULT: $120,000",
+  "reference_key": "120000",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "Total profit = Total cost + Increase in value  \n= $130,000 + $120,000  \n= $250,000 RESULT: $250,000",
+    "verifier": "VERDICT: correct",
+    "aggregator": "Josh made a total profit of $250,000. #### 250000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "120001",
+      "reference_key": "120000",
+      "key_differs": true,
+      "text": "step_2: Increase in value = Initial value * Percentage increase  \n= $80,000 * 1.5  \n= $120,000 RESULT: 120001",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Total profit = Total cost - Increase in value  \n= $130,000 - $120,000  \n= $10,000 RESULT: $10,000",
+        "verifier": "VERDICT: correct",
+        "aggregator": "Josh made a profit of $10,000. #### 10000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "240000",
+      "reference_key": "120000",
+      "key_differs": true,
+      "text": "Increase in value = Initial value * Percentage increase  \n= $160,000 (since it was 150% initially) * 150/100  \n= $240,000 RESULT: $240,000",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Total profit = Total cost + Increase in value  \n= $130,000 + $240,000  \n= $370,000 RESULT: $370,000",
+        "verifier": "VERDICT: correct",
+        "aggregator": "Josh made a total profit of $370,000. #### 370000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "30",
+      "reference_key": "120000",
+      "key_differs": true,
+      "text": "New York Times revenue = 6 * $5 = $30 RESULT: $30",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Total profit = Total cost - Initial purchase price  \n= $130,000 - $80,000  \n= $50,000 RESULT: $50,000",
+        "verifier": "VERDICT: correct",
+        "aggregator": "Josh made a profit of $50,000. #### 50000"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "270000",
+  "sample_keys": [
+    "250000",
+    "250000",
+    "120000",
+    "12000",
+    "250000"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1216.0,
+    "small_out": 313.0,
+    "small_s": 1.8644050309885642
+  },
+  "calls_plus": {
+    "small_in": 906.0,
+    "small_out": 179.0,
+    "small_s": 1.5418946010031505,
+    "large_in": 224.0,
+    "large_out": 48.0,
+    "large_s": 0.48607174399512587
+  },
+  "calls_samples": {
+    "small_in": 1120.0,
+    "small_out": 568.0,
+    "small_s": 6.985541661008028
+  }
+}

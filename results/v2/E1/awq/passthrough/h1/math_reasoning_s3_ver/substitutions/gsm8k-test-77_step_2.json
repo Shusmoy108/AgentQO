@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-77",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "step_2: Raymond's laundry = 1600 pounds / 2 = 800 pounds RESULT: 800 pounds",
+  "reference_key": "800",
+  "final_key_plus": "-600",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "VERDICT: passthrough\n#### -600",
+    "aggregator": "Raymond does half as much laundry as Sarah, so:\n\n- Sarah does 400 pounds.\n- Therefore, Raymond does \\( \\frac{400}{2} = 200 \\) pounds.\n\nThe difference in the amount of laundry between Raymond and David is:\n\n\\( 200 - 800 = -600 \\) pounds.\n\n#### -600",
+    "step_3": "David's laundry = 1600 pounds - 800 pounds = 800 pounds RESULT: 800 pounds"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "801",
+      "reference_key": "800",
+      "key_differs": true,
+      "text": "step_2: Raymond's laundry = 1600 pounds / 2 = 800 pounds RESULT: 801 pounds",
+      "quality": 0.0,
+      "final_key": "200",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "aggregator": "Raymond's laundry = 400 pounds * 1/2 = 200 pounds\nDifference = 400 pounds - 200 pounds = 200 pounds\n\n#### 200",
+        "step_3": "David's laundry = 1600 pounds / 4 = 400 pounds RESULT: 400 pounds"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "750",
+      "reference_key": "800",
+      "key_differs": true,
+      "text": "RESULT: 750 pounds",
+      "quality": 0.0,
+      "final_key": "-800",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### -800",
+        "aggregator": "RAYMOND'S LAUNDRY - DAVID'S LAUNDRY = 800 pounds - 1600 pounds = -800 pounds RESULT: -800 pounds",
+        "step_3": "RAYMOND'S LAUNDRY = 1/2 * 1600 pounds = 800 pounds RESULT: 800 pounds"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "4.4",
+      "reference_key": "800",
+      "key_differs": true,
+      "text": "The cost of roach traps is $4.\nIncluding the 10% tax, the new price of roach traps becomes $4 * 1.10 = $4.40.\nRESULT: 4.40",
+      "quality": 0.0,
+      "final_key": "200",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: passthrough\n#### 200",
+        "aggregator": "#### 200 pounds",
+        "step_3": "RESULT: 800 pounds"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "800",
+  "sample_keys": [
+    "800",
+    "800",
+    "800",
+    "1600",
+    "800"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 857.0,
+    "small_out": 195.0,
+    "small_s": 1.2060773789780797
+  },
+  "calls_plus": {
+    "small_in": 651.0,
+    "small_out": 199.0,
+    "small_s": 1.8512993479889701,
+    "large_in": 198.0,
+    "large_out": 31.0,
+    "large_s": 0.3044402250015992
+  },
+  "calls_samples": {
+    "small_in": 990.0,
+    "small_out": 101.0,
+    "small_s": 1.352869146001467
+  }
+}

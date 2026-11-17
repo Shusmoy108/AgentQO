@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-737",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Giant cubes: 3 cubes * 4 ounces/cube = 12 ounces\nRESULT: 12",
+  "reference_key": "12",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "step_3: Small cubes: 8 cubes * 0.5 ounces/cube = 4 ounces\nRESULT: 4\n\nNow subtract the total water used by all the cubes from the initial amount of water:\n\nInitial amount of water: 32 ounces\nTotal water used by giant cubes: 12 ounces\nTotal water used by medium cubes: 14 ounces\nTotal water used by small cubes: 4 ounces\n\nTotal water used: 12 + 14 + 4 = 30 ounces\n\nWater left: 32 - 30 = 2 ounces\n\nRESULT: 2",
+    "verifier": "VERDICT: correct",
+    "step_2": "step_2: Medium cubes: 7 cubes * 2 ounces/cube = 14 ounces\nRESULT: 14",
+    "aggregator": "Peter has 2 ounces of water left. #### 2"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "13",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "Giant cubes: 3 cubes * 4 ounces/cube = 12 ounces\nRESULT: 13",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 13",
+        "verifier": "VERDICT: correct",
+        "step_2": "RESULT: 13",
+        "aggregator": "Peter has used 3 * 4 + 7 * 2 + 8 * 0.5 = 13 ounces of water for his ice cubes.\nTherefore, he has 32 - 13 = 19 ounces of water left. #### 19"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "0",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 0",
+      "quality": 0.0,
+      "final_key": "13",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 19",
+        "verifier": "VERDICT: correct\n\n#### 13",
+        "step_2": "RESULT: 5",
+        "aggregator": "Peter has used 3 * 4 + 7 * 2 + 8 * 0.5 = 19 ounces of water for his ice cubes.\nTherefore, he has 32 - 19 = 13 ounces of water left."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "27",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "Cindy had 5 green eggs.\n\nTo find the number of blue eggs:\n\nNumber of blue eggs = 2 * Number of green eggs\nNumber of blue eggs = 2 * 5\nNumber of blue eggs = 10\n\nNow we know Cindy has 10 blue eggs.\n\nNext, let's find the number of pink eggs:\n\nNumber of pink eggs = Number of blue eggs - 1\nNumber of pink eggs = 10 - 1\nNumber of pink eggs = 9\n\nFinally, let's find the number of yellow eggs:\n\nNumber of yellow eggs = Number of pink eggs / 3\nNumber of yellow eggs = 9 / 3\nNumber of yellow eggs = 3\n\nNow we can sum all the eggs together:\n\nTotal number of eggs = Green + Blue + Pink + Yellow\nTotal number of eggs = 5 + 10 + 9 + 3\nTotal number of eggs = 27\n\nRESULT: 27",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 27",
+        "verifier": "VERDICT: correct",
+        "step_2": "RESULT: 27",
+        "aggregator": "Peter has used 3 * 4 + 7 * 2 + 8 * 0.5 = 27 ounces of water.\nTherefore, the number of ounces of water he has left is 32 - 27 = 5. #### 5"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "5",
+  "sample_keys": [
+    "6",
+    "6",
+    "0",
+    "2",
+    "2"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1156.0,
+    "small_out": 152.0,
+    "small_s": 1.0028341389988782
+  },
+  "calls_plus": {
+    "small_in": 1079.0,
+    "small_out": 239.0,
+    "small_s": 2.5875972819994786,
+    "large_in": 207.0,
+    "large_out": 25.0,
+    "large_s": 0.2542006980002043
+  },
+  "calls_samples": {
+    "small_in": 1035.0,
+    "small_out": 308.0,
+    "small_s": 3.4870332810096443
+  }
+}

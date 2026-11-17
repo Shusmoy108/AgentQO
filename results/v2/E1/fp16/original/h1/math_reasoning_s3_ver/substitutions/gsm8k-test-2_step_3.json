@@ -1,0 +1,98 @@
+{
+  "task_id": "gsm8k-test-2",
+  "node_id": "step_3",
+  "role": "researcher",
+  "reference": "step_3: Add the initial purchase price to the repair costs to find the total investment.\n\nTotal Investment = Initial Purchase Price + Repair Costs\n                 = $80,000 + $50,000\n                 = $130,000\n\nRESULT: $130,000",
+  "reference_key": "130000",
+  "final_key_plus": "70000",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "VERDICT: incorrect\n\n#### $70,000",
+    "aggregator": "The total investment was $130,000. The house's value increased by 150%, so it now is worth:\n\nFinal Value = Initial Purchase Price * (1 + Increase Percentage)\n            = $80,000 * (1 + 1.5)\n            = $80,000 * 2.5\n            = $200,000\n\nProfit = Final Value - Total Investment\n       = $200,000 - $130,000\n       = $70,000\n\n#### $70,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "130001",
+      "reference_key": "130000",
+      "key_differs": true,
+      "text": "step_3: Add the initial purchase price to the repair costs to find the total investment.\n\nTotal Investment = Initial Purchase Price + Repair Costs\n                 = $80,000 + $50,000\n                 = $130,000\n\nRESULT: 130001",
+      "quality": 0.0,
+      "final_key": "-26000",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: incorrect\n\n#### -26000",
+        "aggregator": "Josh made a profit of $26,000 on this transaction. #### 26000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "145000",
+      "reference_key": "130000",
+      "key_differs": true,
+      "text": "To determine the final profit, we need to find the difference between the final selling price after the renovations and the total investment.\n\nFirst, let's recalculate the increase in the value of the house due to the renovations. The percentage increase is 150%, which means an additional amount equal to the original purchase price times 150% more:\n\nFinal Selling Price = Initial Purchase Price + Increase in Value\n                   = $80,000 + $195,000\n                   = $275,000\n\nNow, subtract the total investment ($130,000) from the final selling price ($275,000) to get the profit:\n\nResult Profit = Final Selling Price - Total Investment\n             = $275,000 - $130,000\n             = $145,000\n\nRESULT: $145,000",
+      "quality": 0.0,
+      "final_key": "-65000",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: incorrect\n\n#### -65000",
+        "aggregator": "Josh made a profit of $145,000. #### 145000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "15",
+      "reference_key": "130000",
+      "key_differs": true,
+      "text": "To compute the total commission, we need to calculate the commission for each newspaper separately and then add them together.\n\nCommission from New York Times = Total Revenue from New York Times * Commission rate for New York Times\n= $30 * 10%\n= $30 * 0.10\n= $3\n\nCommission from Wall Street Journal = Total Revenue from Wall Street Journal * Commission rate for Wall Street Journal\n= $150 * 8%\n= $150 * 0.08\n= $12\n\nNow, let's sum up the commissions:\n\nTotal Commission = Commission from New York Times + Commission from Wall Street Journal\n= $3 + $12\n= $15\n\nRESULT: $15",
+      "quality": 0.0,
+      "final_key": "-30",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "VERDICT: incorrect\n\n#### -30",
+        "aggregator": "Josh made a profit of $15. #### 15"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "325000",
+  "sample_keys": [
+    "130000",
+    "165000",
+    "165000",
+    "325000",
+    "69500"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 1.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1292.0,
+    "small_out": 336.0,
+    "small_s": 1.71698929600052
+  },
+  "calls_plus": {
+    "small_in": 1046.0,
+    "small_out": 351.0,
+    "small_s": 2.783814897001548,
+    "large_in": 330.0,
+    "large_out": 69.0,
+    "large_s": 0.9254279939998469
+  },
+  "calls_samples": {
+    "small_in": 1650.0,
+    "small_out": 172.0,
+    "small_s": 2.1222964769999635
+  }
+}

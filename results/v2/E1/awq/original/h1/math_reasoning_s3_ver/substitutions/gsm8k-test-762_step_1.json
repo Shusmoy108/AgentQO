@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-762",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Ava gives Jayden half of her $90 allowance, which is $90 / 2 = $45.\nRESULT: 45",
+  "reference_key": "45",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "RESULT: 65",
+    "verifier": "VERDICT: correct",
+    "step_2": "RESULT: 115",
+    "aggregator": "Jayden needs $15 more to buy the camera. #### 15"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "46",
+      "reference_key": "45",
+      "key_differs": true,
+      "text": "Ava gives Jayden half of her $90 allowance, which is $90 / 2 = $45.\nRESULT: 46",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 200 - 46 = 154",
+        "verifier": "VERDICT: correct",
+        "step_2": "RESULT: 46",
+        "aggregator": "Jayden needs $154 to buy the camera. #### 154"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "140",
+      "reference_key": "45",
+      "key_differs": true,
+      "text": "JAYDEN_HAD = $70 // existing money\nAVA_GIFTED = $90 / 2 // half of Av's allowance\nAVA_GIFTED *= .5 // since we're looking for whole dollar amounts, we multiply by .5\nTOTAL_FOR_CAMERA = $200\n\nTotal available after gifts: JAYDEN_HAD + AVA_GIFTED\nResult: $140",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "JAYDEN_TOTAL = JAYDEN_HAD + AVA_GIFTED = $70 + $120 = $190 RESULT: $190",
+        "verifier": "VERDICT: correct\n\n#### $10",
+        "step_2": "AVA_GIFTED = $90 / 2 = $45\nJAYDEN_HAD = $70\nAVA_GIFTED += $45 = $120\nJAYDEN_TOTAL = JAYDEN_HAD + AVA_GIFTED = $70 + $120 = $190 RESULT: $190",
+        "aggregator": "Jayden needs $200 - $190 = $10 more to buy the camera."
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "0.8333",
+      "reference_key": "45",
+      "key_differs": true,
+      "text": "To find the cost per flower when buying in packages of 3, we divide the package price by the number of flowers per package:\n\n$2.50 / 3 = $0.8333... per flower\n\nFor packages of 2, the cost is simply the package price:\n\n$1.00 per flower\n\nNow I will compare these two rates to determine which is cheaper.\n\nRESULT: $0.8333...",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: $1.00",
+        "verifier": "VERDICT: correct",
+        "step_2": "RESULT: $0.8333...",
+        "aggregator": "Jayden needs $1.00 more to buy the camera. #### 1.00"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "45",
+  "sample_keys": [
+    "45",
+    "45",
+    "45",
+    "45",
+    "45"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1031.0,
+    "small_out": 171.0,
+    "small_s": 1.1303186069999356
+  },
+  "calls_plus": {
+    "small_in": 814.0,
+    "small_out": 89.0,
+    "small_s": 0.8909349000023212,
+    "large_in": 174.0,
+    "large_out": 32.0,
+    "large_s": 0.3133886849973351
+  },
+  "calls_samples": {
+    "small_in": 870.0,
+    "small_out": 96.0,
+    "small_s": 1.2004539650006336
+  }
+}

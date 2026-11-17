@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-408",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: 9000",
+  "reference_key": "9000",
+  "final_key_plus": "20",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.6,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "To find out how many minutes early Toby will be:\n\nToby's planned departure time - Time to read the book - Travel time to the airport\n= 60 minutes - 30 minutes - 10 minutes\n= 20 minutes\n\nRESULT: 20",
+    "aggregator": "Toby will be 20 minutes early. #### 20",
+    "verifier": "VERDICT: passthrough\n#### 20",
+    "step_2": "To calculate the time it takes for Toby to read all the words in the book:\n\nTotal words = Number of pages \u00d7 Words per page\n           = 45 pages \u00d7 200 words/page\n           = 9000 words\n\nTime to read the book = Total words / Reading speed\n                     = 9000 words / 300 words/minute\n                     = 30 minutes\n\nRESULT: 30"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "9001",
+      "reference_key": "9000",
+      "key_differs": true,
+      "text": "RESULT: 9001",
+      "quality": 0.0,
+      "final_key": "30",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "To find out how many minutes early Toby will be:\n\nToby's planned departure time is 60 minutes after getting to the airport.\n\nHe needs to finish reading the book in 30 minutes (as calculated).\n\nSo, the difference between his planned departure time and the time needed to finish reading the book is:\n\n60 minutes - 30 minutes = 30 minutes\n\nRESULT: 30",
+        "aggregator": "Toby will be 30 minutes early. #### 30",
+        "verifier": "VERDICT: passthrough\n#### 30",
+        "step_2": "To calculate the time it takes for Toby to read all the words in the book:\n\nTotal words = Number of pages \u00d7 Words per page\n           = 45 pages \u00d7 200 words/page\n           = 9000 words\n\nTime to read all words = Total words / Reading speed\n                      = 9000 words / 300 words/minute\n                      = 30 minutes\n\nRESULT: 30"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "30",
+      "reference_key": "9000",
+      "key_differs": true,
+      "text": "Result: 45 pages * 200 words/page = 9000 words\n\nTIME: 9000 words / 300 wpm = 30 minutes",
+      "quality": 0.0,
+      "final_key": "10",
+      "final_differs": true,
+      "descendants": {
+        "step_3": "RESULT: 30 - 30 - 10 = 10 minutes early",
+        "aggregator": "Toby will be 10 minutes early. #### 10",
+        "verifier": "VERDICT: passthrough\n#### 10",
+        "step_2": "RESULT: 30 minutes"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "8",
+      "reference_key": "9000",
+      "key_differs": true,
+      "text": "Joey's new score = Initial score + Points scored = 214 + 26 = 240\n\nMarcy's final score = Initial score + Points scored = 225 + 10 = 235\n\nRESULT: 8",
+      "quality": 1.0,
+      "final_key": "20",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Earliness = 30 minutes - 10 minutes\nEarliness = 20 minutes\n\nRESULT: 20",
+        "aggregator": "Toby will be 20 minutes early. #### 20",
+        "verifier": "VERDICT: passthrough\n#### 20",
+        "step_2": "To calculate the total number of words in the book:\n\nTotal words = Number of pages \u00d7 Words per page\nTotal words = 45 pages \u00d7 200 words/page\nTotal words = 9000 words\n\nNow, let's determine the time it takes for Toby to read all the words in the book:\n\nTime to read = Total words / Reading speed\nTime to read = 9000 words / 300 words/minute\nTime to read = 30 minutes\n\nSubtract the time it takes for Toby to finish reading from his planned departure time:\n\nDeparture time - Time to read = 60 minutes - 30 minutes\nDeparture time - Time to read = 30 minutes\n\nFinally, subtract the travel time to the airport:\n\nEarliness = Departure time - Travel time\nEarliness = 30 minutes - 10 minutes\nEarliness = 20 minutes\n\nRESULT: 20"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "20",
+  "sample_keys": [
+    "30000",
+    "9000",
+    "10",
+    "9000",
+    "30"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 1.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1524.0,
+    "small_out": 472.0,
+    "small_s": 2.0825557779999144
+  },
+  "calls_plus": {
+    "small_in": 903.0,
+    "small_out": 237.0,
+    "small_s": 2.0576407569999446,
+    "large_in": 220.0,
+    "large_out": 8.0,
+    "large_s": 0.11310623200006376
+  },
+  "calls_samples": {
+    "small_in": 1100.0,
+    "small_out": 516.0,
+    "small_s": 5.015513978999934
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-513",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "Step 1: Calculate the amount spent on clothes.\nJulie spent 20% of $500 on clothes.\n\\[ \\text{Amount spent on clothes} = 500 \\times 0.20 = 100 \\]\nRESULT: 400",
+  "reference_key": "400",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "step_3": "RESULT: 400 - (400 * 0.25) = 400 - 100 = 300",
+    "verifier": "VERDICT: correct",
+    "step_2": "RESULT: 400",
+    "aggregator": "Julie has $300 left. #### 300"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "401",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "Step 1: Calculate the amount spent on clothes.\nJulie spent 20% of $500 on clothes.\n\\[ \\text{Amount spent on clothes} = 500 \\times 0.20 = 100 \\]\nRESULT: 401",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 400",
+        "verifier": "VERDICT: correct",
+        "step_2": "Step 2: Determine the remaining money after buying clothes.\n\n\\[ \\text{Remaining money} = 500 - 100 = 400 \\]\n\nRESULT: 400",
+        "aggregator": "Julie had $400 left."
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "300",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "Julie bought 20% of her money on clothes. So first we need to find 20% of $500.\n\n$500 * 20/100 = $100\n\nTherefore, Julie's clothes cost her $100.\n\nNow our total available amount is:\n\nTotal initial amount - Amount spent on clothes\n\n= $500 - $100 = $400\n\nNext, she spent 25% of this remaining amount on music (CDs).\n\nTo find what 25% means:\n\n$400 * 25/100 = $100\n\nSo Julie bought $100 worth of music (CDs).\n\nFinally, let's find out how many dollars she has left after buying both things:\n\nRemaining amount before music purchases - Cost of CDs\n\n= $400 - $100 = $300RESULT: 300",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "Julie had $500 initially. After spending 20% on clothes, she had:\n\n$500 - ($500 * 20/100) = $500 - $100 = $400 remaining.\n\nThen she spent 25% of the remaining $400 on CDs:\n\n$400 * 25/100 = $100.\n\nSo Julie spent $100 on CDs.\n\nAfter buying CDs, she had:\n\n$400 - $100 = $300 left. RESULT: 300",
+        "verifier": "VERDICT: correct",
+        "step_2": "Julie had $500 initially. After spending 20% on clothes, she had:\n\n$500 - ($500 * 20/100) = $500 - $100 = $400 remaining.\n\nThen she spent 25% of the remaining $400 on CDs:\n\n$400 * 25/100 = $100.\n\nSo Julie spent $100 on CDs.\n\nAfter buying CDs, she had:\n\n$400 - $100 = $300 left.",
+        "aggregator": "Julie had $300 left. #### 300"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "28",
+      "reference_key": "400",
+      "key_differs": true,
+      "text": "Paul drives his car twice every day for 14 days. To calculate the total number of rides:\n\nTotal rides = Number of days * Rides per day\n            = 14 days * 2 rides/day\n            = 28 rides\n\nRESULT: 28",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "step_3": "RESULT: 700",
+        "verifier": "VERDICT: correct",
+        "step_2": "RESULT: 28",
+        "aggregator": "Julie had $700 left."
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "100",
+  "sample_keys": [
+    "100",
+    "300",
+    "300",
+    "400",
+    "300"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1024.0,
+    "small_out": 212.0,
+    "small_s": 1.2970950119924964
+  },
+  "calls_plus": {
+    "small_in": 831.0,
+    "small_out": 121.0,
+    "small_s": 1.09636957100156,
+    "large_in": 164.0,
+    "large_out": 61.0,
+    "large_s": 0.5848041709978133
+  },
+  "calls_samples": {
+    "small_in": 820.0,
+    "small_out": 760.0,
+    "small_s": 9.204467429997749
+  }
+}
