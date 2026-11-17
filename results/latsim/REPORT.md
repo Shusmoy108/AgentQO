@@ -2,40 +2,19 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-17 20:45 UTC:
+Data status at 2026-11-17 23:35 UTC:
 - **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
   The lease logged "TIME LEFT after X1" at 15:54Z.
-- **X1b: in progress, 8 of 9 blocks in**: separate placement complete for all four settings; shared for math_q15_7,
-  hotpot_q15_7 and math_granite; shared_mps for math_q15_7 (354 points at K=4/8/32 x 2 repeats), plus math_q15_7
-  K=1 separate and shared (4 plans each, 32 problems, 1 repeat). Still to come: math_phi shared.
-  Interim, K=4/8/32 (rev1 is the held-out claim on X1b), within 10% / within 20% / MAPE p95 / tau:
-  rev1 0.675 / 0.938 / 0.081 / 0.903; frozen 0.653 / 0.887 / 0.097 / 0.891; H3c-fair 0.460 / 0.749 / 0.140 / 0.851;
-  registered H3c 0.169 / 0.325 / 0.934 / 0.646. latsim - H3c-fair within-10% (stratified bootstrap): rev1 +0.215
-  [0.147, 0.282], frozen +0.192 [0.130, 0.257], both significant. Per group, CIs excluding 0: math_q15_7 shared_mps
-  K=8 (rev1 +0.31), math_granite shared K=8 (+0.50 both), hotpot_q15_7 shared K=4 (frozen +0.55), math_q15_7 shared
-  K=4 (frozen +0.31) and K=32 (+0.44 both), math_granite separate K=32 (+0.44 both), and frozen on hotpot_q15_7
-  separate K=32 (-0.36).
-  math_q15_7 shared_mps: median p95 error -2% (K=4), +1% (K=8), +8% (K=32; rev1 +8%, frozen +9%), so MPS also drifts
-  high at K=32, though less than hotpot shared; math_q15_7 plain shared at K=32 does not (-0.3% / -1.2%).
-  math_granite shared (borrowed-free: its own h4grid betas): median p95 error +1% to +4% at every K, p50 within 4%.
-  Failure modes so far: (1) HotpotQA, frozen: X1's prefix-cache overprediction recurs (separate median p95 error +15%,
-  K=32 within 10% 0.00). (2) **New: HotpotQA shared at K=32, both versions overpredict** (median p95 error frozen
-  +47%, rev1 +25%; within 10% 0.00 / 0.27). For rev1 it splits into the base (separate K=32 +8%) and interference:
-  predicted shared/separate p95 ratio 2.05 vs measured 1.83 at K=32 (K=4: 1.75 vs 1.90, K=8: 1.99 vs 1.98). A likely
-  cause (not yet checked): the h4grid betas are applied as constant slowdowns whenever the other server is busy, and
-  were measured at lower occupancy, so near saturation latsim adds more interference than the GPU actually shows. H3c-fair is also wrong
-  there (within 10% 0.09). math_granite separate: median p95 error -3% (both); math_q15_7 shared: -0.3% (frozen) /
-  -1.2% (rev1), p50 +3%.
-  K=1 (scored only against the matched 32-problem re-runs, `matched/`), frozen and rev1 alike: 8/8 plans within 10%,
-  MAPE p95 0.022 (separate 0.030, shared 0.014), tau 0.93. MAPE p50 is 0.03 separate but 0.11 shared, mostly
-  all_small shared (+24%): measured p50 0.88 s shared vs 1.11 s separate on the same 32 problems with no other model
-  busy, i.e. run-to-run variation of a single repeat that the model, which predicts the same 1.10 s for both, cannot see.
-  Tables: `report_tables.md`, `compare/X1b_*.csv`, `matched/X1b_k1_*`.
-- **X1c** (Phi and three-model interference grids) is not in yet. It is the fit data for the planned rev2.
+- **X1b complete** (last block, math_phi shared, landed 23:18Z): all 9 blocks, every listed plan, 2 repeats each,
+  402 points at K = 4/8/32, plus math_q15_7 K=1 (4 plans x separate/shared, 32 problems, 1 repeat). VM-B's
+  21:09Z server-swap incident runs sit in `X1b_vmB/math_phi/superseded_server_swap_2109Z/` and are left out.
+  Results below.
+- **X1c**: the A16 three-model runs are in (22:56Z); the Phi grid fit (`X1c/phi/fit`) is not yet. rev2 code is
+  committed (d1909fb5), not tagged or scored; it is tagged and pushed before any rev2 score.
 - **X6 latency: not present, and its 32B model cannot be predicted** (no 32B fit data).
 
-Generated tables: `report_tables.md`, `compare/X1_by_setting.csv`, `compare/X1_bootstrap.csv`.
-Per-plan CSVs: `X1_per_plan.csv` (frozen), `rev1/X1_per_plan.csv`.
+Generated tables: `report_tables.md`, `compare/{X1,X1b}_by_setting.csv`, `compare/{X1,X1b}_bootstrap.csv`,
+`matched/X1b_k1_*`. Per-plan CSVs: `{X1,X1b}_per_plan.csv` (frozen), `rev1/{X1,X1b}_per_plan.csv`.
 
 ## Provenance
 
@@ -156,6 +135,71 @@ Summary over the 14 groups:
   in every group but one. The exception is hotpot_iso_q15_7 separate (−12%, within 10% 0.38), whose base uses
   borrowed rates.
 
+## X1b (held out for rev1; new loads K = 4, 8, 32 and K = 1): complete, 402 + 8 points
+
+rev1 was made after X1 was opened and before any X1b data existed, so X1b is its held-out test (PI decision). Frozen is
+shown too. Baselines as on X1 (H3c-fair inputs interpolated in log2 K between P5's K = 1/16/32 where they exist).
+
+| predictor | within 10% | within 20% | MAPE p95 | Kendall τ (pooled) |
+|---|---|---|---|---|
+| **latsim rev1** (held out) | **0.669** | **0.928** | **0.083** | **0.918** |
+| latsim frozen | 0.649 | 0.883 | 0.097 | 0.908 |
+| H3c-fair | 0.453 | 0.741 | 0.142 | 0.871 |
+| H3c (registered) | 0.149 | 0.286 | 0.993 | 0.711 |
+| mean_sum-fair | 0.012 | 0.035 | 0.505 | 0.685 |
+
+Paired bootstrap, latsim − H3c-fair within-10% share, stratified over the 27 setting × placement × K groups (5,000
+resamples, seed 0): **rev1 +0.216 [0.157, 0.276]**, frozen +0.197 [0.139, 0.254].
+
+Per group, CI excluding 0 (bold in the table): rev1 is ahead in 5 of 27 and behind in none; frozen ahead in 5, behind in
+1 (hotpot_q15_7 separate K=32, the prefix-cache error). With 11–16 plans per group most single-group CIs span 0.
+
+By placement and load (rev1, within 10% / MAPE p95; `rev1/X1b_pooled.csv`): separate K = 4 / 8 / 32: 0.66 / 0.64 /
+0.71, MAPE 0.08 at each; shared: 0.68 / 0.73 / 0.61, MAPE 0.08 / 0.07 / 0.11; shared_mps (math_q15_7 only): 0.69 /
+0.75 / 0.50, MAPE 0.07 / 0.07 / 0.11. Shared and MPS at K=32 are the weakest cells, for the reason under failure 6.
+
+**K = 1** (32 problems; scored only against re-runs of the frozen and rev1 tags on exactly those problems,
+`matched/`): both versions 8/8 plans within 10%, MAPE p95 0.022, τ 0.93. No baseline is scored at K=1 (their
+predictions are over 64 problems).
+
+**Within-group ranking** is where latsim is weakest. Median within-group τ: latsim 0.78 (both versions), registered H3c
+0.75, H3c-fair 0.67, mean_sum-fair 0.60. rev1's τ is higher than H3c-fair's in 20 of 27 groups (5 lower), higher than
+mean_sum-fair's in 23 (4 lower: math_q15_7 separate at every K, where mean_sum-fair reaches 0.88–0.90, and
+math_q15_7 shared_mps K=32), but only level with the registered H3c (higher in 12, lower in 13). The registered
+H3c's level is far off (median p95 error ~+100%) but its order within a group is about as good.
+
+### Per setting × placement × K
+
+| setting | placement | K | n | within 10%: frozen / rev1 / H3c-fair / H3c | MAPE p95: rev1 / H3c-fair | τ: rev1 / H3c-fair | rev1 − H3c-fair, within 10% [95% CI] |
+|---|---|---|---|---|---|---|---|
+| hotpot_q15_7 | separate | 4 | 11 | 0.73 / 0.64 / 0.36 / 0.00 | 0.10 / 0.22 | 0.85 / 0.75 | +0.27 [-0.18, +0.73] |
+| hotpot_q15_7 | separate | 8 | 11 | 0.64 / 0.55 / 0.45 / 0.00 | 0.08 / 0.18 | 0.75 / 0.67 | +0.09 [-0.36, +0.55] |
+| hotpot_q15_7 | separate | 32 | 11 | 0.00 / 0.55 / 0.36 / 0.00 | 0.11 / 0.11 | 0.67 / 0.75 | +0.18 [-0.18, +0.55] |
+| hotpot_q15_7 | shared | 4 | 11 | 0.82 / 0.73 / 0.27 / 0.00 | 0.06 / 0.26 | 0.78 / 0.67 | +0.45 [+0.00, +0.91] |
+| hotpot_q15_7 | shared | 8 | 11 | 0.36 / 0.64 / 0.18 / 0.00 | 0.08 / 0.29 | 0.78 / 0.71 | +0.45 [+0.00, +0.82] |
+| hotpot_q15_7 | shared | 32 | 11 | 0.00 / 0.27 / 0.09 / 0.00 | 0.26 / 0.25 | 0.64 / 0.53 | +0.18 [+0.00, +0.45] |
+| math_granite | separate | 4 | 16 | 0.56 / 0.62 / 0.44 / 0.00 | 0.07 / 0.12 | 0.78 / 0.60 | +0.19 [-0.12, +0.50] |
+| math_granite | separate | 8 | 16 | 0.62 / 0.62 / 0.50 / 0.00 | 0.08 / 0.14 | 0.82 / 0.53 | +0.12 [-0.25, +0.44] |
+| math_granite | separate | 32 | 16 | 0.81 / 0.81 / 0.38 / 0.00 | 0.07 / 0.14 | 0.85 / 0.57 | **+0.44 [+0.12, +0.75]** |
+| math_granite | shared | 4 | 16 | 0.62 / 0.56 / 0.56 / 0.00 | 0.09 / 0.16 | 0.65 / 0.62 | +0.00 [-0.31, +0.31] |
+| math_granite | shared | 8 | 16 | 0.88 / 0.88 / 0.38 / 0.00 | 0.04 / 0.17 | 0.82 / 0.58 | **+0.50 [+0.25, +0.75]** |
+| math_granite | shared | 32 | 16 | 0.75 / 0.75 / 0.38 / 0.00 | 0.06 / 0.14 | 0.78 / 0.45 | +0.38 [+0.00, +0.69] |
+| math_phi | separate | 4 | 16 | 0.69 / 0.69 / 0.62 / 0.00 | 0.07 / 0.09 | 0.92 / 0.87 | +0.06 [-0.31, +0.44] |
+| math_phi | separate | 8 | 16 | 0.81 / 0.81 / 0.56 / 0.00 | 0.08 / 0.09 | 0.90 / 0.85 | +0.25 [+0.00, +0.50] |
+| math_phi | separate | 32 | 16 | 0.62 / 0.62 / 0.56 / 0.00 | 0.07 / 0.09 | 0.87 / 0.83 | +0.06 [-0.19, +0.31] |
+| math_phi | shared | 4 | 16 | 0.62 / 0.62 / 0.44 / 0.00 | 0.10 / 0.18 | 0.70 / 0.52 | +0.19 [+0.00, +0.38] |
+| math_phi | shared | 8 | 16 | 0.62 / 0.62 / 0.19 / 0.00 | 0.10 / 0.19 | 0.68 / 0.52 | **+0.44 [+0.19, +0.69]** |
+| math_phi | shared | 32 | 16 | 0.62 / 0.62 / 0.56 / 0.00 | 0.09 / 0.12 | 0.57 / 0.58 | +0.06 [-0.19, +0.31] |
+| math_q15_7 | separate | 4 | 16 | 0.69 / 0.69 / 0.62 / 0.56 | 0.07 / 0.09 | 0.73 / 0.80 | +0.06 [-0.25, +0.38] |
+| math_q15_7 | separate | 8 | 16 | 0.56 / 0.56 / 0.69 / 0.50 | 0.08 / 0.09 | 0.73 / 0.78 | -0.12 [-0.44, +0.19] |
+| math_q15_7 | separate | 32 | 16 | 0.81 / 0.81 / 0.69 / 0.44 | 0.08 / 0.07 | 0.82 / 0.65 | +0.12 [-0.12, +0.38] |
+| math_q15_7 | shared | 4 | 16 | 0.81 / 0.81 / 0.50 / 0.38 | 0.06 / 0.12 | 0.80 / 0.80 | +0.31 [+0.00, +0.56] |
+| math_q15_7 | shared | 8 | 16 | 0.75 / 0.75 / 0.50 / 0.25 | 0.07 / 0.12 | 0.78 / 0.78 | +0.25 [-0.06, +0.56] |
+| math_q15_7 | shared | 32 | 16 | 0.69 / 0.69 / 0.25 / 0.38 | 0.08 / 0.16 | 0.73 / 0.85 | **+0.44 [+0.12, +0.75]** |
+| math_q15_7 | shared_mps | 4 | 16 | 0.69 / 0.69 / 0.69 / 0.69 | 0.07 / 0.09 | 0.77 / 0.75 | +0.00 [-0.31, +0.38] |
+| math_q15_7 | shared_mps | 8 | 16 | 0.75 / 0.75 / 0.44 / 0.38 | 0.07 / 0.10 | 0.78 / 0.75 | **+0.31 [+0.06, +0.56]** |
+| math_q15_7 | shared_mps | 32 | 16 | 0.56 / 0.50 / 0.25 / 0.19 | 0.11 / 0.21 | 0.58 / 0.53 | +0.25 [-0.06, +0.56] |
+
 ## In-sample (P5, fit data)
 
 - Share of P5 (plan, placement, K) points with p95 within 10% / 20%, mean over repeats: latsim frozen 0.831 / 0.964.
@@ -169,16 +213,23 @@ Summary over the 14 groups:
    - The frozen fit put that cold cost into every call, but X1 runs most plans warm.
    - Rev1 raises HotpotQA within-10% from 0.06–0.31 to 0.69–0.81. The effect is ~7% on Granite HotpotQA and nil on
      math.
+   - X1b confirms it out of sample at new loads: hotpot_q15_7 separate median p95 error frozen +15% (K=32: within 10%
+     0.00, MAPE 0.33), rev1 +3% (K=32: 0.55, MAPE 0.11).
 2. **Cold first plans** in a block (all_small, then the only_* plans) meet a cold server, and rev1 predicts warm.
    - Separate one_large: within 10% 0.62, bias −4%.
    - Separate all_small: 0.83, bias −7%.
    - A per-block cache-state model would cover this; not built.
 3. **math_tiers plans with a 14B agent**: within 10% 0.50, bias +10% (14B-free tier plans: 0.91).
-   - Three models share one GPU, and the betas involving the 14B are borrowed from the Qwen 3B/14B grid.
-   - Summing two betas when both other servers are busy likely overstates the slowdown. No 3-model grid exists to fit
-     this.
+   - Three models share one GPU, and the betas involving the 14B are borrowed: 7B/14B from the Qwen 3B/14B grid,
+     1.5B/14B from the Qwen 1.5B/7B grid (a log-size tie; an earlier version of this report and the prereg said
+     3B/14B for both, see the prereg erratum).
+   - Summing two betas when both other servers are busy likely overstates the slowdown. X1c's A16 three-model runs
+     now exist; rev2 fits the four 14B factors on them (fitted vs borrowed: 14B→1.5B 2.59 vs 2.23, 1.5B→14B 0.86 vs
+     0.91, 14B→7B 1.76 vs 2.15, 7B→14B 1.12 vs 1.05; per-call log RMSE on A16 0.137 → 0.111).
 4. **math_phi shared**: p50 +11%, p95 +5%. In separate placement Phi is on target (p50 +1%, p95 −1%), so the error
-   sits in the borrowed Phi betas, which rev2 will replace with X1c's measured ones.
+   sits in the borrowed Phi betas, which rev2 will replace with X1c's measured ones. X1b repeats it at every load
+   (rev1 median p50 error +12% / +12% / +8%, p95 +4% / +8% / +3% at K = 4 / 8 / 32; within 10% 0.63 each), while
+   math_phi separate stays on target (within 20% 1.00 at every K).
 5. **Ranking within a setting** is weaker than the pooled τ: 0.64–0.91 per setting, against 0.93 pooled, which mostly
    reflects differences between settings. Still, it is above every baseline's within-setting τ in 11 of 14 groups
    (frozen) and 12 of 14 (rev1).
@@ -186,6 +237,14 @@ Summary over the 14 groups:
      0.68–0.69.
    - math_granite separate is an exception for both: the registered H3c reaches 0.73, against latsim's 0.72.
    - hotpot_q15_7 separate is an exception for frozen only.
+
+6. **Shared and MPS placement at K = 32 run high** (X1b only; X1 is K=16). hotpot_q15_7 shared: median p95 error
+   frozen +47%, rev1 +25% (within 10% 0.00 / 0.27). math_q15_7 shared_mps: +8%. math_q15_7 and math_granite plain
+   shared at K=32 are on target (−1% and +1%), so it is not shared placement as such. For rev1 on HotpotQA, ~8 points
+   come from the base (separate K=32 +8%) and the rest from interference: predicted shared/separate p95 ratio 2.05
+   against measured 1.83 at K=32, while at K=4 / 8 they match (1.75 vs 1.90, 1.99 vs 1.98). Likely cause, not checked:
+   the h4grid betas are constant slowdowns applied whenever the other server is busy, measured at lower occupancy, so
+   near saturation latsim adds more slowdown than the GPU shows. H3c-fair also fails there (within 10% 0.09).
 
 ## Reproduce
 
@@ -197,4 +256,9 @@ python3 -m agentqo.latsim.h3cfair                                               
 python3 -m agentqo.latsim.report                                                # registered metrics, every version
 python3 -m agentqo.latsim.compare --name X1 \
     --measured 'results/v2/X1/*/*/placement_summary.csv,results/v2/X1_vm*/*/*/placement_summary.csv'
+python3 -m agentqo.latsim.compare --name X1b --measured 'results/v2/X1b*/*/*/placement_summary.csv' --exclude-k 1
+python3 -m agentqo.latsim.matched --tag latsim-frozen-20261117T133315Z --params results/latsim/params.json \
+    --label frozen_matched_k1 --runs 'results/v2/X1b/math_q15_7/*_k1/run_*.csv'      # same for rev1 at its tag
+python3 -m agentqo.latsim.evaluate --name X1b_k1_rev1_matched --out results/latsim/matched \
+    --measured 'results/v2/X1b/*/*_k1/placement_summary.csv' --predictions results/latsim/matched/rev1_matched_k1.csv
 ```
