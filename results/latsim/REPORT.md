@@ -2,18 +2,21 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-17 20:25 UTC:
+Data status at 2026-11-17 20:45 UTC:
 - **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
   The lease logged "TIME LEFT after X1" at 15:54Z.
-- **X1b: in progress, 7 of 9 blocks in**: separate placement complete for all four settings; shared for math_q15_7,
-  hotpot_q15_7 and math_granite (306 points at K=4/8/32 x 2 repeats), plus math_q15_7 K=1 separate and shared (4
-  plans each, 32 problems, 1 repeat). Still to come: math_q15_7 shared_mps, math_phi shared.
+- **X1b: in progress, 8 of 9 blocks in**: separate placement complete for all four settings; shared for math_q15_7,
+  hotpot_q15_7 and math_granite; shared_mps for math_q15_7 (354 points at K=4/8/32 x 2 repeats), plus math_q15_7
+  K=1 separate and shared (4 plans each, 32 problems, 1 repeat). Still to come: math_phi shared.
   Interim, K=4/8/32 (rev1 is the held-out claim on X1b), within 10% / within 20% / MAPE p95 / tau:
-  rev1 0.680 / 0.941 / 0.080 / 0.911; frozen 0.650 / 0.882 / 0.099 / 0.897; H3c-fair 0.461 / 0.755 / 0.141 / 0.860;
-  registered H3c 0.131 / 0.255 / 1.060 / 0.676. latsim - H3c-fair within-10% (stratified bootstrap): rev1 +0.219
-  [0.147, 0.291], frozen +0.190 [0.118, 0.258], both significant. Per group, CIs excluding 0: math_granite shared K=8
-  (+0.50 both), hotpot_q15_7 shared K=4 (frozen +0.55), math_q15_7 shared K=4 (frozen +0.31) and K=32 (+0.44
-  both), math_granite separate K=32 (+0.44 both), and frozen on hotpot_q15_7 separate K=32 (-0.36).
+  rev1 0.675 / 0.938 / 0.081 / 0.903; frozen 0.653 / 0.887 / 0.097 / 0.891; H3c-fair 0.460 / 0.749 / 0.140 / 0.851;
+  registered H3c 0.169 / 0.325 / 0.934 / 0.646. latsim - H3c-fair within-10% (stratified bootstrap): rev1 +0.215
+  [0.147, 0.282], frozen +0.192 [0.130, 0.257], both significant. Per group, CIs excluding 0: math_q15_7 shared_mps
+  K=8 (rev1 +0.31), math_granite shared K=8 (+0.50 both), hotpot_q15_7 shared K=4 (frozen +0.55), math_q15_7 shared
+  K=4 (frozen +0.31) and K=32 (+0.44 both), math_granite separate K=32 (+0.44 both), and frozen on hotpot_q15_7
+  separate K=32 (-0.36).
+  math_q15_7 shared_mps: median p95 error -2% (K=4), +1% (K=8), +8% (K=32; rev1 +8%, frozen +9%), so MPS also drifts
+  high at K=32, though less than hotpot shared; math_q15_7 plain shared at K=32 does not (-0.3% / -1.2%).
   math_granite shared (borrowed-free: its own h4grid betas): median p95 error +1% to +4% at every K, p50 within 4%.
   Failure modes so far: (1) HotpotQA, frozen: X1's prefix-cache overprediction recurs (separate median p95 error +15%,
   K=32 within 10% 0.00). (2) **New: HotpotQA shared at K=32, both versions overpredict** (median p95 error frozen
