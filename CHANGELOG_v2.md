@@ -545,3 +545,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
   is short (~22 GB) if every 6 h backup is kept; ACTION NEEDED raised for the Mac. A cache read during the check overlapped
   VM-B's h4grid cell q3_14 p2 shared_nomps r2; that cell is rerun in VM-B's rerun block (p5.sh B-rerun_cal_q3_14).
 - 2026-11-17T03:49:11Z X4 hotpot_q15_7 vs P2: {"cells_compared": 12800, "cells_missing": 0, "flipped_cells": 754, "flip_share": 0.05890625, "plans_with_any_flip": 32, "max_abs_plan_delta": 0.0325, "mean_abs_plan_delta": 0.00828125, "front_added": ["all_large", "hop_1+aggregator+verifier"], "front_removed": [], "front_unchanged": false, "cost": "cost_units from P2 h3_plans.csv for both runs"}
+- 04:25Z Mac storage: backup rotation (newest verified backup per VM) and a 10 GB floor in mac_sync; FINAL cache-zip verification plan recorded; Mac now 139 GiB free. q3_14 shared_nomps r2 rerun approved by the PI.
