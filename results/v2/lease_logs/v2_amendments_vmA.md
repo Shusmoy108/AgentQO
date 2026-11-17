@@ -508,3 +508,49 @@ P6/search_ground_truth.md). The timed list is therefore those 84 plans plus 100 
 remaining 940 (X1/complex_q15_7/plan_selection.json); it contains all 12 plans of the registered 2-D front. Kept as is
 (exploratory, a superset of the registered front); the 100 random plans differ from a draw over the 1,012 non-front
 plans. Cost: about +0.9 h on VM-A's X1 shared block. math_tiers is as registered (14 front plans + 100).
+
+### L2-X1b: load sweep for held-out latency validation, registered 2026-11-17 13:59:13 UTC, before any X1b data
+
+Status: EXPLORATORY under L2-X (same rules: own folder results/v2/X1b, V2_DEVIATION=D-L2-X-code, code
+v2-lease2-x c1bb8338 with per-request start/end timestamps, included in results_v2_UPLOAD.zip,
+FINAL/data_check.md and P6/search_ground_truth.md as latency ground truth).
+Reason: held-out validation of an offline whole-plan latency simulator, built in a separate session on branch
+v2-latsim and fitted only on P5 + h4grid. X1b is never used for fitting; it measures loads and plans the
+simulator has not seen.
+What: settings math_q15_7, hotpot_q15_7, math_granite, math_phi. Plans: all_small, all_large, every
+single-agent plan, plus random plans drawn with seed 1 from the rest: 8 for the math chain (6 agents, 16 plans)
+and 4 for hotpot_chain (5 agents, 11 plans; the request said 12, but the chain has 5 agents). Loads K = 4, 8
+and 32, the first 64 problems of P5's split, 2 repeats, no cache. Placements: separate (small on VM-A, large on
+VM-B at 10.56.2.39) and shared (one GPU), plus shared_mps for math_q15_7 only. Also K=1 for math_q15_7 only:
+all_small, all_large, only_verifier, aggregator+verifier, 32 problems, 1 repeat, separate and shared. Servers
+and settings as X1 (small 0.25 / large 0.55, AGENTQO_VERIFIER=cautious, max_tokens 256 math / 384 HotpotQA /
+512 Granite and Phi). Measured: per run p50/p95/p99, throughput, accuracy; per call tokens, latency and
+request start/end; nvidia-smi 1 s power logs.
+How and when: right after X1 and before X2, under TIMING_LOCK on both VMs held from X1 through X1b (X3 and X7
+paused), reusing X1's servers where possible; a gate and push per setting and placement. If X1b would push
+X7's start past 2026-11-18 14:00 UTC, only math_q15_7 and math_phi run and the cut is logged. The time left is
+recomputed and logged after X1b.
+
+### L2-X1c: interference grids the latency simulator still borrows, registered 2026-11-17 14:02:48 UTC, before any X1c data
+
+X1c: h4-style interference grids for (a) Phi-3.5-mini/Phi-4 and (b) the three-model A16 setup (Qwen
+1.5B/7B/14B on one GPU), because the latency simulator currently borrows these betas. Used to FIT latsim
+rev2; X1/X1b stay held-out tests.
+Rules as L2-X: EXPLORATORY, folder results/v2/X1c, code v2-lease2-x c1bb8338 run from the x clone,
+V2_DEVIATION=D-L2-X-code, under TIMING_LOCK on both VMs (held from X1 through X1b and X1c, X3/X7 paused),
+no cache, power logs kept, a gate and push per part. Runs after X1b and before X2; the time left is
+recomputed after it; (b) is skipped if X7's start would move past 2026-11-18 14:00 UTC.
+(a) Phi-3.5-mini (small) / Phi-4 (large): the D-L2-h4grid design with scripts/placement_test.py (unchanged at
+the tag): grid in separate (Phi-3.5-mini on VM-A, Phi-4 on VM-B) and shared placement x small_share
+0.25/0.5/0.75 x max_tokens 32/128/512 x concurrency 1,4,16 (64 requests) and 64 (128 requests), reduced to
+1 repeat (repeat 0) to stay under 2 h; MPS step separate / shared_nomps / shared_mps x share 0.5 x 128
+tokens x concurrency 1,4,16,32 x 3 repeats; then scripts/h4_fit.py fit and fit-mps (servers 0.25 / 0.55).
+(b) A16 three-model setup, shared placement only (Qwen 1.5B 0.15 / 7B 0.30 / 14B 0.45 on VM-A's GPU, as P2b).
+placement_test.py drives only two endpoints, so a synthetic three-model grid would need a code change; instead
+the grid over which models are busy uses the A16 workflow with scripts/v2/run_placement.py (per-request
+start/end timestamps), math chain, max_tokens 256, K=16, 64 problems, 2 repeats, tier plans chosen by the set
+of busy models: small+large {aggregator=large+verifier=large, planner=large+step_2=large}; small+xl
+{aggregator=xl+verifier=xl, planner=xl+step_2=xl}; large+xl {planner=large+step_1=large+step_2=large+
+step_3=large+aggregator=xl+verifier=xl, planner=xl+step_1=large+step_2=large+step_3=large+aggregator=large+
+verifier=large}; all three {step_2=large+verifier=xl, planner=xl+aggregator=large, step_1=large+step_3=xl+
+verifier=large}.
