@@ -124,3 +124,4 @@
 2026-11-17T19:49:21Z VM-A GATE X1b-math_q15_7_shared: no settings
 2026-11-17T20:00:38Z VM-A GATE X1b-hotpot_q15_7_shared: no settings
 2026-11-17T20:12:19Z VM-B GATE X1b-math_granite_shared: no settings
+2026-11-17T20:40:32Z VM-A GATE X1b-math_q15_7_shared_mps: no settings
