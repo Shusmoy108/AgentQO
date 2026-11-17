@@ -401,3 +401,21 @@ not run. Results: results/v2/X6/<setting>/..., latency in results/v2/X6/latency/
    in one shared store). At least 25 GB stays free after the download (expected ~52 GB). Caches,
    results, logs and the venv are never deleted. Every deletion is logged in STATUS.md. If that is
    not enough when X6 is due, "ACTION NEEDED: attach another volume" is printed and X6 is skipped.
+
+### L2-X5 safeguards (2026-11-17 01:57:47 UTC, before any X5 data)
+
+Data version: HuggingFaceH4/MATH-500 test.jsonl at Hugging Face commit
+6e4ed1a2a79af7d8630a6b768ec859cb5af4d3be ("main" on 2026-11-17 01:57:47 UTC), sha256
+35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132 (500 rows); fetched at that commit,
+byte-identical to main, and pinned at /mnt/data/AgentQO-x/data/tasks/math500_test.jsonl on both VMs, so
+the loader never downloads it again. Recorded in results/v2/X5/README.md.
+Prompt check: math500_prompt() rewrites the math prompts with str.replace. Before the smoke run, every
+agent's prompt for the 5 smoke problems is built with the run's code and checked; after the labels,
+every prompt actually sent (label traces) is checked. Rule: no prompt contains "#### <number>" or
+"<number>"; every agent except the planner contains "\boxed" or "RESULT: <expression>" (the planner
+only plans and is given no answer format, so it is checked for the first part only). A violation stops
+X5 (smoke) or fails it before the plans. Static check run now: 30 prompts, 0 violations.
+Scorer audit: after the labels, results/v2/X5/scorer_audit.csv lists 40 random label problems scored
+wrong that have a prediction (seed 0; gold, pred, raw final text, a blank hand-check column) and
+unscorable_by_agent.csv the unscorable rate per agent, for a manual false-negative check later. The
+scorer is not changed during the lease.

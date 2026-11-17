@@ -515,3 +515,6 @@ Operational choices made during the lease (no code change; the tag is what runs)
   infeasible with a usable KV cache on one 94 GB H100", with a shared-start test as evidence before X6; disk policy
   for the 32B). VM-A model deletion via /mnt/data/delmodel.py (shared blob store: delete only unreferenced
   blobs; dry run 66.1 GB: Phi-4 copy, AWQ pair, Qwen 14B), after X1's lock, logged per model.
+- 02:25Z NEXT block 11: X5 safeguards (no runs): MATH-500 pinned (HF 6e4ed1a2, sha256 35dc4108...), prompt check
+  (/mnt/data/x5check.py: static before smoke, label traces before plans; 30/30 static ok), scorer audit after
+  labels (scorer_audit.csv, unscorable_by_agent.csv). Recorded under L2-X5/X6.
