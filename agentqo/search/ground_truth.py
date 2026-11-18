@@ -45,6 +45,31 @@ SETTINGS: Dict[str, Tuple[Dict[str, str], str]] = {
 }
 
 
+# Settings whose files do not follow <phase>/<setting>/plans: plans folder, API cost priced from h3_calls with
+# agentqo.metrics.cost_model.price_plans (reproduces P6's math_tiers api_usd exactly).
+# x3_cross_family (L2-X3): small = Qwen2.5-7B, large = Granite 8B, xl = Phi-4; tiers priced by tier name.
+EXTRA: Dict[str, Dict[str, object]] = {
+    "x3_cross_family": {"labels": {"large": "X3_vmB/labels_q7_G8", "xl": "X3_vmB/labels_q7_P4"},
+                        "plans": "X3_vmB/plans"},
+}
+
+
+def calls_cost(plans_dir: Path) -> Dict[str, float]:
+    import gzip
+    from agentqo.metrics.cost_model import load_prices, price_plans
+    f = plans_dir / "h3_calls.csv"
+    fh = open(f) if f.exists() else gzip.open(str(f) + ".gz", "rt")
+    with fh:
+        rows = price_plans(csv.DictReader(fh), load_prices(ROOT / "configs" / "v2_prices.yaml"))
+    return {r["plan"]: float(r["api_usd"]) for r in rows}
+
+
+def available(name: str) -> bool:
+    if name in EXTRA:
+        return (V2 / str(EXTRA[name]["plans"]) / "h3_plans.csv").exists()
+    return (V2 / SETTINGS[name][1] / name / "plans" / "h3_plans.csv").exists()
+
+
 def rd(p) -> List[Dict[str, str]]:
     with open(p) as f:
         return list(csv.DictReader(f))
@@ -109,18 +134,25 @@ def measured_latency(setting: str, placement: str) -> Dict[str, float]:
 
 
 def load_setting(name: str, with_latency: bool = True) -> Setting:
-    label_dirs, phase = SETTINGS[name]
-    rows = rd(V2 / phase / name / "plans" / "h3_plans.csv")
+    if name in EXTRA:
+        label_dirs, pdir = dict(EXTRA[name]["labels"]), V2 / str(EXTRA[name]["plans"])
+    else:
+        label_dirs, phase = SETTINGS[name]
+        pdir = V2 / phase / name / "plans"
+    rows = rd(pdir / "h3_plans.csv")
     agents = [k[5:] for k in rows[0] if k.startswith("tier_")]
     tiers = ["small", "large"] + (["xl"] if "xl" in label_dirs else [])
     names = [r["plan"] for r in rows]
     genomes = np.array([[tiers.index(r[f"tier_{a}"]) for a in agents] for r in rows], dtype=np.int8)
     acc = np.array([float(r["accuracy"]) for r in rows])
-    cfile = (V2 / "P6/math_tiers/tiers/tier_pareto.csv" if name == "math_tiers"
-             else V2 / "P6" / name / "cost" / "plan_costs.csv")
-    cmap = {r["plan"]: float(r["api_usd"]) for r in rd(cfile)}
+    if name in EXTRA:
+        cmap = calls_cost(pdir)
+    else:
+        cfile = (V2 / "P6/math_tiers/tiers/tier_pareto.csv" if name == "math_tiers"
+                 else V2 / "P6" / name / "cost" / "plan_costs.csv")
+        cmap = {r["plan"]: float(r["api_usd"]) for r in rd(cfile)}
     cost = np.array([cmap[n] for n in names])
-    pp = rd(V2 / phase / name / "plans" / "h3_per_problem.csv")
+    pp = rd(pdir / "h3_per_problem.csv")
     problems = sorted({r["task_id"] for r in pp})
     pi, ni = {p: j for j, p in enumerate(problems)}, {n: i for i, n in enumerate(names)}
     per = np.full((len(names), len(problems)), np.nan)

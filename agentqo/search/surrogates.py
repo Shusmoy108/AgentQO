@@ -37,7 +37,8 @@ def label_terms(s: Setting) -> LabelTerms:
     gain, dcost, low = np.zeros((n, T)), np.zeros((n, T)), np.zeros((n, T))
     base_acc = base_cost = None
     for t, tier in enumerate(s.tiers[1:], start=1):
-        d = V2 / s.label_dirs[tier] / "labels"
+        d = V2 / s.label_dirs[tier]
+        d = d / "labels" if (d / "labels").exists() else d  # X3 label folders hold the csv files directly
         lab = {r["agent"]: r for r in rd(d / "labels_v2.csv")}
         pp = rd(d / "labels_v2_per_problem.csv")
         f = lambda r, k: float(r[k] or 0)

@@ -343,7 +343,8 @@ def rule_plans(s: Setting, rule: str, terms) -> List[np.ndarray]:
     """Prefix plans k = 0..n of a fixed rule order; multi-tier settings: each prefix at every tier."""
     from agentqo.policies.v2_rules import rule_orders
     from scripts.run_real_pipeline import WORKFLOWS
-    wf_key = ("hotpot_iso" if s.name.startswith("hotpot_iso") else s.name.split("_")[0])
+    wf_key = ("hotpot_iso" if s.name.startswith("hotpot_iso") else "math" if s.name.startswith("x3")
+              else s.name.split("_")[0])
     wf = WORKFLOWS[wf_key][1]()
     top = len(s.tiers) - 1  # labels for confident_uv: the top tier's label row
     labels = {a: {"uv": terms.gain[i, top], "uv_ci_low": terms.uv_ci_low[i, top],

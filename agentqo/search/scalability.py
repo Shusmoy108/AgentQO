@@ -218,55 +218,105 @@ def greedy_syn(sy, budget):
     return np.array(out)
 
 
+def inst_rng(n: int, seed: int):
+    """Instance stream. Seeds < 1000 keep the exploratory formula; seeds >= 1000 (S6 confirmatory) use a
+    separate SeedSequence so no confirmatory instance shares a stream with an exploratory one."""
+    return np.random.default_rng(10_000 + 100 * n + seed if seed < 1000 else [n, seed, 2026])
+
+
+def abacus_layers(sy: Synthetic, need: int, max_layers: int = 60):
+    """Next-best fill: exact non-dominated layers 1..L of the independence estimate, L the smallest with
+    >= need plans. Exact because with additive estimates a dominated prefix stays dominated under any common
+    completion, so a plan in layer <= L only extends prefixes in prefix-layers <= L."""
+    def peel(F, L):
+        rank = np.full(len(F), L)
+        left = np.arange(len(F))
+        for r in range(L):
+            if not len(left):
+                break
+            m = pareto_mask(F[left]); rank[left[m]] = r; left = left[~m]
+        return rank
+    for L in range(1, max_layers + 1):
+        G, F = np.zeros((1, 0), dtype=int), np.array([[1.0, -sy.base]])
+        for i in range(sy.n):
+            t = np.tile(np.arange(3), len(G))
+            G = np.c_[np.repeat(G, 3, 0), t]
+            F = np.repeat(F, 3, 0) + np.c_[sy.dcost[i, t], -sy.label_gain[i, t]]
+            keep = peel(F, L) < L
+            G, F = G[keep], F[keep]
+        if len(G) >= need or L == max_layers:
+            return G, F, L
+
+
+def strict_hv(sy, G):
+    """EXPLORATORY: reference accuracy = the all_small plan's true accuracy."""
+    G = np.asarray(G)
+    base = sy.acc(np.zeros((1, sy.n), dtype=int))[0]
+    return hv2(np.maximum(sy.acc(G) - base, 0), sy.cost(G), sy.cmax)
+
+
 def sweep_one(args):
     """One synthetic instance (n, seed) at every interaction scale and budget."""
     import time
-    n, seed, pools = args
+    n, seed, pools, scales, budgets = args
     rows = []
-    for scale in SCALES:
-        sy = Synthetic(n, pools, np.random.default_rng(10_000 + 100 * n + seed), scale)
+    for scale in scales:
+        sy = Synthetic(n, pools, inst_rng(n, seed), scale)
         card = np.full(n, 3)
         t0 = time.time(); GA, FA = abacus_dp(sy); t_dp = time.time() - t0
         sur = {k: surrogate(sy, k) for k in ("pairwise", "independence")}
         arch = {k: nsga2(card, f, np.random.default_rng(seed), HP["generations"]) for k, (f, _) in sur.items()}
-        found = {}
-        for b in BUDGETS:
+        found, layers = {}, {}
+        for b in budgets:
             for k, (f, ver) in sur.items():
                 seen = {tuple(g) for g in ver}
                 found[(f"nsga2_{k}", b)] = np.array(list(ver) + _pick_new(arch[k][1], arch[k][0], b - len(ver), seen))
             take = pick(FA, b)
             rest = b - len(take)
             found[("abacus", b)] = np.r_[GA[take], np.random.default_rng(seed).integers(0, 3, (rest, n))] if rest > 0 else GA[take]
+            t0 = time.time(); GL, FL, L = abacus_layers(sy, b); layers[b] = (L, time.time() - t0)
+            found[("abacus_nextbest", b)] = GL[pick(FL, b)]
             found[("greedy_uv", b)] = greedy_syn(sy, b)
             found[("random", b)] = np.random.default_rng(seed + 1).integers(0, 3, (b, n))
             found[("nsga2_active", b)] = run_active_syn(sy, b, seed)
         OG, OF = nsga2(card, lambda X: np.c_[sy.cost(X), -sy.acc(X)], np.random.default_rng(seed),
                        ORACLE["generations"], pop=ORACLE["pop"])
-        ref_hv = hv(sy, np.r_[OG[pareto_mask(OF)], *found.values()])
+        ref = np.r_[OG[pareto_mask(OF)], *found.values()]
+        ref_hv, ref_strict = hv(sy, ref), strict_hv(sy, ref)
         indep_err = float(np.abs(sy._pairsum(OG, sy.pairs)).mean())  # mean |interaction| over oracle archive plans
         for (m, b), G_ in found.items():
             rows.append({"n_agents": n, "interaction_scale": scale, "seed": seed, "method": m, "budget": b,
                          "verified": len(np.unique(G_, axis=0)), "hv_ratio": hv(sy, G_) / ref_hv,
+                         "strict_hv_ratio": strict_hv(sy, G_) / ref_strict if ref_strict > 0 else float("nan"),
                          "abacus_front_size": len(GA), "abacus_dp_s": t_dp, "abacus_options_per_agent": 3,
+                         "abacus_layers_used": layers[b][0], "abacus_layers_s": layers[b][1],
                          "n_interacting_pairs": len(sy.pairs) // 4, "mean_abs_interaction": indep_err,
-                         "simulated": True, "registered": False})
+                         "simulated": True})
     print(f"sweep n={n} seed={seed} done", flush=True)
     return rows
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--interaction-sweep", action="store_true", help="EXPLORATORY sweep (not registered)")
+    ap.add_argument("--interaction-sweep", action="store_true", help="EXPLORATORY / S6 sweep")
     ap.add_argument("--seeds", type=int, default=30)
+    ap.add_argument("--seed-start", type=int, default=0)
+    ap.add_argument("--sizes", default=",".join(map(str, SIZES)))
+    ap.add_argument("--scales", default=",".join(map(str, SCALES)))
+    ap.add_argument("--budgets", default=",".join(map(str, BUDGETS)))
     ap.add_argument("--workers", type=int, default=9)
     ap.add_argument("--out", default=str(ROOT / "results" / "search" / "scalability_SIMULATED.csv"))
     a = ap.parse_args()
     pools = measured_pools()
     if a.interaction_sweep:
-        out = ROOT / "results" / "search" / "exploratory" / "scalability_interaction_SIMULATED.csv"
+        out = Path(a.out)
         out.parent.mkdir(parents=True, exist_ok=True)
+        sizes = [int(x) for x in a.sizes.split(",")]
+        scales = [float(x) for x in a.scales.split(",")]
+        budgets = [int(x) for x in a.budgets.split(",")]
+        jobs = [(n, s, pools, scales, budgets) for n in sizes for s in range(a.seed_start, a.seed_start + a.seeds)]
         with Pool(a.workers) as p:
-            rows = [r for rs in p.map(sweep_one, [(n, s, pools) for n in SIZES for s in range(a.seeds)]) for r in rs]
+            rows = [r for rs in p.map(sweep_one, jobs) for r in rs]
         with open(out, "w", newline="") as f:
             w = csv.DictWriter(f, list(rows[0])); w.writeheader(); w.writerows(rows)
         print(f"wrote {len(rows)} rows to {out}")
