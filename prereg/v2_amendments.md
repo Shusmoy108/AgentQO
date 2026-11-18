@@ -642,3 +642,26 @@ before X11b. Order: prep (no model calls) -> wait for the search session's tag s
 No block starts after 2026-11-19 14:00Z; final_guard rules unchanged. A restart moves a partial run to superseded_* and logs
 it. Reported: per plan accuracy, unscorable (X11a) / no-code (X11b) rates, and vs X5 / X7: Spearman rank correlation of plan
 accuracy, the cheapest plan within 1 point of the best, and best plan vs all_large.
+
+#### L2-X11 addendum: H5c (RQ5, confirmatory on X11), registered 2026-11-18 14:27:33 UTC, before any X11 model call (no X11 data exists:
+results/v2/X11 is absent on VM-A; only x11prep, which makes no model calls, has run)
+
+H5c. Data for the search: the existing X5 / X7 plan-evaluation per-problem data (results/v2/X5/math500_q15_7/plans,
+64 plans x 300 MATH-500 eval problems; results/v2/X7/code_c15_7/plans, 32 plans x 178 MBPP+ eval problems). Two searches,
+each run over 30 seeded problem orders (seeds 0-29; the seed permutes the eval problems):
+(a) paired successive halving: round 1 scores every plan on the first n0 = 25 problems of the order; keep the top 1/3 of the
+    plans by accuracy (ceil; ties broken by lower cost_units, then plan name), and triple the number of problems per round
+    (25, 75, 225, ... capped at all eval problems; each round uses the first n_r problems of the same order, so comparisons
+    are paired); stop when one plan is left or the problems are exhausted (then the best remaining plan by accuracy on all
+    problems used, same tie-break).
+(b) paired eps-racing: eps = 0.0134; every live plan is scored on the first 25 problems of the order, then 25 more per step;
+    after each step the leader is the live plan with the highest accuracy on the problems seen; a plan is dropped when the
+    upper end of the 95% normal CI (mean +/- 1.96 sd / sqrt(n)) of its per-problem paired difference to the leader is below
+    -eps; stop when one plan is left or the problems are exhausted (then the leader).
+Evaluations counted = plan x problem cells scored. Comparator: the eval-exhaustive pick = the plan with the best accuracy on
+all eval problems (same tie-break); its cost = all plans x all eval problems. Scoring: each pick's accuracy on the X11
+held-out problems (X11a: 200 MATH-500 problems; X11b: 200 MBPP+ problems), regret = best held-out accuracy over all plans
+minus the pick's held-out accuracy. HELD if, in both settings, the mean held-out regret (over the 30 seeds) of (a) and of
+(b) is within tau = 0.0134 of the exhaustive pick's held-out regret, and the mean number of evaluations of (a) and of (b)
+is <= 40% of the exhaustive count. Otherwise NOT HELD (each condition reported separately). Offline analysis only (no
+extra model calls), computed after X11 finishes; results in results/v2/X11/H5c/.
