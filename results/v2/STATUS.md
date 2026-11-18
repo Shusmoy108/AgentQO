@@ -167,3 +167,4 @@ X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 
 2026-11-18T01:22:13Z VM-A GATE X5-labels: math500_q15_7: labels done; plans INCOMPLETE; smoke all_small=0.20 all_large=1.00
 2026-11-18T01:59:58Z TIME LEFT after X5: 22.0 h to the 2026-11-19T00:00Z stop for new X work (06:00Z GPU cutoff)
 2026-11-18T02:01:37Z VM-A GATE X5-plans: math500_q15_7: labels done; 64 plans, small 0.410 large 0.650 best 0.693; smoke all_small=0.20 all_large=1.00
+2026-11-18T02:01:43Z VM-A GATE X5: math500_q15_7: labels done; 64 plans, small 0.410 large 0.650 best 0.693; smoke all_small=0.20 all_large=1.00
