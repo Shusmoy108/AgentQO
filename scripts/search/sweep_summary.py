@@ -35,9 +35,18 @@ def cell(g, a, b):
 
 
 def main():
-    d = pd.read_csv(EX / "scalability_interaction_SIMULATED.csv")
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--csv", default=str(EX / "scalability_interaction_SIMULATED.csv"))
+    ap.add_argument("--md", default=str(EX / "SCALABILITY_INTERACTION.md"))
+    ap.add_argument("--fig", default="sweep_vs_abacus_SIMULATED.png")
+    ap.add_argument("--comparators", default="abacus")
+    ap.add_argument("--title", default="Scalability x interaction strength (SIMULATED; exploratory, not registered)")
+    a = ap.parse_args()
+    comps = a.comparators.split(",")
+    d = pd.read_csv(a.csv)
     ns, scales, budgets = sorted(d.n_agents.unique()), sorted(d.interaction_scale.unique()), sorted(d.budget.unique())
-    md = ["# Scalability x interaction strength (SIMULATED; exploratory, not registered)", "",
+    md = [f"# {a.title}", "",
           "Synthetic 3-tier workflows (agentqo/search/scalability.py --interaction-sweep). Each (agents, seed) instance",
           "is drawn once; the sampled pair interactions are then multiplied by 0, 0.5, 1, 2, 4 (1 = the measured",
           "distribution; 0 = purely additive truth, label noise still present). HV ratio vs the best known front",
@@ -46,27 +55,34 @@ def main():
           "plans in 4 rounds), nsga2_independence, abacus (exact Pareto DP over the independence estimate),",
           "greedy_uv (stops after 2n+1 plans), random.", "",
           f"## Where interaction-aware search beats Abacus-style (paired over 30 seeds, tau = {TAU}, 95% CI)", "",
-          "Cell = mean HV-ratio difference (method minus abacus) and W/T/L.", ""]
+          "Cell = mean HV-ratio difference (method minus comparator) and W/T/L. abacus = leftover budget filled with",
+          "random plans; abacus_nextbest = leftover filled with the next non-dominated layers of the independence",
+          "estimate (exact layered DP).", ""]
     grids = {}
-    for a in AWARE:
+    for comp in comps:
+      for a_ in AWARE:
         for b in budgets:
-            md += [f"### {a} vs abacus, B = {b}", "", "| agents \\ scale | " + " | ".join(f"x{s:g}" for s in scales) + " |",
+            md += [f"### {a_} vs {comp}, B = {b}", "", "| agents \\ scale | " + " | ".join(f"x{s:g}" for s in scales) + " |",
                    "|---|" + "---|" * len(scales)]
             G = np.zeros((len(ns), len(scales))); R = np.empty_like(G, dtype=object)
             for i, n in enumerate(ns):
                 row = []
                 for j, s in enumerate(scales):
                     g = d[(d.n_agents == n) & (d.interaction_scale == s) & (d.budget == b)]
-                    G[i, j], R[i, j] = cell(g, a, "abacus")
+                    G[i, j], R[i, j] = cell(g, a_, comp)
                     row.append(f"{G[i, j]:+.3f} {R[i, j]}")
                 md.append(f"| {n} | " + " | ".join(row) + " |")
-            grids[(a, b)] = (G, R)
+            grids[(comp, a_, b)] = (G, R)
             md.append("")
-    wins = {(a, b): [(ns[i], scales[j]) for i in range(len(ns)) for j in range(len(scales)) if grids[(a, b)][1][i, j] == "W"]
-            for a in AWARE for b in budgets}
-    md += ["Cells where the interaction-aware method WINS against abacus:", ""]
-    md += [f"- {a}, B={b}: " + (", ".join(f"{n} agents x{s:g}" for n, s in w) or "none") for (a, b), w in wins.items()]
-    md.append("")
+    for comp in comps:
+        md += [f"Cells (of {len(ns) * len(scales)} per budget) where the method WINS / LOSES against {comp}:", ""]
+        for a_ in AWARE:
+            for b in budgets:
+                R = grids[(comp, a_, b)][1]
+                w = [(ns[i], scales[j]) for i in range(len(ns)) for j in range(len(scales)) if R[i, j] == "W"]
+                l = [(ns[i], scales[j]) for i in range(len(ns)) for j in range(len(scales)) if R[i, j] == "L"]
+                md.append(f"- {a_}, B={b}: W {len(w)}, L {len(l)}" + (f" (losses: {', '.join(f'{n} agents x{s:g}' for n, s in l)})" if l else ""))
+        md.append("")
 
     piv = d.groupby(["budget", "interaction_scale", "method"]).hv_ratio.mean().unstack().round(3)
     md += ["## Mean HV ratio by budget and interaction scale (averaged over 10-30 agents)", "",
@@ -76,6 +92,13 @@ def main():
 
     ab = d[d.method == "abacus"].groupby("n_agents").agg(front=("abacus_front_size", "mean"), front_max=("abacus_front_size", "max"),
                                                           dp_s=("abacus_dp_s", "mean"))
+    if "abacus_layers_used" in d:
+        lay = d[d.method == "abacus_nextbest"].groupby(["n_agents", "budget"]).agg(
+            layers=("abacus_layers_used", "mean"), layers_max=("abacus_layers_used", "max"), s=("abacus_layers_s", "mean"))
+        md += ["## Next-best fill: estimate layers needed to fill B (layered Pareto DP)", "",
+               "| agents | B | mean layers | max layers | mean time (s) |", "|---|---|---|---|---|"]
+        md += [f"| {n} | {b} | {r.layers:.1f} | {r.layers_max:.0f} | {r.s:.3f} |" for (n, b), r in lay.iterrows()]
+        md.append("")
     md += ["## How Abacus-style scales", "",
            "Abacus-style never enumerates the 3^n plans. With additive (independence) estimates of cost and accuracy,",
            "the estimated Pareto front can be built agent by agent: keep only the non-dominated partial plans (cost,",
@@ -89,27 +112,28 @@ def main():
            "Budget filling: Abacus-style verifies its estimated front spread along cost; when the front is smaller than",
            "B (typical at 10-15 agents, e.g. 34 plans at 10 agents vs B = 50-200) the rest of B is filled with random",
            "plans (logged choice), so at small n its extra budget is effectively random search.", ""]
-    (EX / "SCALABILITY_INTERACTION.md").write_text("\n".join(md) + "\n")
+    Path(a.md).write_text("\n".join(md) + "\n")
 
     # figure: diverging grids (orange = abacus better, blue = interaction-aware better, gray midpoint)
     cmap = LinearSegmentedColormap.from_list("div", ["#eb6834", "#f0efec", "#2a78d6"])
-    fig, axes = plt.subplots(len(AWARE), len(budgets), figsize=(13, 7.5))
+    keys = [(c, a_) for c in comps for a_ in AWARE]
+    fig, axes = plt.subplots(len(keys), len(budgets), figsize=(13, 3.8 * len(keys)), squeeze=False)
     lim = max(np.abs(g[0]).max() for g in grids.values())
-    for i, a in enumerate(AWARE):
+    for i, (comp, a_) in enumerate(keys):
         for j, b in enumerate(budgets):
             ax = axes[i, j]
-            G, R = grids[(a, b)]
+            G, R = grids[(comp, a_, b)]
             im = ax.imshow(G, cmap=cmap, vmin=-lim, vmax=lim, aspect="auto")
             for r in range(len(ns)):
                 for c in range(len(scales)):
                     ax.text(c, r, f"{G[r, c]:+.3f}\n{R[r, c]}", ha="center", va="center", fontsize=8, color="#111")
             ax.set_xticks(range(len(scales))); ax.set_xticklabels([f"x{s:g}" for s in scales])
             ax.set_yticks(range(len(ns))); ax.set_yticklabels(ns)
-            ax.set_title(f"{a} minus abacus, B={b}", fontsize=9)
+            ax.set_title(f"{a_} minus {comp}, B={b}", fontsize=9)
             ax.set_xlabel("pair-interaction scale (x measured)"); ax.set_ylabel("agents")
     fig.colorbar(im, ax=axes, label="HV ratio difference (blue: interaction-aware better)")
-    fig.suptitle("SIMULATED, exploratory: interaction-aware search vs Abacus-style (W/T/L, tau = 0.0134)", fontsize=10)
-    fig.savefig(ROOT / "results" / "search" / "figures" / "sweep_vs_abacus_SIMULATED.png", dpi=130, bbox_inches="tight")
+    fig.suptitle(f"SIMULATED, exploratory: interaction-aware search vs {', '.join(comps)} (W/T/L, tau = 0.0134)", fontsize=10)
+    fig.savefig(ROOT / "results" / "search" / "figures" / a.fig, dpi=130, bbox_inches="tight")
     print("\n".join(md))
 
 

@@ -10,7 +10,9 @@ greedy_uv (stops after 2n+1 plans), random.
 
 ## Where interaction-aware search beats Abacus-style (paired over 30 seeds, tau = 0.0134, 95% CI)
 
-Cell = mean HV-ratio difference (method minus abacus) and W/T/L.
+Cell = mean HV-ratio difference (method minus comparator) and W/T/L. abacus = leftover budget filled with
+random plans; abacus_nextbest = leftover filled with the next non-dominated layers of the independence
+estimate (exact layered DP).
 
 ### nsga2_pairwise vs abacus, B = 50
 
@@ -66,14 +68,14 @@ Cell = mean HV-ratio difference (method minus abacus) and W/T/L.
 | 20 | +0.014 W | +0.038 W | +0.054 W | +0.063 W | +0.048 W |
 | 30 | -0.007 T | +0.026 W | +0.042 W | +0.066 W | +0.087 W |
 
-Cells where the interaction-aware method WINS against abacus:
+Cells (of 20 per budget) where the method WINS / LOSES against abacus:
 
-- nsga2_pairwise, B=50: none
-- nsga2_pairwise, B=100: none
-- nsga2_pairwise, B=200: 10 agents x0.5, 10 agents x4
-- nsga2_active, B=50: 10 agents x0.5, 10 agents x1, 10 agents x2, 10 agents x4, 15 agents x1, 15 agents x2, 15 agents x4
-- nsga2_active, B=100: 10 agents x0, 10 agents x0.5, 10 agents x1, 10 agents x2, 10 agents x4, 15 agents x0, 15 agents x0.5, 15 agents x1, 15 agents x2, 15 agents x4, 20 agents x0.5, 20 agents x1, 20 agents x2, 20 agents x4, 30 agents x2, 30 agents x4
-- nsga2_active, B=200: 10 agents x0, 10 agents x0.5, 10 agents x1, 10 agents x2, 10 agents x4, 15 agents x0, 15 agents x0.5, 15 agents x1, 15 agents x2, 15 agents x4, 20 agents x0, 20 agents x0.5, 20 agents x1, 20 agents x2, 20 agents x4, 30 agents x0.5, 30 agents x1, 30 agents x2, 30 agents x4
+- nsga2_pairwise, B=50: W 0, L 3 (losses: 20 agents x0, 20 agents x2, 30 agents x0)
+- nsga2_pairwise, B=100: W 0, L 3 (losses: 15 agents x4, 20 agents x2, 30 agents x0)
+- nsga2_pairwise, B=200: W 2, L 3 (losses: 20 agents x2, 20 agents x4, 30 agents x0)
+- nsga2_active, B=50: W 7, L 6 (losses: 15 agents x0, 20 agents x0, 20 agents x0.5, 30 agents x0, 30 agents x0.5, 30 agents x1)
+- nsga2_active, B=100: W 16, L 1 (losses: 30 agents x0)
+- nsga2_active, B=200: W 19, L 0
 
 ## Mean HV ratio by budget and interaction scale (averaged over 10-30 agents)
 

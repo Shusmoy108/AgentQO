@@ -97,3 +97,10 @@ Times UTC. Choices made without asking, as instructed.
   property). S5 HELD if mean retention over 30 seeds >= 0.95 in every X2 setting; PARTIAL if in some; FAILED if
   none. Reported alongside (not deciding): every other method; the true eval front re-scored on X2; and the
   chosen front's X2 HV divided by the true X2 front's HV.
+- 01:1xZ S6(b) (confirmatory, seeds 1000-1029, code at the S6 tag) PARTIAL: 5/8 cells pass (all B = 200 cells;
+  at B = 100 only 20 agents x2). Exploratory fairness check (seeds 0-29, abacus_nextbest added; file
+  scalability_interaction_nextbest_SIMULATED.csv; earlier random-fill sweep file kept): active vs next-best
+  Abacus W/L 7/6 (B 50), 14/1 (B 100), 16/0 (B 200) of 20 cells; next-best fill beats random fill only at weak
+  interactions (x0-x0.5) and is worse at x2-x4. Existing method rows are unchanged from the first sweep
+  (same seeds); only the reference front now also includes abacus_nextbest's plans.
+- Watcher (git ls-tree names only, every 5 min) waits for X2_vmB/math_phi and X3_vmB/plans/h3_plans.csv.

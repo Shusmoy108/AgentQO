@@ -214,7 +214,7 @@ def main():
            "X5 MATH-500, X6 7B/32B, X7 coding, laptop q4."]
     md += ["", "---", "", "# Exploratory, not registered", "",
            "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 pending).", ""]
-    for f in ("exploratory/EXPLORATORY.md", "exploratory/SCALABILITY_INTERACTION.md"):
+    for f in ("exploratory/EXPLORATORY.md", "exploratory/SCALABILITY_INTERACTION.md", "exploratory/FAIRNESS_NEXTBEST.md"):
         if (OUT / f).exists():
             md += [f"(from results/search/{f})", "", "\n".join(("#" + ln if ln.startswith("#") else ln) for ln in (OUT / f).read_text().splitlines()), ""]
     (OUT / "hypotheses_search.md").write_text("\n".join(md) + "\n")
