@@ -136,3 +136,19 @@ override a pair. With rev1's params, `betas_for` was checked identical to the re
 three-model sets x 3 placements. Fit: the four directed 14B pairs (14B->1.5B, 1.5B->14B, 14B->7B, 7B->14B), shared
 only, least squares on per-call log residual of closed-loop re-simulation of the 16 warm X1c A16 runs (rev1 model
 parameters fixed, start = borrowed values). Phi: X1c/phi/fit h4_fit at rev1's quantile (p50), shared and shared_mps.
+
+### rev2 freeze: `latsim-rev2-20261118T000620Z` (2026-11-18 00:06Z, before any rev2 prediction or score)
+
+Fit on X1c only (lease head ee868ef7; X1c reported complete by the lease at ~00:06Z): `results/v2/X1c/phi/fit`
+(fit_results.json, mps_fit.json; AgentIconq at rev1's quantile p50) and `results/v2/X1c/a16_three_model/shared` (16 warm
+runs, 6,144 calls). Params: `results/latsim/rev2/params.json`; it differs from rev1's only in `betas.phi` (new),
+`pair_betas` (new) and the `rev2` record (checked).
+- Phi, shared: large->small 1.896, small->large 1.164 (borrowed from q3_14 before: 2.148, 1.052). MPS: 1.572, 0.567.
+- A16, shared, fitted (borrowed): 14B->1.5B 2.594 (2.225), 1.5B->14B 0.861 (0.908), 14B->7B 1.764 (2.148),
+  7B->14B 1.122 (1.052). Per-call log RMSE on A16 0.137 -> 0.111; mean log residual -0.006 -> -0.005.
+Test plan, unchanged from PI decision 3: predict the full grid with rev2 params (`predict --params
+results/latsim/rev2/params.json --out results/latsim/rev2/predictions.csv`), score X1 and X1b with the same metrics
+and scripts as frozen / rev1, report as "with measured instead of borrowed interference factors". It is not a held-out
+claim on X1 or X1b (both were open). Settings whose predictions can change: those serving Phi or the 14B with another
+model on one GPU (math_phi shared / shared_mps, math_tiers shared / shared_mps-with-14B uses borrowed MPS so only
+shared changes); all others must be identical to rev1 (checked after prediction).
