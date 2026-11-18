@@ -250,3 +250,5 @@ RuntimeError: Engine core initialization failed. See root cause above. Failed co
 (EngineCore pid=729113) INFO 11-18 02:03:39 [core.py:395] init engine (profile, create kv cache, warmup model) took 10.80 s (compilation: 0.15 s)
 88679 MiB, 95830 MiB
 2026-11-18T02:08:47Z X6 schedule: X6 quality waits for X3 to complete on VM-B (X3 holds :8003 with Phi-4 and 0.92 of VM-B's GPU; X6 needs Qwen 7B on :8003). X3 restarted 02:07Z (~2 h of plans left), so X6 quality starts ~04:20Z; VM-A idles until then (moving X7 to VM-A instead would end later). tools/stage4b_orch.sh replaces stage 4 after X5.
+2026-11-18T03:37:13Z X8 START on VM-A (search-prereg-s5b tag on origin; VM-A idle before X6)
+2026-11-18T03:37:46Z X8 scheduled (L2-X8 registered 1981d1e4 before any X8 data): /mnt/data/x8.sh A-x8 (x clone c1bb8338, V2_DEVIATION=D-L2-X-code; complex_q15_7, all 1,024 plans, eval_x2[:200], same flags as P2c: max_tokens 256, cautious verifier, servers 0.25/0.55; P2c labels reused). tools/stage4c_orch.sh (replaces stage4b) starts X8 on VM-A once search-prereg-s5b-* is on origin (not there at 03:35Z), pauses it when X3 completes (X6 priority), resumes it from the cache after X6.
