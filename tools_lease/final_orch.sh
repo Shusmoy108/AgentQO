@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Lease 2 FINAL (PI FINAL spec 2026-11-16, cache part per the PI NEXT of 2026-11-17 04:10Z: compressed per-VM caches built
 # and verified on the VMs, only the compressed files copied to the Mac, no uncompressed cache copy on the Mac, no deletions
-# on the Mac). Waits for 2026-11-19T06:00Z (FINAL_NOW=1 starts at once). FINAL_DRY=1: build into $R/FINAL_dryrun without
+# on the Mac). Waits for 2026-11-19T16:00Z (lease ends 22:38Z; FINAL 16:00-20:00Z; FINAL_NOW=1 starts at once). FINAL_DRY=1: build into $R/FINAL_dryrun without
 # touching the VM caches, git, or mac_sync (for testing the zip build).
 set -uo pipefail
 R=~/AgentQO_results/v2; WT=~/AgentQO_lease; EV=$R/events.log; ST=$R/STATUS.md; T=$R/tools; REPO=/mnt/data/AgentQO
@@ -13,7 +13,7 @@ macfree() { echo $(( $(df -k ~ | tail -1 | awk '{print $4}') / 1024 / 1024 )); }
 floor() { [ "$(macfree)" -ge 10 ] || { echo "$(ts) ACTION NEEDED: Mac disk ($(macfree) GB free) during FINAL $1" | tee -a $ST >> $EV; echo "ACTION NEEDED: Mac disk"; exit 2; }; }
 
 if [ "${FINAL_NOW:-0}" != 1 ] && [ $DRY != 1 ]; then
-  until python3 -c 'import datetime as d,sys; sys.exit(d.datetime.now(d.timezone.utc) < d.datetime(2026,11,19,6,tzinfo=d.timezone.utc))'; do sleep 30; done
+  until python3 -c 'import datetime as d,sys; sys.exit(d.datetime.now(d.timezone.utc) < d.datetime(2026,11,19,16,tzinfo=d.timezone.utc))'; do sleep 30; done
 fi
 log "START (dry=$DRY); Mac free $(macfree) GB"
 mkdir -p $OUT; floor start
