@@ -726,3 +726,26 @@ all_small run, whether to upgrade the verifier. Per setting:
 - Test on the X2 problems (719): HELD if, in both settings, router accuracy >= fixed upgrade accuracy - 0.0134 AND router mean
   API cost <= 0.70 x the fixed upgrade's mean API cost. Otherwise NOT HELD (each condition reported). Offline analysis only
   (no model calls beyond the X12 reruns); results in results/v2/X12/H6b/.
+
+#### L2-X11 addendum: H5c-b2 (RQ5 variant, confirmatory on X11), registered 2026-11-18 14:43:00 UTC AFTER X11 model calls started (14:34:01Z) but BEFORE any X11 output was read or analysed
+
+Evidence at registration (checked on VM-A at 2026-11-18T14:42:44Z by file listing, row count and checksum only):
+X11 per-problem rows existing on VM-A: 0 (no h3_per_problem.csv exists yet; X11a writes its outputs when the run ends).
+Files in results/v2/X11 (4): code_c15_7/split.json (3,844 B), math500_q15_7/split.json (7,540 B),
+math500_q15_7/plans/run_config.v2.json (471 B), provenance.jsonl (217 B). sha256 of results/v2/X11 as it stands (sha256 of
+the sorted per-file sha256 list): c60c2a9e5a1b47bad76c6af8dbba6de76b64c892206d030377fad32deb320e76. No X11 analysis script has
+run and no X11 output file has been opened. The Mac sync loop was paused at 14:42Z until this amendment is pushed; the Mac
+mirror holds the same 4 files (no outputs).
+H5c is unchanged and stays registered as is; H5c-b2 is a variant with only the racing rule changed ("good-enough" stopping).
+(a) successive halving is not repeated.
+(b2) paired eps-racing, eps = 0.0134, on the same X5 / X7 eval per-problem data, the same 30 seeded problem orders (seeds
+0-29), 25 problems per step, the same tie-break as H5c (higher accuracy, then lower cost_units, then plan name). After each
+step: leader = the live plan with the highest accuracy on the problems seen. For every other live plan p: d = correct(p) -
+correct(leader) per problem, 95% normal CI mean +/- 1.96 sd / sqrt(n) (if sd = 0, use sd = 0.5). Drop p if its upper bound
+< 0. STOP when every remaining non-leader plan has upper bound <= eps (no plan can beat the leader by more than eps), or when
+one plan is left, or when the problems are exhausted; the pick is the leader.
+Same scoring, comparator and criterion as H5c: each pick's accuracy on the X11 held-out problems; regret = best held-out
+accuracy over all plans minus the pick's; comparator = the eval-exhaustive pick. HELD if, in both X11 settings, the mean
+held-out regret of (b2) over the 30 seeds is within tau = 0.0134 of the exhaustive pick's regret, at <= 40% of the exhaustive
+plan x problem evaluations. H5c and H5c-b2 are reported side by side; neither replaces the other. Offline analysis only;
+results in results/v2/X11/H5c/ (both).
