@@ -297,3 +297,5 @@ RuntimeError: Engine core initialization failed. See root cause above. Failed co
 2026-11-18T07:08:49Z TIMING_LOCK released on VM-B by X6-latency
 2026-11-18T07:09:56Z X8 (RE)START on VM-A after X6
 2026-11-18T07:13:52Z VM-A GATE X6: hotpot_q7_32: labels done; 32 plans, small 0.490 large 0.502 best 0.540 | math500_q7_32: labels done; 64 plans, small 0.650 large 0.770 best 0.777 | math_q7_32: labels done; 64 plans, small 0.820 large 0.930 best 0.940
+2026-11-18T07:34:27Z TIME LEFT after X8: 16.4 h
+2026-11-18T07:36:38Z VM-A GATE X8: complex_q15_7: plans INCOMPLETE
