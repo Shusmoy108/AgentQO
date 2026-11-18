@@ -350,3 +350,6 @@ RuntimeError: Engine core initialization failed. See root cause above. Failed co
 2026-11-18T16:01:53Z VM-B GATE X9-math_tiers: math_tiers: 729 plans, small 0.505 large 0.845 best 0.900
 2026-11-18T16:02:12Z TIME LEFT after X9: 22.0 h to 2026-11-19 14:00Z
 2026-11-18T16:07:48Z VM-B GATE X9: math_tiers: 729 plans, small 0.505 large 0.845 best 0.900
+2026-11-18T16:27:02Z TIME LEFT after X10 math_granite: 21.5 h to 2026-11-19 14:00Z
+2026-11-18T16:26:42Z X10 math_granite vs P4: {"cells_compared": 25600, "cells_missing": 0, "flipped_cells": 3785, "flip_share": 0.1478515625, "plans_with_any_flip": 64, "max_abs_plan_delta": 0.04, "mean_abs_plan_delta": 0.0144921875, "front_ref": ["all_small", "only_verifier", "planner+step_1+aggregator+verifier", "planner+step_1+verifier", "planner+step_2+step_3+aggregator+verifier", "planner+verifier"], "front_added": ["planner+step_3+verifier", "step_3+verifier"], "front_removed": ["planner+step_1+verifier", "planner+step_2+step_3+aggregator+verifier", "planner+verifier"], "front_unchanged": false, "cost": "cost_units from the reference h3_plans.csv for both runs"}
+2026-11-18T16:30:37Z VM-B GATE X10-math_granite: math_granite: 64 plans, small 0.482 large 0.730 best 0.738 | math_phi: plans INCOMPLETE
