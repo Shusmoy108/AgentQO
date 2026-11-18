@@ -596,3 +596,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T14:29:00Z X11 prep VM-A: x clone 18b3d7a0; sandbox  13 passed in 5.19s ; full suite  222 passed in 119.40s (0:01:59) ; Coder 1.5B/7B downloaded (nothing deleted); /mnt/data 31G free; math500_q15_7 n=200 sha256=dfa024369adda89d overlap=0; code_c15_7 n=200 sha256=05b900e306041f6b overlap=0; 
 - 14:36Z L2-X11 (6d853cdb) + H5c (7a67f064) + H1d (d488d333) registered before any X11 model call; X11 splits n = 200 / 200, overlap 0 / 0; X11a started 14:34Z on VM-A. X9 running on VM-B.
 - 14:39Z L2-X12 + H6b registered (5cc73094); code 75da2c83; X12 queued on VM-A after X11 (stage8_orch.sh).
+- 14:42Z lq.sh cutoffs on both VMs moved to the new schedule (V2_LEASE_END 16:00Z, reserve 2 h -> 14:00Z; step() GPU cutoff 14:00Z); no block interrupted.
