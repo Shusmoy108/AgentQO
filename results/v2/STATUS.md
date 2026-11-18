@@ -150,3 +150,4 @@ X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 
 2026-11-18T00:05:06Z TIME LEFT after X1: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
 2026-11-18T00:05:06Z TIME LEFT after X1b: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
 2026-11-18T00:05:06Z TIME LEFT after X1c: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:05:09Z VM-A GATE X1c-phi_fit: no settings
