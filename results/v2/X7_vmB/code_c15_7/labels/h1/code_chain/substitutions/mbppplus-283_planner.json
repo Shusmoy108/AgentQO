@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-283",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Convert the integer to a string to easily iterate over each digit.\n2. Create a dictionary to count the frequency of each digit.\n3. Iterate over each character (digit) in the string representation of the number.\n4. For each digit, update its count in the dictionary.\n5. Check if the count of any digit is greater than the digit itself; if so, return False. If all counts are valid, return True.",
+  "reference_key": null,
+  "final_key_plus": "def validate(n):\n    str_n = str(n)\n    digit_count = {}\n    \n    for digit in str_n:\n        if digit in digit_count:\n            digit_count[digit] += 1\n        else:\n            digit_count[digit] = 1\n    \n    for digit, count in digit_count.items():\n        if int(digit) < count:\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == False\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == False",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert validate(1234) == True\nassert validate(1111) == True\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == True\n```",
+    "coder": "```python\ndef validate(n):\n    str_n = str(n)\n    digit_count = {}\n    \n    for digit in str_n:\n        if digit in digit_count:\n            digit_count[digit] += 1\n        else:\n            digit_count[digit] = 1\n    \n    for digit, count in digit_count.items():\n        if int(digit) < count:\n            return False\n    \n    return True\n```",
+    "verifier": "PICK: B\n\n```python\ndef validate(n):\n    str_n = str(n)\n    digit_count = {}\n    \n    for digit in str_n:\n        if digit in digit_count:\n            digit_count[digit] += 1\n        else:\n            digit_count[digit] = 1\n    \n    for digit, count in digit_count.items():\n        if int(digit) < count:\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == False\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == False\n```",
+    "fixer": "```python\ndef validate(n):\n    str_n = str(n)\n    digit_count = {}\n    \n    for digit in str_n:\n        if digit in digit_count:\n            digit_count[digit] += 1\n        else:\n            digit_count[digit] = 1\n    \n    for digit, count in digit_count.items():\n        if int(digit) < count:\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == False\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `swap_List` that takes one parameter, `lst`.\n2. Check if the length of the list is less than 2. If true, return the list as it is since there are no elements to swap.\n3. Create two variables, `first_element` and `last_element`, to store the first and last elements of the list, respectively.\n4. Swap the values of `first_element` and `last_element`.\n5. Return the modified list.\n\nThis approach ensures that the function handles lists of any size and correctly swaps the first and last elements.",
+      "quality": 0.0,
+      "final_key": "def validate(n):\n    lst = [int(digit) for digit in str(n)]\n    if len(lst) < 2:\n        return lst\n    first_element = lst[0]\n    last_element = lst[-1]\n    lst[0] = last_element\n    lst[-1] = first_element\n    return lst",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert validate(1234) == True\nassert validate(987654321) == True\nassert validate(111111111) == True\nassert validate(100000000) == False\nassert validate(0) == True\n```",
+        "coder": "```python\ndef validate(n):\n    lst = [int(digit) for digit in str(n)]\n    if len(lst) < 2:\n        return lst\n    first_element = lst[0]\n    last_element = lst[-1]\n    lst[0] = last_element\n    lst[-1] = first_element\n    return lst\n```",
+        "verifier": "PICK: B\n```python\ndef validate(n):\n    lst = [int(digit) for digit in str(n)]\n    if len(lst) < 2:\n        return lst\n    first_element = lst[0]\n    last_element = lst[-1]\n    lst[0] = last_element\n    lst[-1] = first_element\n    return lst\n```",
+        "fixer": "```python\ndef validate(n):\n    lst = [int(digit) for digit in str(n)]\n    if len(lst) < 2:\n        return lst\n    first_element = lst[0]\n    last_element = lst[-1]\n    lst[0] = last_element\n    lst[-1] = first_element\n    return lst\n\n# Test cases\nassert validate(1234) == [4, 3, 2, 1]\nassert validate(51241) == [1, 2, 4, 1, 5]\nassert validate(321) == [1, 2, 3]\nassert validate(1234) == [4, 3, 2, 1]\nassert validate(987654321) == [1, 2, 3, 4, 5, 6, 7, 8, 9]\nassert validate(111111111) == [1, 1, 1, 1, 1, 1, 1, 1, 1]\nassert validate(100000000) == [0, 0, 0, 0, 0, 0, 0, 0, 0]\nassert validate(0) == [0]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Convert the integer to a string for easy iteration over each digit.\n2. Create a dictionary to count the frequency of each digit.\n3. Iterate over each character (digit) in the string representation of the number.\n4. For each digit, update its count in the dictionary.\n5. Check if the count of any digit is greater than the digit itself; if so, return False. If all counts are valid, return True.\n\nError: The condition \"if count > digit\" should be changed to \"if count >= digit + 1\".",
+      "quality": 0.0,
+      "final_key": "def validate(n):\n    str_n = str(n)\n    digit_count = {}\n    \n    for digit in str_n:\n        if digit in digit_count:\n            digit_count[digit] += 1\n        else:\n            digit_count[digit] = 1\n    \n    for digit, count in digit_count.items():\n        if count > int(digit) + 1:\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == True\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert validate(1234) == True\nassert validate(1111) == True\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == True\n```",
+        "coder": "```python\ndef validate(n):\n    str_n = str(n)\n    digit_count = {}\n    \n    for digit in str_n:\n        if digit in digit_count:\n            digit_count[digit] += 1\n        else:\n            digit_count[digit] = 1\n    \n    for digit, count in digit_count.items():\n        if count > int(digit) + 1:\n            return False\n    \n    return True\n```",
+        "verifier": "PICK: B\n\n```python\ndef validate(n):\n    str_n = str(n)\n    digit_count = {}\n    \n    for digit in str_n:\n        if digit in digit_count:\n            digit_count[digit] += 1\n        else:\n            digit_count[digit] = 1\n    \n    for digit, count in digit_count.items():\n        if count > int(digit) + 1:\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == True\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == True\n```",
+        "fixer": "```python\ndef validate(n):\n    str_n = str(n)\n    digit_count = {}\n    \n    for digit in str_n:\n        if digit in digit_count:\n            digit_count[digit] += 1\n        else:\n            digit_count[digit] = 1\n    \n    for digit, count in digit_count.items():\n        if count > int(digit) + 1:\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == True\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `reverse_string_list` that takes one parameter, `string_list`.\n2. Initialize an empty list called `reversed_list` to store the reversed strings.\n3. Iterate over each string in the input list using a for loop.\n4. For each string, use slicing to reverse it and append the result to the `reversed_list`.\n5. After iterating through all strings, return the `reversed_list`.\n\nThis approach ensures that each string is processed individually and correctly reversed before being added to the final list.",
+      "quality": 0.0,
+      "final_key": "def validate(n):\n    # Convert the integer to a string to iterate over each digit\n    str_n = str(n)\n    \n    # Check if the length of the string is 1 (single-digit number)\n    if len(str_n) == 1:\n        return True\n    \n    # Iterate over each character in the string\n    for i in range(len(str_n)):\n        # Get the current digit as an integer\n        digit = int(str_n[i])\n        \n        # Check if the digit is greater than its index\n        if digit > i:\n            return False\n    \n    # If no digits violate the condition, return True\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert validate(1234) == True\nassert validate(1111) == True\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == True\n```",
+        "coder": "```python\ndef validate(n):\n    # Convert the integer to a string to iterate over each digit\n    str_n = str(n)\n    \n    # Check if the length of the string is 1 (single-digit number)\n    if len(str_n) == 1:\n        return True\n    \n    # Iterate over each character in the string\n    for i in range(len(str_n)):\n        # Get the current digit as an integer\n        digit = int(str_n[i])\n        \n        # Check if the digit is greater than its index\n        if digit > i:\n            return False\n    \n    # If no digits violate the condition, return True\n    return True\n```",
+        "verifier": "PICK: A\n```python\ndef validate(n):\n    # Convert the integer to a string to iterate over each digit\n    str_n = str(n)\n    \n    # Check if the length of the string is 1 (single-digit number)\n    if len(str_n) == 1:\n        return True\n    \n    # Iterate over each character in the string\n    for i in range(len(str_n)):\n        # Get the current digit as an integer\n        digit = int(str_n[i])\n        \n        # Check if the digit is greater than its index\n        if digit > i:\n            return False\n    \n    # If no digits violate the condition, return True\n    return True\n```",
+        "fixer": "```python\ndef validate(n):\n    # Convert the integer to a string to iterate over each digit\n    str_n = str(n)\n    \n    # Check if the length of the string is 1 (single-digit number)\n    if len(str_n) == 1:\n        return True\n    \n    # Iterate over each character in the string\n    for i in range(len(str_n)):\n        # Get the current digit as an integer\n        digit = int(str_n[i])\n        \n        # Check if the digit is greater than its index\n        if digit > i:\n            return False\n    \n    # If no digits violate the condition, return True\n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == True\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True",
+  "sample_keys": [
+    "def validate(num):\n    num_str = str(num)\n    for digit in num_str:\n        freq = num_str.count(digit)\n        if int(digit) > freq:\n            return False\n    return True",
+    "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for d in num_str:\n        if d in digit_freq:\n            digit_freq[d] += 1\n        else:\n            digit_freq[d] = 1\n    \n    for d in num_str:\n        if digit_freq[d] > int(d):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == True\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(-1234) == False",
+    "def validate(num):\n    str_num = str(num)\n    for digit in set(str_num):\n        freq = str_num.count(digit)\n        if freq > int(digit):\n            return False\n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(10) == False\nassert validate(987654321) == True\nassert validate(111111111) == False  # Fix: This should be False as 1 appears more times than its value\nassert validate(1234567890) == False  # Fix: This should be False as 0 appears more times than its value\nassert validate(0) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1796.0,
+    "small_out": 1138.0,
+    "small_s": 24.87148082695785
+  },
+  "calls_plus": {
+    "large_in": 118.0,
+    "large_out": 92.0,
+    "large_s": 2.390827890019864,
+    "small_in": 1306.0,
+    "small_out": 498.0,
+    "small_s": 10.13117632700596
+  },
+  "calls_samples": {
+    "small_in": 4522.0,
+    "small_out": 2009.0,
+    "small_s": 41.130746000038926
+  }
+}

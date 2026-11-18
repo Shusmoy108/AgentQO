@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-283",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    \n    for char in num_str:\n        if char in freq_dict:\n            freq_dict[char] += 1\n        else:\n            freq_dict[char] = 1\n    \n    for digit, frequency in freq_dict.items():\n        if int(digit) < frequency:\n            return False\n    \n    return True\n```",
+  "reference_key": "def validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    \n    for char in num_str:\n        if char in freq_dict:\n            freq_dict[char] += 1\n        else:\n            freq_dict[char] = 1\n    \n    for digit, frequency in freq_dict.items():\n        if int(digit) < frequency:\n            return False\n    \n    return True",
+  "final_key_plus": "def validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    \n    for char in num_str:\n        if char in freq_dict:\n            freq_dict[char] += 1\n        else:\n            freq_dict[char] = 1\n    \n    for digit, frequency in freq_dict.items():\n        if int(digit) < frequency:\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == False\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == False",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert validate(1234) == True\nassert validate(1111) == True\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == True\n```",
+    "verifier": "PICK: B\n\n```python\ndef validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    \n    for char in num_str:\n        if char in freq_dict:\n            freq_dict[char] += 1\n        else:\n            freq_dict[char] = 1\n    \n    for digit, frequency in freq_dict.items():\n        if int(digit) < frequency:\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == False\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == False\n```",
+    "fixer": "```python\ndef validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    \n    for char in num_str:\n        if char in freq_dict:\n            freq_dict[char] += 1\n        else:\n            freq_dict[char] = 1\n    \n    for digit, frequency in freq_dict.items():\n        if int(digit) < frequency:\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(1111) == False\nassert validate(9876) == True\nassert validate(0) == True\nassert validate(1000) == False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def validate(num):\n    digits = str(num)\n    char_count = {}  # Initialize an empty dictionary to hold digit counts\n    \n    # Count the frequency of each digit\n    for digit in digits:\n        if digit in char_count:\n            char_count[digit] += 1\n        else:\n            char_count[digit] = 1\n            \n    # Check if any digit's frequency is greater than the digit itself\n    for digit, freq in char_count.items():\n        if freq > int(digit):\n            return False  # Return False if a frequency exceeds its digit\n            \n    return True  # Return True if all digits have valid frequencies",
+      "reference_key": "def validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    \n    for char in num_str:\n        if char in freq_dict:\n            freq_dict[char] += 1\n        else:\n            freq_dict[char] = 1\n    \n    for digit, frequency in freq_dict.items():\n        if int(digit) < frequency:\n            return False\n    \n    return True",
+      "key_differs": true,
+      "text": "```python\ndef validate(num):\n    digits = str(num)\n    char_count = {}  # Initialize an empty dictionary to hold digit counts\n    \n    # Count the frequency of each digit\n    for digit in digits:\n        if digit in char_count:\n            char_count[digit] += 1\n        else:\n            char_count[digit] = 1\n            \n    # Check if any digit's frequency is greater than the digit itself\n    for digit, freq in char_count.items():\n        if freq > int(digit):\n            return False  # Return False if a frequency exceeds its digit\n            \n    return True  # Return True if all digits have valid frequencies\n```",
+      "quality": 1.0,
+      "final_key": "def validate(num):\n    digits = str(num)\n    char_count = {}  # Initialize an empty dictionary to hold digit counts\n    \n    # Count the frequency of each digit\n    for digit in digits:\n        if digit in char_count:\n            char_count[digit] += 1\n        else:\n            char_count[digit] = 1\n            \n    # Check if any digit's frequency is greater than the digit itself\n    for digit, freq in char_count.items():\n        if freq > int(digit):\n            return False  # Return False if a frequency exceeds its digit\n            \n    return True  # Return True if all digits have valid frequencies",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert validate(9876543210) == True\nassert validate(1111111111) == True\nassert validate(12345678901234567890) == True\nassert validate(123456789012345678901234567890) == True\nassert validate(123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678",
+        "verifier": "PICK: A\n\n```python\ndef validate(num):\n    digits = str(num)\n    char_count = {}  # Initialize an empty dictionary to hold digit counts\n    \n    # Count the frequency of each digit\n    for digit in digits:\n        if digit in char_count:\n            char_count[digit] += 1\n        else:\n            char_count[digit] = 1\n            \n    # Check if any digit's frequency is greater than the digit itself\n    for digit, freq in char_count.items():\n        if freq > int(digit):\n            return False  # Return False if a frequency exceeds its digit\n            \n    return True  # Return True if all digits have valid frequencies\n```",
+        "fixer": "```python\ndef validate(num):\n    digits = str(num)\n    char_count = {}  # Initialize an empty dictionary to hold digit counts\n    \n    # Count the frequency of each digit\n    for digit in digits:\n        if digit in char_count:\n            char_count[digit] += 1\n        else:\n            char_count[digit] = 1\n            \n    # Check if any digit's frequency is greater than the digit itself\n    for digit, freq in char_count.items():\n        if freq > int(digit):\n            return False  # Return False if a frequency exceeds its digit\n            \n    return True  # Return True if all digits have valid frequencies\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(9876543210) == False\nassert validate(1111111111) == False\nassert validate(12345678901234567890) == False\nassert validate(123456789012345678901234567890) == False\nassert validate(12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for char in num_str:\n        if char in digit_freq:\n            digit_freq[char] += 1\n        else:\n            digit_freq[char] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True",
+      "reference_key": "def validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    \n    for char in num_str:\n        if char in freq_dict:\n            freq_dict[char] += 1\n        else:\n            freq_dict[char] = 1\n    \n    for digit, frequency in freq_dict.items():\n        if int(digit) < frequency:\n            return False\n    \n    return True",
+      "key_differs": true,
+      "text": "```python\n\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for char in num_str:\n        if char in digit_freq:\n            digit_freq[char] += 1\n        else:\n            digit_freq[char] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n```",
+      "quality": 0.0,
+      "final_key": "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for char in num_str:\n        if char in digit_freq:\n            digit_freq[char] += 1\n        else:\n            digit_freq[char] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(10) == True\nassert validate(987654321) == True\nassert validate(111111111) == True\nassert validate(1234567890) == True\nassert validate(12345678901) == True\nassert validate(123456789012) == True\nassert validate(1234567890123) == True\nassert validate(12345678901234) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert validate(10) == True\nassert validate(987654321) == True\nassert validate(111111111) == True\nassert validate(1234567890) == True\nassert validate(12345678901) == True\nassert validate(123456789012) == True\nassert validate(1234567890123) == True\nassert validate(12345678901234) == True\nassert validate(123456789012345) == True\nassert validate(1234567890123456) == True\nassert validate(12345678901234567) == True\nassert validate(123456789012345678) == True\nassert validate(1234567890123456789) == True\nassert validate(12345678901234567890) == True\nassert validate(123456789012345678901) == True\nassert validate(1234567890123456789012) == True\nassert validate(12345678901234567890123) == True\nassert validate(123456789012345678901234) == True\nassert validate(1234567890123456789012345) == True\nassert validate(12345678901234567890123456) == True\nassert validate(123456789012345678901234567) == True\nassert validate(123456",
+        "verifier": "PICK: B\n\n```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for char in num_str:\n        if char in digit_freq:\n            digit_freq[char] += 1\n        else:\n            digit_freq[char] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(10) == True\nassert validate(987654321) == True\nassert validate(111111111) == True\nassert validate(1234567890) == True\nassert validate(12345678901) == True\nassert validate(123456789012) == True\nassert validate(1234567890123) == True\nassert validate(12345678901234) == True\n```",
+        "fixer": "```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for char in num_str:\n        if char in digit_freq:\n            digit_freq[char] += 1\n        else:\n            digit_freq[char] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(10) == True\nassert validate(987654321) == True\nassert validate(111111111) == True\nassert validate(1234567890) == True\nassert validate(12345678901) == True\nassert validate(123456789012) == True\nassert validate(1234567890123) == True\nassert validate(12345678901234) == True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list",
+      "reference_key": "def validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    \n    for char in num_str:\n        if char in freq_dict:\n            freq_dict[char] += 1\n        else:\n            freq_dict[char] = 1\n    \n    for digit, frequency in freq_dict.items():\n        if int(digit) < frequency:\n            return False\n    \n    return True",
+      "key_differs": true,
+      "text": "```python\ndef reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list\n```",
+      "quality": 0.0,
+      "final_key": "def validate(n):\n    num_str = str(n)\n    for i in range(len(num_str)):\n        if int(num_str[i]) > len(num_str[i]):\n            return False\n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(0) == True\nassert validate(9) == True\nassert validate(1111) == True\nassert validate(123456789) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert validate(1234) == True\nassert validate(0) == True\nassert validate(9) == True\nassert validate(1111) == True\nassert validate(123456789) == True\n```",
+        "verifier": "PICK: B\n```python\ndef validate(n):\n    num_str = str(n)\n    for i in range(len(num_str)):\n        if int(num_str[i]) > len(num_str[i]):\n            return False\n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(0) == True\nassert validate(9) == True\nassert validate(1111) == True\nassert validate(123456789) == True\n```",
+        "fixer": "```python\ndef validate(n):\n    num_str = str(n)\n    for i in range(len(num_str)):\n        if int(num_str[i]) > len(num_str[i]):\n            return False\n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(0) == True\nassert validate(9) == True\nassert validate(1111) == True\nassert validate(123456789) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True",
+  "sample_keys": [
+    "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    # Count the frequency of each digit\n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    # Check if any digit's frequency exceeds its value\n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True",
+    "def validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    \n    for char in num_str:\n        if char in freq_dict:\n            freq_dict[char] += 1\n        else:\n            freq_dict[char] = 1\n    \n    for digit, frequency in freq_dict.items():\n        if frequency > int(digit):\n            return False\n    \n    return True",
+    "def validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    for digit in num_str:\n        if digit in freq_dict:\n            freq_dict[digit] += 1\n        else:\n            freq_dict[digit] = 1\n    for digit, freq in freq_dict.items():\n        if freq > int(digit):\n            return False\n    return True",
+    "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for i in num_str:\n        if i in digit_freq:\n            digit_freq[i] += 1\n        else:\n            digit_freq[i] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True",
+    "def validate(num):\n    num_str = str(num)\n    freq_dict = {}\n    for digit in num_str:\n        if digit in freq_dict:\n            freq_dict[digit] += 1\n        else:\n            freq_dict[digit] = 1\n    for digit, freq in freq_dict.items():\n        if freq > int(digit):\n            return False\n    return True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1796.0,
+    "small_out": 1138.0,
+    "small_s": 24.87148082695785
+  },
+  "calls_plus": {
+    "small_in": 1211.0,
+    "small_out": 601.0,
+    "small_s": 12.460426772013307,
+    "large_in": 306.0,
+    "large_out": 84.0,
+    "large_s": 2.3918873889779206
+  },
+  "calls_samples": {
+    "small_in": 1530.0,
+    "small_out": 460.0,
+    "small_s": 9.388086521968944
+  }
+}

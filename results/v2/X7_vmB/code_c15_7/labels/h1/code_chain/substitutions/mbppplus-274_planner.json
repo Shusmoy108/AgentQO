@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-274",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Understand that the binomial coefficient for a given n and k is calculated as C(n, k) = n! / (k!(n-k)!).\n2. Recognize that the sum of even index binomial coefficients can be found using the property that the sum of all binomial coefficients for a given n is 2^n, and half of these will be even indices.\n3. Implement a function that calculates 2^(n-1) to find the sum of even index binomial coefficients.\n4. Ensure the function handles the input constraint that n must be a positive integer.\n5. Test the function with the provided test case to verify correctness.",
+  "reference_key": null,
+  "final_key_plus": "def even_binomial_Coeff_Sum(n):\n    if n <= 0:\n        raise ValueError(\"Input must be a positive integer\")\n    return 2**(n-1)",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert even_binomial_Coeff_Sum(3) == 4\nassert even_binomial_Coeff_Sum(6) == 64\nassert even_binomial_Coeff_Sum(7) == 128\nassert even_binomial_Coeff_Sum(0) == 1\nassert even_binomial_Coeff_Sum(-1) == ValueError(\"Input must be a positive integer\")\n```",
+    "coder": "```python\ndef even_binomial_Coeff_Sum(n):\n    if n <= 0:\n        raise ValueError(\"Input must be a positive integer\")\n    return 2**(n-1)\n```",
+    "verifier": "PICK: A\n\n```python\ndef even_binomial_Coeff_Sum(n):\n    if n <= 0:\n        raise ValueError(\"Input must be a positive integer\")\n    return 2**(n-1)\n```",
+    "fixer": "```python\ndef even_binomial_Coeff_Sum(n):\n    if n <= 0:\n        raise ValueError(\"Input must be a positive integer\")\n    return 2**(n-1)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `last_Digit_Factorial` that takes one argument, `n`.\n3. Initialize a variable `result` to store the last digit of the factorial.\n4. Use a loop to calculate the factorial of `n`.\n5. In each iteration, multiply the current result by `n` and take the modulus of 10 to get the last digit.\n6. Return the final value of `result`.\n\nThis approach ensures that we efficiently compute the last digit of the factorial without needing to handle very large numbers directly.",
+      "quality": 0.0,
+      "final_key": "def even_binomial_Coeff_Sum(n):\n    result = 1\n    for i in range(2, n + 1, 2):\n        result = (result * i) % 10\n    return result\n\n# Test cases\nassert even_binomial_Coeff_Sum(4) == 8\nassert even_binomial_Coeff_Sum(6) == 32\nassert even_binomial_Coeff_Sum(2) == 2\nassert even_binomial_Coeff_Sum(4) == 8\nassert even_binomial_Coeff_Sum(6) == 32\nassert even_binomial_Coeff_Sum(7) == 128\nassert even_binomial_Coeff_Sum(9) == 512\nassert even_binomial_Coeff_Sum(10) == 1024",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert even_binomial_Coeff_Sum(4) == 8\nassert even_binomial_Coeff_Sum(6) == 32\nassert even_binomial_Coeff_Sum(7) == 128\nassert even_binomial_Coeff_Sum(9) == 512\nassert even_binomial_Coeff_Sum(10) == 1024\n```",
+        "coder": "```python\ndef last_Digit_Factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result = (result * i) % 10\n    return result\n```",
+        "verifier": "PICK: B\n```python\ndef even_binomial_Coeff_Sum(n):\n    result = 1\n    for i in range(2, n + 1, 2):\n        result = (result * i) % 10\n    return result\n\n# Test cases\nassert even_binomial_Coeff_Sum(4) == 8\nassert even_binomial_Coeff_Sum(6) == 32\nassert even_binomial_Coeff_Sum(2) == 2\nassert even_binomial_Coeff_Sum(4) == 8\nassert even_binomial_Coeff_Sum(6) == 32\nassert even_binomial_Coeff_Sum(7) == 128\nassert even_binomial_Coeff_Sum(9) == 512\nassert even_binomial_Coeff_Sum(10) == 1024\n```",
+        "fixer": "```python\ndef even_binomial_Coeff_Sum(n):\n    result = 1\n    for i in range(2, n + 1, 2):\n        result = (result * i) % 10\n    return result\n\n# Test cases\nassert even_binomial_Coeff_Sum(4) == 8\nassert even_binomial_Coeff_Sum(6) == 32\nassert even_binomial_Coeff_Sum(2) == 2\nassert even_binomial_Coeff_Sum(4) == 8\nassert even_binomial_Coeff_Sum(6) == 32\nassert even_binomial_Coeff_Sum(7) == 128\nassert even_binomial_Coeff_Sum(9) == 512\nassert even_binomial_Coeff_Sum(10) == 1024\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to keep track of the maximum sum of increasing subsequences up to each index and the maximum sum including the kth element.\n2. Iterate through the array up to the (i-1)th index.\n3. For each element, check if it can be added to the current increasing subsequence ending at that index.\n4. Update the maximum sum of increasing subsequences up to each index based on the new element.\n5. After iterating through all elements, update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index.\n6. Return the maximum sum including the kth element.",
+      "quality": 0.0,
+      "final_key": "def even_binomial_Coeff_Sum(n):\n    max_sum = [0] * (n + 1)\n    for i in range(1, n + 1):\n        max_sum[i] = max(max_sum[i - 1], max_sum[i // 2])\n    return max_sum[n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert even_binomial_Coeff_Sum(3) == 2\nassert even_binomial_Coeff_Sum(6) == 32\nassert even_binomial_Coeff_Sum(7) == 64\nassert even_binomial_Coeff_Sum(10) == 128\nassert even_binomial_Coeff_Sum(1) == 1\n```",
+        "coder": "```python\ndef even_binomial_Coeff_Sum(n):\n    max_sum = [0] * (n + 1)\n    for i in range(1, n + 1):\n        max_sum[i] = max(max_sum[i - 1], max_sum[i // 2])\n    return max_sum[n]\n```",
+        "verifier": "PICK: A\n\n```python\ndef even_binomial_Coeff_Sum(n):\n    max_sum = [0] * (n + 1)\n    for i in range(1, n + 1):\n        max_sum[i] = max(max_sum[i - 1], max_sum[i // 2])\n    return max_sum[n]\n```",
+        "fixer": "```python\ndef even_binomial_Coeff_Sum(n):\n    max_sum = [0] * (n + 1)\n    for i in range(1, n + 1):\n        max_sum[i] = max(max_sum[i - 1], max_sum[i // 2])\n    return max_sum[n]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `is_even` that takes one parameter, `num`.\n2. Inside the function, use the modulus operator `%` to find the remainder when `num` is divided by 2.\n3. If the remainder is 0, return `True`, indicating that `num` is even.\n4. Otherwise, return `False`, indicating that `num` is odd.\n5. Test the function with the provided assertion to ensure it works correctly.",
+      "quality": 1.0,
+      "final_key": "from math import comb\n\ndef is_even(num):\n    return num % 2 == 0\n\ndef even_binomial_Coeff_Sum(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    \n    total_sum = 0\n    for i in range(n + 1):\n        if is_even(i):\n            total_sum += comb(n, i)\n    \n    return total_sum\n\n# Example usage:\nprint(even_binomial_Coeff_Sum(4))  # Output: 8",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert even_binomial_Coeff_Sum(0) == 1\nassert even_binomial_Coeff_Sum(1) == 1\nassert even_binomial_Coeff_Sum(2) == 3\nassert even_binomial_Coeff_Sum(3) == 6\nassert even_binomial_Coeff_Sum(4) == 8\n```",
+        "coder": "```python\ndef is_even(num):\n    return num % 2 == 0\n\ndef even_binomial_Coeff_Sum(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    \n    total_sum = 0\n    for i in range(n + 1):\n        if is_even(i):\n            total_sum += binomial_coefficient(n, i)\n    \n    return total_sum\n\n# Example usage:\nprint(even_binomial_Coeff_Sum(4))  # Output: 8\n```",
+        "verifier": "PICK: B\n\n```python\nfrom math import comb\n\ndef is_even(num):\n    return num % 2 == 0\n\ndef even_binomial_Coeff_Sum(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    \n    total_sum = 0\n    for i in range(n + 1):\n        if is_even(i):\n            total_sum += comb(n, i)\n    \n    return total_sum\n\n# Example usage:\nprint(even_binomial_Coeff_Sum(4))  # Output: 8\n```",
+        "fixer": "```python\nfrom math import comb\n\ndef is_even(num):\n    return num % 2 == 0\n\ndef even_binomial_Coeff_Sum(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    \n    total_sum = 0\n    for i in range(n + 1):\n        if is_even(i):\n            total_sum += comb(n, i)\n    \n    return total_sum\n\n# Example usage:\nprint(even_binomial_Coeff_Sum(4))  # Output: 8\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "from math import comb\n\ndef even_binomial_Coeff_Sum(n):\n    sum_even_coeffs = 0\n    for i in range(n):\n        if i % 2 == 0:\n            sum_even_coeffs += comb(n, i)\n    return sum_even_coeffs",
+  "sample_keys": [
+    "def even_binomial_Coeff_Sum(n):\n    # Using the formula (2^n - 1) / 3 to calculate the sum of even-indexed binomial coefficients\n    return (2 ** n - 1) // 3",
+    "import math\n\ndef even_binomial_Coeff_Sum(n):\n    sum_even_coeffs = 0\n    for i in range(0, n, 2):\n        coeff = math.comb(n, i)\n        sum_even_coeffs += coeff * 2\n    return sum_even_coeffs",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.6666666666666666
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1492.0,
+    "small_out": 453.0,
+    "small_s": 6.716209744045045
+  },
+  "calls_plus": {
+    "large_in": 115.0,
+    "large_out": 137.0,
+    "large_s": 4.339387092011748,
+    "small_in": 1311.0,
+    "small_out": 220.0,
+    "small_s": 4.873572958022123
+  },
+  "calls_samples": {
+    "small_in": 4435.0,
+    "small_out": 1206.0,
+    "small_s": 25.417579611035762
+  }
+}

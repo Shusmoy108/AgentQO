@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-611",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef max_of_nth(matrix, n):\n    if not matrix or n < 0 or n >= len(matrix[0]):\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value\n```",
+  "reference_key": "def max_of_nth(matrix, n):\n    if not matrix or n < 0 or n >= len(matrix[0]):\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+  "final_key_plus": "def max_of_nth(matrix, n):\n    if not matrix or n < 0 or n >= len(matrix[0]):\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef max_of_nth(matrix, n):\n    if not matrix or n < 0 or n >= len(matrix[0]):\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "if __name__ == \"__main__\":\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\n    assert max_of_nth([[6, 7, 8], [2, 4, 6], [9, 10, 20]], 1) == 10\n    assert max_of_nth([[7, 8, 9], [3, 5, 7], [10, 11, 21]], 1) == 11\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 1) == 9\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == 19\n    print(\"All tests passed successfully.\")",
+      "reference_key": "def max_of_nth(matrix, n):\n    if not matrix or n < 0 or n >= len(matrix[0]):\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+      "key_differs": true,
+      "text": "```python\nif __name__ == \"__main__\":\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\n    assert max_of_nth([[6, 7, 8], [2, 4, 6], [9, 10, 20]], 1) == 10\n    assert max_of_nth([[7, 8, 9], [3, 5, 7], [10, 11, 21]], 1) == 11\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 1) == 9\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\n    assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == 19\n    print(\"All tests passed successfully.\")\n```",
+      "quality": 1.0,
+      "final_key": "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+      "reference_key": "def max_of_nth(matrix, n):\n    if not matrix or n < 0 or n >= len(matrix[0]):\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+      "key_differs": true,
+      "text": "```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value\n```",
+      "quality": 1.0,
+      "final_key": "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_char(\"polygon\",'y','l')==(\"pollgon\")\nassert replace_char(\"character\",'c','a')==(\"aharaater\")\nassert replace_char(\"python\",'l','a')==(\"python\")\nassert replace_char(\"hello world\", 'o', 'a') == \"hallo warld\"  # This test case fails as expected\nassert replace_char(\"1234567890\", '5', '9') == \"1234967890\"\nassert replace_char(\"\", 'x', 'y') == \"\"\nassert replace_char(\"abcde\", 'z', 'x') == \"abcde\"\nassert replace_char(\"aaaaaaa\", 'a', 'b') == \"bbbbbbb\"",
+      "reference_key": "def max_of_nth(matrix, n):\n    if not matrix or n < 0 or n >= len(matrix[0]):\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+      "key_differs": true,
+      "text": "```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_char(\"polygon\",'y','l')==(\"pollgon\")\nassert replace_char(\"character\",'c','a')==(\"aharaater\")\nassert replace_char(\"python\",'l','a')==(\"python\")\nassert replace_char(\"hello world\", 'o', 'a') == \"hallo warld\"  # This test case fails as expected\nassert replace_char(\"1234567890\", '5', '9') == \"1234967890\"\nassert replace_char(\"\", 'x', 'y') == \"\"\nassert replace_char(\"abcde\", 'z', 'x') == \"abcde\"\nassert replace_char(\"aaaaaaa\", 'a', 'b') == \"bbbbbbb\"\n```",
+      "quality": 1.0,
+      "final_key": "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def max_of_nth(matrix, n):\n    if not matrix or n < 0 or n >= len(matrix[0]):\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+  "sample_keys": [
+    "def max_of_nth(matrix, n):\n    if not matrix:\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if n < len(row):\n            if row[n] > max_value:\n                max_value = row[n]\n    return max_value",
+    "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+    "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+    "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if isinstance(row, list) and len(row) >= n + 1:\n            if row[n] > max_value:\n                max_value = row[n]\n    return max_value",
+    "def max_of_nth(matrix, n):\n    if not matrix:\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if n < len(row) and row[n] > max_value:\n            max_value = row[n]\n    return max_value"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2070.0,
+    "small_out": 536.0,
+    "small_s": 11.772036927024601
+  },
+  "calls_plus": {
+    "small_in": 1546.0,
+    "small_out": 467.0,
+    "small_s": 10.15234695901745,
+    "large_in": 524.0,
+    "large_out": 69.0,
+    "large_s": 1.619413042004453
+  },
+  "calls_samples": {
+    "small_in": 2620.0,
+    "small_out": 288.0,
+    "small_s": 5.571440431987867
+  }
+}

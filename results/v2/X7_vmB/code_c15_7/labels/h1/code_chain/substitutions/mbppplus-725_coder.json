@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-725",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\nimport re\n\ndef extract_quotation(s):\n    # Use regular expression to find all text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches\n```",
+  "reference_key": "import re\n\ndef extract_quotation(s):\n    # Use regular expression to find all text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches",
+  "final_key_plus": "import re\n\ndef extract_quotation(s):\n    # Use regular expression to find all text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Single\" \"quote\"') == ['Single', 'quote']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Empty\" \"\"') == ['Empty', '']\nassert extract_quotation('\"Escaped \\\"quotes\\\" inside quotes\"') == ['Escaped \"quotes\" inside quotes']\n```",
+    "verifier": "PICK: A\n```python\nimport re\n\ndef extract_quotation(s):\n    # Use regular expression to find all text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches\n```",
+    "fixer": "```python\nimport re\n\ndef extract_quotation(s):\n    # Use regular expression to find all text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import re\n\ndef extract_quotation(s):\n    # Find all substrings enclosed in double quotes using regex\n    return [match.group(0) for match in re.finditer('\"([^\"]*)\"', s)]\n\n# Test the function with the provided data point\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']",
+      "reference_key": "import re\n\ndef extract_quotation(s):\n    # Use regular expression to find all text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef extract_quotation(s):\n    # Find all substrings enclosed in double quotes using regex\n    return [match.group(0) for match in re.finditer('\"([^\"]*)\"', s)]\n\n# Test the function with the provided data point\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\n```",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef extract_quotation(s):\n    # Find all substrings enclosed in double quotes using regex\n    return [match.group(0) for match in re.finditer('\"([^\"]*)\"', s)]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert extract_quotation('No quotations here') == []\nassert extract_quotation('\"Single quote\"') == ['Single quote']\nassert extract_quotation('\"Double quotes\" \"Another pair\"') == ['Double quotes', 'Another pair']\nassert extract_quotation('\"Escaped \\\"quotes\\\" inside\"') == ['Escaped \"quotes\" inside']\nassert extract_quotation('\"Empty\" \"\"') == ['', '']\n```",
+        "verifier": "PICK: B\n\n```python\nimport re\n\ndef extract_quotation(s):\n    # Find all substrings enclosed in double quotes using regex\n    return [match.group(0) for match in re.finditer('\"([^\"]*)\"', s)]\n```",
+        "fixer": "```python\nimport re\n\ndef extract_quotation(s):\n    # Find all substrings enclosed in double quotes using regex\n    return [match.group(0) for match in re.finditer('\"([^\"]*)\"', s)]\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import re\n\ndef extract_quotation(input_string):\n    # Use regular expression to find all matches of text within double quotes\n    result = re.findall(r'\"([^\"]+)\"', input_string)\n    return result",
+      "reference_key": "import re\n\ndef extract_quotation(s):\n    # Use regular expression to find all text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef extract_quotation(input_string):\n    # Use regular expression to find all matches of text within double quotes\n    result = re.findall(r'\"([^\"]+)\"', input_string)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef extract_quotation(input_string):\n    # Use regular expression to find all matches of text within double quotes\n    result = re.findall(r'\"([^\"]+)\"', input_string)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Single\" \"quote\"') == ['Single', 'quote']\nassert extract_quotation('\"No quotes\"') == ['No quotes']\nassert extract_quotation('\"Edge case with spaces\" \"and\" \"commas\"') == ['Edge case with spaces', 'and', 'commas']\nassert extract_quotation('\"Empty\" \"\"') == ['Empty', '']\n```",
+        "verifier": "PICK: A\n```python\nimport re\n\ndef extract_quotation(input_string):\n    # Use regular expression to find all matches of text within double quotes\n    result = re.findall(r'\"([^\"]+)\"', input_string)\n    return result\n```",
+        "fixer": "```python\nimport re\n\ndef extract_quotation(input_string):\n    # Use regular expression to find all matches of text within double quotes\n    result = re.findall(r'\"([^\"]+)\"', input_string)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def largest_subset(numbers):\n    max_size = 0\n    current_size = 0\n    \n    for num in numbers:\n        # Check if the current number can be added to the current subset\n        if current_size > 0 and num % current_size != 0:\n            current_size = 1\n        else:\n            current_size += 1\n        \n        # Update the maximum subset size found\n        max_size = max(max_size, current_size)\n    \n    return max_size",
+      "reference_key": "import re\n\ndef extract_quotation(s):\n    # Use regular expression to find all text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches",
+      "key_differs": true,
+      "text": "```python\ndef largest_subset(numbers):\n    max_size = 0\n    current_size = 0\n    \n    for num in numbers:\n        # Check if the current number can be added to the current subset\n        if current_size > 0 and num % current_size != 0:\n            current_size = 1\n        else:\n            current_size += 1\n        \n        # Update the maximum subset size found\n        max_size = max(max_size, current_size)\n    \n    return max_size\n```",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef extract_quotation(s):\n    pattern = r'\"([^\"]*)\"'\n    matches = re.findall(pattern, s)\n    return matches",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Hello\" World!') == ['Hello', 'World!']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Single quote\" \"Double quote\" \"Both quotes\"') == ['Single quote', 'Double quote', 'Both quotes']\nassert extract_quotation('\"Nested \"quotes\" inside\" another \"quote\"') == ['Nested \"quotes\"', 'inside', 'another \"quote\"']\n```",
+        "verifier": "PICK: B\n```python\nimport re\n\ndef extract_quotation(s):\n    pattern = r'\"([^\"]*)\"'\n    matches = re.findall(pattern, s)\n    return matches\n```",
+        "fixer": "```python\nimport re\n\ndef extract_quotation(s):\n    pattern = r'\"([^\"]*)\"'\n    matches = re.findall(pattern, s)\n    return matches\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches",
+  "sample_keys": [
+    "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Using regex findall to extract all occurrences\n    result = re.findall(pattern, input_string)\n    return result",
+    "import re\n\ndef extract_quotation(input_string):\n    # Use regular expression to find all substrings enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', input_string)\n    return matches",
+    "import re\n\ndef extract_quotation(text):\n    # Find all occurrences of text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', text)\n    return matches",
+    "import re\n\ndef extract_quotation(text):\n    # Using regular expression to find all substrings enclosed in double quotes\n    matched_strings = re.findall(r'\"(.*?)\"', text)\n    return matched_strings",
+    "import re\ndef extract_quotation(text):\n    pattern = r'\"([^\"]*)\"'\n    return re.findall(pattern, text)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1698.0,
+    "small_out": 356.0,
+    "small_s": 7.876229859975865
+  },
+  "calls_plus": {
+    "small_in": 1472.0,
+    "small_out": 270.0,
+    "small_s": 4.85046047900687,
+    "large_in": 189.0,
+    "large_out": 46.0,
+    "large_s": 1.0068267619935796
+  },
+  "calls_samples": {
+    "small_in": 945.0,
+    "small_out": 234.0,
+    "small_s": 4.264299182017567
+  }
+}

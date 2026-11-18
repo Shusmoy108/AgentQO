@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-586",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `split_Arr` that takes two parameters: `arr` (the list to be split) and `n` (the index at which to split the list).\n2. Use slicing to create two parts of the list: `first_part` from the start of the list up to but not including the nth element, and `second_part` from the nth element to the end of the list.\n3. Concatenate `second_part` and `first_part` to form the new list.\n4. Return the newly formed list.\n5. Test the function with the provided test case to ensure it works as expected.",
+  "reference_key": null,
+  "final_key_plus": "def split_Arr(arr, n):\n    if n <= 0 or n > len(arr):\n        raise ValueError(\"Invalid index\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    return second_part + first_part",
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]\n```",
+    "coder": "```python\ndef split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    return second_part + first_part\n```",
+    "verifier": "PICK: B\n\n```python\ndef split_Arr(arr, n):\n    if n <= 0 or n > len(arr):\n        raise ValueError(\"Invalid index\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    return second_part + first_part\n```",
+    "fixer": "```python\ndef split_Arr(arr, n):\n    if n <= 0 or n > len(arr):\n        raise ValueError(\"Invalid index\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    return second_part + first_part\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `heap_queue_largest` that takes two parameters: `numbers` (a list of integers) and `n` (the number of largest integers to find).\n3. Use the `nlargest` function from the `heapq` module to find the n largest integers in the list.\n4. Return the result as a list.\n5. Test the function with the provided test case to ensure it works correctly.",
+      "quality": 0.0,
+      "final_key": "from heapq import nlargest\n\ndef split_Arr(numbers, n):\n    # Find the n largest elements in the list\n    largest_elements = nlargest(n, numbers)\n    # Append the first part of the original list to the end\n    return largest_elements + numbers[:n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],1) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],6) == [1,2,3,4,5]\n```",
+        "coder": "```python\nfrom heapq import nlargest\n\ndef split_Arr(numbers, n):\n    # Find the n largest elements in the list\n    largest_elements = nlargest(n, numbers)\n    # Append the first part of the original list to the end\n    return largest_elements + numbers[:n]\n```",
+        "verifier": "PICK: A\n```python\nfrom heapq import nlargest\n\ndef split_Arr(numbers, n):\n    # Find the n largest elements in the list\n    largest_elements = nlargest(n, numbers)\n    # Append the first part of the original list to the end\n    return largest_elements + numbers[:n]\n```",
+        "fixer": "```python\nfrom heapq import nlargest\n\ndef split_Arr(numbers, n):\n    # Find the n largest elements in the list\n    largest_elements = nlargest(n, numbers)\n    # Append the first part of the original list to the end\n    return largest_elements + numbers[:n]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `extract_quotation` that takes a single argument, a string.\n3. Use regular expressions to find all occurrences of text enclosed in double quotes.\n4. Return the list of found strings.\n5. Test the function with provided data points.",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef split_Arr(arr, n):\n    # Extract elements before the nth element\n    first_part = arr[:n]\n    # Extract elements after the nth element\n    second_part = arr[n:]\n    # Concatenate the first part with the second part\n    result = second_part + first_part\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],1) == [2,3,4,5,1]\nassert split_Arr([1,2,3,4,5],6) == [1,2,3,4,5]\n```",
+        "coder": "```python\nimport re\n\ndef split_Arr(arr, n):\n    # Extract elements before the nth element\n    first_part = arr[:n]\n    # Extract elements after the nth element\n    second_part = arr[n:]\n    # Concatenate the first part with the second part\n    result = second_part + first_part\n    return result\n```",
+        "verifier": "PICK: A\n```python\nimport re\n\ndef split_Arr(arr, n):\n    # Extract elements before the nth element\n    first_part = arr[:n]\n    # Extract elements after the nth element\n    second_part = arr[n:]\n    # Concatenate the first part with the second part\n    result = second_part + first_part\n    return result\n```",
+        "fixer": "```python\nimport re\n\ndef split_Arr(arr, n):\n    # Extract elements before the nth element\n    first_part = arr[:n]\n    # Extract elements after the nth element\n    second_part = arr[n:]\n    # Concatenate the first part with the second part\n    result = second_part + first_part\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `number_ctr` that takes one parameter, `input_str`.\n3. Initialize a counter variable to zero.\n4. Iterate over each character in the input string using a for loop.\n5. Check if the current character is a digit by using the `isdigit()` method.\n6. If it is a digit, increment the counter.\n7. After iterating through all characters, return the counter value.\n\nHere's the complete implementation:\n\n```python\ndef number_ctr(input_str):\n    # Initialize counter\n    count = 0\n    \n    # Iterate over each character in the input string\n    for char in input_str:\n        # Check if the character is a digit\n        if char.isdigit():\n            # Increment the counter\n            count += 1\n            \n    # Return the counter value\n    return count\n```\n\nThis function will correctly count the number of digits in the provided string.",
+      "quality": 1.0,
+      "final_key": "def split_Arr(arr, n):\n    # Split the array into two parts\n    first_part = arr[:n]\n    second_part = arr[n:]\n    \n    # Add the first part to the end of the second part\n    result = second_part + first_part\n    \n    # Return the resulting array\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([],2) == []\nassert split_Arr([1,2,3,4,5],1) == [1,2,3,4,5]\nassert split_Arr([100,200,300,400,500],5) == [500,400,300,200,100]\nassert split_Arr(['a','b','c','d'],3) == ['c','d','a','b']\n```",
+        "coder": "```python\ndef number_ctr(input_str):\n    # Initialize counter\n    count = 0\n    \n    # Iterate over each character in the input string\n    for char in input_str:\n        # Check if the character is a digit\n        if char.isdigit():\n            # Increment the counter\n            count += 1\n            \n    # Return the counter value\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef split_Arr(arr, n):\n    # Split the array into two parts\n    first_part = arr[:n]\n    second_part = arr[n:]\n    \n    # Add the first part to the end of the second part\n    result = second_part + first_part\n    \n    # Return the resulting array\n    return result\n```",
+        "fixer": "```python\ndef split_Arr(arr, n):\n    # Split the array into two parts\n    first_part = arr[:n]\n    second_part = arr[n:]\n    \n    # Add the first part to the end of the second part\n    result = second_part + first_part\n    \n    # Return the resulting array\n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def split_Arr(arr, n):\n    if n <= 0 or n > len(arr):\n        raise ValueError(\"Invalid index\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result",
+  "sample_keys": [
+    "def split_Arr(arr, n):\n    if n < 0 or n >= len(arr):\n        raise ValueError(\"Index out of range\")\n    left = arr[:n]\n    right = arr[n:]\n    left.extend(right)\n    return left",
+    "def split_arr(arr, n):\n    if n <= 0:\n        raise ValueError(\"n must be greater than 0\")\n    \n    first_part = arr[:n]\n    second_part = arr[n:]\n    \n    return first_part + second_part",
+    "def split_Arr(arr, n):\n    if len(arr) <= n:\n        raise ValueError(\"Input list is too short for the specified operation.\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    return second_part + first_part"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.6666666666666666
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1915.0,
+    "small_out": 486.0,
+    "small_s": 10.577228467998793
+  },
+  "calls_plus": {
+    "large_in": 142.0,
+    "large_out": 134.0,
+    "large_s": 3.0157157159992494,
+    "small_in": 1657.0,
+    "small_out": 277.0,
+    "small_s": 5.0259854090109
+  },
+  "calls_samples": {
+    "small_in": 5830.0,
+    "small_out": 1540.0,
+    "small_s": 26.236088756035315
+  }
+}

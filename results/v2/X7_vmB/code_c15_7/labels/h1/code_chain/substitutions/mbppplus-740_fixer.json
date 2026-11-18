@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-740",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef tuple_to_dict(tup):\n    if len(tup) % 2 != 0:\n        raise ValueError(\"Tuple length must be even\")\n    dict = {}\n    for i in range(0, len(tup), 2):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+  "reference_key": "def tuple_to_dict(tup):\n    if len(tup) % 2 != 0:\n        raise ValueError(\"Tuple length must be even\")\n    dict = {}\n    for i in range(0, len(tup), 2):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "final_key_plus": "def tuple_to_dict(tup):\n    if len(tup) % 2 != 0:\n        raise ValueError(\"Tuple length must be even\")\n    dict = {}\n    for i in range(0, len(tup), 2):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef tuple_to_dict(tup):\n    if len(tup) % 2 != 0:\n        raise ValueError(\"Tuple length must be even\")\n    dict = {}\n    for i in range(0, len(tup), 2):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "reference_key": "def tuple_to_dict(tup):\n    if len(tup) % 2 != 0:\n        raise ValueError(\"Tuple length must be even\")\n    dict = {}\n    for i in range(0, len(tup), 2):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "key_differs": true,
+      "text": "```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert newman_conway(10) == 6\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 2",
+      "reference_key": "def tuple_to_dict(tup):\n    if len(tup) % 2 != 0:\n        raise ValueError(\"Tuple length must be even\")\n    dict = {}\n    for i in range(0, len(tup), 2):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "key_differs": true,
+      "text": "```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert newman_conway(10) == 6\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 2\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+      "reference_key": "def tuple_to_dict(tup):\n    if len(tup) % 2 != 0:\n        raise ValueError(\"Tuple length must be even\")\n    dict = {}\n    for i in range(0, len(tup), 2):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "key_differs": true,
+      "text": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "sample_keys": [
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    if not isinstance(tup, tuple):\n        raise ValueError(\"Input must be a tuple\")\n    \n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2350.0,
+    "small_out": 610.0,
+    "small_s": 12.412047993042506
+  },
+  "calls_plus": {
+    "small_in": 1803.0,
+    "small_out": 581.0,
+    "small_s": 11.190854951011715,
+    "large_in": 579.0,
+    "large_out": 79.0,
+    "large_s": 1.7772436450177338
+  },
+  "calls_samples": {
+    "small_in": 2895.0,
+    "small_out": 290.0,
+    "small_s": 4.896375443961006
+  }
+}

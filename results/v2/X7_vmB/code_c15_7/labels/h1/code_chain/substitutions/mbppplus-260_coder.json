@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-260",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef is_prime(num):\n    if num <= 1:\n        return False\n    if num <= 3:\n        return True\n    if num % 2 == 0 or num % 3 == 0:\n        return False\n    i = 5\n    while i * i <= num:\n        if num % i == 0 or num % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef newman_prime(n):\n    count = 0\n    num = 1\n    while count < n:\n        num += 1\n        if is_prime(num):\n            count += 1\n    return num\n```",
+  "reference_key": "def is_prime(num):\n    if num <= 1:\n        return False\n    if num <= 3:\n        return True\n    if num % 2 == 0 or num % 3 == 0:\n        return False\n    i = 5\n    while i * i <= num:\n        if num % i == 0 or num % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef newman_prime(n):\n    count = 0\n    num = 1\n    while count < n:\n        num += 1\n        if is_prime(num):\n            count += 1\n    return num",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert newman_prime(4) == 11\nassert newman_prime(5) == 13\nassert newman_prime(6) == 17\nassert newman_prime(7) == 19\nassert newman_prime(8) == 23\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\ndef is_prime(num):\n    if num <= 1:\n        return False\n    if num <= 3:\n        return True\n    if num % 2 == 0 or num % 3 == 0:\n        return False\n    i = 5\n    while i * i <= num:\n        if num % i == 0 or num % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef newman_prime(n):\n    count = 0\n    num = 1\n    while count < n:\n        num += 1\n        if is_prime(num):\n            count += 1\n    return num\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def is_prime(num):\n    \"\"\"Check if a given number is prime.\"\"\"\n    if num <= 1:\n        return False\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            return False\n    return True\n\ndef newman_prime(n):\n    \"\"\"Return the nth Newman-Shanks-Williams prime number.\"\"\"\n    count = 0\n    num = 2\n    while count < n:\n        if is_prime(num):\n            count += 1\n        num += 2\n    return num - 2  # Subtracting 2 because we incremented by 2 each time",
+      "reference_key": "def is_prime(num):\n    if num <= 1:\n        return False\n    if num <= 3:\n        return True\n    if num % 2 == 0 or num % 3 == 0:\n        return False\n    i = 5\n    while i * i <= num:\n        if num % i == 0 or num % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef newman_prime(n):\n    count = 0\n    num = 1\n    while count < n:\n        num += 1\n        if is_prime(num):\n            count += 1\n    return num",
+      "key_differs": true,
+      "text": "```python\ndef is_prime(num):\n    \"\"\"Check if a given number is prime.\"\"\"\n    if num <= 1:\n        return False\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            return False\n    return True\n\ndef newman_prime(n):\n    \"\"\"Return the nth Newman-Shanks-Williams prime number.\"\"\"\n    count = 0\n    num = 2\n    while count < n:\n        if is_prime(num):\n            count += 1\n        num += 2\n    return num - 2  # Subtracting 2 because we incremented by 2 each time\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert newman_prime(4) == 19\nassert newman_prime(5) == 31\nassert newman_prime(6) == 41\nassert newman_prime(7) == 59\nassert newman_prime(8) == 71\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef is_prime(num):\n    \"\"\"Check if a given number is prime.\"\"\"\n    if num <= 1:\n        return False\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            return False\n    return True\n\ndef newman_prime(n):\n    \"\"\"Return the nth Newman-Shanks-Williams prime number.\"\"\"\n    count = 0\n    num = 2\n    while count < n:\n        if is_prime(num):\n            count += 1\n        num += 2\n    return num - 2  # Subtracting 2 because we incremented by 2 each time\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def newman_prime(n):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    count = 0\n    current_number = 2\n    while count < n:\n        if is_prime(current_number):\n            count += 1\n        current_number += 1\n    return current_number - 1  # Subtracting 1 because we incremented before checking the last one",
+      "reference_key": "def is_prime(num):\n    if num <= 1:\n        return False\n    if num <= 3:\n        return True\n    if num % 2 == 0 or num % 3 == 0:\n        return False\n    i = 5\n    while i * i <= num:\n        if num % i == 0 or num % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef newman_prime(n):\n    count = 0\n    num = 1\n    while count < n:\n        num += 1\n        if is_prime(num):\n            count += 1\n    return num",
+      "key_differs": true,
+      "text": "```python\ndef newman_prime(n):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    count = 0\n    current_number = 2\n    while count < n:\n        if is_prime(current_number):\n            count += 1\n        current_number += 1\n    return current_number - 1  # Subtracting 1 because we incremented before checking the last one\n```",
+      "quality": 0.0,
+      "final_key": "def newman_prime(n):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    count = 0\n    current_number = 2\n    while count < n:\n        if is_prime(current_number):\n            count += 1\n        current_number += 1\n    return current_number - 1  # Subtracting 1 because we incremented before checking the last one",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert newman_prime(4) == 11\nassert newman_prime(5) == 13\nassert newman_prime(6) == 17\nassert newman_prime(7) == 19\nassert newman_prime(8) == 23\n```",
+        "verifier": "PICK: A\n\n```python\ndef newman_prime(n):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    count = 0\n    current_number = 2\n    while count < n:\n        if is_prime(current_number):\n            count += 1\n        current_number += 1\n    return current_number - 1  # Subtracting 1 because we incremented before checking the last one\n```",
+        "fixer": "```python\ndef newman_prime(n):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    count = 0\n    current_number = 2\n    while count < n:\n        if is_prime(current_number):\n            count += 1\n        current_number += 1\n    return current_number - 1  # Subtracting 1 because we incremented before checking the last one\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    \n    return sum_diff",
+      "reference_key": "def is_prime(num):\n    if num <= 1:\n        return False\n    if num <= 3:\n        return True\n    if num % 2 == 0 or num % 3 == 0:\n        return False\n    i = 5\n    while i * i <= num:\n        if num % i == 0 or num % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef newman_prime(n):\n    count = 0\n    num = 1\n    while count < n:\n        num += 1\n        if is_prime(num):\n            count += 1\n    return num",
+      "key_differs": true,
+      "text": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    \n    return sum_diff\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert digit_distance_nums(1234, 9876) == 12\nassert digit_distance_nums(1111, 2222) == 0\nassert digit_distance_nums(1000, 9999) == 9\nassert digit_distance_nums(12345, 67890) == 5\nassert digit_distance_nums(123456, 789012) == 10\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    \n    return sum_diff\n\ndef newman_prime(n):\n    count = 0\n    num = 2\n    while True:\n        if all(digit_distance_nums(num, i) == 0 for i in range(2, n + 1)):\n            count += 1\n            if count == n:\n                return num\n        num += 1\n\n# Test cases\nassert newman_prime(3) == 7\nassert newman_prime(4) == 17\nassert newman_prime(5) == 41\nassert digit_distance_nums(1234, 9876) == 12\nassert digit_distance_nums(1111, 2222) == 0\nassert digit_distance_nums(1000, 9999) == 9\nassert digit_distance_nums(12345, 67890) == 5\nassert digit_distance_nums(123456, 789012) == 10\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def newman_prime(n):\n    def is_prime(num):\n        \"\"\"Check if a number is prime.\"\"\"\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    current = 2\n    count = 0\n    while count < n:\n        current += 1\n        if is_prime(current):\n            count += 1\n    return current",
+  "sample_keys": [
+    "def newman_prime(n):\n    def is_prime(num):\n        \"\"\"Check if num is a prime number.\"\"\"\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    current_num = 2\n    count_primes = 0\n    while count_primes < n:\n        if is_prime(current_num):\n            count_primes += 1\n        current_num += 1\n    return current_num - 1",
+    "def is_prime(num):\n    \"\"\"Check if a number is prime.\"\"\"\n    if num <= 1:\n        return False\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            return False\n    return True\n\ndef newsamanewilliams_prime(n):\n    \"\"\"Find the nth Newman-Shanks-Williams prime number.\"\"\"\n    current = 2\n    count = 0\n    while count < n:\n        current += 1\n        if is_prime(current):\n            count += 1\n    return current",
+    "def newman_prime(n):\n    def is_prime(num):\n        \"\"\"Check if a number is prime.\"\"\"\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    current = 2\n    count = 0\n    while count < n:\n        current += 1\n        if is_prime(current):\n            count += 1\n    return current",
+    "def check_prime(num):\n    \"\"\"Helper function to check if a number is prime.\"\"\"\n    if num <= 1:\n        return False\n    if num <= 3:\n        return True\n    if num % 2 == 0 or num % 3 == 0:\n        return False\n    i = 5\n    while i * i <= num:\n        if num % i == 0 or num % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef newman_prime(n):\n    \"\"\"Function to find the nth Newman-Shanks-Williams prime number.\"\"\"\n    count = 0\n    num = 2\n    while True:\n        if check_prime(num):\n            count += 1\n            if count == n:\n                return num\n        num += 1",
+    "def newman_prime(n):\n    def is_prime(num):\n        \"\"\"Check if a given number is prime.\"\"\"\n        if num <= 1:\n            return False\n        if num <= 3:\n            return True\n        if num % 2 == 0 or num % 3 == 0:\n            return False\n        i = 5\n        while i * i <= num:\n            if num % i == 0 or num % (i + 2) == 0:\n                return False\n            i += 6\n        return True\n\n    count = 0\n    num = 2\n    while count < n:\n        if is_prime(num):\n            count += 1\n        num += 1\n    return num"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1511.0,
+    "small_out": 430.0,
+    "small_s": 9.791911307984265
+  },
+  "calls_plus": {
+    "small_in": 1455.0,
+    "small_out": 353.0,
+    "small_s": 7.343092982977396,
+    "large_in": 236.0,
+    "large_out": 149.0,
+    "large_s": 4.0719223839987535
+  },
+  "calls_samples": {
+    "small_in": 1180.0,
+    "small_out": 767.0,
+    "small_s": 15.781255506008165
+  }
+}

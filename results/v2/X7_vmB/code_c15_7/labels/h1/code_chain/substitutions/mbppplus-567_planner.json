@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-567",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `issort_list` that takes one parameter: `lst`.\n2. Use a loop to iterate through the list from the first element to the second-to-last element.\n3. In each iteration, compare the current element with the next element.\n4. If any element is greater than the next element, return `False` indicating the list is not sorted.\n5. If the loop completes without finding any unsorted elements, return `True` indicating the list is sorted.",
+  "reference_key": null,
+  "final_key_plus": "def issort_list(lst):\n    for i in range(len(lst) - 1):\n        if lst[i] > lst[i + 1]:\n            return False\n    return True",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert issort_list([])==True\nassert issort_list([1])==True\nassert issort_list([1,2,3,4,5])==True\nassert issort_list([1,3,2,4,5])==False\nassert issort_list([1,2,3,4,5,6,7,8,9,10])==True\n```",
+    "coder": "```python\ndef issort_list(lst):\n    for i in range(len(lst) - 1):\n        if lst[i] > lst[i + 1]:\n            return False\n    return True\n```",
+    "verifier": "PICK: A\n\n```python\ndef issort_list(lst):\n    for i in range(len(lst) - 1):\n        if lst[i] > lst[i + 1]:\n            return False\n    return True\n```",
+    "fixer": "```python\ndef issort_list(lst):\n    for i in range(len(lst) - 1):\n        if lst[i] > lst[i + 1]:\n            return False\n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a counter for inversions to zero.\n2. Iterate through the array from left to right.\n3. For each element, compare it with all elements that come after it.\n4. If an element is found that is smaller than the current element, increment the inversion counter.\n5. Return the total number of inversions.\n\nThis approach ensures that we correctly count all pairs of elements where one is greater than the other, which are considered inversions in the context of sorting algorithms.",
+      "quality": 1.0,
+      "final_key": "def issort_list(arr):\n    inversions = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inversions += 1\n    return inversions == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert issort_list([]) == True\nassert issort_list([1]) == True\nassert issort_list([1, 3, 5, 7, 9]) == True\nassert issort_list([1, 3, 5, 7, 8]) == False\nassert issort_list([1, 3, 5, 7, 9, 10]) == True\n```",
+        "coder": "```python\ndef issort_list(arr):\n    inversions = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inversions += 1\n    return inversions == 0\n```",
+        "verifier": "PICK: B\n\n```python\ndef issort_list(arr):\n    inversions = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inversions += 1\n    return inversions == 0\n```",
+        "fixer": "```python\ndef issort_list(arr):\n    inversions = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inversions += 1\n    return inversions == 0\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `issort_list` that takes one parameter: `lst`.\n2. Use a loop to iterate through the list from the first element to the second-to-last element.\n3. In each iteration, compare the current element with the next element.\n4. If any element is less than or equal to the next element, return `False` indicating the list is not sorted.\n5. If the loop completes without finding any unsorted elements, return `True` indicating the list is sorted.",
+      "quality": 1.0,
+      "final_key": "def issort_list(lst):\n    for i in range(len(lst) - 1):\n        if lst[i] <= lst[i + 1]:\n            continue\n        else:\n            return False\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert issort_list([])==True\nassert issort_list([1])==True\nassert issort_list([1,3,5,7,9,11,13,15,17,19])==True\nassert issort_list([1,3,5,7,9,11,13,15,17,18])==False\nassert issort_list([1,3,5,7,9,11,13,15,17,19,20])==True\n```",
+        "coder": "```python\ndef issort_list(lst):\n    for i in range(len(lst) - 1):\n        if lst[i] <= lst[i + 1]:\n            continue\n        else:\n            return False\n    return True\n```",
+        "verifier": "PICK: A\n\n```python\ndef issort_list(lst):\n    for i in range(len(lst) - 1):\n        if lst[i] <= lst[i + 1]:\n            continue\n        else:\n            return False\n    return True\n```",
+        "fixer": "```python\ndef issort_list(lst):\n    for i in range(len(lst) - 1):\n        if lst[i] <= lst[i + 1]:\n            continue\n        else:\n            return False\n    return True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_undulating` that takes one argument, `num`.\n2. Convert the input number to a string for easier manipulation.\n3. Check if the length of the string is less than 3, which means it's either a single digit or a two-digit number, and thus cannot be undulating.\n4. If the length is 3 or more, split the string into two parts: the first part (before the middle) and the second part (after the middle).\n5. Compare the first part with the reversed second part. If they are equal, the number is undulating; otherwise, it is not.\n6. Return the result as a boolean value.",
+      "quality": 0.0,
+      "final_key": "def is_sort_list(lst):\n    for i in range(len(lst)-1):\n        if lst[i] > lst[i+1]:\n            return False\n    return True\n\n# Test cases\nassert is_sort_list([1,2,4,6,8,10,12,14,16,17]) == True\nassert is_sort_list([1, 2, 4, 6, 8, 10, 12, 14, 20, 17]) == False\nassert is_sort_list([1, 2, 4, 6, 8, 10,15,14,20]) == False\nassert is_undulating(1) == True\nassert is_undulating(12) == True\nassert is_undulating(123) == False\nassert is_undulating(1234) == True\nassert is_undulating(12345) == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_undulating(1)==True\nassert is_undulating(12)==True\nassert is_undulating(123)==False\nassert is_undulating(1234)==True\nassert is_undulating(12345)==False\n```",
+        "coder": "```python\ndef is_undulating(num):\n    num_str = str(num)\n    if len(num_str) < 3:\n        return True\n    else:\n        mid = len(num_str) // 2\n        first_part = num_str[:mid]\n        second_part = num_str[mid:]\n        return first_part == second_part[::-1]\n```",
+        "verifier": "PICK: B\n```python\ndef is_sort_list(lst):\n    for i in range(len(lst)-1):\n        if lst[i] > lst[i+1]:\n            return False\n    return True\n\n# Test cases\nassert is_sort_list([1,2,4,6,8,10,12,14,16,17]) == True\nassert is_sort_list([1, 2, 4, 6, 8, 10, 12, 14, 20, 17]) == False\nassert is_sort_list([1, 2, 4, 6, 8, 10,15,14,20]) == False\nassert is_undulating(1) == True\nassert is_undulating(12) == True\nassert is_undulating(123) == False\nassert is_undulating(1234) == True\nassert is_undulating(12345) == False\n```",
+        "fixer": "```python\ndef is_sort_list(lst):\n    for i in range(len(lst)-1):\n        if lst[i] > lst[i+1]:\n            return False\n    return True\n\n# Test cases\nassert is_sort_list([1,2,4,6,8,10,12,14,16,17]) == True\nassert is_sort_list([1, 2, 4, 6, 8, 10, 12, 14, 20, 17]) == False\nassert is_sort_list([1, 2, 4, 6, 8, 10,15,14,20]) == False\nassert is_undulating(1) == True\nassert is_undulating(12) == True\nassert is_undulating(123) == False\nassert is_undulating(1234) == True\nassert is_undulating(12345) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status",
+  "sample_keys": [
+    "def issort_list(lst):\n    sorted_flag = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_flag = False\n    return sorted_flag",
+    "def issort_list(lst):\n    sorted_status = True\n    for i in range(len(lst) - 1):\n        if lst[i] > lst[i + 1]:\n            sorted_status = False\n            break\n    return sorted_status",
+    "def issort_list(lst):\n    if len(lst) <= 1:\n        return True\n    prev_val = lst[0]\n    for current_val in lst[1:]:\n        if current_val < prev_val:\n            return False\n        prev_val = current_val\n    return True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1876.0,
+    "small_out": 495.0,
+    "small_s": 10.857989208976505
+  },
+  "calls_plus": {
+    "large_in": 124.0,
+    "large_out": 104.0,
+    "large_s": 3.1191531590011436,
+    "small_in": 1423.0,
+    "small_out": 219.0,
+    "small_s": 4.188049978052732
+  },
+  "calls_samples": {
+    "small_in": 5290.0,
+    "small_out": 1431.0,
+    "small_s": 27.297964578989195
+  }
+}

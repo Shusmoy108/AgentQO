@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-425",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `count_element_in_list` that takes two parameters: `list_of_sublists` (the list containing sublists) and `element` (the element to search for).\n2. Initialize a counter variable to zero. This will keep track of the number of sublists containing the specified element.\n3. Iterate through each sublist in the `list_of_sublists`.\n4. For each sublist, check if the `element` is present using the `in` keyword.\n5. If the element is found in the sublist, increment the counter by one.\n6. After iterating through all sublists, return the value of the counter as the result.",
+  "reference_key": null,
+  "final_key_plus": "def count_element_in_list(list_of_sublists, element):\n    count = 0\n    for sublist in list_of_sublists:\n        if element in sublist:\n            count += 1\n    return count",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert count_element_in_list([[],[2,4],[6,8,10]],2) == 1\nassert count_element_in_list([[1,2,3],[4,5,6],[7,8,9]],10) == 0\nassert count_element_in_list([[1,2,3],[4,5,6],[7,8,9]],1) == 3\nassert count_element_in_list([[1,2,3],[4,5,6],[7,8,9]],-1) == 0\nassert count_element_in_list([],1) == 0\n```",
+    "coder": "```python\ndef count_element_in_list(list_of_sublists, element):\n    count = 0\n    for sublist in list_of_sublists:\n        if element in sublist:\n            count += 1\n    return count\n```",
+    "verifier": "PICK: A\n\n```python\ndef count_element_in_list(list_of_sublists, element):\n    count = 0\n    for sublist in list_of_sublists:\n        if element in sublist:\n            count += 1\n    return count\n```",
+    "fixer": "```python\ndef count_element_in_list(list_of_sublists, element):\n    count = 0\n    for sublist in list_of_sublists:\n        if element in sublist:\n            count += 1\n    return count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two counters, `open_count` and `close_count`, both set to zero.\n2. Iterate through each character in the input string.\n3. If the character is an opening parenthesis '(', increment `open_count`.\n4. If the character is a closing parenthesis ')', decrement `close_count`.\n5. After iterating through all characters, if `open_count` equals `close_count`, the expression is balanced; otherwise, it is not.\n6. Return the result of the comparison.",
+      "quality": 0.0,
+      "final_key": "def count_element_in_list(lst, target):\n    open_count = close_count = 0\n    for char in lst:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_element_in_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]], (1, 2)) == 1\nassert count_element_in_list([[], [1, 2, 3], [4, 5, 6]], 1) == 0\nassert count_element_in_list([[[[1]]], [[2]]], 1) == 1\nassert count_element_in_list([[[[1, 2]]], [[3, 4]]], 1) == 2\nassert count_element_in_list([[[[1, 2, 3]]], [[4, 5, 6]]], 1) == 3\n```",
+        "coder": "```python\ndef count_element_in_list(lst, target):\n    open_count = close_count = 0\n    for char in lst:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n```",
+        "verifier": "PICK: A\n\n```python\ndef count_element_in_list(lst, target):\n    open_count = close_count = 0\n    for char in lst:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n```",
+        "fixer": "```python\ndef count_element_in_list(lst, target):\n    open_count = close_count = 0\n    for char in lst:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a variable `sum` to zero.\n2. Iterate through each element in the input list.\n3. For each element, check if it is already in the set `seen`.\n4. If it is not in the set, add it to the set and add its value to `sum`.\n5. After iterating through all elements, return `sum`.\n\nThis approach ensures that we only count each element once, as sets do not allow duplicate values.",
+      "quality": 0.0,
+      "final_key": "def count_element_in_list(lst, target):\n    seen = set()\n    sum = 0\n    for sublist in lst:\n        for element in sublist:\n            if element != target:\n                seen.add(element)\n                sum += 1\n    return sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_element_in_list([],1) == 0\nassert count_element_in_list([[],[1],[2,3]],1) == 1\nassert count_element_in_list([[1,2,3],[4,5,6],[7,8,9]],10) == 0\nassert count_element_in_list([[1,2,3],[4,5,6],[7,8,9],[1,2,3]],1) == 2\nassert count_element_in_list([[1,2,3],[4,5,6],[7,8,9],[1,2,3],[1,2,3]],1) == 3\n```",
+        "coder": "```python\ndef count_element_in_list(lst, target):\n    seen = set()\n    sum = 0\n    for sublist in lst:\n        for element in sublist:\n            if element != target:\n                seen.add(element)\n                sum += 1\n    return sum\n```",
+        "verifier": "PICK: A\n\n```python\ndef count_element_in_list(lst, target):\n    seen = set()\n    sum = 0\n    for sublist in lst:\n        for element in sublist:\n            if element != target:\n                seen.add(element)\n                sum += 1\n    return sum\n```",
+        "fixer": "```python\ndef count_element_in_list(lst, target):\n    seen = set()\n    sum = 0\n    for sublist in lst:\n        for element in sublist:\n            if element != target:\n                seen.add(element)\n                sum += 1\n    return sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a recursive function that takes a dictionary as input.\n2. Base case: If the input is a non-dictionary (e.g., a number or a string), return 0.\n3. Recursive case: For each key-value pair in the dictionary, recursively call the function on the value.\n4. Add 1 to the maximum depth found in the recursive calls.\n5. Return the total depth.",
+      "quality": 0.0,
+      "final_key": "def count_element_in_list(lst, target):\n    def helper(sublist):\n        if isinstance(sublist, list):\n            return max(helper(item) for item in sublist) + 1\n        else:\n            return 0\n    \n    return sum(helper(sublist) for sublist in lst)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_element_in_list([],1)==0\nassert count_element_in_list([[],[1],[2,3,4],[5,6,7,8,9]],1)==1\nassert count_element_in_list([[1,2,3],[4,5,6],[7,8,9]],10)==0\nassert count_element_in_list([[1,2,3],[4,5,6],[7,8,9],[1,2,3]],1)==3\nassert count_element_in_list([[1,2,3],[4,5,6],[7,8,9],[1,2,3,4,5]],1)==4\n```",
+        "coder": "```python\ndef count_element_in_list(lst, target):\n    def helper(sublist):\n        if isinstance(sublist, list):\n            return max(helper(item) for item in sublist) + 1\n        else:\n            return 0\n    \n    return sum(helper(sublist) for sublist in lst)\n```",
+        "verifier": "PICK: A\n\n```python\ndef count_element_in_list(lst, target):\n    def helper(sublist):\n        if isinstance(sublist, list):\n            return max(helper(item) for item in sublist) + 1\n        else:\n            return 0\n    \n    return sum(helper(sublist) for sublist in lst)\n```",
+        "fixer": "```python\ndef count_element_in_list(lst, target):\n    def helper(sublist):\n        if isinstance(sublist, list):\n            return max(helper(item) for item in sublist) + 1\n        else:\n            return 0\n    \n    return sum(helper(sublist) for sublist in lst)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def count_element_in_list(list_of_lists, element):\n    count = 0\n    for sublist in list_of_lists:\n        if element in sublist:\n            count += 1\n    return count",
+  "sample_keys": [
+    "def count_element_in_list(list_to_search, element):\n    count = 0\n    for sublist in list_to_search:\n        if element in sublist:\n            count += 1\n    return count",
+    "def count_element_in_list(sublist_list, element):\n    count = 0\n    for sublist in sublist_list:\n        if element in sublist:\n            count += 1\n    return count",
+    "def count_element_in_list(list_of_lists, element):\n    count = 0\n    for sublist in list_of_lists:\n        if element in sublist:\n            count += 1\n    return count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1846.0,
+    "small_out": 420.0,
+    "small_s": 8.600334819988348
+  },
+  "calls_plus": {
+    "large_in": 131.0,
+    "large_out": 139.0,
+    "large_s": 3.7979389120009728,
+    "small_in": 1701.0,
+    "small_out": 283.0,
+    "small_s": 5.862832471029833
+  },
+  "calls_samples": {
+    "small_in": 5624.0,
+    "small_out": 1550.0,
+    "small_s": 32.55961521095014
+  }
+}

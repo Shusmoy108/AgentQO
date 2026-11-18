@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-630",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((5, 5)) == [[4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6], [6, 4], [6, 5], [6, 6]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1], [0, 0]]\nassert get_coordinates((2, 3)) == [[1, 2], [1, 3], [1, 4], [2, 2], [2, 3], [2, 4], [3, 2], [3, 3], [3, 4]]\n```",
+  "reference_key": "assert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((5, 5)) == [[4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6], [6, 4], [6, 5], [6, 6]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1], [0, 0]]\nassert get_coordinates((2, 3)) == [[1, 2], [1, 3], [1, 4], [2, 2], [2, 3], [2, 4], [3, 2], [3, 3], [3, 4]]",
+  "final_key_plus": "def get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```",
+    "fixer": "```python\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import numpy as np\n\ndef get_coordinates(coordinate):\n    # Generate a random grid\n    grid = np.random.randint(0, 2, (9, 9))\n    coordinate = (np.arange(1, 9)).tolist()[:6]\n\n    rows = grid.shape[0]\n    cols = grid.shape[1]\n    adjacent_coords = []\n\n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n\n    return adjacent_coords\n\n\n# Test the function with some examples\nassert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((0, 0)) == []\nassert get_coordinates((8, 8)) == []\nassert get_coordinates((-1, -1)) == []",
+      "reference_key": "assert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((5, 5)) == [[4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6], [6, 4], [6, 5], [6, 6]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1], [0, 0]]\nassert get_coordinates((2, 3)) == [[1, 2], [1, 3], [1, 4], [2, 2], [2, 3], [2, 4], [3, 2], [3, 3], [3, 4]]",
+      "key_differs": true,
+      "text": "```python\nimport numpy as np\n\ndef get_coordinates(coordinate):\n    # Generate a random grid\n    grid = np.random.randint(0, 2, (9, 9))\n    coordinate = (np.arange(1, 9)).tolist()[:6]\n\n    rows = grid.shape[0]\n    cols = grid.shape[1]\n    adjacent_coords = []\n\n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n\n    return adjacent_coords\n\n\n# Test the function with some examples\nassert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((0, 0)) == []\nassert get_coordinates((8, 8)) == []\nassert get_coordinates((-1, -1)) == []\n```",
+      "quality": 0.0,
+      "final_key": "def get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```",
+        "fixer": "```python\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert get_coordinates((5, 8)) == [[4, 7], [4, 8], [4, 9], [5, 6], [5, 7], [5, 8], [5, 9], [6, 7], [6, 8], [6, 9]]\nassert get_coordinates((-1, -5)) == [[-2, -6], [-2, -5], [-2, -4], [-1, -4], [-1, -3], [-1, -2], [-1, -1], [-1, 0], [-1, 1]]\nassert get_coordinates((1, -1)) == [[0, -1], [0, -2], [1, -2], [2, -2]]\nassert get_coordinates((0, 0)) == []\r\nassert get_coordinates((-2, -2)) == [[-3, -3], [-3, -2], [-3, -1], [-3, 0], [-3, 1], [-3, 2], [-2, -3], [-2, -2], [-2, -1]]",
+      "reference_key": "assert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((5, 5)) == [[4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6], [6, 4], [6, 5], [6, 6]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1], [0, 0]]\nassert get_coordinates((2, 3)) == [[1, 2], [1, 3], [1, 4], [2, 2], [2, 3], [2, 4], [3, 2], [3, 3], [3, 4]]",
+      "key_differs": true,
+      "text": "```python\nassert get_coordinates((5, 8)) == [[4, 7], [4, 8], [4, 9], [5, 6], [5, 7], [5, 8], [5, 9], [6, 7], [6, 8], [6, 9]]\nassert get_coordinates((-1, -5)) == [[-2, -6], [-2, -5], [-2, -4], [-1, -4], [-1, -3], [-1, -2], [-1, -1], [-1, 0], [-1, 1]]\nassert get_coordinates((1, -1)) == [[0, -1], [0, -2], [1, -2], [2, -2]]\nassert get_coordinates((0, 0)) == []\r\nassert get_coordinates((-2, -2)) == [[-3, -3], [-3, -2], [-3, -1], [-3, 0], [-3, 1], [-3, 2], [-2, -3], [-2, -2], [-2, -1]]\n```",
+      "quality": 0.0,
+      "final_key": "def get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```",
+        "fixer": "```python\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "assert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((5, 5)) == [[4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6], [6, 4], [6, 5], [6, 6]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1], [0, 0]]\nassert get_coordinates((2, 3)) == [[1, 2], [1, 3], [1, 4], [2, 2], [2, 3], [2, 4], [3, 2], [3, 3], [3, 4]]",
+      "key_differs": true,
+      "text": "```python\nassert remove_odd(\"\") == \"\"\nassert remove_odd(\"a\") == \"a\"\nassert remove_odd(\"ab\") == \"b\"\nassert remove_odd(\"abc\") == \"c\"\nassert remove_odd(\"abcd\") == \"bd\"",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n\n# Test cases\nassert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]\nassert get_coordinates((4, 5)) == [[3, 4], [3, 5], [3, 6], [4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6]]\nassert get_coordinates((5, 6)) == [[4, 5], [4, 6], [4, 7], [5, 5], [5, 6], [5, 7], [6, 5], [6, 6], [6, 7]]\nassert remove_odd(\"\") == \"\"\nassert remove_odd(\"a\") == \"a\"\nassert remove_odd(\"ab\") == \"b\"\nassert remove_odd(\"abc\") == \"c\"\nassert remove_odd(\"abcd\") == \"bd\"\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((0, 10)) == [[-1, 9], [-1, 10], [-1, 11], [0, 9], [0, 10], [0, 11], [1, 9], [1, 10], [1, 11]]\nassert get_coordinates((-10, -10)) == [[-11, -11], [-11, -10], [-11, -9], [-10, -11], [-10, -10], [-10, -9], [-9, -11], [-9, -10], [-9, -9]]",
+  "sample_keys": [
+    "assert get_coordinates((10, 5)) == [[9, 6], [9, 7], [9, 8], [10, 4], [10, 5], [10, 6], [11, 4], [11, 5], [11, 6]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-1, -2]]\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((5, 5)) == [[4, 4], [4, 5], [4, 6], [5, 3], [5, 4], [5, 5], [5, 6], [6, 4], [6, 5]]\nassert get_coordinates((-5, -5)) == [[-6, -6], [-6, -5], [-5, -6]]",
+    "assert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((4, 5)) == [[3, 4], [3, 5], [4, 4], [4, 5]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1]]\nassert get_coordinates((5, 5)) == [[4, 5], [4, 6], [5, 4], [5, 5], [5, 6]]\nassert get_coordinates((6, 6)) == [[5, 6], [5, 7], [6, 5], [6, 6], [6, 7]]",
+    "def get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n\n# Test cases\nassert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]\n\n# Edge case: Single cell\nassert get_coordinates((1, 1)) == [[0, 0], [1, 0], [1, 1], [1, 2], [0, 2]]\n\n# Edge case: Out of bounds\nassert get_coordinates((5, 6)) == []\n\n# Edge case: On the boundary\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]\n\n# Edge case: Large grid\ngrid = [\n    [1, 2, 3],\n    [4, 5, 6],\n    [7, 8, 9]\n]\nassert get_coordinates((2, 2)) == [[1, 1], [1, 2], [1, 3], [2, 1], [2, 2], [2, 3], [3, 1], [3, 2], [3, 3]]",
+    "assert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((2, 3)) == [[1, 2], [1, 3], [1, 4], [2, 2], [2, 3], [2, 4], [3, 2], [3, 3], [3, 4]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((5, 5)) == [[4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6], [6, 4], [6, 5], [6, 6]]",
+    "# Typical case test with positive coordinates\r\nassert get_coordinates((2, 3)) == [[1, 2], [1, 3], [1, 4], [2, 2], [2, 3], [2, 4], [3, 2], [3, 3], [3, 4]]\r\n\r\n# Edge case test with zero coordinates\r\nassert get_coordinates((0, 0)) == []\r\n\r\n# Boundary case test with negative coordinates\r\nassert get_coordinates((-1, -1)) == [[-2, -1], [-2, 0], [-1, -2], [-1, 0], [0, -2], [0, -1], [0, 1], [0, 2], [1, -1], [1, 0], [1, 1]]\r\n\r\n# Out-of-boundary case test\r\nassert get_coordinates((5, 6)) == []\r\n\r\n# Invalid input type case (non-tuple)\r\nassert get_coordinates(\"3, 4\") == []"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3283.0,
+    "small_out": 807.0,
+    "small_s": 17.077192561031552
+  },
+  "calls_plus": {
+    "small_in": 2978.0,
+    "small_out": 469.0,
+    "small_s": 8.467251017020317,
+    "large_in": 272.0,
+    "large_out": 327.0,
+    "large_s": 7.0693221440014895
+  },
+  "calls_samples": {
+    "small_in": 1360.0,
+    "small_out": 1464.0,
+    "small_s": 25.517510302976007
+  }
+}

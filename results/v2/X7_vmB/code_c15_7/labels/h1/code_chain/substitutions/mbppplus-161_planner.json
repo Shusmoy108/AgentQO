@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-161",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `remove_elements` that takes two lists as parameters.\n2. Use list comprehension to iterate through the first list and include only those elements that are not present in the second list.\n3. Return the new list containing the filtered elements.\n4. Test the function with the provided test case to ensure it works correctly.\n5. Document the function with a docstring explaining its purpose and parameters.",
+  "reference_key": null,
+  "final_key_plus": "def remove_elements(main_list, elements_to_remove):\n    \"\"\"\n    Removes all elements from 'main_list' that are present in 'elements_to_remove'.\n    \n    Parameters:\n    - main_list (list): The original list from which elements will be removed.\n    - elements_to_remove (list): A list of elements to be removed from 'main_list'.\n    \n    Returns:\n    - list: A new list containing elements from 'main_list' after removing the specified elements.\n    \"\"\"\n    return [element for element in main_list if element not in elements_to_remove]",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert remove_elements([], []) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], []) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\n```",
+    "coder": "```python\ndef remove_elements(main_list, elements_to_remove):\n    \"\"\"\n    Removes all elements from 'main_list' that are present in 'elements_to_remove'.\n    \n    Parameters:\n    - main_list (list): The original list from which elements will be removed.\n    - elements_to_remove (list): A list of elements to be removed from 'main_list'.\n    \n    Returns:\n    - list: A new list containing elements from 'main_list' after removing the specified elements.\n    \"\"\"\n    return [element for element in main_list if element not in elements_to_remove]\n```",
+    "verifier": "PICK: A\n\n```python\ndef remove_elements(main_list, elements_to_remove):\n    \"\"\"\n    Removes all elements from 'main_list' that are present in 'elements_to_remove'.\n    \n    Parameters:\n    - main_list (list): The original list from which elements will be removed.\n    - elements_to_remove (list): A list of elements to be removed from 'main_list'.\n    \n    Returns:\n    - list: A new list containing elements from 'main_list' after removing the specified elements.\n    \"\"\"\n    return [element for element in main_list if element not in elements_to_remove]\n```",
+    "fixer": "```python\ndef remove_elements(main_list, elements_to_remove):\n    \"\"\"\n    Removes all elements from 'main_list' that are present in 'elements_to_remove'.\n    \n    Parameters:\n    - main_list (list): The original list from which elements will be removed.\n    - elements_to_remove (list): A list of elements to be removed from 'main_list'.\n    \n    Returns:\n    - list: A new list containing elements from 'main_list' after removing the specified elements.\n    \"\"\"\n    return [element for element in main_list if element not in elements_to_remove]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a helper function `extract_even` that takes a single argument, a nested mixed tuple.\n2. Use recursion to traverse the tuple.\n3. For each element, check if it is an integer or another tuple.\n4. If it's an integer, check if it is even using the modulus operator (`%`). If it is, add it to a new list.\n5. If it's a tuple, recursively call `extract_even` on it and append the result to the new list.\n6. After traversing the entire tuple, convert the list of even integers back into a tuple and return it.\n\nHere's the complete implementation:\n\n```python\ndef extract_even(nested_tuple):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item % 2 == 0:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n```\n\nThis function will correctly handle any nested structure of tuples containing integers and other tuples, extracting all even numbers and returning them as a new tuple.",
+      "quality": 0.0,
+      "final_key": "def remove_elements(nested_tuple, elements_to_remove):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item not in elements_to_remove:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 4, 6, 8]) == [1, 3, 5, 7, 9, 10]\nassert remove_elements([], []) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [10, 11, 12, 13, 14]) == [2, 4, 6, 8]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == []\n```",
+        "coder": "```python\ndef extract_even(nested_tuple):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item % 2 == 0:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n```",
+        "verifier": "PICK: B\n\n```python\ndef remove_elements(nested_tuple, elements_to_remove):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item not in elements_to_remove:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n```",
+        "fixer": "```python\ndef remove_elements(nested_tuple, elements_to_remove):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item not in elements_to_remove:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import the necessary module for mathematical operations.\n2. Define a function named `volume_sphere` that takes one parameter, `radius`.\n3. Inside the function, calculate the volume using the formula \\( V = \\frac{4}{3} \\pi r^3 \\).\n4. Return the calculated volume.\n5. Test the function with the provided test case to ensure it returns the correct result.",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef remove_elements(main_list, elements_to_remove):\n    # Use list comprehension to filter out elements present in elements_to_remove\n    filtered_list = [element for element in main_list if element not in elements_to_remove]\n    return filtered_list",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert remove_elements([], []) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], []) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\n```",
+        "coder": "```python\nimport math\n\ndef remove_elements(main_list, elements_to_remove):\n    # Use list comprehension to filter out elements present in elements_to_remove\n    filtered_list = [element for element in main_list if element not in elements_to_remove]\n    return filtered_list\n```",
+        "verifier": "PICK: A\n```python\nimport math\n\ndef remove_elements(main_list, elements_to_remove):\n    # Use list comprehension to filter out elements present in elements_to_remove\n    filtered_list = [element for element in main_list if element not in elements_to_remove]\n    return filtered_list\n```",
+        "fixer": "```python\nimport math\n\ndef remove_elements(main_list, elements_to_remove):\n    # Use list comprehension to filter out elements present in elements_to_remove\n    filtered_list = [element for element in main_list if element not in elements_to_remove]\n    return filtered_list\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `is_perfect_square` that takes one argument, `num`.\n3. Check if `num` is less than 0. If so, return False because negative numbers cannot be perfect squares.\n4. Calculate the integer square root of `num` using the `int()` function.\n5. Square the calculated integer square root and compare it to `num`. If they are equal, return True; otherwise, return False.\n6. Test the function with the provided test case `assert not is_perfect_square(10)`.",
+      "quality": 1.0,
+      "final_key": "def remove_elements(lst1, lst2):\n    return [x for x in lst1 if x not in lst2]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert remove_elements([], []) == []\nassert remove_elements([1, 2, 3], [4, 5, 6]) == [1, 2, 3]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == [11]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == [11, 12]\n```",
+        "coder": "```python\ndef remove_elements(lst1, lst2):\n    return [x for x in lst1 if x not in lst2]\n```",
+        "verifier": "PICK: A\n\n```python\ndef remove_elements(lst1, lst2):\n    return [x for x in lst1 if x not in lst2]\n```",
+        "fixer": "```python\ndef remove_elements(lst1, lst2):\n    return [x for x in lst1 if x not in lst2]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list",
+  "sample_keys": [
+    "def remove_elements(original_list, elements_to_remove):\n    return [element for element in original_list if element not in elements_to_remove]",
+    "def remove_elements(original_list, elements_to_remove):\n    return [element for element in original_list if element not in elements_to_remove]",
+    "def remove_elements(source_list, elements_to_remove):\n    result_list = []\n    for element in source_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.3333333333333333
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2636.0,
+    "small_out": 562.0,
+    "small_s": 4.790497398003936
+  },
+  "calls_plus": {
+    "large_in": 160.0,
+    "large_out": 87.0,
+    "large_s": 1.301422527001705,
+    "small_in": 2715.0,
+    "small_out": 642.0,
+    "small_s": 12.427531910972903
+  },
+  "calls_samples": {
+    "small_in": 7843.0,
+    "small_out": 1603.0,
+    "small_s": 33.89870504292776
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-771",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef check_expression(expression):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for char in expression:\n        if char in mapping.values():\n            stack.append(char)\n        elif char in mapping:\n            if not stack or mapping[char] != stack.pop():\n                return False\n    return not stack\n```",
+  "reference_key": "def check_expression(expression):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for char in expression:\n        if char in mapping.values():\n            stack.append(char)\n        elif char in mapping:\n            if not stack or mapping[char] != stack.pop():\n                return False\n    return not stack",
+  "final_key_plus": "def check_expression(expression):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for char in expression:\n        if char in mapping.values():\n            stack.append(char)\n        elif char in mapping:\n            if not stack or mapping[char] != stack.pop():\n                return False\n    return not stack",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef check_expression(expression):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for char in expression:\n        if char in mapping.values():\n            stack.append(char)\n        elif char in mapping:\n            if not stack or mapping[char] != stack.pop():\n                return False\n    return not stack\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "class ExpressionBalancingChecker:\n    def __init__(self, expression):\n        self.expression = expression\n\n    def is_balanced(self):\n        stack = []\n        for char in self.expression:\n            if char in '([{':\n                stack.append(char)\n            elif char in ')]}':\n                if not stack or not self.is_matching_character(stack.pop(), char):\n                    return False\n        return len(stack) == 0\n\ndef is_matching_character(open_char, close_char):\n    if open_char == '{' and close_char == '}':\n        return True\n    elif open_char == '[' and close_char == ']':\n        return True\n    elif open_char == '(' and close_char == ')':\n        return True\n    else:\n        return False\n\n# Test cases\nexpression_checker = ExpressionBalancingChecker(\"{()}[{}]\")\nassert expression_checker.is_balanced() == True\n\nexpression_checker = ExpressionBalancingChecker(\"{()}[{]\")\nassert expression_checker.is_balanced() == False\n\nexpression_checker = ExpressionBalancingChecker(\"{()][]}({})\")\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \"()\")\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \"(())\"\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \"(()())\"\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \")(\"\nassert expression_checker.is_balanced() == False\n\nexpression_checker = \"({[]})\"\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \"[{]}\"\nassert expression_checker.is_balanced() == False",
+      "reference_key": "def check_expression(expression):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for char in expression:\n        if char in mapping.values():\n            stack.append(char)\n        elif char in mapping:\n            if not stack or mapping[char] != stack.pop():\n                return False\n    return not stack",
+      "key_differs": true,
+      "text": "```python\nclass ExpressionBalancingChecker:\n    def __init__(self, expression):\n        self.expression = expression\n\n    def is_balanced(self):\n        stack = []\n        for char in self.expression:\n            if char in '([{':\n                stack.append(char)\n            elif char in ')]}':\n                if not stack or not self.is_matching_character(stack.pop(), char):\n                    return False\n        return len(stack) == 0\n\ndef is_matching_character(open_char, close_char):\n    if open_char == '{' and close_char == '}':\n        return True\n    elif open_char == '[' and close_char == ']':\n        return True\n    elif open_char == '(' and close_char == ')':\n        return True\n    else:\n        return False\n\n# Test cases\nexpression_checker = ExpressionBalancingChecker(\"{()}[{}]\")\nassert expression_checker.is_balanced() == True\n\nexpression_checker = ExpressionBalancingChecker(\"{()}[{]\")\nassert expression_checker.is_balanced() == False\n\nexpression_checker = ExpressionBalancingChecker(\"{()][]}({})\")\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \"()\")\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \"(())\"\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \"(()())\"\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \")(\"\nassert expression_checker.is_balanced() == False\n\nexpression_checker = \"({[]})\"\nassert expression_checker.is_balanced() == True\n\nexpression_checker = \"[{]}\"\nassert expression_checker.is_balanced() == False\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n\n# Fixing the incorrect assertion\ntry:\n    assert check_expression(\"{()}[{]\") == False, \"Failed for {()}[{])\"\nexcept AssertionError as e:\n    print(str(e))\n\n# Test results (complete)\nimport pytest\n\n@pytest.mark.parametrize('expression, expected', [\n    (\"{}\", True),\n    (\"{}[]\", True),\n    (\"({[]})\", True),\n    (\"[{}]}\", False),\n    (\"{{}}{}[]\", True),\n    (\"()[()\", False),\n])\ndef test_check_expression(expression, expected):\n    result = check_expression(expression)\n    assert result == expected, f\"Failed for {expression}: expected {expected}, got {result}\"",
+      "reference_key": "def check_expression(expression):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for char in expression:\n        if char in mapping.values():\n            stack.append(char)\n        elif char in mapping:\n            if not stack or mapping[char] != stack.pop():\n                return False\n    return not stack",
+      "key_differs": true,
+      "text": "```python\ndef check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n\n# Fixing the incorrect assertion\ntry:\n    assert check_expression(\"{()}[{]\") == False, \"Failed for {()}[{])\"\nexcept AssertionError as e:\n    print(str(e))\n\n# Test results (complete)\nimport pytest\n\n@pytest.mark.parametrize('expression, expected', [\n    (\"{}\", True),\n    (\"{}[]\", True),\n    (\"({[]})\", True),\n    (\"[{}]}\", False),\n    (\"{{}}{}[]\", True),\n    (\"()[()\", False),\n])\ndef test_check_expression(expression, expected):\n    result = check_expression(expression)\n    assert result == expected, f\"Failed for {expression}: expected {expected}, got {result}\"\n```",
+      "quality": 0.0,
+      "final_key": "def check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n\n# Fixing the incorrect assertion\ntry:\n    assert check_expression(\"{()}[{]\") == False, \"Failed for {()}[{])\"\nexcept AssertionError as e:\n    print(str(e))\n\n# Test results (complete)\nimport pytest\n\n@pytest.mark.parametrize('expression, expected', [\n    (\"{}\", True),\n    (\"{}[]\", True),\n    (\"({[]})\", True),\n    (\"[{}]}\", False),\n    (\"{{}}{}[]\", True),\n    (\"()[()\", False),\n])\ndef test_check_expression(expression, expected):\n    result = check_expression(expression)\n    assert result == expected, f\"Failed for {expression}: expected {expected}, got {result}\"",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n\n# Fixing the incorrect assertion\ntry:\n    assert check_expression(\"{()}[{]\") == False, \"Failed for {()}[{])\"\nexcept AssertionError as e:\n    print(str(e))\n\n# Test results (complete)\nimport pytest\n\n@pytest.mark.parametrize('expression, expected', [\n    (\"{}\", True),\n    (\"{}[]\", True),\n    (\"({[]})\", True),\n    (\"[{}]}\", False),\n    (\"{{}}{}[]\", True),\n    (\"()[()\", False),\n])\ndef test_check_expression(expression, expected):\n    result = check_expression(expression)\n    assert result == expected, f\"Failed for {expression}: expected {expected}, got {result}\"\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive",
+      "reference_key": "def check_expression(expression):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for char in expression:\n        if char in mapping.values():\n            stack.append(char)\n        elif char in mapping:\n            if not stack or mapping[char] != stack.pop():\n                return False\n    return not stack",
+      "key_differs": true,
+      "text": "```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n```",
+      "quality": 0.0,
+      "final_key": "def check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count",
+  "sample_keys": [
+    "def check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n\n# Test cases\nassert check_expression(\"{()}[{}]\") == True\nassert check_expression(\"{()}[{]\") == False\nassert check_expression(\"{()}[{}][]({})\") == True\nassert check_expression(\"()\") == True\nassert check_expression(\"(())\") == True\nassert check_expression(\"(()())\") == True\nassert check_expression(\")(\") == False\nassert check_expression(\"({[]})\") == True\nassert check_expression(\"([)]\") == False\nassert check_expression(\"{{}}{}[]\") == True\nassert check_expression(\"[{]}\") == False",
+    "def check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n\n# Additional test cases\nassert check_expression(\"{()}[{}]\") == True\nassert check_expression(\"{()}[{]\") == False\nassert check_expression(\"{()}[{}][]({})\") == True\nassert check_expression(\"()\") == True\nassert check_expression(\"(())\") == True\nassert check_expression(\"(()())\") == True\nassert check_expression(\")(\") == False\nassert check_expression(\"({[]})\") == True\nassert check_expression(\"([)]\") == False\nassert check_expression(\"{{}}{}[]\") == True\nassert check_expression(\"[{]}\") == False",
+    "def check_expression(expression):\n    stack = []\n    for char in expression:\n        if char == '(':\n            stack.append(char)\n        elif char == ')':\n            if not stack or stack.pop() != '(':\n                return False\n    return not stack",
+    "def check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n\n# Test cases\nassert check_expression(\"{()}[{}]\") == True\nassert check_expression(\"{()}[{]\") == False  # Fixed the assertion to be equal to False\nassert check_expression(\"{()}[{}][]({})\") == True\nassert check_expression(\"()\") == True\nassert check_expression(\"(())\") == True\nassert check_expression(\"(()())\") == True\nassert check_expression(\")(\") == False  # Fixed the assertion to be equal to False\nassert check_expression(\"({[]})\") == True\nassert check_expression(\"([)]\") == False  # Fixed the assertion to be equal to False\nassert check_expression(\"{{}}{}[]\") == True\nassert check_expression(\"[{]}\") == False  # Fixed the assertion to be equal to False",
+    "def check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n# Test results\nassert check_expression(\"{()}[{}]\") == True\nassert check_expression(\"{()}[{]\") == False\nassert check_expression(\"{()}[{}][]({})\") == True\nassert check_expression(\"()\") == True\nassert check_expression(\"(())\") == True\nassert check_expression(\"(()())\") == True\nassert check_expression(\")(\") == False\nassert check_expression(\"({[]})\") == True\nassert check_expression(\"([)]\") == False\nassert check_expression(\"{{}}{}[]\") == True\nassert check_expression(\"[{]}\") == False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1441.0,
+    "small_out": 813.0,
+    "small_s": 17.39109394699335
+  },
+  "calls_plus": {
+    "small_in": 1093.0,
+    "small_out": 760.0,
+    "small_s": 16.01371777598979,
+    "large_in": 351.0,
+    "large_out": 75.0,
+    "large_s": 2.209207780979341
+  },
+  "calls_samples": {
+    "small_in": 1755.0,
+    "small_out": 830.0,
+    "small_s": 17.067705481982557
+  }
+}

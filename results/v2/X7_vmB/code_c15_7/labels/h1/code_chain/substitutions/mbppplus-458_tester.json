@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-458",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert rectangle_area(5, 4) == 20\nassert rectangle_area(7, 9) == 63\nassert rectangle_area(0, 10) == 0\nassert rectangle_area(-3, -4) == 12\nassert rectangle_area(100, 1) == 100\n```",
+  "reference_key": "assert rectangle_area(5, 4) == 20\nassert rectangle_area(7, 9) == 63\nassert rectangle_area(0, 10) == 0\nassert rectangle_area(-3, -4) == 12\nassert rectangle_area(100, 1) == 100",
+  "final_key_plus": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```",
+    "fixer": "```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestRectangleArea(unittest.TestCase):\n    def setUp(self):\n        self.solutions = [(10, 20, 200), (5, 7, 35), (0, 10, 0), (-1, -5, 5)]\n    \n    def test_rectangle_area(self):\n        for length, width, expected in self.solutions:\n            self.assertEqual(rectangle_area(length, width), expected)\n        \nif __name__ == '__main__':\n    unittest.main()",
+      "reference_key": "assert rectangle_area(5, 4) == 20\nassert rectangle_area(7, 9) == 63\nassert rectangle_area(0, 10) == 0\nassert rectangle_area(-3, -4) == 12\nassert rectangle_area(100, 1) == 100",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TestRectangleArea(unittest.TestCase):\n    def setUp(self):\n        self.solutions = [(10, 20, 200), (5, 7, 35), (0, 10, 0), (-1, -5, 5)]\n    \n    def test_rectangle_area(self):\n        for length, width, expected in self.solutions:\n            self.assertEqual(rectangle_area(length, width), expected)\n        \nif __name__ == '__main__':\n    unittest.main()\n```",
+      "quality": 1.0,
+      "final_key": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```",
+        "fixer": "```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert rectangle_area(-5,-2) == 10\nassert rectangle_area(-3,4) == -12\nassert rectangle_area(6,9) == 54\nassert rectangle_area(0,7) == 0\nassert rectangle_area(8,-1) == -8",
+      "reference_key": "assert rectangle_area(5, 4) == 20\nassert rectangle_area(7, 9) == 63\nassert rectangle_area(0, 10) == 0\nassert rectangle_area(-3, -4) == 12\nassert rectangle_area(100, 1) == 100",
+      "key_differs": true,
+      "text": "```python\nassert rectangle_area(-5,-2) == 10\nassert rectangle_area(-3,4) == -12\nassert rectangle_area(6,9) == 54\nassert rectangle_area(0,7) == 0\nassert rectangle_area(8,-1) == -8\n```",
+      "quality": 1.0,
+      "final_key": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```",
+        "fixer": "```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert set(extract_singly([])) == set()\nassert set(extract_singly([[1], [2], [3]])) == set([1, 2, 3])\nassert set(extract_singly([[1, 2], [2, 3], [3, 4]]) == set([1, 2, 3, 4])\nassert set(extract_singly([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == set([1, 2, 3, 4, 5, 6, 7, 8, 9])\nassert set(extract_singly([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])",
+      "reference_key": "assert rectangle_area(5, 4) == 20\nassert rectangle_area(7, 9) == 63\nassert rectangle_area(0, 10) == 0\nassert rectangle_area(-3, -4) == 12\nassert rectangle_area(100, 1) == 100",
+      "key_differs": true,
+      "text": "```python\nassert set(extract_singly([])) == set()\nassert set(extract_singly([[1], [2], [3]])) == set([1, 2, 3])\nassert set(extract_singly([[1, 2], [2, 3], [3, 4]]) == set([1, 2, 3, 4])\nassert set(extract_singly([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == set([1, 2, 3, 4, 5, 6, 7, 8, 9])\nassert set(extract_singly([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])\n```",
+      "quality": 1.0,
+      "final_key": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```",
+        "fixer": "```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert rectangle_area(7, 9) == 63\nassert rectangle_area(0, 5) == 0\nassert rectangle_area(-4, 8) == -32\nassert rectangle_area(15, 0) == 0\nassert rectangle_area(100, 200) == 20000",
+  "sample_keys": [
+    "assert rectangle_area(5, 6) == 30\nassert rectangle_area(-1, 5) == -5\nassert rectangle_area(0, 4) == 0\nassert rectangle_area(7, -3) == 21\nassert rectangle_area(9.5, 8.3) == 78.35",
+    "# Test case 4 - Edge case with negative dimensions\nassert rectangle_area(-5, 10) == -50\n\n# Test case 5 - Edge case with zero dimensions\nassert rectangle_area(0, 10) == 0\n\n# Test case 6 - Edge case with very large dimensions\nassert rectangle_area(1000000, 2000000) == 2000000000000\n\n# Test case 7 - Edge case with small dimensions\nassert rectangle_area(2, 3) == 6\n\n# Test case 8 - Edge case with extremely small dimensions\nassert rectangle_area(1e-9, 1e-9) == 1e-18",
+    "assert rectangle_area(-1,2) == -2\nassert rectangle_area(-1,-1) == 1\nassert rectangle_area(0,10) == 0\nassert rectangle_area(10,0) == 0\nassert rectangle_area(2.5,3.5) == 9.25",
+    "assert rectangle_area(7,9) == 63\nassert rectangle_area(-5,4) == 20\nassert rectangle_area(0,10) == 0\nassert rectangle_area(8,0) == 0\nassert rectangle_area(12.5,3.1) == 39.25",
+    "# Test case for typical inputs\nassert rectangle_area(8,5) == 40\n\n# Test case for smaller inputs\nassert rectangle_area(4,3) == 12\n\n# Test case for large inputs\nassert rectangle_area(100,200) == 20000\n\n# Edge case test for zero dimensions (invalid input)\ntry:\n    rectangle_area(0,0)\nexcept ValueError as e:\n    assert str(e) == \"Both length and width must be positive numbers\"\n\n# Edge case test for negative dimensions (invalid input)\ntry:\n    rectangle_area(-1,-1)\nexcept ValueError as e:\n    assert str(e) == \"Both length and width must be positive numbers\""
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1225.0,
+    "small_out": 324.0,
+    "small_s": 7.191981645009946
+  },
+  "calls_plus": {
+    "small_in": 1057.0,
+    "small_out": 243.0,
+    "small_s": 5.30724734600517,
+    "large_in": 159.0,
+    "large_out": 78.0,
+    "large_s": 2.16315267898608
+  },
+  "calls_samples": {
+    "small_in": 795.0,
+    "small_out": 556.0,
+    "small_s": 10.715384679962881
+  }
+}

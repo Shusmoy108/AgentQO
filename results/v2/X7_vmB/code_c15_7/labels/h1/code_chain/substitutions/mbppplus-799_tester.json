@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-799",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(255, 8) == 255\nassert left_rotate(128, 7) == 256\nassert left_rotate(2147483647, 1) == 4294967294\n```",
+  "reference_key": "assert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(255, 8) == 255\nassert left_rotate(128, 7) == 256\nassert left_rotate(2147483647, 1) == 4294967294",
+  "final_key_plus": "def left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16, 2) == 64\nassert left_rotate(10, 2) == 40\nassert left_rotate(99, 3) == 792\nassert left_rotate(99, 3) == 792\nassert left_rotate(0b0001, 3) == 0b1000\nassert left_rotate(0b0101, 3) == 0b101000\nassert left_rotate(0b11101, 3) == 0b11101000\nassert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(255, 8) == 255\nassert left_rotate(128, 7) == 256\nassert left_rotate(2147483647, 1) == 4294967294",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16, 2) == 64\nassert left_rotate(10, 2) == 40\nassert left_rotate(99, 3) == 792\nassert left_rotate(99, 3) == 792\nassert left_rotate(0b0001, 3) == 0b1000\nassert left_rotate(0b0101, 3) == 0b101000\nassert left_rotate(0b11101, 3) == 0b11101000\nassert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(255, 8) == 255\nassert left_rotate(128, 7) == 256\nassert left_rotate(2147483647, 1) == 4294967294\n```",
+    "fixer": "```python\ndef left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16, 2) == 64\nassert left_rotate(10, 2) == 40\nassert left_rotate(99, 3) == 792\nassert left_rotate(99, 3) == 792\nassert left_rotate(0b0001, 3) == 0b1000\nassert left_rotate(0b0101, 3) == 0b101000\nassert left_rotate(0b11101, 3) == 0b11101000\nassert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(255, 8) == 255\nassert left_rotate(128, 7) == 256\nassert left_rotate(2147483647, 1) == 4294967294\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert left_rotate(0, 2) == 0\nassert left_rotate(56, 3) == 7936\nassert left_rotate(-10, 1) == -4098\nassert left_rotate(255, 8) == 512\nassert left_rotate(189, 4) == 1296",
+      "reference_key": "assert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(255, 8) == 255\nassert left_rotate(128, 7) == 256\nassert left_rotate(2147483647, 1) == 4294967294",
+      "key_differs": true,
+      "text": "```python\nassert left_rotate(0, 2) == 0\nassert left_rotate(56, 3) == 7936\nassert left_rotate(-10, 1) == -4098\nassert left_rotate(255, 8) == 512\nassert left_rotate(189, 4) == 1296\n```",
+      "quality": 0.0,
+      "final_key": "def left_rotate(num, d):\n    if num < 0:\n        raise ValueError(\"invalid literal for int() with base 2: '1010b'\")\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef left_rotate(num, d):\n    if num < 0:\n        raise ValueError(\"invalid literal for int() with base 2: '1010b'\")\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n```",
+        "fixer": "```python\ndef left_rotate(num, d):\n    if num < 0:\n        raise ValueError(\"invalid literal for int() with base 2: '1010b'\")\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert left_rotate(16,2) == 64\nassert left_rotate(0,2) == 0\nassert left_rotate(31,8) == 496\nassert left_rotate(2**31-1,31) == 2\nassert left_rotate(2**31+1,31) == 2",
+      "reference_key": "assert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(255, 8) == 255\nassert left_rotate(128, 7) == 256\nassert left_rotate(2147483647, 1) == 4294967294",
+      "key_differs": true,
+      "text": "```python\nassert left_rotate(16,2) == 64\nassert left_rotate(0,2) == 0\nassert left_rotate(31,8) == 496\nassert left_rotate(2**31-1,31) == 2\nassert left_rotate(2**31+1,31) == 2\n```",
+      "quality": 0.0,
+      "final_key": "def left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert left_rotate(16,2) == 64\nassert left_rotate(0,2) == 0\nassert left_rotate(31,8) == 496\nassert left_rotate(2**31-1,31) == 2\nassert left_rotate(2**31+1,31) == 2",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert left_rotate(16,2) == 64\nassert left_rotate(0,2) == 0\nassert left_rotate(31,8) == 496\nassert left_rotate(2**31-1,31) == 2\nassert left_rotate(2**31+1,31) == 2\n```",
+        "fixer": "```python\ndef left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert left_rotate(16,2) == 64\nassert left_rotate(0,2) == 0\nassert left_rotate(31,8) == 496\nassert left_rotate(2**31-1,31) == 2\nassert left_rotate(2**31+1,31) == 2\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert mul_even_odd([1,3,5,7,4,1,6,8]) == 4\nassert mul_even_odd([]) == 1\nassert mul_even_odd([2,4,6,8]) == 384\nassert mul_even_odd([1,3,5,7,9]) == 945\nassert mul_even_odd([-2,-4,-6,-8]) == 384",
+      "reference_key": "assert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(255, 8) == 255\nassert left_rotate(128, 7) == 256\nassert left_rotate(2147483647, 1) == 4294967294",
+      "key_differs": true,
+      "text": "```python\nassert mul_even_odd([1,3,5,7,4,1,6,8]) == 4\nassert mul_even_odd([]) == 1\nassert mul_even_odd([2,4,6,8]) == 384\nassert mul_even_odd([1,3,5,7,9]) == 945\nassert mul_even_odd([-2,-4,-6,-8]) == 384\n```",
+      "quality": 0.0,
+      "final_key": "def left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert mul_even_odd([1,3,5,7,4,1,6,8]) == 4\nassert mul_even_odd([]) == 1\nassert mul_even_odd([2,4,6,8]) == 384\nassert mul_even_odd([1,3,5,7,9]) == 945\nassert mul_even_odd([-2,-4,-6,-8]) == 384",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert mul_even_odd([1,3,5,7,4,1,6,8]) == 4\nassert mul_even_odd([]) == 1\nassert mul_even_odd([2,4,6,8]) == 384\nassert mul_even_odd([1,3,5,7,9]) == 945\nassert mul_even_odd([-2,-4,-6,-8]) == 384\n```",
+        "fixer": "```python\ndef left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert mul_even_odd([1,3,5,7,4,1,6,8]) == 4\nassert mul_even_odd([]) == 1\nassert mul_even_odd([2,4,6,8]) == 384\nassert mul_even_odd([1,3,5,7,9]) == 945\nassert mul_even_odd([-2,-4,-6,-8]) == 384\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert left_rotate(16,2) == 64\nassert left_rotate(0,1) == 1\nassert left_rotate(1,31) == 1\nassert left_rotate(1,32) == 1\nassert left_rotate(1,33) == 2",
+  "sample_keys": [
+    "assert left_rotate(30, 1) == 6\nassert left_rotate(30, 2) == 120\nassert left_rotate(30, 7) == 30\nassert left_rotate(-1, 8) == -256\nassert left_rotate(1, 0) == 1",
+    "assert left_rotate(3, 1) == 2\nassert left_rotate(10, 2) == 20\nassert left_rotate(-8, 3) == -64\nassert left_rotate(0, 5) == 0\nassert left_rotate(-5, 7) == 120",
+    "assert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(0b10000000000000000000000000000000, 1) == 0b10000000000000000000000000001000\nassert left_rotate(10, 8) == 16\nassert left_rotate(2147483647, 1) == 4294967290",
+    "assert left_rotate(16,2) == 64, \"Test case 1 failed\"\nassert left_rotate(-16,2) == -64, \"Test case 2 failed\"\nassert left_rotate(0,2) == 0, \"Test case 3 failed\"\nassert left_rotate(32,2) == 64, \"Test case 4 failed\"\nassert left_rotate(255,2) == 510, \"Test case 5 failed\"",
+    "assert left_rotate(0,1) == 1\nassert left_rotate(987654321,7) == 272145632\nassert left_rotate(123456789,0) == 123456789\nassert left_rotate(123456789,31) == 16777216\nassert left_rotate(123456789,32) == 123456789"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1906.0,
+    "small_out": 952.0,
+    "small_s": 17.625105477985926
+  },
+  "calls_plus": {
+    "small_in": 1795.0,
+    "small_out": 948.0,
+    "small_s": 16.66649481302011,
+    "large_in": 197.0,
+    "large_out": 96.0,
+    "large_s": 2.7717747399874497
+  },
+  "calls_samples": {
+    "small_in": 985.0,
+    "small_out": 549.0,
+    "small_s": 11.451027271017665
+  }
+}

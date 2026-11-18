@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-740",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert tuple_to_dict(('a', 'b')) == {'a': 'b'}\nassert tuple_to_dict((True, False)) == {True: False}\nassert tuple_to_dict((None, 'none')) == {None: 'none'}\nassert tuple_to_dict((1.5, 2.5, 3.5)) == {1.5: 2.5, 2.5: 3.5}\nassert tuple_to_dict(()) == {}\n```",
+  "reference_key": "assert tuple_to_dict(('a', 'b')) == {'a': 'b'}\nassert tuple_to_dict((True, False)) == {True: False}\nassert tuple_to_dict((None, 'none')) == {None: 'none'}\nassert tuple_to_dict((1.5, 2.5, 3.5)) == {1.5: 2.5, 2.5: 3.5}\nassert tuple_to_dict(()) == {}",
+  "final_key_plus": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+    "fixer": "```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test case 1: Basic tuple\nassert tuple_to_dict((1, 2, 3, 4, 5)) == {1: 2, 2: 3, 3: 4, 4: 5}\n\n# Test case 2: Edge case with same starting and ending values\nassert tuple_to_dict(('a', 'b', 'c', 'd', 'e')) == {'a': 'b', 'b': 'c', 'c': 'd', 'd': 'e'}\n\n# Test case 3: Edge case with odd number of elements (last element not paired)\nassert tuple_to_dict((1, 2, 3)) == {1: 2, 2: 3}\n\n# Test case 4: Edge case with empty tuple\nassert tuple_to_dict(()) == {}\n\n# Test case 5: Edge case with non-string elements\nassert tuple_to_dict(([1, 2], [3, 4])) == {[1, 2]: [3, 4]}",
+      "reference_key": "assert tuple_to_dict(('a', 'b')) == {'a': 'b'}\nassert tuple_to_dict((True, False)) == {True: False}\nassert tuple_to_dict((None, 'none')) == {None: 'none'}\nassert tuple_to_dict((1.5, 2.5, 3.5)) == {1.5: 2.5, 2.5: 3.5}\nassert tuple_to_dict(()) == {}",
+      "key_differs": true,
+      "text": "```python\n# Test case 1: Basic tuple\nassert tuple_to_dict((1, 2, 3, 4, 5)) == {1: 2, 2: 3, 3: 4, 4: 5}\n\n# Test case 2: Edge case with same starting and ending values\nassert tuple_to_dict(('a', 'b', 'c', 'd', 'e')) == {'a': 'b', 'b': 'c', 'c': 'd', 'd': 'e'}\n\n# Test case 3: Edge case with odd number of elements (last element not paired)\nassert tuple_to_dict((1, 2, 3)) == {1: 2, 2: 3}\n\n# Test case 4: Edge case with empty tuple\nassert tuple_to_dict(()) == {}\n\n# Test case 5: Edge case with non-string elements\nassert tuple_to_dict(([1, 2], [3, 4])) == {[1, 2]: [3, 4]}\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    if not isinstance(tup, tuple):\n        raise ValueError(\"Input must be a tuple\")\n    \n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    \n    return dict",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_dict(tup):\n    if not isinstance(tup, tuple):\n        raise ValueError(\"Input must be a tuple\")\n    \n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    \n    return dict\n```",
+        "fixer": "```python\ndef tuple_to_dict(tup):\n    if not isinstance(tup, tuple):\n        raise ValueError(\"Input must be a tuple\")\n    \n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    \n    return dict\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Regular case\nassert tuple_to_dict((4, 6, 8, 10, 12, 14)) == {4: 6, 8: 10, 12: 14}\n\n# Single element tupla\nassert tuple_to_dict((9,)) == {9: None}  # Adding None to handle single element tuples\n\n# Empty tuple\nassert tuple_to_dict(()) == {}\n\n# Edge case where next value is None (impossible with current logic)\n# assert tuple_to_dict((10, 20, None, 30)) == {10: 20, 30: None}  # This would be difficult to implement without additional logic or handling special condition.\n\n# Case with only two elements\nassert tuple_to_dict((15, 25)) == {15: 25}",
+      "reference_key": "assert tuple_to_dict(('a', 'b')) == {'a': 'b'}\nassert tuple_to_dict((True, False)) == {True: False}\nassert tuple_to_dict((None, 'none')) == {None: 'none'}\nassert tuple_to_dict((1.5, 2.5, 3.5)) == {1.5: 2.5, 2.5: 3.5}\nassert tuple_to_dict(()) == {}",
+      "key_differs": true,
+      "text": "The following assert statements will test different scenarios:\n\n```python\n# Regular case\nassert tuple_to_dict((4, 6, 8, 10, 12, 14)) == {4: 6, 8: 10, 12: 14}\n\n# Single element tupla\nassert tuple_to_dict((9,)) == {9: None}  # Adding None to handle single element tuples\n\n# Empty tuple\nassert tuple_to_dict(()) == {}\n\n# Edge case where next value is None (impossible with current logic)\n# assert tuple_to_dict((10, 20, None, 30)) == {10: 20, 30: None}  # This would be difficult to implement without additional logic or handling special condition.\n\n# Case with only two elements\nassert tuple_to_dict((15, 25)) == {15: 25}\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    if not tup:\n        return {}\n    \n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    \n    return dict",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_dict(tup):\n    if not tup:\n        return {}\n    \n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    \n    return dict\n```",
+        "fixer": "```python\ndef tuple_to_dict(tup):\n    if not tup:\n        return {}\n    \n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    \n    return dict\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+      "reference_key": "assert tuple_to_dict(('a', 'b')) == {'a': 'b'}\nassert tuple_to_dict((True, False)) == {True: False}\nassert tuple_to_dict((None, 'none')) == {None: 'none'}\nassert tuple_to_dict((1.5, 2.5, 3.5)) == {1.5: 2.5, 2.5: 3.5}\nassert tuple_to_dict(()) == {}",
+      "key_differs": true,
+      "text": "```python\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+        "fixer": "```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 2, 3: 4, 5: 6}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict(('x')) == {}\nassert tuple_to_dict(()) == {}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) == {1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10}",
+  "sample_keys": [
+    "assert tuple_to_dict((2, 4, 6, 8, 10)) == {2: 4, 6: 8, 10: 10}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict((1)) == {}\nassert tuple_to_dict(()) == {}\nassert tuple_to_dict(((3, 4), (5, 6))) == {3: 4, 5: 6}",
+    "assert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict(('x',)) == {}\nassert tuple_to_dict(()) == {}\nassert tuple_to_dict((1, 2, 3, 4, 5)) == {1: 2, 2: 3, 3: 4, 4: 5}",
+    "assert tuple_to_dict(('a', 'b')) == {'a': 'b'}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict(('a', 'b', 'c', 'd')) == {'a': 'b', 'b': 'c', 'c': 'd'}\nassert tuple_to_dict(('a', 'b', 'c', 'd', 'e')) == {'a': 'b', 'b': 'c', 'c': 'd', 'd': 'e'}\nassert tuple_to_dict(('a', 'b', 'c', 'd', 'e', 'f')) == {'a': 'b', 'b': 'c', 'c': 'd', 'd': 'e', 'e': 'f'}",
+    "assert tuple_to_dict((1, 2, 3)) == {1: 2, 2: 3}\nassert tuple_to_dict((4, 6, 8, 10, 12)) == {4: 6, 6: 8, 8: 10, 10: 12}\nassert tuple_to_dict(() == {})\nassert tuple_to_dict((7)) == {7: None}\nassert tuple_to_dict(('x',)) == {'x': None}",
+    "assert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((4, 6, 8)) == {4: 6, 6: 8}\nassert tuple_to_dict((9)) == {}\nassert tuple_to_dict(() == {}\nassert tuple_to_dict((-2, 3, 4, 5, 6)) == {-2: 3, 4: 5, 6: None}"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2350.0,
+    "small_out": 610.0,
+    "small_s": 12.412047993042506
+  },
+  "calls_plus": {
+    "small_in": 1866.0,
+    "small_out": 426.0,
+    "small_s": 7.885849982005311,
+    "large_in": 229.0,
+    "large_out": 102.0,
+    "large_s": 2.2765922010003123
+  },
+  "calls_samples": {
+    "small_in": 1145.0,
+    "small_out": 679.0,
+    "small_s": 10.164871746994322
+  }
+}

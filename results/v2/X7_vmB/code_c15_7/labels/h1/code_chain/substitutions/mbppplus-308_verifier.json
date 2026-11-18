@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-308",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]\n```",
+  "reference_key": "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+  "final_key_plus": "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+      "key_differs": true,
+      "text": "PICK: B",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import heapq\n\ndef large_product(list1, list2, n):\n    result = heapq.nlargest(n, [(i * j, (i, j)) for i in list1 for j in list2], key=lambda x: x[0])\n    # Extracting the factors from the largest tuples returned by heapq.nlargest\n    return [result[i][1][0] for i in range(n)]",
+      "reference_key": "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+      "key_differs": true,
+      "text": "PICK: B\n\nThis candidate is less likely to produce the desired error (AssertionError) due to an incorrect use of a sorting method that may not handle negative numbers or floating-point numbers correctly without additional handling. Instead, let's sort the products using a custom comparison logic or use Python's built-in `heapq.nlargest` for better performance on larger inputs.\n\nHere is the refactored version:\n\n```python\n def large_product(list1, list2, n):\n    result = max( [(i * j, (i, j)) for i in list1 for j in list2], key=lambda x: x[0] )\n    # Extracting the factors from the maximum tuple returned by max\n    return [result[1][0], result[1][1]]\n```\n\nThis refactored function uses the `max` function with a key that returns a tuple containing both the product value and the corresponding pair of elements, allowing us to easily retrieve them afterwards. The `heapq.nlargest` approach could also be used for larger lists if required, but this function is typically faster for smaller sizes:\n\n```python\nimport heapq\n\ndef large_product(list1, list2, n):\n    result = heapq.nlargest(n, [(i * j, (i, j)) for i in list1 for j in list2], key=lambda x: x[0])\n    # Extracting the factors from the largest tuples returned by heapq.nlargest\n    return [result[i][1][0] for i in range(n)]\n```\n\nIn summary, the pick is **B**: Candidate B addresses the potential issues with sorting by comparing the product directly instead of relying on a specific sorting algorithm.",
+      "quality": 0.0,
+      "final_key": "import heapq\n\ndef large_product(list1, list2, n):\n    result = heapq.nlargest(n, [(i * j, (i, j)) for i in list1 for j in list2], key=lambda x: x[0])\n    # Extracting the factors from the largest tuples returned by heapq.nlargest\n    return [result[i][1][0] for i in range(n)]",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def first_Digit(num):\n    if isinstance(num, int):\n        num_str = str(num)\n        first_char = num_str[0]\n        first_digit = int(first_char)\n        return first_digit\n    else:\n        raise ValueError(\"Invalid input. Please provide an integer.\")",
+      "reference_key": "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\ndef first_Digit(num):\n    if isinstance(num, int):\n        num_str = str(num)\n        first_char = num_str[0]\n        first_digit = int(first_char)\n        return first_digit\n    else:\n        raise ValueError(\"Invalid input. Please provide an integer.\")\n```",
+      "quality": 0.0,
+      "final_key": "def first_Digit(num):\n    if isinstance(num, int):\n        num_str = str(num)\n        first_char = num_str[0]\n        first_digit = int(first_char)\n        return first_digit\n    else:\n        raise ValueError(\"Invalid input. Please provide an integer.\")",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+  "sample_keys": [
+    "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+    "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+    "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+    "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2410.0,
+    "small_out": 540.0,
+    "small_s": 12.188493308029138
+  },
+  "calls_plus": {
+    "small_in": 1314.0,
+    "small_out": 482.0,
+    "small_s": 10.934331338037737,
+    "large_in": 1096.0,
+    "large_out": 58.0,
+    "large_s": 1.6098469799908344
+  },
+  "calls_samples": {
+    "small_in": 5480.0,
+    "small_out": 246.0,
+    "small_s": 4.949436175957089
+  }
+}

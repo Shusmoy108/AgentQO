@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-750",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([1, 2], ()) == [1, 2]\nassert add_tuple((3, 4), [5, 6]) == [3, 4, 5, 6]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (None,)) == [True, False, None]\n```",
+  "reference_key": "assert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([1, 2], ()) == [1, 2]\nassert add_tuple((3, 4), [5, 6]) == [3, 4, 5, 6]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (None,)) == [True, False, None]",
+  "final_key_plus": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```",
+    "fixer": "```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert add_tuple([], (3,)) == [3]\nassert add_tuple([6, 8, 29], (-4,)) == [6, 8, 29, -4]\nassert add_tuple([\"a\", \"b\", 19], (\"c\", 20)) == [\"a\", \"b\", 19, \"c\", 20]\nassert add_tuple(['x', 'o'], ('p', 'q')) == ['x', 'o', 'p', 'q']\nassert add_tuple([True], ('False',)) == [True, False]",
+      "reference_key": "assert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([1, 2], ()) == [1, 2]\nassert add_tuple((3, 4), [5, 6]) == [3, 4, 5, 6]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (None,)) == [True, False, None]",
+      "key_differs": true,
+      "text": "```python\nassert add_tuple([], (3,)) == [3]\nassert add_tuple([6, 8, 29], (-4,)) == [6, 8, 29, -4]\nassert add_tuple([\"a\", \"b\", 19], (\"c\", 20)) == [\"a\", \"b\", 19, \"c\", 20]\nassert add_tuple(['x', 'o'], ('p', 'q')) == ['x', 'o', 'p', 'q']\nassert add_tuple([True], ('False',)) == [True, False]\n```",
+      "quality": 1.0,
+      "final_key": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```",
+        "fixer": "```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestAddTuple(unittest.TestCase):\n    def test_edge_case(self):\n        self.assertEqual(add_tuple([], ()), [])\n    \n    def test_common_case_1(self):\n        self.assertEqual(add_tuple([1, 2, 3], (4, 5)), [1, 2, 3, 4, 5])\n    \n    def test_common_case_2(self):\n        self.assertEqual(add_tuple([], (1, 2, 3)), [1, 2, 3])\n    \n    def test_empty_list_and_tuple(self):\n        self.assertEqual(add_tuple([], tuple()), [])\n    \n    def test_single_element_in_tuple_with_list(self):\n        self.assertEqual(add_tuple([1], (10,)), [1, 10])\n\nif __name__ == \"__main__\":\n    unittest.main()",
+      "reference_key": "assert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([1, 2], ()) == [1, 2]\nassert add_tuple((3, 4), [5, 6]) == [3, 4, 5, 6]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (None,)) == [True, False, None]",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TestAddTuple(unittest.TestCase):\n    def test_edge_case(self):\n        self.assertEqual(add_tuple([], ()), [])\n    \n    def test_common_case_1(self):\n        self.assertEqual(add_tuple([1, 2, 3], (4, 5)), [1, 2, 3, 4, 5])\n    \n    def test_common_case_2(self):\n        self.assertEqual(add_tuple([], (1, 2, 3)), [1, 2, 3])\n    \n    def test_empty_list_and_tuple(self):\n        self.assertEqual(add_tuple([], tuple()), [])\n    \n    def test_single_element_in_tuple_with_list(self):\n        self.assertEqual(add_tuple([1], (10,)), [1, 10])\n\nif __name__ == \"__main__\":\n    unittest.main()\n```",
+      "quality": 1.0,
+      "final_key": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```",
+        "fixer": "```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)\nassert max_aggregate([('John Doe', 100), ('Jane Smith', 95), ('Alice Johnson', 105)]) == ('Alice Johnson', 200)\nassert max_aggregate([('Bob Brown', 80), ('Charlie Davis', 75), ('David Evans', 85)]) == ('David Evans', 160)\nassert max_aggregate([('Eve Green', 90), ('Frank White', 85), ('Grace Black', 95)]) == ('Grace Black', 180)\nassert max_aggregate([]) == None",
+      "reference_key": "assert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([1, 2], ()) == [1, 2]\nassert add_tuple((3, 4), [5, 6]) == [3, 4, 5, 6]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (None,)) == [True, False, None]",
+      "key_differs": true,
+      "text": "```python\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)\nassert max_aggregate([('John Doe', 100), ('Jane Smith', 95), ('Alice Johnson', 105)]) == ('Alice Johnson', 200)\nassert max_aggregate([('Bob Brown', 80), ('Charlie Davis', 75), ('David Evans', 85)]) == ('David Evans', 160)\nassert max_aggregate([('Eve Green', 90), ('Frank White', 85), ('Grace Black', 95)]) == ('Grace Black', 180)\nassert max_aggregate([]) == None\n```",
+      "quality": 1.0,
+      "final_key": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n\ndef max_aggregate(lst):\n    if not lst:\n        return None\n    return max(lst, key=lambda x: x[1])",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n\ndef max_aggregate(lst):\n    if not lst:\n        return None\n    return max(lst, key=lambda x: x[1])\n```",
+        "fixer": "```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\n\n# Additional tests\ndef max_aggregate(lst):\n    if not lst:\n        return None\n    return max(lst, key=lambda x: x[1])\n\n# Test cases for max_aggregate\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)\nassert max_aggregate([('John Doe', 100), ('Jane Smith', 95), ('Alice Johnson', 105)]) == ('Alice Johnson', 200)\nassert max_aggregate([('Bob Brown', 80), ('Charlie Davis', 75), ('David Evans', 85)]) == ('David Evans', 160)\nassert max_aggregate([('Eve Green', 90), ('Frank White', 85), ('Grace Black', 95)]) == ('Grace Black', 180)\nassert max_aggregate([]) == None\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([3, 4, 5], ()) == [3, 4, 5]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (True, True)) == [True, False, True, True]\nassert add_tuple([None], (None, None)) == [None, None, None]",
+  "sample_keys": [
+    "assert add_tuple([], (2, 3)) == [2, 3]\nassert add_tuple([1, 2], (-1, -2)) == [1, 2, -1, -2]\nassert add_tuple([-1, -2], (1, 2)) == [-1, -2, 1, 2]\nassert add_tuple([3, 4, 5], (0, 0)) == [3, 4, 5, 0, 0]\nassert add_tuple([0, 0], (1, 1, 1)) == [0, 0, 1, 1, 1]",
+    "assert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([3, 4], ()) == [3, 4]\nassert add_tuple([-1, -2, -3], (-4, -5)) == [-1, -2, -3, -4, -5]\nassert add_tuple(['a', 'b'], ('c', )) == ['a', 'b', 'c']\nassert add_tuple([True, False], (None, )) == [True, False, None]",
+    "assert add_tuple([], ()) == []\nassert add_tuple([1, 2], (3,)) == [1, 2, 3]\nassert add_tuple([1, 2, 3], (4, 5)) == [1, 2, 3, 4, 5]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (None,)) == [True, False, None]",
+    "assert add_tuple([], (1, 2, 3)) == [1, 2, 3]\nassert add_tuple([10, 20], ()) == [10, 20]\nassert add_tuple(['apple', 'banana'], ('orange',)) == ['apple', 'banana', 'orange']\nassert add_tuple([True, False, None], ((1, 2),)) == [True, False, None, (1, 2)]\nassert add_tuple([None], ('hello', 'world')) == [None, 'hello', 'world']",
+    "import unittest\n\nclass TestAddTuple(unittest.TestCase):\n    def test_add_tuple(self):\n        self.assertEqual(add_tuple([5, 6, 7], (9, 10)), [5, 6, 7, 9, 10])\n        self.assertEqual(add_tuple([], (1, 2)), [1, 2])\n        self.assertEqual(add_tuple([3, 4, 5], (6, 7, 8)), [3, 4, 5, 6, 7, 8])\n        self.assertEqual(add_tuple(['a', 'b'], ('c', 'd')), ['a', 'b', 'c', 'd'])\n        self.assertEqual(add_tuple([], (tuple())), [])\n\nif __name__ == '__main__':\n    unittest.main()"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1598.0,
+    "small_out": 302.0,
+    "small_s": 3.850801103981212
+  },
+  "calls_plus": {
+    "small_in": 1472.0,
+    "small_out": 187.0,
+    "small_s": 2.660461082967231,
+    "large_in": 162.0,
+    "large_out": 115.0,
+    "large_s": 3.421728711022297
+  },
+  "calls_samples": {
+    "small_in": 810.0,
+    "small_out": 673.0,
+    "small_s": 13.79189869898255
+  }
+}

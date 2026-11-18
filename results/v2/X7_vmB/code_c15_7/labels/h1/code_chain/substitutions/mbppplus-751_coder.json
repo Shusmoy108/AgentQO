@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-751",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is less than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is less than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```",
+  "reference_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is less than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is less than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([]) == True\nassert check_min_heap([1]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6,",
+    "verifier": "PICK: A",
+    "fixer": "```python\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is less than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is less than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import *\nfrom collections import *\n\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "reference_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is less than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is less than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "key_differs": true,
+      "text": "```python\nfrom typing import *\nfrom collections import *\n\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```",
+      "quality": 1.0,
+      "final_key": "from typing import *\nfrom collections import *\n\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([]) == True\nassert check_min_heap([1]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6,",
+        "verifier": "PICK: A\n\n```python\nfrom typing import *\nfrom collections import *\n\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```",
+        "fixer": "```python\nfrom typing import *\nfrom collections import *\n\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import List\n\ndef is_valid_parent(arr: List[int], i: int) -> bool:\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr: List[int]) -> bool:\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "reference_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is less than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is less than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "key_differs": true,
+      "text": "```python\nfrom typing import List\n\ndef is_valid_parent(arr: List[int], i: int) -> bool:\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr: List[int]) -> bool:\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([]) == True\nassert check_min_heap([1]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6,",
+        "verifier": "PICK: A",
+        "fixer": "```python\nfrom typing import List\n\ndef is_valid_parent(arr: List[int], i: int) -> bool:\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr: List[int]) -> bool:\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+      "reference_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is less than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is less than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "key_differs": true,
+      "text": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+      "quality": 0.0,
+      "final_key": "def check_min_heap(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 7]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 8]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 9]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 10]) == False\n```",
+        "verifier": "PICK: B\n\n```python\ndef check_min_heap(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+        "fixer": "```python\ndef check_min_heap(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n\n# Test cases\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([2, 3, 4, 5, 10, 15]) == True\nassert check_min_heap([2, 10, 4, 5, 3, 15]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 7]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 8]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 9]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 10]) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+  "sample_keys": [
+    "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+    "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+    "def is_valid_parent(arr, i):\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+    "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+    "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2563.0,
+    "small_out": 1080.0,
+    "small_s": 23.261016257980373
+  },
+  "calls_plus": {
+    "small_in": 2163.0,
+    "small_out": 930.0,
+    "small_s": 16.600277170044137,
+    "large_in": 400.0,
+    "large_out": 150.0,
+    "large_s": 3.2072152950277086
+  },
+  "calls_samples": {
+    "small_in": 2000.0,
+    "small_out": 718.0,
+    "small_s": 13.073870870954124
+  }
+}

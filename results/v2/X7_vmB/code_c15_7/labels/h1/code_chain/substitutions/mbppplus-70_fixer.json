@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-70",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```",
+  "reference_key": "def get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+  "final_key_plus": "def get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import List\n\ndef get_equal(tuples_list: List[Tuple[int]]) -> bool:\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "reference_key": "def get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "key_differs": true,
+      "text": "```python\nfrom typing import List\n\ndef get_equal(tuples_list: List[Tuple[int]]) -> bool:\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```",
+      "quality": 0.0,
+      "final_key": "from typing import List\n\ndef get_equal(tuples_list: List[Tuple[int]]) -> bool:\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nfrom typing import List\n\ndef get_equal(tuples_list: List[Tuple[int]]) -> bool:\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    else:\n        length = len(tuples_list[0])\n        for tup in tuples_list:\n            if len(tup) != length:\n                return False\n        return True",
+      "reference_key": "def get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "key_differs": true,
+      "text": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    else:\n        length = len(tuples_list[0])\n        for tup in tuples_list:\n            if len(tup) != length:\n                return False\n        return True\n```\n\nIn the test cases, the additional failing test `get_equal([(), (1, 2), (3, 4, 5)])` was incorrectly marked as passed due to returning `True` instead of raising an assertion error. The corrected code now includes the necessary condition to check if the list is empty before proceeding with the comparison. This ensures that the function correctly handles both empty lists and non-empty lists with tuples of different lengths.",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    else:\n        length = len(tuples_list[0])\n        for tup in tuples_list:\n            if len(tup) != length:\n                return False\n        return True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    else:\n        length = len(tuples_list[0])\n        for tup in tuples_list:\n            if len(tup) != length:\n                return False\n        return True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def sum_digits(num):\n    if num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n\n# Test cases\nassert sum_digits(345) == 12\nassert sum_digits(12) == 3\nassert sum_digits(97) == 16\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(-12345) == 15",
+      "reference_key": "def get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "key_differs": true,
+      "text": "```python\ndef sum_digits(num):\n    if num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n\n# Test cases\nassert sum_digits(345) == 12\nassert sum_digits(12) == 3\nassert sum_digits(97) == 16\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(-12345) == 15\n```",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+  "sample_keys": [
+    null,
+    "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+    "def get_equal(tuples_list):\n    # Check if the input is empty\n    if not tuples_list:\n        return True\n    \n    # Get the length of the first tuple\n    length = len(tuples_list[0])\n    \n    # Iterate through each tuple in the list\n    for tup in tuples_list:\n        # If any tuple has a different length than the first tuple, return False\n        if len(tup) != length:\n            return False\n    \n    # Return True if all tuples have equal length\n    return True",
+    "def get_equal(tuples_list):\n    if not tuples_list:  # Handle empty list case\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True  # Fixed to handle empty list correctly\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True  # Added check for empty list",
+    "def get_equal(tuples_list):\n    if not tuples_list:  # Check if the list is empty\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1720.0,
+    "small_out": 833.0,
+    "small_s": 15.85900613895501
+  },
+  "calls_plus": {
+    "small_in": 1263.0,
+    "small_out": 384.0,
+    "small_s": 7.560054582980229,
+    "large_in": 425.0,
+    "large_out": 65.0,
+    "large_s": 1.4187356279871892
+  },
+  "calls_samples": {
+    "small_in": 2125.0,
+    "small_out": 1237.0,
+    "small_s": 18.88599535499816
+  }
+}

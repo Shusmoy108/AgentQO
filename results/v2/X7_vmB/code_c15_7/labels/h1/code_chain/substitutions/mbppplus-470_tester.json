@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-470",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert add_pairwise((3, 9, 4, 6, 2)) == (12, 13, 10, 8)\nassert add_pairwise((-1, -5, -7, -8, -10)) == (-6, -12, -15, -18)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((100,)) == ()\nassert add_pairwise(()) == ()\n```",
+  "reference_key": "assert add_pairwise((3, 9, 4, 6, 2)) == (12, 13, 10, 8)\nassert add_pairwise((-1, -5, -7, -8, -10)) == (-6, -12, -15, -18)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((100,)) == ()\nassert add_pairwise(()) == ()",
+  "final_key_plus": "def add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result\n```",
+    "fixer": "```python\ndef add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Check with two adjacent tuples\nassert add_pairwise(((1, -3), (2, -4))) == ((-2, -7))\n# Check with single element tuple\nassert add_pairwise(((0,),)) == ()\n# Check with multiple identical tuples\nassert add_pairwise((((1, 1), (2, 2))), == ((2, 4), (4, 6)))\n# Check with empty tuple\nassert add_pairwise(()) == ()\n# Check with a large number of elements and mixed types\nassert add_pairwise(((1, 'a'), ('b', 2), (3, 3))) == [('a+b', 1+2), (b+3', 2+3), (3+3', 3+3)]",
+      "reference_key": "assert add_pairwise((3, 9, 4, 6, 2)) == (12, 13, 10, 8)\nassert add_pairwise((-1, -5, -7, -8, -10)) == (-6, -12, -15, -18)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((100,)) == ()\nassert add_pairwise(()) == ()",
+      "key_differs": true,
+      "text": "```python\n# Check with two adjacent tuples\nassert add_pairwise(((1, -3), (2, -4))) == ((-2, -7))\n# Check with single element tuple\nassert add_pairwise(((0,),)) == ()\n# Check with multiple identical tuples\nassert add_pairwise((((1, 1), (2, 2))), == ((2, 4), (4, 6)))\n# Check with empty tuple\nassert add_pairwise(()) == ()\n# Check with a large number of elements and mixed types\nassert add_pairwise(((1, 'a'), ('b', 2), (3, 3))) == [('a+b', 1+2), (b+3', 2+3), (3+3', 3+3)]\n```",
+      "quality": 0.0,
+      "final_key": "def add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result\n```",
+        "fixer": "```python\ndef add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert add_pairwise((4, 9, 4, 3, -10)) == [13, 13, 7, 2]\nassert add_pairwise((-1, 0, 1, 2, 3)) == [0, 1, 3, 5]\nassert add_pairwise((7,)) == []\nassert add_pairwise((0, 0, 0)) == [0]\nassert add_pairwise((-2,)) == [-1]\n\n# Additional tests\nadditional_test_1 = add_pairwise((-2, -3, -4))\nassert additional_test_1 == [-5, -7, -9]\nadditional_test_2 = add_pairwise((1, 3, 5, 7, 9, 11))\nassert additional_test_2 == [4, 8, 12, 16, 20, 24]",
+      "reference_key": "assert add_pairwise((3, 9, 4, 6, 2)) == (12, 13, 10, 8)\nassert add_pairwise((-1, -5, -7, -8, -10)) == (-6, -12, -15, -18)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((100,)) == ()\nassert add_pairwise(()) == ()",
+      "key_differs": true,
+      "text": "```python\nassert add_pairwise((4, 9, 4, 3, -10)) == [13, 13, 7, 2]\nassert add_pairwise((-1, 0, 1, 2, 3)) == [0, 1, 3, 5]\nassert add_pairwise((7,)) == []\nassert add_pairwise((0, 0, 0)) == [0]\nassert add_pairwise((-2,)) == [-1]\n\n# Additional tests\nadditional_test_1 = add_pairwise((-2, -3, -4))\nassert additional_test_1 == [-5, -7, -9]\nadditional_test_2 = add_pairwise((1, 3, 5, 7, 9, 11))\nassert additional_test_2 == [4, 8, 12, 16, 20, 24]\n```",
+      "quality": 0.0,
+      "final_key": "def add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((2, 6, 8, 9, 11)) == (8, 14, 17, 20)\nassert add_pairwise((3, 7, 9, 10, 12)) == (10, 16, 19, 22)\nassert add_pairwise((4, 9, 4, 3, -10)) == [13, 13, 7, 2]\nassert add_pairwise((-1, 0, 1, 2, 3)) == [0, 1, 3, 5]\nassert add_pairwise((7,)) == []\nassert add_pairwise((0, 0, 0)) == [0]\nassert add_pairwise((-2,)) == [-1]\nassert additional_test_1 == [-5, -7, -9]\nassert additional_test_2 == [4, 8, 12, 16, 20, 24]",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((2, 6, 8, 9, 11)) == (8, 14, 17, 20)\nassert add_pairwise((3, 7, 9, 10, 12)) == (10, 16, 19, 22)\nassert add_pairwise((4, 9, 4, 3, -10)) == [13, 13, 7, 2]\nassert add_pairwise((-1, 0, 1, 2, 3)) == [0, 1, 3, 5]\nassert add_pairwise((7,)) == []\nassert add_pairwise((0, 0, 0)) == [0]\nassert add_pairwise((-2,)) == [-1]\nassert additional_test_1 == [-5, -7, -9]\nassert additional_test_2 == [4, 8, 12, 16, 20, 24]\n```",
+        "fixer": "```python\ndef add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((2, 6, 8, 9, 11)) == (8, 14, 17, 20)\nassert add_pairwise((3, 7, 9, 10, 12)) == (10, 16, 19, 22)\nassert add_pairwise((4, 9, 4, 3, -10)) == [13, 13, 7, 2]\nassert add_pairwise((-1, 0, 1, 2, 3)) == [0, 1, 3, 5]\nassert add_pairwise((7,)) == []\nassert add_pairwise((0, 0, 0)) == [0]\nassert add_pairwise((-2,)) == [-1]\nassert additional_test_1 == [-5, -7, -9]\nassert additional_test_2 == [4, 8, 12, 16, 20, 24]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert sequential_search([], 31) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 19) == (True, 9)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 0) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 58) == (True, 2)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 77) == (True, 5)",
+      "reference_key": "assert add_pairwise((3, 9, 4, 6, 2)) == (12, 13, 10, 8)\nassert add_pairwise((-1, -5, -7, -8, -10)) == (-6, -12, -15, -18)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((100,)) == ()\nassert add_pairwise(()) == ()",
+      "key_differs": true,
+      "text": "```python\nassert sequential_search([], 31) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 19) == (True, 9)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 0) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 58) == (True, 2)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 77) == (True, 5)\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((2, 6, 8, 9, 11)) == (8, 14, 17, 20)\nassert add_pairwise((3, 7, 9, 10, 12)) == (10, 16, 19, 22)\nassert sequential_search([], 31) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 19) == (True, 9)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 0) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 58) == (True, 2)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 77) == (True, 5)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-4, -8, -12, -16)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ()",
+  "sample_keys": [
+    "assert add_pairwise((14, 17, 20, 23, 26)) == (31, 38, 45, 52)\nassert add_pairwise((-9, -7, -5, -3, -1)) == (-16, -14, -12, -10)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((1000,)) == ()\nassert add_pairwise((10, -5, -10, 20)) == (95, -15, 30)",
+    "assert add_pairwise((2, 3, 4, 5)) == [5, 7, 9]\nassert add_pairwise((10,)) == []\nassert add_pairwise((-1, -2, -3)) == [-3, -5, -7]\nassert add_pairwise((0,)) == []\nassert add_pairwise((-100, -200, -300)) == [-300, -500, -700]",
+    "assert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)  # Test case with positive numbers\nassert add_pairwise((-2, -3, -4, -5, -6)) == (-9, -12, -15, -18)  # Test case with negative numbers\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)  # Test case with zeros\nassert add_pairwise((1,)) == []  # Test case with single element\nassert add_pairwise((2, 3)) == [5]",
+    "assert add_pairwise((1,)) == [1]\nassert add_pairwise((1, 3)) == [4]\nassert add_pairwise((-1, -2, -3)) == [-3, -5]\nassert add_pairwise((10, 20, 30, 40, 50, 60)) == [30, 50, 70, 90]\nassert add_pairwise((0, 0, 0, 0, 0)) == [0]",
+    "assert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-2, -4, -6, -8)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((-1, 0, 1)) == (0, )\nassert add_pairwise((100, )) == ()"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1883.0,
+    "small_out": 420.0,
+    "small_s": 9.034634483949048
+  },
+  "calls_plus": {
+    "small_in": 1665.0,
+    "small_out": 295.0,
+    "small_s": 5.836902201990597,
+    "large_in": 194.0,
+    "large_out": 128.0,
+    "large_s": 2.7789201159903314
+  },
+  "calls_samples": {
+    "small_in": 970.0,
+    "small_out": 686.0,
+    "small_s": 13.492700405971846
+  }
+}

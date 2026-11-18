@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-758",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `unique_sublists` that takes a list of lists as input.\n2. Initialize an empty dictionary to store the results.\n3. Iterate through each sublist in the input list.\n4. Convert each sublist to a tuple since lists cannot be used as dictionary keys.\n5. Use the tuple as a key in the dictionary and increment its value by one for each occurrence found in the input list.\n6. Return the populated dictionary after iterating through all sublists.",
+  "reference_key": null,
+  "final_key_plus": "def unique_sublists(list_of_lists):\n    result = {}\n    for sublist in list_of_lists:\n        # Convert sublist to tuple and update the dictionary\n        result[tuple(sublist)] = result.get(tuple(sublist), 0) + 1\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert unique_sublists([]) == {}\nassert unique_sublists([[], [], []]) == {}\nassert unique_sublists([[1, 2], [2, 3], [3, 4]]) == {(1, 2): 1, (2, 3): 1, (3, 4): 1}\nassert unique_sublists([[1, 2], [2, 3], [3, 4], [1, 2]]) == {(1, 2): 2, (2, 3): 1, (3, 4): 1}\nassert unique_sublists([[1, 2], [2, 3], [3, 4], [1, 2], [2, 3]]) == {(1, 2): 3, (2, 3): 2, (3, 4): 1}\n```",
+    "coder": "```python\ndef unique_sublists(list_of_lists):\n    result = {}\n    for sublist in list_of_lists:\n        # Convert sublist to tuple and update the dictionary\n        result[tuple(sublist)] = result.get(tuple(sublist), 0) + 1\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef unique_sublists(list_of_lists):\n    result = {}\n    for sublist in list_of_lists:\n        # Convert sublist to tuple and update the dictionary\n        result[tuple(sublist)] = result.get(tuple(sublist), 0) + 1\n    return result\n```",
+    "fixer": "```python\ndef unique_sublists(list_of_lists):\n    result = {}\n    for sublist in list_of_lists:\n        # Convert sublist to tuple and update the dictionary\n        result[tuple(sublist)] = result.get(tuple(sublist), 0) + 1\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `rectangle_area` that takes two parameters, `length` and `width`.\n2. Calculate the area by multiplying the length by the width.\n3. Return the calculated area.\n\nHere's the complete function:\n\n```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```\n\nThis function will correctly compute the area of a rectangle given its length and width.",
+      "quality": 1.0,
+      "final_key": "def unique_sublists(lst):\n    # Convert each sublist to a tuple and count occurrences\n    counts = {tuple(sublist): lst.count(sublist) for sublist in lst}\n    \n    return counts",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert unique_sublists([]) == {}\nassert unique_sublists([[], [], []]) == {}\nassert unique_sublists([[1, 2], [2, 3], [1, 2]]) == {(1, 2): 2, (2, 3): 1}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3]]) == {(1, 2, 3): 2, (4, 5, 6): 1}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3], [1, 2, 3]]) == {(1, 2, 3): 3, (4, 5, 6): 1}\n```",
+        "coder": "```python\ndef unique_sublists(lst):\n    # Convert each sublist to a tuple and count occurrences\n    counts = {tuple(sublist): lst.count(sublist) for sublist in lst}\n    \n    return counts\n```",
+        "verifier": "PICK: A\n\n```python\ndef unique_sublists(lst):\n    # Convert each sublist to a tuple and count occurrences\n    counts = {tuple(sublist): lst.count(sublist) for sublist in lst}\n    \n    return counts\n```",
+        "fixer": "```python\ndef unique_sublists(lst):\n    # Convert each sublist to a tuple and count occurrences\n    counts = {tuple(sublist): lst.count(sublist) for sublist in lst}\n    \n    return counts\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `unique_sublists` that takes a list of lists as input.\n2. Initialize an empty dictionary to store the results.\n3. Iterate through each sublist in the input list.\n4. Convert each sublist to a string to use it as a key in the dictionary. This is done to ensure that sublists with the same elements but in different orders are considered unique.\n5. Use the string as a key in the dictionary and increment its value by one for each occurrence found in the input list.\n6. Return the populated dictionary after iterating through all sublists.",
+      "quality": 0.0,
+      "final_key": "def unique_sublists(list_of_lists):\n    result = {}\n    for sublist in list_of_lists:\n        # Convert sublist to a string to handle duplicates\n        key = str(sublist)\n        if key in result:\n            result[key] += 1\n        else:\n            result[key] = 1\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert unique_sublists([]) == {}\nassert unique_sublists([[], [], []]) == {}\nassert unique_sublists([[1, 2], [2, 3], [1, 2]]) == {(1, 2): 2, (2, 3): 1}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3]]) == {(1, 2, 3): 2, (4, 5, 6): 1}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3], [1, 2, 3]]) == {(1, 2, 3): 3, (4, 5, 6): 1}\n```",
+        "coder": "```python\ndef unique_sublists(list_of_lists):\n    result = {}\n    for sublist in list_of_lists:\n        # Convert sublist to a string to handle duplicates\n        key = str(sublist)\n        if key in result:\n            result[key] += 1\n        else:\n            result[key] = 1\n    return result\n```",
+        "verifier": "PICK: A\n\n```python\ndef unique_sublists(list_of_lists):\n    result = {}\n    for sublist in list_of_lists:\n        # Convert sublist to a string to handle duplicates\n        key = str(sublist)\n        if key in result:\n            result[key] += 1\n        else:\n            result[key] = 1\n    return result\n```",
+        "fixer": "```python\ndef unique_sublists(list_of_lists):\n    result = {}\n    for sublist in list_of_lists:\n        # Convert sublist to a string to handle duplicates\n        key = str(sublist)\n        if key in result:\n            result[key] += 1\n        else:\n            result[key] = 1\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `frequency` that takes two parameters: `numbers_list`, which is the list of numbers to search through, and `target_number`, which is the number whose occurrences need to be counted.\n2. Initialize a variable `count` to zero. This will keep track of the number of times `target_number` appears in `numbers_list`.\n3. Iterate over each element `num` in `numbers_list` using a for loop.\n4. Inside the loop, check if `num` is equal to `target_number`. If they are equal, increment the `count` by one.\n5. After the loop completes, return the value of `count`.\n\nThis approach ensures that we correctly count all occurrences of the target number in the list.",
+      "quality": 0.0,
+      "final_key": "from collections import Counter\n\ndef unique_sublists(numbers_list):\n    sublists_count = Counter()\n    for sublist in numbers_list:\n        # Convert each sublist to a tuple before counting\n        sublist_tuple = tuple(sublist)\n        sublists_count[sublist_tuple] += 1\n    return dict(sublists_count)\n\n# Test cases\nassert unique_sublists([[1, 3], [5, 7], [1, 3], [13, 15, 17], [5, 7], [9, 11]] )=={(1, 3): 2, (5, 7): 2, (13, 15, 17): 1, (9, 11): 1}\nassert unique_sublists([['green', 'orange'], ['black'], ['green', 'orange'], ['white']])=={('green', 'orange'): 2, ('black',): 1, ('white',): 1}\nassert unique_sublists([[10, 20, 30, 40], [60, 70, 50, 50], [90, 100, 200]])=={(10, 20, 30, 40): 1, (60, 70, 50, 50): 1, (90, 100, 200): 1}\nassert unique_sublists([['john']])=={('john',): 1}\nassert frequency([1, 3, 5, 7, 9], 3) == 1\nassert frequency([1, 3, 5, 7, 9], 10) == 0\nassert frequency([], 5) == 0\nassert frequency([1, 1, 1, 1, 1], 1) == 5\nassert frequency([1, 2, 3, 4, 5], 6) == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert frequency([1, 3, 5, 7, 9], 3) == 1\nassert frequency([1, 3, 5, 7, 9], 10) == 0\nassert frequency([], 5) == 0\nassert frequency([1, 1, 1, 1, 1], 1) == 5\nassert frequency([1, 2, 3, 4, 5], 6) == 0\n```",
+        "coder": "```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\nfrom collections import Counter\n\ndef unique_sublists(numbers_list):\n    sublists_count = Counter()\n    for sublist in numbers_list:\n        # Convert each sublist to a tuple before counting\n        sublist_tuple = tuple(sublist)\n        sublists_count[sublist_tuple] += 1\n    return dict(sublists_count)\n\n# Test cases\nassert unique_sublists([[1, 3], [5, 7], [1, 3], [13, 15, 17], [5, 7], [9, 11]] )=={(1, 3): 2, (5, 7): 2, (13, 15, 17): 1, (9, 11): 1}\nassert unique_sublists([['green', 'orange'], ['black'], ['green', 'orange'], ['white']])=={('green', 'orange'): 2, ('black',): 1, ('white',): 1}\nassert unique_sublists([[10, 20, 30, 40], [60, 70, 50, 50], [90, 100, 200]])=={(10, 20, 30, 40): 1, (60, 70, 50, 50): 1, (90, 100, 200): 1}\nassert unique_sublists([['john']])=={('john',): 1}\nassert frequency([1, 3, 5, 7, 9], 3) == 1\nassert frequency([1, 3, 5, 7, 9], 10) == 0\nassert frequency([], 5) == 0\nassert frequency([1, 1, 1, 1, 1], 1) == 5\nassert frequency([1, 2, 3, 4, 5], 6) == 0\n```",
+        "fixer": "```python\nfrom collections import Counter\n\ndef unique_sublists(numbers_list):\n    sublists_count = Counter()\n    for sublist in numbers_list:\n        # Convert each sublist to a tuple before counting\n        sublist_tuple = tuple(sublist)\n        sublists_count[sublist_tuple] += 1\n    return dict(sublists_count)\n\n# Test cases\nassert unique_sublists([[1, 3], [5, 7], [1, 3], [13, 15, 17], [5, 7], [9, 11]] )=={(1, 3): 2, (5, 7): 2, (13, 15, 17): 1, (9, 11): 1}\nassert unique_sublists([['green', 'orange'], ['black'], ['green', 'orange'], ['white']])=={('green', 'orange'): 2, ('black',): 1, ('white',): 1}\nassert unique_sublists([[10, 20, 30, 40], [60, 70, 50, 50], [90, 100, 200]])=={(10, 20, 30, 40): 1, (60, 70, 50, 50): 1, (90, 100, 200): 1}\nassert unique_sublists([['john']])=={('john',): 1}\nassert frequency([1, 3, 5, 7, 9], 3) == 1\nassert frequency([1, 3, 5, 7, 9], 10) == 0\nassert frequency([], 5) == 0\nassert frequency([1, 1, 1, 1, 1], 1) == 5\nassert frequency([1, 2, 3, 4, 5], 6) == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+  "sample_keys": [
+    null,
+    null,
+    "def unique_sublists(lst):\n    sublist_counts = {}\n    for sublist in lst:\n        # Convert sublist to tuple and update count in dictionary\n        sublist_tuple = tuple(sublist)\n        if sublist_tuple in sublist_counts:\n            sublist_counts[sublist_tuple] += 1\n        else:\n            sublist_counts[sublist_tuple] = 1\n    return sublist_counts"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2910.0,
+    "small_out": 521.0,
+    "small_s": 11.544353786011925
+  },
+  "calls_plus": {
+    "large_in": 214.0,
+    "large_out": 100.0,
+    "large_s": 3.089423725992674,
+    "small_in": 2664.0,
+    "small_out": 380.0,
+    "small_s": 7.464512576989364
+  },
+  "calls_samples": {
+    "small_in": 9153.0,
+    "small_out": 1747.0,
+    "small_s": 35.61093097898993
+  }
+}

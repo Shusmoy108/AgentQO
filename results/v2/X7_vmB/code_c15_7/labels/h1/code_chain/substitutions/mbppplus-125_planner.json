@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-125",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Initialize two variables, `max_diff` and `current_diff`, to zero. These will keep track of the maximum difference found so far and the current difference as we iterate through the string.\n2. Iterate through each character in the binary string.\n3. For each '0', increment `current_diff` by 1. For each '1', decrement `current_diff` by 1.\n4. If `current_diff` becomes negative, reset it to zero because starting from the next character might yield a higher difference.\n5. Update `max_diff` if `current_diff` is greater than `max_diff`.\n6. Return `max_diff` after iterating through the entire string.",
+  "reference_key": null,
+  "final_key_plus": "def find_length(binary_string):\n    max_diff = 0\n    current_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            current_diff += 1\n        else:\n            current_diff -= 1\n        \n        if current_diff < 0:\n            current_diff = 0\n        \n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert find_length(\"11000010001\") == 6\nassert find_length(\"00000000000\") == 0\nassert find_length(\"11111111111\") == 0\nassert find_length(\"\") == 0\nassert find_length(\"10101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101",
+    "coder": "```python\ndef find_length(binary_string):\n    max_diff = 0\n    current_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            current_diff += 1\n        else:\n            current_diff -= 1\n        \n        if current_diff < 0:\n            current_diff = 0\n        \n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+    "verifier": "PICK: A\n\n```python\ndef find_length(binary_string):\n    max_diff = 0\n    current_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            current_diff += 1\n        else:\n            current_diff -= 1\n        \n        if current_diff < 0:\n            current_diff = 0\n        \n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+    "fixer": "```python\ndef find_length(binary_string):\n    max_diff = 0\n    current_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            current_diff += 1\n        else:\n            current_diff -= 1\n        \n        if current_diff < 0:\n            current_diff = 0\n        \n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize an empty string `result` to store the modified string.\n2. Iterate through each character in the input string `s`.\n3. If the character is a space, append `%20` to `result`.\n4. Otherwise, append the character itself to `result`.\n5. Return the `result` string.\n\nThis approach ensures that all spaces in the input string are replaced with `%20`, as required.",
+      "quality": 0.0,
+      "final_key": "def find_length(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_length(\"11000010001\") == 6\nassert find_length(\"\") == 0\nassert find_length(\"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "coder": "```python\ndef find_length(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n```",
+        "verifier": "PICK: A\n\n```python\ndef find_length(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n```",
+        "fixer": "```python\ndef find_length(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two variables, `max_diff` and `current_diff`, to zero. These will keep track of the maximum difference found so far and the current difference as we iterate through the string.\n2. Iterate through each character in the binary string.\n3. For each '0', increment `current_diff` by 1. For each '1', decrement `current_diff` by 1.\n4. If `current_diff` becomes negative, reset it back to zero because starting from the next character might yield a higher difference.\n5. Update `max_diff` if `current_diff` exceeds `max_diff`.\n6. Return `max_diff` after iterating through the entire string.",
+      "quality": 1.0,
+      "final_key": "def find_length(binary_string):\n    max_diff = 0\n    current_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            current_diff += 1\n        else:\n            current_diff -= 1\n        \n        if current_diff < 0:\n            current_diff = 0\n        \n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert find_length(\"11000010001\") == 6\nassert find_length(\"00000000000\") == 0\nassert find_length(\"11111111111\") == 0\nassert find_length(\"\") == 0\nassert find_length(\"10101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101",
+        "coder": "```python\ndef find_length(binary_string):\n    max_diff = 0\n    current_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            current_diff += 1\n        else:\n            current_diff -= 1\n        \n        if current_diff < 0:\n            current_diff = 0\n        \n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+        "verifier": "PICK: A\n\n```python\ndef find_length(binary_string):\n    max_diff = 0\n    current_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            current_diff += 1\n        else:\n            current_diff -= 1\n        \n        if current_diff < 0:\n            current_diff = 0\n        \n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+        "fixer": "```python\ndef find_length(binary_string):\n    max_diff = 0\n    current_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            current_diff += 1\n        else:\n            current_diff -= 1\n        \n        if current_diff < 0:\n            current_diff = 0\n        \n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `find_dissimilar` that takes two tuples as input parameters.\n2. Initialize an empty list called `dissimilar_elements`.\n3. Iterate over each element in the first tuple using a for loop.\n4. For each element, check if it is not present in the second tuple using the `not in` operator.\n5. If the element is not found in the second tuple, append it to the `dissimilar_elements` list.\n6. After iterating through all elements in the first tuple, return the `dissimilar_elements` list.\n\nThis approach ensures that we correctly identify and return the elements that are unique to the first tuple compared to the second tuple.",
+      "quality": 0.0,
+      "final_key": "def find_length(binary_string):\n    zero_count = binary_string.count('0')\n    one_count = binary_string.count('1')\n    return max(zero_count, one_count)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_dissimilar((1, 2, 3), (4, 5)) == [1, 2, 3]\nassert find_dissimilar(('a', 'b'), ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert find_dissimilar(('x', 'y', 'z'), ('x', 'y', 'z')) == []\nassert find_dissimilar(('a', 'b', 'c'), ('a', 'b', 'c', 'd')) == ['d']\nassert find_dissimilar(('a', 'b', 'c'), ('a', 'b', 'c', 'd', 'e')) == ['d', 'e']\n```",
+        "coder": "```python\ndef find_dissimilar(tup1, tup2):\n    dissimilar_elements = []\n    for element in tup1:\n        if element not in tup2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements\n```",
+        "verifier": "PICK: B\n\n```python\ndef find_length(binary_string):\n    zero_count = binary_string.count('0')\n    one_count = binary_string.count('1')\n    return max(zero_count, one_count)\n```",
+        "fixer": "```python\ndef find_length(binary_string):\n    zero_count = binary_string.count('0')\n    one_count = binary_string.count('1')\n    return max(zero_count, one_count)\n\n# Test cases\nassert find_length(\"11000010001\") == 6\nassert find_length(\"10111\") == 1\nassert find_length(\"11011101100101\") == 2\nassert find_dissimilar((1, 2, 3), (4, 5)) == [1, 2, 3]\nassert find_dissimilar(('a', 'b'), ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert find_dissimilar(('x', 'y', 'z'), ('x', 'y', 'z')) == []\nassert find_dissimilar(('a', 'b', 'c'), ('a', 'b', 'c', 'd')) == ['d']\nassert find_dissimilar(('a', 'b', 'c'), ('a', 'b', 'c', 'd', 'e')) == ['d', 'e']\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff",
+  "sample_keys": [
+    "def find_length(binary_string):\n    max_length = 0\n    current_zeros = 0\n    current_ones = 0\n    \n    for char in binary_string:\n        if char == '0':\n            current_zeros += 1\n        else:\n            current_ones -= 1\n        \n        if current_zeros - current_ones <= 0:\n            max_length = max(max_length, current_zeros + abs(current_ones))\n    \n    return max_length",
+    "def find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        max_diff = max(max_diff, abs(zero_count - one_count))\n    \n    return max_diff",
+    "def find_length(binary_str):\n    zero_count = one_count = max_diff = 0\n    for char in binary_str:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        diff = zero_count - one_count\n        if diff > max_diff:\n            max_diff = diff\n    return max_diff"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3045.0,
+    "small_out": 940.0,
+    "small_s": 20.29497872295906
+  },
+  "calls_plus": {
+    "large_in": 129.0,
+    "large_out": 143.0,
+    "large_s": 3.880469241994433,
+    "small_in": 2874.0,
+    "small_out": 781.0,
+    "small_s": 16.13803680005367
+  },
+  "calls_samples": {
+    "small_in": 9261.0,
+    "small_out": 2958.0,
+    "small_s": 56.5223257910111
+  }
+}

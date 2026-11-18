@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-470",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef add_pairwise(tup):\n    result = []\n    for i in range(1, len(tup)):\n        result.append(tup[i] + tup[i-1])\n    return tuple(result)\n```",
+  "reference_key": "def add_pairwise(tup):\n    result = []\n    for i in range(1, len(tup)):\n        result.append(tup[i] + tup[i-1])\n    return tuple(result)",
+  "final_key_plus": "def add_pairwise(tup):\n    if not tup:\n        return ()\n    result = []\n    for i in range(1, len(tup)):\n        result.append(tup[i] + tup[i-1])\n    return tuple(result)",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-4, -8, -12, -16)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ()\n```",
+    "verifier": "PICK: B\n\n```python\ndef add_pairwise(tup):\n    if not tup:\n        return ()\n    result = []\n    for i in range(1, len(tup)):\n        result.append(tup[i] + tup[i-1])\n    return tuple(result)\n```",
+    "fixer": "```python\ndef add_pairwise(tup):\n    if not tup:\n        return ()\n    result = []\n    for i in range(1, len(tup)):\n        result.append(tup[i] + tup[i-1])\n    return tuple(result)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def add_pairwise(nTuple):\n    result = []\n    for i in range(len(nTuple)):\n        idx = i - 1\n        if idx >= 0 and idx < len(nTuple):\n            result.append(nTuple[i] + nTuple[idx])\n    return result",
+      "reference_key": "def add_pairwise(tup):\n    result = []\n    for i in range(1, len(tup)):\n        result.append(tup[i] + tup[i-1])\n    return tuple(result)",
+      "key_differs": true,
+      "text": "```python\ndef add_pairwise(nTuple):\n    result = []\n    for i in range(len(nTuple)):\n        idx = i - 1\n        if idx >= 0 and idx < len(nTuple):\n            result.append(nTuple[i] + nTuple[idx])\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def add_pairwise(nTuple):\n    result = []\n    for i in range(len(nTuple)):\n        idx = i - 1\n        if idx >= 0 and idx < len(nTuple):\n            result.append(nTuple[i] + nTuple[idx])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((2, 6, 8, 9, 11)) == (8, 14, 17, 20)\nassert add_pairwise((3, 7, 9, 10, 12)) == (10, 16, 19, 22)\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, 0, 1, 2, 3)) == (0, 1, 3, 5)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ())",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, 0, 1, 2, 3)) == (0, 1, 3, 5)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ()\n```",
+        "verifier": "PICK: B\n\n```python\ndef add_pairwise(nTuple):\n    result = []\n    for i in range(len(nTuple)):\n        idx = i - 1\n        if idx >= 0 and idx < len(nTuple):\n            result.append(nTuple[i] + nTuple[idx])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((2, 6, 8, 9, 11)) == (8, 14, 17, 20)\nassert add_pairwise((3, 7, 9, 10, 12)) == (10, 16, 19, 22)\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, 0, 1, 2, 3)) == (0, 1, 3, 5)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ())\n```",
+        "fixer": "```python\ndef add_pairwise(nTuple):\n    result = []\n    for i in range(len(nTuple)):\n        idx = i - 1\n        if idx >= 0 and idx < len(nTuple):\n            result.append(nTuple[i] + nTuple[idx])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((2, 6, 8, 9, 11)) == (8, 14, 17, 20)\nassert add_pairwise((3, 7, 9, 10, 12)) == (10, 16, 19, 22)\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, 0, 1, 2, 3)) == (0, 1, 3, 5)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ())\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def add_pairwise(a_tuple):\n    \"\"\"Given a tuple of numbers, returns a new tuple of sums from adjacent pairs.\"\"\"\n    result = []\n    length = len(a_tuple)\n    for i in range(length - 1):\n        if 0 <= i < length - 1:\n            result.append(a_tuple[i] + a_tuple[i+1])\n    return tuple(result)",
+      "reference_key": "def add_pairwise(tup):\n    result = []\n    for i in range(1, len(tup)):\n        result.append(tup[i] + tup[i-1])\n    return tuple(result)",
+      "key_differs": true,
+      "text": "```python\ndef add_pairwise(a_tuple):\n    \"\"\"Given a tuple of numbers, returns a new tuple of sums from adjacent pairs.\"\"\"\n    result = []\n    length = len(a_tuple)\n    for i in range(length - 1):\n        if 0 <= i < length - 1:\n            result.append(a_tuple[i] + a_tuple[i+1])\n    return tuple(result)\n```",
+      "quality": 1.0,
+      "final_key": "def add_pairwise(a_tuple):\n    \"\"\"Given a tuple of numbers, returns a new tuple of sums from adjacent pairs.\"\"\"\n    result = []\n    length = len(a_tuple)\n    for i in range(length - 1):\n        if 0 <= i < length - 1:\n            result.append(a_tuple[i] + a_tuple[i+1])\n    return tuple(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, 0, 1, 2, 3)) == (-1, 1, 3, 5)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ()\n```",
+        "verifier": "PICK: A\n\n```python\ndef add_pairwise(a_tuple):\n    \"\"\"Given a tuple of numbers, returns a new tuple of sums from adjacent pairs.\"\"\"\n    result = []\n    length = len(a_tuple)\n    for i in range(length - 1):\n        if 0 <= i < length - 1:\n            result.append(a_tuple[i] + a_tuple[i+1])\n    return tuple(result)\n```",
+        "fixer": "```python\ndef add_pairwise(a_tuple):\n    \"\"\"Given a tuple of numbers, returns a new tuple of sums from adjacent pairs.\"\"\"\n    result = []\n    length = len(a_tuple)\n    for i in range(length - 1):\n        if 0 <= i < length - 1:\n            result.append(a_tuple[i] + a_tuple[i+1])\n    return tuple(result)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)",
+      "reference_key": "def add_pairwise(tup):\n    result = []\n    for i in range(1, len(tup)):\n        result.append(tup[i] + tup[i-1])\n    return tuple(result)",
+      "key_differs": true,
+      "text": "```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n```",
+      "quality": 1.0,
+      "final_key": "def sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n\ndef add_pairwise(arr):\n    result = []\n    for i in range(len(arr) - 1):\n        result.append(arr[i] + arr[i + 1])\n    return tuple(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-2, -4, -6, -8)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10, 20, 30, 40, 50)) == (30, 50, 70, 90)\nassert add_pairwise((1, 2, 3, 4, 5, 6)) == (3, 5, 7, 9, 11)\n```",
+        "verifier": "PICK: B\n\n```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n\ndef add_pairwise(arr):\n    result = []\n    for i in range(len(arr) - 1):\n        result.append(arr[i] + arr[i + 1])\n    return tuple(result)\n```",
+        "fixer": "```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n\ndef add_pairwise(arr):\n    result = []\n    for i in range(len(arr) - 1):\n        result.append(arr[i] + arr[i + 1])\n    return tuple(result)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result",
+  "sample_keys": [
+    "def add_pairwise(tup):\n    result = []\n    for i in range(len(tup)):\n        prev_index = i - 1\n        if prev_index >= 0:\n            result.append(tup[i] + tup[prev_index])\n    return result",
+    "def add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple) - 1):\n        neighbor_index = i - 1\n        if neighbor_index >= 0:\n            result.append(input_tuple[i] + input_tuple[neighbor_index])\n    return result",
+    "def add_pairwise(input_tuple):\n    result = []\n    for i in range(1, len(input_tuple)):\n        if i - 1 >= 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result",
+    "def add_pairwise(tup):\n    result = []\n    for i in range(len(tup)):\n        idx = i - 1\n        if idx >= 0:\n            result.append(tup[i] + tup[idx])\n        else:\n            result.append(tup[i])\n    return result",
+    "def add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1883.0,
+    "small_out": 420.0,
+    "small_s": 9.034634483949048
+  },
+  "calls_plus": {
+    "small_in": 1546.0,
+    "small_out": 378.0,
+    "small_s": 7.644670262001455,
+    "large_in": 266.0,
+    "large_out": 46.0,
+    "large_s": 1.0478039380104747
+  },
+  "calls_samples": {
+    "small_in": 1330.0,
+    "small_out": 342.0,
+    "small_s": 6.586408997041872
+  }
+}

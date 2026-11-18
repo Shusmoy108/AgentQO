@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-740",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+  "reference_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "final_key_plus": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict(('x')) == {}\nassert tuple_to_dict(()) == {}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) == {1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10}\n```",
+    "verifier": "PICK: A\n\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+    "fixer": "```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "key_differs": true,
+      "text": "```python def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_dict((1, 2, 3, 4, 5)) == {1: 2, 2: 3, 3: 4, 4: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict((1,)) == {}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 2, 2: 3, 3: 4, 4: 5, 5: 6}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6, 7)) == {1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7}\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+        "fixer": "```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)",
+      "reference_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "key_differs": true,
+      "text": "```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    if len(tup) < 2:\n        raise ValueError(\"Tuple must contain at least two elements\")\n    \n    dict_result = {}\n    for i in range(len(tup)):\n        if i == 0:\n            dict_result[tup[i]] = tup[1]\n        else:\n            dict_result[tup[i]] = dict_result[tup[i-1]] + dict_result[tup[i-2]]\n    \n    return dict_result\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5}\nassert tuple_to_dict((1, 1, 1, 1, 1)) == {1: 1}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6, 7)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8, 7: 13}",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5}\nassert tuple_to_dict((1, 1, 1, 1, 1)) == {1: 1}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6, 7)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8, 7: 13}\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_dict(tup):\n    if len(tup) < 2:\n        raise ValueError(\"Tuple must contain at least two elements\")\n    \n    dict_result = {}\n    for i in range(len(tup)):\n        if i == 0:\n            dict_result[tup[i]] = tup[1]\n        else:\n            dict_result[tup[i]] = dict_result[tup[i-1]] + dict_result[tup[i-2]]\n    \n    return dict_result\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5}\nassert tuple_to_dict((1, 1, 1, 1, 1)) == {1: 1}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6, 7)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8, 7: 13}\n```",
+        "fixer": "```python\ndef tuple_to_dict(tup):\n    if len(tup) < 2:\n        raise ValueError(\"Tuple must contain at least two elements\")\n    \n    dict_result = {}\n    for i in range(len(tup)):\n        if i == 0:\n            dict_result[tup[i]] = tup[1]\n        else:\n            dict_result[tup[i]] = dict_result[tup[i-1]] + dict_result[tup[i-2]]\n    \n    return dict_result\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5}\nassert tuple_to_dict((1, 1, 1, 1, 1)) == {1: 1}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6, 7)) == {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8, 7: 13}\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "reference_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "key_differs": true,
+      "text": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tuples_list):\n    if not all(get_equal(tuples_list)):\n        raise ValueError(\"All tuples must have the same length\")\n    \n    result = {}\n    for i in range(len(tuples_list[0])):\n        result[tuples_list[0][i]] = tuples_list[1][i]\n    \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict(('x',)) == {'x': None}\nassert tuple_to_dict(()) == {}\nassert tuple_to_dict(((1,), (2,), (3,))) == {1: None, 2: None, 3: None}\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_dict(tuples_list):\n    if not all(get_equal(tuples_list)):\n        raise ValueError(\"All tuples must have the same length\")\n    \n    result = {}\n    for i in range(len(tuples_list[0])):\n        result[tuples_list[0][i]] = tuples_list[1][i]\n    \n    return result\n```",
+        "fixer": "```python\ndef tuple_to_dict(tuples_list):\n    if not all(get_equal(tuples_list)):\n        raise ValueError(\"All tuples must have the same length\")\n    \n    result = {}\n    for i in range(len(tuples_list[0])):\n        result[tuples_list[0][i]] = tuples_list[1][i]\n    \n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "sample_keys": [
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2350.0,
+    "small_out": 610.0,
+    "small_s": 12.412047993042506
+  },
+  "calls_plus": {
+    "small_in": 1934.0,
+    "small_out": 556.0,
+    "small_s": 11.292868710035691,
+    "large_in": 416.0,
+    "large_out": 54.0,
+    "large_s": 1.197511962003773
+  },
+  "calls_samples": {
+    "small_in": 2080.0,
+    "small_out": 270.0,
+    "small_s": 4.862313306017313
+  }
+}

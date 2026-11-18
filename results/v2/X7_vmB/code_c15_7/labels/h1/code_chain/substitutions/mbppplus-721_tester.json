@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-721",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert maxAverageOfPath([[1, 2], [3, 4]]) == 2.5\nassert maxAverageOfPath([[10, 20], [30, 40], [50, 60]]) == 35.0\nassert maxAverageOfPath([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == 1.0\nassert maxAverageOfPath([[5]]) == 5.0\nassert maxAverageOfPath([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == 10.5\n```",
+  "reference_key": "assert maxAverageOfPath([[1, 2], [3, 4]]) == 2.5\nassert maxAverageOfPath([[10, 20], [30, 40], [50, 60]]) == 35.0\nassert maxAverageOfPath([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == 1.0\nassert maxAverageOfPath([[5]]) == 5.0\nassert maxAverageOfPath([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == 10.5",
+  "final_key_plus": "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n```",
+    "fixer": "```python\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n\n# Test cases\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2\nassert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2\nassert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8\nassert maxAverageOfPath([[1, 2], [3, 4]]) == 2.5\nassert maxAverageOfPath([[10, 20], [30, 40], [50, 60]]) == 35.0\nassert maxAverageOfPath([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == 1.0\nassert maxAverageOfPath([[5]]) == 5.0\nassert maxAverageOfPath([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 1"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[10, 20], [30, 40]]) == 30.  # Single row or single column path\nassert maxAverageOfPath([[-1, 2], [-2, -1]]) == -1   # Path with just one element\nassert maxAverageOfPath([]) == float('-inf')     # Empty matrix\nassert maxAverageOfPath([[0, -8]]) == -8       # Single negative number at edge",
+      "reference_key": "assert maxAverageOfPath([[1, 2], [3, 4]]) == 2.5\nassert maxAverageOfPath([[10, 20], [30, 40], [50, 60]]) == 35.0\nassert maxAverageOfPath([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == 1.0\nassert maxAverageOfPath([[5]]) == 5.0\nassert maxAverageOfPath([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == 10.5",
+      "key_differs": true,
+      "text": "```python\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[10, 20], [30, 40]]) == 30.  # Single row or single column path\nassert maxAverageOfPath([[-1, 2], [-2, -1]]) == -1   # Path with just one element\nassert maxAverageOfPath([]) == float('-inf')     # Empty matrix\nassert maxAverageOfPath([[0, -8]]) == -8       # Single negative number at edge\n```",
+      "quality": 1.0,
+      "final_key": "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n```",
+        "fixer": "```python\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n\n# Test cases\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2\nassert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2\nassert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8\nassert maxAverageOfPath([[10, 20], [30, 40]]) == 30.  # Single row or single column path -> AssertionError \nassert maxAverageOfPath([[-1, 2], [-2, -1]]) == -1   # Path with just one element -> AssertionError \nassert maxAverageOfPath([]) == float('-inf')     # Empty matrix -> IndexError list index out of range\nassert maxAverageOfPath([[0, -8]]) == -8       # Single negative number at edge -> AssertionError\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test cases\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2  # Expected 5.2\nassert maxAverageOfPath([ [5, 3] ]) == 4.5   # Expected 4.5\nassert maxAverageOfPath([ [1] ]) == 1     # Expected 1\nassert maxAverageOfPath([ [1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15] ]) == 8.6  # Expected 8.6\nassert maxAverageOfPath([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20], [21, 22, 23, 24, 25]]) == 17.5  # Expected 17.5",
+      "reference_key": "assert maxAverageOfPath([[1, 2], [3, 4]]) == 2.5\nassert maxAverageOfPath([[10, 20], [30, 40], [50, 60]]) == 35.0\nassert maxAverageOfPath([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == 1.0\nassert maxAverageOfPath([[5]]) == 5.0\nassert maxAverageOfPath([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == 10.5",
+      "key_differs": true,
+      "text": "```python\n# Test cases\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2  # Expected 5.2\nassert maxAverageOfPath([ [5, 3] ]) == 4.5   # Expected 4.5\nassert maxAverageOfPath([ [1] ]) == 1     # Expected 1\nassert maxAverageOfPath([ [1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15] ]) == 8.6  # Expected 8.6\nassert maxAverageOfPath([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20], [21, 22, 23, 24, 25]]) == 17.5  # Expected 17.5    \n```",
+      "quality": 1.0,
+      "final_key": "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n```",
+        "fixer": "```python\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n\n# Test cases\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2\nassert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2\nassert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2  # Expected 5.2\nassert maxAverageOfPath([[5, 3]]) == 4.5   # Expected 4.5 -> AssertionError \nassert maxAverageOfPath([[1]]) == 1     # Expected 1\nassert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15] ]) == 8.6  # Expected 8.6 -> AssertionError \nassert maxAverageOfPath"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.188790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(2), 33.51032163829848, rel_tol=0.001)\nassert math.isclose(volume_sphere(3), 113.09733552923254, rel_tol=0.001)\nassert math.isclose(volume_sphere(-1), -4.188790204786391, rel_tol=0.001)",
+      "reference_key": "assert maxAverageOfPath([[1, 2], [3, 4]]) == 2.5\nassert maxAverageOfPath([[10, 20], [30, 40], [50, 60]]) == 35.0\nassert maxAverageOfPath([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == 1.0\nassert maxAverageOfPath([[5]]) == 5.0\nassert maxAverageOfPath([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == 10.5",
+      "key_differs": true,
+      "text": "```python\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.188790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(2), 33.51032163829848, rel_tol=0.001)\nassert math.isclose(volume_sphere(3), 113.09733552923254, rel_tol=0.001)\nassert math.isclose(volume_sphere(-1), -4.188790204786391, rel_tol=0.001)\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n\n# Test cases\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2\nassert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2\nassert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n\n# Test cases\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2\nassert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2\nassert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8\n```",
+        "fixer": "```python\nimport math\n\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n\n# Test cases\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2\nassert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2\nassert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10]]) == 6.0\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13]]) == 7.0\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13], [14, 15, 16]]) == 8.0\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13], [14, 15, 16], [17, 18, 19]]) == 9.0",
+  "sample_keys": [
+    "# Test case 1: Typical case with small matrix\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\n\n# Test case 2: Edge case with empty matrix\nassert maxAverageOfPath([]) == float('-inf')\n\n# Test case 3: Edge case with single element matrix\nassert maxAverageOfPath([[1]]) == 1.0\n\n# Test case 4: Edge case with matrix where all elements are equal\nassert maxAverageOfPath([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == 1.0\n\n# Test case 5: Edge case with diagonal matrix\nassert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.5",
+    "assert maxAverageOfPath([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 50.0, \"Test case 1 failed\"\nassert maxAverageOfPath([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == 1.0, \"Test case 2 failed\"\nassert maxAverageOfPath([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == 8.0, \"Test case 3 failed\"\nassert maxAverageOfPath([[10, 20, 30, 40], [50, 60, 70, 80], [90, 100, 110, 120], [130, 140, 150, 160], [170, 180, 190, 200]]) == 80.0, \"Test case 4 failed\"\nassert maxAverageOfPath([]) == float('-inf'), \"Test case 5 failed\"  # Edge case for empty matrix",
+    "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4]]) == 4\nassert maxAverageOfPath([[1]]) == 1\nassert maxAverageOfPath([]) == 0\nassert maxAverageOfPath([\n    [5, 9],\n    [6, 8],\n    [7, 2]\n]) == 9.0",
+    "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[10, 20], [30, 40]]) == 25.0\nassert maxAverageOfPath([[13], [14]]) == 13.5\nassert maxAverageOfPath([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == 13.5\nassert maxAverageOfPath([[1, 2], [3, 4]]) == 2.5",
+    "assert maxAverageOfPath([[5, 8, 10], [12, 15, 17], [20, 23, 25]]) == 14.75\nassert maxAverageOfPath([[10, 20], [25, 30]]) == 27.5\nassert maxAverageOfPath([[1]]) == 1.0\nassert maxAverageOfPath([[-10, -20, -30], [-40, -50, -60], [-70, -80, -90]]) == -45.0\nassert maxAverageOfPath([[100]]) == 100.0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3214.0,
+    "small_out": 1299.0,
+    "small_s": 13.202394616964739
+  },
+  "calls_plus": {
+    "small_in": 2556.0,
+    "small_out": 992.0,
+    "small_s": 16.75047913598246,
+    "large_in": 406.0,
+    "large_out": 183.0,
+    "large_s": 5.740958257985767
+  },
+  "calls_samples": {
+    "small_in": 2030.0,
+    "small_out": 994.0,
+    "small_s": 20.136479774024338
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-753",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `min_k` that takes two parameters: a list of tuples (`data`) and an integer (`k`).\n2. Use the `sorted()` function to sort the list of tuples based on the second element (the numeric value) of each tuple in ascending order.\n3. Slice the sorted list to get the first `k` elements, which will be the minimum `k` records.\n4. Return the sliced list as the result.\n5. Ensure the function handles edge cases, such as when `k` is greater than the length of the list or when the list is empty.",
+  "reference_key": null,
+  "final_key_plus": "def min_k(data, k):\n    if not data or k <= 0:\n        return []\n    \n    # Sort the list of tuples by the second element in ascending order\n    sorted_data = sorted(data, key=lambda x: x[1])\n    \n    # Get the first k elements from the sorted list\n    result = sorted_data[:k]\n    \n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\nassert min_k([], 3) == []\nassert min_k([('John', 25), ('Jane', 30), ('Mike', 20)], 0) == []\nassert min_k([('Alice', 35), ('Bob', 30), ('Charlie', 25)], 1) == [('Bob', 30)]\nassert min_k([('David', 40), ('Eve', 35), ('Frank', 40)], 2) == [('David', 40), ('Frank', 40)]\n```",
+    "coder": "```python\ndef min_k(data, k):\n    if not data or k <= 0:\n        return []\n    \n    # Sort the list of tuples by the second element in ascending order\n    sorted_data = sorted(data, key=lambda x: x[1])\n    \n    # Get the first k elements from the sorted list\n    result = sorted_data[:k]\n    \n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef min_k(data, k):\n    if not data or k <= 0:\n        return []\n    \n    # Sort the list of tuples by the second element in ascending order\n    sorted_data = sorted(data, key=lambda x: x[1])\n    \n    # Get the first k elements from the sorted list\n    result = sorted_data[:k]\n    \n    return result\n```",
+    "fixer": "```python\ndef min_k(data, k):\n    if not data or k <= 0:\n        return []\n    \n    # Sort the list of tuples by the second element in ascending order\n    sorted_data = sorted(data, key=lambda x: x[1])\n    \n    # Get the first k elements from the sorted list\n    result = sorted_data[:k]\n    \n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize pointers for both input arrays.\n2. Compare elements pointed by these pointers.\n3. Move the pointer of the smaller element towards the end of its array.\n4. Repeat step 2 until you reach the kth position.\n5. Return the element at the kth position.",
+      "quality": 0.0,
+      "final_key": "def min_k(arr, k):\n    i = j = 0\n    while j < len(arr) and i < k:\n        if arr[i][1] > arr[j][1]:\n            arr[i], arr[j] = arr[j], arr[i]\n        i += 1\n        j += 1\n    return arr[:k]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\nassert min_k([], 3) == []\nassert min_k([(1, 2), (3, 4), (5, 6)], 0) == []\nassert min_k([(1, 2), (3, 4), (5, 6)], 7) == [(1, 2), (3, 4), (5, 6)]\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 1) == [('Akash', 2)]\n```",
+        "coder": "```python\ndef min_k(arr, k):\n    i = j = 0\n    while j < len(arr) and i < k:\n        if arr[i][1] > arr[j][1]:\n            arr[i], arr[j] = arr[j], arr[i]\n        i += 1\n        j += 1\n    return arr[:k]\n```",
+        "verifier": "PICK: B\n\n```python\ndef min_k(arr, k):\n    i = j = 0\n    while j < len(arr) and i < k:\n        if arr[i][1] > arr[j][1]:\n            arr[i], arr[j] = arr[j], arr[i]\n        i += 1\n        j += 1\n    return arr[:k]\n```",
+        "fixer": "```python\ndef min_k(arr, k):\n    i = j = 0\n    while j < len(arr) and i < k:\n        if arr[i][1] > arr[j][1]:\n            arr[i], arr[j] = arr[j], arr[i]\n        i += 1\n        j += 1\n    return arr[:k]\n\n# Test cases\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\nassert min_k([('Sanjeev', 11), ('Angat', 5), ('Akash', 3), ('Nepin', 9)], 3) == [('Akash', 3), ('Angat', 5), ('Nepin', 9)]\nassert min_k([('tanmay', 14), ('Amer', 11), ('Ayesha', 9), ('SKD', 16)], 1) == [('Ayesha', 9)]\nassert min_k([], 3) == []\nassert min_k([(1, 2), (3, 4), (5, 6)], 0) == []\nassert min_k([(1, 2), (3, 4), (5, 6)], 7) == [(1, 2), (3, 4), (5, 6)]\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 1) == [('Akash', 2)]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `min_k` that takes two parameters: a list of tuples (`data`) and an integer (`k`).\n2. Use the `sorted()` function to sort the list of tuples based on the second element (the numeric value) of each tuple in ascending order.\n3. Slice the sorted list to get the first `k` elements, which will be the minimum `k` records.\n4. Check if the list is empty before attempting to slice it. If it is, return an appropriate message indicating that no records can be found.\n5. Ensure the function handles edge cases, such as when `k` is greater than the length of the list or when the list is empty.",
+      "quality": 0.0,
+      "final_key": "def min_k(data, k):\n    if not data:\n        return \"No records found.\"\n    \n    # Sort the list of tuples by the second element in ascending order\n    sorted_data = sorted(data, key=lambda x: x[1])\n    \n    # Return the first k elements\n    return sorted_data[:k]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert min_k([], 3) == \"No records found.\"\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 0) == []\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 5) == [('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)]\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 1) == [('Akshat', 4)]\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\n```",
+        "coder": "```python\ndef min_k(data, k):\n    if not data:\n        return \"No records found.\"\n    \n    # Sort the list of tuples by the second element in ascending order\n    sorted_data = sorted(data, key=lambda x: x[1])\n    \n    # Return the first k elements\n    return sorted_data[:k]\n```",
+        "verifier": "PICK: A\n\n```python\ndef min_k(data, k):\n    if not data:\n        return \"No records found.\"\n    \n    # Sort the list of tuples by the second element in ascending order\n    sorted_data = sorted(data, key=lambda x: x[1])\n    \n    # Return the first k elements\n    return sorted_data[:k]\n```",
+        "fixer": "```python\ndef min_k(data, k):\n    if not data:\n        return \"No records found.\"\n    \n    # Sort the list of tuples by the second element in ascending order\n    sorted_data = sorted(data, key=lambda x: x[1])\n    \n    # Return the first k elements\n    return sorted_data[:k]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_element_in_list` that takes two parameters: `list_of_lists` (the list of lists) and `element` (the element to search for).\n2. Initialize a counter variable to zero.\n3. Iterate over each sublist in the `list_of_lists`.\n4. For each sublist, check if the `element` is present using the `in` keyword.\n5. If the element is found, increment the counter by one.\n6. After iterating through all sublists, return the counter value.\n\nThis approach ensures that we correctly count the occurrences of the specified element across all sublists.",
+      "quality": 0.0,
+      "final_key": "def min_k(tuple_list, k):\n    if not tuple_list or k <= 0:\n        return []\n    \n    sorted_tuples = sorted(tuple_list, key=lambda x: x[1])\n    return sorted_tuples[:k]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\nassert min_k([], 3) == []\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 0) == []\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 5) == [('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)]\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 1) == [('Akshat', 4)]\n```",
+        "coder": "```python\ndef count_element_in_list(list_of_lists, element):\n    count = 0\n    for sublist in list_of_lists:\n        if element in sublist:\n            count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef min_k(tuple_list, k):\n    if not tuple_list or k <= 0:\n        return []\n    \n    sorted_tuples = sorted(tuple_list, key=lambda x: x[1])\n    return sorted_tuples[:k]\n```",
+        "fixer": "```python\ndef min_k(tuple_list, k):\n    if not tuple_list or k <= 0:\n        return []\n    \n    sorted_tuples = sorted(tuple_list, key=lambda x: x[1])\n    return sorted_tuples[:k]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+  "sample_keys": [
+    "def min_k(tuples_list, k):\n    min_records = []\n    curr_min_score = float('inf')\n    \n    for tup in tuples_list:\n        if tup[1] <= curr_min_score:\n            min_records.append(tup)\n            curr_min_score = tup[1]\n    \n    while len(min_records) < k:\n        min_records.append(tuples_list.pop())\n    \n    return min_records",
+    "def min_k(tuples_list, k):\n    # Step 1: Sort the tuples by their second element\n    sorted_tuples = sorted(tuples_list, key=lambda x: x[1])\n    \n    # Step 2: Slice the sorted list to get the first k elements\n    result = sorted_tuples[:k]\n    \n    return result",
+    "def min_k(tuple_list, k):\n    result = []\n    for tup in tuple_list:\n        if len(tup) <= k:\n            result.append(tup)\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2397.0,
+    "small_out": 489.0,
+    "small_s": 7.475189091986977
+  },
+  "calls_plus": {
+    "large_in": 176.0,
+    "large_out": 128.0,
+    "large_s": 3.950284263002686,
+    "small_in": 2264.0,
+    "small_out": 427.0,
+    "small_s": 8.824369470006786
+  },
+  "calls_samples": {
+    "small_in": 7548.0,
+    "small_out": 1691.0,
+    "small_s": 35.4140795370331
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-577",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `last_Digit_Factorial` that takes an integer `n` as its parameter.\n2. Initialize a variable `result` to 1, which will store the product of numbers from 1 to n modulo 10.\n3. Use a for loop to iterate through each number from 1 to n.\n4. In each iteration, multiply the current value of `result` by the loop variable and take the result modulo 10 to keep only the last digit.\n5. Return the final value of `result` after the loop completes.",
+  "reference_key": null,
+  "final_key_plus": "def last_Digit_Factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = (result * i) % 10\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert last_Digit_Factorial(2) == 2\nassert last_Digit_Factorial(3) == 6\nassert last_Digit_Factorial(10) == 0\nassert last_Digit_Factorial(15) == 0\nassert last_Digit_Factorial(20) == 0\n```",
+    "coder": "```python\ndef last_Digit_Factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = (result * i) % 10\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef last_Digit_Factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = (result * i) % 10\n    return result\n```",
+    "fixer": "```python\ndef last_Digit_Factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = (result * i) % 10\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to keep track of the maximum sum of increasing subsequences up to each index and the maximum sum including the kth element.\n2. Iterate through the array up to the (i-1)th index.\n3. For each element, check if it can be added to the current increasing subsequence ending at that index.\n4. Update the maximum sum of increasing subsequences up to each index based on the new element.\n5. After iterating through all elements, update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index.\n6. Return the maximum sum including the kth element.",
+      "quality": 0.0,
+      "final_key": "def last_Digit_Factorial(n):\n    # Initialize variables\n    max_sum = [0] * (n + 1)\n    max_sum[1] = 1\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(2, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        if i % 5 == 0:\n            max_sum[i] = max_sum[i - 1]\n        else:\n            max_sum[i] = max(max_sum[i - 1], max_sum[i // 5] + i % 5)\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum[n] += n\n    \n    # Return the maximum sum including the kth element\n    return max_sum[n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert last_Digit_Factorial(6) == 0\nassert last_Digit_Factorial(7) == 1\nassert last_Digit_Factorial(8) == 0\nassert last_Digit_Factorial(9) == 0\nassert last_Digit_Factorial(10) == 0\n```",
+        "coder": "```python\ndef last_Digit_Factorial(n):\n    # Initialize variables\n    max_sum = [0] * (n + 1)\n    max_sum[1] = 1\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(2, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        if i % 5 == 0:\n            max_sum[i] = max_sum[i - 1]\n        else:\n            max_sum[i] = max(max_sum[i - 1], max_sum[i // 5] + i % 5)\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum[n] += n\n    \n    # Return the maximum sum including the kth element\n    return max_sum[n]\n```",
+        "verifier": "PICK: A\n\n```python\ndef last_Digit_Factorial(n):\n    # Initialize variables\n    max_sum = [0] * (n + 1)\n    max_sum[1] = 1\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(2, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        if i % 5 == 0:\n            max_sum[i] = max_sum[i - 1]\n        else:\n            max_sum[i] = max(max_sum[i - 1], max_sum[i // 5] + i % 5)\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum[n] += n\n    \n    # Return the maximum sum including the kth element\n    return max_sum[n]\n```",
+        "fixer": "```python\ndef last_Digit_Factorial(n):\n    # Initialize variables\n    max_sum = [0] * (n + 1)\n    max_sum[1] = 1\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(2, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        if i % 5 == 0:\n            max_sum[i] = max_sum[i - 1]\n        else:\n            max_sum[i] = max(max_sum[i - 1], max_sum[i // 5] + i % 5)\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum[n] += n\n    \n    # Return the maximum sum including the kth element\n    return max_sum[n]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `last_Digit_Factorial` that takes an integer `n` as its parameter.\n2. Initialize a variable `result` to 1, which will store the product of numbers from 1 to n modulo 10.\n3. Use a for loop to iterate through each number from 1 to n.\n4. In each iteration, multiply the current value of `result` by the loop variable and then take the result modulo 10 to keep only the last digit.\n5. After completing the loop, return the final value of `result`.",
+      "quality": 0.0,
+      "final_key": "def last_Digit_Factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = (result * i) % 10\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert last_Digit_Factorial(2) == 2\nassert last_Digit_Factorial(3) == 6\nassert last_Digit_Factorial(10) == 0\nassert last_Digit_Factorial(15) == 0\nassert last_Digit_Factorial(20) == 0\n```",
+        "coder": "```python\ndef last_Digit_Factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = (result * i) % 10\n    return result\n```",
+        "verifier": "PICK: A\n\n```python\ndef last_Digit_Factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = (result * i) % 10\n    return result\n```",
+        "fixer": "```python\ndef last_Digit_Factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = (result * i) % 10\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `remove_lowercase` that takes one parameter, `input_string`.\n3. Initialize an empty list `result_list` to store characters that are not lowercase.\n4. Iterate over each character in the input string using a for loop.\n5. Check if the current character is uppercase or not using the `isupper()` method.\n6. If the character is uppercase, append it to `result_list`.\n7. After the loop, join all elements in `result_list` into a single string and return it.\n\nThis approach ensures that only uppercase characters are retained in the output string.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef last_Digit_Factorial(n):\n    # Calculate factorial using math.factorial\n    fact = math.factorial(n)\n    \n    # Convert the factorial to string to easily access the last character\n    fact_str = str(fact)\n    \n    # Return the last character as an integer\n    return int(fact_str[-1])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert last_Digit_Factorial(10) == 0\nassert last_Digit_Factorial(20) == 0\nassert last_Digit_Factorial(30) == 0\nassert last_Digit_Factorial(40) == 0\nassert last_Digit_Factorial(50) == 0\n```",
+        "coder": "```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n```",
+        "verifier": "PICK: B\n```python\nimport math\n\ndef last_Digit_Factorial(n):\n    # Calculate factorial using math.factorial\n    fact = math.factorial(n)\n    \n    # Convert the factorial to string to easily access the last character\n    fact_str = str(fact)\n    \n    # Return the last character as an integer\n    return int(fact_str[-1])\n```",
+        "fixer": "```python\nimport math\n\ndef last_Digit_Factorial(n):\n    # Calculate factorial using math.factorial\n    fact = math.factorial(n)\n    \n    # Convert the factorial to string to easily access the last character\n    fact_str = str(fact)\n    \n    # Return the last character as an integer\n    return int(fact_str[-1])\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def last_Digit_Factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result = (result * i) % 10\n    return result",
+  "sample_keys": [
+    null,
+    "def last_Digit_Factorial(n):\n    factorial = 1\n    for i in range(2, n + 1):\n        factorial *= i\n    return factorial % 10",
+    "def last_Digit_Factorial(n):\n    last_digit = 1\n    for i in range(1, n + 1):\n        last_digit *= i % 10\n    return last_digit % 10"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1298.0,
+    "small_out": 353.0,
+    "small_s": 4.599324416019954
+  },
+  "calls_plus": {
+    "large_in": 108.0,
+    "large_out": 122.0,
+    "large_s": 3.8834340950124897,
+    "small_in": 1198.0,
+    "small_out": 233.0,
+    "small_s": 5.071527473977767
+  },
+  "calls_samples": {
+    "small_in": 4059.0,
+    "small_out": 1142.0,
+    "small_s": 24.036445474048378
+  }
+}

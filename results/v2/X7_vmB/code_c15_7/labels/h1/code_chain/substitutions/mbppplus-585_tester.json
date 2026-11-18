@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-585",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert expensive_items([{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 123.45}, {'name': 'Item-5', 'price': 678.00}], 2) == [{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-5', 'price': 678.00}]\nassert expensive_items([{'name': 'Item-6', 'price': 456.78}], 1) == [{'name': 'Item-6', 'price': 456.78}]\nassert expensive_items([], 0) == []\nassert expensive_items([{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}], 2) == [{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}]\nassert expensive_items([{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-10', 'price': 500.00}, {'name': 'Item-11', 'price': 750.00}], 3) == [{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-11', 'price': 750.00}, {'name': 'Item-10', 'price': 500.00}]\n```",
+  "reference_key": "assert expensive_items([{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 123.45}, {'name': 'Item-5', 'price': 678.00}], 2) == [{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-5', 'price': 678.00}]\nassert expensive_items([{'name': 'Item-6', 'price': 456.78}], 1) == [{'name': 'Item-6', 'price': 456.78}]\nassert expensive_items([], 0) == []\nassert expensive_items([{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}], 2) == [{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}]\nassert expensive_items([{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-10', 'price': 500.00}, {'name': 'Item-11', 'price': 750.00}], 3) == [{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-11', 'price': 750.00}, {'name': 'Item-10', 'price': 500.00}]",
+  "final_key_plus": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+    "fixer": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert expensive_items([],1)==[]\nassert expensive_items([{},{},{},{},{}],5)==[]\nassert expensive_items([{'name': 'Item-1', 'price': 104}],'')==['Item-1']\nassert expensive_items([{}, {'price': -98}],'')=={}",
+      "reference_key": "assert expensive_items([{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 123.45}, {'name': 'Item-5', 'price': 678.00}], 2) == [{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-5', 'price': 678.00}]\nassert expensive_items([{'name': 'Item-6', 'price': 456.78}], 1) == [{'name': 'Item-6', 'price': 456.78}]\nassert expensive_items([], 0) == []\nassert expensive_items([{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}], 2) == [{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}]\nassert expensive_items([{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-10', 'price': 500.00}, {'name': 'Item-11', 'price': 750.00}], 3) == [{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-11', 'price': 750.00}, {'name': 'Item-10', 'price': 500.00}]",
+      "key_differs": true,
+      "text": "```python\nassert expensive_items([],1)==[]\nassert expensive_items([{},{},{},{},{}],5)==[]\nassert expensive_items([{'name': 'Item-1', 'price': 104}],'')==['Item-1']\nassert expensive_items([{}, {'price': -98}],'')=={}\n```",
+      "quality": 0.0,
+      "final_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+        "fixer": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert expensive_items([],3)==[]\nassert expensive_items([{}],4)==[]\nassert expensive_items({},{})==[]\nassert expensive_items({'items':[{'name':'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}]},2)==[{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]\nassert expensive_items({'items': [{'name':'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {}, {'name': '', 'price': -1.97}],'num_items': 8},4)==[[{'name':'', 'price': -1.97}, {'name':'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}, {'name': '', 'price': -1.97}], [{'name':'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]]",
+      "reference_key": "assert expensive_items([{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 123.45}, {'name': 'Item-5', 'price': 678.00}], 2) == [{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-5', 'price': 678.00}]\nassert expensive_items([{'name': 'Item-6', 'price': 456.78}], 1) == [{'name': 'Item-6', 'price': 456.78}]\nassert expensive_items([], 0) == []\nassert expensive_items([{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}], 2) == [{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}]\nassert expensive_items([{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-10', 'price': 500.00}, {'name': 'Item-11', 'price': 750.00}], 3) == [{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-11', 'price': 750.00}, {'name': 'Item-10', 'price': 500.00}]",
+      "key_differs": true,
+      "text": "```python\nassert expensive_items([],3)==[]\nassert expensive_items([{}],4)==[]\nassert expensive_items({},{})==[]\nassert expensive_items({'items':[{'name':'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}]},2)==[{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]\nassert expensive_items({'items': [{'name':'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {}, {'name': '', 'price': -1.97}],'num_items': 8},4)==[[{'name':'', 'price': -1.97}, {'name':'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}, {'name': '', 'price': -1.97}], [{'name':'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]]\n```",
+      "quality": 0.0,
+      "final_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+        "fixer": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert perfect_squares(1,30) == [1, 4, 9, 16, 25]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(1,0) == []\nassert perfect_squares(-1,10) == [-1, 0, 1, 4, 9, 16, 25]\nassert perfect_squares(10,10) == [10]",
+      "reference_key": "assert expensive_items([{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 123.45}, {'name': 'Item-5', 'price': 678.00}], 2) == [{'name': 'Item-3', 'price': 789.99}, {'name': 'Item-5', 'price': 678.00}]\nassert expensive_items([{'name': 'Item-6', 'price': 456.78}], 1) == [{'name': 'Item-6', 'price': 456.78}]\nassert expensive_items([], 0) == []\nassert expensive_items([{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}], 2) == [{'name': 'Item-7', 'price': 100.00}, {'name': 'Item-8', 'price': 100.00}]\nassert expensive_items([{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-10', 'price': 500.00}, {'name': 'Item-11', 'price': 750.00}], 3) == [{'name': 'Item-9', 'price': 999.99}, {'name': 'Item-11', 'price': 750.00}, {'name': 'Item-10', 'price': 500.00}]",
+      "key_differs": true,
+      "text": "```python\nassert perfect_squares(1,30) == [1, 4, 9, 16, 25]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(1,0) == []\nassert perfect_squares(-1,10) == [-1, 0, 1, 4, 9, 16, 25]\nassert perfect_squares(10,10) == [10]\n```",
+      "quality": 0.0,
+      "final_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+        "fixer": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n\n# Test cases\nassert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 45.09}],2)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 45.09},{'name': 'Item-4', 'price': 22.75}],1)==[{'name': 'Item-2', 'price': 555.22}]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert expensive_items([], 1) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}], 1) == [{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}], 3) == [{'name': 'Item-3', 'price': 789.45}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 234.67}], 4) == [{'name': 'Item-4', 'price': 234.67}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]",
+  "sample_keys": [
+    "assert expensive_items([],3) == []\nassert expensive_items([{'name': 'Item-1', 'price': 65}],1) == [{'name': 'Item-1', 'price': 65}]\nassert expensive_items([{'name': 'Item-1', 'price': 121.1}, {'name': 'Item-2', 'price': 789.99}], 2) == [{'name': 'Item-2', 'price': 789.99}, {'name': 'Item-1', 'price': 121.1}]\nassert expensive_items([{ 'name': 'Item-1', 'price': 42 }, {'name': 'Item-2', 'price': 76.6}], 0) == []\nassert expensive_items([{ 'name': 'Item-1', 'price': 42 }, {'name': 'Item-2', 'price': 76.6}], 1) == [{'name': 'Item-1', 'price': 42 }]",
+    "assert expensive_items([],3)==[]\nassert expensive_items([{name='Item-1', price=125},{name='Item-2', price=78},{name='Item-3', price=90}],[1])==[{name='Item-1', price=125}]\nassert expensive_items([{name='Item-1', price=145},{name='Item-2', price=555},{name='Item-3', price=100}],[2])==[{name='Item-2', price=555},{name='Item-1', price=145}]\nassert expensive_items([{name='Item-1', price=125},{name='Item-2', price=78},{name='Item-3', price=100}],[0])==[]\nassert expensive_items([{name='Item-1', price=125},{name='Item-2', price=78},{name='Item-3', price=100}],[4])==[{name='Item-1', price=125},{name='Item-2', price=78},{name='Item-3', price=100}]",
+    null,
+    "assert expensive_items([],1)==[]\nassert expensive_items([{'name': 'Item-3', 'price': 888.99}],1)==[{'name': 'Item-3', 'price': 888.99}]\nassert expensive_items([{'name': 'Item-4', 'price': 666.77}, {'name': 'Item-5', 'price': 444.33}, {'name': 'Item-6', 'price': 222.11}],2)==[{'name': 'Item-4', 'price': 666.77}, {'name': 'Item-5', 'price': 444.33}]\nassert expensive_items([{'name': 'Item-7', 'price': 111.00}, {'name': 'Item-8', 'price': 999.99}, {'name': 'Item-9', 'price': 777.77}],3)==[{'name': 'Item-9', 'price': 777.77}, {'name': 'Item-8', 'price': 999.99}, {'name': 'Item-7', 'price': 111.00}]\nassert expensive_items([{'name': 'Item-10', 'price': 333.33}, {'name': 'Item-11', 'price': 111.11}, {'name': 'Item-12', 'price': 222.22}, {'name': 'Item-13', 'price': 333.33}],4)==[{'name': 'Item-12', 'price': 222.22}, {'name': 'Item-11', 'price': 111.11}, {'name': 'Item-10', 'price': 333.33}, {'name': 'Item-13', 'price': 333.33}]",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3419.0,
+    "small_out": 858.0,
+    "small_s": 18.42893981799716
+  },
+  "calls_plus": {
+    "small_in": 3044.0,
+    "small_out": 440.0,
+    "small_s": 9.00888746898272,
+    "large_in": 249.0,
+    "large_out": 373.0,
+    "large_s": 8.01549516399973
+  },
+  "calls_samples": {
+    "small_in": 1245.0,
+    "small_out": 1955.0,
+    "small_s": 34.861821111961035
+  }
+}

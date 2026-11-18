@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-414",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `overlapping` that takes two sequences as input parameters.\n2. Use a set intersection operation to determine if there are any common elements between the two sequences.\n3. If the intersection is empty, return `False`, indicating no overlap.\n4. If the intersection is not empty, return `True`, indicating overlap.\n5. Include a docstring within the function to describe its purpose and parameters.",
+  "reference_key": null,
+  "final_key_plus": "def overlapping(seq1, seq2):\n    \"\"\"\n    Check if any value in seq1 exists in seq2.\n\n    Parameters:\n    - seq1 (list): The first sequence of values.\n    - seq2 (list): The second sequence of values.\n\n    Returns:\n    - bool: True if there is at least one common element, False otherwise.\n    \"\"\"\n    return len(set(seq1) & set(seq2)) > 0",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([], []) == False\nassert overlapping([1,2,3], [1,2,3]) == True\nassert overlapping(['a', 'b', 'c'], ['d', 'e', 'f']) == False\nassert overlapping(['a', 'b', 'c'], ['a', 'b', 'c']) == True\n```",
+    "coder": "```python\ndef overlapping(seq1, seq2):\n    \"\"\"\n    Check if any value in seq1 exists in seq2.\n\n    Parameters:\n    - seq1 (list): The first sequence of values.\n    - seq2 (list): The second sequence of values.\n\n    Returns:\n    - bool: True if there is at least one common element, False otherwise.\n    \"\"\"\n    return len(set(seq1) & set(seq2)) > 0\n```",
+    "verifier": "PICK: A\n\n```python\ndef overlapping(seq1, seq2):\n    \"\"\"\n    Check if any value in seq1 exists in seq2.\n\n    Parameters:\n    - seq1 (list): The first sequence of values.\n    - seq2 (list): The second sequence of values.\n\n    Returns:\n    - bool: True if there is at least one common element, False otherwise.\n    \"\"\"\n    return len(set(seq1) & set(seq2)) > 0\n```",
+    "fixer": "```python\ndef overlapping(seq1, seq2):\n    \"\"\"\n    Check if any value in seq1 exists in seq2.\n\n    Parameters:\n    - seq1 (list): The first sequence of values.\n    - seq2 (list): The second sequence of values.\n\n    Returns:\n    - bool: True if there is at least one common element, False otherwise.\n    \"\"\"\n    return len(set(seq1) & set(seq2)) > 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_char_position` that takes one parameter, `input_string`.\n2. Initialize a counter variable to zero.\n3. Iterate over each character in the input string using a for loop.\n4. For each character, convert it to lowercase to handle case insensitivity.\n5. Check if the index of the character in the lowercase string is equal to its ASCII value minus 97 (since 'a' has an ASCII value of 97).\n6. If the condition is true, increment the counter by 1.\n7. After iterating through all characters, return the counter.\n\nThis approach ensures that we correctly count the occurrences where a character's position matches its alphabetical order in both uppercase and lowercase.",
+      "quality": 1.0,
+      "final_key": "def overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping(['a','b','c','d','e'],['f','g','h','i','j']) == True\nassert overlapping([],[]) == False\nassert overlapping(['a','a','a'],['a','a','a']) == True\nassert overlapping(['A','B','C','D','E'],['a','b','c','d','e']) == False\n```",
+        "coder": "```python\ndef count_char_position(input_string):\n    counter = 0\n    for char in input_string.lower():\n        if ord(char) - 97 == input_string.index(char):\n            counter += 1\n    return counter\n```",
+        "verifier": "PICK: B\n\n```python\ndef overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)\n```",
+        "fixer": "```python\ndef overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `remove_kth_element` that accepts two parameters: `input_list` (the original list) and `k` (the index of the element to be removed).\n2. Check if the value of `k` is within the valid range of indices for the input list. If `k` is out of bounds, raise an IndexError.\n3. Create a new list called `result_list` by iterating over each element in the `input_list`.\n4. Use a conditional statement to check if the current index `i` is equal to `k`. If it is, skip adding the element to `result_list`.\n5. If the current index `i` is not equal to `k`, add the element to `result_list`.\n6. Return the `result_list`.\n\nThis approach ensures that the function handles edge cases such as invalid indices gracefully and efficiently.",
+      "quality": 1.0,
+      "final_key": "def overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([], [1,2,3,4,5]) == False\nassert overlapping([1,2,3,4,5], []) == True\nassert overlapping([1,2,3,4,5], [1,2,3,4,5]) == True\nassert overlapping([1,2,3,4,5], [1,2,3,4,5,6]) == True\n```",
+        "coder": "```python\ndef remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list\n```",
+        "verifier": "PICK: B\n\n```python\ndef overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)\n```",
+        "fixer": "```python\ndef overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `snake_to_camel` that takes one parameter, `snake_str`.\n3. Initialize an empty string `camel_str`.\n4. Iterate over each character in `snake_str`.\n5. If the character is uppercase, capitalize it and add it to `camel_str`.\n6. If the character is lowercase or a digit, append it directly to `camel_str`.\n7. Return `camel_str`.\n\nThis approach ensures that the first letter of the resulting string is capitalized, as required by the task.",
+      "quality": 1.0,
+      "final_key": "def overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([],[]) == False\nassert overlapping(['a','b','c'],['d','e','f']) == True\nassert overlapping(['A','B','C'],['a','b','c']) == True\nassert overlapping(['a','b','c','D'],['a','b','c']) == True\n```",
+        "coder": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```",
+        "verifier": "PICK: B\n\n```python\ndef overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)\n```",
+        "fixer": "```python\ndef overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False",
+  "sample_keys": [
+    "def overlapping(seq1, seq2):\n    flag = False\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                flag = True\n                break\n        if flag:\n            break\n    return flag",
+    "def is_unique(seq1, seq2):\n    for item in seq1:\n        if item in seq2:\n            return True\n    return False\n\ndef overlapping(seq1, seq2):\n    result = is_unique(seq1, seq2)\n    print(result)\n    return result",
+    "def overlapping(seq1, seq2):\n    for item in seq1:\n        if item in seq2:\n            return True\n    return False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1482.0,
+    "small_out": 357.0,
+    "small_s": 4.632155140017858
+  },
+  "calls_plus": {
+    "large_in": 121.0,
+    "large_out": 89.0,
+    "large_s": 2.896411008987343,
+    "small_in": 1514.0,
+    "small_out": 391.0,
+    "small_s": 8.328770018968498
+  },
+  "calls_samples": {
+    "small_in": 4673.0,
+    "small_out": 1226.0,
+    "small_s": 25.89775424601976
+  }
+}

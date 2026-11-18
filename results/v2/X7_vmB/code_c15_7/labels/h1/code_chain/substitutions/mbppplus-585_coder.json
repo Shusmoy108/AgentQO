@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-585",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+  "reference_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+  "final_key_plus": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert expensive_items([], 1) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}], 1) == [{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 678.55}], 3) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 678.55}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 678.55}, {'name': 'Item-5', 'price': 890.00}], 5) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 678.55}, {'name': 'Item-5', 'price': 890.00}]\n```",
+    "verifier": "PICK: A\n\n```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+    "fixer": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n\n# Test cases\nassert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 45.09}],2)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 45.09},{'name': 'Item-4', 'price': 22.75}],1)==[{'name': 'Item-2', 'price': 555.22}]\nassert expensive_items([], 1) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}], 1) == [{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}]\nassert expensive_items([{'name': 'Item-1', 'price': 101"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def expensive_items(data, n):\n    most_expensive = []\n    for entry in data:\n        if 'price' in entry:\n            price = entry['price']\n            if not most_expensive or price >= most_expensive[0]['price']:\n                most_expensive.append(entry)\n                \n    # Sort in descending order by price\n    for i in range(len(most_expensive)):\n        for j in range(i + 1, len(most_expensive)):\n            if most_expensive[i]['price'] < most_expensive[j]['price']:\n                most_expensive[i], most_expensive[j] = most_expensive[j], most_expensive[i]\n                \n    # Return the top n items\n    return most_expensive[:n] if n > 0 else most_expensive",
+      "reference_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+      "key_differs": true,
+      "text": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for entry in data:\n        if 'price' in entry:\n            price = entry['price']\n            if not most_expensive or price >= most_expensive[0]['price']:\n                most_expensive.append(entry)\n                \n    # Sort in descending order by price\n    for i in range(len(most_expensive)):\n        for j in range(i + 1, len(most_expensive)):\n            if most_expensive[i]['price'] < most_expensive[j]['price']:\n                most_expensive[i], most_expensive[j] = most_expensive[j], most_expensive[i]\n                \n    # Return the top n items\n    return most_expensive[:n] if n > 0 else most_expensive\n```\nThis code snippet defines the `expensive_items` function as specified in the plan. It finds the n most expensive items in a list of dictionaries, handles edge cases where no items are given, and sorts them accordingly before returning the result. The solution includes sorting but does not need explicit checks for `most_expensive` being empty, simplifying handling of empty inputs.",
+      "quality": 0.0,
+      "final_key": "def expensive_items(data, n):\n    most_expensive = []\n    for entry in data:\n        if 'price' in entry:\n            price = entry['price']\n            if not most_expensive or price >= most_expensive[0]['price']:\n                most_expensive.append(entry)\n                \n    # Sort in descending order by price\n    for i in range(len(most_expensive)):\n        for j in range(i + 1, len(most_expensive)):\n            if most_expensive[i]['price'] < most_expensive[j]['price']:\n                most_expensive[i], most_expensive[j] = most_expensive[j], most_expensive[i]\n                \n    # Return the top n items\n    return most_expensive[:n] if n > 0 else most_expensive",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert expensive_items([], 3) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}], 1) == [{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}], 3) == [{'name': 'Item-3', 'price': 789.45}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}], 4) == [{'name': 'Item-4', 'price': 987.65}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]\n```",
+        "verifier": "PICK: A\n\n```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for entry in data:\n        if 'price' in entry:\n            price = entry['price']\n            if not most_expensive or price >= most_expensive[0]['price']:\n                most_expensive.append(entry)\n                \n    # Sort in descending order by price\n    for i in range(len(most_expensive)):\n        for j in range(i + 1, len(most_expensive)):\n            if most_expensive[i]['price'] < most_expensive[j]['price']:\n                most_expensive[i], most_expensive[j] = most_expensive[j], most_expensive[i]\n                \n    # Return the top n items\n    return most_expensive[:n] if n > 0 else most_expensive\n```",
+        "fixer": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for entry in data:\n        if 'price' in entry:\n            price = entry['price']\n            if not most_expensive or price >= most_expensive[0]['price']:\n                most_expensive.append(entry)\n                \n    # Sort in descending order by price\n    for i in range(len(most_expensive)):\n        for j in range(i + 1, len(most_expensive)):\n            if most_expensive[i]['price'] < most_expensive[j]['price']:\n                most_expensive[i], most_expensive[j] = most_expensive[j], most_expensive[i]\n                \n    # Return the top n items\n    return most_expensive[:n] if n > 0 else most_expensive\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[-1]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+      "reference_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+      "key_differs": true,
+      "text": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[-1]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+      "quality": 0.0,
+      "final_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[-1]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert expensive_items([], 1) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}], 1) == [{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 678.55}], 3) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 678.55}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 678.55}, {'name': 'Item-5', 'price': 999.99}], 5) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}, {'name': 'Item-4', 'price': 678.55}, {'name': 'Item-5', 'price': 999.99}]\n```",
+        "verifier": "PICK: A\n\n```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[-1]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+        "fixer": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[-1]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n\n# Test cases\nassert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 45.09}],2)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 45.09},{'name': 'Item-4', 'price': 22.75}],1)==[{'name': 'Item-2', 'price': 555.22}]\nassert expensive_items([], 1) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}], 1) == [{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.99}]\nassert expensive_items([{'name': 'Item-1', 'price': 101"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares",
+      "reference_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if not most_expensive or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef expensive_items(data, n):\n    # Extract prices from the data\n    prices = [item['price'] for item in data]\n    \n    # Sort prices in descending order\n    sorted_prices = sorted(prices, reverse=True)\n    \n    # Return the top n most expensive items\n    return [{'name': item['name'], 'price': price} for price in sorted_prices[:n]]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert expensive_items([],1) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}],3) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}],2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}],4) == [{'name': 'Item-4', 'price': 987.65}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}, {'name': 'Item-3', 'price': 789.45}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}, {'name': 'Item-5', 'price': 1234.56}],5) == [{'name': 'Item-5', 'price': 1234.56}, {'name': 'Item-4', 'price': 987.65}, {'name': 'Item-2', 'price': 555.22}, {'name':",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef expensive_items(data, n):\n    # Extract prices from the data\n    prices = [item['price'] for item in data]\n    \n    # Sort prices in descending order\n    sorted_prices = sorted(prices, reverse=True)\n    \n    # Return the top n most expensive items\n    return [{'name': item['name'], 'price': price} for price in sorted_prices[:n]]\n```",
+        "fixer": "```python\nimport math\n\ndef expensive_items(data, n):\n    # Extract prices from the data\n    prices = [item['price'] for item in data]\n    \n    # Sort prices in descending order\n    sorted_prices = sorted(prices, reverse=True)\n    \n    # Return the top n most expensive items\n    return [{'name': item['name'], 'price': price} for price in sorted_prices[:n]]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+  "sample_keys": [
+    "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[-1]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+    "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: -x['price'])\n    return most_expensive[:n]",
+    "def expensive_items(data, n):\n    most_expensive = []\n    \n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    \n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+    "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+    "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3419.0,
+    "small_out": 858.0,
+    "small_s": 18.42893981799716
+  },
+  "calls_plus": {
+    "small_in": 2948.0,
+    "small_out": 1265.0,
+    "small_s": 22.950671552011045,
+    "large_in": 346.0,
+    "large_out": 75.0,
+    "large_s": 1.686846405005781
+  },
+  "calls_samples": {
+    "small_in": 1730.0,
+    "small_out": 452.0,
+    "small_s": 8.744325594976544
+  }
+}

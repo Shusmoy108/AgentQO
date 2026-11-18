@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-414",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert overlapping([1,2,3,4,5], [5,6,7,8,9]) == True\nassert overlapping([], [1,2,3]) == False\nassert overlapping([10], []) == False\nassert overlapping(['a', 'b', 'c'], ['d', 'e', 'f']) == False\nassert overlapping(['apple', 'banana'], ['banana', 'cherry']) == True\n```",
+  "reference_key": "assert overlapping([1,2,3,4,5], [5,6,7,8,9]) == True\nassert overlapping([], [1,2,3]) == False\nassert overlapping([10], []) == False\nassert overlapping(['a', 'b', 'c'], ['d', 'e', 'f']) == False\nassert overlapping(['apple', 'banana'], ['banana', 'cherry']) == True",
+  "final_key_plus": "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n```",
+    "fixer": "```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestOverlappingFunction(unittest.TestCase):\n    def test_overlap_exists(self):\n        self.assertFalse(overlapping([10, 20, 30], [30, 40, 50]))  # No overlap\n        \n    def test_overlap_identical_elements(self):\n        self.assertTrue(overlapping([1, 1, 1, 1], [1, 1, 1, 1]))  # Identical sequences\n        \n    def test_empty_sequences(self):\n        self.assertFalse(overlapping([], []))  # Both sequences are empty\n        \n    def test_sequence_with_none_values(self):\n        self.assertFalse(overlapping(None, [1, 2]))       # One of the sequences is None\n        self.assertFalse(overlapping([], None))        # One of the sequences is None\n        \n    def test_single_element_sequences(self):\n        self.assertTrue(overlapping([10], [10]))        # Single element sequences\n        self.assertTrue(overlapping([20, 30, 40], [30, 40, 50]))# Overlapping single element sequences\n\nif __name__ == \"__main__\":\n    unittest.main()",
+      "reference_key": "assert overlapping([1,2,3,4,5], [5,6,7,8,9]) == True\nassert overlapping([], [1,2,3]) == False\nassert overlapping([10], []) == False\nassert overlapping(['a', 'b', 'c'], ['d', 'e', 'f']) == False\nassert overlapping(['apple', 'banana'], ['banana', 'cherry']) == True",
+      "key_differs": true,
+      "text": "Certainly! To ensure accuracy, we need to cover various scenarios including typical cases such as overlapping sequences, sequences with identical elements, empty sequences, and sequences with mixed elements. We'll also include some edge cases like None values.\n\nHere are five assert statements to validate the `overlapping` function:\n\n```python\nimport unittest\n\nclass TestOverlappingFunction(unittest.TestCase):\n    def test_overlap_exists(self):\n        self.assertFalse(overlapping([10, 20, 30], [30, 40, 50]))  # No overlap\n        \n    def test_overlap_identical_elements(self):\n        self.assertTrue(overlapping([1, 1, 1, 1], [1, 1, 1, 1]))  # Identical sequences\n        \n    def test_empty_sequences(self):\n        self.assertFalse(overlapping([], []))  # Both sequences are empty\n        \n    def test_sequence_with_none_values(self):\n        self.assertFalse(overlapping(None, [1, 2]))       # One of the sequences is None\n        self.assertFalse(overlapping([], None))        # One of the sequences is None\n        \n    def test_single_element_sequences(self):\n        self.assertTrue(overlapping([10], [10]))        # Single element sequences\n        self.assertTrue(overlapping([20, 30, 40], [30, 40, 50]))# Overlapping single element sequences\n\nif __name__ == \"__main__\":\n    unittest.main()\n```\n\n### Explanation of Each Assert Statement:\n1. **overlap_exists**: This tests if the function returns `False` when no overlaps exist between two distinct sequences.\n2. **overlap_identical_elements**: This ensures that if both sequences contain identical elements, the function returns `True`.\n3. **empty_sequences**: This checks if the function returns `False` when either of the input sequences is empty.\n4. **sequence_with_none_values**: This verifies the behavior when one of the input sequences includes `None`, ensuring the function handles different data types gracefully.\n5. **single_element_sequences**: This tests the function's handling of sequences with a single element.\n\nThis comprehensive testing helps ensure the `overlapping` function behaves correctly across various inputs.",
+      "quality": 1.0,
+      "final_key": "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n```",
+        "fixer": "```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert overlapping([1,2,3,4,5],[])==False\nassert overlapping([],[])==False\nassert overlapping([1,2,3,4,5],[5,4,3,2,1])==True\nassert overlapping(['a','b'],['c','d'])==False\nassert overlapping('abc','abc')==True",
+      "reference_key": "assert overlapping([1,2,3,4,5], [5,6,7,8,9]) == True\nassert overlapping([], [1,2,3]) == False\nassert overlapping([10], []) == False\nassert overlapping(['a', 'b', 'c'], ['d', 'e', 'f']) == False\nassert overlapping(['apple', 'banana'], ['banana', 'cherry']) == True",
+      "key_differs": true,
+      "text": "```python\nassert overlapping([1,2,3,4,5],[])==False\nassert overlapping([],[])==False\nassert overlapping([1,2,3,4,5],[5,4,3,2,1])==True\nassert overlapping(['a','b'],['c','d'])==False\nassert overlapping('abc','abc')==True\n```",
+      "quality": 1.0,
+      "final_key": "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n```",
+        "fixer": "```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123abcABC') == '123AbcABC'\nassert snake_to_camel('') == ''",
+      "reference_key": "assert overlapping([1,2,3,4,5], [5,6,7,8,9]) == True\nassert overlapping([], [1,2,3]) == False\nassert overlapping([10], []) == False\nassert overlapping(['a', 'b', 'c'], ['d', 'e', 'f']) == False\nassert overlapping(['apple', 'banana'], ['banana', 'cherry']) == True",
+      "key_differs": true,
+      "text": "```python\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123abcABC') == '123AbcABC'\nassert snake_to_camel('') == ''\n```",
+      "quality": 0.0,
+      "final_key": "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n\n# Test cases\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([1,2,3],[4,5,6]) == False\nassert overlapping([1,4,5],[1,4,5]) == True\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123abcABC') == '123AbcABC'\nassert snake_to_camel('') == ''",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n\n# Test cases\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([1,2,3],[4,5,6]) == False\nassert overlapping([1,4,5],[1,4,5]) == True\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123abcABC') == '123AbcABC'\nassert snake_to_camel('') == ''\n```",
+        "fixer": "```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n\n# Test cases\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([1,2,3],[4,5,6]) == False\nassert overlapping([1,4,5],[1,4,5]) == True\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123abcABC') == '123AbcABC'\nassert snake_to_camel('') == ''\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([], []) == False\nassert overlapping([1,2,3], [1,2,3]) == True\nassert overlapping([1,2,3,4,5], [1,2,3,4,5]) == True\nassert overlapping([1,2,3,4,5], [1,2,3,4,5,6]) == True",
+  "sample_keys": [
+    "assert overlapping([10,10,10], [10,10,10]) == True\nassert overlapping([], []) == False\nassert overlapping(['a', 'b', 'c'], ['x']) == False\nassert overlapping(['d', 'e', 'f'], ['g', 'h', 'i']) == False\nassert overlapping(['j', 'k', 'l'], [m, n, o]) == False",
+    "assert overlapping(['a','b','c'], ['d','e','f']) == False\nassert overlapping('hello', 'world') == False\nassert overlapping([], []) == False\nassert overlapping(['100'], [100]) == False\nassert overlapping(['100', '200'], ['100', '300']) == True",
+    "assert overlapping([], [1,2]) == False\nassert overlapping([1], [1]) == True\nassert overlapping([1,2,3], [1,4,5]) == True\nassert overlapping([1,2,3], [4,5]) == False\nassert overlapping([1,2,3,4,5], []) == False",
+    "assert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([], []) == True\nassert overlapping([0], [0]) == True\nassert overlapping([1,1,1], [1]) == True\nassert overlapping(['a', 'b', 'c'], ['d']) == False",
+    "assert overlapping(['a','b','c','d'],['e','f','g','h']) == False\nassert overlapping(['x','y','z'],[]) == False\nassert overlapping([],['w','x','y','z']) == False\nassert overlapping([][],[]) == True\nassert overlapping([100,200], [100,200,300,400]) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1482.0,
+    "small_out": 357.0,
+    "small_s": 4.632155140017858
+  },
+  "calls_plus": {
+    "small_in": 1258.0,
+    "small_out": 246.0,
+    "small_s": 3.6085402450407855,
+    "large_in": 179.0,
+    "large_out": 96.0,
+    "large_s": 2.796762324986048
+  },
+  "calls_samples": {
+    "small_in": 895.0,
+    "small_out": 433.0,
+    "small_s": 9.042233108979417
+  }
+}

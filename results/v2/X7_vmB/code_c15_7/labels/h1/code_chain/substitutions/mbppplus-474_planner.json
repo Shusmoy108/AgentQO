@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-474",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `replace_char` that takes three parameters: `input_string`, `old_char`, and `new_char`.\n2. Use the `str.replace()` method on `input_string` to replace all occurrences of `old_char` with `new_char`.\n3. Return the modified string from the function.\n4. Ensure the function handles cases where `old_char` is not present in `input_string` by returning the original string unchanged.\n5. Test the function with the provided test case to verify it works as expected.",
+  "reference_key": null,
+  "final_key_plus": "def replace_char(input_string, old_char, new_char):\n    if old_char in input_string:\n        return input_string.replace(old_char, new_char)\n    else:\n        return input_string",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert replace_char(\"hello\", 'o', 'a') == \"hallo\"\nassert replace_char(\"world\", 'r', 'd') == \"world\"\nassert replace_char(\"python\", 't', 'p') == \"pyhon\"\nassert replace_char(\"1234567890\", '5', '6') == \"123467890\"\nassert replace_char(\"\", 'x', 'y') == \"\"\n```",
+    "coder": "```python\ndef replace_char(input_string, old_char, new_char):\n    if old_char in input_string:\n        return input_string.replace(old_char, new_char)\n    else:\n        return input_string\n```",
+    "verifier": "PICK: A\n\n```python\ndef replace_char(input_string, old_char, new_char):\n    if old_char in input_string:\n        return input_string.replace(old_char, new_char)\n    else:\n        return input_string\n```",
+    "fixer": "```python\ndef replace_char(input_string, old_char, new_char):\n    if old_char in input_string:\n        return input_string.replace(old_char, new_char)\n    else:\n        return input_string\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two variables, `zero_count` and `one_count`, to keep track of the current count of 0s and 1s respectively.\n2. Initialize a variable `max_diff` to store the maximum difference found so far.\n3. Iterate through each character in the input string:\n   - If the character is '0', increment `zero_count`.\n   - If the character is '1', increment `one_count`.\n   - Calculate the current difference as `abs(zero_count - one_count)`.\n   - Update `max_diff` if the current difference is greater than `max_diff`.\n4. Return `max_diff`.\n\nThis approach ensures that we efficiently find the maximum difference by keeping track of the counts of both 0s and 1s and updating the maximum difference whenever a new difference is found.",
+      "quality": 0.0,
+      "final_key": "def replace_char(s, old_char, new_char):\n    zero_count = 0\n    one_count = 0\n    max_diff = 0\n    \n    for char in s:\n        if char == old_char:\n            zero_count += 1\n        elif char == new_char:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert replace_char(\"hello\", 'o', 'a') == 2\nassert replace_char(\"world\", 'z', 'x') == 3\nassert replace_char(\"python\", 'p', 'q') == 1\nassert replace_char(\"abba\", 'b', 'c') == 0\nassert replace_char(\"\", 'a', 'b') == 0\n```",
+        "coder": "```python\ndef replace_char(s, old_char, new_char):\n    zero_count = 0\n    one_count = 0\n    max_diff = 0\n    \n    for char in s:\n        if char == old_char:\n            zero_count += 1\n        elif char == new_char:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+        "verifier": "PICK: B\n\n```python\ndef replace_char(s, old_char, new_char):\n    zero_count = 0\n    one_count = 0\n    max_diff = 0\n    \n    for char in s:\n        if char == old_char:\n            zero_count += 1\n        elif char == new_char:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+        "fixer": "```python\ndef replace_char(s, old_char, new_char):\n    zero_count = 0\n    one_count = 0\n    max_diff = 0\n    \n    for char in s:\n        if char == old_char:\n            zero_count += 1\n        elif char == new_char:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `replace_char` that takes three parameters: `input_string`, `old_char`, and `new_char`.\n2. Use the `str.replace()` method on `input_string` to replace all occurrences of `old_char` with `new_char`.\n3. Return the modified string from the function.\n4. Ensure the function correctly identifies when `old_char` is absent in `input_string` and returns the original string without modification.\n5. Test the function with the provided test case to confirm it behaves as intended.",
+      "quality": 1.0,
+      "final_key": "def replace_char(input_string, old_char, new_char):\n    if old_char in input_string:\n        return input_string.replace(old_char, new_char)\n    else:\n        return input_string",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert replace_char(\"hello\", 'o', 'a') == \"hallo\"\nassert replace_char(\"world\", 'r', 'd') == \"world\"\nassert replace_char(\"python\", 't', 'p') == \"pyhon\"\nassert replace_char(\"1234567890\", '5', '6') == \"123467890\"\nassert replace_char(\"\", 'x', 'y') == \"\"\n```",
+        "coder": "```python\ndef replace_char(input_string, old_char, new_char):\n    if old_char in input_string:\n        return input_string.replace(old_char, new_char)\n    else:\n        return input_string\n```",
+        "verifier": "PICK: A\n\n```python\ndef replace_char(input_string, old_char, new_char):\n    if old_char in input_string:\n        return input_string.replace(old_char, new_char)\n    else:\n        return input_string\n```",
+        "fixer": "```python\ndef replace_char(input_string, old_char, new_char):\n    if old_char in input_string:\n        return input_string.replace(old_char, new_char)\n    else:\n        return input_string\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `find_remainder` that takes two parameters: `arr`, which is the list of numbers, and `n`, which is the modulus.\n2. Initialize a variable `product` to 1.\n3. Iterate through each number in the list `arr`.\n4. Multiply the current `product` by the current number.\n5. Take the result modulo `n` and store it back in `product`.\n6. After iterating through all numbers, return the final value of `product`.\n\nThis approach ensures that the function correctly computes the product of the array elements modulo `n`.",
+      "quality": 1.0,
+      "final_key": "def replace_char(s, old_char, new_char):\n    return s.replace(old_char, new_char)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert replace_char(\"polygon\",'y','l')==(\"pollgon\")\nassert replace_char(\"hello\",\"o\",\"a\")==(\"hellaa\")\nassert replace_char(\"world\",\"r\",\"t\")==(\"worldt\")\nassert replace_char(\"test\",\"e\",\"x\")==(\"testxx\")\nassert replace_char(\"abcde\",\"b\",\"z\")==(\"azcde\")",
+        "coder": "```python\ndef find_remainder(arr, n):\n    product = 1\n    for num in arr:\n        product = (product * num) % n\n    return product\n```",
+        "verifier": "PICK: B\n\n```python\ndef replace_char(s, old_char, new_char):\n    return s.replace(old_char, new_char)\n```",
+        "fixer": "```python\ndef replace_char(s, old_char, new_char):\n    return s.replace(old_char, new_char)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_char(\"polygon\",'y','l')==(\"pollgon\")\nassert replace_char(\"character\",'c','a')==(\"aharaater\")\nassert replace_char(\"python\",'l','a')==(\"python\")\nassert replace_char(\"hello world\", 'o', 'a') == \"hallo warld\"  # This test case fails as expected\nassert replace_char(\"1234567890\", '5', '9') == \"1234967890\"\nassert replace_char(\"\", 'x', 'y') == \"\"\nassert replace_char(\"abcde\", 'z', 'x') == \"abcde\"\nassert replace_char(\"aaaaaaa\", 'a', 'b') == \"bbbbbbb\"",
+  "sample_keys": [
+    null,
+    "def replace_char(original_string, old_char, new_char):\n    result = []\n    for char in original_string:\n        if char == old_char:\n            result.append(new_char)\n        else:\n            result.append(char)\n    return ''.join(result)\n\n# Test cases\nassert replace_char(\"polygon\",'y','l')==(\"pollgon\")\nassert replace_char(\"character\",'c','a')==(\"aharaater\")\nassert replace_char(\"python\",'l','a')==(\"python\")\nassert replace_char(\"hello world\", 'o', 'a') == \"hallo warld\"  # This test case fails as expected\nassert replace_char(\"1234567890\", '5', '9') == \"1234967890\"\nassert replace_char(\"\", 'x', 'y') == \"\"\nassert replace_char(\"abcde\", 'z', 'x') == \"abcde\"\nassert replace_char(\"aaaaaaa\", 'a', 'b') == \"bbbbbbb\"",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1550.0,
+    "small_out": 814.0,
+    "small_s": 17.551536787999794
+  },
+  "calls_plus": {
+    "large_in": 102.0,
+    "large_out": 113.0,
+    "large_s": 2.9931359390029684,
+    "small_in": 1237.0,
+    "small_out": 237.0,
+    "small_s": 4.878377482964424
+  },
+  "calls_samples": {
+    "small_in": 4666.0,
+    "small_out": 2046.0,
+    "small_s": 40.856894990982255
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-730",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `consecutive_duplicates` that takes a list as its parameter.\n2. Initialize an empty list called `result`.\n3. Iterate through the input list using a for loop.\n4. For each element, check if it is different from the last element added to `result`.\n5. If it is different, append it to `result`.\n6. Return the `result` list after the loop ends.",
+  "reference_key": null,
+  "final_key_plus": "def consecutive_duplicates(lst):\n    result = []\n    for i in lst:\n        if len(result) == 0 or i != result[-1]:\n            result.append(i)\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([1]) == [1]\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([1, 2, 2, 3, 3, 3]) == [1, 2, 3]\nassert consecutive_duplicates([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n```",
+    "coder": "```python\ndef consecutive_duplicates(lst):\n    result = []\n    for i in lst:\n        if len(result) == 0 or i != result[-1]:\n            result.append(i)\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef consecutive_duplicates(lst):\n    result = []\n    for i in lst:\n        if len(result) == 0 or i != result[-1]:\n            result.append(i)\n    return result\n```",
+    "fixer": "```python\ndef consecutive_duplicates(lst):\n    result = []\n    for i in lst:\n        if len(result) == 0 or i != result[-1]:\n            result.append(i)\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `even_binomial_Coeff_Sum` that accepts one parameter, `n`.\n3. Initialize a variable `sum_even_coeffs` to store the sum of even index binomial coefficients.\n4. Use a loop to iterate through each index from 0 to `n-1`.\n5. For each index, calculate the binomial coefficient using the formula `binom(n, i)` where `i` is the current index.\n6. Check if the index is even by using the condition `i % 2 == 0`.\n7. If the index is even, add the calculated binomial coefficient to `sum_even_coeffs`.\n8. After the loop completes, return the value of `sum_even_coeffs`.\n\nThis approach ensures that we correctly compute the sum of even index binomial coefficients for any given positive integer `n`.",
+      "quality": 0.0,
+      "final_key": "from math import comb\n\ndef consecutive_duplicates(lst):\n    sum_even_coeffs = 0\n    for i in range(len(lst)):\n        if i % 2 == 0:\n            sum_even_coeffs += comb(len(lst), i)\n    return lst[:len(lst) - sum_even_coeffs] + [lst[-1]] * sum_even_coeffs",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([1]) == [1]\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,",
+        "coder": "```python\nfrom math import comb\n\ndef consecutive_duplicates(lst):\n    sum_even_coeffs = 0\n    for i in range(len(lst)):\n        if i % 2 == 0:\n            sum_even_coeffs += comb(len(lst), i)\n    return lst[:len(lst) - sum_even_coeffs] + [lst[-1]] * sum_even_coeffs\n```",
+        "verifier": "PICK: A\n```python\nfrom math import comb\n\ndef consecutive_duplicates(lst):\n    sum_even_coeffs = 0\n    for i in range(len(lst)):\n        if i % 2 == 0:\n            sum_even_coeffs += comb(len(lst), i)\n    return lst[:len(lst) - sum_even_coeffs] + [lst[-1]] * sum_even_coeffs\n```",
+        "fixer": "```python\nfrom math import comb\n\ndef consecutive_duplicates(lst):\n    sum_even_coeffs = 0\n    for i in range(len(lst)):\n        if i % 2 == 0:\n            sum_even_coeffs += comb(len(lst), i)\n    return lst[:len(lst) - sum_even_coeffs] + [lst[-1]] * sum_even_coeffs\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `consecutive_duplicates` that takes a list as its parameter.\n2. Initialize an empty list called `result`.\n3. Iterate through the input list using a for loop.\n4. For each element, check if it is equal to or greater than 100.\n5. If it is greater than or equal to 100, append it to `result`.\n6. Return the `result` list after the loop ends.",
+      "quality": 0.0,
+      "final_key": "def consecutive_duplicates(lst):\n    result = []\n    for i in lst:\n        if i >= 100:\n            result.append(i)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([1]) == [1]\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([1, 2, 2, 3, 3, 3]) == [1, 2, 3]\nassert consecutive_duplicates([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 11, 12, 13, 14, 15, 15, 15, 16, 17, 18, 19, 20, 20, 20, 21, 22, 23, 24, 25, 25, 25, 26, 27, 28, 29, 30, 30, 30, 31, 32, 33, 34, 35, 35, 35, 36, 37, 38, 39, 40, 40, 40, 41, 42, 43, 44, 45, 45, 45, 46, 47, 48, 49, 50, 50, 50, 51, 52, 53, 54, 55, 55, 55, 56, 57, 58, 59, 60, 60, 60, 61, 62, 63, 64, 65, 65, 65, 66, 67, 68, 69, 70, 70, 70, 71, 72, 73, 74, 75, 75, 75, 76, 77, 78, 79, 80, 80, 80, 81, 82, 83, 8",
+        "coder": "```python\ndef consecutive_duplicates(lst):\n    result = []\n    for i in lst:\n        if i >= 100:\n            result.append(i)\n    return result\n```",
+        "verifier": "PICK: A\n\n```python\ndef consecutive_duplicates(lst):\n    result = []\n    for i in lst:\n        if i >= 100:\n            result.append(i)\n    return result\n```",
+        "fixer": "```python\ndef consecutive_duplicates(lst):\n    result = []\n    for i in lst:\n        if i >= 100:\n            result.append(i)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to keep track of the maximum sum of increasing subsequences up to each index and the maximum sum including the kth element.\n2. Iterate through the array up to the (i-1)th index.\n3. For each element, check if it can be added to the current increasing subsequence ending at that index.\n4. Update the maximum sum of increasing subsequences up to each index based on the new element.\n5. After iterating through all elements, update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index.\n6. Return the maximum sum including the kth element.",
+      "quality": 0.0,
+      "final_key": "def consecutive_duplicates(arr):\n    n = len(arr)\n    max_sum_increasing = [arr[i] for i in range(n)]\n    max_sum_with_k = arr[n-1]\n\n    for i in range(1, n):\n        for j in range(i):\n            if arr[j] < arr[i]:\n                max_sum_increasing[i] = max(max_sum_increasing[i], max_sum_increasing[j] + arr[i])\n\n        max_sum_with_k += arr[i]\n\n    return max_sum_with_k",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([1]) == [1]\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([1, 2, 2, 3, 3, 3]) == [1, 2, 3]\nassert consecutive_duplicates([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n```",
+        "coder": "```python\ndef consecutive_duplicates(arr):\n    n = len(arr)\n    max_sum_increasing = [arr[i] for i in range(n)]\n    max_sum_with_k = arr[n-1]\n\n    for i in range(1, n):\n        for j in range(i):\n            if arr[j] < arr[i]:\n                max_sum_increasing[i] = max(max_sum_increasing[i], max_sum_increasing[j] + arr[i])\n\n        max_sum_with_k += arr[i]\n\n    return max_sum_with_k\n```",
+        "verifier": "PICK: A\n\n```python\ndef consecutive_duplicates(arr):\n    n = len(arr)\n    max_sum_increasing = [arr[i] for i in range(n)]\n    max_sum_with_k = arr[n-1]\n\n    for i in range(1, n):\n        for j in range(i):\n            if arr[j] < arr[i]:\n                max_sum_increasing[i] = max(max_sum_increasing[i], max_sum_increasing[j] + arr[i])\n\n        max_sum_with_k += arr[i]\n\n    return max_sum_with_k\n```",
+        "fixer": "```python\ndef consecutive_duplicates(arr):\n    n = len(arr)\n    max_sum_increasing = [arr[i] for i in range(n)]\n    max_sum_with_k = arr[n-1]\n\n    for i in range(1, n):\n        for j in range(i):\n            if arr[j] < arr[i]:\n                max_sum_increasing[i] = max(max_sum_increasing[i], max_sum_increasing[j] + arr[i])\n\n        max_sum_with_k += arr[i]\n\n    return max_sum_with_k\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result",
+  "sample_keys": [
+    "def consecutive_duplicates(lst):\n    result = []\n    for i in lst:\n        if len(result) == 0 or i != result[-1]:\n            result.append(i)\n    return result",
+    "def remove_consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result",
+    "def remove_consecutive_duplicates(input_list):\n    result = []\n    prev_element = None\n    for element in input_list:\n        if element != prev_element:\n            result.append(element)\n        prev_element = element\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2439.0,
+    "small_out": 402.0,
+    "small_s": 5.410950741003035
+  },
+  "calls_plus": {
+    "large_in": 175.0,
+    "large_out": 90.0,
+    "large_s": 2.9195102710218634,
+    "small_in": 2226.0,
+    "small_out": 281.0,
+    "small_s": 6.0159814069920685
+  },
+  "calls_samples": {
+    "small_in": 8603.0,
+    "small_out": 2554.0,
+    "small_s": 52.839727591956034
+  }
+}

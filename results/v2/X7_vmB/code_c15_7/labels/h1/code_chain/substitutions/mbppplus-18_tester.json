@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-18",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert remove_dirty_chars(\"hello world\", \"ad\") == 'hello worl'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdefg'\nassert remove_dirty_chars(\"1234567890\", \"2468\") == '135790'\nassert remove_dirty_chars(\"\", \"abc\") == ''\nassert remove_dirty_chars(\"aaaaa\", \"aaa\") == ''\n```",
+  "reference_key": "assert remove_dirty_chars(\"hello world\", \"ad\") == 'hello worl'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdefg'\nassert remove_dirty_chars(\"1234567890\", \"2468\") == '135790'\nassert remove_dirty_chars(\"\", \"abc\") == ''\nassert remove_dirty_chars(\"aaaaa\", \"aaa\") == ''",
+  "final_key_plus": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n```",
+    "fixer": "```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert remove_dirty_chars(\"hello world\", \"world\") == \"h\"\nassert remove_dirty_chars(\"abcdef\", \"\") == \"abcdef\"\nassert remove_dirty_chars(\"\", \"abc\") == \"\"\nassert remove_dirty_chars(\"mississippi\", \"p\") == \"mississi\"\nassert remove_dirty_chars(\"aabbccdd\", \"ab\") == \"cd\"",
+      "reference_key": "assert remove_dirty_chars(\"hello world\", \"ad\") == 'hello worl'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdefg'\nassert remove_dirty_chars(\"1234567890\", \"2468\") == '135790'\nassert remove_dirty_chars(\"\", \"abc\") == ''\nassert remove_dirty_chars(\"aaaaa\", \"aaa\") == ''",
+      "key_differs": true,
+      "text": "```python\nassert remove_dirty_chars(\"hello world\", \"world\") == \"h\"\nassert remove_dirty_chars(\"abcdef\", \"\") == \"abcdef\"\nassert remove_dirty_chars(\"\", \"abc\") == \"\"\nassert remove_dirty_chars(\"mississippi\", \"p\") == \"mississi\"\nassert remove_dirty_chars(\"aabbccdd\", \"ab\") == \"cd\"\n```",
+      "quality": 0.0,
+      "final_key": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"hello world\", \"world\") == \"h\"\nassert remove_dirty_chars(\"abcdef\", \"\") == \"abcdef\"\nassert remove_dirty_chars(\"\", \"abc\") == \"\"\nassert remove_dirty_chars(\"mississippi\", \"p\") == \"mississi\"\nassert remove_dirty_chars(\"aabbccdd\", \"ab\") == \"cd\"",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"hello world\", \"world\") == \"h\"\nassert remove_dirty_chars(\"abcdef\", \"\") == \"abcdef\"\nassert remove_dirty_chars(\"\", \"abc\") == \"\"\nassert remove_dirty_chars(\"mississippi\", \"p\") == \"mississi\"\nassert remove_dirty_chars(\"aabbccdd\", \"ab\") == \"cd\"\n```",
+        "fixer": "```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"hello world\", \"world\") == \"h\"\nassert remove_dirty_chars(\"abcdef\", \"\") == \"abcdef\"\nassert remove_dirty_chars(\"\", \"abc\") == \"\"\nassert remove_dirty_chars(\"mississippi\", \"p\") == \"mississi\"\nassert remove_dirty_chars(\"aabbccdd\", \"ab\") == \"cd\"\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert remove_dirty_chars(\"\", \"\") == \"\"\nassert remove_dirty_chars(\"\", \"test\") == \"\"\nassert remove_dirty_chars(\"test\", \"\") == \"test\"\nassert remove_dirty_chars(\"hello\", \"world\") == \"ellh\"\nassert remove_dirty_chars(\"abcdefg\", \"abcxyz\") == \"defg\"",
+      "reference_key": "assert remove_dirty_chars(\"hello world\", \"ad\") == 'hello worl'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdefg'\nassert remove_dirty_chars(\"1234567890\", \"2468\") == '135790'\nassert remove_dirty_chars(\"\", \"abc\") == ''\nassert remove_dirty_chars(\"aaaaa\", \"aaa\") == ''",
+      "key_differs": true,
+      "text": "```python\nassert remove_dirty_chars(\"\", \"\") == \"\"\nassert remove_dirty_chars(\"\", \"test\") == \"\"\nassert remove_dirty_chars(\"test\", \"\") == \"test\"\nassert remove_dirty_chars(\"hello\", \"world\") == \"ellh\"\nassert remove_dirty_chars(\"abcdefg\", \"abcxyz\") == \"defg\"\n```",
+      "quality": 0.0,
+      "final_key": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"\", \"\") == \"\"\nassert remove_dirty_chars(\"\", \"test\") == \"\"\nassert remove_dirty_chars(\"test\", \"\") == \"test\"\nassert remove_dirty_chars(\"hello\", \"world\") == \"ellh\"\nassert remove_dirty_chars(\"abcdefg\", \"abcxyz\") == \"defg\"",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"\", \"\") == \"\"\nassert remove_dirty_chars(\"\", \"test\") == \"\"\nassert remove_dirty_chars(\"test\", \"\") == \"test\"\nassert remove_dirty_chars(\"hello\", \"world\") == \"ellh\"\nassert remove_dirty_chars(\"abcdefg\", \"abcxyz\") == \"defg\"\n```",
+        "fixer": "```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"\", \"\") == \"\"\nassert remove_dirty_chars(\"\", \"test\") == \"\"\nassert remove_dirty_chars(\"test\", \"\") == \"test\"\nassert remove_dirty_chars(\"hello\", \"world\") == \"ellh\"\nassert remove_dirty_chars(\"abcdefg\", \"abcxyz\") == \"defg\"\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "assert remove_dirty_chars(\"hello world\", \"ad\") == 'hello worl'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdefg'\nassert remove_dirty_chars(\"1234567890\", \"2468\") == '135790'\nassert remove_dirty_chars(\"\", \"abc\") == ''\nassert remove_dirty_chars(\"aaaaa\", \"aaa\") == ''",
+      "key_differs": true,
+      "text": "```python\nassert divisible_by_digits(1,22) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]\nassert divisible_by_digits(10,100) == [10, 12, 15, 20, 24, 30, 36, 40, 45, 50, 54, 60, 66, 70, 75, 80, 84, 90, 96]\nassert divisible_by_digits(100,1000) == [100, 120, 150, 200, 240, 300, 360, 400, 450, 500, 540, 600, 660, 700, 750, 800, 840, 900, 960]\nassert divisible_by_digits(1000,10000) == [1000, 1200, 1500, 2000, 2400, 3000, 3600, 4000, 4500, 5000, 5400, 6000, 6600, 7000, 7500, 8000, 8400, 9000, 9600]\nassert divisible_by_digits(10000,100000) == [10000, 12000, 15000, 20000, 24000, 30000, 36000, 40000, 45000, 50000, 54000, 60000, 66000, 70000, 75000,",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert divisible_by_digits(1,22) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]\nassert divisible_by_digits(10,100) == [10, 12, 15, 20, 24, 30, 36, 40, 45, 50, 54, 60, 66, 70, 75, 80, 84, 90, 96]\nassert divisible_by_digits(100,1000) == [100, 120, 150, 200, 240, 300, 360, 400, 450, 500, 540, 600, 660, 700, 750, 800, 840, 900, 960]\nassert divisible_by_digits(10000,100000) == [10000, 12000, 15000, 20000, 24000, 30000, 36000, 40000, 45000, 50000, 54000, 60000, 66000, 70000, 75000, 80000, 84000, 90000, 96000]",
+        "fixer": "```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert divisible_by_digits(1,22) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]\nassert divisible_by_digits(10,100) == [10, 12, 15, 20, 24, 30, 36, 40, 45, 50, 54, 60, 66, 70, 75, 80, 84, 90, 96]\nassert divisible_by_digits(100,1000) == [100, 120, 150, 200, 240, 300, 360, 400, 450, 500, 540, 600, 660, 700, 750, 800, 840, 900, 960]\nassert divisible_by_digits(10000,100000) == [10000, 12000, 15000, 20000, 24000, 30000, 36000, 40000, 45000, 50000, 54000, 60000, 66000, 70000, 75000, 80000, 84000, 90000, 96000]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"\") == 'abcdefg'\nassert remove_dirty_chars(\"\", \"abc\") == ''\nassert remove_dirty_chars(\"1234567890\", \"13579\") == '24680'\nassert remove_dirty_chars(\"python programming\", \"p\") == 'ython rogramming'",
+  "sample_keys": [
+    "assert remove_dirty_chars(\"\", \"\") == \"\"\nassert remove_dirty_chars(\"abcdef\", \"a\") == \"bcdef\"\nassert remove_dirty_chars(\"hello\", \"llo\") == \"heo\"\nassert remove_dirty_chars(\"test\", \"est\") == \"t\" \nassert remove_dirty_chars(\"world\", \"ord\") == \"werld\"",
+    "assert remove_dirty_chars(\"hello world\", \"world\") == 'helo '\nassert remove_dirty_chars(\"1234567890\", \"123\") == '4567890'\nassert remove_dirty_chars(\"abcdefg\", \"\") == 'abcdefg'\nassert remove_dirty_chars(\"\", \"abcdefghijklmnopqrstuvwxyz\") == ''",
+    null,
+    "assert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"programming\", \"mng\") == 'prorag'\nassert remove_dirty_chars(\"1234567890\", \"13579\") == '24680'\nassert remove_dirty_chars(\"\", \"abc\") == ''\nassert remove_dirty_chars(\"a\", \"\") == 'a'",
+    "assert remove_dirty_chars(\"\", \"\") == \"\"\nassert remove_dirty_chars(\"aaabbbcc\", \"abc\") == \"aaaabbbbcc\"\nassert remove_dirty_chars(\"aabbccdd\", \"aab\") == \"ccd\"\nassert remove_dirty_chars(\"abcd\", \"xyz\") == \"abcd\"\nassert remove_dirty_chars(\"123456789\", \"01234\") == \"56789\""
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1496.0,
+    "small_out": 451.0,
+    "small_s": 9.581778405001387
+  },
+  "calls_plus": {
+    "small_in": 1316.0,
+    "small_out": 356.0,
+    "small_s": 7.498578761995304,
+    "large_in": 171.0,
+    "large_out": 92.0,
+    "large_s": 2.061428445013007
+  },
+  "calls_samples": {
+    "small_in": 855.0,
+    "small_out": 414.0,
+    "small_s": 7.67441327997949
+  }
+}

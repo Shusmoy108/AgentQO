@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-59",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 40\nassert is_octagonal(6) == 122\n```",
+  "reference_key": "assert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 40\nassert is_octagonal(6) == 122",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B",
+    "fixer": "```python\ndef find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases to verify the correctness of the function\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(10) == 280\nassert find_nth_octagonal(15) == 645\nassert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(3) == 21\nassert find_nth_octagonal(4) == 40\nassert find_nth_octagonal(6) == 122\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass OctagonalNumberTest(unittest.TestCase):\n    def test_ninth_octagonal(self):\n        self.assertEqual(find_nth_octagonal(9), 450)\n\n    def test_zeroth_octagonal(self):\n        self.assertEqual(find_nth_octagonal(0), 1)\n\n    def test_sixth_octagonal(self):\n        self.assertEqual(find_nth_octagonal(6), 91)\n\n    def test_thirteenth_octagonal(self):\n        self.assertEqual(find_nth_octagonal(13), 781)\n\n    def test_one_octagonal(self):\n        self.assertEqual(find_nth_octagonal(1), 1)\n\nif __name__ == '__main__':\n    unittest.main()",
+      "reference_key": "assert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 40\nassert is_octagonal(6) == 122",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass OctagonalNumberTest(unittest.TestCase):\n    def test_ninth_octagonal(self):\n        self.assertEqual(find_nth_octagonal(9), 450)\n\n    def test_zeroth_octagonal(self):\n        self.assertEqual(find_nth_octagonal(0), 1)\n\n    def test_sixth_octagonal(self):\n        self.assertEqual(find_nth_octagonal(6), 91)\n\n    def test_thirteenth_octagonal(self):\n        self.assertEqual(find_nth_octagonal(13), 781)\n\n    def test_one_octagonal(self):\n        self.assertEqual(find_nth_octagonal(1), 1)\n\nif __name__ == '__main__':\n    unittest.main()\n```",
+      "quality": 0.0,
+      "final_key": "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(10) == 280\nassert find_nth_octagonal(15) == 645",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n```python\ndef find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(10) == 280\nassert find_nth_octagonal(15) == 645\n```",
+        "fixer": "```python\ndef find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(10) == 280\nassert find_nth_octagonal(15) == 645\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases from problem statement\nassert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 40\nassert is_octagonal(5) == 65\n\n# Additional assert statements for common edge cases\nassert is_octagonal(0) == 0  # Edge case for n=0\nassert is_octagonal(7) == 196  # Edge case for n=7\nassert is_octagonal(-1) == None  # Edge case for negative n\nassert is_octagonal(1.5) == None  # Edge case for non-integer n",
+      "reference_key": "assert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 40\nassert is_octagonal(6) == 122",
+      "key_differs": true,
+      "text": "Certainly! Below is the candidate code with an additional five assert statements to verify its correctness:\n\n```python\ndef find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases from problem statement\nassert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 40\nassert is_octagonal(5) == 65\n\n# Additional assert statements for common edge cases\nassert is_octagonal(0) == 0  # Edge case for n=0\nassert is_octagonal(7) == 196  # Edge case for n=7\nassert is_octagonal(-1) == None  # Edge case for negative n\nassert is_octagonal(1.5) == None  # Edge case for non-integer n\n```\n\nEach of these additional asserts covers different scenarios:\n1. `is_octagonal(0)` checks for `n` equal to 0.\n2. `is_octagonal(7)` checks for the 7th octagonal number (196).\n3. `is_octagonal(-1)` checks for a negative input, which is expected to return `None`.\n4. `is_octagonal(1.5)` checks for a floating-point number input, which is also expected to return `None`.",
+      "quality": 0.0,
+      "final_key": "def find_nth_octagonal(n):\n    if n < 0:\n        return None\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(10) == 280\nassert find_nth_octagonal(15) == 645\nassert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(3) == 21\nassert find_nth_octagonal(4) == 40\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(0) == 0\nassert find_nth_octagonal(7) == 196\nassert find_nth_octagonal(-1) == None",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n```python\ndef find_nth_octagonal(n):\n    if n < 0:\n        return None\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(10) == 280\nassert find_nth_octagonal(15) == 645\nassert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(3) == 21\nassert find_nth_octagonal(4) == 40\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(0) == 0\nassert find_nth_octagonal(7) == 196\nassert find_nth_octagonal(-1) == None\n```",
+        "fixer": "```python\ndef find_nth_octagonal(n):\n    if n < 0:\n        return None\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(10) == 280\nassert find_nth_octagonal(15) == 645\nassert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(3) == 21\nassert find_nth_octagonal(4) == 40\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(0) == 0\nassert find_nth_octagonal(7) == 196\nassert find_nth_octagonal(-1) == None\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"ab\") == 2\nassert count_charac(\"abc\") == 3\nassert count_charac(\"hello world\") == 11",
+      "reference_key": "assert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 40\nassert is_octagonal(6) == 122",
+      "key_differs": true,
+      "text": "```python\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"ab\") == 2\nassert count_charac(\"abc\") == 3\nassert count_charac(\"hello world\") == 11\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(10) == 280\nassert find_nth_octagonal(15) == 645\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"ab\") == 2\nassert count_charac(\"abc\") == 3\nassert count_charac(\"hello world\") == 11\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(3) == 21\nassert find_nth_octagonal(4) == 40\nassert find_nth_octagonal(5) == 65",
+  "sample_keys": [
+    "assert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(7) == 196\nassert find_nth_octagonal(0) == 0\nassert find_nth_octagonal(-1) == None",
+    "assert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(3) == 21\nassert find_nth_octagonal(4) == 49\nassert find_nth_octagonal(5) == 70",
+    "assert find_nth_octagonal(7) == 59\nassert find_nth_octagonal(10) == 240\nassert find_nth_octagonal(8) == 240\nassert find_nth_octagonal(0) == 0\nassert find_nth_octagonal(-1) == None",
+    "assert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(7) == 490\nassert find_nth_octagonal(8) == 3040\nassert find_nth_octagonal(9) == 19440",
+    "# Test with a typical positive integer\nassert is_octagonal(10) == 435\n\n# Test with a small positive integer\nassert is_octagonal(3) == 15\n\n# Test with a large positive integer\nassert is_octagonal(18) == 945\n\n# Test with zero\nassert is_octagonal(0) == 0\n\n# Test with negative input\ntry:\n    is_octagonal(-1)\nexcept AssertionError as e:\n    print(e)  # Expected: Input must be a non-negative integer"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1472.0,
+    "small_out": 426.0,
+    "small_s": 6.0684654700162355
+  },
+  "calls_plus": {
+    "small_in": 1327.0,
+    "small_out": 366.0,
+    "small_s": 5.980710772011662,
+    "large_in": 166.0,
+    "large_out": 64.0,
+    "large_s": 2.033724170003552
+  },
+  "calls_samples": {
+    "small_in": 830.0,
+    "small_out": 399.0,
+    "small_s": 8.518727786024101
+  }
+}

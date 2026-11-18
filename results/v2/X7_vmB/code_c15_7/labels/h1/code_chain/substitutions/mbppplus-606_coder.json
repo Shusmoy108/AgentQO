@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-606",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+  "reference_key": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(-90) == -math.pi/2\nassert radian_degree(360) == 2*math.pi\nassert radian_degree(181) == math.pi + math.sin(math.radians(1))\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+      "key_differs": true,
+      "text": "```python def radian_degree(degrees):\n    import math\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+      "quality": 1.0,
+      "final_key": "def radian_degree(degrees):\n    import math\n    radians = degrees * (math.pi / 180)\n    return radians",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(-90) == -math.pi/2\nassert radian_degree(360) == 2*math.pi\nassert radian_degree(181) == math.pi + math.sin(math.radians(1))\n```",
+        "verifier": "PICK: B\n\n```python\ndef radian_degree(degrees):\n    import math\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+        "fixer": "```python\ndef radian_degree(degrees):\n    import math\n    radians = degrees * (math.pi / 180)\n    return radians\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef radian_degree(degrees):\n    \"\"\"\n    Convert degrees to radians.\n\n    Parameters:\n    degrees (float): Angle in degrees.\n    \n    Returns:\n    float: Angle in radians.\n    \"\"\"\n    radians = degrees * (math.pi / 180)\n    return radians",
+      "reference_key": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef radian_degree(degrees):\n    \"\"\"\n    Convert degrees to radians.\n\n    Parameters:\n    degrees (float): Angle in degrees.\n    \n    Returns:\n    float: Angle in radians.\n    \"\"\"\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef radian_degree(degrees):\n    \"\"\"\n    Convert degrees to radians.\n\n    Parameters:\n    degrees (float): Angle in degrees.\n    \n    Returns:\n    float: Angle in radians.\n    \"\"\"\n    radians = degrees * (math.pi / 180)\n    return radians",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(-90) == -math.pi/2\nassert radian_degree(360) == 2*math.pi\nassert radian_degree(181) == math.pi + math.sin(math.radians(1))\n```",
+        "verifier": "PICK: A\n```python\nimport math\n\ndef radian_degree(degrees):\n    \"\"\"\n    Convert degrees to radians.\n\n    Parameters:\n    degrees (float): Angle in degrees.\n    \n    Returns:\n    float: Angle in radians.\n    \"\"\"\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+        "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    \"\"\"\n    Convert degrees to radians.\n\n    Parameters:\n    degrees (float): Angle in degrees.\n    \n    Returns:\n    float: Angle in radians.\n    \"\"\"\n    radians = degrees * (math.pi / 180)\n    return radians\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True",
+      "reference_key": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+      "key_differs": true,
+      "text": "```python\ndef check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef radian_degree(degrees):\n    return math.radians(degrees)\n\n# Test cases\nassert radian_degree(90) == 1.5707963267948966\nassert radian_degree(60) == 1.0471975511965976\nassert radian_degree(120) == 2.0943951023931953\nassert check_type((1, 2, 3)) == True\nassert check_type((1, 'a', 3)) == False\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 'a')) == False\nassert check_type((1, 2, 3, 4)) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_type((1, 2, 3)) == True\nassert check_type((1, 'a', 3)) == False\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 'a')) == False\nassert check_type((1, 2, 3, 4)) == True\n```",
+        "verifier": "PICK: B\n```python\nimport math\n\ndef radian_degree(degrees):\n    return math.radians(degrees)\n\n# Test cases\nassert radian_degree(90) == 1.5707963267948966\nassert radian_degree(60) == 1.0471975511965976\nassert radian_degree(120) == 2.0943951023931953\nassert check_type((1, 2, 3)) == True\nassert check_type((1, 'a', 3)) == False\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 'a')) == False\nassert check_type((1, 2, 3, 4)) == True\n```",
+        "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    return math.radians(degrees)\n\n# Test cases\nassert radian_degree(90) == 1.5707963267948966\nassert radian_degree(60) == 1.0471975511965976\nassert radian_degree(120) == 2.0943951023931953\nassert check_type((1, 2, 3)) == True\nassert check_type((1, 'a', 3)) == False\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 'a')) == False\nassert check_type((1, 2, 3, 4)) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+  "sample_keys": [
+    "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+    "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+    "def radian_degree(degrees):\n    import math  # Importing the math module for pi constant\n    radians = degrees * (math.pi / 180)\n    return radians",
+    "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+    "def radian_degree(degrees):\n    import math\n    radians = degrees * (math.pi / 180)\n    return radians"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1353.0,
+    "small_out": 231.0,
+    "small_s": 4.788483611046104
+  },
+  "calls_plus": {
+    "small_in": 1163.0,
+    "small_out": 198.0,
+    "small_s": 4.132547912042355,
+    "large_in": 190.0,
+    "large_out": 33.0,
+    "large_s": 0.7274651010229718
+  },
+  "calls_samples": {
+    "small_in": 950.0,
+    "small_out": 177.0,
+    "small_s": 3.164308183011599
+  }
+}

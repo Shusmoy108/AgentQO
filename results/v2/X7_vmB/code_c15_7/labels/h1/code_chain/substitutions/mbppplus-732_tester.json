@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-732",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert replace_specialchar('Hello World') == 'Hello:World'\nassert replace_specialchar('This,is,a,test.') == 'This::is::a::test:'\nassert replace_specialchar('NoSpecialCharsHere') == 'NoSpecialCharsHere'\nassert replace_specialchar(' ') == ':'\nassert replace_specialchar(',') == ':'\nassert replace_specialchar('.') == ':'\n```",
+  "reference_key": "assert replace_specialchar('Hello World') == 'Hello:World'\nassert replace_specialchar('This,is,a,test.') == 'This::is::a::test:'\nassert replace_specialchar('NoSpecialCharsHere') == 'NoSpecialCharsHere'\nassert replace_specialchar(' ') == ':'\nassert replace_specialchar(',') == ':'\nassert replace_specialchar('.') == ':'",
+  "final_key_plus": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n```",
+    "fixer": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert replace_specialchar('Hello world!') == 'Hello:world!'\nassert replace_specialchar('This is a test string.') == 'This::is:a:test:string:'\nassert replace_specialchar('') == ''\nassert replace_specialchar('No special characters') == 'No:special:characters'\nassert replace_specialchar(',,,,') == ':::'",
+      "reference_key": "assert replace_specialchar('Hello World') == 'Hello:World'\nassert replace_specialchar('This,is,a,test.') == 'This::is::a::test:'\nassert replace_specialchar('NoSpecialCharsHere') == 'NoSpecialCharsHere'\nassert replace_specialchar(' ') == ':'\nassert replace_specialchar(',') == ':'\nassert replace_specialchar('.') == ':'",
+      "key_differs": true,
+      "text": "```python\nassert replace_specialchar('Hello world!') == 'Hello:world!'\nassert replace_specialchar('This is a test string.') == 'This::is:a:test:string:'\nassert replace_specialchar('') == ''\nassert replace_specialchar('No special characters') == 'No:special:characters'\nassert replace_specialchar(',,,,') == ':::'\n```",
+      "quality": 1.0,
+      "final_key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n```",
+        "fixer": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Test cases\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\nassert replace_specialchar('a b c,d e f') == ('a:b:c:d:e:f')\nassert replace_specialchar('ram reshma,ram rahim') == ('ram:reshma:ram:rahim')\nassert replace_specialchar('Hello world!') == 'Hello:world!'\nassert replace_specialchar('This is a test string.') == 'This::is:a:test:string:'\nassert replace_specialchar('') == ''\nassert replace_specialchar('No special characters') == 'No:special:characters'\nassert replace_specialchar(',,,,') == ':::'\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Edge case test for non-alphanumeric characters\nassert replace_specialchar('!@#$%^&*()_+') == '!@#$%^&*()_+'\n\n# Edge case test for single special character followed by alphabetic letter\nassert replace_specialchar('-a') == '-a'\n\n# Edge case test for double special characters followed by alphabetic letter\nassert replace_specialchar('--b') == '--b'\n\n# Test with multiple consecutive special characters\nassert replace_specialchar(',,c,,,d,,,e') == '::c::::d::::::e::'\n\n# Test with uppercase text\nassert replace_specialchar('PYTHON LANGUAGE') == 'PYTHON:LANGUAGE'",
+      "reference_key": "assert replace_specialchar('Hello World') == 'Hello:World'\nassert replace_specialchar('This,is,a,test.') == 'This::is::a::test:'\nassert replace_specialchar('NoSpecialCharsHere') == 'NoSpecialCharsHere'\nassert replace_specialchar(' ') == ':'\nassert replace_specialchar(',') == ':'\nassert replace_specialchar('.') == ':'",
+      "key_differs": true,
+      "text": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Edge case test for non-alphanumeric characters\nassert replace_specialchar('!@#$%^&*()_+') == '!@#$%^&*()_+'\n\n# Edge case test for single special character followed by alphabetic letter\nassert replace_specialchar('-a') == '-a'\n\n# Edge case test for double special characters followed by alphabetic letter\nassert replace_specialchar('--b') == '--b'\n\n# Test with multiple consecutive special characters\nassert replace_specialchar(',,c,,,d,,,e') == '::c::::d::::::e::'\n\n# Test with uppercase text\nassert replace_specialchar('PYTHON LANGUAGE') == 'PYTHON:LANGUAGE'\n```",
+      "quality": 1.0,
+      "final_key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n```",
+        "fixer": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Test cases\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\nassert replace_specialchar('a b c,d e f') == ('a:b:c:d:e:f')\nassert replace_specialchar('ram reshma,ram rahim') == ('ram:reshma:ram:rahim')\nassert replace_specialchar('!@#$%^&*()_+') == '!@#$%^&*()_+'\nassert replace_specialchar('-a') == '-a'\nassert replace_specialchar('--b') == '--b'\nassert replace_specialchar(',,c,,,d,,,e') == '::c::::d::::::e::'\nassert replace_specialchar('PYTHON LANGUAGE') == 'PYTHON:LANGUAGE'\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert max_length([[], [1], [2, 3], [4, 5, 6, 7], [8, 9, 10, 11, 12, 13]]) == (6, [8, 9, 10, 11, 12, 13])\nassert max_length([[1, 2, 3], [4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15, 16, 17]]) == (6, [11, 12, 13, 14, 15, 16, 17])\nassert max_length([[1], [2], [3], [4], [5]]) == (1, [1])\nassert max_length([]) == (0, [])\nassert max_length([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]]) == (18, [18])",
+      "reference_key": "assert replace_specialchar('Hello World') == 'Hello:World'\nassert replace_specialchar('This,is,a,test.') == 'This::is::a::test:'\nassert replace_specialchar('NoSpecialCharsHere') == 'NoSpecialCharsHere'\nassert replace_specialchar(' ') == ':'\nassert replace_specialchar(',') == ':'\nassert replace_specialchar('.') == ':'",
+      "key_differs": true,
+      "text": "```python\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7], [8, 9, 10, 11, 12, 13]]) == (6, [8, 9, 10, 11, 12, 13])\nassert max_length([[1, 2, 3], [4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15, 16, 17]]) == (6, [11, 12, 13, 14, 15, 16, 17])\nassert max_length([[1], [2], [3], [4], [5]]) == (1, [1])\nassert max_length([]) == (0, [])\nassert max_length([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]]) == (18, [18])\n```",
+      "quality": 1.0,
+      "final_key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n```",
+        "fixer": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Test cases\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\nassert replace_specialchar('a b c,d e f') == ('a:b:c:d:e:f')\nassert replace_specialchar('ram reshma,ram rahim') == ('ram:reshma:ram:rahim')\nassert max_length([[[], [1], [2, 3], [4, 5, 6, 7], [8, 9, 10, 11, 12, 13]]) == (6, [8, 9, 10, 11, 12, 13])\nassert max_length([[1, 2, 3], [4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15, 16, 17]]) == (6, [11, 12, 13, 14, 15, 16, 17])\nassert max_length([[1], [2], [3], [4], [5]]) == (1, [1])\nassert max_length([]) == (0, [])\nassert max_length([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]]) == (18, [18])\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert replace_specialchar('Hello world!') == 'Hello:world!'\nassert replace_specialchar('This is a test.') == 'This:is:a:test.'\nassert replace_specialchar('No special characters here.') == 'No:special:characters:here.'\nassert replace_specialchar('1234567890') == '1234567890'\nassert replace_specialchar('') == ''",
+  "sample_keys": [
+    "assert replace_specialchar('Hello, World!') == 'Hello::World!'\nassert replace_specialchar('This is a test.') == 'This:is:a:test.'\nassert replace_specialchar('No special characters here') == 'No:special:characters:here'\nassert replace_specialchar('Edge case: multiple.,commas,and.dots...') == 'Edge:case::multiple::::commas::and:dots::::'\nassert replace_specialchar('All special chars@#%^&*()_+-=') == 'All:special:chars:@#%^&*()_+-=::'",
+    "assert replace_specialchar('Hello World!') == 'Hello:World!'\nassert replace_specialchar('Programming is fun.') == 'Programming:is:fun.'\nassert replace_specialchar('1234567890!@#$%^&*()') == '1234567890!!!@#$%^&*()'\nassert replace_specialchar('A,B,C,D,E') == 'A:B:C:D:E'\nassert replace_specialchar('Special characters like @#$%^&*) are replaced.') == 'Special:characters:like:@#$%^&*)are:replaced.'",
+    "assert replace_specialchar('Hello World') == 'Hello:World'\nassert replace_specialchar('Hello, World! How are you?') == 'Hello::World!!How:are:you:'\nassert replace_specialchar('This is a test sentence 123.') == 'This::is::a::test:sentence::123:'\nassert replace_specialchar('No special characters here.') == 'No:specialcharacters:here.'\nassert replace_specialchar('Multiple...dots...in...the...sentence.') == 'Multiple....dots....in....the....sentence...'",
+    "assert replace_specialchar('Hello World') == 'Hello:World'\nassert replace_specialchar('Python programming is fun.') == 'Python:programming:is:fun.'\nassert replace_specialchar('Data analysis, Machine learning, AI.') == 'Data:analysis::Machine:learning::AI:'\nassert replace_specialchar('No special characters here!') == 'No:special:characters:here!'\nassert replace_specialchar('Special character, comma, period:') == 'Special:character::comma::period:'",
+    "# Test case 1: Typical scenario\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\n\n# Test case 2: Multiple consecutive delimiters (spaces)\nassert replace_specialchar('   Leading, Trailing,   Spaces.') == ('Leading:Trailing:Spaces:')\n\n# Test case 3: Delimiters at the beginning and end\nassert replace_specialchar(',Start,,End,.') == ('Start:Start:End:End:')\n\n# Test case 4: Edge case: No delimiter\nassert replace_specialchar('NoDelimitersHere.') == ('NoDelimitersHere.')\n\n# Test case 5: Edge case: Mixed upper and lower case delimiters\nassert replace_specialchar('MixedCase,LOWER_CASE,Delimiters.') == ('MixedCase::lower_case::delimiters:')"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1587.0,
+    "small_out": 594.0,
+    "small_s": 11.904328320000786
+  },
+  "calls_plus": {
+    "small_in": 1316.0,
+    "small_out": 338.0,
+    "small_s": 7.020424757996807,
+    "large_in": 179.0,
+    "large_out": 81.0,
+    "large_s": 1.799921894009458
+  },
+  "calls_samples": {
+    "small_in": 895.0,
+    "small_out": 668.0,
+    "small_s": 11.726671678974526
+  }
+}

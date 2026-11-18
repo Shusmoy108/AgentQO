@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-88",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict\n```",
+  "reference_key": "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+  "final_key_plus": "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert freq_count([]) == {}\nassert freq_count([1]) == {1: 1}\nassert freq_count([1, 1, 1, 1]) == {1: 4}\nassert freq_count(['a', 'b', 'c']) == {'a': 1, 'b': 1, 'c': 1}\nassert freq_count(['a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']) == {'a': 3, 'b': 3, 'c': 3}\n```",
+    "verifier": "PICK: A\n\n```python\ndef freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict\n```",
+    "fixer": "```python\ndef freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_majority(arr, n, target):\n    count = 0\n    for i in range(n):\n        if arr[i] == target:\n            count += 1\n            if count > n // 2:\n                return True\n    return False",
+      "reference_key": "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+      "key_differs": true,
+      "text": "```python\ndef is_majority(arr, n, target):\n    count = 0\n    for i in range(n):\n        if arr[i] == target:\n            count += 1\n            if count > n // 2:\n                return True\n    return False\n```",
+      "quality": 1.0,
+      "final_key": "from collections import Counter\n\ndef freq_count(arr):\n    return dict(Counter(arr))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert freq_count([10,10,10,10,20,20,20,20,40,40,50,50,30]) == ({10: 4, 20: 4, 40: 2, 50: 2, 30: 1})\nassert freq_count([]) == {}\nassert freq_count([1]) == {1: 1}\nassert freq_count([1, 1, 1, 1, 1]) == {1: 5}\nassert freq_count([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == {1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1}\n```",
+        "verifier": "PICK: B\n```python\nfrom collections import Counter\n\ndef freq_count(arr):\n    return dict(Counter(arr))\n```",
+        "fixer": "```python\nfrom collections import Counter\n\ndef freq_count(arr):\n    return dict(Counter(arr))\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+      "reference_key": "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+      "key_differs": true,
+      "text": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+      "quality": 1.0,
+      "final_key": "from collections import Counter\n\ndef freq_count(data):\n    return dict(Counter(data))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert freq_count([10,10,10,10,20,20,20,20,40,40,50,50,30]) == ({10: 4, 20: 4, 40: 2, 50: 2, 30: 1})\nassert freq_count([]) == {}\nassert freq_count([1, 2, 2, 3, 3, 3, 4, 4, 4, 4]) == ({1: 1, 2: 2, 3: 3, 4: 4})\nassert freq_count(['apple', 'banana', 'apple', 'orange', 'banana']) == ({'apple': 2, 'banana': 2, 'orange': 1})\nassert freq_count([True, False, True, True, False, False, False]) == ({True: 3, False: 3})\n```",
+        "verifier": "PICK: B\n```python\nfrom collections import Counter\n\ndef freq_count(data):\n    return dict(Counter(data))\n```",
+        "fixer": "```python\nfrom collections import Counter\n\ndef freq_count(data):\n    return dict(Counter(data))\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0",
+      "reference_key": "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+      "key_differs": true,
+      "text": "```python\ndef is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0\n```",
+      "quality": 1.0,
+      "final_key": "from collections import Counter\n\ndef freq_count(lst):\n    return dict(Counter(lst))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert freq_count([10,10,10,10,20,20,20,20,40,40,50,50,30]) == ({10: 4, 20: 4, 40: 2, 50: 2, 30: 1})\nassert freq_count([]) == {}\nassert freq_count([1, 2, 3, 4, 5]) == ({1: 1, 2: 1, 3: 1, 4: 1, 5: 1})\nassert freq_count([-1, -2, -3, -4, -5]) == ({-1: 1, -2: 1, -3: 1, -4: 1, -5: 1})\nassert freq_count([100, 200, 300, 400, 500]) == ({100: 1, 200: 1, 300: 1, 400: 1, 500: 1})\nassert freq_count([100, 200, 300, 400, 500, 600]) == ({100: 1, 200: 1, 300: 1, 400: 1, 500: 1, 600: 1})\n```",
+        "verifier": "PICK: B\n```python\nfrom collections import Counter\n\ndef freq_count(lst):\n    return dict(Counter(lst))\n```",
+        "fixer": "```python\nfrom collections import Counter\n\ndef freq_count(lst):\n    return dict(Counter(lst))\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+  "sample_keys": [
+    "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+    "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+    "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+    "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+    "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": null,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2219.0,
+    "small_out": 424.0,
+    "small_s": 9.352181750029558
+  },
+  "calls_plus": {
+    "small_in": 1915.0,
+    "small_out": 370.0,
+    "small_s": 8.152827974030515,
+    "large_in": 304.0,
+    "large_out": 54.0,
+    "large_s": 1.2453021759865806
+  },
+  "calls_samples": {
+    "small_in": 1520.0,
+    "small_out": 270.0,
+    "small_s": 5.03454320304445
+  }
+}

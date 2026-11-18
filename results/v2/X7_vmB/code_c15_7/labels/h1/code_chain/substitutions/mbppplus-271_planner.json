@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-271",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `even_Power_Sum` that accepts one parameter, `n`.\n2. Initialize a variable to store the sum of the powers.\n3. Use a loop to iterate through the first `n` even numbers.\n4. For each even number, raise it to the fifth power and add the result to the sum.\n5. Return the computed sum after the loop completes.",
+  "reference_key": null,
+  "final_key_plus": "def even_Power_Sum(n):\n    total_sum = 0\n    for i in range(2, 2*n+1, 2):\n        total_sum += i**5\n    return total_sum",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert even_Power_Sum(3) == 4897\nassert even_Power_Sum(4) == 10384\nassert even_Power_Sum(5) == 17280\nassert even_Power_Sum(6) == 28672\nassert even_Power_Sum(7) == 40960\n```",
+    "coder": "```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    for i in range(2, 2*n+1, 2):\n        total_sum += i**5\n    return total_sum\n```",
+    "verifier": "PICK: A\n\n```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    for i in range(2, 2*n+1, 2):\n        total_sum += i**5\n    return total_sum\n```",
+    "fixer": "```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    for i in range(2, 2*n+1, 2):\n        total_sum += i**5\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `pancake_sort` that takes a list of integers as input.\n2. Check if the list is already sorted. If it is, return the list as it is.\n3. Find the maximum element in the list and its index.\n4. Reverse the sublist from the start to the index of the maximum element.\n5. Reverse the entire list to move the maximum element to its correct position.\n6. Repeat steps 3-5 for all elements in the list until the list is sorted.",
+      "quality": 1.0,
+      "final_key": "def even_Power_Sum(n):\n    total_sum = 0\n    for i in range(1, n+1):\n        even_number = 2 * i\n        total_sum += even_number ** 5\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert even_Power_Sum(1) == 0\nassert even_Power_Sum(3) == 784\nassert even_Power_Sum(5) == 1056\nassert even_Power_Sum(7) == 1680\nassert even_Power_Sum(9) == 2592\n```",
+        "coder": "```python\ndef pancake_sort(arr):\n    def reverse_sublist(arr, start, end):\n        while start < end:\n            arr[start], arr[end] = arr[end], arr[start]\n            start += 1\n            end -= 1\n\n    n = len(arr)\n    for i in range(n):\n        max_index = i\n        for j in range(i + 1, n):\n            if arr[j] > arr[max_index]:\n                max_index = j\n        reverse_sublist(arr, i, max_index)\n        reverse_sublist(arr, 0, i)\n\n# Test the function\nprint(pancake_sort([3, 1, 4, 1, 5, 9]))  # Output: [1, 1, 3, 4, 5, 9]\n```",
+        "verifier": "PICK: B\n\n```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    for i in range(1, n+1):\n        even_number = 2 * i\n        total_sum += even_number ** 5\n    return total_sum\n```",
+        "fixer": "```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    for i in range(1, n+1):\n        even_number = 2 * i\n        total_sum += even_number ** 5\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `even_Power_Sum` that accepts one parameter, `n`.\n2. Initialize a variable to store the sum of the powers.\n3. Use a while loop to iterate until the current number exceeds `n` or becomes odd.\n4. For each even number, raise it to the fifth power and add the result to the sum.\n5. Return the computed sum after the loop completes.",
+      "quality": 0.0,
+      "final_key": "def even_Power_Sum(n):\n    total_sum = 0\n    i = 2\n    while i <= n:\n        if i % 2 == 0:\n            total_sum += i ** 5\n        i += 1\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 7776\nassert even_Power_Sum(5) == 12150\nassert even_Power_Sum(6) == 19683\nassert even_Power_Sum(7) == 31104\n```",
+        "coder": "```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    i = 2\n    while i <= n:\n        if i % 2 == 0:\n            total_sum += i ** 5\n        i += 1\n    return total_sum\n```",
+        "verifier": "PICK: A\n\n```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    i = 2\n    while i <= n:\n        if i % 2 == 0:\n            total_sum += i ** 5\n        i += 1\n    return total_sum\n```",
+        "fixer": "```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    i = 2\n    while i <= n:\n        if i % 2 == 0:\n            total_sum += i ** 5\n        i += 1\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `left_rotate` that takes two parameters: `num`, which is the number to be rotated, and `d`, which is the number of bits to rotate to the left.\n2. Convert the number to its binary representation using the built-in `bin()` function.\n3. Extract the first `d` bits from the binary string using slicing.\n4. Concatenate the remaining bits (which are the last `32 - d` bits) to the extracted bits.\n5. Convert the resulting binary string back to an integer using the built-in `int()` function with base 2.\n6. Return the resulting integer.\n\nHere's the complete implementation:\n\n```python\ndef left_rotate(num, d):\n    # Convert the number to binary and remove the '0b' prefix\n    binary_str = bin(num)[2:]\n    \n    # Extract the first d bits\n    first_d_bits = binary_str[:d]\n    \n    # Concatenate the remaining bits\n    remaining_bits = binary_str[d:]\n    \n    # Combine the bits\n    result_binary = remaining_bits + first_d_bits\n    \n    # Convert the binary string back to an integer\n    result_num = int(result_binary, 2)\n    \n    return result_num\n```\n\nThis function correctly rotates the bits of the input number to the left by the specified number of positions.",
+      "quality": 0.0,
+      "final_key": "def even_Power_Sum(n):\n    total_sum = 0\n    for i in range(1, n+1):\n        if i % 2 == 0:\n            total_sum += i**5\n    return total_sum\n\n# Test cases\nassert even_Power_Sum(2) == 1056\nassert even_Power_Sum(3) == 8832\nassert even_Power_Sum(1) == 32\nassert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 17280\nassert even_Power_Sum(5) == 40960\nassert even_Power_Sum(6) == 103680\nassert even_Power_Sum(7) == 2097152",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 17280\nassert even_Power_Sum(5) == 40960\nassert even_Power_Sum(6) == 103680\nassert even_Power_Sum(7) == 2097152\n```",
+        "coder": "```python\ndef left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n```",
+        "verifier": "PICK: B\n```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    for i in range(1, n+1):\n        if i % 2 == 0:\n            total_sum += i**5\n    return total_sum\n\n# Test cases\nassert even_Power_Sum(2) == 1056\nassert even_Power_Sum(3) == 8832\nassert even_Power_Sum(1) == 32\nassert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 17280\nassert even_Power_Sum(5) == 40960\nassert even_Power_Sum(6) == 103680\nassert even_Power_Sum(7) == 2097152\n```",
+        "fixer": "```python\ndef even_Power_Sum(n):\n    total_sum = 0\n    for i in range(1, n+1):\n        if i % 2 == 0:\n            total_sum += i**5\n    return total_sum\n\n# Test cases\nassert even_Power_Sum(2) == 1056\nassert even_Power_Sum(3) == 8832\nassert even_Power_Sum(1) == 32\nassert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 17280\nassert even_Power_Sum(5) == 40960\nassert even_Power_Sum(6) == 103680\nassert even_Power_Sum(7) == 2097152\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def even_Power_Sum(n):\n    sum_even_powers = 0\n    for i in range(1, n + 1):\n        if i % 2 == 0:\n            sum_even_powers += i ** 5\n    return sum_even_powers",
+  "sample_keys": [
+    "def even_Power_Sum(n):\n    nth_even = 2 * (n - 1)\n    power_sum = sum(nth_even ** 5 for nth_even in range(1, n + 1))\n    return power_sum",
+    "import math\n\ndef even_Power_Sum(n):\n    total_sum = 0\n    for i in range(1, n + 1):\n        even_number = 2 * i\n        square = even_number ** 2\n        total_sum += square ** 5\n    return total_sum",
+    "def even_Power_Sum(n):\n    total_sum = 0\n    for i in range(2, 2*n+1, 2):\n        total_sum += i**5\n    return total_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1555.0,
+    "small_out": 442.0,
+    "small_s": 6.42534410598455
+  },
+  "calls_plus": {
+    "large_in": 123.0,
+    "large_out": 85.0,
+    "large_s": 2.77188663900597,
+    "small_in": 1290.0,
+    "small_out": 244.0,
+    "small_s": 5.266854848014191
+  },
+  "calls_samples": {
+    "small_in": 4506.0,
+    "small_out": 1183.0,
+    "small_s": 25.177328054007376
+  }
+}

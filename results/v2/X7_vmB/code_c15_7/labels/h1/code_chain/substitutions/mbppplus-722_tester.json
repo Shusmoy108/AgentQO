@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-722",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert filter_data({'Alice': (5.5, 130), 'Bob': (6.1, 140), 'Charlie': (5.8, 135)}, 6.0, 135) == {'Bob': (6.1, 140)}\nassert filter_data({'Dave': (5.7, 120), 'Eve': (5.6, 115), 'Frank': (5.9, 125)}, 5.8, 120) == {'Dave': (5.7, 120), 'Frank': (5.9, 125)}\nassert filter_data({'Grace': (6.2, 150), 'Hank': (6.3, 160), 'Ivy': (6.1, 155)}, 6.2, 150) == {'Grace': (6.2, 150), 'Hank': (6.3, 160)}\nassert filter_data({'Jack': (5.4, 110), 'Katie': (5.3, 105), 'Liam': (5.2, 100)}, 5.5, 105) == {}\nassert filter_data({}, 5.0, 60) == {}\n```",
+  "reference_key": "assert filter_data({'Alice': (5.5, 130), 'Bob': (6.1, 140), 'Charlie': (5.8, 135)}, 6.0, 135) == {'Bob': (6.1, 140)}\nassert filter_data({'Dave': (5.7, 120), 'Eve': (5.6, 115), 'Frank': (5.9, 125)}, 5.8, 120) == {'Dave': (5.7, 120), 'Frank': (5.9, 125)}\nassert filter_data({'Grace': (6.2, 150), 'Hank': (6.3, 160), 'Ivy': (6.1, 155)}, 6.2, 150) == {'Grace': (6.2, 150), 'Hank': (6.3, 160)}\nassert filter_data({'Jack': (5.4, 110), 'Katie': (5.3, 105), 'Liam': (5.2, 100)}, 5.5, 105) == {}\nassert filter_data({}, 5.0, 60) == {}",
+  "final_key_plus": "def filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```",
+    "fixer": "```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert filter_data({},6.0,70)=={}\nassert filter_data({'A': (13, 34), 'B': (9, 25), 'C': (8, 26)},13,37)=={'A': (13, 34)}\nassert filter_data({'D': (16, 40), 'E': (15, 20)},16,41)=={'D': (16, 40)}\nassert filter_data({'F': (11, 30), 'G': (19, 21)},10,35)=={'F': (11, 30)}\nassert filter_data({'H': (18, 22), 'I': (20, 24)},19,22)=={'I': (20, 24)}",
+      "reference_key": "assert filter_data({'Alice': (5.5, 130), 'Bob': (6.1, 140), 'Charlie': (5.8, 135)}, 6.0, 135) == {'Bob': (6.1, 140)}\nassert filter_data({'Dave': (5.7, 120), 'Eve': (5.6, 115), 'Frank': (5.9, 125)}, 5.8, 120) == {'Dave': (5.7, 120), 'Frank': (5.9, 125)}\nassert filter_data({'Grace': (6.2, 150), 'Hank': (6.3, 160), 'Ivy': (6.1, 155)}, 6.2, 150) == {'Grace': (6.2, 150), 'Hank': (6.3, 160)}\nassert filter_data({'Jack': (5.4, 110), 'Katie': (5.3, 105), 'Liam': (5.2, 100)}, 5.5, 105) == {}\nassert filter_data({}, 5.0, 60) == {}",
+      "key_differs": true,
+      "text": "```python\nassert filter_data({},6.0,70)=={}\nassert filter_data({'A': (13, 34), 'B': (9, 25), 'C': (8, 26)},13,37)=={'A': (13, 34)}\nassert filter_data({'D': (16, 40), 'E': (15, 20)},16,41)=={'D': (16, 40)}\nassert filter_data({'F': (11, 30), 'G': (19, 21)},10,35)=={'F': (11, 30)}\nassert filter_data({'H': (18, 22), 'I': (20, 24)},19,22)=={'I': (20, 24)}\n```",
+      "quality": 0.0,
+      "final_key": "def filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```",
+        "fixer": "```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.3,70)=={}\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.1, 68), 'Pierre Cox': (5.8, 66)},6.2,68)=={'Cierra Vega': (6.2, 70)}\nassert filter_data({},6.0,70)=={}\nassert filter_data({'John Smith': (70, 200), 'Jane Doe': (65, 185)},70,210)=={'John Smith': (70, 200)}\nassert filter_data({'Alice Johnson': (80, 220), 'Bob Brown': (75, 180)},\n                   min_height=80, \n                   min_weight=200)=={}",
+      "reference_key": "assert filter_data({'Alice': (5.5, 130), 'Bob': (6.1, 140), 'Charlie': (5.8, 135)}, 6.0, 135) == {'Bob': (6.1, 140)}\nassert filter_data({'Dave': (5.7, 120), 'Eve': (5.6, 115), 'Frank': (5.9, 125)}, 5.8, 120) == {'Dave': (5.7, 120), 'Frank': (5.9, 125)}\nassert filter_data({'Grace': (6.2, 150), 'Hank': (6.3, 160), 'Ivy': (6.1, 155)}, 6.2, 150) == {'Grace': (6.2, 150), 'Hank': (6.3, 160)}\nassert filter_data({'Jack': (5.4, 110), 'Katie': (5.3, 105), 'Liam': (5.2, 100)}, 5.5, 105) == {}\nassert filter_data({}, 5.0, 60) == {}",
+      "key_differs": true,
+      "text": "```python\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.3,70)=={}\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.1, 68), 'Pierre Cox': (5.8, 66)},6.2,68)=={'Cierra Vega': (6.2, 70)}\nassert filter_data({},6.0,70)=={}\nassert filter_data({'John Smith': (70, 200), 'Jane Doe': (65, 185)},70,210)=={'John Smith': (70, 200)}\nassert filter_data({'Alice Johnson': (80, 220), 'Bob Brown': (75, 180)},\n                   min_height=80, \n                   min_weight=200)=={}\n```",
+      "quality": 0.0,
+      "final_key": "def filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```",
+        "fixer": "```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert set(similar_elements((3, 4, 5, 6),(5, 7, 4, 10))) == set((4, 5))\nassert set(similar_elements((1, 2, 3), (4, 5, 6))) == set()\nassert set(similar_elements((1, 2, 3), (1, 2, 3))) == set((1, 2, 3))\nassert set(similar_elements((1, 2, 3), (1, 2, 3, 4, 5))) == set((1, 2, 3))\nassert set(similar_elements((1, 2, 3), (1, 2, 3, 4, 5, 6))) == set((1, 2, 3))",
+      "reference_key": "assert filter_data({'Alice': (5.5, 130), 'Bob': (6.1, 140), 'Charlie': (5.8, 135)}, 6.0, 135) == {'Bob': (6.1, 140)}\nassert filter_data({'Dave': (5.7, 120), 'Eve': (5.6, 115), 'Frank': (5.9, 125)}, 5.8, 120) == {'Dave': (5.7, 120), 'Frank': (5.9, 125)}\nassert filter_data({'Grace': (6.2, 150), 'Hank': (6.3, 160), 'Ivy': (6.1, 155)}, 6.2, 150) == {'Grace': (6.2, 150), 'Hank': (6.3, 160)}\nassert filter_data({'Jack': (5.4, 110), 'Katie': (5.3, 105), 'Liam': (5.2, 100)}, 5.5, 105) == {}\nassert filter_data({}, 5.0, 60) == {}",
+      "key_differs": true,
+      "text": "```python\nassert set(similar_elements((3, 4, 5, 6),(5, 7, 4, 10))) == set((4, 5))\nassert set(similar_elements((1, 2, 3), (4, 5, 6))) == set()\nassert set(similar_elements((1, 2, 3), (1, 2, 3))) == set((1, 2, 3))\nassert set(similar_elements((1, 2, 3), (1, 2, 3, 4, 5))) == set((1, 2, 3))\nassert set(similar_elements((1, 2, 3), (1, 2, 3, 4, 5, 6))) == set((1, 2, 3))\n```",
+      "quality": 0.0,
+      "final_key": "def filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```",
+        "fixer": "```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n\n# Test cases\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.0,70)=={'Cierra Vega': (6.2, 70)}\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},5.9,67)=={'Cierra Vega': (6.2, 70),'Kierra Gentry': (6.0, 68)}\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},5.7,64)=={'Cierra Vega': (6.2, 70),'Alden Cantrell': (5.9, 65),'Kierra Gentry': (6.0, 68),'Pierre Cox': (5.8, 66)}\nassert set(similar_elements((3, 4, 5, 6),(5, 7, 4, 10))) == set((4, 5))\nassert set(similar_elements((1, 2, 3), (4, 5, 6))) == set()\nassert set(similar_elements((1, 2, 3), (1, 2, 3))) == set((1, 2, 3))\nassert set(similar_elements((1, 2, 3), (1, 2, 3, 4, 5))) == set((1, 2, 3))\nassert set(similar"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.0,70)=={'Cierra Vega': (6.2, 70)}\nassert filter_data({},6.0,70)=={}\nassert filter_data({'John Doe': (1.75, 80), 'Jane Smith': (1.65, 70)},1.75,80)=={'John Doe': (1.75, 80)}\nassert filter_data({'Alice Johnson': (1.85, 90), 'Bob Brown': (1.75, 80)},1.75,80)=={'Alice Johnson': (1.85, 90)}\nassert filter_data({'Charlie Davis': (1.65, 70), 'David Lee': (1.75, 80)},1.75,70)=={'Charlie Davis': (1.65, 70)}",
+  "sample_keys": [
+    "assert filter_data({'John Doe': (1.8, 75), 'Jane Smith': (1.5, 45), 'Mike Johnson': (2.0, 90)}, 1.7, 50) == {'Jane Smith': (1.5, 45)}\nassert filter_data({}, 3.0, 20) == {}\nassert filter_data({'Alice Brown': (5.6, 55), 'Bob Davis': (6.5, 70), 'Charlie Evans': (5.8, 68)}, 5.5, 60) == {'Alice Brown': (5.6, 55), 'Bob Davis': (6.5, 70)}\nassert filter_data({'David Jones': (6.9, 85), 'Eve Williams': (5.4, 50), 'Frank Taylor': (6.3, 72)}, 6.3, 65) == {'David Jones': (6.9, 85)}\nassert filter_data({'Grace Kim': (5.1, 40), 'Hannah Lee': (6.3, 60), 'Ian Wilson': (5.7, 52)}, 5.6, 53) == {'Grace Kim': (5.1, 40)}",
+    "assert filter_data({'John Doe': (6.1, 72), 'Jane Smith': (5.9, 68), 'Michael Johnson': (6.0, 67)}, 6.0, 70) == {'John Doe': (6.1, 72), 'Michael Johnson': (6.0, 67)}\nassert filter_data({'Alice Anderson': (5.8, 64), 'Bob Brown': (6.6, 74), 'Charlie Davis': (6.3, 69)}, 5.9, 70) == {'Charlie Davis': (6.3, 69)}\nassert filter_data({'Eve Evans': (5.7, 66), 'Frank Fletcher': (6.5, 73), 'Grace Green': (6.4, 68)}, 6.0, 70) == {'Frank Fletcher': (6.5, 73)}\nassert filter_data({'Hannah Harper': (5.8, 65), 'Ivan Inouye': (6.0, 67), 'Jenny Jones': (6.2, 72)}, 6.5, 70) == {'Hannah Harper': (5.8, 65), 'Jenny Jones': (6.2, 72)}\nassert filter_data({}, 5.8, 67) == {}",
+    "assert filter_data({}, 1.5, 40) == {}\nassert filter_data({'Alice': (1.65, 50), 'Bob': (2.3, 80)}, 1.7, 60) == {'Alice': (1.65, 50)}\nassert filter_data({'John': (1.85, 70), 'Tom': (1.75, 80)}, 1.8, 80) == {'John': (1.85, 70)}\nassert filter_data({'Sarah': (1.60, 55), 'Mike': (1.55, 75)}, 1.6, 65) == {'Sarah': (1.60, 55)}\nassert filter_data({'Liam': (1.75, 75), 'Emma': (1.85, 85)}, 1.7, 70) == {'Liam': (1.75, 75)}",
+    "assert filter_data({},6.0,70)=={}\nassert filter_data({'John Doe': (1.8, 80), 'Jane Smith': (1.7, 75)},1.9,75.5)=={'John Doe': (1.8, 80)}\nassert filter_data({'Alice Johnson': (5.5, 45), 'Bob Brown': (6.2, 90)},5.3,40)=={'Alice Johnson': (5.5, 45)}\nassert filter_data({'Charlie Davis': (6.1, 85), 'David Wilson': (5.8, 72)},5.9,72)=={'David Wilson': (5.8, 72)}\nassert filter_data({'Eva Thompson': (6.0, 69), 'Frank White': (6.5, 100)},6.2,69.5)=={'Frank White': (6.5, 100)}",
+    "assert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},4.0,35)=={}\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.1,70)=={'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68)}\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.0,71)=={'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68)}\nassert filter_data({},6.0,70)=={}\nassert filter_data({'John Doe': (6.0, 60)},6.0,60)=={'John Doe': (6.0, 60)}"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3279.0,
+    "small_out": 598.0,
+    "small_s": 13.239311450975947
+  },
+  "calls_plus": {
+    "small_in": 3113.0,
+    "small_out": 339.0,
+    "small_s": 7.374034542997833,
+    "large_in": 292.0,
+    "large_out": 304.0,
+    "large_s": 8.423639713000739
+  },
+  "calls_samples": {
+    "small_in": 1460.0,
+    "small_out": 1409.0,
+    "small_s": 26.576444149017334
+  }
+}

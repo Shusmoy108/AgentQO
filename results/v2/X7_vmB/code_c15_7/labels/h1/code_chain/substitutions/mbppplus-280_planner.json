@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-280",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `sequential_search` that accepts two parameters: `array` and `element`.\n2. Initialize a variable `index` to -1 to keep track of the position of the element.\n3. Iterate through each item in the `array` using a loop.\n4. Inside the loop, check if the current item matches the `element`. If it does, update `index` to the current iteration index and break out of the loop.\n5. Return a tuple containing a boolean indicating whether the element was found (`index != -1`) and the `index` value.",
+  "reference_key": null,
+  "final_key_plus": "def sequential_search(array, element):\n    index = -1\n    for i in range(len(array)):\n        if array[i] == element:\n            index = i\n            break\n    return (index != -1, index)",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert sequential_search([], 31) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 19) == (True, 9)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 0) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 58) == (True, 2)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 78) == (False, -1)\n```",
+    "coder": "```python\ndef sequential_search(array, element):\n    index = -1\n    for i in range(len(array)):\n        if array[i] == element:\n            index = i\n            break\n    return (index != -1, index)\n```",
+    "verifier": "PICK: A\n\n```python\ndef sequential_search(array, element):\n    index = -1\n    for i in range(len(array)):\n        if array[i] == element:\n            index = i\n            break\n    return (index != -1, index)\n```",
+    "fixer": "```python\ndef sequential_search(array, element):\n    index = -1\n    for i in range(len(array)):\n        if array[i] == element:\n            index = i\n            break\n    return (index != -1, index)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `remove_dirty_chars` that takes two parameters, `dirty_string` and `clean_string`.\n2. Initialize an empty string `result` to store the cleaned result.\n3. Iterate over each character in `dirty_string`.\n4. For each character, check if it is not present in `clean_string`.\n5. If the character is not in `clean_string`, append it to `result`.\n6. Return the `result` string after the loop completes.\n\nHere's the complete implementation:\n\n```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n\n# Test the function\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that solves the problem as described. The function name, variable names, and docstring are distinct from the given code snippet while still addressing the same task.",
+      "quality": 1.0,
+      "final_key": "def sequential_search(arr, elem):\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            return True, i\n    return False, -1",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sequential_search([],31) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],11) == (True, 0)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],19) == (True, 9)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],100) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],31,1) == (True, 3)\n```",
+        "coder": "```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef sequential_search(arr, elem):\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            return True, i\n    return False, -1\n```",
+        "fixer": "```python\ndef sequential_search(arr, elem):\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            return True, i\n    return False, -1\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_Monotonic` that takes an array as input.\n2. Check if the array is sorted in ascending order.\n3. If it is, return `True`.\n4. If not, check if the array is sorted in descending order.\n5. If it is, return `True`.\n6. If neither condition is met, return `False`.",
+      "quality": 0.0,
+      "final_key": "def sequential_search(arr, element):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True, arr.index(element)\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True, arr.index(element)\n    else:\n        return False, -1",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sequential_search([], 31) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 19) == (True, 9)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 100) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 31) == (True, 3)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 31) == (True, 3)\n```",
+        "coder": "```python\ndef sequential_search(arr, element):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True, arr.index(element)\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True, arr.index(element)\n    else:\n        return False, -1\n```",
+        "verifier": "PICK: A\n\n```python\ndef sequential_search(arr, element):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True, arr.index(element)\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True, arr.index(element)\n    else:\n        return False, -1\n```",
+        "fixer": "```python\ndef sequential_search(arr, element):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True, arr.index(element)\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True, arr.index(element)\n    else:\n        return False, -1\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `tuple_to_int` that takes one parameter: `tup`.\n2. Initialize a variable `result` to 0.\n3. Iterate over each element in the tuple using a for loop.\n4. For each element, multiply it by 10 raised to the power of its index (starting from 0) and add it to `result`.\n5. Return the final value of `result`.\n\nThis approach ensures that each digit in the tuple is correctly placed in its corresponding position in the resulting integer.",
+      "quality": 1.0,
+      "final_key": "def sequential_search(arr, elem):\n    for i, num in enumerate(arr):\n        if num == elem:\n            return True, i\n    return False, -1",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sequential_search([],31) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],11) == (True, 0)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],19) == (True, 9)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],100) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],-1) == (False, -1)\n```",
+        "coder": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef sequential_search(arr, elem):\n    for i, num in enumerate(arr):\n        if num == elem:\n            return True, i\n    return False, -1\n```",
+        "fixer": "```python\ndef sequential_search(arr, elem):\n    for i, num in enumerate(arr):\n        if num == elem:\n            return True, i\n    return False, -1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)",
+  "sample_keys": [
+    "def sequential_search(arr, target):\n    presence = False\n    index = -1\n    for i, num in enumerate(arr):\n        if num == target:\n            presence = True\n            index = i\n            break\n    return (presence, index)",
+    "def sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)",
+    "def sequential_search(arr, elem):\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            return True, i\n    return False, -1"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2254.0,
+    "small_out": 495.0,
+    "small_s": 10.443173121020664
+  },
+  "calls_plus": {
+    "large_in": 166.0,
+    "large_out": 124.0,
+    "large_s": 2.780813645978924,
+    "small_in": 2070.0,
+    "small_out": 360.0,
+    "small_s": 6.294415414973628
+  },
+  "calls_samples": {
+    "small_in": 6647.0,
+    "small_out": 1389.0,
+    "small_s": 27.651622382050846
+  }
+}

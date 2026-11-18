@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-589",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `perfect_squares` that takes two parameters, `start` and `end`.\n2. Initialize an empty list called `squares` to store the perfect squares found within the range.\n3. Use a for loop to iterate through each number from `start` to `end` (inclusive).\n4. For each number, check if it is a perfect square by taking its square root and verifying if the square of the rounded square root equals the original number.\n5. If the number is a perfect square, append it to the `squares` list.\n6. Return the `squares` list after the loop completes.",
+  "reference_key": null,
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert perfect_squares(1,30)==[1, 4, 9, 16, 25]\nassert perfect_squares(1,1)==[1]\nassert perfect_squares(1,0)==[]\nassert perfect_squares(-1,1)==[1]\nassert perfect_squares(1,-1)==[]\n```",
+    "coder": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.sqrt(num)\n        if sqrt_num.is_integer():\n            squares.append(int(sqrt_num) ** 2)\n    return squares\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.sqrt(num)\n        if sqrt_num.is_integer():\n            squares.append(int(sqrt_num) ** 2)\n    return squares\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `insert_element` that accepts two parameters: `lst` (the input list) and `element` (the element to be inserted).\n2. Initialize an empty list called `result`.\n3. Iterate over each item in the input list `lst`.\n4. For each item, append the current `element` followed by the item to the `result` list.\n5. After iterating through all items in `lst`, return the `result` list.\n\nThis approach ensures that the element is inserted before each element in the original list, as required.",
+      "quality": 0.0,
+      "final_key": "def perfect_squares(start, end):\n    result = []\n    for num in range(start, end + 1):\n        if int(num**0.5)**2 == num:\n            result.append(num)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert perfect_squares(1,30) == [1, 4, 9, 16, 25]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(1,0) == []\nassert perfect_squares(-1,1) == [-1, 0, 1]\nassert perfect_squares(10,100) == [10, 16, 25, 36, 49, 64, 81, 100]\n```",
+        "coder": "```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.append(element)\n        result.append(item)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef perfect_squares(start, end):\n    result = []\n    for num in range(start, end + 1):\n        if int(num**0.5)**2 == num:\n            result.append(num)\n    return result\n```",
+        "fixer": "```python\ndef perfect_squares(start, end):\n    result = []\n    for num in range(start, end + 1):\n        if int(num**0.5)**2 == num:\n            result.append(num)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `split_Arr` that takes two parameters: `arr` (the input list) and `n` (the index at which to split the list).\n2. Use slicing to create two parts of the list: the first part from the start up to but not including the nth element, and the second part from the nth element to the end.\n3. Concatenate the first part with the second part to form the new list.\n4. Return the new list.\n\nHere's the implementation of the function:\n\n```python\ndef split_Arr(arr, n):\n    # Split the list into two parts\n    first_part = arr[:n]\n    second_part = arr[n:]\n    \n    # Concatenate the parts\n    result = first_part + second_part\n    \n    # Return the result\n    return result\n```\n\nThis function will correctly split the list at the specified index and return the modified list as required.",
+      "quality": 0.0,
+      "final_key": "def perfect_squares(start, end):\n    # Initialize an empty list to store perfect squares\n    squares = []\n    \n    # Iterate through the range from start to end\n    for num in range(start, end + 1):\n        # Check if the number is a perfect square\n        if int(num**0.5)**2 == num:\n            # Append the perfect square to the list\n            squares.append(num)\n    \n    # Return the list of perfect squares\n    return squares",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert perfect_squares(1,30) == [1, 4, 9, 16, 25]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(1,0) == []\nassert perfect_squares(-1,1) == [-1, 0, 1]\nassert perfect_squares(10,100) == [16, 25, 36, 49, 64, 81, 100]\n```",
+        "coder": "```python\ndef split_Arr(arr, n):\n    # Split the list into two parts\n    first_part = arr[:n]\n    second_part = arr[n:]\n    \n    # Concatenate the parts\n    result = first_part + second_part\n    \n    # Return the result\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef perfect_squares(start, end):\n    # Initialize an empty list to store perfect squares\n    squares = []\n    \n    # Iterate through the range from start to end\n    for num in range(start, end + 1):\n        # Check if the number is a perfect square\n        if int(num**0.5)**2 == num:\n            # Append the perfect square to the list\n            squares.append(num)\n    \n    # Return the list of perfect squares\n    return squares\n```",
+        "fixer": "```python\ndef perfect_squares(start, end):\n    # Initialize an empty list to store perfect squares\n    squares = []\n    \n    # Iterate through the range from start to end\n    for num in range(start, end + 1):\n        # Check if the number is a perfect square\n        if int(num**0.5)**2 == num:\n            # Append the perfect square to the list\n            squares.append(num)\n    \n    # Return the list of perfect squares\n    return squares\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `heap_queue_largest` that takes two parameters: `numbers` (a list of integers) and `n` (the number of largest integers to find).\n3. Use the `nlargest` function from the `heapq` module to find the n largest integers in the list.\n4. Return the result as a list.\n5. Test the function with the provided test case to ensure it works correctly.",
+      "quality": 0.0,
+      "final_key": "from heapq import nlargest\n\ndef perfect_squares(start, end):\n    # Generate a list of perfect squares within the range [start, end]\n    perfect_squares_list = [i**2 for i in range(int(start**0.5), int(end**0.5) + 1)]\n    # Find the n largest perfect squares\n    result = nlargest(10, perfect_squares_list)  # Assuming we want the top 10 perfect squares\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert perfect_squares(1,100)==[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\nassert perfect_squares(1,1)==[1]\nassert perfect_squares(1,0)==[]\nassert perfect_squares(-1,1)==[1]\nassert perfect_squares(1,-1)==[]\n```",
+        "coder": "```python\nfrom heapq import nlargest\n\ndef perfect_squares(start, end):\n    # Generate a list of perfect squares within the range [start, end]\n    perfect_squares_list = [i**2 for i in range(int(start**0.5), int(end**0.5) + 1)]\n    # Find the n largest perfect squares\n    result = nlargest(n, perfect_squares_list)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\nfrom heapq import nlargest\n\ndef perfect_squares(start, end):\n    # Generate a list of perfect squares within the range [start, end]\n    perfect_squares_list = [i**2 for i in range(int(start**0.5), int(end**0.5) + 1)]\n    # Find the n largest perfect squares\n    result = nlargest(10, perfect_squares_list)  # Assuming we want the top 10 perfect squares\n    return result\n```",
+        "fixer": "```python\nfrom heapq import nlargest\n\ndef perfect_squares(start, end):\n    # Generate a list of perfect squares within the range [start, end]\n    perfect_squares_list = [i**2 for i in range(int(start**0.5), int(end**0.5) + 1)]\n    # Find the n largest perfect squares\n    result = nlargest(10, perfect_squares_list)  # Assuming we want the top 10 perfect squares\n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "def perfect_squares(min_num, max_num):\n    squares = []\n    for i in range(min_num, max_num):\n        if i == int(i**0.5)**2:\n            squares.append(i)\n    return squares",
+    null,
+    "def perfect_squares(start, end):\n    \"\"\"\n    Find all perfect squares between start and end (inclusive).\n    \n    Parameters:\n    - start (int): The starting number.\n    - end (int): The ending number.\n    \n    Returns:\n    - list: A list of perfect squares between start and end.\n    \"\"\"\n    squares = []\n    for num in range(start, end + 1):\n        if num * num >= start and num * num <= end:\n            squares.append(num * num)\n    return squares\n\n# Test cases\nassert perfect_squares(1,30)==[1, 4, 9, 16, 25]\nassert perfect_squares(50,100)==[64, 81, 100]\nassert perfect_squares(100,200)==[100, 121, 144, 169, 196]\nassert perfect_squares(1,10) == [1, 4, 9]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(10,10) == [100]  # This should be [100]\nassert perfect_squares(10,1) == []  # This should be []\nassert perfect_squares(-1,1) == [1]  # This should be [1]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1661.0,
+    "small_out": 357.0,
+    "small_s": 7.869810361997224
+  },
+  "calls_plus": {
+    "large_in": 117.0,
+    "large_out": 136.0,
+    "large_s": 3.1122587749850936,
+    "small_in": 1446.0,
+    "small_out": 205.0,
+    "small_s": 4.091077874996699
+  },
+  "calls_samples": {
+    "small_in": 5490.0,
+    "small_out": 1974.0,
+    "small_s": 34.13848110701656
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-391",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list2[i]: list3[i]}\n        result.append({list1[i]: inner_dict})\n    return result\n```",
+  "reference_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list2[i]: list3[i]}\n        result.append({list1[i]: inner_dict})\n    return result",
+  "final_key_plus": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list2[i]: list3[i]}\n        result.append({list1[i]: inner_dict})\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S001\"], [\"Adina Park\"], [85]) == [{'S001': {'Adina Park': 85}}]\nassert convert_list_dictionary([\"S001\", \"S002\"], [\"Adina Park\", \"Leyton Marsh\"], [85, 98]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\"], [85, 98, 89]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"], [85, 98, 89, 92], [\"A\", \"B\", \"C\", \"D\"]) == [{'S001': {'Adina Park': 85}, 'A': 'A'}, {'S002': {'Leyton Marsh': 98}, 'B': 'B'}, {'S003': {'Duncan Boyle': 89}, 'C': 'C'}, {'S004': {'Saim Richards': 92}, 'D': 'D'}]\n```",
+    "verifier": "PICK: A\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list2[i]: list3[i]}\n        result.append({list1[i]: inner_dict})\n    return result\n```",
+    "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list2[i]: list3[i]}\n        result.append({list1[i]: inner_dict})\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {i: list2[i], len(list2) + i: list3[i]}}\n        result.append(inner_dict)\n    return result",
+      "reference_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list2[i]: list3[i]}\n        result.append({list1[i]: inner_dict})\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {i: list2[i], len(list2) + i: list3[i]}}\n        result.append(inner_dict)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {i: list2[i], len(list2) + i: list3[i]}}\n        result.append(inner_dict)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S001\"], [\"Adina Park\"], [85]) == [{'S001': {'Adina Park': 85}}]\nassert convert_list_dictionary([\"S001\", \"S002\"], [\"Adina Park\", \"Leyton Marsh\"], [85, 98]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\"], [85, 98, 89]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"], [85, 98, 89, 92]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}, {'S004': {'Saim Richards': 92}}]\n```",
+        "verifier": "PICK: B\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {i: list2[i], len(list2) + i: list3[i]}}\n        result.append(inner_dict)\n    return result\n```",
+        "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {i: list2[i], len(list2) + i: list3[i]}}\n        result.append(inner_dict)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+      "reference_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list2[i]: list3[i]}\n        result.append({list1[i]: inner_dict})\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S001\"], [\"Adina Park\"], [85]) == [{'S001': {'Adina Park': 85}}]\nassert convert_list_dictionary([\"S001\", \"S002\"], [\"Adina Park\", \"Leyton Marsh\"], [85, 98]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\"], [85, 98, 89]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"], [85, 98, 89, 92], [\"A\", \"B\", \"C\", \"D\"]) == [{'S001': {'Adina Park': 85}, 'A': 'A'}, {'S002': {'Leyton Marsh': 98}, 'B': 'B'}, {'S003': {'Duncan Boyle': 89}, 'C': 'C'}, {'S004': {'Saim Richards': 92}, 'D': 'D'}]\n```",
+        "verifier": "PICK: A\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```",
+        "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def merge_sorted_list(list1, list2, list3):\n    merged_list = []\n    while list1 or list2 or list3:\n        min_value = float('inf')\n        index = -1\n        if list1:\n            min_value = list1[0]\n            index = 0\n        if list2:\n            if list2[0] < min_value:\n                min_value = list2[0]\n                index = 1\n        if list3:\n            if list3[0] < min_value:\n                min_value = list3[0]\n                index = 2\n        \n        if index == 0:\n            merged_list.append(list1.pop(0))\n        elif index == 1:\n            merged_list.append(list2.pop(0))\n        else:\n            merged_list.append(list3.pop(0))\n    \n    return merged_list",
+      "reference_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list2[i]: list3[i]}\n        result.append({list1[i]: inner_dict})\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef merge_sorted_list(list1, list2, list3):\n    merged_list = []\n    while list1 or list2 or list3:\n        min_value = float('inf')\n        index = -1\n        if list1:\n            min_value = list1[0]\n            index = 0\n        if list2:\n            if list2[0] < min_value:\n                min_value = list2[0]\n                index = 1\n        if list3:\n            if list3[0] < min_value:\n                min_value = list3[0]\n                index = 2\n        \n        if index == 0:\n            merged_list.append(list1.pop(0))\n        elif index == 1:\n            merged_list.append(list2.pop(0))\n        else:\n            merged_list.append(list3.pop(0))\n    \n    return merged_list\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([1], [2], [3]) == [{'1': {'2': {'3': {}}}}]\nassert convert_list_dictionary(['A', 'B'], ['C', 'D'], ['E', 'F']) == [{'A': {'C': {'E': {}}}}, {'B': {'D': {'F': {}}}}]\nassert convert_list_dictionary(['X', 'Y', 'Z'], [], ['W', 'V']) == [{'X': {'W': {}}}, {'Y': {'V': {}}}, {'Z': {}}]\nassert convert_list_dictionary(['Q', 'R'], ['S', 'T'], ['U', 'V', 'W']) == [{'Q': {'S': {'U': {}}}}, {'R': {'T': {'V': {}}}}, {'U': {'W': {}}}]\n```",
+        "verifier": "PICK: B\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    merged_list = []\n    while list1 or list2 or list3:\n        min_value = float('inf')\n        index = -1\n        if list1:\n            min_value = list1[0]\n            index = 0\n        if list2:\n            if list2[0] < min_value:\n                min_value = list2[0]\n                index = 1\n        if list3:\n            if list3[0] < min_value:\n                min_value = list3[0]\n                index = 2\n        \n        if index == 0:\n            merged_list.append({list1.pop(0): {}})\n        elif index == 1:\n            merged_list.append({list2.pop(0): {}})\n        else:\n            merged_list.append({list3.pop(0): {}})\n    \n    return merged_list\n\n# Test cases\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"],[\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"] ,[85, 98, 89, 92])==[{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}, {'S004': {'Saim Richards': 92}}]\nassert convert_list_dictionary([\"abc\",\"def\",\"ghi\",\"jkl\"],[\"python\",\"program\",\"language\",\"programs\"],[100,200,300,400])==[{'abc':{'python':100}},{'def':{'program':200}},{'ghi':{'language':300}},{'jkl':{'programs':400}}]\nassert convert_list_dictionary([\"A1\",\"A2\",\"A3\",\"A4\"],[\"java\",\"C\",\"C++\",\"DBMS\"],[10,20,30,40])==[{'A1':{'java':10}},{'A2':{'C':20}},{'A3':{'C++':30}},{'A4':{'DBMS':40}}]\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([1], [2], [3]) == [{'1': {'2",
+        "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    merged_list = []\n    while list1 or list2 or list3:\n        min_value = float('inf')\n        index = -1\n        if list1:\n            min_value = list1[0]\n            index = 0\n        if list2:\n            if list2[0] < min_value:\n                min_value = list2[0]\n                index = 1\n        if list3:\n            if list3[0] < min_value:\n                min_value = list3[0]\n                index = 2\n        \n        if index == 0:\n            merged_list.append({list1.pop(0): {}})\n        elif index == 1:\n            merged_list.append({list2.pop(0): {}})\n        else:\n            merged_list.append({list3.pop(0): {}})\n    \n    return merged_list\n\n# Test cases\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"],[\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"] ,[85, 98, 89, 92])==[{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}, {'S004': {'Saim Richards': 92}}]\nassert convert_list_dictionary([\"abc\",\"def\",\"ghi\",\"jkl\"],[\"python\",\"program\",\"language\",\"programs\"],[100,200,300,400])==[{'abc':{'python':100}},{'def':{'program':200}},{'ghi':{'language':300}},{'jkl':{'programs':400}}]\nassert convert_list_dictionary([\"A1\",\"A2\",\"A3\",\"A4\"],[\"java\",\"C\",\"C++\",\"DBMS\"],[10,20,30,40])==[{'A1':{'java':10}},{'A2':{'C':20}},{'A3':{'C++':30}},{'A4':{'DBMS':40}}]\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([1], [2], [3]) == [{'1': {'2': {'3': {"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+  "sample_keys": [
+    "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+    "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+    "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+    "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+    "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3620.0,
+    "small_out": 731.0,
+    "small_s": 13.495941150991712
+  },
+  "calls_plus": {
+    "small_in": 3237.0,
+    "small_out": 672.0,
+    "small_s": 10.177693122968776,
+    "large_in": 379.0,
+    "large_out": 59.0,
+    "large_s": 1.3081907420128118
+  },
+  "calls_samples": {
+    "small_in": 1895.0,
+    "small_out": 300.0,
+    "small_s": 3.4890022699837573
+  }
+}

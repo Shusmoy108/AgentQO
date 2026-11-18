@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-306",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum\n```",
+  "reference_key": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+  "final_key_plus": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import *\n# Define a Python class that implements the required functionality\nclass ProblemSolution:\n    def max_sum_increasing_subseq(self, arr: List[int], n: int, k: int, m: int):\n        # Check if any index is greater than or equal to the length of the array\n        if k >= len(arr) or m >= len(arr):\n            return float('inf')\n        \n        # Initialize a dynamic programming table with zeros\n        dp = [0] * (m + 1)\n        sum_dp = [0] * (m + 1)\n        \n        # Iterate through all possible k elements\n        for j in range(1, k + 1):\n            # Initialize maximum sum of increasing subsequences to 0\n            ans = dp[i] + arr[k - j]\n            \n            # Iterate through all possible m subarrays using the sliding window technique\n            for i in range(k - j + 1, n + 1):\n                \n                # Update the dynamic programming table with the maximum sum of increasing subsequences\n                dp[i] = max(dp[i], ans)\n                \n                # Update the sum of increasing subsequences using the sliding window technique\n                sum_dp[i] = max(sum_dp[i], dp[i - 1] + arr[i - 1])\n                \n                # If the current element is smaller than the previous element, update the answer\n                if ans <= arr[i - 1]:\n                    ans = arr[i - 1]\n                    dp[i] = dp[i - 1]\n        \n        # Return the maximum sum of the given k subarrays\n        return max(sum_dp[-1], dp[-1])\n\n# Example usage:\nsolver = ProblemSolution()\nprint(solver.max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6))  # Output: 11",
+      "reference_key": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+      "key_differs": true,
+      "text": "Pick: B\n\n```python\nfrom typing import *\n# Define a Python class that implements the required functionality\nclass ProblemSolution:\n    def max_sum_increasing_subseq(self, arr: List[int], n: int, k: int, m: int):\n        # Check if any index is greater than or equal to the length of the array\n        if k >= len(arr) or m >= len(arr):\n            return float('inf')\n        \n        # Initialize a dynamic programming table with zeros\n        dp = [0] * (m + 1)\n        sum_dp = [0] * (m + 1)\n        \n        # Iterate through all possible k elements\n        for j in range(1, k + 1):\n            # Initialize maximum sum of increasing subsequences to 0\n            ans = dp[i] + arr[k - j]\n            \n            # Iterate through all possible m subarrays using the sliding window technique\n            for i in range(k - j + 1, n + 1):\n                \n                # Update the dynamic programming table with the maximum sum of increasing subsequences\n                dp[i] = max(dp[i], ans)\n                \n                # Update the sum of increasing subsequences using the sliding window technique\n                sum_dp[i] = max(sum_dp[i], dp[i - 1] + arr[i - 1])\n                \n                # If the current element is smaller than the previous element, update the answer\n                if ans <= arr[i - 1]:\n                    ans = arr[i - 1]\n                    dp[i] = dp[i - 1]\n        \n        # Return the maximum sum of the given k subarrays\n        return max(sum_dp[-1], dp[-1])\n\n# Example usage:\nsolver = ProblemSolution()\nprint(solver.max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6))  # Output: 11\n```",
+      "quality": 0.0,
+      "final_key": "from typing import *\n# Define a Python class that implements the required functionality\nclass ProblemSolution:\n    def max_sum_increasing_subseq(self, arr: List[int], n: int, k: int, m: int):\n        # Check if any index is greater than or equal to the length of the array\n        if k >= len(arr) or m >= len(arr):\n            return float('inf')\n        \n        # Initialize a dynamic programming table with zeros\n        dp = [0] * (m + 1)\n        sum_dp = [0] * (m + 1)\n        \n        # Iterate through all possible k elements\n        for j in range(1, k + 1):\n            # Initialize maximum sum of increasing subsequences to 0\n            ans = dp[i] + arr[k - j]\n            \n            # Iterate through all possible m subarrays using the sliding window technique\n            for i in range(k - j + 1, n + 1):\n                \n                # Update the dynamic programming table with the maximum sum of increasing subsequences\n                dp[i] = max(dp[i], ans)\n                \n                # Update the sum of increasing subsequences using the sliding window technique\n                sum_dp[i] = max(sum_dp[i], dp[i - 1] + arr[i - 1])\n                \n                # If the current element is smaller than the previous element, update the answer\n                if ans <= arr[i - 1]:\n                    ans = arr[i - 1]\n                    dp[i] = dp[i - 1]\n        \n        # Return the maximum sum of the given k subarrays\n        return max(sum_dp[-1], dp[-1])\n\n# Example usage:\nsolver = ProblemSolution()\nprint(solver.max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6))  # Output: 11",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)",
+      "reference_key": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+      "key_differs": true,
+      "text": "PICK: A\n\n```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n```",
+      "quality": 0.0,
+      "final_key": "def remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+      "reference_key": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+      "key_differs": true,
+      "text": "PICK: A\n\n```python\ndef sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum\n```",
+      "quality": 0.0,
+      "final_key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+  "sample_keys": [
+    "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+    "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+    "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+    null,
+    "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3172.0,
+    "small_out": 1023.0,
+    "small_s": 19.084579018992372
+  },
+  "calls_plus": {
+    "small_in": 1689.0,
+    "small_out": 807.0,
+    "small_s": 14.344957563997013,
+    "large_in": 1483.0,
+    "large_out": 216.0,
+    "large_s": 6.657580113009317
+  },
+  "calls_samples": {
+    "small_in": 7415.0,
+    "small_out": 1375.0,
+    "small_s": 28.187995252985274
+  }
+}

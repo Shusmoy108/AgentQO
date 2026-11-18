@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-123",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```",
+  "reference_key": "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+  "final_key_plus": "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6,
+  "baseline_agrees": false,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "key_differs": true,
+      "text": "PICK: B",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False",
+      "reference_key": "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False\n```",
+      "quality": 0.0,
+      "final_key": "def is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal",
+      "reference_key": "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "key_differs": true,
+      "text": "PICK: A\n\n```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```",
+      "quality": 0.0,
+      "final_key": "def check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "def sum_of_divisors(num):\n    divisors = [1]\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            divisors.append(i)\n            if i != num // i:\n                divisors.append(num // i)\n    return sum(divisors)\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n\n# Test case\nprint(amicable_numbers_sum(999))  # Output: 504",
+    "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+    null,
+    null,
+    "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1539.0,
+    "small_out": 720.0,
+    "small_s": 14.62673587500467
+  },
+  "calls_plus": {
+    "small_in": 1090.0,
+    "small_out": 715.0,
+    "small_s": 14.508390417002374,
+    "large_in": 449.0,
+    "large_out": 145.0,
+    "large_s": 3.053456877009012
+  },
+  "calls_samples": {
+    "small_in": 2245.0,
+    "small_out": 450.0,
+    "small_s": 3.8584701440122444
+  }
+}

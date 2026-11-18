@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-730",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert consecutive_duplicates([1, 1, 1, 2, 3, 3, 4]) == [1, 2, 3, 4]\nassert consecutive_duplicates(['a', 'b', 'b', 'c', 'c', 'c']) == ['a', 'b', 'c']\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([True, True, False, False, True]) == [True, False, True]\nassert consecutive_duplicates([None, None, None, 'hello', 'hello']) == [None, 'hello']\n```",
+  "reference_key": "assert consecutive_duplicates([1, 1, 1, 2, 3, 3, 4]) == [1, 2, 3, 4]\nassert consecutive_duplicates(['a', 'b', 'b', 'c', 'c', 'c']) == ['a', 'b', 'c']\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([True, True, False, False, True]) == [True, False, True]\nassert consecutive_duplicates([None, None, None, 'hello', 'hello']) == [None, 'hello']",
+  "final_key_plus": "def consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result\n```",
+    "fixer": "```python\ndef consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test case with different length lists\nassert consecutive_duplicates([1]) == [1]\n\n# Test case with multiple consecutive duplicate elements\nassert consecutive_duplicates([1, 2, 2, 3, 3, 3]) == [1, 2, 3]\n\n# Test case with repeated elements at the start\nassert consecutive_duplicates([4, 4, 4, 4, 4, 4]) == [4]\n\n# Test case with consecutive duplicates mixed in the middle\nassert consecutive_duplicates([1, 2, 3, 2, 2, 4, 5]) == [1, 2, 3, 2, 4, 5]\n\n# Edge case with empty list\nassert consecutive_duplicates([]) == []\n\n\"\"\" Additional assertions \"\"\"\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([2]) == [2]\nassert consecutive_duplicates([2, 2, 2, 2]) == [2]\nassert consecutive_duplicates([2, 1, 2, 1]) == [2, 1, 2, 1]",
+      "reference_key": "assert consecutive_duplicates([1, 1, 1, 2, 3, 3, 4]) == [1, 2, 3, 4]\nassert consecutive_duplicates(['a', 'b', 'b', 'c', 'c', 'c']) == ['a', 'b', 'c']\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([True, True, False, False, True]) == [True, False, True]\nassert consecutive_duplicates([None, None, None, 'hello', 'hello']) == [None, 'hello']",
+      "key_differs": true,
+      "text": "```python\n# Test case with different length lists\nassert consecutive_duplicates([1]) == [1]\n\n# Test case with multiple consecutive duplicate elements\nassert consecutive_duplicates([1, 2, 2, 3, 3, 3]) == [1, 2, 3]\n\n# Test case with repeated elements at the start\nassert consecutive_duplicates([4, 4, 4, 4, 4, 4]) == [4]\n\n# Test case with consecutive duplicates mixed in the middle\nassert consecutive_duplicates([1, 2, 3, 2, 2, 4, 5]) == [1, 2, 3, 2, 4, 5]\n\n# Edge case with empty list\nassert consecutive_duplicates([]) == []\n\n\"\"\" Additional assertions \"\"\"\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([2]) == [2]\nassert consecutive_duplicates([2, 2, 2, 2]) == [2]\nassert consecutive_duplicates([2, 1, 2, 1]) == [2, 1, 2, 1]\n```",
+      "quality": 1.0,
+      "final_key": "def consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result\n```",
+        "fixer": "```python\ndef consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert consecutive_duplicates([100]) == [100]\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([-1,-1,-1,-1,-1]) == [-1]\nassert consecutive_duplicates([1,2,3,4,4,4,5,6,6,6,6,6,7,7,7,7,7]) == [1,2,3,4,5,6,7,8,9]\nassert consecutive_duplicates([1,1,2,2,2,2,3,3,3,3]) == [1,2,3]",
+      "reference_key": "assert consecutive_duplicates([1, 1, 1, 2, 3, 3, 4]) == [1, 2, 3, 4]\nassert consecutive_duplicates(['a', 'b', 'b', 'c', 'c', 'c']) == ['a', 'b', 'c']\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([True, True, False, False, True]) == [True, False, True]\nassert consecutive_duplicates([None, None, None, 'hello', 'hello']) == [None, 'hello']",
+      "key_differs": true,
+      "text": "```python\nassert consecutive_duplicates([100]) == [100]\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([-1,-1,-1,-1,-1]) == [-1]\nassert consecutive_duplicates([1,2,3,4,4,4,5,6,6,6,6,6,7,7,7,7,7]) == [1,2,3,4,5,6,7,8,9]\nassert consecutive_duplicates([1,1,2,2,2,2,3,3,3,3]) == [1,2,3]\n```",
+      "quality": 1.0,
+      "final_key": "def consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result\n```",
+        "fixer": "```python\ndef consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 7) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 8) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 9) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 10) == 11",
+      "reference_key": "assert consecutive_duplicates([1, 1, 1, 2, 3, 3, 4]) == [1, 2, 3, 4]\nassert consecutive_duplicates(['a', 'b', 'b', 'c', 'c', 'c']) == ['a', 'b', 'c']\nassert consecutive_duplicates([]) == []\nassert consecutive_duplicates([True, True, False, False, True]) == [True, False, True]\nassert consecutive_duplicates([None, None, None, 'hello', 'hello']) == [None, 'hello']",
+      "key_differs": true,
+      "text": "```python\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 7) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 8) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 9) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 10) == 11\n```",
+      "quality": 1.0,
+      "final_key": "def consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result\n```",
+        "fixer": "```python\ndef consecutive_duplicates(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != result[-1]:\n            result.append(input_list[i])\n    return result\n\n# Test cases\nassert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]\nassert consecutive_duplicates([10, 10, 15, 19, 18, 18, 17, 26, 26, 17, 18, 10]) == [10, 15, 19, 18, 17, 26, 17, 18, 10]\nassert consecutive_duplicates(['a', 'a', 'b', 'c', 'd', 'd']) == ['a', 'b', 'c', 'd']\nassert consecutive_duplicates(['a', 'a', 'b', 'c', 'd', 'd', 'a', 'a']) == ['a', 'b', 'c', 'd', 'a']\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert consecutive_duplicates([]) == []\nassert consecutive_duplicates([1]) == [1]\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([1, 2, 2, 3, 3, 3]) == [1, 2, 3]\nassert consecutive_duplicates([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+  "sample_keys": [
+    "assert consecutive_duplicates([]) == []\nassert consecutive_duplicates([1]) == [1]\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 2, 3]) == [1, 2, 3]\nassert consecutive_duplicates([1, 1, 1, 1]) == [1]",
+    "assert consecutive_duplicates([]) == [], \"Empty list should still return an empty list\"\nassert consecutive_duplicates([10]) == [10], \"Single element list should remain unchanged\"\nassert consecutive_duplicates([1, 1, 2, 2, 3, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 8, 9, 7, 7]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 7], \"Multiple elements with duplicates should be removed\"\nassert consecutive_duplicates([1, 2, 3, 4, 5, 5, 5, 6, 6, 6, 6, 7, 8, 9, 10, 10, 10, 10]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], \"Repeated elements at the end and beginning should be removed\"\nassert consecutive_duplicates([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == [], \"All identical elements should be removed\"",
+    "assert consecutive_duplicates([]) == []\nassert consecutive_duplicates([1]) == [1]\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([1, 2, 2]) == [1, 2]\nassert consecutive_duplicates([1, 2, 2, 3, 3, 3]) == [1, 2, 3]\nassert consecutive_duplicates([1, 2, 3, 4, 5, 6, 7, 8, 9, 4, 4]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 4]",
+    "assert consecutive_duplicates([]) == []\nassert consecutive_duplicates([1]) == [1]\nassert consecutive_duplicates([1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 2, 2, 3]) == [1, 2, 3]\nassert consecutive_duplicates([1, 1, 1, 2, 2, 2]) == [1, 2, 2]\nassert consecutive_duplicates([1, 1, 1, 2, 2, 2, 3, 3, 3, 3]) == [1, 2, 2, 3, 3]\nassert consecutive_duplicates([-1, -1, -1, -2]) == [-1, -2]\nassert consecutive_duplicates([0, 0, 0, 0, 0, 0, 0, 0]) == [0]\nassert consecutive_duplicates([0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]) == [0, 1, 2, 3, 4]",
+    "assert consecutive_duplicates([]) == []\nassert consecutive_duplicates([1]) == [1]\nassert consecutive_duplicates([1, 1]) == [1]\nassert consecutive_duplicates([1, 1, 1]) == [1]\nassert consecutive_duplicates([1, 2, 2, 3, 3, 3, 4, 4, 4, 4]) == [1, 2, 3, 4]\nassert consecutive_duplicates([0, 0, 0, 0, 0, 1, 1, 1, 1, 1]) == [0, 1]\nassert consecutive_duplicates([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2439.0,
+    "small_out": 402.0,
+    "small_s": 5.410950741003035
+  },
+  "calls_plus": {
+    "small_in": 2143.0,
+    "small_out": 258.0,
+    "small_s": 3.938271671999246,
+    "large_in": 239.0,
+    "large_out": 125.0,
+    "large_s": 3.6662735209974926
+  },
+  "calls_samples": {
+    "small_in": 1195.0,
+    "small_out": 1005.0,
+    "small_s": 20.930946526001208
+  }
+}

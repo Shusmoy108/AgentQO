@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-767",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n```",
+  "reference_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count",
+  "final_key_plus": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import pytest\n\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test the function with provided data points\ntest_cases = [\n    ([1,1,1,1], 2, 6),\n    ([1,5,7,-1,5], 6, 3),\n    ([1,-2,3], 1, 1),\n    ([1,-2,3], -3, 1),\n    ([], 2, 0),\n    ([1], 2, 0),\n    ([1, 2], 3, 1),\n    ([1, 2, 3, 4], 5, 4)\n]\n\n@pytest.mark.parametrize(\"numbers, sum, expected\", test_cases)\ndef test_get_pairs_count(numbers, sum, expected):\n    result = get_pairs_count(numbers, sum)\n    assert result == expected, f\"Expected {expected}, but got {result} for numbers={numbers} and sum={sum}\"",
+      "reference_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count",
+      "key_differs": true,
+      "text": "```python\nimport pytest\n\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test the function with provided data points\ntest_cases = [\n    ([1,1,1,1], 2, 6),\n    ([1,5,7,-1,5], 6, 3),\n    ([1,-2,3], 1, 1),\n    ([1,-2,3], -3, 1),\n    ([], 2, 0),\n    ([1], 2, 0),\n    ([1, 2], 3, 1),\n    ([1, 2, 3, 4], 5, 4)\n]\n\n@pytest.mark.parametrize(\"numbers, sum, expected\", test_cases)\ndef test_get_pairs_count(numbers, sum, expected):\n    result = get_pairs_count(numbers, sum)\n    assert result == expected, f\"Expected {expected}, but got {result} for numbers={numbers} and sum={sum}\"\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases to verify the correctness of the function\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\nassert get_pairs_count([1, 2, 3], 4) == 3  # Corrected assertion to match the expected output\nassert get_pairs_count([1, 2, 3, 4], 5) == 4  # Corrected assertion to match the expected output",
+      "reference_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count",
+      "key_differs": true,
+      "text": "```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases to verify the correctness of the function\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\nassert get_pairs_count([1, 2, 3], 4) == 3  # Corrected assertion to match the expected output\nassert get_pairs_count([1, 2, 3, 4], 5) == 4  # Corrected assertion to match the expected output\n```",
+      "quality": 0.0,
+      "final_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases to verify the correctness of the function\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\nassert get_pairs_count([1, 2, 3], 4) == 3  # Corrected assertion to match the expected output\nassert get_pairs_count([1, 2, 3, 4], 5) == 4  # Corrected assertion to match the expected output",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases to verify the correctness of the function\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\nassert get_pairs_count([1, 2, 3], 4) == 3  # Corrected assertion to match the expected output\nassert get_pairs_count([1, 2, 3, 4], 5) == 4  # Corrected assertion to match the expected output\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "import math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+      "reference_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c\n```",
+      "quality": 1.0,
+      "final_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\nassert get_pairs_count([1, 2, 3], 4) == 3\nassert get_pairs_count([1, 2, 3, 4], 5) == 4",
+  "sample_keys": [
+    "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\n\n# Failing test cases\n# FAIL assert get_pairs_count([1, 2, 3], 4) == 3 -> AssertionError \n# FAIL assert get_pairs_count([1, 2, 3, 4], 5) == 4 -> AssertionError",
+    "# Fix the code here\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count",
+    "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1], 2) == 6\nassert get_pairs_count([1,5,7,-1,5], 6) == 3\nassert get_pairs_count([1, -2, 3], 1) == 1\nassert get_pairs_count([-1, -2, 3], -3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\nassert get_pairs_count([1, 2, 3], 4) == 3\nassert get_pairs_count([1, 2, 3, 4], 5) == 4",
+    "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1, -2, 3], 1) == 1\nassert get_pairs_count([-1, -2, 3], -3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\nassert get_pairs_count([1, 2, 3], 4) == 3\nassert get_pairs_count([1, 2, 3, 4], 5) == 4",
+    "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases to verify correctness\nassert get_pairs_count([1, 1, 1, 1], 2) == 6\nassert get_pairs_count([1, 5, 7, -1, 5], 6) == 3\nassert get_pairs_count([1, -2, 3], 1) == 1\nassert get_pairs_count([-1, -2, 3], -3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\nassert get_pairs_count([1, 2, 3], 4) == 3\nassert get_pairs_count([1, 2, 3, 4], 5) == 4"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1717.0,
+    "small_out": 800.0,
+    "small_s": 14.598636370967142
+  },
+  "calls_plus": {
+    "small_in": 1276.0,
+    "small_out": 408.0,
+    "small_s": 7.366042861976894,
+    "large_in": 396.0,
+    "large_out": 62.0,
+    "large_s": 1.3730703330074903
+  },
+  "calls_samples": {
+    "small_in": 1980.0,
+    "small_out": 1019.0,
+    "small_s": 8.904740258934908
+  }
+}

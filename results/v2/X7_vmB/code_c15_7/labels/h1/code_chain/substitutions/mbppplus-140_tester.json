@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-140",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert set(extract_singly([])) == set([])\nassert set(extract_singly([[10], [20], [30]])) == set([10, 20, 30])\nassert set(extract_singly([[1, 2, 3], [3, 4, 5], [5, 6]])) == set([1, 2, 3, 4, 5, 6])\nassert set(extract_singly([[1, 1, 1], [2, 2, 2], [3, 3, 3]])) == set([1, 2, 3])\nassert set(extract_singly([[100, 200], [200, 300], [300, 100]])) == set([100, 200, 300])\n```",
+  "reference_key": "assert set(extract_singly([])) == set([])\nassert set(extract_singly([[10], [20], [30]])) == set([10, 20, 30])\nassert set(extract_singly([[1, 2, 3], [3, 4, 5], [5, 6]])) == set([1, 2, 3, 4, 5, 6])\nassert set(extract_singly([[1, 1, 1], [2, 2, 2], [3, 3, 3]])) == set([1, 2, 3])\nassert set(extract_singly([[100, 200], [200, 300], [300, 100]])) == set([100, 200, 300])",
+  "final_key_plus": "def extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n```",
+    "fixer": "```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert set(extract_singly([])) == set([])\nassert set(extract_singly([[0]])) == {0}\nassert set(extract_singly([[], [0], [7]])) == {0, 7}\nassert set(extract_singly([[2], [], [6], [], [8]])) == {2, 6, 8}\nassert set(extract_singly([[9], [10], [], [12], [13], []])) == {9, 10, 12, 13}",
+      "reference_key": "assert set(extract_singly([])) == set([])\nassert set(extract_singly([[10], [20], [30]])) == set([10, 20, 30])\nassert set(extract_singly([[1, 2, 3], [3, 4, 5], [5, 6]])) == set([1, 2, 3, 4, 5, 6])\nassert set(extract_singly([[1, 1, 1], [2, 2, 2], [3, 3, 3]])) == set([1, 2, 3])\nassert set(extract_singly([[100, 200], [200, 300], [300, 100]])) == set([100, 200, 300])",
+      "key_differs": true,
+      "text": "```python\nassert set(extract_singly([])) == set([])\nassert set(extract_singly([[0]])) == {0}\nassert set(extract_singly([[], [0], [7]])) == {0, 7}\nassert set(extract_singly([[2], [], [6], [], [8]])) == {2, 6, 8}\nassert set(extract_singly([[9], [10], [], [12], [13], []])) == {9, 10, 12, 13}\n```",
+      "quality": 1.0,
+      "final_key": "def extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n```",
+        "fixer": "```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert set(extract_singly([(10, 20), (20, 30)])) == set([10, 20, 30])",
+      "reference_key": "assert set(extract_singly([])) == set([])\nassert set(extract_singly([[10], [20], [30]])) == set([10, 20, 30])\nassert set(extract_singly([[1, 2, 3], [3, 4, 5], [5, 6]])) == set([1, 2, 3, 4, 5, 6])\nassert set(extract_singly([[1, 1, 1], [2, 2, 2], [3, 3, 3]])) == set([1, 2, 3])\nassert set(extract_singly([[100, 200], [200, 300], [300, 100]])) == set([100, 200, 300])",
+      "key_differs": true,
+      "text": "```python\nassert set(extract_singly([(10, 20), (20, 30)])) == set([10, 20, 30])\n```\nFor the other expected results, consider the case when the input list empty, or contains only single-element sublists. For example:\n\n`assert set(extract_singly([])) == set()`\n\n`assert set(extract_singly([[], [1], [[2]]])) == set()`\n\nAlso, think about what would happen if there were duplicate elements in different sublists. How do you handle such cases? In our current implementation, duplicates are ignored as they will be added only once. This is consistent with the standard behavior.\n\nPlease provide your code for testing, including the assert statements, so I can verify its correctness.",
+      "quality": 1.0,
+      "final_key": "def extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n```",
+        "fixer": "```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert replace_spaces(\"\") == ''\nassert replace_spaces(\"Hello World!\") == 'Hello%20World!'\nassert replace_spaces(\"   Leading spaces \") == '%20Leading%20spaces%20'\nassert replace_spaces(\"Trailing spaces   \") == 'Trailing%20spaces%20'\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'",
+      "reference_key": "assert set(extract_singly([])) == set([])\nassert set(extract_singly([[10], [20], [30]])) == set([10, 20, 30])\nassert set(extract_singly([[1, 2, 3], [3, 4, 5], [5, 6]])) == set([1, 2, 3, 4, 5, 6])\nassert set(extract_singly([[1, 1, 1], [2, 2, 2], [3, 3, 3]])) == set([1, 2, 3])\nassert set(extract_singly([[100, 200], [200, 300], [300, 100]])) == set([100, 200, 300])",
+      "key_differs": true,
+      "text": "```python\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"Hello World!\") == 'Hello%20World!'\nassert replace_spaces(\"   Leading spaces \") == '%20Leading%20spaces%20'\nassert replace_spaces(\"Trailing spaces   \") == 'Trailing%20spaces%20'\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'\n```",
+      "quality": 1.0,
+      "final_key": "def extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n```",
+        "fixer": "```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n\n# Test cases\nassert set(extract_singly([(3, 4, 5), (4, 5, 7), (1, 4)])) == set([3, 4, 5, 7, 1])\nassert set(extract_singly([(1, 2, 3), (4, 2, 3), (7, 8)])) == set([1, 2, 3, 4, 7, 8])\nassert set(extract_singly([(7, 8, 9), (10, 11, 12), (10, 11)])) == set([7, 8, 9, 10, 11, 12])\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert set(extract_singly([])) == set()\nassert set(extract_singly([[1], [2], [3]])) == set([1, 2, 3])\nassert set(extract_singly([[1, 2], [2, 3], [3, 4]]) == set([1, 2, 3, 4])\nassert set(extract_singly([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == set([1, 2, 3, 4, 5, 6, 7, 8, 9])\nassert set(extract_singly([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])",
+  "sample_keys": [
+    "assert set(extract_singly([])) == set()\nassert set(extract_singly([[], []])) == set()\nassert set(extract_singly([[1], [2]])) == set([1, 2])\nassert set(extract_singly([['a'], ['b']])) == set(['a', 'b'])\nassert set(extract_singly([[(1, 2)], [(3, 4)]])) == set([1, 2, 3, 4])",
+    "assert set(extract_singly([])) == set([])\nassert set(extract_singly([[1], [2], [3]])) == {1, 2, 3}\nassert set(extract_singly([[], []])) == set([])\nassert set(extract_singly([[1, 2, 3, 3], [1, 2, 3], [1, 2, 3]]) == {1, 2, 3}\nassert set(extract_singly([[1, 2, 3, 3], [1, 2, 3, 3], [1, 2, 3, 3], [1, 2, 3, 3]]) == {1, 2, 3}",
+    "# Test case with multiple sublists containing unique elements\nassert set(extract_singly([(3, 5, 7), (2, 6, 8), (9, 0, 1)])) == set([3, 5, 7, 2, 6, 8, 9, 0, 1])\n\n# Test case with empty sublist\nassert set(extract_singly([(5, 8), [], (10, 12)])) == set([5, 8, 10, 12])\n\n# Edge case with nested lists containing duplicates\nassert set(extract_singly([[1, 2], [3, 2], [5]])) == set([1, 2, 3, 5])\n\n# Edge case with mixed data types\nassert set(extract_singly([(True, False), ('Hello', 'World'), (1.1, 2.2)])) == set([True, False, 'Hello', 'World', 1.1, 2.2])\n\n# Edge case with negative integers\nassert set(extract_singly([(-1, -2), (-3, -4), (-5)])) == set([-1, -2, -3, -4, -5])",
+    "assert set(extract_singly([('x', 'y'), ('z', 'w')])) == {'x', 'y', 'z', 'w'}\nassert set(extract_singly([])) == set()\nassert set(extract_singly([[1], [2], [3]]) == {1, 2, 3}\nassert set(extract_singly([{4}, [5, 6], [7, 8, 9]])) == {4, 5, 6, 7, 8, 9}\nassert set(extract_singly([(1, 1), (1, 2), (3, 3)]) == {1, 2, 3}",
+    "assert set(extract_singly([(3, 4, 5), (4, 5, 7), (1, 4)])) == set([3, 4, 5, 7, 1])\nassert set(extract_singly([])) == set()\nassert set(extract_singly([(1,), (2,), (3,), (4,)])) == set([1, 2, 3, 4])\nassert set(extract_singly([(1, 2), (2, 3), (3, 4), (4, 1)]) == set([1, 2, 3, 4])\nassert set(extract_singly([[], [1], [2]]) == set([1, 2])"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2375.0,
+    "small_out": 491.0,
+    "small_s": 10.706050799024524
+  },
+  "calls_plus": {
+    "small_in": 1961.0,
+    "small_out": 262.0,
+    "small_s": 5.580646256974433,
+    "large_in": 198.0,
+    "large_out": 199.0,
+    "large_s": 5.035635020001791
+  },
+  "calls_samples": {
+    "small_in": 990.0,
+    "small_out": 860.0,
+    "small_s": 15.99710708897328
+  }
+}

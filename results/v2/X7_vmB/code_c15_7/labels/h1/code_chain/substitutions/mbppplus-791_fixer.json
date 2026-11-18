@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-791",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```",
+  "reference_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+  "final_key_plus": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def remove_nested(input_tuple):\n    result_list = []\n\n    def helper(tup):\n        nonlocal result_list\n        for item in tup:\n            if isinstance(item, tuple):\n                helper(item)\n            else:\n                result_list.append(item)\n\n    helper(input_tuple)\n    return tuple(result_list)",
+      "reference_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+      "key_differs": true,
+      "text": "```python\ndef remove_nested(input_tuple):\n    result_list = []\n\n    def helper(tup):\n        nonlocal result_list\n        for item in tup:\n            if isinstance(item, tuple):\n                helper(item)\n            else:\n                result_list.append(item)\n\n    helper(input_tuple)\n    return tuple(result_list)\n```",
+      "quality": 0.0,
+      "final_key": "def remove_nested(input_tuple):\n    result_list = []\n\n    def helper(tup):\n        nonlocal result_list\n        for item in tup:\n            if isinstance(item, tuple):\n                helper(item)\n            else:\n                result_list.append(item)\n\n    helper(input_tuple)\n    return tuple(result_list)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef remove_nested(input_tuple):\n    result_list = []\n\n    def helper(tup):\n        nonlocal result_list\n        for item in tup:\n            if isinstance(item, tuple):\n                helper(item)\n            else:\n                result_list.append(item)\n\n    helper(input_tuple)\n    return tuple(result_list)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n\n# Test cases\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested((2, 6, 8, (5, 7), 11)) == (2, 6, 8, 11)\nassert remove_nested((3, 7, 9, (6, 8), 12)) == (3, 7, 9, 12)\nassert remove_nested((3, 7, 9, (6, 8), (5, 12), 12)) == (3, 7, 9, 12)",
+      "reference_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+      "key_differs": true,
+      "text": "Here's the updated code that removes nested tuples from a given tuple:\n\n```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n\n# Test cases\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested((2, 6, 8, (5, 7), 11)) == (2, 6, 8, 11)\nassert remove_nested((3, 7, 9, (6, 8), 12)) == (3, 7, 9, 12)\nassert remove_nested((3, 7, 9, (6, 8), (5, 12), 12)) == (3, 7, 9, 12)\n```",
+      "quality": 0.0,
+      "final_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2",
+      "reference_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+      "key_differs": true,
+      "text": "```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n```",
+      "quality": 0.0,
+      "final_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+  "sample_keys": [
+    "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+    "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n\n# Test cases to verify the correctness of the function\ntest_cases = [\n    ((1, 5, 7, (4, 6), 10), (1, 5, 7, 10)),\n    ((2, 6, 8, (5, 7), 11), (2, 6, 8, 11)),\n    ((3, 7, 9, (6, 8), 12), (3, 7, 9, 12)),\n    ((3, 7, 9, (6, 8), (5, 12), 12), (3, 7, 9, 12)),\n    ((1, 5, 7, (4, 6), 10), (1, 5, 7, 10)),\n    (((1,), 2, (3,)), (1, 2, 3)),\n    ((), ()),\n    ((1, 2, 3, 4, 5), (1, 2, 3, 4, 5)),\n    ((1, 2, 3, 4, 5, (6, 7, 8)), (1, 2, 3, 4, 5, 6, 7, 8))\n]\n\nfor input_tuple, expected in test_cases:\n    result = remove_nested(input_tuple)\n    assert result == expected, f\"Expected {expected}, but got {result}.\"\nprint(\"All tests passed!\")",
+    "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+    "from typing import *\ndef remove_nested(input_tuple: Tuple[Any]) -> Tuple[Any]:\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+    "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2014.0,
+    "small_out": 449.0,
+    "small_s": 6.566948453983059
+  },
+  "calls_plus": {
+    "small_in": 1478.0,
+    "small_out": 396.0,
+    "small_s": 5.792362020991277,
+    "large_in": 536.0,
+    "large_out": 53.0,
+    "large_s": 1.64152685701265
+  },
+  "calls_samples": {
+    "small_in": 2680.0,
+    "small_out": 714.0,
+    "small_s": 14.982160665036645
+  }
+}

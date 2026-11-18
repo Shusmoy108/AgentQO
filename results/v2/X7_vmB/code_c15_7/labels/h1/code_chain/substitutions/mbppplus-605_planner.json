@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-605",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `prime_num` that takes an integer as its parameter.\n2. Check if the integer is less than 2, as numbers less than 2 are not prime. If so, return `False`.\n3. Iterate from 2 up to the square root of the integer (inclusive). For each iteration, check if the integer is divisible by the current number.\n4. If the integer is divisible by any number during the iteration, it is not a prime number; return `False`.\n5. If no divisors are found, the integer is a prime number; return `True`.",
+  "reference_key": null,
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert prime_num(17)==True\nassert prime_num(49)==False\nassert prime_num(2)==True\nassert prime_num(1)==False\nassert prime_num(67)==True\n```",
+    "coder": "```python\nimport math\n\ndef prime_num(n):\n    if n < 2:\n        return False\n    for i in range(2, int(math.sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef prime_num(n):\n    if n < 2:\n        return False\n    for i in range(2, int(math.sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `large_product` that takes two lists as input parameters.\n2. Initialize an empty list called `result` to store the largest products.\n3. Iterate over the first list using a for loop.\n4. For each element in the first list, iterate over the second list using another for loop.\n5. Calculate the product of the current elements from both lists.\n6. Append the calculated product to the `result` list.\n7. After both loops complete, sort the `result` list in descending order.\n8. Return the first three elements of the sorted `result` list.\n\nThis approach ensures that we efficiently find the largest products by iterating through the lists only once and sorting the results afterward.",
+      "quality": 1.0,
+      "final_key": "def prime_num(n):\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    max_divisor = int(n**0.5) + 1\n    for divisor in range(3, max_divisor, 2):\n        if n % divisor == 0:\n            return False\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert prime_num(7)==True\nassert prime_num(49)==False\nassert prime_num(101)==True\nassert prime_num(1)==False\nassert prime_num(2)==True\n```",
+        "coder": "```python\ndef large_product(list1, list2):\n    result = []\n    for i in list1:\n        for j in list2:\n            product = i * j\n            result.append(product)\n    result.sort(reverse=True)\n    return result[:3]\n```",
+        "verifier": "PICK: B\n```python\ndef prime_num(n):\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    max_divisor = int(n**0.5) + 1\n    for divisor in range(3, max_divisor, 2):\n        if n % divisor == 0:\n            return False\n    return True\n```",
+        "fixer": "```python\ndef prime_num(n):\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    max_divisor = int(n**0.5) + 1\n    for divisor in range(3, max_divisor, 2):\n        if n % divisor == 0:\n            return False\n    return True\n\n# Test cases\nassert prime_num(13) == True\nassert prime_num(7) == True\nassert prime_num(-1010) == False\nassert prime_num(7) == True\nassert prime_num(49) == False\nassert prime_num(101) == True\nassert prime_num(1) == False\nassert prime_num(2) == True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `neg_nos` that takes one parameter, `numbers`.\n2. Initialize an empty list called `negative_numbers`.\n3. Iterate over each number in the input list `numbers`.\n4. Check if the current number is less than zero using the condition `if num < 0`.\n5. If the condition is true, append the number to the `negative_numbers` list.\n6. After iterating through all numbers, return the `negative_numbers` list.\n\nThis approach ensures that all negative numbers from the input list are collected into a new list, which is then returned as the result.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert prime_num(-7) == True\nassert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(9) == False\nassert prime_num(11) == True\n```",
+        "coder": "```python\ndef neg_nos(numbers):\n    negative_numbers = []\n    for num in numbers:\n        if num < 0:\n            negative_numbers.append(num)\n    return negative_numbers\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef prime_num(n):\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\n# Test cases\nassert prime_num(13) == True\nassert prime_num(7) == True\nassert prime_num(-1010) == False\nassert prime_num(-7) == True\nassert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(9) == False\nassert prime_num(11) == True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `kth_element` that takes two parameters: `arr`, which is the input array, and `k`, which is the position of the desired element (1-based index).\n2. Check if the value of `k` is within the valid range for the array indices (i.e., 1 \u2264 k \u2264 len(arr)).\n3. If `k` is out of bounds, raise an exception or handle it appropriately.\n4. Otherwise, return the element at the position specified by `k` in the array.\n5. Test the function with the provided test case to ensure it works as expected.",
+      "quality": 1.0,
+      "final_key": "def prime_num(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert prime_num(17)==True\nassert prime_num(49)==False\nassert prime_num(2)==True\nassert prime_num(1)==False\nassert prime_num(67)==True\n```",
+        "coder": "```python\ndef prime_num(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n```",
+        "verifier": "PICK: A\n\n```python\ndef prime_num(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n```",
+        "fixer": "```python\ndef prime_num(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+  "sample_keys": [
+    "def prime_num(num):\n    # Step 2\n    if num <= 1:\n        return False\n    # Step 3\n    elif num == 2:\n        return True\n    # Step 4\n    for i in range(2, int(num**0.5) + 1):\n        # Step 5\n        if num % i == 0:\n            return False\n    # Step 6\n    return True",
+    null,
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.6666666666666666
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1249.0,
+    "small_out": 411.0,
+    "small_s": 9.404178711003624
+  },
+  "calls_plus": {
+    "large_in": 101.0,
+    "large_out": 127.0,
+    "large_s": 3.9206543309846893,
+    "small_in": 1069.0,
+    "small_out": 169.0,
+    "small_s": 3.650299582950538
+  },
+  "calls_samples": {
+    "small_in": 4219.0,
+    "small_out": 1511.0,
+    "small_s": 31.318613302981248
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-797",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert sum_in_range(1, 10) == 25\nassert sum_in_range(4, 7) == 12\nassert sum_in_range(10, 10) == 0\nassert sum_in_range(-3, 2) == -4\nassert sum_in_range(0, 0) == 0\n```",
+  "reference_key": "assert sum_in_range(1, 10) == 25\nassert sum_in_range(4, 7) == 12\nassert sum_in_range(10, 10) == 0\nassert sum_in_range(-3, 2) == -4\nassert sum_in_range(0, 0) == 0",
+  "final_key_plus": "def sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n```",
+    "fixer": "```python\ndef sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sum_in_range(2,3) == 1 # Even number\nassert sum_in_range(-5,-3) == -6 # Negative odd number\nassert sum_in_range(20,19) == 0 # Edge case where the higher value before l is equal to the lower\nassert sum_in_range(10,20) == 95 # Range from positive even to positive even\nassert sum_in_range(15,29) == 147 # Range from positive odd to positive even",
+      "reference_key": "assert sum_in_range(1, 10) == 25\nassert sum_in_range(4, 7) == 12\nassert sum_in_range(10, 10) == 0\nassert sum_in_range(-3, 2) == -4\nassert sum_in_range(0, 0) == 0",
+      "key_differs": true,
+      "text": "To satisfy the additional requirements:\n```python\nassert sum_in_range(2,3) == 1 # Even number\nassert sum_in_range(-5,-3) == -6 # Negative odd number\nassert sum_in_range(20,19) == 0 # Edge case where the higher value before l is equal to the lower\nassert sum_in_range(10,20) == 95 # Range from positive even to positive even\nassert sum_in_range(15,29) == 147 # Range from positive odd to positive even\n```",
+      "quality": 1.0,
+      "final_key": "def sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "test_cases = {\n    (1, 3): 4,\n    (5, 7): 9,\n    (-3, -1): 6,\n    (8, 8): 0,\n    (15, 70): 112,\n    (71, 71): 71\n}\n\nfor inputs, expected_output in test_cases.items():\n    assert sum_in_range(*inputs) == expected_output",
+      "reference_key": "assert sum_in_range(1, 10) == 25\nassert sum_in_range(4, 7) == 12\nassert sum_in_range(10, 10) == 0\nassert sum_in_range(-3, 2) == -4\nassert sum_in_range(0, 0) == 0",
+      "key_differs": true,
+      "text": "```python\ntest_cases = {\n    (1, 3): 4,\n    (5, 7): 9,\n    (-3, -1): 6,\n    (8, 8): 0,\n    (15, 70): 112,\n    (71, 71): 71\n}\n\nfor inputs, expected_output in test_cases.items():\n    assert sum_in_range(*inputs) == expected_output\n```",
+      "quality": 1.0,
+      "final_key": "def sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n\n# Test cases\nassert sum_in_range(2,5) == 8\nassert sum_in_range(5,7) == 12\nassert sum_in_range(7,13) == 40\nassert sum_in_range(1,10) == 25\nassert sum_in_range(10,10) == 0\nassert sum_in_range(10,1) == 0\nassert sum_in_range(-1,1) == 0\nassert sum_in_range(0,0) == 0\nassert sum_in_range(100,100) == 100\nassert sum_in_range(100,101) == 101\nassert sum_in_range(101,100) == 0\nassert sum_in_range(100,102) == 102\nassert sum_in_range(102,100) == 0\nassert sum_in_range(100,103) == 103\nassert sum_in_range(103,100) == 0\nassert sum_in_range(100,104) == 104\nassert sum_in_range(104,100) == 0\nassert sum_in_range(100,105) == 105\nassert sum_in_range(105,100) == 0\nassert sum_in_range(100,106) == 106\nassert sum_in_range(106,100) == 0\nassert sum_in_range(100,107) == 107\nassert sum_in_range(107,100) == 0\nassert sum_in_range(100,108) == 108\nassert sum_in_range(108,100) == 0\nassert sum_in_range(100,109) == 109\nassert sum_in_range(109,100) == 0\nassert sum"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert count_char_position(\"xyz\") == 3\nassert count_char_position(\"aA\") == 2\nassert count_char_position(\"bB\") == 2\nassert count_char_position(\"cC\") == 2\nassert count_char_position(\"dD\") == 2\nassert count_char_position(\"eE\") == 2\nassert count_char_position(\"fF\") == 2\nassert count_char_position(\"gG\") == 2\nassert count_char_position(\"hH\") == 2\nassert count_char_position(\"iI\") == 2\nassert count_char_position(\"jJ\") == 2\nassert count_char_position(\"kK\") == 2\nassert count_char_position(\"lL\") == 2\nassert count_char_position(\"mM\") == 2\nassert count_char_position(\"nN\") == 2\nassert count_char_position(\"oO\") == 2\nassert count_char_position(\"pP\") == 2\nassert count_char_position(\"qQ\") == 2\nassert count_char_position(\"rR\") == 2\nassert count_char_position(\"sS\") == 2\nassert count_char_position(\"tT\") == 2\nassert count_char_position(\"uU\") == 2\nassert count_char_position(\"vV\") == 2\nassert count_char_position(\"wW\") == 2\nassert count_char_position(\"xX\") == 2\nassert count_char_position(\"yY\") == 2\nassert count_char_position(\"zZ\") == 2\nassert count_char_position(\"\") == 0\nassert count_char_position(\"1234567890\") == 0\nassert count_char_position(\"!@#$%^&*()_+-=[]{}|;':\", \",./<>?\") == 0\nassert count_char_position(\"abcABC\") == 3\nassert count_char_position(\"ABcAbC\") == 3\nassert count_char_position(\"aBcDeFgHiJkLmNoPqRsTuVwXyZ\") == 26\nassert count_char_position(\"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") == 52\nassert count_char_position(\"1234567890!@#$%^&*()_+-=[]{}|;':\", \",./<>? ABCDEFghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") == 52",
+      "reference_key": "assert sum_in_range(1, 10) == 25\nassert sum_in_range(4, 7) == 12\nassert sum_in_range(10, 10) == 0\nassert sum_in_range(-3, 2) == -4\nassert sum_in_range(0, 0) == 0",
+      "key_differs": true,
+      "text": "```python\nassert count_char_position(\"xyz\") == 3\nassert count_char_position(\"aA\") == 2\nassert count_char_position(\"bB\") == 2\nassert count_char_position(\"cC\") == 2\nassert count_char_position(\"dD\") == 2\nassert count_char_position(\"eE\") == 2\nassert count_char_position(\"fF\") == 2\nassert count_char_position(\"gG\") == 2\nassert count_char_position(\"hH\") == 2\nassert count_char_position(\"iI\") == 2\nassert count_char_position(\"jJ\") == 2\nassert count_char_position(\"kK\") == 2\nassert count_char_position(\"lL\") == 2\nassert count_char_position(\"mM\") == 2\nassert count_char_position(\"nN\") == 2\nassert count_char_position(\"oO\") == 2\nassert count_char_position(\"pP\") == 2\nassert count_char_position(\"qQ\") == 2\nassert count_char_position(\"rR\") == 2\nassert count_char_position(\"sS\") == 2\nassert count_char_position(\"tT\") == 2\nassert count_char_position(\"uU\") == 2\nassert count_char_position(\"vV\") == 2\nassert count_char_position(\"wW\") == 2\nassert count_char_position(\"xX\") == 2\nassert count_char_position(\"yY\") == 2\nassert count_char_position(\"zZ\") == 2\nassert count_char_position(\"\") == 0\nassert count_char_position(\"1234567890\") == 0\nassert count_char_position(\"!@#$%^&*()_+-=[]{}|;':\", \",./<>?\") == 0\nassert count_char_position(\"abcABC\") == 3\nassert count_char_position(\"ABcAbC\") == 3\nassert count_char_position(\"aBcDeFgHiJkLmNoPqRsTuVwXyZ\") == 26\nassert count_char_position(\"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") == 52\nassert count_char_position(\"1234567890!@#$%^&*()_+-=[]{}|;':\", \",./<>? ABCDEFghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") == 52\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n\n# Test cases\nassert sum_in_range(2,5) == 8\nassert sum_in_range(5,7) == 12\nassert sum_in_range(7,13) == 40\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert sum_in_range(3,7) == 16\nassert sum_in_range(1,1) == 1\nassert sum_in_range(10,10) == 10\nassert sum_in_range(-1,1) == 0\nassert sum_in_range(0,0) == 0",
+  "sample_keys": [
+    "assert sum_in_range(3,7) == 17\nassert sum_in_range(4,4) == 0\nassert sum_in_range(-3,3) == -6\nassert sum_in_range(10,10) == 0\nassert sum_in_range(10,15) == 60",
+    "assert sum_in_range(-2,2) == -2\nassert sum_in_range(4,9) == 20\nassert sum_in_range(6,6) == 0\nassert sum_in_range(7,-3) == 21\nassert sum_in_range(0,100) == 2550",
+    "# Test case 1: Sum of odd numbers between 2 and 5\nassert sum_in_range(2, 5) == 8\n\n# Test case 2: Sum of odd numbers between 3 and 3\nassert sum_in_range(3, 3) == 3\n\n# Test case 3: Sum of odd numbers between 4 and 7\nassert sum_in_range(4, 7) == 16\n\n# Test case 4: Sum of odd numbers between -2 and 0\nassert sum_in_range(-2, 0) == -1\n\n# Test case 5: Sum of odd numbers between 10 and 9\nassert sum_in_range(10, 9) == 0",
+    "assert sum_in_range(-1, 4) == 3\nassert sum_in_range(0, 5) == 9\nassert sum_in_range(-3, -6) == -9\nassert sum_in_range(7, 10) == 28\nassert sum_in_range(10, 10) == 10",
+    "def sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n\n# Test cases\nassert sum_in_range(2, 5) == 8\nassert sum_in_range(1, 4) == 6\nassert sum_in_range(0, 0) == 0\nassert sum_in_range(7, 9) == 15\nassert sum_in_range(-3, 3) == 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1339.0,
+    "small_out": 372.0,
+    "small_s": 4.864947028021561
+  },
+  "calls_plus": {
+    "small_in": 1174.0,
+    "small_out": 298.0,
+    "small_s": 4.528207630006364,
+    "large_in": 177.0,
+    "large_out": 80.0,
+    "large_s": 2.422039062017575
+  },
+  "calls_samples": {
+    "small_in": 885.0,
+    "small_out": 524.0,
+    "small_s": 11.085043596016476
+  }
+}

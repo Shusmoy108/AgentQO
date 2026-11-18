@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-118",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert string_to_list(\"\") == []\nassert string_to_list(\"single\") == [\"single\"]\nassert string_to_list(\" multiple   spaces \") == [\"multiple\", \"spaces\"]\nassert string_to_list(\"123 456 789\") == [\"123\", \"456\", \"789\"]\nassert string_to_list(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\") == ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']\n```",
+  "reference_key": "assert string_to_list(\"\") == []\nassert string_to_list(\"single\") == [\"single\"]\nassert string_to_list(\" multiple   spaces \") == [\"multiple\", \"spaces\"]\nassert string_to_list(\"123 456 789\") == [\"123\", \"456\", \"789\"]\nassert string_to_list(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\") == ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']",
+  "final_key_plus": "def string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```",
+    "fixer": "```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert string_to_list(\"hello world\") == ['hello', 'world'], \"Test case error for input 'hello world'\"\nassert string_to_list(\"\") == [], \"Test case error for empty string\"\nassert string_to_list(\"singleword\") == ['singleword'], \"Test case error for single word\"\nassert string_to_list(\".com\") == ['.com'], \"Test case error for a single domain\"\nassert string_to_list(\"-a-b-c\") == ['-a', '-b', '-c'], \"Test case error for dashed input\"",
+      "reference_key": "assert string_to_list(\"\") == []\nassert string_to_list(\"single\") == [\"single\"]\nassert string_to_list(\" multiple   spaces \") == [\"multiple\", \"spaces\"]\nassert string_to_list(\"123 456 789\") == [\"123\", \"456\", \"789\"]\nassert string_to_list(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\") == ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']",
+      "key_differs": true,
+      "text": "```python\nassert string_to_list(\"hello world\") == ['hello', 'world'], \"Test case error for input 'hello world'\"\nassert string_to_list(\"\") == [], \"Test case error for empty string\"\nassert string_to_list(\"singleword\") == ['singleword'], \"Test case error for single word\"\nassert string_to_list(\".com\") == ['.com'], \"Test case error for a single domain\"\nassert string_to_list(\"-a-b-c\") == ['-a', '-b', '-c'], \"Test case error for dashed input\"\n```",
+      "quality": 0.0,
+      "final_key": "def string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```",
+        "fixer": "```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "assert string_to_list(\"\") == []\nassert string_to_list(\"single\") == [\"single\"]\nassert string_to_list(\" multiple   spaces \") == [\"multiple\", \"spaces\"]\nassert string_to_list(\"123 456 789\") == [\"123\", \"456\", \"789\"]\nassert string_to_list(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\") == ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']",
+      "key_differs": true,
+      "text": "```python\nassert string_to_list(\"\") == []\nassert string_to_list(\"single word\") == ['single', 'word']\nassert string_to_list(\"this is sentence with multiple words.\") == [\n'start',\n'esthe',\n'is',\n'sentence',\n'with',\n'multiple',\n'words.'\n]\nassert string_to_list(\"list\") == [\"list\"]\nassert string_to_list(\"list comprehension list.append(item)\") == [\n\tlist,\n\tcomprehension,\n\tlist,\n\tappend,\n\titem\n]",
+      "quality": 0.0,
+      "final_key": "def string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```",
+        "fixer": "```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert cube_nums([]) == []\nassert cube_nums([-1, -2, -3]) == [1, 8, 27]\nassert cube_nums([0]) == [0]\nassert cube_nums([10, 20, 30]) == [1000, 8000, 27000]\nassert cube_nums([-10, -20, -30]) == [1000, 8000, 27000]",
+      "reference_key": "assert string_to_list(\"\") == []\nassert string_to_list(\"single\") == [\"single\"]\nassert string_to_list(\" multiple   spaces \") == [\"multiple\", \"spaces\"]\nassert string_to_list(\"123 456 789\") == [\"123\", \"456\", \"789\"]\nassert string_to_list(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\") == ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']",
+      "key_differs": true,
+      "text": "```python\nassert cube_nums([]) == []\nassert cube_nums([-1, -2, -3]) == [1, 8, 27]\nassert cube_nums([0]) == [0]\nassert cube_nums([10, 20, 30]) == [1000, 8000, 27000]\nassert cube_nums([-10, -20, -30]) == [1000, 8000, 27000]\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n\n# Test cases\nassert string_to_list(\"python programming\") == ['python', 'programming']\nassert string_to_list(\"lists tuples strings\") == ['lists', 'tuples', 'strings']\nassert string_to_list(\"write a program\") == ['write', 'a', 'program']\nassert cube_nums([]) == []\nassert cube_nums([-1, -2, -3]) == [1, 8, 27]\nassert cube_nums([0]) == [0]\nassert cube_nums([10, 20, 30]) == [1000, 8000, 27000]\nassert cube_nums([-10, -20, -30]) == [1000, 8000, 27000]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert string_to_list(\"\") == []\nassert string_to_list(\"single\") == ['single']\nassert string_to_list(\"multiple words\") == ['multiple', 'words']\nassert string_to_list(\"with spaces\") == ['with', 'spaces']\nassert string_to_list(\"no spaces\") == ['no', 'spaces']",
+  "sample_keys": [
+    "assert string_to_list(\"1234\") == ['1234'], \"Test case with single digit failed\"\nassert string_to_list(\"\") == [], \"Test case with empty string failed\"\nassert string_to_list(\"hello world!\") == ['hello', 'world!'], \"Test case with mixed characters failed\"\nassert string_to_list(\" \") == [], \"Test case with single space failed\"\nassert string_to_list(\"one two three four five six seven eight nine ten\") == ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'], \"Test case with multiple words failed\"",
+    "assert string_to_list(\"\") == []\nassert string_to_list(\"a\") == [\"a\"]\nassert string_to_list(\"hello world\") == [\"hello\", \"world\"]\nassert string_to_list(\"singleword\") == [\"singleword\"]\nassert string_to_list(\"12345 67890 abc def\") == [\"12345\", \"67890\", \"abc\", \"def\"]",
+    "assert string_to_list(\"\") == []\nassert string_to_list(\"python\") == ['python']\nassert string_to_list(\"hello world\") == ['hello', 'world']\nassert string_to_list(\"data science is fun\") == ['data', 'science', 'is', 'fun']\nassert string_to_list(\"one two three four five six seven eight nine ten\") == ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']",
+    "# Check with empty string\nassert string_to_list(\"\") == []\n\n# Check with multiple words separated by single space\nassert string_to_list(\"hello world\") == ['hello', 'world']\n\n# Check with multiple words separated by multiple spaces\nassert string_to_list(\"   join   me     properly \") == ['join', 'me', 'properly']\n\n# Check with leading whitespace\nassert string_to_list(\"  extra       white space\") == ['extra', 'white', 'space']\n\n# Check with trailing whitespace\nassert string_to_list(\"  extra white space  \") == ['extra', 'white', 'space']\n\n# Check with multiple consecutive spaces\nassert string_to_list(\"single   double   triple   spaced\") == ['single', 'double', 'triple', 'spaced']",
+    "# Additional test cases for the string_to_list function\nassert string_to_list(\"\") == []  # Test with empty string\nassert string_to_list(\"one two three\") == ['one', 'two', 'three']  # Test with multiple words\nassert string_to_list(\"single_word\") == ['single_word']  # Test with single word\nassert string_to_list(\"1234567890\") == ['1234567890']  # Test with numbers only\nassert string_to_list(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\") == \\\n       ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']  # Test with all lowercase letters"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1263.0,
+    "small_out": 327.0,
+    "small_s": 6.5904566400568
+  },
+  "calls_plus": {
+    "small_in": 1442.0,
+    "small_out": 259.0,
+    "small_s": 5.2436227870348375,
+    "large_in": 166.0,
+    "large_out": 183.0,
+    "large_s": 4.109430095995776
+  },
+  "calls_samples": {
+    "small_in": 830.0,
+    "small_out": 737.0,
+    "small_s": 12.734295150032267
+  }
+}

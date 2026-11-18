@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-85",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `surfacearea_sphere` that takes one parameter, the radius of the sphere.\n2. Use the formula for the surface area of a sphere, \\( A = 4\\pi r^2 \\), where \\( r \\) is the radius.\n3. Import the `math` module to access the value of pi.\n4. Calculate the surface area using the formula and return the result.\n5. Ensure the function handles floating-point numbers accurately by using `math.isclose` in tests if necessary.",
+  "reference_key": null,
+  "final_key_plus": "import math\n\ndef surfacearea_sphere(radius):\n    \"\"\"\n    Calculate the surface area of a sphere given its radius.\n\n    Args:\n    radius (float): The radius of the sphere.\n\n    Returns:\n    float: The surface area of the sphere.\n    \"\"\"\n    return 4 * math.pi * radius ** 2",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 4 * math.pi, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(2), 25.132741228718345, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(3), 113.09733552923255, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\n```",
+    "coder": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    \"\"\"\n    Calculate the surface area of a sphere given its radius.\n\n    Args:\n    radius (float): The radius of the sphere.\n\n    Returns:\n    float: The surface area of the sphere.\n    \"\"\"\n    return 4 * math.pi * radius ** 2\n```",
+    "verifier": "PICK: A\n```python\nimport math\n\ndef surfacearea_sphere(radius):\n    \"\"\"\n    Calculate the surface area of a sphere given its radius.\n\n    Args:\n    radius (float): The radius of the sphere.\n\n    Returns:\n    float: The surface area of the sphere.\n    \"\"\"\n    return 4 * math.pi * radius ** 2\n```",
+    "fixer": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    \"\"\"\n    Calculate the surface area of a sphere given its radius.\n\n    Args:\n    radius (float): The radius of the sphere.\n\n    Returns:\n    float: The surface area of the sphere.\n    \"\"\"\n    return 4 * math.pi * radius ** 2\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_divisors` that takes one parameter, `num`.\n2. Initialize a variable `divisor_count` to 0.\n3. Iterate through all numbers from 1 to `num` (inclusive).\n4. For each number, check if it divides `num` without leaving a remainder using the modulus operator (`%`).\n5. If the condition is true, increment `divisor_count` by 1.\n6. After the loop completes, check if `divisor_count` is even.\n7. Return `True` if `divisor_count` is even, otherwise return `False`.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\ndef surfacearea_sphere(radius):\n    return 4 * math.pi * radius ** 2\n\n# Test cases\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(15), 2827.4333882308138, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(20), 5026.548245743669, rel_tol=0.001)\nassert count_divisors(1) == True\nassert count_divisors(2) == False\nassert count_divisors(3) == True\nassert count_divisors(4) == False\nassert count_divisors(5) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_divisors(1) == True\nassert count_divisors(2) == False\nassert count_divisors(3) == True\nassert count_divisors(4) == False\nassert count_divisors(5) == True\n```",
+        "coder": "```python\nimport math\n\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\ndef surfacearea_sphere(radius):\n    return 4 * math.pi * radius ** 2\n\n# Test cases\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(15), 2827.4333882308138, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(20), 5026.548245743669, rel_tol=0.001)\nassert count_divisors(1) == True\nassert count_divisors(2) == False\nassert count_divisors(3) == True\nassert count_divisors(4) == False\nassert count_divisors(5) == True\n```",
+        "fixer": "```python\nimport math\n\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\ndef surfacearea_sphere(radius):\n    return 4 * math.pi * radius ** 2\n\n# Test cases\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(15), 2827.4333882308138, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(20), 5026.548245743669, rel_tol=0.001)\nassert count_divisors(1) == True\nassert count_divisors(2) == False\nassert count_divisors(3) == True\nassert count_divisors(4) == False\nassert count_divisors(5) == True\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `surface_area_sphere` that takes one parameter, the radius of the sphere.\n2. Use the formula for the surface area of a sphere, \\( A = 4\\pi r^2 \\), where \\( r \\) is the radius.\n3. Import the `math` module to access the value of pi.\n4. Calculate the surface area using the formula and return the result.\n5. Handle floating-point numbers by ensuring the calculation uses `math.isclose` in tests when required.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef surface_area_sphere(radius):\n    # Calculate the surface area using the formula 4 * pi * r^2\n    surface_area = 4 * math.pi * radius ** 2\n    return surface_area",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert math.isclose(surface_area_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surface_area_sphere(1), 4 * math.pi, rel_tol=0.001)\nassert math.isclose(surface_area_sphere(2), 25.132741228718345, rel_tol=0.001)\nassert math.isclose(surface_area_sphere(3), 113.09733552923255, rel_tol=0.001)\nassert math.isclose(surface_area_sphere(10), 1256.6370614359173, rel_tol=0.001)\n```",
+        "coder": "```python\nimport math\n\ndef surface_area_sphere(radius):\n    # Calculate the surface area using the formula 4 * pi * r^2\n    surface_area = 4 * math.pi * radius ** 2\n    return surface_area\n```",
+        "verifier": "PICK: A\n```python\nimport math\n\ndef surface_area_sphere(radius):\n    # Calculate the surface area using the formula 4 * pi * r^2\n    surface_area = 4 * math.pi * radius ** 2\n    return surface_area\n```",
+        "fixer": "```python\nimport math\n\ndef surface_area_sphere(radius):\n    # Calculate the surface area using the formula 4 * pi * r^2\n    surface_area = 4 * math.pi * radius ** 2\n    return surface_area\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `add_tuple` that takes two parameters: `lst` (the list) and `tup` (the tuple).\n2. Use the `extend()` method of the list to append all elements of the tuple to the end of the list.\n3. Return the modified list.\n\nHere's the complete implementation:\n\n```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```\n\nThis function will correctly add the elements of the tuple to the end of the list and return the updated list.",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef surfacearea_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return 4 * math.pi * radius ** 2",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    return 4 * math.pi * radius ** 2\n\n# Test cases\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 4 * math.pi, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(2), 25.132741228718345, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(-1), 0, rel_tol=0.001)  # Edge case: negative radius\n```",
+        "coder": "```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef surfacearea_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return 4 * math.pi * radius ** 2\n```",
+        "fixer": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return 4 * math.pi * radius ** 2\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import math\n\ndef surfacearea_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return 4 * math.pi * radius ** 2",
+  "sample_keys": [
+    "import math\n\ndef surfacearea_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return 4 * math.pi * radius ** 2",
+    "import math\n\ndef surfacearea_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return 4 * math.pi * radius ** 2",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1767.0,
+    "small_out": 350.0,
+    "small_s": 4.545528646995081
+  },
+  "calls_plus": {
+    "large_in": 130.0,
+    "large_out": 109.0,
+    "large_s": 3.5432682539976668,
+    "small_in": 1863.0,
+    "small_out": 385.0,
+    "small_s": 8.248622832004912
+  },
+  "calls_samples": {
+    "small_in": 5787.0,
+    "small_out": 1344.0,
+    "small_s": 24.720116640033666
+  }
+}

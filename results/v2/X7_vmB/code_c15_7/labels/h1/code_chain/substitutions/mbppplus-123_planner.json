@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-123",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a helper function to calculate the sum of proper divisors of a given number.\n2. Iterate through numbers from 1 to the specified number, using the helper function to find amicable pairs.\n3. Check if each pair is amicable (sum of divisors of one equals the other and vice versa).\n4. Sum up all amicable numbers found within the range.\n5. Return the total sum of amicable numbers.",
+  "reference_key": null,
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert amicable_numbers_sum(1000) == 3162\nassert amicable_numbers_sum(10000) == 41784\nassert amicable_numbers_sum(100000) == 31626\nassert amicable_numbers_sum(1000000) == 417840\nassert amicable_numbers_sum(10000000) == 3162624\n```",
+    "coder": "```python\ndef amicable_numbers_sum(n):\n    def sum_of_divisors(num):\n        \"\"\"Calculate the sum of proper divisors of a number.\"\"\"\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    amicable_sum = 0\n    for i in range(1, n + 1):\n        if sum_of_divisors(i) == i and sum_of_divisors(sum_of_divisors(i)) == i:\n            amicable_sum += i\n    return amicable_sum\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\ndef amicable_numbers_sum(n):\n    def sum_of_divisors(num):\n        \"\"\"Calculate the sum of proper divisors of a number.\"\"\"\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    amicable_sum = 0\n    for i in range(1, n + 1):\n        if sum_of_divisors(i) == i and sum_of_divisors(sum_of_divisors(i)) == i:\n            amicable_sum += i\n    return amicable_sum\n\n# Test cases\nassert amicable_numbers_sum(999) == 504\nassert amicable_numbers_sum(1000) == 3162\nassert amicable_numbers_sum(1001) == 0\nassert amicable_numbers_sum(1002) == 504\nassert amicable_numbers_sum(1003) == 0\nassert amicable_numbers_sum(1004) == 504\nassert amicable_numbers_sum(1005) == 0\nassert amicable_numbers_sum(1006) == 504\nassert amicable_numbers_sum(1007) == 0\nassert amicable_numbers_sum(1008) == 504\nassert amicable_numbers_sum(1009) == 0\nassert amicable_numbers_sum(1010) == 504\nassert amicable_numbers_sum(1011) == 0\nassert amicable_numbers_sum(1012) == 504\nassert amicable_numbers_sum(1013) == 0\nassert amicable_numbers_sum(1014) == 504\nassert amicable_numbers_sum(1015) == 0\nassert amicable_numbers_sum(1016) == 504\nassert amicable_numbers_sum(1017) == 0\nassert amicable_numbers_sum(1018) == 504\nassert amicable_numbers_sum(1019) == 0\nassert amicable_numbers_sum(1020) == 504\nassert am"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `new_tuple` that takes two parameters: `string_list` and `additional_string`.\n2. Inside the function, use the `tuple()` constructor to convert the `string_list` into a tuple.\n3. Append the `additional_string` to the end of the tuple using the `+` operator.\n4. Return the resulting tuple.\n\nHere's the complete implementation:\n\n```python\ndef new_tuple(string_list, additional_string):\n    # Convert the string list into a tuple\n    result_tuple = tuple(string_list)\n    # Append the additional string to the tuple\n    final_tuple = result_tuple + (additional_string,)\n    # Return the final tuple\n    return final_tuple\n```\n\nThis function will correctly create a new tuple from the provided string and list, as demonstrated by the assertion.",
+      "quality": 0.0,
+      "final_key": "def amicable_numbers_sum(n):\n    def find_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return divisors\n\n    amicable_pairs = []\n    for i in range(1, n + 1):\n        divs_i = find_divisors(i)\n        divs_j = find_divisors(sum(divs_i))\n        if i != j and sum(divs_j) == i:\n            amicable_pairs.append((i, j))\n\n    return sum(x + y for x, y in amicable_pairs)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert amicable_numbers_sum(284) == 220\nassert amicable_numbers_sum(6) == 12\nassert amicable_numbers_sum(1) == 0\nassert amicable_numbers_sum(10000) == 33330\nassert amicable_numbers_sum(100000) == 49600\n```",
+        "coder": "```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n```",
+        "verifier": "PICK: B\n```python\ndef amicable_numbers_sum(n):\n    def find_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return divisors\n\n    amicable_pairs = []\n    for i in range(1, n + 1):\n        divs_i = find_divisors(i)\n        divs_j = find_divisors(sum(divs_i))\n        if i != j and sum(divs_j) == i:\n            amicable_pairs.append((i, j))\n\n    return sum(x + y for x, y in amicable_pairs)\n```",
+        "fixer": "```python\ndef amicable_numbers_sum(n):\n    def find_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return divisors\n\n    amicable_pairs = []\n    for i in range(1, n + 1):\n        divs_i = find_divisors(i)\n        divs_j = find_divisors(sum(divs_i))\n        if i != j and sum(divs_j) == i:\n            amicable_pairs.append((i, j))\n\n    return sum(x + y for x, y in amicable_pairs)\n\n# Test cases\nassert amicable_numbers_sum(999) == 504\nassert amicable_numbers_sum(9999) == 31626\nassert amicable_numbers_sum(99) == 0\nassert amicable_numbers_sum(284) == 220\nassert amicable_numbers_sum(6) == 12\nassert amicable_numbers_sum(1) == 0\nassert amicable_numbers_sum(10000) == 33330\nassert amicable_numbers_sum(100000) == 49600\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_magic_square` that takes a 2D list (matrix) as input.\n2. Calculate the sum of each row, column, and diagonal.\n3. Check if all sums are equal.\n4. Return True if they are equal, False otherwise.\n\n```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n```\n\nThis function checks if the given matrix is a magic square by comparing the sums of its rows, columns, and diagonals. If all sums are equal, it returns True; otherwise, it returns False.",
+      "quality": 0.0,
+      "final_key": "def is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```",
+        "coder": "```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```",
+        "fixer": "```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `check_element` that accepts two parameters: `lst` (the list) and `element` (the element to compare).\n2. Initialize a variable `all_equal` to `True`.\n3. Iterate over each item in the list using a for loop.\n4. For each item, compare it to the given element using the equality operator (`==`).\n5. If any item is not equal to the element, set `all_equal` to `False` and break out of the loop.\n6. After the loop completes, return the value of `all_equal`.\n\nThis approach ensures that the function correctly identifies if all elements in the list are equal to the specified element.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert check_element([1, 2, 3], 1) == True\nassert check_element([1, 2, 3], 2) == True\nassert check_element([1, 2, 3], 3) == True\nassert check_element([1, 2, 3], 4) == False\nassert check_element([], 1) == False\n```",
+        "coder": "```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef amicable_numbers_sum(n):\n    def find_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return divisors\n\n    def is_amicable(a, b):\n        return sum(find_divisors(a)) == b and sum(find_divisors(b)) == a\n\n    total_sum = 0\n    for i in range(1, n + 1):\n        for j in range(i + 1, n + 1):\n            if is_amicable(i, j):\n                total_sum += i + j\n    return total_sum\n\n# Test cases\nassert amicable_numbers_sum(999) == 504\nassert amicable_numbers_sum(9999) == 31626\nassert amicable_numbers_sum(99) == 0\nassert check_element([1, 2, 3], 1) == True\nassert check_element([1, 2, 3], 2) == True\nassert check_element([1, 2, 3], 3) == True\nassert check_element([1, 2, 3], 4) == False\nassert check_element([], 1) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "from math import sqrt\n\ndef divisors(num):\n    \"\"\"Returns a list of all divisors of num.\"\"\"\n    divs = [1]\n    for i in range(2, int(sqrt(num)) + 1):\n        if num % i == 0:\n            divs.extend([i, num // i])\n    return sorted(divs)\n\ndef amicable_numbers_sum(n):\n    def is_amicable(a, b):\n        return sum(divisors(a)) == b and sum(divisors(b)) == a\n\n    amicable_numbers = []\n    for i in range(1, n + 1):\n        for j in range(i + 1, n + 1):\n            if is_amicable(i, j):\n                amicable_numbers.append(i)\n                break\n    return sum(amicable_numbers)",
+    null,
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1539.0,
+    "small_out": 720.0,
+    "small_s": 14.62673587500467
+  },
+  "calls_plus": {
+    "large_in": 109.0,
+    "large_out": 92.0,
+    "large_s": 2.0292903509980533,
+    "small_in": 1612.0,
+    "small_out": 783.0,
+    "small_s": 14.857164271990769
+  },
+  "calls_samples": {
+    "small_in": 4502.0,
+    "small_out": 1761.0,
+    "small_s": 32.55148988193832
+  }
+}

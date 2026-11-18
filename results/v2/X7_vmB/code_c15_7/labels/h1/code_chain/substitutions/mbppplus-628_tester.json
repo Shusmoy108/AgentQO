@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-628",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert replace_spaces(\"Hello World\") == 'Hello%20World'\nassert replace_spaces(\"Python Programming\") == 'Python%20Programming'\nassert replace_spaces(\"123 456 789\") == '123%20456%20789'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'\n```",
+  "reference_key": "assert replace_spaces(\"Hello World\") == 'Hello%20World'\nassert replace_spaces(\"Python Programming\") == 'Python%20Programming'\nassert replace_spaces(\"123 456 789\") == '123%20456%20789'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'",
+  "final_key_plus": "def replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n```",
+    "fixer": "```python\ndef replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n\n# Additional asserts\nassert replace_spaces(\"Hello World\") == 'Hello%20World'  # Typical case\nassert replace_spaces(\"\") == ''                            # Edge case: Empty string\nassert replace_spaces(\"NoSpacesHere!\") == 'NoSpacesHere!'         # Edge case: String without any spaces\nassert replace_spaces(\"1234   6789\") == '1234%206789'       # Edge case: String containing multiple spaces\nassert replace_spaces(\"   LeadingSpaces \") == '%20LeadingSpaces' # Edge case: Leading spaces",
+      "reference_key": "assert replace_spaces(\"Hello World\") == 'Hello%20World'\nassert replace_spaces(\"Python Programming\") == 'Python%20Programming'\nassert replace_spaces(\"123 456 789\") == '123%20456%20789'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'",
+      "key_differs": true,
+      "text": "```python\ndef replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n\n# Additional asserts\nassert replace_spaces(\"Hello World\") == 'Hello%20World'  # Typical case\nassert replace_spaces(\"\") == ''                            # Edge case: Empty string\nassert replace_spaces(\"NoSpacesHere!\") == 'NoSpacesHere!'         # Edge case: String without any spaces\nassert replace_spaces(\"1234   6789\") == '1234%206789'       # Edge case: String containing multiple spaces\nassert replace_spaces(\"   LeadingSpaces \") == '%20LeadingSpaces' # Edge case: Leading spaces\n```",
+      "quality": 1.0,
+      "final_key": "def replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n```",
+        "fixer": "```python\ndef replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert replace_spaces(\"Hello World\") == 'Hello%20World'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"   \") == '%20%20%20'\nassert replace_spaces(\"Special     Case\") == 'Special%20Case'\nassert replace_spaces(\"<>&?#\") == '<>%&?#'",
+      "reference_key": "assert replace_spaces(\"Hello World\") == 'Hello%20World'\nassert replace_spaces(\"Python Programming\") == 'Python%20Programming'\nassert replace_spaces(\"123 456 789\") == '123%20456%20789'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'",
+      "key_differs": true,
+      "text": "```python\nassert replace_spaces(\"Hello World\") == 'Hello%20World'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"   \") == '%20%20%20'\nassert replace_spaces(\"Special     Case\") == 'Special%20Case'\nassert replace_spaces(\"<>&?#\") == '<>%&?#'\n```",
+      "quality": 1.0,
+      "final_key": "def replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n```",
+        "fixer": "```python\ndef replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == (0, 2, 2, 3)",
+      "reference_key": "assert replace_spaces(\"Hello World\") == 'Hello%20World'\nassert replace_spaces(\"Python Programming\") == 'Python%20Programming'\nassert replace_spaces(\"123 456 789\") == '123%20456%20789'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'",
+      "key_differs": true,
+      "text": "```python\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == (0, 2, 2, 3)\n```",
+      "quality": 0.0,
+      "final_key": "def replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_spaces(\"My Name is Dawood\") == 'My%20Name%20is%20Dawood'\nassert replace_spaces(\"I am a Programmer\") == 'I%20am%20a%20Programmer'\nassert replace_spaces(\"I love Coding\") == 'I%20love%20Coding'\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == (0, 2, 2, 3)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_spaces(\"My Name is Dawood\") == 'My%20Name%20is%20Dawood'\nassert replace_spaces(\"I am a Programmer\") == 'I%20am%20a%20Programmer'\nassert replace_spaces(\"I love Coding\") == 'I%20love%20Coding'\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == (0, 2, 2, 3)\n```",
+        "fixer": "```python\ndef replace_spaces(s):\n    result = \"\"\n    for char in s:\n        if char == \" \":\n            result += \"%20\"\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_spaces(\"My Name is Dawood\") == 'My%20Name%20is%20Dawood'\nassert replace_spaces(\"I am a Programmer\") == 'I%20am%20a%20Programmer'\nassert replace_spaces(\"I love Coding\") == 'I%20love%20Coding'\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == (0, 2, 2, 3)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert replace_spaces(\"\") == ''\nassert replace_spaces(\"Hello World!\") == 'Hello%20World!'\nassert replace_spaces(\"   Leading spaces \") == '%20Leading%20spaces%20'\nassert replace_spaces(\"Trailing spaces   \") == 'Trailing%20spaces%20'\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'",
+  "sample_keys": [
+    "assert replace_spaces(\" \") == '%20'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"Hello World\") == 'Hello%20World'\nassert replace_spaces(\"No Spaces\") == 'NoSpaces'\nassert replace_spaces(\"   Leading Spaces\") == '%20Leading%20Spaces'\nassert replace_spaces(\"Trailing Spaces   \") == 'Trailing%20Spaces%'",
+    "assert replace_spaces(\"Hello World!\") == 'Hello%20World!'\nassert replace_spaces(\"   Leading Spaces   \") == '%20Leading%20Spaces%20'\nassert replace_spaces(\"Trailing Spaces   \") == 'Trailing%20Spaces%20%'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'",
+    null,
+    "assert replace_spaces(\"\") == ''\nassert replace_spaces(\" \") == '%20'\nassert replace_spaces(\"Hello\") == 'Hello'\nassert replace_spaces(\"  Leading spaces  \") == '%20Leading%20spaces%20'\nassert replace_spaces(\"Trailing spaces   \") == 'Trailing%20spaces%20'",
+    "assert replace_spaces(\"Hello World\") == 'Hello%20World'\nassert replace_spaces(\"   Leading Spaces\") == '%20LeadingSpaces'\nassert replace_spaces(\"Trailing Spaces   \") == 'TrailingSpaces%20'\nassert replace_spaces(\"\") == ''\nassert replace_spaces(\"NoSpacesHere\") == 'NoSpacesHere'"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1493.0,
+    "small_out": 424.0,
+    "small_s": 9.31256371201016
+  },
+  "calls_plus": {
+    "small_in": 1270.0,
+    "small_out": 233.0,
+    "small_s": 4.93420504394453,
+    "large_in": 181.0,
+    "large_out": 89.0,
+    "large_s": 2.1854700009862427
+  },
+  "calls_samples": {
+    "small_in": 905.0,
+    "small_out": 424.0,
+    "small_s": 8.171488644991769
+  }
+}

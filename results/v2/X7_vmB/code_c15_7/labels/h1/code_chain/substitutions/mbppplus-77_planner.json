@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-77",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `is_Diff` that takes one parameter, `num`.\n2. Inside the function, check if the remainder when `num` is divided by 11 is zero.\n3. If the remainder is zero, return `True`, indicating the number is divisible by 11.\n4. If the remainder is not zero, return `False`, indicating the number is not divisible by 11.\n5. Ensure the function handles both positive and negative integers correctly.",
+  "reference_key": null,
+  "final_key_plus": "def is_Diff(num):\n    return num % 11 == 0",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert is_Diff(123456789) == True\nassert is_Diff(1234567890) == False\nassert is_Diff(1234567891) == False\nassert is_Diff(1234567892) == False\nassert is_Diff(1234567893) == False\n```",
+    "coder": "```python\ndef is_Diff(num):\n    return num % 11 == 0\n```",
+    "verifier": "PICK: A\n\n```python\ndef is_Diff(num):\n    return num % 11 == 0\n```",
+    "fixer": "```python\ndef is_Diff(num):\n    return num % 11 == 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a counter for odd pairs.\n2. Iterate through each pair of elements in the list.\n3. For each pair, calculate their XOR value.\n4. If the XOR value is odd, increment the counter.\n5. Return the total count of odd pairs.\n\nHere's the corresponding Python function:\n\n```python\ndef find_Odd_Pair(arr, n):\n    odd_pairs_count = 0\n    for i in range(n):\n        for j in range(i+1, n):\n            if (arr[i] ^ arr[j]) % 2 != 0:\n                odd_pairs_count += 1\n    return odd_pairs_count\n```\n\nThis function iterates through all possible pairs of elements in the array and checks if their XOR value is odd using the condition `(arr[i] ^ arr[j]) % 2 != 0`. If the condition is true, it increments the `odd_pairs_count`. Finally, it returns the total count of odd pairs found.",
+      "quality": 0.0,
+      "final_key": "def is_Diff(num):\n    return num % 11 != 0\n\n# Test cases\nassert is_Diff(12345) == False\nassert is_Diff(1212112) == True\nassert is_Diff(1212) == False\nassert is_Diff(12345) == False\nassert is_Diff(11111) == True\nassert is_Diff(12346) == True\nassert is_Diff(12347) == True\nassert is_Diff(12348) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_Diff(12345) == False\nassert is_Diff(11111) == True\nassert is_Diff(12346) == True\nassert is_Diff(12347) == True\nassert is_Diff(12348) == True\n```",
+        "coder": "```python\ndef find_Odd_Pair(arr, n):\n    odd_pairs_count = 0\n    for i in range(n):\n        for j in range(i+1, n):\n            if (arr[i] ^ arr[j]) % 2 != 0:\n                odd_pairs_count += 1\n    return odd_pairs_count\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_Diff(num):\n    return num % 11 != 0\n\n# Test cases\nassert is_Diff(12345) == False\nassert is_Diff(1212112) == True\nassert is_Diff(1212) == False\nassert is_Diff(12345) == False\nassert is_Diff(11111) == True\nassert is_Diff(12346) == True\nassert is_Diff(12347) == True\nassert is_Diff(12348) == True\n```",
+        "fixer": "```python\ndef is_Diff(num):\n    return num % 11 != 0\n\n# Test cases\nassert is_Diff(12345) == False\nassert is_Diff(1212112) == True\nassert is_Diff(1212) == False\nassert is_Diff(12345) == False\nassert is_Diff(11111) == True\nassert is_Diff(12346) == True\nassert is_Diff(12347) == True\nassert is_Diff(12348) == True\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `is_Diff` that takes one parameter, `num`.\n2. Inside the function, check if the absolute value of `num` is divisible by 11 without any remainder.\n3. If the condition is true, return `True`, indicating the number is divisible by 11.\n4. If the condition is false, return `False`, indicating the number is not divisible by 11.\n5. Ensure the function handles both positive and negative integers correctly.",
+      "quality": 1.0,
+      "final_key": "def is_Diff(num):\n    return abs(num) % 11 == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_Diff(12345) == False\nassert is_Diff(-12345) == True\nassert is_Diff(0) == True\nassert is_Diff(11) == True\nassert is_Diff(-11) == True\n```",
+        "coder": "```python\ndef is_Diff(num):\n    return abs(num) % 11 == 0\n```",
+        "verifier": "PICK: A\n\n```python\ndef is_Diff(num):\n    return abs(num) % 11 == 0\n```",
+        "fixer": "```python\ndef is_Diff(num):\n    return abs(num) % 11 == 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `insert_element` that accepts two parameters: `lst` (the input list) and `element` (the element to be inserted).\n2. Initialize an empty list called `result`.\n3. Iterate over each item in the input list `lst`.\n4. For each item, append the current `element` followed by the item to the `result` list.\n5. After iterating through all items in `lst`, return the `result` list.\n\nThis approach ensures that the element is inserted before each element in the original list, as required.",
+      "quality": 0.0,
+      "final_key": "def is_Diff(n):\n    if n < 0:\n        n = -n\n    sum_of_digits = sum(int(digit) for digit in str(n))\n    return sum_of_digits % 11 != 0\n\n# Test cases\nassert is_Diff(12345) == False\nassert is_Diff(1212112) == True\nassert is_Diff(1212) == False\nassert is_Diff(12345) == False\nassert is_Diff(0) == True\nassert is_Diff(-1) == True\nassert is_Diff(11) == True\nassert is_Diff(121) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_Diff(12345) == False\nassert is_Diff(0) == True\nassert is_Diff(-1) == True\nassert is_Diff(11) == True\nassert is_Diff(121) == True\n```",
+        "coder": "```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.append(element)\n        result.append(item)\n    return result\n```",
+        "verifier": "PICK: B\n```python\ndef is_Diff(n):\n    if n < 0:\n        n = -n\n    sum_of_digits = sum(int(digit) for digit in str(n))\n    return sum_of_digits % 11 != 0\n\n# Test cases\nassert is_Diff(12345) == False\nassert is_Diff(1212112) == True\nassert is_Diff(1212) == False\nassert is_Diff(12345) == False\nassert is_Diff(0) == True\nassert is_Diff(-1) == True\nassert is_Diff(11) == True\nassert is_Diff(121) == True\n```",
+        "fixer": "```python\ndef is_Diff(n):\n    if n < 0:\n        n = -n\n    sum_of_digits = sum(int(digit) for digit in str(n))\n    return sum_of_digits % 11 != 0\n\n# Test cases\nassert is_Diff(12345) == False\nassert is_Diff(1212112) == True\nassert is_Diff(1212) == False\nassert is_Diff(12345) == False\nassert is_Diff(0) == True\nassert is_Diff(-1) == True\nassert is_Diff(11) == True\nassert is_Diff(121) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0",
+  "sample_keys": [
+    "def is_Diff(n):\n    num_str = str(n)\n    odd_sum = 0\n    even_sum = 0\n    for i in range(len(num_str)):\n        if i % 2 == 0:\n            even_sum += int(num_str[i])\n        else:\n            odd_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0",
+    "def is_Diff(n):\n    sum = 0\n    while n > 0:\n        sum += n % 10\n        n //= 10\n    return sum % 11 == 0",
+    "def is_diff(num):\n    num_str = str(num)\n    sum_even = 0\n    sum_odd = 0\n    \n    for i, digit in enumerate(num_str):\n        if i % 2 == 0:\n            sum_even += int(digit)\n        else:\n            sum_odd -= int(digit)\n    \n    diff = abs(sum_odd - sum_even)\n    return diff % 11 == 0\n\n# Test cases\nassert is_diff(12345) == False\nassert is_diff(1212112) == True\nassert is_diff(1212) == False\nassert is_diff(123456789) == True\nassert is_diff(1234567890) == False\nassert is_diff(12345678901) == True\nassert is_diff(123456789012) == False\nassert is_diff(1234567890123) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1663.0,
+    "small_out": 658.0,
+    "small_s": 14.187649775005411
+  },
+  "calls_plus": {
+    "large_in": 108.0,
+    "large_out": 104.0,
+    "large_s": 2.2973113019834273,
+    "small_in": 1134.0,
+    "small_out": 170.0,
+    "small_s": 3.5533634329622146
+  },
+  "calls_samples": {
+    "small_in": 4826.0,
+    "small_out": 1852.0,
+    "small_s": 31.587004696921213
+  }
+}

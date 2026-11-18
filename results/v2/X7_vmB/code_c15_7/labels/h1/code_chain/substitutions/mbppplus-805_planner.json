@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-805",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `max_sum_list` that takes a single argument, `list_of_lists`, which is expected to be a list containing other lists of integers.\n2. Initialize a variable `max_sum` to store the maximum sum encountered during iteration, starting with a very small number (e.g., negative infinity).\n3. Initialize another variable `max_list` to store the list with the highest sum, initially set to `None`.\n4. Iterate through each sublist in `list_of_lists` using a loop.\n5. For each sublist, calculate its sum and compare it with `max_sum`. If the current sublist's sum is greater than `max_sum`, update `max_sum` and set `max_list` to the current sublist.\n6. After iterating through all sublists, return `max_list` as the result.",
+  "reference_key": null,
+  "final_key_plus": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_list = None\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_list = sublist\n    return max_list",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]]) == [10, 11, 12]\nassert max_sum_list([[-1,-2,-3], [-4,-5,-6], [-10,-11,-12], [-7,-8,-9]]) == [-10, -11, -12]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300]]) == [100, 200, 300]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300], [1000,2000,3000]]) == [1000, 2000, 3000]\nassert max_sum_list([]) == []\n```",
+    "coder": "```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_list = None\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_list = sublist\n    return max_list\n```",
+    "verifier": "PICK: A\n\n```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_list = None\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_list = sublist\n    return max_list\n```",
+    "fixer": "```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_list = None\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_list = sublist\n    return max_list\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `maximum` that takes two parameters, `num1` and `num2`.\n2. Inside the function, compare `num1` and `num2` using the greater than operator (`>`).\n3. If `num1` is greater than `num2`, return `num1`.\n4. Otherwise, return `num2`.\n\nThis solution meets all the requirements specified in the task.",
+      "quality": 1.0,
+      "final_key": "def maximum(num1, num2):\n    if num1 > num2:\n        return num1\n    else:\n        return num2\n\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    result = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            result = sublist\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert maximum(10, 20) == 20\nassert maximum(-5, -10) == -5\nassert maximum(0, 0) == 0\nassert maximum(100, 50) == 100\nassert maximum(1000, 100) == 1000\n```",
+        "coder": "```python\ndef maximum(num1, num2):\n    if num1 > num2:\n        return num1\n    else:\n        return num2\n```",
+        "verifier": "PICK: B\n```python\ndef maximum(num1, num2):\n    if num1 > num2:\n        return num1\n    else:\n        return num2\n\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    result = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            result = sublist\n    return result\n```",
+        "fixer": "```python\ndef maximum(num1, num2):\n    if num1 > num2:\n        return num1\n    else:\n        return num2\n\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    result = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            result = sublist\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `max_sum_list` that takes a single argument, `list_of_lists`, which is expected to be a list containing other lists of integers.\n2. Initialize a variable `max_sum` to store the maximum sum encountered during iteration, starting with a very small number (e.g., negative infinity).\n3. Initialize another variable `max_list` to store the list with the highest sum, initially set to `None`.\n4. Iterate through each sublist in `list_of_lists` using a loop.\n5. For each sublist, calculate its sum and compare it with `max_sum`. If the current sublist's sum is greater than or equal to `max_sum`, update `max_sum` and set `max_list` to the current sublist.\n6. After iterating through all sublists, return `max_list` as the result.",
+      "quality": 1.0,
+      "final_key": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_list = None\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum >= max_sum:\n            max_sum = current_sum\n            max_list = sublist\n    return max_list",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]]) == [10, 11, 12]\nassert max_sum_list([[-1,-2,-3], [-4,-5,-6], [-10,-11,-12], [-7,-8,-9]]) == [-10, -11, -12]\nassert max_sum_list([[100], [200], [300]]) == [300]\nassert max_sum_list([]) == []\nassert max_sum_list([[1,2,3,4,5], [6,7,8,9,10], [11,12,13,14,15]]) == [11, 12, 13, 14, 15]\n```",
+        "coder": "```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_list = None\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum >= max_sum:\n            max_sum = current_sum\n            max_list = sublist\n    return max_list\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_list = None\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum >= max_sum:\n            max_sum = current_sum\n            max_list = sublist\n    return max_list\n```",
+        "fixer": "```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_list = None\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum >= max_sum:\n            max_sum = current_sum\n            max_list = sublist\n    return max_list\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `find_Rotations` that takes a single argument, `s`, which is the input string.\n2. Initialize a variable `rotations` to 0, which will keep track of the number of rotations needed.\n3. Use a while loop to iterate until the string becomes equal to itself after one rotation.\n4. Inside the loop, rotate the string by moving the first character to the end.\n5. Increment the `rotations` counter by 1 after each rotation.\n6. Return the value of `rotations` once the string has become equal to itself.\n\nThis approach ensures that we find the minimum number of rotations required to achieve the desired outcome.",
+      "quality": 1.0,
+      "final_key": "from typing import List\n\ndef max_sum_list(lst: List[List[int]]) -> List[int]:\n    max_sum = float('-inf')\n    result = []\n    \n    for i in range(len(lst)):\n        current_sum = sum(lst[i])\n        if current_sum > max_sum:\n            max_sum = current_sum\n            result = lst[i]\n    \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_Rotations(\"hello\") == 1\nassert find_Rotations(\"world\") == 2\nassert find_Rotations(\"\") == 0\nassert find_Rotations(\"a\") == 0\nassert find_Rotations(\"ab\") == 1\n```",
+        "coder": "```python\ndef find_Rotations(s):\n    rotations = 0\n    while s != s[1:] + s[0]:\n        s = s[1:] + s[0]\n        rotations += 1\n    return rotations\n```",
+        "verifier": "PICK: B\n\n```python\nfrom typing import List\n\ndef max_sum_list(lst: List[List[int]]) -> List[int]:\n    max_sum = float('-inf')\n    result = []\n    \n    for i in range(len(lst)):\n        current_sum = sum(lst[i])\n        if current_sum > max_sum:\n            max_sum = current_sum\n            result = lst[i]\n    \n    return result\n```",
+        "fixer": "```python\nfrom typing import List\n\ndef max_sum_list(lst: List[List[int]]) -> List[int]:\n    max_sum = float('-inf')\n    result = []\n    \n    for i in range(len(lst)):\n        current_sum = sum(lst[i])\n        if current_sum > max_sum:\n            max_sum = current_sum\n            result = lst[i]\n    \n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+  "sample_keys": [
+    "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+    "def max_sum_list(list_of_lists):\n    if not list_of_lists:\n        return []\n    \n    max_sum = float('-inf')\n    max_sum_list = []\n    \n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sum_list = sublist\n    \n    return max_sum_list",
+    "def max_sum_list(input_lists):\n    max_sum = float('-inf')\n    max_list = []\n    for lst in input_lists:\n        current_sum = sum(lst)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_list = [lst]\n        elif current_sum == max_sum:\n            max_list.append(lst)\n    return max_list"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2274.0,
+    "small_out": 559.0,
+    "small_s": 11.530479278968414
+  },
+  "calls_plus": {
+    "large_in": 146.0,
+    "large_out": 173.0,
+    "large_s": 3.737970899004722,
+    "small_in": 2218.0,
+    "small_out": 469.0,
+    "small_s": 8.155347756983247
+  },
+  "calls_samples": {
+    "small_in": 7027.0,
+    "small_out": 1945.0,
+    "small_s": 35.42273231095169
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-777",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert find_sum([7, 8, 9, 7, 10]) == 34\nassert find_sum([1, 1, 1, 1, 1]) == 0\nassert find_sum([]) == 0\nassert find_sum([2, 4, 6, 8, 10]) == 30\nassert find_sum([-1, -2, -3, -1, -2]) == -6\n```",
+  "reference_key": "assert find_sum([7, 8, 9, 7, 10]) == 34\nassert find_sum([1, 1, 1, 1, 1]) == 0\nassert find_sum([]) == 0\nassert find_sum([2, 4, 6, 8, 10]) == 30\nassert find_sum([-1, -2, -3, -1, -2]) == -6",
+  "final_key_plus": "def find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum\n```",
+    "fixer": "```python\ndef find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert find_sum([]) == 0\nassert find_sum([10]) == 10\nassert find_sum([1,1,1,2,3,4,5]) == 15\nassert find_sum([1,2,2,3,3,3,4,4,4,4,5]) == 8\nassert find_sum([-1, -2, -1, -2, 3, 4, 5, 6, -3, -4]) == 15",
+      "reference_key": "assert find_sum([7, 8, 9, 7, 10]) == 34\nassert find_sum([1, 1, 1, 1, 1]) == 0\nassert find_sum([]) == 0\nassert find_sum([2, 4, 6, 8, 10]) == 30\nassert find_sum([-1, -2, -3, -1, -2]) == -6",
+      "key_differs": true,
+      "text": "```python\nassert find_sum([]) == 0\nassert find_sum([10]) == 10\nassert find_sum([1,1,1,2,3,4,5]) == 15\nassert find_sum([1,2,2,3,3,3,4,4,4,4,5]) == 8\nassert find_sum([-1, -2, -1, -2, 3, 4, 5, 6, -3, -4]) == 15\n```",
+      "quality": 1.0,
+      "final_key": "def find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum\n```",
+        "fixer": "```python\ndef find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert find_sum([]) == 0\nassert find_sum([7]) == 7\nassert find_sum([-10, -8, 3, -2, -90, 10]) == -20\ntry:\n    find_sum('hello')\nexcept TypeError as e:\n    assert str(e) == \"unsupported operand type(s) for +: 'str' and 'int'\"",
+      "reference_key": "assert find_sum([7, 8, 9, 7, 10]) == 34\nassert find_sum([1, 1, 1, 1, 1]) == 0\nassert find_sum([]) == 0\nassert find_sum([2, 4, 6, 8, 10]) == 30\nassert find_sum([-1, -2, -3, -1, -2]) == -6",
+      "key_differs": true,
+      "text": "```python\nassert find_sum([]) == 0\nassert find_sum([7]) == 7\nassert find_sum([-10, -8, 3, -2, -90, 10]) == -20\ntry:\n    find_sum('hello')\nexcept TypeError as e:\n    assert str(e) == \"unsupported operand type(s) for +: 'str' and 'int'\"\n```",
+      "quality": 1.0,
+      "final_key": "def find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum\n```",
+        "fixer": "```python\ndef find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert lateralsurface_cube(3) == 36\nassert lateralsurface_cube(7) == 196\nassert lateralsurface_cube(0) == 0\nassert lateralsurface_cube(10) == 400\nassert lateralsurface_cube(-5) == 0",
+      "reference_key": "assert find_sum([7, 8, 9, 7, 10]) == 34\nassert find_sum([1, 1, 1, 1, 1]) == 0\nassert find_sum([]) == 0\nassert find_sum([2, 4, 6, 8, 10]) == 30\nassert find_sum([-1, -2, -3, -1, -2]) == -6",
+      "key_differs": true,
+      "text": "```python\nassert lateralsurface_cube(3) == 36\nassert lateralsurface_cube(7) == 196\nassert lateralsurface_cube(0) == 0\nassert lateralsurface_cube(10) == 400\nassert lateralsurface_cube(-5) == 0\n```",
+      "quality": 1.0,
+      "final_key": "def find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum\n```",
+        "fixer": "```python\ndef find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum\n\n# Test cases\nassert find_sum([1,2,3,1,1,4,5,6]) == 21\nassert find_sum([1,10,9,4,2,10,10,45,4]) == 71\nassert find_sum([12,10,9,45,2,10,10,45,10]) == 78\nassert lateralsurface_cube(3) == 36\nassert lateralsurface_cube(7) == 196\nassert lateralsurface_cube(0) == 0\nassert lateralsurface_cube(10) == 400\nassert lateralsurface_cube(-5) == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert find_sum([]) == 0\nassert find_sum([7]) == 7\nassert find_sum([1, 2, 3, 4, 5]) == 15\nassert find_sum([1, 1, 1, 1, 1]) == 0\nassert find_sum([-1, -2, -3, -4, -5]) == -15",
+  "sample_keys": [
+    "import pytest\n\ndef test_find_sum():\n    assert find_sum([1,2,3,1,1,4,5,6]) == 21\n    assert find_sum([]) == 0\n    assert find_sum([7]) == 7\n    assert find_sum([1,1,1,1]) == 0\n    assert find_sum([2,3,4,5,6,2,3,4,5,6]) == 90\n    # Add more asserts as needed",
+    "assert find_sum([-1, -1, -1]) == 0\nassert find_sum([]) == 0\nassert find_sum([10, 20, 30, 40, 50]) == 150\nassert find_sum([1, 2, 3, 4, 5, 6, 7]) == 28\nassert find_sum([-2, -2, -2]) == 0",
+    "assert find_sum([1,2,3,2,4,5,6,7,8,9]) == 45\nassert find_sum([10,11,12,10,11,13,14,12,15]) == 42\nassert find_sum([]) == 0\nassert find_sum([-1,-2,-3,-1]) == -6\nassert find_sum([10,10]) == 0",
+    "assert find_sum([7,8,9,8,7]) == 25\nassert find_sum([1,2,3,4,5,6,7,8,9]) == 45\nassert find_sum([]) == 0\nassert find_sum([10]) == 10\nassert find_sum([-1, -2, -3, -4, -5]) == -15",
+    "assert find_sum([]) == 0\nassert find_sum([7]) == 7\nassert find_sum([1,2,3,4,5,6,7,8,9]) == 45\nassert find_sum([1,1,1,1,1,1,1,1,1,1]) == 0\nassert find_sum([-5,-4,-3,-2,-1,0,1,2,3,4,5]) == 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1523.0,
+    "small_out": 337.0,
+    "small_s": 7.151577122014714
+  },
+  "calls_plus": {
+    "small_in": 1383.0,
+    "small_out": 245.0,
+    "small_s": 4.909684944024775,
+    "large_in": 182.0,
+    "large_out": 106.0,
+    "large_s": 3.3630164520000108
+  },
+  "calls_samples": {
+    "small_in": 910.0,
+    "small_out": 532.0,
+    "small_s": 10.67993408604525
+  }
+}

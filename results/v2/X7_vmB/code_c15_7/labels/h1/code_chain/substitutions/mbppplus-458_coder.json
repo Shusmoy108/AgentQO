@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-458",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```",
+  "reference_key": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+  "final_key_plus": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert rectangle_area(7, 9) == 63\nassert rectangle_area(0, 5) == 0\nassert rectangle_area(-4, 8) == -32\nassert rectangle_area(15, 0) == 0\nassert rectangle_area(100, 200) == 20000\n```",
+    "verifier": "PICK: A\n\n```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```",
+    "fixer": "```python\ndef rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def rectangle_area(length, width):\n    # Calculate the area\n    area = length * width\n    \n    # Return the area\n    return area",
+      "reference_key": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+      "key_differs": true,
+      "text": "```python\ndef rectangle_area(length, width):\n    # Calculate the area\n    area = length * width\n    \n    # Return the area\n    return area\n```",
+      "quality": 1.0,
+      "final_key": "def rectangle_area(length, width):\n    # Calculate the area\n    area = length * width\n    \n    # Return the area\n    return area",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert rectangle_area(7, 9) == 63\nassert rectangle_area(0, 5) == 0\nassert rectangle_area(-4, 8) == -32\nassert rectangle_area(100, 0) == 0\nassert rectangle_area(10, -5) == -50\n```",
+        "verifier": "PICK: A\n\n```python\ndef rectangle_area(length, width):\n    # Calculate the area\n    area = length * width\n    \n    # Return the area\n    return area\n```",
+        "fixer": "```python\ndef rectangle_area(length, width):\n    # Calculate the area\n    area = length * width\n    \n    # Return the area\n    return area\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count",
+      "reference_key": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+      "key_differs": true,
+      "text": "```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n```",
+      "quality": 0.0,
+      "final_key": "def rectangle_area(length, width):\n    return length * width\n\n# Test cases\nassert rectangle_area(10, 20) == 200\nassert rectangle_area(10, 5) == 50\nassert rectangle_area(4, 2) == 8\nassert frequency([1, 2, 3, 4, 5], 3) == 1\nassert frequency([], 1) == 0\nassert frequency([1, 1, 1, 1, 1], 1) == 5\nassert frequency([10, 20, 30, 40, 50], 60) == 0\nassert frequency([10, 20, 30, 40, 50], 10) == 5",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert frequency([1, 2, 3, 4, 5], 3) == 1\nassert frequency([], 1) == 0\nassert frequency([1, 1, 1, 1, 1], 1) == 5\nassert frequency([10, 20, 30, 40, 50], 60) == 0\nassert frequency([10, 20, 30, 40, 50], 10) == 5\n```",
+        "verifier": "PICK: B\n```python\ndef rectangle_area(length, width):\n    return length * width\n\n# Test cases\nassert rectangle_area(10, 20) == 200\nassert rectangle_area(10, 5) == 50\nassert rectangle_area(4, 2) == 8\nassert frequency([1, 2, 3, 4, 5], 3) == 1\nassert frequency([], 1) == 0\nassert frequency([1, 1, 1, 1, 1], 1) == 5\nassert frequency([10, 20, 30, 40, 50], 60) == 0\nassert frequency([10, 20, 30, 40, 50], 10) == 5\n```",
+        "fixer": "```python\ndef rectangle_area(length, width):\n    return length * width\n\n# Test cases\nassert rectangle_area(10, 20) == 200\nassert rectangle_area(10, 5) == 50\nassert rectangle_area(4, 2) == 8\nassert frequency([1, 2, 3, 4, 5], 3) == 1\nassert frequency([], 1) == 0\nassert frequency([1, 1, 1, 1, 1], 1) == 5\nassert frequency([10, 20, 30, 40, 50], 60) == 0\nassert frequency([10, 20, 30, 40, 50], 10) == 5\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)",
+      "reference_key": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+      "key_differs": true,
+      "text": "```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n```",
+      "quality": 1.0,
+      "final_key": "def rectangle_area(length, width):\n    return length * width",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert rectangle_area(5,7)==35\nassert rectangle_area(0,0)==0\nassert rectangle_area(-1,-1)==1\nassert rectangle_area(100,200)==20000\nassert rectangle_area(10,10)==100\n```",
+        "verifier": "PICK: B\n\n```python\ndef rectangle_area(length, width):\n    return length * width\n```",
+        "fixer": "```python\ndef rectangle_area(length, width):\n    return length * width\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+  "sample_keys": [
+    "def rectangle_area(length, width):\n    area = length * width\n    return area",
+    "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+    "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+    "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area",
+    "def rectangle_area(length, width):\n    # Step 2: Calculate the area\n    area = length * width\n    \n    # Step 3: Return the area\n    return area"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1225.0,
+    "small_out": 324.0,
+    "small_s": 7.191981645009946
+  },
+  "calls_plus": {
+    "small_in": 1018.0,
+    "small_out": 281.0,
+    "small_s": 6.295054082991555,
+    "large_in": 207.0,
+    "large_out": 43.0,
+    "large_s": 1.1534479460096918
+  },
+  "calls_samples": {
+    "small_in": 1035.0,
+    "small_out": 195.0,
+    "small_s": 3.9991580820060335
+  }
+}

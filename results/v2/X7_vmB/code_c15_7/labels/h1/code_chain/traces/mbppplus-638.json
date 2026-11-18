@@ -1,0 +1,69 @@
+{
+  "task_id": "mbppplus-638",
+  "gold": "mbppplus:638",
+  "problem": "Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.\nYour code should pass this test:\nassert wind_chill(120,35)==40",
+  "final_quality": 0.0,
+  "final_key": "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+  "nodes": {
+    "planner": {
+      "prompt": "You are planning how to write a Python function. Do not write code.\nTask: Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.\nYour code should pass this test:\nassert wind_chill(120,35)==40\nWrite a numbered plan of at most 5 short steps.\nStart your answer with \"PLAN:\".",
+      "output": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `wind_chill` that takes two parameters: `wind_velocity` (in km/h) and `temperature` (in Celsius).\n3. Calculate the wind chill index using the formula: `wci = 13.12 + 0.6215 * T - 11.37 * V^0.16 + 0.3965 * T * V^0.16`.\n4. Round the result to the nearest integer.\n5. Return the calculated wind chill index.",
+      "key": null,
+      "confidence": 0.8771340106342101,
+      "fidelity": "small",
+      "prompt_tokens": 121,
+      "completion_tokens": 126,
+      "latency_s": 2.823001076001674,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "coder": {
+      "prompt": "Task: Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.\nYour code should pass this test:\nassert wind_chill(120,35)==40\nPlan:\nPLAN:\n1. Import necessary libraries (if any).\n2. Define the function `wind_chill` that takes two parameters: `wind_velocity` (in km/h) and `temperature` (in Celsius).\n3. Calculate the wind chill index using the formula: `wci = 13.12 + 0.6215 * T - 11.37 * V^0.16 + 0.3965 * T * V^0.16`.\n4. Round the result to the nearest integer.\n5. Return the calculated wind chill index.\nWrite the complete Python function, with any imports it needs. Do not include tests or example calls.\nReturn only one ```python code block.",
+      "output": "```python\ndef wind_chill(wind_velocity, temperature):\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```",
+      "key": "def wind_chill(wind_velocity, temperature):\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+      "confidence": 0.982581505281716,
+      "fidelity": "small",
+      "prompt_tokens": 242,
+      "completion_tokens": 80,
+      "latency_s": 1.7445093439891934,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "tester": {
+      "prompt": "Task: Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.\nYour code should pass this test:\nassert wind_chill(120,35)==40\nCandidate code:\n```python\ndef wind_chill(wind_velocity, temperature):\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```\nWrite 5 extra Python assert statements that check this function on typical and edge cases. Work out each\nexpected result from the task, not from the code.\nReturn only one ```python code block containing the assert lines.",
+      "output": "```python\nassert wind_chill(100, 20) == 28\nassert wind_chill(50, 10) == 10\nassert wind_chill(0, 0) == 0\nassert wind_chill(150, 30) == 40\nassert wind_chill(-10, 25) == 10\n```",
+      "key": "assert wind_chill(100, 20) == 28\nassert wind_chill(50, 10) == 10\nassert wind_chill(0, 0) == 0\nassert wind_chill(150, 30) == 40\nassert wind_chill(-10, 25) == 10",
+      "confidence": 0.7788056678357378,
+      "fidelity": "small",
+      "prompt_tokens": 214,
+      "completion_tokens": 89,
+      "latency_s": 1.9621868050016928,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "fixer": {
+      "prompt": "Task: Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.\nYour code should pass this test:\nassert wind_chill(120,35)==40\nCode:\n```python\ndef wind_chill(wind_velocity, temperature):\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```\nTest results (the task's example test and the extra asserts, run on this code):\nPASS assert wind_chill(120,35)==40\nPASS assert wind_chill(40,20)==19\nPASS assert wind_chill(10,8)==6\nFAIL assert wind_chill(100, 20) == 28 -> AssertionError \nFAIL assert wind_chill(50, 10) == 10 -> AssertionError \nFAIL assert wind_chill(0, 0) == 0 -> AssertionError \nFAIL assert wind_chill(150, 30) == 40 -> AssertionError \nFAIL assert wind_chill(-10, 25) == 10 -> TypeError type complex doesn't define __round__ method\nIf a test failed because the code is wrong, fix the code. If the code is right, or a failing assert is itself\nwrong, keep the code unchanged.\nReturn the complete code in one ```python code block.",
+      "output": "```python\ndef wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```",
+      "key": "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+      "confidence": 0.9399098250879371,
+      "fidelity": "small",
+      "prompt_tokens": 384,
+      "completion_tokens": 153,
+      "latency_s": 3.3016109890013468,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "verifier": {
+      "prompt": "Task: Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.\nYour code should pass this test:\nassert wind_chill(120,35)==40\nCandidate A:\n```python\ndef wind_chill(wind_velocity, temperature):\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```\nTest results for A:\nPASS assert wind_chill(120,35)==40\nPASS assert wind_chill(40,20)==19\nPASS assert wind_chill(10,8)==6\nFAIL assert wind_chill(100, 20) == 28 -> AssertionError \nFAIL assert wind_chill(50, 10) == 10 -> AssertionError \nFAIL assert wind_chill(0, 0) == 0 -> AssertionError \nFAIL assert wind_chill(150, 30) == 40 -> AssertionError \nFAIL assert wind_chill(-10, 25) == 10 -> TypeError type complex doesn't define __round__ method\nCandidate B (a revision of A):\n```python\ndef wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```\nTest results for B:\nPASS assert wind_chill(120,35)==40\nPASS assert wind_chill(40,20)==19\nPASS assert wind_chill(10,8)==6\nFAIL assert wind_chill(100, 20) == 28 -> AssertionError \nFAIL assert wind_chill(50, 10) == 10 -> AssertionError \nFAIL assert wind_chill(0, 0) == 0 -> AssertionError \nFAIL assert wind_chill(150, 30) == 40 -> AssertionError \nFAIL assert wind_chill(-10, 25) == 10 -> ValueError Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\nPick the candidate more likely to be correct for the task. Write \"PICK: A\" or \"PICK: B\", then return the\ncomplete code of the picked candidate in one ```python code block.",
+      "output": "PICK: B\n\n```python\ndef wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```",
+      "key": "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+      "confidence": 0.99,
+      "fidelity": "small",
+      "prompt_tokens": 694,
+      "completion_tokens": 158,
+      "latency_s": 3.3855047700053547,
+      "cache_hit": false,
+      "code_node": null
+    }
+  }
+}

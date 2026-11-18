@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-475",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert sort_counter({'English':92, 'History':88, 'Geography':90}) == [('English', 92), ('Geography', 90), ('History', 88)]\nassert sort_counter({'Art':75, 'Music':80, 'Dance':78}) == [('Music', 80), ('Dance', 78), ('Art', 75)]\nassert sort_counter({'Biology':85, 'Computer Science':84, 'Physics':86}) == [('Biology', 85), ('Physics', 86), ('Computer Science', 84)]\nassert sort_counter({'Literature':91, 'Philosophy':89, 'Theology':90}) == [('Literature', 91), ('Theology', 90), ('Philosophy', 89)]\nassert sort_counter({}) == []\n```",
+  "reference_key": "assert sort_counter({'English':92, 'History':88, 'Geography':90}) == [('English', 92), ('Geography', 90), ('History', 88)]\nassert sort_counter({'Art':75, 'Music':80, 'Dance':78}) == [('Music', 80), ('Dance', 78), ('Art', 75)]\nassert sort_counter({'Biology':85, 'Computer Science':84, 'Physics':86}) == [('Biology', 85), ('Physics', 86), ('Computer Science', 84)]\nassert sort_counter({'Literature':91, 'Philosophy':89, 'Theology':90}) == [('Literature', 91), ('Theology', 90), ('Philosophy', 89)]\nassert sort_counter({}) == []",
+  "final_key_plus": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+    "fixer": "```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sort_counter({'':150}) == [(150,),]  # Testing with an empty dictionary\nassert sort_counter({'one':2, '':1}) == [('o', 1), ('ne', 2)]  # Testing with an empty string as the key\nassert sort_counter({100:20, 12:3}) == [(12, 3), (100, 20)]  # Testing with non-empty keys and values\nassert sort_counter({'a':5, 'b':5, 'c':5}) == [('a', 5), ('b', 5), ('c', 5)]  # Testing with all same values and different keys\nassert sort_counter({'d':1, None:20}) == [(1, None), (d, 1)]  # Testing with None as a key",
+      "reference_key": "assert sort_counter({'English':92, 'History':88, 'Geography':90}) == [('English', 92), ('Geography', 90), ('History', 88)]\nassert sort_counter({'Art':75, 'Music':80, 'Dance':78}) == [('Music', 80), ('Dance', 78), ('Art', 75)]\nassert sort_counter({'Biology':85, 'Computer Science':84, 'Physics':86}) == [('Biology', 85), ('Physics', 86), ('Computer Science', 84)]\nassert sort_counter({'Literature':91, 'Philosophy':89, 'Theology':90}) == [('Literature', 91), ('Theology', 90), ('Philosophy', 89)]\nassert sort_counter({}) == []",
+      "key_differs": true,
+      "text": "```python\nassert sort_counter({'':150}) == [(150,),]  # Testing with an empty dictionary\nassert sort_counter({'one':2, '':1}) == [('o', 1), ('ne', 2)]  # Testing with an empty string as the key\nassert sort_counter({100:20, 12:3}) == [(12, 3), (100, 20)]  # Testing with non-empty keys and values\nassert sort_counter({'a':5, 'b':5, 'c':5}) == [('a', 5), ('b', 5), ('c', 5)]  # Testing with all same values and different keys\nassert sort_counter({'d':1, None:20}) == [(1, None), (d, 1)]  # Testing with None as a key\n```",
+      "quality": 0.0,
+      "final_key": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+        "fixer": "```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'A': 20, 'B': 15, 'C': 40,'D':30}) == [('C', 40), ('D', 30), ('A', 20), ('B', 15)]\nassert sort_counter({}) == []\nassert sort_counter({\"one\": 1}) == [(\"one\", 1)]\nassert sort_counter({\"one\": -1}) == [(-1, \"one\")]\nassert sort_counter({'one': 1, 'two': -2, 'three': 3}) == [('three', 3), ('one', 1), ('two', -2)]\nassert sort_counter({'two': 2, 'three': 2}) == [('two', 2), ('three', 2)]\nassert sort_counter({'a': 5, 'b': 10, 'c': 5, 'd': 15, 'e': 10}) == [('d', 15), ('e', 10), ('b', 10), ('a', 5), ('c', 5)]",
+      "reference_key": "assert sort_counter({'English':92, 'History':88, 'Geography':90}) == [('English', 92), ('Geography', 90), ('History', 88)]\nassert sort_counter({'Art':75, 'Music':80, 'Dance':78}) == [('Music', 80), ('Dance', 78), ('Art', 75)]\nassert sort_counter({'Biology':85, 'Computer Science':84, 'Physics':86}) == [('Biology', 85), ('Physics', 86), ('Computer Science', 84)]\nassert sort_counter({'Literature':91, 'Philosophy':89, 'Theology':90}) == [('Literature', 91), ('Theology', 90), ('Philosophy', 89)]\nassert sort_counter({}) == []",
+      "key_differs": true,
+      "text": "```python\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'A': 20, 'B': 15, 'C': 40,'D':30}) == [('C', 40), ('D', 30), ('A', 20), ('B', 15)]\nassert sort_counter({}) == []\nassert sort_counter({\"one\": 1}) == [(\"one\", 1)]\nassert sort_counter({\"one\": -1}) == [(-1, \"one\")]\nassert sort_counter({'one': 1, 'two': -2, 'three': 3}) == [('three', 3), ('one', 1), ('two', -2)]\nassert sort_counter({'two': 2, 'three': 2}) == [('two', 2), ('three', 2)]\nassert sort_counter({'a': 5, 'b': 10, 'c': 5, 'd': 15, 'e': 10}) == [('d', 15), ('e', 10), ('b', 10), ('a', 5), ('c', 5)]\n```",
+      "quality": 0.0,
+      "final_key": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+        "fixer": "```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert text_lowercase_underscore(\"aab_cbbbc\")==(True)\nassert text_lowercase_underscore(\"Aaab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_\")==(False)\nassert text_lowercase_underscore(\"_aab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_a\")==(False)",
+      "reference_key": "assert sort_counter({'English':92, 'History':88, 'Geography':90}) == [('English', 92), ('Geography', 90), ('History', 88)]\nassert sort_counter({'Art':75, 'Music':80, 'Dance':78}) == [('Music', 80), ('Dance', 78), ('Art', 75)]\nassert sort_counter({'Biology':85, 'Computer Science':84, 'Physics':86}) == [('Biology', 85), ('Physics', 86), ('Computer Science', 84)]\nassert sort_counter({'Literature':91, 'Philosophy':89, 'Theology':90}) == [('Literature', 91), ('Theology', 90), ('Philosophy', 89)]\nassert sort_counter({}) == []",
+      "key_differs": true,
+      "text": "```python\nassert text_lowercase_underscore(\"aab_cbbbc\")==(True)\nassert text_lowercase_underscore(\"Aaab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_\")==(False)\nassert text_lowercase_underscore(\"_aab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_a\")==(False)\n```",
+      "quality": 0.0,
+      "final_key": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+        "fixer": "```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85, 'Art':86}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85), ('Art', 86)]",
+  "sample_keys": [
+    "assert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Python':90, 'Java':88, 'C++':92, 'JavaScript':86}) == [('Java', 88), ('Python', 90), ('JavaScript', 86), ('C++', 92)]\nassert sort_counter({'Science':76, 'Economics':84, 'Geography':77}) == [('Geography', 77), ('Science', 76), ('Economics', 84)]\nassert sort_counter({'History':89, 'Language':95, 'Art':91, 'Music':93}) == [('Language', 95), ('Music', 93), ('History', 89), ('Art', 91)]\nassert sort_counter({'English':95, 'French':94, 'German':93, 'Spanish':92}) == [('German', 93), ('English', 95), ('Spanish', 92), ('French', 94)]",
+    "assert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87})==[('Chemistry', 87), ('Physics', 83), ('Math', 81)], \"Test case 1 failed\"\nassert sort_counter({'Apple':2, 'Banana':5, 'Cherry':10})==[('Cherry', 10), ('Apple', 2), ('Banana', 5)], \"Test case 2 failed\"\nassert sort_counter({'Red':6, 'Blue':9, 'Green':12})==[('Green', 12), ('Blue', 9), ('Red', 6)], \"Test case 3 failed\"\nassert sort_counter({'White':4, 'Black':7, 'Yellow':11})==[('Yellow', 11), ('White', 4), ('Black', 7)], \"Test case 4 failed\"\nassert sort_counter({})==[], \"Test case 5 failed\"  # Edge case where the input is an empty dictionary",
+    "assert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({}) == []\nassert sort_counter({'a':100, 'b':200, 'c':100}) == [('b', 200), ('a', 100), ('c', 100)]\nassert sort_counter({'d':-10, 'e':5, 'f':15, 'g':0}) == [('f', 15), ('e', 5), ('g', 0), ('d', -10)]\nassert sort_counter({'h':0, 'i':-10, 'j':0}) == [('j', 0), ('h', 0), ('i', -10)]",
+    "assert sort_counter({'a':10, 'b':20, 'c':30}) == [('c', 30), ('b', 20), ('a', 10)], \"Test case 1 failed\"\nassert sort_counter({'z':1, 'x':2, 'y':3, 'w':4}) == [('w', 4), ('y', 3), ('x', 2), ('z', 1)], \"Test case 2 failed\"\nassert sort_counter({'':1, ' ':2, 'a':3}) == [('a', 3), (' ', 2), ('', 1)], \"Test case 3 failed\"\nassert sort_counter({}) == [], \"Test case 4 failed\"\nassert sort_counter({'d':5}) == [('d', 5)], \"Test case 5 failed\"",
+    "# Check with a dictionary with all items having the same value\nassert sort_counter({'Apple':5, 'Banana':5, 'Cherry':5}) == [('Apple', 5), ('Banana', 5), ('Cherry', 5)]\n\n# Check with a dictionary where all keys have the same value\nassert sort_counter({'A':20, 'B':20, 'C':20}) == [('A', 20), ('B', 20), ('C', 20)]\n\n# Check with an empty dictionary\nassert sort_counter({}) == []\n\n# Check with a dictionary where no key has any value\nassert sort_counter({'X': None, 'Y': None}) == [('', None), ('', None)]\n\n# Check with a dictionary where one key's value is None\nassert sort_counter({'Z': None, 'W': 10}) == [('W', 10), (None, None)]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3080.0,
+    "small_out": 650.0,
+    "small_s": 14.309225242992397
+  },
+  "calls_plus": {
+    "small_in": 2312.0,
+    "small_out": 276.0,
+    "small_s": 5.758226637990447,
+    "large_in": 192.0,
+    "large_out": 200.0,
+    "large_s": 4.44854013598524
+  },
+  "calls_samples": {
+    "small_in": 960.0,
+    "small_out": 1085.0,
+    "small_s": 19.160457457968732
+  }
+}

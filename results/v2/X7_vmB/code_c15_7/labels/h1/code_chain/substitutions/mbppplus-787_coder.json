@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-787",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+  "reference_key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+  "final_key_plus": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.8,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert not text_match_three(\"ac\")  # Expected: True\nassert text_match_three(\"abb\")  # Expected: True\nassert text_match_three(\"abbb\")  # Expected: True\nassert text_match_three(\"aabb\")  # Expected: False\nassert text_match_three(\"abc\")   # Expected: False\n```",
+    "verifier": "PICK: A\n```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+    "fixer": "```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import re\n\ndef text_match_three(text):\n    # Regular expression pattern to match 'a' followed by exactly three 'b's\n    pattern = r'^ab{3}$'\n    \n    # Check if the text matches the pattern\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+      "reference_key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef text_match_three(text):\n    # Regular expression pattern to match 'a' followed by exactly three 'b's\n    pattern = r'^ab{3}$'\n    \n    # Check if the text matches the pattern\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef text_match_three(text):\n    # Regular expression pattern to match 'a' followed by exactly three 'b's\n    pattern = r'^ab{3}$'\n    \n    # Check if the text matches the pattern\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not text_match_three(\"ac\")  # Expected: True\nassert text_match_three(\"abb\")  # Expected: True\nassert text_match_three(\"aabbb\")  # Expected: True\nassert text_match_three(\"abc\")  # Expected: False\nassert text_match_three(\"abbc\")  # Expected: False\n```",
+        "verifier": "PICK: A\n```python\nimport re\n\ndef text_match_three(text):\n    # Regular expression pattern to match 'a' followed by exactly three 'b's\n    pattern = r'^ab{3}$'\n    \n    # Check if the text matches the pattern\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\nimport re\n\ndef text_match_three(text):\n    # Regular expression pattern to match 'a' followed by exactly three 'b's\n    pattern = r'^ab{3}$'\n    \n    # Check if the text matches the pattern\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import re\n\ndef text_match_three(text): \n    pattern = r'^ab{3}$' \n    return bool(re.match(pattern, text))",
+      "reference_key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef text_match_three(text): \n    pattern = r'^ab{3}$' \n    return bool(re.match(pattern, text)) \n```",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef text_match_three(text): \n    pattern = r'^ab{3}$' \n    return bool(re.match(pattern, text))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not text_match_three(\"ac\") # Expected: True\nassert text_match_three(\"abb\") # Expected: False\nassert text_match_three(\"aabbb\") # Expected: False\nassert text_match_three(\"aabb\") # Expected: False\nassert text_match_three(\"abc\") # Expected: False\n```",
+        "verifier": "PICK: A\n```python\nimport re\n\ndef text_match_three(text): \n    pattern = r'^ab{3}$' \n    return bool(re.match(pattern, text))\n```",
+        "fixer": "```python\nimport re\n\ndef text_match_three(text): \n    pattern = r'^ab{3}$' \n    return bool(re.match(pattern, text))\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def capital_words_spaces(input_string):\n    words_list = input_string.split()\n    result = []\n    for word in words_list:\n        if word[0].isupper():\n            result.append(' ')\n        result.append(word)\n    return ''.join(result)",
+      "reference_key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+      "key_differs": true,
+      "text": "```python\ndef capital_words_spaces(input_string):\n    words_list = input_string.split()\n    result = []\n    for word in words_list:\n        if word[0].isupper():\n            result.append(' ')\n        result.append(word)\n    return ''.join(result)\n```",
+      "quality": 1.0,
+      "final_key": "def text_match_three(input_string):\n    words_list = input_string.split()\n    result = []\n    for word in words_list:\n        if word[0].isupper() and len(word) >= 3 and word[1:] == 'bbb':\n            result.append(' ')\n        result.append(word)\n    return ''.join(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not text_match_three(\"ac\") == True\nassert not text_match_three(\"aabb\") == False\nassert not text_match_three(\"abbb\") == False\nassert not text_match_three(\"abc\") == False\nassert not text_match_three(\"a\") == False\nassert not text_match_three(\"\") == False\nassert not text_match_three(\"A\") == False\nassert not text_match_three(\"AB\") == False\nassert not text_match_three(\"ABC\") == False\nassert not text_match_three(\"aBc\") == False\nassert not text_match_three(\"aBcc\") == False\nassert not text_match_three(\"aBccc\") == False\nassert not text_match_three(\"aBcccc\") == False\nassert not text_match_three(\"aBdddd\") == False\nassert not text_match_three(\"aBeeee\") == False\nassert not text_match_three(\"aBffff\") == False\nassert not text_match_three(\"aBgggg\") == False\nassert not text_match_three(\"aBhhhh\") == False\nassert not text_match_three(\"aBiiii\") == False\nassert not text_match_three(\"aBjjjj\") == False\nassert not text_match_three(\"aBkkkk\") == False\nassert not text_match_three(\"aBllll\") == False\nassert not text_match_three(\"aBmmmm\") == False\nassert not text_match_three(\"aBnnnn\") == False\nassert not text_match_three(\"aBoooo\") == False\nassert not text_match_three(\"aBpppp\") == False\nassert not text_match_three(\"aBqqqq\") == False\nassert not text_match_three(\"aBrrrr\") == False\nassert not text_match_three(\"aBssss\") == False\nassert not text_match_three(\"aBtttt\") == False\nassert not text_match_three(\"aBuuuu\") == False\nassert not text_match_three(\"aBvvvv\") == False\nassert not text_match_three(\"aBwwww\") == False\nassert not text_match_three(\"aBxxxx\") == False\nassert not text_match_three(\"aByyyy\") == False\nassert not text_match_three(\"aBzzzz\") == False\nassert not text_match_three(\"aCaaa\") == False\nassert not text_match_three(\"aCbbb\") == False\nassert not text_match_three(\"aCcbb\") == False\nassert not text",
+        "verifier": "PICK: B\n\n```python\ndef text_match_three(input_string):\n    words_list = input_string.split()\n    result = []\n    for word in words_list:\n        if word[0].isupper() and len(word) >= 3 and word[1:] == 'bbb':\n            result.append(' ')\n        result.append(word)\n    return ''.join(result)\n```",
+        "fixer": "```python\ndef text_match_three(input_string):\n    words_list = input_string.split()\n    result = []\n    for word in words_list:\n        if word[0].isupper() and len(word) >= 3 and word[1:] == 'bbb':\n            result.append(' ')\n        result.append(word)\n    return ''.join(result)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+  "sample_keys": [
+    "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    return bool(re.match(pattern, text))",
+    "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+    "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    return bool(re.match(pattern, text))",
+    "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    \n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+    "import re\n\ndef text_match_three(text):\n    # Regular expression pattern to match 'a' followed by exactly three 'b's\n    pattern = r'^ab{3}$'\n    \n    # Check if the text matches the pattern\n    if re.match(pattern, text):\n        return True\n    else:\n        return False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1334.0,
+    "small_out": 410.0,
+    "small_s": 8.328833934967406
+  },
+  "calls_plus": {
+    "small_in": 1033.0,
+    "small_out": 367.0,
+    "small_s": 7.404783947975375,
+    "large_in": 301.0,
+    "large_out": 43.0,
+    "large_s": 0.9532845280191395
+  },
+  "calls_samples": {
+    "small_in": 1505.0,
+    "small_out": 225.0,
+    "small_s": 3.695672907982953
+  }
+}

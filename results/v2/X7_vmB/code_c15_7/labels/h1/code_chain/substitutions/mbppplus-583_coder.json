@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-583",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\nimport math\n\ndef catalan_number(n):\n    # Calculate the nth Catalan number using the formula\n    return math.comb(2 * n, n) // (n + 1)\n```",
+  "reference_key": "import math\n\ndef catalan_number(n):\n    # Calculate the nth Catalan number using the formula\n    return math.comb(2 * n, n) // (n + 1)",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert catalan_number(0)==1\nassert catalan_number(1)==1\nassert catalan_number(2)==2\nassert catalan_number(3)==5\nassert catalan_number(4)==14\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef catalan_number(n):\n    # Calculate the nth Catalan number using the formula\n    return math.comb(2 * n, n) // (n + 1)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def catalan_number(n):\n    from math import factorial\n\n    return factorial(2*n) // ((factorial(n + 1) * factorial(n)))",
+      "reference_key": "import math\n\ndef catalan_number(n):\n    # Calculate the nth Catalan number using the formula\n    return math.comb(2 * n, n) // (n + 1)",
+      "key_differs": true,
+      "text": "```python\ndef catalan_number(n):\n    from math import factorial\n\n    return factorial(2*n) // ((factorial(n + 1) * factorial(n)))\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert catalan_number(0)==1\nassert catalan_number(1)==1\nassert catalan_number(2)==2\nassert catalan_number(3)==5\nassert catalan_number(4)==14\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nfrom math import factorial\n\ndef catalan_number(n):\n    return factorial(2*n) // ((factorial(n + 1) * factorial(n)))\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef catalan_number(n):\n    # Formula for the nth Catalan number\n    return math.comb(2*n, n) // (math.factorial(n + 1) * math factorial(n))",
+      "reference_key": "import math\n\ndef catalan_number(n):\n    # Calculate the nth Catalan number using the formula\n    return math.comb(2 * n, n) // (n + 1)",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef catalan_number(n):\n    # Formula for the nth Catalan number\n    return math.comb(2*n, n) // (math.factorial(n + 1) * math factorial(n))\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef catalan_number(n):\n    # Formula for the nth Catalan number\n    return math.comb(2*n, n) // (math.factorial(n + 1) * math.factorial(n))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert catalan_number(0)==1\nassert catalan_number(1)==1\nassert catalan_number(2)==2\nassert catalan_number(3)==5\nassert catalan_number(4)==14\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef catalan_number(n):\n    # Formula for the nth Catalan number\n    return math.comb(2*n, n) // (math.factorial(n + 1) * math.factorial(n))\n```",
+        "fixer": "```python\nimport math\n\ndef catalan_number(n):\n    # Formula for the nth Catalan number\n    return math.comb(2*n, n) // (math.factorial(n + 1) * math.factorial(n))\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def cal_sum(n):\n    if n <= 0:\n        return 0\n    a, b = 3, 0\n    sum_perrin = 0\n    for _ in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin",
+      "reference_key": "import math\n\ndef catalan_number(n):\n    # Calculate the nth Catalan number using the formula\n    return math.comb(2 * n, n) // (n + 1)",
+      "key_differs": true,
+      "text": "```python\ndef cal_sum(n):\n    if n <= 0:\n        return 0\n    a, b = 3, 0\n    sum_perrin = 0\n    for _ in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin\n```",
+      "quality": 0.0,
+      "final_key": "def catalan_number(n):\n    if n <= 0:\n        return 0\n    a, b = 3, 0\n    sum_perrin = 0\n    for _ in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert catalan_number(2) == 2\nassert catalan_number(4) == 14\nassert catalan_number(8) == 4862\nassert catalan_number(10) == 16796\nassert catalan_number(-1) == 0\n```",
+        "verifier": "PICK: B\n\n```python\ndef catalan_number(n):\n    if n <= 0:\n        return 0\n    a, b = 3, 0\n    sum_perrin = 0\n    for _ in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin\n```",
+        "fixer": "```python\ndef catalan_number(n):\n    if n <= 0:\n        return 0\n    a, b = 3, 0\n    sum_perrin = 0\n    for _ in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin\n\n# Test cases\nassert catalan_number(10) == 16796\nassert catalan_number(9) == 4862\nassert catalan_number(7) == 429\nassert catalan_number(2) == 2\nassert catalan_number(4) == 14\nassert catalan_number(8) == 4862\nassert catalan_number(10) == 16796\nassert catalan_number(-1) == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def catalan_number(n):\n    # Calculate the factorial of 2n\n    fact_2n = math.factorial(2 * n)\n    # Calculate the factorial of (n+1)\n    fact_n_plus_1 = math.factorial(n + 1)\n    # Calculate the factorial of n\n    fact_n = math.factorial(n)\n    # Calculate the nth Catalan number using the formula\n    catalan = fact_2n // (fact_n_plus_1 * fact_n)\n    return catalan",
+  "sample_keys": [
+    "import math\n\ndef catalan_number(n):\n    # Calculate the nth Catalan number using the formula (2n)! / ((n+1)! * n!)\n    return math.comb(2*n, n) // (n + 1)",
+    "def catalan_number(n):\n    # Calculate the factorial of 2n\n    fact_2n = math.factorial(2*n)\n    # Calculate the factorial of (n+1)!\n    fact_n_plus_1 = math.factorial(n+1)\n    # Calculate the factorial of n!\n    fact_n = math.factorial(n)\n    # Calculate the nth Catalan number\n    c = fact_2n // (fact_n_plus_1 * fact_n)\n    return c",
+    "def catalan_number(n):\n    from math import factorial\n    return factorial(2*n) // ((factorial(n+1) * factorial(n)))",
+    "def catalan_number(n):\n    # Calculate the factorial of 2n\n    n_factorial = math.factorial(2*n)\n    # Calculate the factorial of (n+1) and n\n    (n_plus_1_factorial, n_factorial) = (math.factorial(n+1), math.factorial(n))\n    # Calculate the nth Catalan number using the formula\n    catalan = n_factorial // ((n_plus_1_factorial * n_factorial))\n    return catalan",
+    "import math\n\ndef catalan_number(n):\n    # Calculate the nth Catalan number using the formula\n    return math.factorial(2*n) // (math.factorial(n + 1) * math.factorial(n))"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1633.0,
+    "small_out": 547.0,
+    "small_s": 11.236391570972046
+  },
+  "calls_plus": {
+    "small_in": 931.0,
+    "small_out": 236.0,
+    "small_s": 4.553206334036076,
+    "large_in": 233.0,
+    "large_out": 44.0,
+    "large_s": 0.9732109860051423
+  },
+  "calls_samples": {
+    "small_in": 1165.0,
+    "small_out": 432.0,
+    "small_s": 8.43392582598608
+  }
+}

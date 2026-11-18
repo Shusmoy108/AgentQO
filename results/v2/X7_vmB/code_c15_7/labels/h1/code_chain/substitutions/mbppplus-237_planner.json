@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-237",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `check_occurrences` that accepts one parameter: a list of tuples.\n2. Initialize an empty dictionary to store the count of each tuple.\n3. Iterate through each tuple in the input list.\n4. For each tuple, if it is already a key in the dictionary, increment its value by 1. If it is not a key, add it to the dictionary with a value of 1.\n5. Return the populated dictionary after iterating through all tuples.",
+  "reference_key": null,
+  "final_key_plus": "def check_occurrences(tuples_list):\n    occurrence_dict = {}\n    for tup in tuples_list:\n        if tup in occurrence_dict:\n            occurrence_dict[tup] += 1\n        else:\n            occurrence_dict[tup] = 1\n    return occurrence_dict",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert check_occurrences([]) == {}\nassert check_occurrences([(1, 1)]) == {(1, 1): 1}\nassert check_occurrences([(1, 1), (1, 1)]) == {(1, 1): 2}\nassert check_occurrences([(1, 1), (2, 2), (3, 3)]) == {(1, 1): 2, (2, 2): 1, (3, 3): 1}\nassert check_occurrences([(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]) == {(1, 1): 2, (2, 2): 1, (3, 3): 1, (4, 4): 1, (5, 5): 1}\n```",
+    "coder": "```python\ndef check_occurrences(tuples_list):\n    occurrence_dict = {}\n    for tup in tuples_list:\n        if tup in occurrence_dict:\n            occurrence_dict[tup] += 1\n        else:\n            occurrence_dict[tup] = 1\n    return occurrence_dict\n```",
+    "verifier": "PICK: B\n\n```python\ndef check_occurrences(tuples_list):\n    occurrence_dict = {}\n    for tup in tuples_list:\n        if tup in occurrence_dict:\n            occurrence_dict[tup] += 1\n        else:\n            occurrence_dict[tup] = 1\n    return occurrence_dict\n```",
+    "fixer": "```python\ndef check_occurrences(tuples_list):\n    occurrence_dict = {}\n    for tup in tuples_list:\n        if tup in occurrence_dict:\n            occurrence_dict[tup] += 1\n        else:\n            occurrence_dict[tup] = 1\n    return occurrence_dict\n\n# Test cases\nassert check_occurrences([(3, 1), (1, 3), (2, 5), (5, 2), (6, 3)] ) == {(1, 3): 2, (2, 5): 2, (3, 6): 1}\nassert check_occurrences([(4, 2), (2, 4), (3, 6), (6, 3), (7, 4)] ) == {(2, 4): 2, (3, 6): 2, (4, 7): 1}\nassert check_occurrences([(13, 2), (11, 23), (12, 25), (25, 12), (16, 23)] ) == {(2, 13): 1, (11, 23): 1, (12, 25): 2, (16, 23): 1}\nassert check_occurrences([]) == {}\nassert check_occurrences([(1, 1)]) == {(1, 1): 1}\nassert check_occurrences([(1, 1), (1, 1)]) == {(1, 1): 2}\nassert check_occurrences([(1, 1), (2, 2), (3, 3)]) == {(1, 1): 2, (2, 2): 1, (3, 3): 1}\nassert check_occurrences([(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]) == {(1, 1): 2, (2, 2): 1, (3, 3): 1, (4, 4): 1, (5, 5): 1}\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `digit_distance_nums` that takes two parameters, `num1` and `num2`.\n2. Convert both numbers to strings to easily access each digit.\n3. Initialize a variable `sum_diff` to zero to store the total difference.\n4. Iterate over the digits of both numbers simultaneously using a loop.\n5. For each pair of corresponding digits, calculate the absolute difference.\n6. Add the calculated difference to `sum_diff`.\n7. Return the value of `sum_diff`.\n\nThis approach ensures that we correctly compute the sum of the per-digit differences between any two given integers.",
+      "quality": 0.0,
+      "final_key": "def digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    return sum_diff\n\ndef check_occurrences(nums_list):\n    occurrences_dict = {}\n    for num_tuple in nums_list:\n        if num_tuple in occurrences_dict:\n            occurrences_dict[num_tuple] += 1\n        else:\n            occurrences_dict[num_tuple] = 1\n    return occurrences_dict\n\n# Test cases\nassert check_occurrences([(3, 1), (1, 3), (2, 5), (5, 2), (6, 3)]) == {(1, 3): 2, (2, 5): 2, (3, 6): 1}\nassert check_occurrences([(4, 2), (2, 4), (3, 6), (6, 3), (7, 4)]) == {(2, 4): 2, (3, 6): 2, (4, 7): 1}\nassert check_occurrences([(13, 2), (11, 23), (12, 25), (25, 12), (16, 23)]) == {(2, 13): 1, (11, 23): 1, (12, 25): 2, (16, 23): 1}\nassert digit_distance_nums(1234, 9876) == 10\nassert digit_distance_nums(1111, 2222) == 0\nassert digit_distance_nums(12345, 12345) == 0\nassert digit_distance_nums(123456, 123456) == 0\nassert digit_distance_nums(1234567, 1234567) == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert digit_distance_nums(1234, 9876) == 10\nassert digit_distance_nums(1111, 2222) == 0\nassert digit_distance_nums(12345, 12345) == 0\nassert digit_distance_nums(123456, 123456) == 0\nassert digit_distance_nums(1234567, 1234567) == 0\n```",
+        "coder": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    return sum_diff\n```",
+        "verifier": "PICK: B\n\n```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    return sum_diff\n\ndef check_occurrences(nums_list):\n    occurrences_dict = {}\n    for num_tuple in nums_list:\n        if num_tuple in occurrences_dict:\n            occurrences_dict[num_tuple] += 1\n        else:\n            occurrences_dict[num_tuple] = 1\n    return occurrences_dict\n\n# Test cases\nassert check_occurrences([(3, 1), (1, 3), (2, 5), (5, 2), (6, 3)]) == {(1, 3): 2, (2, 5): 2, (3, 6): 1}\nassert check_occurrences([(4, 2), (2, 4), (3, 6), (6, 3), (7, 4)]) == {(2, 4): 2, (3, 6): 2, (4, 7): 1}\nassert check_occurrences([(13, 2), (11, 23), (12, 25), (25, 12), (16, 23)]) == {(2, 13): 1, (11, 23): 1, (12, 25): 2, (16, 23): 1}\nassert digit_distance_nums(1234, 9876) == 10\nassert digit_distance_nums(1111, 2222) == 0\nassert digit_distance_nums(12345, 12345) == 0\nassert digit_distance_nums(123456, 123456) == 0\nassert digit_distance_nums(1234567, 1234567) == 0\n```",
+        "fixer": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    return sum_diff\n\ndef check_occurrences(nums_list):\n    occurrences_dict = {}\n    for num_tuple in nums_list:\n        if num_tuple in occurrences_dict:\n            occurrences_dict[num_tuple] += 1\n        else:\n            occurrences_dict[num_tuple] = 1\n    return occurrences_dict\n\n# Test cases\nassert check_occurrences([(3, 1), (1, 3), (2, 5), (5, 2), (6, 3)]) == {(1, 3): 2, (2, 5): 2, (3, 6): 1}\nassert check_occurrences([(4, 2), (2, 4), (3, 6), (6, 3), (7, 4)]) == {(2, 4): 2, (3, 6): 2, (4, 7): 1}\nassert check_occurrences([(13, 2), (11, 23), (12, 25), (25, 12), (16, 23)]) == {(2, 13): 1, (11, 23): 1, (12, 25): 2, (16, 23): 1}\nassert digit_distance_nums(1234, 9876) == 10\nassert digit_distance_nums(1111, 2222) == 0\nassert digit_distance_nums(12345, 12345) == 0\nassert digit_distance_nums(123456, 123456) == 0\nassert digit_distance_nums(1234567, 1234567) == 0\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_tuple_occurrences` that accepts one parameter: a list of tuples.\n2. Initialize an empty dictionary to store the counts of each tuple.\n3. Iterate through each tuple in the input list.\n4. For each tuple, check if it is already a key in the dictionary.\n   - If it is, increment its value by 1.\n   - If it is not, add it to the dictionary with a value of 1.\n5. Return the populated dictionary after iterating through all tuples.",
+      "quality": 0.0,
+      "final_key": "def count_tuple_occurrences(tuples_list):\n    occurrences = {}\n    for tup in tuples_list:\n        if tup in occurrences:\n            occurrences[tup] += 1\n        else:\n            occurrences[tup] = 1\n    return occurrences\n\n# Test cases\nassert count_tuple_occurrences([(3, 1), (1, 3), (2, 5), (5, 2), (6, 3)] ) == {(1, 3): 2, (2, 5): 2, (3, 6): 1}\nassert count_tuple_occurrences([(4, 2), (2, 4), (3, 6), (6, 3), (7, 4)] ) == {(2, 4): 2, (3, 6): 2, (4, 7): 1}\nassert count_tuple_occurrences([(13, 2), (11, 23), (12, 25), (25, 12), (16, 23)] ) == {(2, 13): 1, (11, 23): 1, (12, 25): 2, (16, 23): 1}\nassert count_tuple_occurrences([]) == {}\nassert count_tuple_occurrences([(\"a\", \"b\"), (\"a\", \"c\"), (\"b\", \"d\")]) == {\"a\": 2, \"b\": 2, \"c\": 1, \"d\": 1}\nassert count_tuple_occurrences([(\"x\", \"y\"), (\"z\", \"w\"), (\"x\", \"y\"), (\"z\", \"w\"), (\"x\", \"y\")]) == {\"x\": 3, \"y\": 3, \"z\": 2}\nassert count_tuple_occurrences([(), (), ()]) == {(): 3}\nassert count_tuple_occurrences([(1, 2, 3), (4, 5, 6), (7, 8, 9)]) == {(1, 2, 3): 1, (4, 5, 6): 1, (7, 8, 9): 1}",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_tuple_occurrences([]) == {}\nassert count_tuple_occurrences([(\"a\", \"b\"), (\"a\", \"c\"), (\"b\", \"d\")]) == {\"a\": 2, \"b\": 2, \"c\": 1, \"d\": 1}\nassert count_tuple_occurrences([(\"x\", \"y\"), (\"z\", \"w\"), (\"x\", \"y\"), (\"z\", \"w\"), (\"x\", \"y\")]) == {\"x\": 3, \"y\": 3, \"z\": 2}\nassert count_tuple_occurrences([(), (), ()]) == {(): 3}\nassert count_tuple_occurrences([(1, 2, 3), (4, 5, 6), (7, 8, 9)]) == {(1, 2, 3): 1, (4, 5, 6): 1, (7, 8, 9): 1}\n```",
+        "coder": "```python\ndef count_tuple_occurrences(tuples_list):\n    occurrences = {}\n    for tup in tuples_list:\n        if tup in occurrences:\n            occurrences[tup] += 1\n        else:\n            occurrences[tup] = 1\n    return occurrences\n```",
+        "verifier": "PICK: B\n\n```python\ndef count_tuple_occurrences(tuples_list):\n    occurrences = {}\n    for tup in tuples_list:\n        if tup in occurrences:\n            occurrences[tup] += 1\n        else:\n            occurrences[tup] = 1\n    return occurrences\n\n# Test cases\nassert count_tuple_occurrences([(3, 1), (1, 3), (2, 5), (5, 2), (6, 3)] ) == {(1, 3): 2, (2, 5): 2, (3, 6): 1}\nassert count_tuple_occurrences([(4, 2), (2, 4), (3, 6), (6, 3), (7, 4)] ) == {(2, 4): 2, (3, 6): 2, (4, 7): 1}\nassert count_tuple_occurrences([(13, 2), (11, 23), (12, 25), (25, 12), (16, 23)] ) == {(2, 13): 1, (11, 23): 1, (12, 25): 2, (16, 23): 1}\nassert count_tuple_occurrences([]) == {}\nassert count_tuple_occurrences([(\"a\", \"b\"), (\"a\", \"c\"), (\"b\", \"d\")]) == {\"a\": 2, \"b\": 2, \"c\": 1, \"d\": 1}\nassert count_tuple_occurrences([(\"x\", \"y\"), (\"z\", \"w\"), (\"x\", \"y\"), (\"z\", \"w\"), (\"x\", \"y\")]) == {\"x\": 3, \"y\": 3, \"z\": 2}\nassert count_tuple_occurrences([(), (), ()]) == {(): 3}\nassert count_tuple_occurrences([(1, 2, 3), (4, 5, 6), (7, 8, 9)]) == {(1, 2, 3): 1, (4, 5, 6): 1, (7, 8, 9): 1}\n```",
+        "fixer": "```python\ndef count_tuple_occurrences(tuples_list):\n    occurrences = {}\n    for tup in tuples_list:\n        if tup in occurrences:\n            occurrences[tup] += 1\n        else:\n            occurrences[tup] = 1\n    return occurrences\n\n# Test cases\nassert count_tuple_occurrences([(3, 1), (1, 3), (2, 5), (5, 2), (6, 3)] ) == {(1, 3): 2, (2, 5): 2, (3, 6): 1}\nassert count_tuple_occurrences([(4, 2), (2, 4), (3, 6), (6, 3), (7, 4)] ) == {(2, 4): 2, (3, 6): 2, (4, 7): 1}\nassert count_tuple_occurrences([(13, 2), (11, 23), (12, 25), (25, 12), (16, 23)] ) == {(2, 13): 1, (11, 23): 1, (12, 25): 2, (16, 23): 1}\nassert count_tuple_occurrences([]) == {}\nassert count_tuple_occurrences([(\"a\", \"b\"), (\"a\", \"c\"), (\"b\", \"d\")]) == {\"a\": 2, \"b\": 2, \"c\": 1, \"d\": 1}\nassert count_tuple_occurrences([(\"x\", \"y\"), (\"z\", \"w\"), (\"x\", \"y\"), (\"z\", \"w\"), (\"x\", \"y\")]) == {\"x\": 3, \"y\": 3, \"z\": 2}\nassert count_tuple_occurrences([(), (), ()]) == {(): 3}\nassert count_tuple_occurrences([(1, 2, 3), (4, 5, 6), (7, 8, 9)]) == {(1, 2, 3): 1, (4, 5, 6): 1, (7, 8, 9): 1}\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `square_nums` that takes one parameter: `nums`, which is a list of integers.\n2. Initialize an empty list called `squared_nums` to store the squared values.\n3. Iterate over each element `num` in the input list `nums`.\n4. For each element, calculate its square using the exponentiation operator (`**`) and append it to the `squared_nums` list.\n5. After iterating through all elements, return the `squared_nums` list.\n\nThis approach ensures that each element in the input list is squared individually and the results are collected into a new list, which is then returned as the output of the function.",
+      "quality": 0.0,
+      "final_key": "def check_occurrences(lst):\n    occurrences = {}\n    for item in lst:\n        if item in occurrences:\n            occurrences[item] += 1\n        else:\n            occurrences[item] = 1\n    return occurrences",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_occurrences([(3, 1), (1, 3), (2, 5), (5, 2), (6, 3)]) == {(1, 3): 2, (2, 5): 2, (3, 6): 1}\nassert check_occurrences([]) == {}\nassert check_occurrences([1]) == {1: 1}\nassert check_occurrences([(1, 1), (1, 1), (1, 1)]) == {1: 3}\nassert check_occurrences([(1, 1), (1, 2), (1, 3), (1, 4), (1, 5)]) == {1: 5}\n```",
+        "coder": "```python\ndef square_nums(nums):\n    squared_nums = [num ** 2 for num in nums]\n    return squared_nums\n```",
+        "verifier": "PICK: B\n```python\ndef check_occurrences(lst):\n    occurrences = {}\n    for item in lst:\n        if item in occurrences:\n            occurrences[item] += 1\n        else:\n            occurrences[item] = 1\n    return occurrences\n```",
+        "fixer": "```python\ndef check_occurrences(lst):\n    occurrences = {}\n    for item in lst:\n        if item in occurrences:\n            occurrences[item] += 1\n        else:\n            occurrences[item] = 1\n    return occurrences\n\n# Test cases\nassert check_occurrences([(3, 1), (1, 3), (2, 5), (5, 2), (6, 3)]) == {(1, 3): 2, (2, 5): 2, (3, 6): 1}\nassert check_occurrences([(4, 2), (2, 4), (3, 6), (6, 3), (7, 4)]) == {(2, 4): 2, (3, 6): 2, (4, 7): 1}\nassert check_occurrences([(13, 2), (11, 23), (12, 25), (25, 12), (16, 23)]) == {(2, 13): 1, (11, 23): 1, (12, 25): 2, (16, 23): 1}\nassert check_occurrences([]) == {}\nassert check_occurrences([1]) == {1: 1}\nassert check_occurrences([(1, 1), (1, 1), (1, 1)]) == {1: 3}\nassert check_occurrences([(1, 1), (1, 2), (1, 3), (1, 4), (1, 5)]) == {1: 5}\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def check_occurrences(tuples_list):\n    occurrences = {}\n    for tup in tuples_list:\n        if tup in occurrences:\n            occurrences[tup] += 1\n        else:\n            occurrences[tup] = 1\n    return occurrences",
+  "sample_keys": [
+    "def check_occurrences(lst):\n    occurrences = {}\n    for tup in lst:\n        if tup in occurrences:\n            occurrences[tup] += 1\n        else:\n            occurrences[tup] = 1\n    return occurrences",
+    "def check_occurrences(tuples_list):\n    occurrence_dict = {}\n    for tup in tuples_list:\n        if tup in occurrence_dict:\n            occurrence_dict[tup] += 1\n        else:\n            occurrence_dict[tup] = 1\n    return occurrence_dict",
+    "def check_occurrences(tuples_list):\n    occurrences = {}\n    for t in tuples_list:\n        if t in occurrences:\n            occurrences[t] += 1\n        else:\n            occurrences[t] = 1\n    return occurrences"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2664.0,
+    "small_out": 868.0,
+    "small_s": 19.169458144984674
+  },
+  "calls_plus": {
+    "large_in": 171.0,
+    "large_out": 103.0,
+    "large_s": 3.3279446230153553,
+    "small_in": 2509.0,
+    "small_out": 776.0,
+    "small_s": 15.522481076972326
+  },
+  "calls_samples": {
+    "small_in": 8109.0,
+    "small_out": 2721.0,
+    "small_s": 54.68381049204618
+  }
+}

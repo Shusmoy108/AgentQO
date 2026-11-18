@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-558",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `digit_distance_nums` that takes two integer arguments.\n2. Convert both integers to strings to easily access individual digits.\n3. Calculate the absolute difference between corresponding digits from both numbers.\n4. Sum up all the calculated differences.\n5. Return the total sum as the result.",
+  "reference_key": null,
+  "final_key_plus": "def digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    total_sum = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            total_sum += diff\n        except ValueError:\n            return \"Error: Invalid input. Please provide integer values.\"\n    \n    return total_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert digit_distance_nums(10, 9) == 1\nassert digit_distance_nums(123, 456) == 3\nassert digit_distance_nums(789, 123) == 6\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(-1, 1) == 2\n```",
+    "coder": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    total_sum = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        total_sum += diff\n    \n    return total_sum\n```",
+    "verifier": "PICK: B\n\n```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    total_sum = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            total_sum += diff\n        except ValueError:\n            return \"Error: Invalid input. Please provide integer values.\"\n    \n    return total_sum\n```",
+    "fixer": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    total_sum = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            total_sum += diff\n        except ValueError:\n            return \"Error: Invalid input. Please provide integer values.\"\n    \n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `find` that takes two parameters, `numerator` and `denominator`.\n2. Use integer division (`//`) to calculate the quotient of the numerator divided by the denominator.\n3. Return the result of the integer division.\n\nHere's the complete function:\n\n```python\ndef find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient\n```\n\nThis function will correctly compute the quotient of two numbers and round it down to the nearest integer as required.",
+      "quality": 0.0,
+      "final_key": "def digit_distance_nums(num1, num2):\n    # Convert numbers to strings to easily iterate over each digit\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    \n    # Initialize the sum of differences\n    total_difference = 0\n    \n    # Iterate over the digits of both numbers\n    for i in range(max(len(str_num1), len(str_num2))):\n        # Get the current digit from each number, defaulting to 0 if out of bounds\n        digit1 = int(str_num1[i]) if i < len(str_num1) else 0\n        digit2 = int(str_num2[i]) if i < len(str_num2) else 0\n        \n        # Calculate the absolute difference and add it to the total\n        total_difference += abs(digit1 - digit2)\n    \n    return total_difference",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert digit_distance_nums(10, 20) == 10\nassert digit_distance_nums(99, 88) == 11\nassert digit_distance_nums(1234, 5678) == 15\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(-1, -2) == 1\n```",
+        "coder": "```python\ndef find(numerator, denominator):\n    quotient = numerator // denominator\n    return quotient\n```",
+        "verifier": "PICK: B\n\n```python\ndef digit_distance_nums(num1, num2):\n    # Convert numbers to strings to easily iterate over each digit\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    \n    # Initialize the sum of differences\n    total_difference = 0\n    \n    # Iterate over the digits of both numbers\n    for i in range(max(len(str_num1), len(str_num2))):\n        # Get the current digit from each number, defaulting to 0 if out of bounds\n        digit1 = int(str_num1[i]) if i < len(str_num1) else 0\n        digit2 = int(str_num2[i]) if i < len(str_num2) else 0\n        \n        # Calculate the absolute difference and add it to the total\n        total_difference += abs(digit1 - digit2)\n    \n    return total_difference\n```",
+        "fixer": "```python\ndef digit_distance_nums(num1, num2):\n    # Convert numbers to strings to easily iterate over each digit\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    \n    # Initialize the sum of differences\n    total_difference = 0\n    \n    # Iterate over the digits of both numbers\n    for i in range(max(len(str_num1), len(str_num2))):\n        # Get the current digit from each number, defaulting to 0 if out of bounds\n        digit1 = int(str_num1[i]) if i < len(str_num1) else 0\n        digit2 = int(str_num2[i]) if i < len(str_num2) else 0\n        \n        # Calculate the absolute difference and add it to the total\n        total_difference += abs(digit1 - digit2)\n    \n    return total_difference\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `digit_distance_nums` that takes two integer arguments.\n2. Convert both integers to strings to easily access individual digits.\n3. Calculate the absolute difference between corresponding digits from both numbers.\n4. Multiply the calculated differences by 2 (since the problem might be asking for twice the digit distance).\n5. Sum up all the multiplied differences.\n6. Return the total sum as the result.",
+      "quality": 0.0,
+      "final_key": "def digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    total_sum = 0\n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            total_sum += diff * 2\n        except ValueError:\n            return \"Error: Invalid input\"\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert digit_distance_nums(10, 9) == 18\nassert digit_distance_nums(123, 456) == 18\nassert digit_distance_nums(789, 123) == 18\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(-1, -2) == 3\n```",
+        "coder": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    total_sum = 0\n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        total_sum += diff * 2\n    return total_sum\n```",
+        "verifier": "PICK: B\n\n```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    total_sum = 0\n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            total_sum += diff * 2\n        except ValueError:\n            return \"Error: Invalid input\"\n    return total_sum\n```",
+        "fixer": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    total_sum = 0\n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            total_sum += diff * 2\n        except ValueError:\n            return \"Error: Invalid input\"\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `check_integer` that takes one parameter, `s`.\n2. Inside the function, use a regular expression to check if the input string `s` matches the pattern of an integer.\n3. If the input string matches the pattern, return `True`, indicating that it is an integer.\n4. If the input string does not match the pattern, return `False`, indicating that it is not an integer.\n5. Test the function with the provided test case `\"python\"` to ensure it returns `False`.",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef digit_distance_nums(a, b):\n    # Convert integers to strings\n    str_a = str(abs(a))\n    str_b = str(abs(b))\n    \n    # Calculate the absolute difference between the lengths of the strings\n    diff = abs(len(str_a) - len(str_b))\n    \n    # Initialize the sum of differences\n    total_diff = 0\n    \n    # Pad the shorter string with leading zeros\n    max_len = max(len(str_a), len(str_b))\n    str_a = str_a.zfill(max_len)\n    str_b = str_b.zfill(max_len)\n    \n    # Iterate over each character pair and calculate the difference\n    for i in range(max_len):\n        total_diff += abs(int(str_a[i]) - int(str_b[i]))\n    \n    return total_diff",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert digit_distance_nums(10, 20) == 10\nassert digit_distance_nums(-1, -2) == 1\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(99, 100) == 1\nassert digit_distance_nums(123456789, 987654321) == 18\n```",
+        "coder": "```python\nimport re\n\ndef check_integer(s):\n    # Regular expression to match an integer\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    return bool(re.match(pattern, s))\n```",
+        "verifier": "PICK: B\n\n```python\nimport re\n\ndef digit_distance_nums(a, b):\n    # Convert integers to strings\n    str_a = str(abs(a))\n    str_b = str(abs(b))\n    \n    # Calculate the absolute difference between the lengths of the strings\n    diff = abs(len(str_a) - len(str_b))\n    \n    # Initialize the sum of differences\n    total_diff = 0\n    \n    # Pad the shorter string with leading zeros\n    max_len = max(len(str_a), len(str_b))\n    str_a = str_a.zfill(max_len)\n    str_b = str_b.zfill(max_len)\n    \n    # Iterate over each character pair and calculate the difference\n    for i in range(max_len):\n        total_diff += abs(int(str_a[i]) - int(str_b[i]))\n    \n    return total_diff\n```",
+        "fixer": "```python\nimport re\n\ndef digit_distance_nums(a, b):\n    # Convert integers to strings\n    str_a = str(abs(a))\n    str_b = str(abs(b))\n    \n    # Calculate the absolute difference between the lengths of the strings\n    diff = abs(len(str_a) - len(str_b))\n    \n    # Initialize the sum of differences\n    total_diff = 0\n    \n    # Pad the shorter string with leading zeros\n    max_len = max(len(str_a), len(str_b))\n    str_a = str_a.zfill(max_len)\n    str_b = str_b.zfill(max_len)\n    \n    # Iterate over each character pair and calculate the difference\n    for i in range(max_len):\n        total_diff += abs(int(str_a[i]) - int(str_b[i]))\n    \n    return total_diff\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            sum_diff += diff\n        except ValueError:\n            return \"Error: Invalid input. Please provide integer values.\"\n    \n    return sum_diff",
+  "sample_keys": [
+    "def digit_distance_nums(num, other_num):\n    \"\"\"\n    Find the sum of the per-digit difference between two integers.\n    \n    Args:\n    num (int): The first integer.\n    other_num (int): The second integer.\n    \n    Returns:\n    int: The sum of the per-digit differences.\n    \"\"\"\n    total_distance = 0\n    while num > 0 or other_num > 0:\n        # Extract the last digit from both numbers\n        digit1 = num % 10\n        digit2 = other_num % 10\n        \n        # Calculate the absolute difference and add it to the total distance\n        total_distance += abs(digit1 - digit2)\n        \n        # Remove the last digit from both numbers\n        num //= 10\n        other_num //= 10\n    \n    return total_distance",
+    "def digit_distance_nums(num1, num2):\n    digit_difference = 0\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    \n    for i in range(min(len(str_num1), len(str_num2))):\n        digit_difference += abs(int(str_num1[i]) - int(str_num2[i]))\n    \n    return digit_difference\n\n# Test cases\nassert digit_distance_nums(1,2) == 1\nassert digit_distance_nums(23,56) == 6\nassert digit_distance_nums(123,256) == 7\nassert digit_distance_nums(10, 9) == 1\nassert digit_distance_nums(123, 456) == 3\nassert digit_distance_nums(789, 123) == 6\nassert digit_distance_nums(0, 0) == 0\ntry:\n    assert digit_distance_nums(-1, 1) == 2\nexcept ValueError as e:\n    print(e)  # Output: invalid literal for int() with base 10: '-'",
+    "def digit_distance_nums(num1, num2):\n    difference = abs(num1 - num2)\n    digits = [int(digit) for digit in str(num1)] + [int(digit) for digit in str(num2)]\n    return sum([abs(digits[i] - digits[i+1]) for i in range(len(digits)-1)])"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1528.0,
+    "small_out": 492.0,
+    "small_s": 11.009467548021348
+  },
+  "calls_plus": {
+    "large_in": 108.0,
+    "large_out": 65.0,
+    "large_s": 2.208442917006323,
+    "small_in": 1358.0,
+    "small_out": 365.0,
+    "small_s": 7.345024099980947
+  },
+  "calls_samples": {
+    "small_in": 5268.0,
+    "small_out": 2413.0,
+    "small_s": 48.21005979902111
+  }
+}

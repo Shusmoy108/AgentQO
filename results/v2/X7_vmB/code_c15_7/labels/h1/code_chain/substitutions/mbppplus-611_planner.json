@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-611",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `max_of_nth` that takes two parameters: `matrix`, which is a list of lists representing the matrix, and `n`, which is the index of the column for which the maximum value needs to be found.\n2. Initialize a variable `max_value` to store the maximum value found in the specified column. Set it to negative infinity initially to ensure any value in the matrix will be larger.\n3. Iterate through each row in the matrix using a loop.\n4. For each row, access the element at the `n`th index (since list indices start at 0).\n5. Compare this element with the current `max_value`. If it's greater, update `max_value`.\n6. After iterating through all rows, return the `max_value` as the result.",
+  "reference_key": null,
+  "final_key_plus": "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) > n:\n            max_value = max(max_value, row[n])\n    return max_value",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 4) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == None\nassert max_of_nth([], 2) == None\n```",
+    "coder": "```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) > n:\n            max_value = max(max_value, row[n])\n    return max_value\n```",
+    "verifier": "PICK: A\n\n```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) > n:\n            max_value = max(max_value, row[n])\n    return max_value\n```",
+    "fixer": "```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) > n:\n            max_value = max(max_value, row[n])\n    return max_value\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `frequency` that takes two parameters: `numbers_list`, which is the list of numbers to search through, and `target_number`, which is the number whose occurrences need to be counted.\n2. Initialize a variable `count` to zero. This will keep track of the number of times `target_number` appears in `numbers_list`.\n3. Iterate over each element `num` in `numbers_list` using a for loop.\n4. Inside the loop, check if `num` is equal to `target_number`. If they are equal, increment the `count` by one.\n5. After the loop completes, return the value of `count`.\n\nThis approach ensures that we correctly count all occurrences of the target number in the list.",
+      "quality": 0.0,
+      "final_key": "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) >= n + 1:\n            max_value = max(max_value, row[n])\n    return max_value\n\n# Test cases\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[6, 7, 8], [2, 4, 6], [9, 10, 20]], 1) == 10\nassert max_of_nth([[7, 8, 9], [3, 5, 7], [10, 11, 21]], 1) == 11\nassert frequency([1, 2, 3, 4, 5], 3) == 1\nassert frequency([], 1) == 0\nassert frequency([10, 20, 30, 40, 50], 10) == 1\nassert frequency([1, 2, 3, 4, 5], 1) == 1\nassert frequency([1, 2, 3, 4, 5], 6) == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert frequency([1, 2, 3, 4, 5], 3) == 1\nassert frequency([], 1) == 0\nassert frequency([10, 20, 30, 40, 50], 10) == 1\nassert frequency([1, 2, 3, 4, 5], 6) == 0\nassert frequency([1, 2, 3, 4, 5], 1) == 1\n```",
+        "coder": "```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) >= n + 1:\n            max_value = max(max_value, row[n])\n    return max_value\n\n# Test cases\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[6, 7, 8], [2, 4, 6], [9, 10, 20]], 1) == 10\nassert max_of_nth([[7, 8, 9], [3, 5, 7], [10, 11, 21]], 1) == 11\nassert frequency([1, 2, 3, 4, 5], 3) == 1\nassert frequency([], 1) == 0\nassert frequency([10, 20, 30, 40, 50], 10) == 1\nassert frequency([1, 2, 3, 4, 5], 1) == 1\nassert frequency([1, 2, 3, 4, 5], 6) == 0\n```",
+        "fixer": "```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) >= n + 1:\n            max_value = max(max_value, row[n])\n    return max_value\n\n# Test cases\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[6, 7, 8], [2, 4, 6], [9, 10, 20]], 1) == 10\nassert max_of_nth([[7, 8, 9], [3, 5, 7], [10, 11, 21]], 1) == 11\nassert frequency([1, 2, 3, 4, 5], 3) == 1\nassert frequency([], 1) == 0\nassert frequency([10, 20, 30, 40, 50], 10) == 1\nassert frequency([1, 2, 3, 4, 5], 1) == 1\nassert frequency([1, 2, 3, 4, 5], 6) == 0\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "Plan:\n1. Define a function named `max_of_nth` that takes two parameters: `matrix`, which is a list of lists representing the matrix, and `n`, which is the index of the column for which the maximum value needs to be found.\n2. Initialize a variable `max_value` to store the maximum value found in the specified column. Set it to negative infinity initially to ensure any value in the matrix will be larger.\n3. Iterate through each row in the matrix using a loop.\n4. For each row, access the element at the `n`th index.\n5. Compare this element with the current `max_value`. If it's greater, update `max_value`.\n6. After iterating through all rows, return the `max_value` as the result.",
+      "quality": 1.0,
+      "final_key": "def max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) > n:\n            max_value = max(max_value, row[n])\n    return max_value",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 4) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == None\nassert max_of_nth([], 2) == None\n```",
+        "coder": "```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) > n:\n            max_value = max(max_value, row[n])\n    return max_value\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) > n:\n            max_value = max(max_value, row[n])\n    return max_value\n```",
+        "fixer": "```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if len(row) > n:\n            max_value = max(max_value, row[n])\n    return max_value\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `replace_char` that takes three parameters: `input_string`, `old_char`, and `new_char`.\n2. Initialize an empty string `result` to store the modified string.\n3. Iterate over each character in the `input_string`.\n4. If the current character is equal to `old_char`, append `new_char` to `result`. Otherwise, append the current character to `result`.\n5. Return the `result` string.\n\nHere's the complete implementation:\n\n```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n\n# Test case\nassert replace_char(\"polygon\", 'y', 'l') == (\"pollgon\")\n```\n\nThis function iterates through each character in the input string, checks if it matches the `old_char`, and replaces it with `new_char` if they match. The modified characters are then concatenated into a new string, which is returned as the result.",
+      "quality": 0.0,
+      "final_key": "def max_of_nth(matrix, n):\n    if n < 0 or n >= len(matrix[0]):\n        return None\n    return max(row[n] for row in matrix)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 1) == 9\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 4) == None\n```",
+        "coder": "```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_of_nth(matrix, n):\n    if n < 0 or n >= len(matrix[0]):\n        return None\n    return max(row[n] for row in matrix)\n```",
+        "fixer": "```python\ndef max_of_nth(matrix, n):\n    if n < 0 or n >= len(matrix[0]):\n        return None\n    return max(row[n] for row in matrix)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def max_of_nth(matrix, n):\n    if not matrix or n < 0 or n >= len(matrix[0]):\n        return None\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value",
+  "sample_keys": [
+    "def max_of_nth(matrix, n):\n    max_value = float('-inf')  # Initialize max_value to negative infinity\n    for row in matrix:\n        if n < len(row):  # Check if the column index is within bounds\n            current_value = row[n]\n            if current_value > max_value:\n                max_value = current_value\n    return max_value",
+    "def max_of_nth(matrix, n):\n    # Check if the matrix is empty\n    if not matrix:\n        return None\n    \n    # Initialize the max value to the first element of the nth column\n    max_value = matrix[0][n]\n    \n    # Iterate through each row of the matrix\n    for row in matrix:\n        # Access the nth element and update max if necessary\n        if row[n] > max_value:\n            max_value = row[n]\n    \n    # Return the final max value\n    return max_value",
+    "def max_of_nth(matrix, nth_column):\n    # Check if the matrix is empty\n    if not matrix:\n        raise ValueError(\"Matrix is empty\")\n    \n    # Check if the nth_column is within the valid range\n    if nth_column < 0 or nth_column >= len(matrix[0]):\n        raise ValueError(\"Invalid column index\")\n    \n    # Extract the column from the matrix\n    column = [row[nth_column] for row in matrix]\n    \n    # Calculate the maximum value in the column\n    max_value = max(column)\n    \n    return max_value"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2070.0,
+    "small_out": 536.0,
+    "small_s": 11.772036927024601
+  },
+  "calls_plus": {
+    "large_in": 141.0,
+    "large_out": 168.0,
+    "large_s": 5.067696298006922,
+    "small_in": 1926.0,
+    "small_out": 331.0,
+    "small_s": 6.675068208976882
+  },
+  "calls_samples": {
+    "small_in": 6746.0,
+    "small_out": 1839.0,
+    "small_s": 37.57064999101567
+  }
+}

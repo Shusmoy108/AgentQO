@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-479",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef first_Digit(num):\n    num_str = str(abs(num))  # Convert the number to string and take absolute value to handle negative numbers\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit\n```",
+  "reference_key": "def first_Digit(num):\n    num_str = str(abs(num))  # Convert the number to string and take absolute value to handle negative numbers\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+  "final_key_plus": "def first_Digit(num):\n    num_str = str(abs(num))  # Convert the number to string and take absolute value to handle negative numbers\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef first_Digit(num):\n    num_str = str(abs(num))  # Convert the number to string and take absolute value to handle negative numbers\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def first_Digit(num):\n    num_str = str(num)\n    if not num_str.isdigit():\n        raise ValueError(\"Invalid input. Please provide a non-negative integer.\")\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+      "reference_key": "def first_Digit(num):\n    num_str = str(abs(num))  # Convert the number to string and take absolute value to handle negative numbers\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+      "key_differs": true,
+      "text": "```python\ndef first_Digit(num):\n    num_str = str(num)\n    if not num_str.isdigit():\n        raise ValueError(\"Invalid input. Please provide a non-negative integer.\")\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit\n```\n\nThe test results showed an issue due to the `raise ValueError` statement, which needs to be used only at the beginning of a function if you want to exit immediately upon encountering an error condition. In this particular case, since we need to handle both positive and negative integers, it's more appropriate to check if the string representation of `num` contains any characters other than digits before attempting to extract the first character and convert it to an integer. This way, it gracefully errors out when the input is not a valid integer.",
+      "quality": 1.0,
+      "final_key": "def first_Digit(num):\n    num_str = str(num)\n    if not num_str.isdigit():\n        raise ValueError(\"Invalid input. Please provide a non-negative integer.\")\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef first_Digit(num):\n    num_str = str(num)\n    if not num_str.isdigit():\n        raise ValueError(\"Invalid input. Please provide a non-negative integer.\")\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def first_Digit(num):\n    import unittest\n\n    class TestFirstDigit(unittest.TestCase):\n        def test_first_digit(self):\n            self.assertEqual(first_Digit(123), 1)\n            self.assertEqual(first_Digit(456), 4)\n            self.assertEqual(first_Digit(12), 1)\n            self.assertEqual(first_Digit(987654321), 9)\n            with self.assertRaises(ValueError) as context:\n                first_Digit(-12345)\n            self.assertEqual(context.exception.args, ('invalid literal for int() with base 10:', '-'))\n            self.assertEqual(first_Digit(0), 0)\n            self.assertEqual(first_Digit(1000000000), 1)\n            with self.assertRaises(ValueError) as context:\n                first_Digit(-1000000000)\n\n    if __name__ == '__main__':\n        unittest.main(argv=[''], exit=False)",
+      "reference_key": "def first_Digit(num):\n    num_str = str(abs(num))  # Convert the number to string and take absolute value to handle negative numbers\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+      "key_differs": true,
+      "text": "```python\ndef first_Digit(num):\n    import unittest\n\n    class TestFirstDigit(unittest.TestCase):\n        def test_first_digit(self):\n            self.assertEqual(first_Digit(123), 1)\n            self.assertEqual(first_Digit(456), 4)\n            self.assertEqual(first_Digit(12), 1)\n            self.assertEqual(first_Digit(987654321), 9)\n            with self.assertRaises(ValueError) as context:\n                first_Digit(-12345)\n            self.assertEqual(context.exception.args, ('invalid literal for int() with base 10:', '-'))\n            self.assertEqual(first_Digit(0), 0)\n            self.assertEqual(first_Digit(1000000000), 1)\n            with self.assertRaises(ValueError) as context:\n                first_Digit(-1000000000)\n\n    if __name__ == '__main__':\n        unittest.main(argv=[''], exit=False)\n```",
+      "quality": 1.0,
+      "final_key": "def first_Digit(num):\n    num_str = str(num)\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef first_Digit(num):\n    num_str = str(num)\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def newman_prime(n):\n    def is_prime(num):\n        \"\"\"Check if a number is prime.\"\"\"\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    current = 2\n    count = 0\n    while count < n:\n        current += 1\n        if is_prime(current):\n            count += 1\n    return current",
+      "reference_key": "def first_Digit(num):\n    num_str = str(abs(num))  # Convert the number to string and take absolute value to handle negative numbers\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+      "key_differs": true,
+      "text": "```python\ndef newman_prime(n):\n    def is_prime(num):\n        \"\"\"Check if a number is prime.\"\"\"\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    current = 2\n    count = 0\n    while count < n:\n        current += 1\n        if is_prime(current):\n            count += 1\n    return current\n```",
+      "quality": 1.0,
+      "final_key": "def first_Digit(num):\n    num_str = str(num)\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef first_Digit(num):\n    num_str = str(num)\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def first_Digit(num):\n    if isinstance(num, int):\n        num_str = str(num)\n        first_char = num_str[0]\n        first_digit = int(first_char)\n        return first_digit\n    else:\n        raise ValueError(\"Invalid input. Please provide an integer.\")",
+  "sample_keys": [
+    "def first_Digit(num):\n    if isinstance(num, int):\n        num_str = str(num)\n        first_char = num_str[0]\n        first_digit = int(first_char)\n        return first_digit\n    else:\n        raise ValueError(\"Invalid input. The input must be an integer.\")",
+    "def first_Digit(num):\n    if isinstance(num, (int, float)):\n        num_str = str(abs(num))  # Ensure the number is positive for simplicity\n        if len(num_str) == 1:\n            return num  # Return the single-digit number directly\n        else:\n            return int(num_str[0])\n    elif isinstance(num, str):\n        if num.startswith('-'):\n            raise ValueError(\"invalid literal for int() with base 10: '-'\")\n        return int(num[0])\n    else:\n        raise TypeError(\"unsupported type for first_Digit\")",
+    "def first_Digit(num):\n    if num < 0:\n        raise ValueError(\"invalid literal for int() with base 10: '-'\")\n    \n    num_str = str(abs(num))\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+    "def first_Digit(num):\n    if isinstance(num, int):\n        num_str = str(num)\n        first_char = num_str[0]\n        first_digit = int(first_char)\n        return first_digit\n    elif isinstance(num, float):\n        num_str = str(int(num))\n        first_char = num_str[0]\n        first_digit = int(first_char)\n        return first_digit\n    else:\n        raise TypeError('Invalid input type')",
+    "import unittest\n\nclass TestFirstDigit(unittest.TestCase):\n    def test_first_digit(self):\n        self.assertEqual(first_Digit(123), 1)\n        self.assertEqual(first_Digit(456), 4)\n        self.assertEqual(first_Digit(12), 1)\n        self.assertEqual(first_Digit(987654321), 9)\n        with self.assertRaises(ValueError):\n            first_Digit(-12345)\n        self.assertEqual(first_Digit(0), 0)\n        self.assertEqual(first_Digit(1000000000), 1)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1451.0,
+    "small_out": 457.0,
+    "small_s": 10.387548434955534
+  },
+  "calls_plus": {
+    "small_in": 1085.0,
+    "small_out": 390.0,
+    "small_s": 8.57542134996038,
+    "large_in": 335.0,
+    "large_out": 57.0,
+    "large_s": 1.6832887279742863
+  },
+  "calls_samples": {
+    "small_in": 1675.0,
+    "small_out": 498.0,
+    "small_s": 9.923592781997286
+  }
+}

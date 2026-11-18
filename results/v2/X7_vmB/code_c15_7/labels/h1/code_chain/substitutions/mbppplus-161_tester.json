@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-161",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert remove_elements([1, 2, 3, 4, 5], [3, 5]) == [1, 2, 4]\nassert remove_elements(['a', 'b', 'c'], ['b']) == ['a', 'c']\nassert remove_elements([], [1, 2, 3]) == []\nassert remove_elements([1, 2, 3], []) == [1, 2, 3]\nassert remove_elements([10, 20, 30], [10, 30, 40]) == [20]\n```",
+  "reference_key": "assert remove_elements([1, 2, 3, 4, 5], [3, 5]) == [1, 2, 4]\nassert remove_elements(['a', 'b', 'c'], ['b']) == ['a', 'c']\nassert remove_elements([], [1, 2, 3]) == []\nassert remove_elements([1, 2, 3], []) == [1, 2, 3]\nassert remove_elements([10, 20, 30], [10, 30, 40]) == [20]",
+  "final_key_plus": "def remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list\n```",
+    "fixer": "```python\ndef remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Edge case of empty lists\nassert remove_elements([], []) == []\n\n# Edge case where there\u2019s no matching element\nassert remove_elements([1, 2, 3], [4, 5, 6]) == [1, 2, 3]\n\n# Typical case with multiple elements removal\nassert remove_elements(['a', 'b', 'c', 'd'], ['a', 'c']) == ['b', 'd']\n\n# Typical case with single element removal\nassert remove_elements(['apple', 'banana', 'cherry'], ['banana']) == ['apple', 'cherry']\n\n# Typical case with all elements removed\nassert remove_elements([True, False, True, False, True], [True, True, True]) == [False, False]",
+      "reference_key": "assert remove_elements([1, 2, 3, 4, 5], [3, 5]) == [1, 2, 4]\nassert remove_elements(['a', 'b', 'c'], ['b']) == ['a', 'c']\nassert remove_elements([], [1, 2, 3]) == []\nassert remove_elements([1, 2, 3], []) == [1, 2, 3]\nassert remove_elements([10, 20, 30], [10, 30, 40]) == [20]",
+      "key_differs": true,
+      "text": "```python\n# Edge case of empty lists\nassert remove_elements([], []) == []\n\n# Edge case where there\u2019s no matching element\nassert remove_elements([1, 2, 3], [4, 5, 6]) == [1, 2, 3]\n\n# Typical case with multiple elements removal\nassert remove_elements(['a', 'b', 'c', 'd'], ['a', 'c']) == ['b', 'd']\n\n# Typical case with single element removal\nassert remove_elements(['apple', 'banana', 'cherry'], ['banana']) == ['apple', 'cherry']\n\n# Typical case with all elements removed\nassert remove_elements([True, False, True, False, True], [True, True, True]) == [False, False]\n```",
+      "quality": 1.0,
+      "final_key": "def remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list\n```",
+        "fixer": "```python\ndef remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "assert remove_elements([1, 2, 3, 4, 5], [3, 5]) == [1, 2, 4]\nassert remove_elements(['a', 'b', 'c'], ['b']) == ['a', 'c']\nassert remove_elements([], [1, 2, 3]) == []\nassert remove_elements([1, 2, 3], []) == [1, 2, 3]\nassert remove_elements([10, 20, 30], [10, 30, 40]) == [20]",
+      "key_differs": true,
+      "text": "```python\n# Check with empty lists\nassert remove_elements([], []) == []\n# Check with single item lists\nassert remove_elements([1], []) == [1]\nassert remove_elements([1], [2]) == [1]\nassert remove_elements([2], [1]) == []\n# Check with different lengths\nassert remove_elements([1, 2, 3, 4, 5], [1, 5]) == [2, 3, 4]\n# Check with multiple elements to remove\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 4, 6, 8]) == [1, 3, 5, 7, 9, 10]",
+      "quality": 1.0,
+      "final_key": "def remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list\n```",
+        "fixer": "```python\ndef remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert not is_perfect_square(10)  # Expected: True\nassert is_perfect_square(25)  # Expected: True\nassert is_perfect_square(36)  # Expected: True\nassert is_perfect_square(49)  # Expected: True\nassert is_perfect_square(50)  # Expected: False",
+      "reference_key": "assert remove_elements([1, 2, 3, 4, 5], [3, 5]) == [1, 2, 4]\nassert remove_elements(['a', 'b', 'c'], ['b']) == ['a', 'c']\nassert remove_elements([], [1, 2, 3]) == []\nassert remove_elements([1, 2, 3], []) == [1, 2, 3]\nassert remove_elements([10, 20, 30], [10, 30, 40]) == [20]",
+      "key_differs": true,
+      "text": "```python\nassert not is_perfect_square(10)  # Expected: True\nassert is_perfect_square(25)  # Expected: True\nassert is_perfect_square(36)  # Expected: True\nassert is_perfect_square(49)  # Expected: True\nassert is_perfect_square(50)  # Expected: False\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef remove_elements(original_list, elements_to_remove):\n    result_list = []\n    for element in original_list:\n        if element not in elements_to_remove:\n            result_list.append(element)\n    return result_list\n\n# Test cases\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 4, 6, 8]) == [1, 3, 5, 7, 9, 10]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 3, 5, 7]) == [2, 4, 6, 8, 9, 10]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [5, 7]) == [1, 2, 3, 4, 6, 8, 9, 10]\n\n# Additional tests\ndef is_perfect_square(n):\n    \"\"\"Check if a number is a perfect square.\"\"\"\n    if n < 0:\n        return False\n    root = int(n**0.5)\n    return root * root == n\n\n# Test cases for is_perfect_square\nassert is_perfect_square(10) == False\nassert is_perfect_square(25) == True\nassert is_perfect_square(36) == True\nassert is_perfect_square(49) == True\nassert is_perfect_square(50) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert remove_elements([], []) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], []) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []",
+  "sample_keys": [
+    "# Test case 1 - Typical\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 4, 6, 8]) == [1, 3, 5, 7, 9, 10]\n\n# Test case 2 - Edge case: Empty original list\nassert remove_elements([], [1, 2, 3]) == []\n\n# Test case 3 - Edge case: Empty elements to remove list\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], []) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\n# Test case 4 - Edge case: Original list is larger than elements to remove list\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == []\n\n# Test case 5 - Edge case: Elements to remove list contains repeated elements\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 1, 2, 2]) == [3, 4, 5, 6, 7, 8, 9, 10]",
+    "assert remove_elements([], [2, 4, 6, 8]) == [], \"Test case with empty list failed\"\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], []) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], \"Test case with empty removal list failed\"\nassert remove_elements([\"apple\", \"banana\", \"cherry\"], [\"banana\", \"orange\"]) == [\"apple\", \"cherry\"], \"Test case with different input types failed\"\nassert remove_elements([True, False, True, False, True], [False, True]) == [True, True], \"Test case with multiple elements to remove failed\"\nassert remove_elements([100, 200, 300, 400, 500], [100, 300, 500]) == [200, 400], \"Test case with repeated elements to remove failed\"",
+    "assert remove_elements([], []) == []\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], []) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3]) == [4, 5, 6, 7, 8, 9, 10]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [10, 11, 12]) == [1, 2, 3, 4, 5, 6, 7, 8, 9]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 3, 5, 7, 9, 11, 13]) == [2, 4, 6, 8, 10]",
+    "# Check with an empty list\nassert remove_elements([], []) == []\n\n# Check with no elements to remove\nassert remove_elements([1, 2, 3], []) == [1, 2, 3]\n\n# Check with a list of unique elements\nassert remove_elements([1, 2, 3, 4], [5, 6, 7]) == [1, 2, 3, 4]\n\n# Check with repeated elements\nassert remove_elements([1, 2, 2, 3, 3, 4], [2, 3]) == [1, 4]\n\n# Check with multiple occurrences of the same element\nassert remove_elements([1, 1, 1, 1, 1, 1], [1]) == []",
+    "assert remove_elements([], []) == []\nassert remove_elements([1, 2, 3], [4]) == [1, 2, 3]\nassert remove_elements([4, 5, 6, 7], [4, 7]) == [5, 6]\nassert remove_elements([1, 2, 2, 3, 3, 4, 4, 5], [2, 3, 4]) == [1, 5]\nassert remove_elements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [0]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2636.0,
+    "small_out": 562.0,
+    "small_s": 4.790497398003936
+  },
+  "calls_plus": {
+    "small_in": 1969.0,
+    "small_out": 282.0,
+    "small_s": 3.7091377960168757,
+    "large_in": 220.0,
+    "large_out": 131.0,
+    "large_s": 4.020609701023204
+  },
+  "calls_samples": {
+    "small_in": 1100.0,
+    "small_out": 1248.0,
+    "small_s": 25.66942804097198
+  }
+}

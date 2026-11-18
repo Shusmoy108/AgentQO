@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-109",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: B\n\n```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count\n```",
+  "reference_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+  "final_key_plus": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(list(map(int, binary_string))) % 2 != 0:\n            count += 1\n    return count",
+      "reference_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+      "key_differs": true,
+      "text": "PICK: A\n\n```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(list(map(int, binary_string))) % 2 != 0:\n            count += 1\n    return count\n```\n\nThis version of the function uses a generator expression inside `sum()` to convert each character of the binary string to an integer, allowing it to iterate over the list without needing to cast each element to a float first. This change resolves the TypeError encountered earlier by correctly treating the individual bits as integers. It also makes the function compatible with Python 3.",
+      "quality": 0.0,
+      "final_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(list(map(int, binary_string))) % 2 != 0:\n            count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if int(sum(int(bit) for bit in binary_string)) % 2 != 0:\n            count += 1\n    return count",
+      "reference_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if int(sum(int(bit) for bit in binary_string)) % 2 != 0:\n            count += 1\n    return count\n```",
+      "quality": 0.0,
+      "final_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if int(sum(int(bit) for bit in binary_string)) % 2 != 0:\n            count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "import math\n\ndef catalan_number(n):\n    # Calculate the factorial of 2n\n    fact_2n = math.factorial(2 * n)\n    # Calculate the factorial of (n+1)\n    fact_n_plus_1 = math.factorial(n + 1)\n    # Calculate the factorial of n\n    fact_n = math.factorial(n)\n    # Calculate the nth Catalan number using the formula\n    catalan = fact_2n // (fact_n_plus_1 * fact_n)\n    return catalan",
+      "reference_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+      "key_differs": true,
+      "text": "PICK: B\n```python\nimport math\n\ndef catalan_number(n):\n    # Calculate the factorial of 2n\n    fact_2n = math.factorial(2 * n)\n    # Calculate the factorial of (n+1)\n    fact_n_plus_1 = math.factorial(n + 1)\n    # Calculate the factorial of n\n    fact_n = math.factorial(n)\n    # Calculate the nth Catalan number using the formula\n    catalan = fact_2n // (fact_n_plus_1 * fact_n)\n    return catalan\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef catalan_number(n):\n    # Calculate the factorial of 2n\n    fact_2n = math.factorial(2 * n)\n    # Calculate the factorial of (n+1)\n    fact_n_plus_1 = math.factorial(n + 1)\n    # Calculate the factorial of n\n    fact_n = math.factorial(n)\n    # Calculate the nth Catalan number using the formula\n    catalan = fact_2n // (fact_n_plus_1 * fact_n)\n    return catalan",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+  "sample_keys": [
+    null,
+    "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+    "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(binary_string) % 2 != 0:\n            count += 1\n    return count",
+    "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+    "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1881.0,
+    "small_out": 501.0,
+    "small_s": 10.341892241005553
+  },
+  "calls_plus": {
+    "small_in": 1121.0,
+    "small_out": 424.0,
+    "small_s": 8.682172578002792,
+    "large_in": 760.0,
+    "large_out": 77.0,
+    "large_s": 1.732658636989072
+  },
+  "calls_samples": {
+    "small_in": 3800.0,
+    "small_out": 307.0,
+    "small_s": 6.05342417495558
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-141",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert pancake_sort([4, 3, 2, 1]) == [1, 2, 3, 4]\nassert pancake_sort([1, 2, 3, 4]) == [1, 2, 3, 4]\nassert pancake_sort([]) == []\nassert pancake_sort([10]) == [10]\nassert pancake_sort([-2, -3, -1]) == [-3, -2, -1]\n```",
+  "reference_key": "assert pancake_sort([4, 3, 2, 1]) == [1, 2, 3, 4]\nassert pancake_sort([1, 2, 3, 4]) == [1, 2, 3, 4]\nassert pancake_sort([]) == []\nassert pancake_sort([10]) == [10]\nassert pancake_sort([-2, -3, -1]) == [-3, -2, -1]",
+  "final_key_plus": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```",
+    "fixer": "```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert pancake_sort([]) == [], \"Empty list should not change\"\nassert pancake_sort([1]) == [1], \"Single element list should remain unchanged\"\nassert pancake_sort([-1, 3, -10, 4, -10]) == [-10, -10, -1, 3, 4], \"Mixed sign integers should maintain original order but sorted correctly\"\nassert pancake_sort([100]) == [100], \"Single-element positive integer list remains the same\"\nassert pancake_sort([100, 99, 98, 97, 96, 95, 94, 93, 92, 91]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 91], \"Sequence from 1 to 91 reversed back to [1, 2, 3, 4, 5, 6, 7, 8, 9, 91]\"",
+      "reference_key": "assert pancake_sort([4, 3, 2, 1]) == [1, 2, 3, 4]\nassert pancake_sort([1, 2, 3, 4]) == [1, 2, 3, 4]\nassert pancake_sort([]) == []\nassert pancake_sort([10]) == [10]\nassert pancake_sort([-2, -3, -1]) == [-3, -2, -1]",
+      "key_differs": true,
+      "text": "```python\nassert pancake_sort([]) == [], \"Empty list should not change\"\nassert pancake_sort([1]) == [1], \"Single element list should remain unchanged\"\nassert pancake_sort([-1, 3, -10, 4, -10]) == [-10, -10, -1, 3, 4], \"Mixed sign integers should maintain original order but sorted correctly\"\nassert pancake_sort([100]) == [100], \"Single-element positive integer list remains the same\"\nassert pancake_sort([100, 99, 98, 97, 96, 95, 94, 93, 92, 91]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 91], \"Sequence from 1 to 91 reversed back to [1, 2, 3, 4, 5, 6, 7, 8, 9, 91]\"\n```",
+      "quality": 1.0,
+      "final_key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```",
+        "fixer": "```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert pancake_sort([]) == []\nassert pancake_sort([1]) == [1]\nassert pancake_sort([-1, -2, -3, -4]) == [-4, -3, -2, -1]\nassert pancake_sort([10, 20, 30, 40, 50]) == [10, 20, 30, 40, 50]\nassert pancake_sort([100, 50, 80, 30, 60]) == [60, 80, 50, 30, 100]",
+      "reference_key": "assert pancake_sort([4, 3, 2, 1]) == [1, 2, 3, 4]\nassert pancake_sort([1, 2, 3, 4]) == [1, 2, 3, 4]\nassert pancake_sort([]) == []\nassert pancake_sort([10]) == [10]\nassert pancake_sort([-2, -3, -1]) == [-3, -2, -1]",
+      "key_differs": true,
+      "text": "```python\nassert pancake_sort([]) == []\nassert pancake_sort([1]) == [1]\nassert pancake_sort([-1, -2, -3, -4]) == [-4, -3, -2, -1]\nassert pancake_sort([10, 20, 30, 40, 50]) == [10, 20, 30, 40, 50]\nassert pancake_sort([100, 50, 80, 30, 60]) == [60, 80, 50, 30, 100]\n```",
+      "quality": 1.0,
+      "final_key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```",
+        "fixer": "```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61",
+      "reference_key": "assert pancake_sort([4, 3, 2, 1]) == [1, 2, 3, 4]\nassert pancake_sort([1, 2, 3, 4]) == [1, 2, 3, 4]\nassert pancake_sort([]) == []\nassert pancake_sort([10]) == [10]\nassert pancake_sort([-2, -3, -1]) == [-3, -2, -1]",
+      "key_differs": true,
+      "text": "```python\nassert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n\n# Test cases\nassert pancake_sort([15, 79, 25, 38, 69]) == [15, 25, 38, 69, 79]\nassert pancake_sort([98, 12, 54, 36, 85]) == [12, 36, 54, 85, 98]\nassert pancake_sort([41, 42, 32, 12, 23]) == [12, 23, 32, 41, 42]\nassert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "assert pancake_sort([]) == [], \"Test case for empty array\"\nassert pancake_sort([1]) == [1], \"Test case for single-element array\"\nassert pancake_sort([4, 3, 2, 1]) == [1, 2, 3, 4], \"Test case for descending sorted array\"\nassert pancake_sort([1, 2, 3]) == [1, 2, 3], \"Test case for already sorted array\"\nassert pancake_sort([-3, -2, -1, 0]) == [-1, -2, -3, 0], \"Test case for negative numbers\"",
+    "assert pancake_sort([]) == []\nassert pancake_sort([10]) == [10]\nassert pancake_sort([-1, -2, -3, -4, -5]) == [-5, -4, -3, -2, -1]\nassert pancake_sort([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]\nassert pancake_sort([5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5]",
+    "assert pancake_sort([]) == []\nassert pancake_sort([42]) == [42]\nassert pancake_sort([-10, 10, -20, 20]) == [-20, 10, -10, 20]\nassert pancake_sort([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]\nassert pancake_sort([5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5]",
+    "assert pancake_sort([]) == []\nassert pancake_sort([42]) == [42]\nassert pancake_sort([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nassert pancake_sort([1, 3, 2, 4]) == [1, 2, 3, 4]\nassert pancake_sort([4, 3, 2, 1]) == [1, 2, 3, 4]",
+    "assert pancake_sort([]) == []\nassert pancake_sort([1]) == [1]\nassert pancake_sort([10, 2, 3, 4, 5, 6, 7, 8, 9, 11]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nassert pancake_sort([12, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]\nassert pancake_sort([10, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2624.0,
+    "small_out": 1271.0,
+    "small_s": 24.42883441603044
+  },
+  "calls_plus": {
+    "small_in": 1833.0,
+    "small_out": 515.0,
+    "small_s": 8.69316811999306,
+    "large_in": 280.0,
+    "large_out": 107.0,
+    "large_s": 3.043494768993696
+  },
+  "calls_samples": {
+    "small_in": 1400.0,
+    "small_out": 809.0,
+    "small_s": 16.253192802949343
+  }
+}

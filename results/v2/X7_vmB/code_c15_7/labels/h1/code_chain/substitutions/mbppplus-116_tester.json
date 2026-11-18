@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-116",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert tuple_to_int((4, 5)) == 45\nassert tuple_to_int((9,)) == 9\nassert tuple_to_int((0, 1, 2, 3)) == 123\nassert tuple_to_int((7, 8, 9, 0)) == 7890\nassert tuple_to_int((0, 0, 1)) == 1\n```",
+  "reference_key": "assert tuple_to_int((4, 5)) == 45\nassert tuple_to_int((9,)) == 9\nassert tuple_to_int((0, 1, 2, 3)) == 123\nassert tuple_to_int((7, 8, 9, 0)) == 7890\nassert tuple_to_int((0, 0, 1)) == 1",
+  "final_key_plus": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```",
+    "fixer": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert tuple_to_int(())==100\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((0,1,2)) == 12\nassert tuple_to_int((9,8,7,6,5)) == 45678\nassert tuple_to_int((100, 200, 300, 400, 500)) == 55555",
+      "reference_key": "assert tuple_to_int((4, 5)) == 45\nassert tuple_to_int((9,)) == 9\nassert tuple_to_int((0, 1, 2, 3)) == 123\nassert tuple_to_int((7, 8, 9, 0)) == 7890\nassert tuple_to_int((0, 0, 1)) == 1",
+      "key_differs": true,
+      "text": "```python\n\nassert tuple_to_int(())==100\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((0,1,2)) == 12\nassert tuple_to_int((9,8,7,6,5)) == 45678\nassert tuple_to_int((100, 200, 300, 400, 500)) == 55555\n```\n\nEach assertion checks the `tuple_to_int` function with different inputs including an empty tuple, a tuple with all zeros, a tuple with non-zero numbers arranged in increasing order, a tuple with non-zero numbers arranged in decreasing order, and a tuple with a significant number of elements. The expected results are provided at the end of the code snippet.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n\n# Test cases\nassert tuple_to_int((1,2,3))==123\nassert tuple_to_int((4,5,6))==456\nassert tuple_to_int((5,6,7))==567\nassert tuple_to_int(())==100\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((0,1,2)) == 12\nassert tuple_to_int((9,8,7,6,5)) == 45678\nassert tuple_to_int((100, 200, 300, 400, 500)) == 55555\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert tuple_to_int((987,)) == 987\nassert tuple_to_int((-123,456)) == -123456\nassert tuple_to_int((0,1,2,3,4,5,6,7,8,9)) == 0123456789\nassert tuple_to_int((-1,-2,-3,-4,-5,-6,-7,-8,-9)) == -1-2-3-4-5-6-7-8-9\nassert tuple_to_int((0)) == 0",
+      "reference_key": "assert tuple_to_int((4, 5)) == 45\nassert tuple_to_int((9,)) == 9\nassert tuple_to_int((0, 1, 2, 3)) == 123\nassert tuple_to_int((7, 8, 9, 0)) == 7890\nassert tuple_to_int((0, 0, 1)) == 1",
+      "key_differs": true,
+      "text": "```python\nassert tuple_to_int((987,)) == 987\nassert tuple_to_int((-123,456)) == -123456\nassert tuple_to_int((0,1,2,3,4,5,6,7,8,9)) == 0123456789\nassert tuple_to_int((-1,-2,-3,-4,-5,-6,-7,-8,-9)) == -1-2-3-4-5-6-7-8-9\nassert tuple_to_int((0)) == 0\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```",
+        "fixer": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert multiple_to_single([])==0\nassert multiple_to_single([1])==1\nassert multiple_to_single([-1,-2,-3])==-6\nassert multiple_to_single([0,0,0])==0\nassert multiple_to_single([999,999,999])==2997",
+      "reference_key": "assert tuple_to_int((4, 5)) == 45\nassert tuple_to_int((9,)) == 9\nassert tuple_to_int((0, 1, 2, 3)) == 123\nassert tuple_to_int((7, 8, 9, 0)) == 7890\nassert tuple_to_int((0, 0, 1)) == 1",
+      "key_differs": true,
+      "text": "```python\nassert multiple_to_single([])==0\nassert multiple_to_single([1])==1\nassert multiple_to_single([-1,-2,-3])==-6\nassert multiple_to_single([0,0,0])==0\nassert multiple_to_single([999,999,999])==2997\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        if isinstance(num, int) and num > 0:\n            result += num * (10 ** i)\n        else:\n            raise ValueError(\"All elements in the tuple must be positive integers.\")\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        if isinstance(num, int) and num > 0:\n            result += num * (10 ** i)\n        else:\n            raise ValueError(\"All elements in the tuple must be positive integers.\")\n    return result\n```",
+        "fixer": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        if isinstance(num, int) and num > 0:\n            result += num * (10 ** i)\n        else:\n            raise ValueError(\"All elements in the tuple must be positive integers.\")\n    return result\n\n# Test cases\nassert tuple_to_int((1,2,3))==123\nassert tuple_to_int((4,5,6))==456\nassert tuple_to_int((5,6,7))==567\nassert multiple_to_single([])==0\nassert multiple_to_single([1])==1\nassert multiple_to_single([-1,-2,-3])==-6\nassert multiple_to_single([0,0,0])==0\nassert multiple_to_single([999,999,999])==2997\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((7,8,9,0)) == 7890\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((10,20,30)) == 102030\nassert tuple_to_int((-1,-2,-3)) == -123",
+  "sample_keys": [
+    "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n\n# Test cases\nassert tuple_to_int((1,2,3))==123\nassert tuple_to_int((1,2,3,4)) == 1234\nassert tuple_to_int((1,2,3,4,5)) == 12345\nassert tuple_to_int((0,0,0,0,0)) == 0\nassert tuple_to_int((9,9,9,9,9)) == 99999",
+    "assert tuple_to_int((4,5,6))==456\nassert tuple_to_int((7,8,9,10))==78910\nassert tuple_to_int((10,20,30))==102030\nassert tuple_to_int((0,0,0))==0\nassert tuple_to_int((999,999,999))==9999999",
+    "assert tuple_to_int((4, 5, 6)) == 456\nassert tuple_to_int((7, 8, 9, 0)) == 7890\nassert tuple_to_int((10,)) == 10\nassert tuple_to_int(()) == 0\nassert tuple_to_int((1, -2, 3)) == 123",
+    "assert tuple_to_int((9,8))==980\nassert tuple_to_int((4,5,6,7))==4567\nassert tuple_to_int((10)) == 10\nassert tuple_to_int((0,0,0))==0\nassert tuple_to_int((123456789))==123456789",
+    "assert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((9,0,8)) == 908\nassert tuple_to_int((100,200,300)) == 100200300\nassert tuple_to_int((-1,-2,-3)) == -1-2-3\nassert tuple_to_int((0,0,0)) == 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1435.0,
+    "small_out": 542.0,
+    "small_s": 11.387247775041033
+  },
+  "calls_plus": {
+    "small_in": 1201.0,
+    "small_out": 246.0,
+    "small_s": 4.984297042043181,
+    "large_in": 165.0,
+    "large_out": 94.0,
+    "large_s": 2.062535350007238
+  },
+  "calls_samples": {
+    "small_in": 825.0,
+    "small_out": 525.0,
+    "small_s": 8.99505360101466
+  }
+}

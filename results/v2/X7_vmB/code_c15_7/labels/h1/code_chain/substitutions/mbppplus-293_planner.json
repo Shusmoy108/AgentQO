@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-293",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Import the math module to use mathematical functions.\n2. Define a function named `otherside_rightangle` that takes two arguments, representing the lengths of the two known sides of the right-angled triangle.\n3. Use the Pythagorean theorem (a^2 + b^2 = c^2) to calculate the length of the third side, where 'c' is the hypotenuse if one of the given sides is the other leg.\n4. Return the calculated length of the third side.\n5. Ensure the function handles both cases where either of the given sides could be the hypotenuse by checking which side is longer and applying the appropriate formula.",
+  "reference_key": null,
+  "final_key_plus": "import math\n\ndef otherside_rightangle(a, b):\n    # Determine which side is the hypotenuse\n    if a > b:\n        hypotenuse = a\n        other_side = b\n    else:\n        hypotenuse = b\n        other_side = a\n    \n    # Calculate the length of the third side using the Pythagorean theorem\n    third_side = math.sqrt(hypotenuse**2 - other_side**2)\n    \n    return third_side",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert otherside_rightangle(5, 12) == 13.0\nassert otherside_rightangle(10, 6) == 8.0\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(1, 1) == 1.4142135623730951\nassert otherside_rightangle(0, 0) == 0.0\n```",
+    "coder": "```python\nimport math\n\ndef otherside_rightangle(a, b):\n    # Determine which side is the hypotenuse\n    if a > b:\n        hypotenuse = a\n        other_side = b\n    else:\n        hypotenuse = b\n        other_side = a\n    \n    # Calculate the length of the third side using the Pythagorean theorem\n    third_side = math.sqrt(hypotenuse**2 - other_side**2)\n    \n    return third_side\n```",
+    "verifier": "PICK: A\n```python\nimport math\n\ndef otherside_rightangle(a, b):\n    # Determine which side is the hypotenuse\n    if a > b:\n        hypotenuse = a\n        other_side = b\n    else:\n        hypotenuse = b\n        other_side = a\n    \n    # Calculate the length of the third side using the Pythagorean theorem\n    third_side = math.sqrt(hypotenuse**2 - other_side**2)\n    \n    return third_side\n```",
+    "fixer": "```python\nimport math\n\ndef otherside_rightangle(a, b):\n    # Determine which side is the hypotenuse\n    if a > b:\n        hypotenuse = a\n        other_side = b\n    else:\n        hypotenuse = b\n        other_side = a\n    \n    # Calculate the length of the third side using the Pythagorean theorem\n    third_side = math.sqrt(hypotenuse**2 - other_side**2)\n    \n    return third_side\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a helper function to calculate the sum of costs for a given path.\n2. Use depth-first search (DFS) to explore all possible paths from the top-left to the bottom-right cell.\n3. For each valid path, calculate its average cost.\n4. Keep track of the maximum average found during the DFS traversal.\n5. Return the maximum average calculated.\n\nThis approach ensures that we explore all possible paths and compute their averages efficiently.",
+      "quality": 0.0,
+      "final_key": "def otherside_rightangle(a, b):\n    def dfs(x, y, path_cost, max_avg):\n        if x == a and y == b:\n            avg = path_cost / len(path)\n            max_avg[0] = max(max_avg[0], avg)\n            return\n        if x < a:\n            dfs(x + 1, y, path_cost + 1, max_avg)\n        if y < b:\n            dfs(x, y + 1, path_cost + 1, max_avg)\n\n    max_avg = [0]\n    dfs(1, 1, 0, max_avg)\n    return max_avg[0]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert otherside_rightangle(5, 12) == 13.0\nassert otherside_rightangle(10, 10) == 14.142135623730951\nassert otherside_rightangle(1, 1) == 1.4142135623730951\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(100, 100) == 141.42135623730951\n```",
+        "coder": "```python\ndef otherside_rightangle(a, b):\n    def dfs(x, y, path_cost, max_avg):\n        if x == a and y == b:\n            avg = path_cost / len(path)\n            max_avg[0] = max(max_avg[0], avg)\n            return\n        if x < a:\n            dfs(x + 1, y, path_cost + 1, max_avg)\n        if y < b:\n            dfs(x, y + 1, path_cost + 1, max_avg)\n\n    max_avg = [0]\n    dfs(1, 1, 0, max_avg)\n    return max_avg[0]\n```",
+        "verifier": "PICK: B\n\n```python\ndef otherside_rightangle(a, b):\n    def dfs(x, y, path_cost, max_avg):\n        if x == a and y == b:\n            avg = path_cost / len(path)\n            max_avg[0] = max(max_avg[0], avg)\n            return\n        if x < a:\n            dfs(x + 1, y, path_cost + 1, max_avg)\n        if y < b:\n            dfs(x, y + 1, path_cost + 1, max_avg)\n\n    max_avg = [0]\n    dfs(1, 1, 0, max_avg)\n    return max_avg[0]\n```",
+        "fixer": "```python\ndef otherside_rightangle(a, b):\n    def dfs(x, y, path_cost, max_avg):\n        if x == a and y == b:\n            avg = path_cost / len(path)\n            max_avg[0] = max(max_avg[0], avg)\n            return\n        if x < a:\n            dfs(x + 1, y, path_cost + 1, max_avg)\n        if y < b:\n            dfs(x, y + 1, path_cost + 1, max_avg)\n\n    max_avg = [0]\n    dfs(1, 1, 0, max_avg)\n    return max_avg[0]\n\n# Test cases\nassert otherside_rightangle(7, 8) == 10.63014581273465\nassert otherside_rightangle(3, 4) == 5\nassert otherside_rightangle(7, 15) == 16.55294535724685\nassert otherside_rightangle(5, 12) == 13.0\nassert otherside_rightangle(10, 10) == 14.142135623730951\nassert otherside_rightangle(1, 1) == 1.4142135623730951\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(100, 100) == 141.42135623730951\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import the math module to use mathematical functions.\n2. Define a function named `otherside_rightangle` that takes two arguments, representing the lengths of the two known sides of the right-angled triangle.\n3. Calculate the square root of the sum of the squares of these two sides to find the length of the third side using the Pythagorean theorem: \\(\\sqrt{a^2 + b^2}\\).\n4. Return the calculated length of the third side.\n5. Ensure the function handles both cases where either of the given sides could be the hypotenuse by using the absolute value function to determine which side has the larger length and applying the appropriate formula.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef otherside_rightangle(a, b):\n    # Determine which side is the hypotenuse (larger)\n    if abs(a) > abs(b):\n        hypotenuse = a\n        other_side = b\n    else:\n        hypotenuse = b\n        other_side = a\n    \n    # Calculate the length of the third side using the Pythagorean theorem\n    third_side = math.sqrt(hypotenuse**2 - other_side**2)\n    \n    return third_side",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert otherside_rightangle(5, 12) == 13.0\nassert otherside_rightangle(10, 6) == 8.0\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(1, 1) == 1.4142135623730951\nassert otherside_rightangle(-5, -12) == 13.0\n```",
+        "coder": "```python\nimport math\n\ndef otherside_rightangle(a, b):\n    # Determine which side is the hypotenuse (larger)\n    if abs(a) > abs(b):\n        hypotenuse = a\n        other_side = b\n    else:\n        hypotenuse = b\n        other_side = a\n    \n    # Calculate the length of the third side using the Pythagorean theorem\n    third_side = math.sqrt(hypotenuse**2 - other_side**2)\n    \n    return third_side\n```",
+        "verifier": "PICK: A\n```python\nimport math\n\ndef otherside_rightangle(a, b):\n    # Determine which side is the hypotenuse (larger)\n    if abs(a) > abs(b):\n        hypotenuse = a\n        other_side = b\n    else:\n        hypotenuse = b\n        other_side = a\n    \n    # Calculate the length of the third side using the Pythagorean theorem\n    third_side = math.sqrt(hypotenuse**2 - other_side**2)\n    \n    return third_side\n```",
+        "fixer": "```python\nimport math\n\ndef otherside_rightangle(a, b):\n    # Determine which side is the hypotenuse (larger)\n    if abs(a) > abs(b):\n        hypotenuse = a\n        other_side = b\n    else:\n        hypotenuse = b\n        other_side = a\n    \n    # Calculate the length of the third side using the Pythagorean theorem\n    third_side = math.sqrt(hypotenuse**2 - other_side**2)\n    \n    return third_side\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a helper function `extract_even` that takes a single argument, a nested mixed tuple.\n2. Use recursion to traverse the tuple.\n3. For each element, check if it is an integer or another tuple.\n4. If it's an integer, check if it is even using the modulus operator (`%`). If it is, add it to a new list.\n5. If it's a tuple, recursively call `extract_even` on it and append the result to the new list.\n6. After traversing the entire tuple, convert the list of even integers back into a tuple and return it.\n\nHere's the complete implementation:\n\n```python\ndef extract_even(nested_tuple):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item % 2 == 0:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n```\n\nThis function will correctly handle any nested structure of tuples containing integers and other tuples, extracting all even numbers and returning them as a new tuple.",
+      "quality": 0.0,
+      "final_key": "def extract_even(nested_tuple):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item % 2 == 0:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n\n# Test cases\nassert extract_even((1, (2, 3), 4)) == (2, 4)\nassert extract_even(((1,), 2, (3,))) == (2,)\nassert extract_even((1, 2, 3)) == ()\nassert extract_even((1, 2, 3, 4, 5)) == (2, 4)\nassert extract_even((1, 2, 3, 4, 5, 6)) == (2, 4, 6)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert extract_even((1, (2, 3), 4)) == (2, 4)\nassert extract_even(((1,), 2, (3,))) == (2,)\nassert extract_even((1, 2, 3)) == ()\nassert extract_even((1, 2, 3, 4, 5)) == (2, 4)\nassert extract_even((1, 2, 3, 4, 5, 6)) == (2, 4, 6)\n```",
+        "coder": "```python\ndef extract_even(nested_tuple):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item % 2 == 0:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n```",
+        "verifier": "PICK: B\n\n```python\ndef extract_even(nested_tuple):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item % 2 == 0:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n\n# Test cases\nassert extract_even((1, (2, 3), 4)) == (2, 4)\nassert extract_even(((1,), 2, (3,))) == (2,)\nassert extract_even((1, 2, 3)) == ()\nassert extract_even((1, 2, 3, 4, 5)) == (2, 4)\nassert extract_even((1, 2, 3, 4, 5, 6)) == (2, 4, 6)\n```",
+        "fixer": "```python\ndef extract_even(nested_tuple):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item % 2 == 0:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n\n# Test cases\nassert extract_even((1, (2, 3), 4)) == (2, 4)\nassert extract_even(((1,), 2, (3,))) == (2,)\nassert extract_even((1, 2, 3)) == ()\nassert extract_even((1, 2, 3, 4, 5)) == (2, 4)\nassert extract_even((1, 2, 3, 4, 5, 6)) == (2, 4, 6)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+  "sample_keys": [
+    "import math\n\ndef otherside_rightangle(a, b):\n    # Calculate the square of each known side\n    a_squared = a ** 2\n    b_squared = b ** 2\n    \n    # Calculate the sum of the squares of the other two sides\n    sum_of_squares = a_squared + b_squared\n    \n    # Calculate the square root of the sum of the squares\n    c = math.sqrt(sum_of_squares)\n    \n    # Return the result as the length of the third side of the right-angled triangle\n    return c",
+    "import math\n\ndef otherside_rightangle(leg_a, leg_b):\n    # Step 3: Sum of squares of the legs\n    sum_of_squares = leg_a**2 + leg_b**2\n    \n    # Step 4: Hypotenuse calculation using the Pythagorean theorem\n    hypotenuse = math.sqrt(sum_of_squares)\n    \n    # Step 5: Return the calculated hypotenuse\n    return hypotenuse",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1526.0,
+    "small_out": 379.0,
+    "small_s": 7.427651722013252
+  },
+  "calls_plus": {
+    "large_in": 120.0,
+    "large_out": 139.0,
+    "large_s": 2.900187316990923,
+    "small_in": 1682.0,
+    "small_out": 424.0,
+    "small_s": 6.6567221760051325
+  },
+  "calls_samples": {
+    "small_in": 5325.0,
+    "small_out": 1599.0,
+    "small_s": 26.63608781702351
+  }
+}

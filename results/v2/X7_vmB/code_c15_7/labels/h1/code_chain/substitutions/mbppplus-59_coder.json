@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-59",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n```",
+  "reference_key": "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(3) == 21\nassert find_nth_octagonal(4) == 40\nassert find_nth_octagonal(5) == 65\n```",
+    "verifier": "PICK: B",
+    "fixer": "```python\ndef find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number\n\n# Test cases\nassert find_nth_octagonal(5) == 65\nassert find_nth_octagonal(10) == 280\nassert find_nth_octagonal(15) == 645\nassert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(3) == 21\nassert find_nth_octagonal(4) == 40\nassert find_nth_octagonal(5) == 65\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def find_nth_octagonal(n):\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number",
+      "reference_key": "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number",
+      "key_differs": true,
+      "text": "```python\ndef find_nth_octagonal(n):\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number\n```",
+      "quality": 0.0,
+      "final_key": "def find_nth_octagonal(n):\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_nth_octagonal(1) == 1\nassert find_nth_octagonal(2) == 8\nassert find_nth_octagonal(3) == 21\nassert find_nth_octagonal(4) == 40\nassert find_nth_octagonal(5) == 65\n```",
+        "verifier": "PICK: A\n\n```python\ndef find_nth_octagonal(n):\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number\n```",
+        "fixer": "```python\ndef find_nth_octagonal(n):\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]",
+      "reference_key": "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number",
+      "key_differs": true,
+      "text": "```python\ndef get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert is_octagonal(3) == 9\nassert is_octagonal(4) == 28\nassert is_octagonal(5) == 65\nassert is_octagonal(6) == 126\nassert is_octagonal(7) == 217\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]\n\n# Test cases\nassert get_total_number_of_sequences(5, 5) == 65\nassert get_total_number_of_sequences(10, 10) == 280\nassert get_total_number_of_sequences(15, 15) == 645\nassert get_total_number_of_sequences(3, 3) == 9\nassert get_total_number_of_sequences(4, 4) == 28\nassert get_total_number_of_sequences(5, 5) == 65\nassert get_total_number_of_sequences(6, 6) == 126\nassert get_total_number_of_sequences(7, 7) == 217\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count",
+      "reference_key": "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number",
+      "key_differs": true,
+      "text": "```python\ndef count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n```",
+      "quality": 0.0,
+      "final_key": "def count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n\ndef is_octagonal(n):\n    if n < 1:\n        return False\n    # The formula for the nth octagonal number is 3n^2 - 2n\n    return (3 * n**2 - 2 * n) % 9 == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_charac(\"hello\") == 5\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"aaaaaaa\") == 7\nassert count_charac(\"ab\") == 2\n```",
+        "verifier": "PICK: B\n```python\ndef count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n\ndef is_octagonal(n):\n    if n < 1:\n        return False\n    # The formula for the nth octagonal number is 3n^2 - 2n\n    return (3 * n**2 - 2 * n) % 9 == 0\n```",
+        "fixer": "```python\ndef count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n\ndef is_octagonal(n):\n    if n < 1:\n        return False\n    # The formula for the nth octagonal number is 3n^2 - 2n\n    return (3 * n**2 - 2 * n) % 9 == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number",
+  "sample_keys": [
+    "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number",
+    null,
+    "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number",
+    "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number",
+    "def find_nth_octagonal(n):\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    # Return the calculated value\n    return octagonal_number"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1472.0,
+    "small_out": 426.0,
+    "small_s": 6.0684654700162355
+  },
+  "calls_plus": {
+    "small_in": 1237.0,
+    "small_out": 374.0,
+    "small_s": 5.354335366020678,
+    "large_in": 235.0,
+    "large_out": 52.0,
+    "large_s": 1.519972878973931
+  },
+  "calls_samples": {
+    "small_in": 1175.0,
+    "small_out": 261.0,
+    "small_s": 5.429846292943694
+  }
+}

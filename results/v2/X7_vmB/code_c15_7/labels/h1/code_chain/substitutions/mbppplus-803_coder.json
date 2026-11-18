@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-803",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(num ** 0.5)\n    return sqrt_num * sqrt_num == num\n```",
+  "reference_key": "def is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(num ** 0.5)\n    return sqrt_num * sqrt_num == num",
+  "final_key_plus": "def is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(num ** 0.5)\n    return sqrt_num * sqrt_num == num",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert not is_perfect_square(10)\nassert is_perfect_square(25)\nassert is_perfect_square(36)\nassert is_perfect_square(49)\nassert not is_perfect_square(-1)\n```",
+    "verifier": "PICK: A\n\n```python\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(num ** 0.5)\n    return sqrt_num * sqrt_num == num\n```",
+    "fixer": "```python\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(num ** 0.5)\n    return sqrt_num * sqrt_num == num\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def is_perfect_square(num):\n    if num < 0:\n        return False\n    i = int(num ** 0.5)\n    return i * i == num",
+      "reference_key": "def is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(num ** 0.5)\n    return sqrt_num * sqrt_num == num",
+      "key_differs": true,
+      "text": "```python\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    i = int(num ** 0.5)\n    return i * i == num\n```",
+      "quality": 1.0,
+      "final_key": "def is_perfect_square(num):\n    if num < 0:\n        return False\n    i = int(num ** 0.5)\n    return i * i == num",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not is_perfect_square(10)\nassert is_perfect_square(25)\nassert is_perfect_square(36)\nassert is_perfect_square(49)\nassert not is_perfect_square(-1)\n```",
+        "verifier": "PICK: A\n\n```python\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    i = int(num ** 0.5)\n    return i * i == num\n```",
+        "fixer": "```python\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    i = int(num ** 0.5)\n    return i * i == num\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    \n    root = int(math.sqrt(num))\n    return root * root == num",
+      "reference_key": "def is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(num ** 0.5)\n    return sqrt_num * sqrt_num == num",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    \n    root = int(math.sqrt(num))\n    return root * root == num\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not is_perfect_square(10)  # Expected: True\nassert is_perfect_square(25)  # Expected: True\nassert is_perfect_square(36)  # Expected: True\nassert is_perfect_square(49)  # Expected: True\nassert is_perfect_square(50)  # Expected: False\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    \n    root = int(math.sqrt(num))\n    return root * root == num\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def toggle_string(input_str):\n    # Convert all lowercase letters to uppercase\n    upper_str = input_str.upper()\n    # Convert all uppercase letters to lowercase\n    lower_str = input_str.lower()\n    # Return the modified string\n    return upper_str if input_str.islower() else lower_str",
+      "reference_key": "def is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(num ** 0.5)\n    return sqrt_num * sqrt_num == num",
+      "key_differs": true,
+      "text": "```python\ndef toggle_string(input_str):\n    # Convert all lowercase letters to uppercase\n    upper_str = input_str.upper()\n    # Convert all uppercase letters to lowercase\n    lower_str = input_str.lower()\n    # Return the modified string\n    return upper_str if input_str.islower() else lower_str\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef is_perfect_square(n):\n    if n < 0:\n        return False\n    root = int(math.sqrt(n))\n    return root * root == n\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)\nassert is_perfect_square(25)\nassert is_perfect_square(36)\nassert is_perfect_square(49)\nassert is_perfect_square(64)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not is_perfect_square(10)\nassert is_perfect_square(25)\nassert is_perfect_square(36)\nassert is_perfect_square(49)\nassert is_perfect_square(64)\n```",
+        "verifier": "PICK: B\n```python\nimport math\n\ndef is_perfect_square(n):\n    if n < 0:\n        return False\n    root = int(math.sqrt(n))\n    return root * root == n\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)\nassert is_perfect_square(25)\nassert is_perfect_square(36)\nassert is_perfect_square(49)\nassert is_perfect_square(64)\n```",
+        "fixer": "```python\nimport math\n\ndef is_perfect_square(n):\n    if n < 0:\n        return False\n    root = int(math.sqrt(n))\n    return root * root == n\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)\nassert is_perfect_square(25)\nassert is_perfect_square(36)\nassert is_perfect_square(49)\nassert is_perfect_square(64)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "import math\n\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(math.sqrt(num))\n    return sqrt_num * sqrt_num == num",
+  "sample_keys": [
+    "import math\n\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(math.sqrt(num))\n    return sqrt_num * sqrt_num == num",
+    "def is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt = int(num ** 0.5)\n    return sqrt * sqrt == num",
+    "import math\n\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    root = int(math.sqrt(num))\n    return root * root == num",
+    "def is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(num ** 0.5)\n    return sqrt_num * sqrt_num == num",
+    "import math\n\ndef is_perfect_square(num):\n    if num < 0:\n        return False\n    sqrt_num = int(math.sqrt(num))\n    return sqrt_num * sqrt_num == num"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1464.0,
+    "small_out": 301.0,
+    "small_s": 2.616032750986051
+  },
+  "calls_plus": {
+    "small_in": 1123.0,
+    "small_out": 271.0,
+    "small_s": 4.319973681005649,
+    "large_in": 245.0,
+    "large_out": 45.0,
+    "large_s": 1.251961095025763
+  },
+  "calls_samples": {
+    "small_in": 1225.0,
+    "small_out": 219.0,
+    "small_s": 4.78858215798391
+  }
+}

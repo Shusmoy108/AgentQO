@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-222",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert check_type((1, 2, 3, 4)) == True\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 'b', 3)) == False\nassert check_type(()) == True\nassert check_type((True, False, True)) == True\n```",
+  "reference_key": "assert check_type((1, 2, 3, 4)) == True\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 'b', 3)) == False\nassert check_type(()) == True\nassert check_type((True, False, True)) == True",
+  "final_key_plus": "def check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True\n```",
+    "fixer": "```python\ndef check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test with all integer elements\nassert check_type((5, 6, 7, 3, 5, 6)) == True\n\n# Test with mixed types\nmixed_tuple = ('A', 'B', 2, 3.14)\nresult_mixed = check_type(mixed_tuple)\nassert isinstance(result_mixed, bool), \"The function should return a boolean value.\"\nassert result_mixed == False, \"Expected all elements to be of the same data type, but found a mix.\"\n\n# Test with empty tuple\nempty_tuple = ()\nassert check_type(empty_tuple) == True, \"Empties should always return True.\"\n\n# Test with only one element\nsingle_element_tuple = (42,)\nassert check_type(single_element_tuple) == True, \"Single-element tuples should return True.\"\n\n# Test with only one mixed element (int and other)\nmixture_tuple = (1, 'test')\nresult_mixture = check_type(mixture_tuple)\nassert isinstance(result_mixture, bool), \"The function should return a boolean value.\"\nassert result_mixture == False, \"Expected the mixed element to be of the same data type, but found a mix.\"",
+      "reference_key": "assert check_type((1, 2, 3, 4)) == True\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 'b', 3)) == False\nassert check_type(()) == True\nassert check_type((True, False, True)) == True",
+      "key_differs": true,
+      "text": "To add five additional test cases, we can use common types like strings, tuples, lists, and complex numbers. Additionally, we can test the edge case where the input is an empty tuple.\n\nThe expected results for these cases are:\n\n1. All integer types (e.g., (1, 2, 3, 4, 5)) -> `True`\n2. Mixed data types (e.g., ('A', 'B', 2, 3.14)) -> `False`\n3. Empty tuple -> `True'\n4. Only single element - e.g., (42,) -> `True`\n5. Only one of two mixed types (int and other) - e.g., (1, 'test') -> `False`\n\nHere's the complete set of assertions:\n\n```python\n# Test with all integer elements\nassert check_type((5, 6, 7, 3, 5, 6)) == True\n\n# Test with mixed types\nmixed_tuple = ('A', 'B', 2, 3.14)\nresult_mixed = check_type(mixed_tuple)\nassert isinstance(result_mixed, bool), \"The function should return a boolean value.\"\nassert result_mixed == False, \"Expected all elements to be of the same data type, but found a mix.\"\n\n# Test with empty tuple\nempty_tuple = ()\nassert check_type(empty_tuple) == True, \"Empties should always return True.\"\n\n# Test with only one element\nsingle_element_tuple = (42,)\nassert check_type(single_element_tuple) == True, \"Single-element tuples should return True.\"\n\n# Test with only one mixed element (int and other)\nmixture_tuple = (1, 'test')\nresult_mixture = check_type(mixture_tuple)\nassert isinstance(result_mixture, bool), \"The function should return a boolean value.\"\nassert result_mixture == False, \"Expected the mixed element to be of the same data type, but found a mix.\"\n```",
+      "quality": 1.0,
+      "final_key": "def check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True\n```",
+        "fixer": "```python\ndef check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True\n\n# Test cases\nassert check_type((5, 6, 7, 3, 5, 6)) == True\nassert check_type((1, 2, \"4\")) == False\nassert check_type((3, 2, 1, 4, 5)) == True\nassert check_type((5, 6, 7, 3, 5, 6)) == True\nassert isinstance(check_type((5, 6, 7, 3, 5, 6)), bool)\nassert check_type((1, 2, \"4\")) == False\nassert check_type((3, 2, 1, 4, 5)) == True\nassert check_type((5, 6, 7, 3, 5, 6)) == True\nassert isinstance(check_type((5, 6, 7, 3, 5, 6)), bool)\nassert check_type((5, 6, 7, 3, 5, 6)) == True\nassert isinstance(check_type((5, 6, 7, 3, 5, 6)), bool)\nassert check_type((5, 6, 7, 3, 5, 6)) == True\nassert isinstance(check_type((5, 6, 7, 3, 5, 6)), bool)\nassert check_type((5, 6, 7, 3, 5, 6)) == True\nassert isinstance(check_type((5, 6, 7, 3, 5, 6)), bool)\nassert check_type((5, 6, 7, 3, 5, 6)) == True\nassert isinstance(check_type((5, 6, 7, 3, 5, 6)), bool)\nassert check_type((5, 6, 7, 3, 5"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert check_type((\"hello\", \"world\")) == True\nassert check_type((\"apple\", \"banana\", \"cherry\")) == True\nassert check_type((True, False, True)) == True\nassert check_type((-10, 20, -30)) == True\nassert check_type(\"hello\") == False",
+      "reference_key": "assert check_type((1, 2, 3, 4)) == True\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 'b', 3)) == False\nassert check_type(()) == True\nassert check_type((True, False, True)) == True",
+      "key_differs": true,
+      "text": "```python\nassert check_type((\"hello\", \"world\")) == True\nassert check_type((\"apple\", \"banana\", \"cherry\")) == True\nassert check_type((True, False, True)) == True\nassert check_type((-10, 20, -30)) == True\nassert check_type(\"hello\") == False\n```",
+      "quality": 1.0,
+      "final_key": "def check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True\n```",
+        "fixer": "```python\ndef check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([]) == ()\nassert start_withp(['Pineapple', 'Peach', 'Plum']) == ('Pineapple', 'Peach', 'Plum')\nassert start_withp(['Apple', 'Banana', 'Cherry']) == ()\nassert start_withp(['Papaya', 'Peach', 'Pear']) == ('Papaya', 'Peach', 'Pear')",
+      "reference_key": "assert check_type((1, 2, 3, 4)) == True\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 'b', 3)) == False\nassert check_type(()) == True\nassert check_type((True, False, True)) == True",
+      "key_differs": true,
+      "text": "```python\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([]) == ()\nassert start_withp(['Pineapple', 'Peach', 'Plum']) == ('Pineapple', 'Peach', 'Plum')\nassert start_withp(['Apple', 'Banana', 'Cherry']) == ()\nassert start_withp(['Papaya', 'Peach', 'Pear']) == ('Papaya', 'Peach', 'Pear')\n```",
+      "quality": 1.0,
+      "final_key": "def check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True\n```",
+        "fixer": "```python\ndef check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True\n\n# Test cases\nassert check_type((5, 6, 7, 3, 5, 6)) == True\nassert check_type((1, 2, \"4\")) == False\nassert check_type((3, 2, 1, 4, 5)) == True\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([]) == ()\nassert start_withp(['Pineapple', 'Peach', 'Plum']) == ('Pineapple', 'Peach', 'Plum')\nassert start_withp(['Apple', 'Banana', 'Cherry']) == ()\nassert start_withp(['Papaya', 'Peach', 'Pear']) == ('Papaya', 'Peach', 'Pear')\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 3)) == True\nassert check_type((True, False, True)) == True\nassert check_type((None, None, None)) == True\nassert check_type((1, 'a', 3)) == False",
+  "sample_keys": [
+    "# Typical case:\nassert check_type((1, 2, 3, 4, 5)) == True\n\n# Edge case 1: Empty tuple:\nassert check_type(()) == True\n\n# Edge case 2: Tuple with only one element:\nassert check_type((1,)) == True\n\n# Edge case 3: Tuple with mixed data types:\nassert check_type((1, 'two', 3.0)) == False\n\n# Edge case 4: Nested tuples:\nassert check_type(((1, 2), (3, 4))) == True\n\n# Edge case 5: Mixed types in nested tuples:\nassert check_type(((1, 'two'), ('three', 4.0))) == False",
+    "assert check_type((1, 2, 3)) == True\nassert check_type(('a', 'b', 'c')) == True\nassert check_type(('hello', 123, 456)) == False\nassert check_type(()) == True\nassert check_type([1, 2, 3]) == True\nassert check_type('string') == False",
+    "# Check with a tuple of integers\nassert check_type((1, 2, 3, 4, 5)) == True\n\n# Check with a tuple of strings\nassert check_type(('hello', 'world', 'python')) == True\n\n# Check with a tuple containing mixed types (integers and strings)\nassert check_type((1, 'hello', 2, 'world')) == False\n\n# Check with an empty tuple\nassert check_type(()) == True\n\n# Check with a single-element tuple\nassert check_type((42,)) == True",
+    "# Edge case: An empty tuple\nassert check_type(() ) == False\n\n# Edge case: A single-element tuple\nassert check_type((10,) ) == True\n\n# Edge case: A tuple with mixed types (integers and strings)\nassert check_type((1, \"hello\", 2)) == False\n\n# Edge case: A tuple with identical elements of the same type\nassert check_type((\"apple\", \"banana\", \"cherry\")) == True\n\n# Additional tests for more complex scenarios\nassert check_type((True, True, True)) == True\nassert check_type((False, False, False)) == True\nassert check_type((None, None, None)) == True",
+    "assert check_type(('hello', 'world')) == True\nassert check_type(('hello', '123')) == True\nassert check_type(('hello', 123)) == False\nassert check_type((5, 6, 7, 3, 5, 6, 123)) == True\nassert check_type((5, 6, 7, 3, 5, 6, 'hello')) == False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1666.0,
+    "small_out": 538.0,
+    "small_s": 11.188907166011631
+  },
+  "calls_plus": {
+    "small_in": 1438.0,
+    "small_out": 462.0,
+    "small_s": 9.233362061000662,
+    "large_in": 243.0,
+    "large_out": 74.0,
+    "large_s": 1.6670716470107436
+  },
+  "calls_samples": {
+    "small_in": 1215.0,
+    "small_out": 615.0,
+    "small_s": 11.642075198004022
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-398",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert sum_of_digits([123, 456, 789]) == 45\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([-12, -34, -56]) == 20\nassert sum_of_digits([111, 222, 333]) == 18\nassert sum_of_digits([]) == 0\n```",
+  "reference_key": "assert sum_of_digits([123, 456, 789]) == 45\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([-12, -34, -56]) == 20\nassert sum_of_digits([111, 222, 333]) == 18\nassert sum_of_digits([]) == 0",
+  "final_key_plus": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit in str_num:\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit in str_num:\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum\n```",
+    "fixer": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit in str_num:\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestSumOfDigits(unittest.TestCase):\n    def test_single_digit(self):\n        self.assertEqual(sum_of_digits([3]), 3)\n\n    def test_zero_digit(self):\n        self.assertEqual(sum_of_digits([0]), 0)\n\n    def test_negative_number(self):\n        self.assertEqual(sum_of_digits([-897]), -25)\n\n    def test_float_numbers(self):\n        self.assertEqual(sum_of_digits([1.5, 2.3, 5.2]), 9.0)\n\n    def test_mixed_numbers(self):\n        self.assertEqual(sum_of_digits([1, 2, 'hello', 4]), 11)\n\nif __name__ == '__main__':\n    unittest.main()",
+      "reference_key": "assert sum_of_digits([123, 456, 789]) == 45\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([-12, -34, -56]) == 20\nassert sum_of_digits([111, 222, 333]) == 18\nassert sum_of_digits([]) == 0",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TestSumOfDigits(unittest.TestCase):\n    def test_single_digit(self):\n        self.assertEqual(sum_of_digits([3]), 3)\n\n    def test_zero_digit(self):\n        self.assertEqual(sum_of_digits([0]), 0)\n\n    def test_negative_number(self):\n        self.assertEqual(sum_of_digits([-897]), -25)\n\n    def test_float_numbers(self):\n        self.assertEqual(sum_of_digits([1.5, 2.3, 5.2]), 9.0)\n\n    def test_mixed_numbers(self):\n        self.assertEqual(sum_of_digits([1, 2, 'hello', 4]), 11)\n\nif __name__ == '__main__':\n    unittest.main()\n```",
+      "quality": 0.0,
+      "final_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):\n            raise ValueError(\"Invalid input: List found\")\n        str_num = str(num)\n        for digit in str_num:\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):\n            raise ValueError(\"Invalid input: List found\")\n        str_num = str(num)\n        for digit in str_num:\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):\n            raise ValueError(\"Invalid input: List found\")\n        str_num = str(num)\n        for digit in str_num:\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sum_of_digits([9,18,27])==30\nassert sum_of_digits([-1,-2,-3])==-6\nassert sum_of_digits([0,0,0])==0\nassert sum_of_digits([11,22,33])>45\nassert sum_of_digits([])==0",
+      "reference_key": "assert sum_of_digits([123, 456, 789]) == 45\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([-12, -34, -56]) == 20\nassert sum_of_digits([111, 222, 333]) == 18\nassert sum_of_digits([]) == 0",
+      "key_differs": true,
+      "text": "```python\nassert sum_of_digits([9,18,27])==30\nassert sum_of_digits([-1,-2,-3])==-6\nassert sum_of_digits([0,0,0])==0\nassert sum_of_digits([11,22,33])>45\nassert sum_of_digits([])==0\n```",
+      "quality": 0.0,
+      "final_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if not isinstance(num, int):\n            raise ValueError(\"Invalid input: All elements must be integers.\")\n        str_num = str(num)\n        for digit in str_num:\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if not isinstance(num, int):\n            raise ValueError(\"Invalid input: All elements must be integers.\")\n        str_num = str(num)\n        for digit in str_num:\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit in str_num:\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5",
+      "reference_key": "assert sum_of_digits([123, 456, 789]) == 45\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([-12, -34, -56]) == 20\nassert sum_of_digits([111, 222, 333]) == 18\nassert sum_of_digits([]) == 0",
+      "key_differs": true,
+      "text": "```python\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\n```",
+      "quality": 0.0,
+      "final_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum\n\n# Test cases\nassert sum_of_digits([10,2,56]) == 14\ntry:\n    sum_of_digits([[10,20,4,5,'b',70,'a']])\nexcept ValueError as e:\n    print(e)  # Output: Invalid input: List elements must be integers.\n\ntry:\n    sum_of_digits([10,20,-4,5,-70])\nexcept ValueError as e:\n    print(e)  # Output: Invalid input: List elements must be integers.\n\ntry:\n    jacobsthal_num(0)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(1)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(2)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(3)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(4)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum\n\n# Test cases\nassert sum_of_digits([10,2,56]) == 14\ntry:\n    sum_of_digits([[10,20,4,5,'b',70,'a']])\nexcept ValueError as e:\n    print(e)  # Output: Invalid input: List elements must be integers.\n\ntry:\n    sum_of_digits([10,20,-4,5,-70])\nexcept ValueError as e:\n    print(e)  # Output: Invalid input: List elements must be integers.\n\ntry:\n    jacobsthal_num(0)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(1)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(2)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(3)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(4)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n```",
+        "fixer": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum\n\n# Test cases\nassert sum_of_digits([10,2,56]) == 14\ntry:\n    sum_of_digits([[10,20,4,5,'b',70,'a']])\nexcept ValueError as e:\n    print(e)  # Output: Invalid input: List elements must be integers.\n\ntry:\n    sum_of_digits([10,20,-4,5,-70])\nexcept ValueError as e:\n    print(e)  # Output: Invalid input: List elements must be integers.\n\ntry:\n    jacobsthal_num(0)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(1)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(2)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(3)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n\ntry:\n    jacobsthal_num(4)\nexcept NameError as e:\n    print(e)  # Output: NameError: name 'jacobsthal_num' is not defined\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert sum_of_digits([10,2,56]) == 14\nassert sum_of_digits([-1, -2, -3]) == -6\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([999, 888, 777]) == 294\nassert sum_of_digits([]) == 0",
+  "sample_keys": [
+    "assert sum_of_digits([10,2,56]) == 14  # Test case 1: Sum of digits of [10,2,56] is 14\nassert sum_of_digits([0]) == 0  # Test case 2: Sum of digits of [0] is 0\nassert sum_of_digits([-1,2,-3]) == -6  # Test case 3: Sum of digits of [-1,2,-3] is -6\nassert sum_of_digits([100,10,1]) == 12  # Test case 4: Sum of digits of [100,10,1] is 12\nassert sum_of_digits([]) == 0  # Test case 5: Sum of digits of [] is 0",
+    "assert sum_of_digits([]) == 0\nassert sum_of_digits([1]) == 1\nassert sum_of_digits([10, -1, 100]) == 12\nassert sum_of_digits([-10, 99, 1000]) == 18\nassert sum_of_digits([0, 0, 0, 0]) == 0",
+    null,
+    "assert sum_of_digits([789]) == 24\nassert sum_of_digits([13579]) == 30\nassert sum_of_digits([0]) == 0\nassert sum_of_digits([-12345]) == -15\nassert sum_of_digits([]) == 0",
+    "assert sum_of_digits([]) == 0\nassert sum_of_digits([0]) == 0\nassert sum_of_digits([11, 22, 33, 44]) == 36\nassert sum_of_digits([-1, -2, -3]) == -6\nassert sum_of_digits([999, 888]) == 36"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1633.0,
+    "small_out": 511.0,
+    "small_s": 11.066085749975173
+  },
+  "calls_plus": {
+    "small_in": 1479.0,
+    "small_out": 418.0,
+    "small_s": 8.546388674003538,
+    "large_in": 175.0,
+    "large_out": 101.0,
+    "large_s": 2.168589699023869
+  },
+  "calls_samples": {
+    "small_in": 875.0,
+    "small_out": 517.0,
+    "small_s": 9.577103875984903
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-19",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `test_duplicate` that takes one parameter: an array of integers.\n2. Inside the function, create an empty set called `seen`.\n3. Iterate through each integer in the input array.\n4. For each integer, check if it is already in the `seen` set.\n   - If it is, return `True` indicating a duplicate was found.\n   - If it is not, add the integer to the `seen` set.\n5. After iterating through all integers, return `False` indicating no duplicates were found.",
+  "reference_key": null,
+  "final_key_plus": "def test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.3333333333333333,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert test_duplicate(([1,2,3,4,5]))==False\nassert test_duplicate(([1,2,3,4,5,6]))==False\nassert test_duplicate(([1,2,3,4,5,6,7]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1",
+    "coder": "```python\ndef test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n```",
+    "verifier": "PICK: A\n\n```python\ndef test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n```",
+    "fixer": "```python\ndef test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `check_type` that takes one parameter, `tuple`.\n2. Use the built-in `type()` function to get the data type of the first element in the tuple.\n3. Iterate over each element in the tuple using a for loop.\n4. For each element, compare its data type to the data type obtained in step 2.\n5. If any element has a different data type from the first element, return `False`.\n6. If all elements have the same data type, return `True`.\n\nThis approach ensures that the function correctly checks the data types of all elements in the tuple.",
+      "quality": 0.0,
+      "final_key": "def check_type(tuple):\n    if len(tuple) == 0:\n        return True\n    first_element_type = type(tuple[0])\n    for element in tuple:\n        if type(element) != first_element_type:\n            return False\n    return True\n\ndef test_duplicate(array):\n    return check_type(array)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert test_duplicate(([1,2,3,4,5]))==False\nassert test_duplicate(([]))==True\nassert test_duplicate(([1,1,1,1,1]))==True\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,10]))==True\n```",
+        "coder": "```python\ndef check_type(tuple):\n    if len(tuple) == 0:\n        return True\n    first_element_type = type(tuple[0])\n    for element in tuple:\n        if type(element) != first_element_type:\n            return False\n    return True\n```",
+        "verifier": "PICK: B\n\n```python\ndef check_type(tuple):\n    if len(tuple) == 0:\n        return True\n    first_element_type = type(tuple[0])\n    for element in tuple:\n        if type(element) != first_element_type:\n            return False\n    return True\n\ndef test_duplicate(array):\n    return check_type(array)\n```",
+        "fixer": "```python\ndef check_type(tuple):\n    if len(tuple) == 0:\n        return True\n    first_element_type = type(tuple[0])\n    for element in tuple:\n        if type(element) != first_element_type:\n            return False\n    return True\n\ndef test_duplicate(array):\n    return check_type(array)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "Plan:\n1. Define a function named `test_duplicate` that takes one parameter: an array of integers.\n2. Inside the function, initialize a variable `seen` as an empty set.\n3. Iterate through each integer in the input array.\n4. For each integer, check if it is already in the `seen` set.\n   - If it is, return `True` indicating a duplicate was found.\n   - If it is not, add the integer to the `seen` set using `seen.add(integer)`.\n5. After iterating through all integers, return `False` indicating no duplicates were found.",
+      "quality": 1.0,
+      "final_key": "def test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert test_duplicate(([1,2,3,4,5]))==False\nassert test_duplicate(([1,2,3,4,5,6]))==False\nassert test_duplicate(([1,2,3,4,5,6,7]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1",
+        "coder": "```python\ndef test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n```",
+        "verifier": "PICK: A\n\n```python\ndef test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n```",
+        "fixer": "```python\ndef test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a variable `sum` to store the result.\n2. Iterate through the list using a for loop.\n3. Check if the index is even (i.e., `index % 2 == 0`) and if the element at that index is even (i.e., `element % 2 == 0`).\n4. If both conditions are met, add the element to the `sum`.\n5. After iterating through all elements, return the `sum`.",
+      "quality": 0.0,
+      "final_key": "def test_duplicate(arr):\n    sum = 0\n    for index, element in enumerate(arr):\n        if index % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert test_duplicate(([1,2,3,4,5]))==False\nassert test_duplicate(([1,2,3,4,6]))==True\nassert test_duplicate(([1,2,3,4,7]))==True\nassert test_duplicate(([1,2,3,4,8]))==True\nassert test_duplicate(([1,2,3,4,9]))==True\n```",
+        "coder": "```python\ndef test_duplicate(arr):\n    sum = 0\n    for index, element in enumerate(arr):\n        if index % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum\n```",
+        "verifier": "PICK: A\n\n```python\ndef test_duplicate(arr):\n    sum = 0\n    for index, element in enumerate(arr):\n        if index % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum\n```",
+        "fixer": "```python\ndef test_duplicate(arr):\n    sum = 0\n    for index, element in enumerate(arr):\n        if index % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False",
+  "sample_keys": [
+    "def test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False",
+    "def test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False",
+    "def check_duplicates(numbers):\n    seen_numbers = set()\n    for num in numbers:\n        if num in seen_numbers:\n            return True\n        seen_numbers.add(num)\n    return False\n\n# Test cases\nassert check_duplicates(([1,2,3,4,5])) == False\nassert check_duplicates(([1,2,3,4, 4])) == True\nassert check_duplicates([1,1,2,2,3,3,4,4,5]) == True\nassert check_duplicates(([1,2,3,4,5])) == False\nassert check_duplicates(([1,2,3,4,5,5])) == True\nassert check_duplicates(([])) == False\nassert check_duplicates(([1])) == False\nassert check_duplicates(([1,1,1,1,1])) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1681.0,
+    "small_out": 730.0,
+    "small_s": 14.869970939966151
+  },
+  "calls_plus": {
+    "large_in": 111.0,
+    "large_out": 117.0,
+    "large_s": 2.646861393994186,
+    "small_in": 1594.0,
+    "small_out": 637.0,
+    "small_s": 12.649644056975376
+  },
+  "calls_samples": {
+    "small_in": 5001.0,
+    "small_out": 2134.0,
+    "small_s": 41.99905585197848
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-312",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert math.isclose(volume_cone(3, 4), 37.69911184307752, rel_tol=0.001)\nassert math.isclose(volume_cone(7, 24), 1231.764068062655, rel_tol=0.001)\nassert math.isclose(volume_cone(0, 10), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(5, 0), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1047.1975511965976, rel_tol=0.001)\n```",
+  "reference_key": "assert math.isclose(volume_cone(3, 4), 37.69911184307752, rel_tol=0.001)\nassert math.isclose(volume_cone(7, 24), 1231.764068062655, rel_tol=0.001)\nassert math.isclose(volume_cone(0, 10), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(5, 0), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1047.1975511965976, rel_tol=0.001)",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    volume = (1/3) * math.pi * r**2 * h\n    return volume\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert volume_cone(3, 3) == 141.37166941l, \"Edge case for small radius\"\nassert volume_cone(7, 11) > 267.04093111l, \"Typical case with higher radius\"\nassert volume_cone(2, 10) < 314.16063030299807l, \"Edge case with very small radius\"\nassert volume_cone(5, 2) < 125.66362463902839l, \"Typical case with lower height\"\nassert volume_cone(10, 10) > 785.3981633974589l, \"Another typical case\"",
+      "reference_key": "assert math.isclose(volume_cone(3, 4), 37.69911184307752, rel_tol=0.001)\nassert math.isclose(volume_cone(7, 24), 1231.764068062655, rel_tol=0.001)\nassert math.isclose(volume_cone(0, 10), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(5, 0), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1047.1975511965976, rel_tol=0.001)",
+      "key_differs": true,
+      "text": "```python\nassert volume_cone(3, 3) == 141.37166941l, \"Edge case for small radius\"\nassert volume_cone(7, 11) > 267.04093111l, \"Typical case with higher radius\"\nassert volume_cone(2, 10) < 314.16063030299807l, \"Edge case with very small radius\"\nassert volume_cone(5, 2) < 125.66362463902839l, \"Typical case with lower height\"\nassert volume_cone(10, 10) > 785.3981633974589l, \"Another typical case\"\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    volume = (1/3) * math.pi * r**2 * h\n    return volume\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    volume = (1/3) * math.pi * r**2 * h\n    return volume\n    \n# Check for typical values\nassert math.isclose(volume_cone(5, 12), 314.1592653589793, rel_tol=0.001)\n\n# Check for edge case where radius is zero\nassert math.isclose(volume_cone(0, 12), 0, rel_tol=0.001)\n\n# Check for edge case where height is zero\nassert math.isclose(volume_cone(5, 0), 0, rel_tol=0.001)\n\n# Check for edge case where both radius and height are zero\nassert math.isclose(volume_cone(0, 0), 0, rel_tol=0.001)\n\n# Check for negative radius\nassert math.isnan(volume_cone(-5, 12))\n\n# Check for negative height\nassert math.isnan(volume_cone(5, -12))\n\n# Check if non-numeric arguments are raised\ntry:\n    volume_cone('a', 12)\nexcept TypeError as e:\n    assert str(e) == \"Both 'r' and 'h' must be numbers\"\n\ntry:\n    volume_cone(5, 'b')\nexcept TypeError as e:\n    assert str(e) == \"Both 'r' and 'h' must be numbers\"",
+      "reference_key": "assert math.isclose(volume_cone(3, 4), 37.69911184307752, rel_tol=0.001)\nassert math.isclose(volume_cone(7, 24), 1231.764068062655, rel_tol=0.001)\nassert math.isclose(volume_cone(0, 10), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(5, 0), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1047.1975511965976, rel_tol=0.001)",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    volume = (1/3) * math.pi * r**2 * h\n    return volume\n    \n# Check for typical values\nassert math.isclose(volume_cone(5, 12), 314.1592653589793, rel_tol=0.001)\n\n# Check for edge case where radius is zero\nassert math.isclose(volume_cone(0, 12), 0, rel_tol=0.001)\n\n# Check for edge case where height is zero\nassert math.isclose(volume_cone(5, 0), 0, rel_tol=0.001)\n\n# Check for edge case where both radius and height are zero\nassert math.isclose(volume_cone(0, 0), 0, rel_tol=0.001)\n\n# Check for negative radius\nassert math.isnan(volume_cone(-5, 12))\n\n# Check for negative height\nassert math.isnan(volume_cone(5, -12))\n\n# Check if non-numeric arguments are raised\ntry:\n    volume_cone('a', 12)\nexcept TypeError as e:\n    assert str(e) == \"Both 'r' and 'h' must be numbers\"\n\ntry:\n    volume_cone(5, 'b')\nexcept TypeError as e:\n    assert str(e) == \"Both 'r' and 'h' must be numbers\"\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    if not isinstance(r, (int, float)) or not isinstance(h, (int, float)):\n        raise ValueError(\"Both 'r' and 'h' must be numbers\")\n    volume = (1/3) * math.pi * r**2 * h\n    return volume",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    if not isinstance(r, (int, float)) or not isinstance(h, (int, float)):\n        raise ValueError(\"Both 'r' and 'h' must be numbers\")\n    volume = (1/3) * math.pi * r**2 * h\n    return volume\n```",
+        "fixer": "```python\nimport math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    if not isinstance(r, (int, float)) or not isinstance(h, (int, float)):\n        raise ValueError(\"Both 'r' and 'h' must be numbers\")\n    volume = (1/3) * math.pi * r**2 * h\n    return volume\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert heap_sort([]) == []\nassert heap_sort([1]) == [1]\nassert heap_sort([1, 2]) == [1, 2]\nassert heap_sort([2, 1]) == [1, 2]\nassert heap_sort([-1, -2, -3, -4, -5]) == [-5, -4, -3, -2, -1]",
+      "reference_key": "assert math.isclose(volume_cone(3, 4), 37.69911184307752, rel_tol=0.001)\nassert math.isclose(volume_cone(7, 24), 1231.764068062655, rel_tol=0.001)\nassert math.isclose(volume_cone(0, 10), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(5, 0), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1047.1975511965976, rel_tol=0.001)",
+      "key_differs": true,
+      "text": "```python\nassert heap_sort([]) == []\nassert heap_sort([1]) == [1]\nassert heap_sort([1, 2]) == [1, 2]\nassert heap_sort([2, 1]) == [1, 2]\nassert heap_sort([-1, -2, -3, -4, -5]) == [-5, -4, -3, -2, -1]\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    volume = (1/3) * math.pi * r**2 * h\n    return volume\n\n# Test cases\nassert math.isclose(volume_cone(5,12), 314.15926535897927, rel_tol=0.001)\nassert math.isclose(volume_cone(10,15), 1570.7963267948965, rel_tol=0.001)\nassert math.isclose(volume_cone(19,17), 6426.651371693521, rel_tol=0.001)\n\n# Additional tests\ndef heap_sort(arr):\n    n = len(arr)\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    return arr\n\n# Test cases for heap_sort\ntry:\n    assert heap_sort([]) == []\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort passed\")\n\ntry:\n    assert heap_sort([1]) == [1]\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort passed\")\n\ntry:\n    assert heap_sort([1, 2]) == [1, 2]\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort passed\")\n\ntry:\n    assert heap_sort([2, 1]) == [1, 2]\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort passed\")\n\ntry:\n    assert heap_sort([-1, -2, -3, -4, -5]) == [-5, -4, -3, -2, -1]\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort",
+        "fixer": "```python\nimport math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    volume = (1/3) * math.pi * r**2 * h\n    return volume\n\n# Test cases\nassert math.isclose(volume_cone(5,12), 314.15926535897927, rel_tol=0.001)\nassert math.isclose(volume_cone(10,15), 1570.7963267948965, rel_tol=0.001)\nassert math.isclose(volume_cone(19,17), 6426.651371693521, rel_tol=0.001)\n\n# Additional tests\ndef heap_sort(arr):\n    n = len(arr)\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    return arr\n\n# Test cases for heap_sort\ntry:\n    assert heap_sort([]) == []\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort passed\")\n\ntry:\n    assert heap_sort([1]) == [1]\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort passed\")\n\ntry:\n    assert heap_sort([1, 2]) == [1, 2]\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort passed\")\n\ntry:\n    assert heap_sort([2, 1]) == [1, 2]\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort passed\")\n\ntry:\n    assert heap_sort([-1, -2, -3, -4, -5]) == [-5, -4, -3, -2, -1]\nexcept NameError:\n    print(\"NameError: heap_sort is not defined\")\nelse:\n    print(\"heap_sort passed\")\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert math.isclose(volume_cone(0, 10), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1000.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 20), 1256.6370614359172, rel_tol=0.001)\nassert math.isclose(volume_cone(10, -10), 0, rel_tol=0.001)",
+  "sample_keys": [
+    "assert math.isclose(volume_cone(1, 2), 3.141592653589793, rel_tol=0.001)  # Test with a simple cone\nassert math.isclose(volume_cone(0, 5), 0.0, rel_tol=0.001)      # Edge case with radius zero\nassert math.isclose(volume_cone(10, 0), 0.0, rel_tol=0.001)   # Edge case with height zero\nassert math.isclose(volume_cone(5, 2.5), 47.1238898038469, rel_tol=0.001) # Moderate case with different dimensions\nassert math.isclose(volume_cone(3.5, 1.5), 23.141592653589793, rel_tol=0.001)  # Large case with high radius and height",
+    "import math\n\nassert math.isclose(volume_cone(5,12), 314.15926535897927, rel_tol=0.001)  # Typical case\n\nassert math.isclose(volume_cone(0,12), 0, rel_tol=0.001)  # Edge case with radius zero\n\nassert math.isclose(volume_cone(-5,12), -314.15926535897927, rel_tol=0.001)  # Negative radius\n\nassert math.isclose(volume_cone(5,-12), 0, rel_tol=0.001)  # Negative height\n\nassert math.isclose(volume_cone(5,0), 0, rel_tol=0.001)  # Edge case with height zero",
+    "import math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    volume = (1/3) * math.pi * r**2 * h\n    return volume\n\n# Test cases\nassert math.isclose(volume_cone(1,1), 0.3141592653589793, rel_tol=0.001)\nassert math.isclose(volume_cone(3,3), 56.54866776461627, rel_tol=0.001)\nassert math.isclose(volume_cone(0,100), 0.0, rel_tol=0.001)\nassert math.isclose(volume_cone(-1,1), -0.1273239544735162, rel_tol=0.001)\nassert math.isclose(volume_cone(5,0), 0.0, rel_tol=0.001)",
+    "assert math.isclose(volume_cone(0, 12), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(5, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(-5, 12), -314.15926535897927, rel_tol=0.001)\nassert math.isclose(volume_cone(5, -12), -314.15926535897927, rel_tol=0.001)\nassert math.isclose(volume_cone(5, 10), 523.5987755982988, rel_tol=0.001)",
+    "assert math.isclose(volume_cone(3, 4), 113.09733552923256, rel_tol=0.001)\nassert math.isclose(volume_cone(0, 10), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(-5, 12), -628.3185307179586, rel_tol=0.001)\nassert math.isclose(volume_cone(5, -12), 0, rel_tol=0.001)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1966.0,
+    "small_out": 448.0,
+    "small_s": 9.696497137018014
+  },
+  "calls_plus": {
+    "small_in": 1815.0,
+    "small_out": 227.0,
+    "small_s": 4.923939859989332,
+    "large_in": 205.0,
+    "large_out": 187.0,
+    "large_s": 4.140171679988271
+  },
+  "calls_samples": {
+    "small_in": 1025.0,
+    "small_out": 1019.0,
+    "small_s": 17.592197230958845
+  }
+}

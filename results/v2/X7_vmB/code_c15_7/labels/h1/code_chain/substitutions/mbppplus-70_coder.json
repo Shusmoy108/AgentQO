@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-70",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```",
+  "reference_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+  "final_key_plus": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```",
+    "verifier": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```",
+    "fixer": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def get_equal(tuples_list):\n    # Check if the list is empty or contains at least two tuples\n    if not tuples_list or len(tuples_list) < 2:\n        return False\n\n    # Get the length of the first tuple as a reference\n    length = len(tuples_list[0])\n\n    # Iterate through each tuple in the list\n    for t in tuples_list:\n        # If the current tuple's length differs from the reference\n        if len(t) != length:\n            return False\n\n    # All tuples have the same length\n    return True",
+      "reference_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "key_differs": true,
+      "text": "```python\ndef get_equal(tuples_list):\n    # Check if the list is empty or contains at least two tuples\n    if not tuples_list or len(tuples_list) < 2:\n        return False\n\n    # Get the length of the first tuple as a reference\n    length = len(tuples_list[0])\n\n    # Iterate through each tuple in the list\n    for t in tuples_list:\n        # If the current tuple's length differs from the reference\n        if len(t) != length:\n            return False\n\n    # All tuples have the same length\n    return True\n```\nThe provided solution accurately checks for tuples of equal length by iterating once over the list and comparing lengths of individual tuples against the first one.",
+      "quality": 0.0,
+      "final_key": "def get_equal(tuples_list):\n    # Check if the list is empty or contains at least two tuples\n    if not tuples_list or len(tuples_list) < 2:\n        return False\n\n    # Get the length of the first tuple as a reference\n    length = len(tuples_list[0])\n\n    # Iterate through each tuple in the list\n    for t in tuples_list:\n        # If the current tuple's length differs from the reference\n        if len(t) != length:\n            return False\n\n    # All tuples have the same length\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([]) == False\nassert get_equal([(), ()]) == True\nassert get_equal([(1, 2), (3, 4, 5)]) == False\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\n```",
+        "verifier": "PICK: A\n```python\ndef get_equal(tuples_list):\n    # Check if the list is empty or contains at least two tuples\n    if not tuples_list or len(tuples_list) < 2:\n        return False\n\n    # Get the length of the first tuple as a reference\n    length = len(tuples_list[0])\n\n    # Iterate through each tuple in the list\n    for t in tuples_list:\n        # If the current tuple's length differs from the reference\n        if len(t) != length:\n            return False\n\n    # All tuples have the same length\n    return True\n```",
+        "fixer": "```python\ndef get_equal(tuples_list):\n    # Check if the list is empty or contains at least two tuples\n    if not tuples_list or len(tuples_list) < 2:\n        return False\n\n    # Get the length of the first tuple as a reference\n    length = len(tuples_list[0])\n\n    # Iterate through each tuple in the list\n    for t in tuples_list:\n        # If the current tuple's length differs from the reference\n        if len(t) != length:\n            return False\n\n    # All tuples have the same length\n    return True\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    \n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    \n    return True",
+      "reference_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "key_differs": true,
+      "text": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    \n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    \n    return True\n```",
+      "quality": 0.0,
+      "final_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    \n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    \n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    \n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    \n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```",
+        "fixer": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    \n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    \n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def sum_digits(num):\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum",
+      "reference_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "key_differs": true,
+      "text": "```python\ndef sum_digits(num):\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    \n    first_tuple_length = len(tuples_list[0])\n    \n    for tuple_ in tuples_list:\n        if len(tuple_) != first_tuple_length:\n            return False\n    \n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7, 8)]) == False\nassert get_equal([(1, 2, 3), (4, 5, 6, 7, 8, 9)]) == True\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    \n    first_tuple_length = len(tuples_list[0])\n    \n    for tuple_ in tuples_list:\n        if len(tuple_) != first_tuple_length:\n            return False\n    \n    return True\n```",
+        "fixer": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    \n    first_tuple_length = len(tuples_list[0])\n    \n    for tuple_ in tuples_list:\n        if len(tuple_) != first_tuple_length:\n            return False\n    \n    return True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+  "sample_keys": [
+    "def get_equal(tuples_list):\n    if not tuples_list:\n        return False\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+    "def get_equal(tuples_list):\n    length = len(tuples_list[0])  # Get the length of the first tuple\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False  # Return False if any tuple has a different length\n    return True  # Return True if all tuples have the same length",
+    "def get_equal(tuples_list):\n    # Get the length of the first tuple in the list\n    length = len(tuples_list[0])\n    \n    # Iterate through each tuple in the list\n    for tup in tuples_list:\n        # Check if the current tuple's length is not equal to the initial length\n        if len(tup) != length:\n            # Return False if a mismatch is found\n            return False\n    \n    # If all tuples have the same length, return True\n    return True",
+    "def get_equal(tuples_list):\n    # Start by assuming the first tuple's length is our reference\n    length = len(tuples_list[0])\n    \n    # Loop through each tuple in the list\n    for tup in tuples_list:\n        # Check if the current tuple's length is different from our reference\n        if len(tup) != length:\n            # If it is, return False as all tuples must have the same length\n            return False\n    \n    # If no tuples have a different length, return True\n    return True",
+    "def get_equal(tuples_list):\n    # Initialize the length of the first tuple\n    length = len(tuples_list[0])\n    \n    # Iterate through each tuple in the list\n    for tup in tuples_list:\n        # Check if the current tuple's length is different from the initialized length\n        if len(tup) != length:\n            # Return False if a tuple has a different length\n            return False\n    \n    # If all tuples have the same length, return True\n    return True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1720.0,
+    "small_out": 833.0,
+    "small_s": 15.85900613895501
+  },
+  "calls_plus": {
+    "small_in": 1470.0,
+    "small_out": 787.0,
+    "small_s": 14.88319889997365,
+    "large_in": 250.0,
+    "large_out": 46.0,
+    "large_s": 0.9961187790031545
+  },
+  "calls_samples": {
+    "small_in": 1250.0,
+    "small_out": 468.0,
+    "small_s": 8.120252020016778
+  }
+}

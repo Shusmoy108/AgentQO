@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-296",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```",
+  "reference_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+  "final_key_plus": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import numpy as np\n\ndef sort_and_count_inversions(arr):\n    def merge_sort(arr):\n        if len(arr) <= 1:\n            return arr, 0\n        \n        mid = len(arr) // 2\n        left_arr, left_inv_sum = merge_sort(arr[:mid])\n        right_arr, right_inv_sum = merge_sort(arr[mid:])\n        \n        merged_arr, inv_count = merge(left_arr, right_arr)\n        return merged_arr, left_inv_sum + right_inv_sum + inv_count\n    \n    def merge(left, right):\n        merged = []\n        inv_count = 0\n        i, j = 0, 0\n        \n        while i < len(left) and j < len(right):\n            if left[i] <= right[j]:\n                merged.append(left[i])\n                i += 1\n            else:\n                merged.append(right[j])\n                j += 1\n                # Count inversion pairs where one element is from left and other from right\n                inv_count += len(left) - i\n        \n        merged.extend(left[i:])\n        merged.extend(right[j:])\n        return merged, inv_count\n    \n    _, total_inv_count = merge_sort(arr)\n    return total_inv_count",
+      "reference_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+      "key_differs": true,
+      "text": "```python\nimport numpy as np\n\ndef sort_and_count_inversions(arr):\n    def merge_sort(arr):\n        if len(arr) <= 1:\n            return arr, 0\n        \n        mid = len(arr) // 2\n        left_arr, left_inv_sum = merge_sort(arr[:mid])\n        right_arr, right_inv_sum = merge_sort(arr[mid:])\n        \n        merged_arr, inv_count = merge(left_arr, right_arr)\n        return merged_arr, left_inv_sum + right_inv_sum + inv_count\n    \n    def merge(left, right):\n        merged = []\n        inv_count = 0\n        i, j = 0, 0\n        \n        while i < len(left) and j < len(right):\n            if left[i] <= right[j]:\n                merged.append(left[i])\n                i += 1\n            else:\n                merged.append(right[j])\n                j += 1\n                # Count inversion pairs where one element is from left and other from right\n                inv_count += len(left) - i\n        \n        merged.extend(left[i:])\n        merged.extend(right[j:])\n        return merged, inv_count\n    \n    _, total_inv_count = merge_sort(arr)\n    return total_inv_count\n```\n\nThis solution uses a divide-and-conquer approach with a merge sort combined with counting inversions during the merging process. The time complexity of this approach is O(nlogn), making it efficient for moderately large arrays.",
+      "quality": 1.0,
+      "final_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+      "key_differs": true,
+      "text": "```/python\n\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```",
+      "quality": 1.0,
+      "final_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result",
+      "reference_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+      "key_differs": true,
+      "text": "```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n```",
+      "quality": 1.0,
+      "final_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+  "sample_keys": [
+    "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+    "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+    "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+    "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+    "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1433.0,
+    "small_out": 391.0,
+    "small_s": 8.622342366026714
+  },
+  "calls_plus": {
+    "small_in": 1077.0,
+    "small_out": 326.0,
+    "small_s": 7.1462681950361,
+    "large_in": 356.0,
+    "large_out": 65.0,
+    "large_s": 1.4743557239999063
+  },
+  "calls_samples": {
+    "small_in": 1780.0,
+    "small_out": 325.0,
+    "small_s": 5.1922788879601285
+  }
+}

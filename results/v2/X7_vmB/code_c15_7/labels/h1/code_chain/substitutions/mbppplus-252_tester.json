@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-252",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert convert(0 + 1j) == (1.0, pi / 2)\nassert convert(-1) == (1.0, pi)\nassert convert(1 - 1j) == (sqrt(2), -pi / 4)\nassert convert(-1 + 1j) == (sqrt(2), pi / 4)\nassert convert(0) == (0.0, 0.0)\n```",
+  "reference_key": "assert convert(0 + 1j) == (1.0, pi / 2)\nassert convert(-1) == (1.0, pi)\nassert convert(1 - 1j) == (sqrt(2), -pi / 4)\nassert convert(-1 + 1j) == (sqrt(2), pi / 4)\nassert convert(0) == (0.0, 0.0)",
+  "final_key_plus": "import cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```",
+    "fixer": "```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert convert(-2-2j) == (3.4641016151377544, (-2.356194490192345))  # Edge case with negative real and imaginary parts\nassert convert(0+1j) == (1.0, 1.5707963267948966)  # Edge case with zero imaginary part\nassert convert(-1) == (1.0, -\u03c0/2.0)  # Edge case with negative real and positive imaginary part\nassert convert(1+1j) == (1.4142135623730951, (0.7853981633974484))  # Typical case\nassert convert(2-3j) == (4.6410161513775443, (-0.5235987755982989))  # Another typical case",
+      "reference_key": "assert convert(0 + 1j) == (1.0, pi / 2)\nassert convert(-1) == (1.0, pi)\nassert convert(1 - 1j) == (sqrt(2), -pi / 4)\nassert convert(-1 + 1j) == (sqrt(2), pi / 4)\nassert convert(0) == (0.0, 0.0)",
+      "key_differs": true,
+      "text": "```python\nassert convert(-2-2j) == (3.4641016151377544, (-2.356194490192345))  # Edge case with negative real and imaginary parts\nassert convert(0+1j) == (1.0, 1.5707963267948966)  # Edge case with zero imaginary part\nassert convert(-1) == (1.0, -\u03c0/2.0)  # Edge case with negative real and positive imaginary part\nassert convert(1+1j) == (1.4142135623730951, (0.7853981633974484))  # Typical case\nassert convert(2-3j) == (4.6410161513775443, (-0.5235987755982989))  # Another typical case\n```",
+      "quality": 1.0,
+      "final_key": "import cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```",
+        "fixer": "```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert convert(-2).real == sqrt(8), \"Edge case of negative real part\"\nassert convert(complex(0,1)).imaginary == 1, \"Imaginary part is 1\"\nassert round(convert(complex(0,-1)).real, 7) == round(sqrt(8)/-2), \"Special case of negative real part with non-zero imaginary part\"\nassert convert(complex(3,4)).magnitude > 5, \"Positive complex number with large magnitude\"\nassert convert(complex(-3,-4)).angle < 0, \"Negative complex number with small but positive magnitude\"",
+      "reference_key": "assert convert(0 + 1j) == (1.0, pi / 2)\nassert convert(-1) == (1.0, pi)\nassert convert(1 - 1j) == (sqrt(2), -pi / 4)\nassert convert(-1 + 1j) == (sqrt(2), pi / 4)\nassert convert(0) == (0.0, 0.0)",
+      "key_differs": true,
+      "text": "```python\nassert convert(-2).real == sqrt(8), \"Edge case of negative real part\"\nassert convert(complex(0,1)).imaginary == 1, \"Imaginary part is 1\"\nassert round(convert(complex(0,-1)).real, 7) == round(sqrt(8)/-2), \"Special case of negative real part with non-zero imaginary part\"\nassert convert(complex(3,4)).magnitude > 5, \"Positive complex number with large magnitude\"\nassert convert(complex(-3,-4)).angle < 0, \"Negative complex number with small but positive magnitude\"\n```",
+      "quality": 1.0,
+      "final_key": "import cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```",
+        "fixer": "```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert even_bit_set_number(10) == 10\nassert even_bit_set_number(1) == 1\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(2**31 - 1) == 2**31 - 1\nassert even_bit_set_number(-1) == -1",
+      "reference_key": "assert convert(0 + 1j) == (1.0, pi / 2)\nassert convert(-1) == (1.0, pi)\nassert convert(1 - 1j) == (sqrt(2), -pi / 4)\nassert convert(-1 + 1j) == (sqrt(2), pi / 4)\nassert convert(0) == (0.0, 0.0)",
+      "key_differs": true,
+      "text": "```python\nassert even_bit_set_number(10) == 10\nassert even_bit_set_number(1) == 1\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(2**31 - 1) == 2**31 - 1\nassert even_bit_set_number(-1) == -1\n```",
+      "quality": 0.0,
+      "final_key": "import cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n\n# Test cases\nassert convert(1) == (1.0, 0.0)\nassert convert(4) == (4.0, 0.0)\nassert convert(5) == (5.0, 0.0)\nassert even_bit_set_number(10) == 10\nassert even_bit_set_number(1) == 1\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(2**31 - 1) == 2**31 - 1\nassert even_bit_set_number(-1) == -1",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n\n# Test cases\nassert convert(1) == (1.0, 0.0)\nassert convert(4) == (4.0, 0.0)\nassert convert(5) == (5.0, 0.0)\nassert even_bit_set_number(10) == 10\nassert even_bit_set_number(1) == 1\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(2**31 - 1) == 2**31 - 1\nassert even_bit_set_number(-1) == -1\n```",
+        "fixer": "```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n\n# Test cases\nassert convert(1) == (1.0, 0.0)\nassert convert(4) == (4.0, 0.0)\nassert convert(5) == (5.0, 0.0)\nassert even_bit_set_number(10) == 10\nassert even_bit_set_number(1) == 1\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(2**31 - 1) == 2**31 - 1\nassert even_bit_set_number(-1) == -1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert convert(2 + 3j) == (sqrt(13), atan2(3, 2))\nassert convert(-1 - 1j) == (sqrt(2), pi)\nassert convert(0) == (0, 0)\nassert convert(1j) == (1, pi/2)\nassert convert(-1j) == (1, -pi/2)",
+  "sample_keys": [
+    "assert convert(1) == (1.0, 0.0)\nassert convert(-1) == (1.0, 3.141592653589793)\nassert convert(1 + 1j) == (1.4142135623730951, 0.7853981633974483)\nassert convert(-1 - 1j) == (1.4142135623730951, -0.7853981633974483)\nassert convert(0) == (0.0, 0.0)",
+    "assert convert(-1) == (-1.0, 3.141592653589793)\nassert convert(1j) == (1.0, 1.5707963267948966)\nassert convert(1 + 1j) == (1.414213562373095, 0.7853981633974483)\nassert convert(-1 - 1j) == (1.414213562373095, -2.356194490192345)\nassert convert(0) == (0.0, 0.0)",
+    "assert convert(2+3j) == (3.605551275463989, 0.9272952180016128)\nassert convert(-1-1j) == (1.4142135623730951, 2.356194490192345)\r\nassert convert(0) == (0.0, 0.0)\r\nassert convert(1j) == (1.0, 1.5707963267948966)\r\nassert convert(-1) == (1.0, -1.5707963267948966)",
+    "assert convert(2 + 3j) == (3.605551275463989, 0.9272952180016119)\nassert convert(-1 + 1j) == (1.4142135623730951, 0.7853981633974483)\nassert convert(-1 - 1j) == (1.4142135623730951, 2.356194490192345)\nassert convert(0 + 1j) == (1.0, 1.5707963267949066)\nassert convert(0 - 1j) == (1.0, -1.5707963267949066)",
+    "assert convert(2+3j) == (sqrt(13), atan2(3, 2))\nassert convert(-2-3j) == (sqrt(13), atan2(3, 2))\nassert convert(1+1j) == (sqrt(2), pi/4)\nassert convert(-1+1j) == (sqrt(2), -pi/4)\nassert convert(1j) == (1, pi/2)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1564.0,
+    "small_out": 447.0,
+    "small_s": 9.743785901955562
+  },
+  "calls_plus": {
+    "small_in": 1399.0,
+    "small_out": 360.0,
+    "small_s": 7.106113997957436,
+    "large_in": 189.0,
+    "large_out": 95.0,
+    "large_s": 2.029779155011056
+  },
+  "calls_samples": {
+    "small_in": 945.0,
+    "small_out": 852.0,
+    "small_s": 16.31555264099734
+  }
+}

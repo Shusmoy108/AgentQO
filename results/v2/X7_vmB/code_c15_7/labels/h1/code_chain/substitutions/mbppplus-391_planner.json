@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-391",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `convert_list_dictionary` that takes three lists as input parameters.\n2. Initialize an empty list called `nested_dict_list`.\n3. Iterate over the indices of the first list using a for loop.\n4. For each index, create a dictionary with the current element from the first list as the key and another dictionary as its value.\n5. Inside the inner dictionary, use the corresponding elements from the second and third lists as the key-value pair.\n6. Append the created dictionary to `nested_dict_list`.\n7. Return `nested_dict_list` after the loop completes.",
+  "reference_key": null,
+  "final_key_plus": "def convert_list_dictionary(list1, list2, list3):\n    nested_dict_list = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        nested_dict_list.append(inner_dict)\n    return nested_dict_list",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S001\"], [\"Adina Park\"], [85]) == [{'S001': {'Adina Park': 85}}]\nassert convert_list_dictionary([\"S001\", \"S002\"], [\"Adina Park\", \"Leyton Marsh\"], [85, 98]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\"], [85, 98, 89]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"], [85, 98, 89, 92], [\"A\", \"B\", \"C\", \"D\"]) == [{'S001': {'Adina Park': 85}, 'A': 'A'}, {'S002': {'Leyton Marsh': 98}, 'B': 'B'}, {'S003': {'Duncan Boyle': 89}, 'C': 'C'}, {'S004': {'Saim Richards': 92}, 'D': 'D'}]\n```",
+    "coder": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    nested_dict_list = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        nested_dict_list.append(inner_dict)\n    return nested_dict_list\n```",
+    "verifier": "PICK: A\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    nested_dict_list = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        nested_dict_list.append(inner_dict)\n    return nested_dict_list\n```",
+    "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    nested_dict_list = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        nested_dict_list.append(inner_dict)\n    return nested_dict_list\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_equal_numbers` that takes three integer parameters.\n2. Inside the function, initialize a counter variable to zero.\n3. Use a for loop to iterate through each pair of integers in the input tuple.\n4. For each pair, check if all three integers are equal using an if statement.\n5. If they are equal, increment the counter by one.\n6. After the loop completes, return the value of the counter.\n\nHere's the complete implementation:\n\n```python\ndef count_equal_numbers(a, b, c):\n    # Initialize the counter\n    count = 0\n    \n    # Iterate through each pair of integers\n    for i in range(3):\n        for j in range(i + 1, 3):\n            for k in range(j + 1, 3):\n                # Check if all three integers are equal\n                if a == b == c:\n                    count += 1\n    \n    # Return the result\n    return count\n\n# Test the function\nassert count_equal_numbers(1, 1, 1) == 3\n```\n\nThis function will correctly count the number of equal numbers among the three given integers.",
+      "quality": 0.0,
+      "final_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append({list1[i]: {list2[i]: list3[i]}})\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S001\"], [\"Adina Park\"], [85]) == [{'S001': {'Adina Park': 85}}]\nassert convert_list_dictionary([\"S001\", \"S002\"], [\"Adina Park\", \"Leyton Marsh\"], [85, 98]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\"], [85, 98, 89]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"], [85, 98, 89, 92]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}, {'S004': {'Saim Richards': 92}}]\n```",
+        "coder": "```python\ndef count_equal_numbers(a, b, c):\n    count = 0\n    for i in range(3):\n        for j in range(i + 1, 3):\n            for k in range(j + 1, 3):\n                if a == b == c:\n                    count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append({list1[i]: {list2[i]: list3[i]}})\n    return result\n```",
+        "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append({list1[i]: {list2[i]: list3[i]}})\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `get_pairs_count` that takes two parameters: `numbers` (a list of integers) and `sum`.\n2. Initialize a counter variable `count` to zero.\n3. Iterate through each pair of numbers in the list using nested loops.\n4. For each pair, check if their sum equals the given `sum`.\n5. If they do, increment the `count` by one.\n6. After iterating through all possible pairs, return the `count`.\n\nHere's the complete implementation:\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n```\n\nThis function will correctly count the number of pairs whose sum equals the specified `sum`.",
+      "quality": 0.0,
+      "final_key": "def convert_list_dictionary(keys, values, sums):\n    result = []\n    for key, value in zip(keys, values):\n        pair_dict = {key: value}\n        for sum_val in sums:\n            if sum(pair_dict.values()) == sum_val:\n                result.append(pair_dict)\n                break\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S001\"], [\"Adina Park\"], [85]) == [{'S001': {'Adina Park': 85}}]\nassert convert_list_dictionary([\"S001\", \"S002\"], [\"Adina Park\", \"Leyton Marsh\"], [85, 98]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\"], [85, 98, 89]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"], [85, 98, 89, 92]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}, {'S004': {'Saim Richards': 92}}]\n```",
+        "coder": "```python\ndef convert_list_dictionary(keys, values, sums):\n    result = []\n    for key, value in zip(keys, values):\n        pair_dict = {key: value}\n        for sum_val in sums:\n            if sum(pair_dict.values()) == sum_val:\n                result.append(pair_dict)\n                break\n    return result\n```",
+        "verifier": "PICK: A\n\n```python\ndef convert_list_dictionary(keys, values, sums):\n    result = []\n    for key, value in zip(keys, values):\n        pair_dict = {key: value}\n        for sum_val in sums:\n            if sum(pair_dict.values()) == sum_val:\n                result.append(pair_dict)\n                break\n    return result\n```",
+        "fixer": "```python\ndef convert_list_dictionary(keys, values, sums):\n    result = []\n    for key, value in zip(keys, values):\n        pair_dict = {key: value}\n        for sum_val in sums:\n            if sum(pair_dict.values()) == sum_val:\n                result.append(pair_dict)\n                break\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize an empty list to store the merged result.\n2. Iterate through each element in the first list.\n3. For each element, check if it is less than or equal to the smallest element in the merged list.\n4. If true, insert the element at its correct position in the merged list.\n5. Repeat steps 2-4 for all elements in the first list.\n6. Continue iterating through the second list and repeat steps 2-4 until all elements from both lists have been processed.\n7. Return the merged list.\n\nThis approach ensures that the resulting list is sorted and contains all elements from the input lists without duplicates.",
+      "quality": 0.0,
+      "final_key": "def convert_list_dictionary(list1, list2, list3):\n    merged = []\n    min_value = float('inf')\n    \n    # Find the minimum value in the first list\n    for item in list1:\n        if item < min_value:\n            min_value = item\n    \n    # Insert elements from the first list into the merged list\n    for item in list1:\n        if item <= min_value:\n            merged.append({'{0}'.format(item): {list2[list1.index(item)]: list3[list1.index(item)]}})\n            min_value = item + 1\n    \n    # Insert elements from the second list into the merged list\n    for item in list2:\n        if item > min_value:\n            merged.append({'{0}'.format(item): {list3[list2.index(item)]: list3[list2.index(item)]}})\n            min_value = item + 1\n    \n    return merged",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([1], [1], [1]) == [{'1': {'1': 1}}]\nassert convert_list_dictionary(['A', 'B'], ['X', 'Y'], [10, 20]) == [{'A': {'X': 10}}, {'B': {'Y': 20}}]\nassert convert_list_dictionary(['Z'], ['W'], [30]) == [{'Z': {'W': 30}}]\nassert convert_list_dictionary(['1', '2', '3', '4', '5'], ['a', 'b', 'c', 'd', 'e'], [6, 7, 8, 9, 10]) == [{'1': {'a': 6}}, {'2': {'b': 7}}, {'3': {'c': 8}}, {'4': {'d': 9}}, {'5': {'e': 10}}]\n```",
+        "coder": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    merged = []\n    min_value = float('inf')\n    \n    # Find the minimum value in the first list\n    for item in list1:\n        if item < min_value:\n            min_value = item\n    \n    # Insert elements from the first list into the merged list\n    for item in list1:\n        if item <= min_value:\n            merged.append({'{0}'.format(item): {list2[list1.index(item)]: list3[list1.index(item)]}})\n            min_value = item + 1\n    \n    # Insert elements from the second list into the merged list\n    for item in list2:\n        if item > min_value:\n            merged.append({'{0}'.format(item): {list3[list2.index(item)]: list3[list2.index(item)]}})\n            min_value = item + 1\n    \n    return merged\n```",
+        "verifier": "PICK: A\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    merged = []\n    min_value = float('inf')\n    \n    # Find the minimum value in the first list\n    for item in list1:\n        if item < min_value:\n            min_value = item\n    \n    # Insert elements from the first list into the merged list\n    for item in list1:\n        if item <= min_value:\n            merged.append({'{0}'.format(item): {list2[list1.index(item)]: list3[list1.index(item)]}})\n            min_value = item + 1\n    \n    # Insert elements from the second list into the merged list\n    for item in list2:\n        if item > min_value:\n            merged.append({'{0}'.format(item): {list3[list2.index(item)]: list3[list2.index(item)]}})\n            min_value = item + 1\n    \n    return merged\n```",
+        "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    merged = []\n    min_value = float('inf')\n    \n    # Find the minimum value in the first list\n    for item in list1:\n        if item < min_value:\n            min_value = item\n    \n    # Insert elements from the first list into the merged list\n    for item in list1:\n        if item <= min_value:\n            merged.append({'{0}'.format(item): {list2[list1.index(item)]: list3[list1.index(item)]}})\n            min_value = item + 1\n    \n    # Insert elements from the second list into the merged list\n    for item in list2:\n        if item > min_value:\n            merged.append({'{0}'.format(item): {list3[list2.index(item)]: list3[list2.index(item)]}})\n            min_value = item + 1\n    \n    return merged\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+  "sample_keys": [
+    "def convert_list_dictionary(keys, values):\n    result = []\n    for i in range(len(keys)):\n        inner_dict = {}\n        for j in range(len(values)):\n            if i == j:\n                inner_dict[keys[i]] = values[j]\n        result.append(inner_dict)\n    return result",
+    "def convert_list_dictionary(list1, list2, list3):\n    nested_dict = {}\n    for i in range(len(list1)):\n        nested_dict[list1[i]] = {list2[i]: list3[i]}\n    return nested_dict",
+    "def convert_list_dictionary(keys, values, depth=1):\n    result = {}\n    \n    for i in range(len(keys)):\n        if depth > 1:\n            inner_dict = {} if i == 0 else result[keys[i - 1]]\n            result[keys[i]] = inner_dict\n        else:\n            result[keys[i]] = {values[i]: None}\n    \n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3620.0,
+    "small_out": 731.0,
+    "small_s": 13.495941150991712
+  },
+  "calls_plus": {
+    "large_in": 218.0,
+    "large_out": 124.0,
+    "large_s": 2.6774273790069856,
+    "small_in": 3384.0,
+    "small_out": 583.0,
+    "small_s": 10.147942146955756
+  },
+  "calls_samples": {
+    "small_in": 10756.0,
+    "small_out": 2687.0,
+    "small_s": 44.99393152893754
+  }
+}

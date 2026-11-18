@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-257",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+  "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "final_key_plus": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.6,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(1000, -1000) == (-1000, 1000)\n```",
+    "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+    "fixer": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def swap_numbers(num1, num2):\n    # Create a tuple with num2 and num1 as elements\n    return (num2, num1)",
+      "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "key_differs": true,
+      "text": "```python\ndef swap_numbers(num1, num2):\n    # Create a tuple with num2 and num1 as elements\n    return (num2, num1)\n```",
+      "quality": 1.0,
+      "final_key": "def swap_numbers(num1, num2):\n    # Create a tuple with num2 and num1 as elements\n    return (num2, num1)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(1000, -1000) == (-1000, 1000)\n```",
+        "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    # Create a tuple with num2 and num1 as elements\n    return (num2, num1)\n```",
+        "fixer": "```python\ndef swap_numbers(num1, num2):\n    # Create a tuple with num2 and num1 as elements\n    return (num2, num1)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def swap_numbers(num1, num2):\n    # Create a tuple containing num2 and num1\n    return (num2, num1)  # return the resulting tuple",
+      "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "key_differs": true,
+      "text": "```python\ndef swap_numbers(num1, num2):\n    # Create a tuple containing num2 and num1\n    return (num2, num1)  # return the resulting tuple\n```",
+      "quality": 1.0,
+      "final_key": "def swap_numbers(num1, num2):\n    # Create a tuple containing num2 and num1\n    return (num2, num1)  # return the resulting tuple",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert swap_numbers(3, 7) == (7, 3), \"Test case 1 failed\"\nassert swap_numbers(-1, -1) == (-1, -1), \"Test case 2 failed\"\nassert swap_numbers(0, 0) == (0, 0), \"Test case 3 failed\"\nassert swap_numbers(100, 200) == (200, 100), \"Test case 4 failed\"\nassert swap_numbers(1000, -1000) == (-1000, 1000), \"Test case 5 failed\"\n```",
+        "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    # Create a tuple containing num2 and num1\n    return (num2, num1)  # return the resulting tuple\n```",
+        "fixer": "```python\ndef swap_numbers(num1, num2):\n    # Create a tuple containing num2 and num1\n    return (num2, num1)  # return the resulting tuple\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)",
+      "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "key_differs": true,
+      "text": "```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n```",
+      "quality": 0.0,
+      "final_key": "def swap_numbers(a, b):\n    return (b, a)\n\n# Test cases\nassert swap_numbers(10, 20) == (20, 10)\nassert swap_numbers(15, 17) == (17, 15)\nassert swap_numbers(100, 200) == (200, 100)\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```",
+        "verifier": "PICK: B\n\n```python\ndef swap_numbers(a, b):\n    return (b, a)\n\n# Test cases\nassert swap_numbers(10, 20) == (20, 10)\nassert swap_numbers(15, 17) == (17, 15)\nassert swap_numbers(100, 200) == (200, 100)\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```",
+        "fixer": "```python\ndef swap_numbers(a, b):\n    return (b, a)\n\n# Test cases\nassert swap_numbers(10, 20) == (20, 10)\nassert swap_numbers(15, 17) == (17, 15)\nassert swap_numbers(100, 200) == (200, 100)\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "sample_keys": [
+    null,
+    null,
+    "def swap_numbers(num1, num2):\n    # Create a tuple containing num2 and num1\n    swapped = (num2, num1)\n    # Return the resulting tuple\n    return swapped",
+    "def swap_numbers(num1, num2):\n    return (num2, num1)",
+    "def swap_numbers(num1, num2):\n    return (num2, num1)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1299.0,
+    "small_out": 243.0,
+    "small_s": 5.342892476008274
+  },
+  "calls_plus": {
+    "small_in": 1123.0,
+    "small_out": 220.0,
+    "small_s": 4.823321300005773,
+    "large_in": 176.0,
+    "large_out": 23.0,
+    "large_s": 0.5376831159810536
+  },
+  "calls_samples": {
+    "small_in": 880.0,
+    "small_out": 136.0,
+    "small_s": 2.726422589010326
+  }
+}

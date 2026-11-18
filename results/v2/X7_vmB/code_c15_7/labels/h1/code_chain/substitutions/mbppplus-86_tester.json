@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-86",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61\n```",
+  "reference_key": "assert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61",
+  "final_key_plus": "def centered_hexagonal_number(n):\n    return (3 * n**2 - 3 * n + 1) // 2",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.8,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef centered_hexagonal_number(n):\n    return (3 * n**2 - 3 * n + 1) // 2\n```",
+    "fixer": "```python\ndef centered_hexagonal_number(n):\n    return (3 * n**2 - 3 * n + 1) // 2\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 6\nassert centered_hexagonal_number(4) == 45\nassert centered_hexagonal_number(8) == 286  \nassert centered_hexagonal_number(9) == 408",
+      "reference_key": "assert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61",
+      "key_differs": true,
+      "text": "```python\nassert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 6\nassert centered_hexagonal_number(4) == 45\nassert centered_hexagonal_number(8) == 286  \nassert centered_hexagonal_number(9) == 408\n```",
+      "quality": 0.0,
+      "final_key": "def centered_hexagonal_number(n):\n    return (3 * n**2 - 3 * n + 1) // 2",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef centered_hexagonal_number(n):\n    return (3 * n**2 - 3 * n + 1) // 2\n```",
+        "fixer": "```python\ndef centered_hexagonal_number(n):\n    return (3 * n**2 - 3 * n + 1) // 2\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def assert_correct():\n    assert centered_hexagonal_number(10) == 271\n    assert centered_hexagonal_number(3) == 19\n    assert centered_hexagonal_number(4) == 28\n    assert centered_hexagonal_number(0) == 0\n    assert centered_hexagonal_number(-1) == 0\n    print(\"All tests passed!\")\nassert_correct()",
+      "reference_key": "assert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61",
+      "key_differs": true,
+      "text": "```python\ndef assert_correct():\n    assert centered_hexagonal_number(10) == 271\n    assert centered_hexagonal_number(3) == 19\n    assert centered_hexagonal_number(4) == 28\n    assert centered_hexagonal_number(0) == 0\n    assert centered_hexagonal_number(-1) == 0\n    print(\"All tests passed!\")\nassert_correct()\n```",
+      "quality": 0.0,
+      "final_key": "def centered_hexagonal_number(n):\n    if n < 0:\n        return 0\n    return (3 * n**2 - 3 * n + 1) // 2",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef centered_hexagonal_number(n):\n    if n < 0:\n        return 0\n    return (3 * n**2 - 3 * n + 1) // 2\n```",
+        "fixer": "```python\ndef centered_hexagonal_number(n):\n    if n < 0:\n        return 0\n    return (3 * n**2 - 3 * n + 1) // 2\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 4 * math.pi, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(2), 25.132741228718345, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(3), 113.09733552923255, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(-1), 0, rel_tol=0.001)",
+      "reference_key": "assert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61",
+      "key_differs": true,
+      "text": "```python\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 4 * math.pi, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(2), 25.132741228718345, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(3), 113.09733552923255, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(-1), 0, rel_tol=0.001)\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef centered_hexagonal_number(n):\n    return (3 * n**2 - 3 * n + 1) // 2\n\n# Test cases\nassert centered_hexagonal_number(10) == 271\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(9) == 217\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 4 * math.pi, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(2), 25.132741228718345, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(3), 113.09733552923255, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(-1), 0, rel_tol=0.001)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "assert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61",
+  "sample_keys": [
+    "# Test with typical case\nassert centered_hexagonal_number(10) == 271\n\n# Test with edge case where n is even\nassert centered_hexagonal_number(2) == 11\n\n# Test with edge case where n is odd\nassert centered_hexagonal_number(5) == 46\n\n# Test with edge case where n is negative\nassert centered_hexagonal_number(-3) == -29\n\n# Test with edge case where n is zero\nassert centered_hexagonal_number(0) == 1",
+    "assert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 7\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 37\nassert centered_hexagonal_number(5) == 61",
+    "assert centered_hexagonal_number(1) == 1  # Edge case: 1st centered hexagon is just the center point\nassert centered_hexagonal_number(2) == 7  # Centered hexagon with 2 points\nassert centered_hexagonal_number(3) == 19  # 3rd centered hexagon\nassert centered_hexagonal_number(4) == 37  # 4th centered hexagon\nassert centered_hexagonal_number(5) == 61  # 5th centered hexagon",
+    "assert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(2) == 6\nassert centered_hexagonal_number(3) == 19\nassert centered_hexagonal_number(4) == 38\nassert centered_hexagonal_number(5) == 67",
+    "assert centered_hexagonal_number(15) == 595\nassert centered_hexagonal_number(20) == 680\nassert centered_hexagonal_number(25) == 784\nassert centered_hexagonal_number(1) == 1\nassert centered_hexagonal_number(-5) == None"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1237.0,
+    "small_out": 304.0,
+    "small_s": 3.916289546963526
+  },
+  "calls_plus": {
+    "small_in": 1087.0,
+    "small_out": 236.0,
+    "small_s": 3.0597281589580234,
+    "large_in": 150.0,
+    "large_out": 68.0,
+    "large_s": 2.0144217569904868
+  },
+  "calls_samples": {
+    "small_in": 750.0,
+    "small_out": 444.0,
+    "small_s": 9.316400135983713
+  }
+}

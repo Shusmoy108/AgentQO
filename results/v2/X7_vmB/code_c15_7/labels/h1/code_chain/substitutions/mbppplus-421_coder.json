@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-421",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```",
+  "reference_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+  "final_key_plus": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"apple\", \"banana\", \"cherry\")) == 'apple-banana-cherry'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('single')) == 'single'\n```",
+    "verifier": "PICK: A\n\n```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```",
+    "fixer": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n\n# Test cases\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"QWE\", \"is\", 4, \"RTY\")) == 'QWE-is-4-RTY'\nassert concatenate_tuple((\"ZEN\", \"is\", 4, \"OP\")) == 'ZEN-is-4-OP'\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"apple\", \"banana\", \"cherry\")) == 'apple-banana-cherry'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('single')) == 'single'\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+      "key_differs": true,
+      "text": "```python def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        # Convert non-string items to strings\n        item_str = str(item)\n        # Concatenate with the delimiter\n        result += item_str + \"-\"\n    # Remove the trailing delimiter\n    return result[:-1]```",
+      "quality": 1.0,
+      "final_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        # Convert non-string items to strings\n        item_str = str(item)\n        # Concatenate with the delimiter\n        result += item_str + \"-\"\n    # Remove the trailing delimiter\n    return result[:-1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"Hello\", \"World\")) == 'Hello-World'\nassert concatenate_tuple((\"123\", \"456\", \"789\")) == '123-456-789'\nassert concatenate_tuple((\"a\", \"b\", \"c\")) == 'a-b-c'\nassert concatenate_tuple(()) == ''\n```",
+        "verifier": "PICK: B\n\n```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        # Convert non-string items to strings\n        item_str = str(item)\n        # Concatenate with the delimiter\n        result += item_str + \"-\"\n    # Remove the trailing delimiter\n    return result[:-1]\n```",
+        "fixer": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        # Convert non-string items to strings\n        item_str = str(item)\n        # Concatenate with the delimiter\n        result += item_str + \"-\"\n    # Remove the trailing delimiter\n    return result[:-1]\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\" \n   \n    return result[:-1]",
+      "reference_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+      "key_differs": true,
+      "text": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\" \n   \n    return result[:-1]  \n```",
+      "quality": 1.0,
+      "final_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n   \n    return result[:-1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"apple\", \"banana\", \"cherry\")) == 'apple-banana-cherry'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('single')) == 'single'\n```",
+        "verifier": "PICK: B\n\n```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n   \n    return result[:-1]\n```",
+        "fixer": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n   \n    return result[:-1]\n\n# Test cases\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\") ) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"QWE\", \"is\", 4, \"RTY\") ) == 'QWE-is-4-RTY'\nassert concatenate_tuple((\"ZEN\", \"is\", 4, \"OP\") ) == 'ZEN-is-4-OP'\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"apple\", \"banana\", \"cherry\")) == 'apple-banana-cherry'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('single')) == 'single'\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def count_Occurrence(input_list, target_elements):\n    count_dict = {}\n    for element in input_list:\n        if element in target_elements:\n            count_dict[element] = count_dict.get(element, 0) + 1\n    return count_dict",
+      "reference_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+      "key_differs": true,
+      "text": "```python\ndef count_Occurrence(input_list, target_elements):\n    count_dict = {}\n    for element in input_list:\n        if element in target_elements:\n            count_dict[element] = count_dict.get(element, 0) + 1\n    return count_dict\n```",
+      "quality": 1.0,
+      "final_key": "def concatenate_tuple(input_tuple):\n    delimiter = '-'\n    result = delimiter.join(map(str, input_tuple))\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"apple\", \"banana\", \"cherry\")) == 'apple-banana-cherry'\nassert concatenate_tuple((\"hello\", \"world\", \"python\")) == 'hello-world-python'\nassert concatenate_tuple((\"123\", \"456\", \"789\")) == '123-456-789'\nassert concatenate_tuple(()) == ''\n```",
+        "verifier": "PICK: B\n\n```python\ndef concatenate_tuple(input_tuple):\n    delimiter = '-'\n    result = delimiter.join(map(str, input_tuple))\n    return result\n```",
+        "fixer": "```python\ndef concatenate_tuple(input_tuple):\n    delimiter = '-'\n    result = delimiter.join(map(str, input_tuple))\n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+  "sample_keys": [
+    "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+    "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+    "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+    "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+    "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1575.0,
+    "small_out": 574.0,
+    "small_s": 12.165428792010061
+  },
+  "calls_plus": {
+    "small_in": 1263.0,
+    "small_out": 533.0,
+    "small_s": 11.243514483008767,
+    "large_in": 312.0,
+    "large_out": 41.0,
+    "large_s": 0.9643027650017757
+  },
+  "calls_samples": {
+    "small_in": 1560.0,
+    "small_out": 205.0,
+    "small_s": 3.902539179951418
+  }
+}

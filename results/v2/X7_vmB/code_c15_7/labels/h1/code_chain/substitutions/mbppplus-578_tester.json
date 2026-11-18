@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-578",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert interleave_lists([], [], []) == []\nassert interleave_lists([1], [10], [100]) == [1, 10, 100]\nassert interleave_lists([1, 2], [10, 20], [100, 200]) == [1, 10, 100, 2, 20, 200]\nassert interleave_lists(['a', 'b'], ['x', 'y'], ['1', '2']) == ['a', 'x', '1', 'b', 'y', '2']\nassert interleave_lists([True, False], [None, \"test\"], [0, 1]) == [True, None, 0, False, \"test\", 1]\n```",
+  "reference_key": "assert interleave_lists([], [], []) == []\nassert interleave_lists([1], [10], [100]) == [1, 10, 100]\nassert interleave_lists([1, 2], [10, 20], [100, 200]) == [1, 10, 100, 2, 20, 200]\nassert interleave_lists(['a', 'b'], ['x', 'y'], ['1', '2']) == ['a', 'x', '1', 'b', 'y', '2']\nassert interleave_lists([True, False], [None, \"test\"], [0, 1]) == [True, None, 0, False, \"test\", 1]",
+  "final_key_plus": "def interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```",
+    "fixer": "```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700], \"Basic case with three lists of the same length.\"\nassert interleave_lists([], [], [])==[], \"Edge case with empty lists.\"\nassert interleave_lists(['a', 'b'], ['x', 'y'], ['A', 'B'])==['a', 'x', 'A', 'b', 'y', 'B'], \"Case with mixed data types.\"\nassert interleave_lists(range(1,8), reversed(range(8)), [2])==[1, 7, 3, 6, 4, 5, 2], \"Case with different lengths and single element.\"\nassert interleave_lists('abc','def','ghi')=='abcdefghi', \"Case with strings.\"",
+      "reference_key": "assert interleave_lists([], [], []) == []\nassert interleave_lists([1], [10], [100]) == [1, 10, 100]\nassert interleave_lists([1, 2], [10, 20], [100, 200]) == [1, 10, 100, 2, 20, 200]\nassert interleave_lists(['a', 'b'], ['x', 'y'], ['1', '2']) == ['a', 'x', '1', 'b', 'y', '2']\nassert interleave_lists([True, False], [None, \"test\"], [0, 1]) == [True, None, 0, False, \"test\", 1]",
+      "key_differs": true,
+      "text": "```python\nassert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700], \"Basic case with three lists of the same length.\"\nassert interleave_lists([], [], [])==[], \"Edge case with empty lists.\"\nassert interleave_lists(['a', 'b'], ['x', 'y'], ['A', 'B'])==['a', 'x', 'A', 'b', 'y', 'B'], \"Case with mixed data types.\"\nassert interleave_lists(range(1,8), reversed(range(8)), [2])==[1, 7, 3, 6, 4, 5, 2], \"Case with different lengths and single element.\"\nassert interleave_lists('abc','def','ghi')=='abcdefghi', \"Case with strings.\"\n```",
+      "quality": 1.0,
+      "final_key": "def interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```",
+        "fixer": "```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n\n# Test cases\nassert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700]\nassert interleave_lists([10,20],[15,2],[5,10])==[10,15,5,20,2,10]\nassert interleave_lists([11,44], [10,15], [20,5])==[11,10,20,44,15,5]\nassert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700], \"Basic case with three lists of the same length.\"\nassert interleave_lists([], [], [])==[], \"Edge case with empty lists.\"\nassert interleave_lists(['a', 'b'], ['x', 'y'], ['A', 'B'])==['a', 'x', 'A', 'b', 'y', 'B'], \"Case"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "assert interleave_lists([], [], []) == []\nassert interleave_lists([1], [10], [100]) == [1, 10, 100]\nassert interleave_lists([1, 2], [10, 20], [100, 200]) == [1, 10, 100, 2, 20, 200]\nassert interleave_lists(['a', 'b'], ['x', 'y'], ['1', '2']) == ['a', 'x', '1', 'b', 'y', '2']\nassert interleave_lists([True, False], [None, \"test\"], [0, 1]) == [True, None, 0, False, \"test\", 1]",
+      "key_differs": true,
+      "text": "```python\nassert interleave_lists([1], [10], [100]) == [1, 10, 100]\nassert interleave_lists([], [], []) == []\nassert interleave_lists(['a', 'b'], ['C', 'D'], ['e', 'f']) == ['a', 'C', 'e', 'b', 'D', 'f']\nassert interleave_lists([1, 2, 3], [4, 5, 6], [7, 8, 9]) == [1, 4, 7, 2, 5, 8, 3, 6, 9]\n# Add more assertions here if necessary",
+      "quality": 1.0,
+      "final_key": "def interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```",
+        "fixer": "```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 1) == 9\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == 19\nassert max_of_nth([], 2) == None",
+      "reference_key": "assert interleave_lists([], [], []) == []\nassert interleave_lists([1], [10], [100]) == [1, 10, 100]\nassert interleave_lists([1, 2], [10, 20], [100, 200]) == [1, 10, 100, 2, 20, 200]\nassert interleave_lists(['a', 'b'], ['x', 'y'], ['1', '2']) == ['a', 'x', '1', 'b', 'y', '2']\nassert interleave_lists([True, False], [None, \"test\"], [0, 1]) == [True, None, 0, False, \"test\", 1]",
+      "key_differs": true,
+      "text": "```python\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 1) == 9\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == 19\nassert max_of_nth([], 2) == None\n```",
+      "quality": 0.0,
+      "final_key": "def interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n\n# Test cases\nassert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700]\nassert interleave_lists([10,20],[15,2],[5,10])==[10,15,5,20,2,10]\nassert interleave_lists([11,44], [10,15], [20,5])==[11,10,20,44,15,5]\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 1) == 9\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == 19\nassert max_of_nth([], 2) == None",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n\n# Test cases\nassert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700]\nassert interleave_lists([10,20],[15,2],[5,10])==[10,15,5,20,2,10]\nassert interleave_lists([11,44], [10,15], [20,5])==[11,10,20,44,15,5]\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 1) == 9\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == 19\nassert max_of_nth([], 2) == None\n```",
+        "fixer": "```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n\n# Test cases\nassert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700]\nassert interleave_lists([10,20],[15,2],[5,10])==[10,15,5,20,2,10]\nassert interleave_lists([11,44], [10,15], [20,5])==[11,10,20,44,15,5]\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 0) == 5\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 1) == 9\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], 2) == 19\nassert max_of_nth([[5, 6, 7], [1, 3, 5], [8, 9, 19]], -1) == 19\nassert max_of_nth([], 2) == None\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert interleave_lists([], [], []) == []\nassert interleave_lists([1], [2], [3]) == [1, 2, 3]\nassert interleave_lists(['a', 'b'], ['c', 'd'], ['e', 'f']) == ['a', 'c', 'e', 'b', 'd', 'f']\nassert interleave_lists([True, False], [True, False], [True, False]) == [True, True, False, False, True, False]\nassert interleave_lists([None], [None], [None]) == [None, None, None]",
+  "sample_keys": [
+    "assert interleave_lists([], [], []) == []\nassert interleave_lists([1], [2], [3]) == [1, 2, 3]\nassert interleave_lists(['a', 'b'], ['c', 'd'], ['e', 'f']) == ['a', 'c', 'e', 'b', 'd', 'f']\n# Check interleaving with duplicate elements\nassert interleave_lists([1, 1, 2, 2], [3, 3, 4, 4], [5, 5, 6, 6]) == [1, 3, 5, 1, 3, 5, 2, 4, 6, 2, 4, 6]\n# Check interleaving with lists of different lengths\nassert interleave_lists([1, 2], [3, 4, 5], [6]) == [1, 3, 6, 2, 4]\n# Check interleaving with empty lists\nassert interleave_lists([], [], []) == []",
+    "assert interleave_lists([], [], []) == []\nassert interleave_lists([1], [2], [3]) == [1, 2, 3]\nassert interleave_lists([[1, 2, 3]], [[4, 5, 6]], [[7, 8, 9]]) == [1, 4, 7, 2, 5, 8, 3, 6, 9]\nassert interleave_lists(['a', 'b'], ['c', 'd'], ['e', 'f']) == ['a', 'c', 'e', 'b', 'd', 'f']\nassert interleave_lists([True, False], [True, True], [False, False]) == [True, True, True, False, False, False]",
+    "assert interleave_lists([], [], [])==[]\nassert interleave_lists([1], [2], [3])==[1, 2, 3]\nassert interleave_lists(['a', 'b'], ['c', 'd'], ['e', 'f'])==['a', 'c', 'e', 'b', 'd', 'f']\nassert interleave_lists([True, False], [1, 2], [3, 4])==[True, 1, False, 2, True, 3, False, 4]\nassert interleave_lists([None], [1, 2, 3], [4, 5, None])==[None, 1, 4, 2, 5, 3]",
+    "assert interleave_lists([], [], []) == []\nassert interleave_lists([1], [2], [3]) == [1, 2, 3]\nassert interleave_lists(['a', 'b', 'c'], ['x', 'y', 'z'], [10, 20, 30]) == ['a', 10, 'b', 20, 'c', 30, 'x', 10, 'y', 20, 'z', 30]\nassert interleave_lists([True, False], [True, True], [False, False]) == [True, True, True, False, False, False]\nassert interleave_lists([None, None], [None, None], [None, None]) == [None, None, None, None, None, None]",
+    "assert interleave_lists([], [], []) == []\nassert interleave_lists([1], [2], [3]) == [1, 2, 3]\nassert interleave_lists(['a', 'b'], ['c', 'd'], ['e', 'f']) == ['a', 'c', 'e', 'b', 'd', 'f']\nassert interleave_lists([True, False], [10, 20], [30, 40]) == [True, 10, False, 20, True, 30, False, 40]\nassert interleave_lists(range(10), range(20), range(30)) == list(range(0, 90, 3))"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2786.0,
+    "small_out": 443.0,
+    "small_s": 9.708431689970894
+  },
+  "calls_plus": {
+    "small_in": 2588.0,
+    "small_out": 311.0,
+    "small_s": 6.7392865359724965,
+    "large_in": 318.0,
+    "large_out": 175.0,
+    "large_s": 4.9830593160004355
+  },
+  "calls_samples": {
+    "small_in": 1590.0,
+    "small_out": 901.0,
+    "small_s": 16.978178161982214
+  }
+}

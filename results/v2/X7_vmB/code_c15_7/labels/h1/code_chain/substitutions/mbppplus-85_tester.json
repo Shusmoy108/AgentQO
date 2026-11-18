@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-85",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 12.566, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(5), 314.159, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(100), 125663.706, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1000), 12566370.614, rel_tol=0.001)\n```",
+  "reference_key": "assert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 12.566, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(5), 314.159, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(100), 125663.706, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1000), 12566370.614, rel_tol=0.001)",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    return 4 * math.pi * radius ** 2\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Edge case: radius = 2.9\nassert math.isclose(surfacearea_sphere(2.9), 668.4691896241898, rel_tol=0.001)\n\n# Typical case: radius = 10\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\n\n# Edge case: radius = 0\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\n\n# Edge case: radius = -5\nassert math.isnan(surfacearea_sphere(-5))\n\n# Edge case: radius = 1.5\nassert math.isclose(surfacearea_sphere(1.5), 28.27433388230814, rel_tol=0.001)",
+      "reference_key": "assert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 12.566, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(5), 314.159, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(100), 125663.706, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1000), 12566370.614, rel_tol=0.001)",
+      "key_differs": true,
+      "text": "```python\n# Edge case: radius = 2.9\nassert math.isclose(surfacearea_sphere(2.9), 668.4691896241898, rel_tol=0.001)\n\n# Typical case: radius = 10\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\n\n# Edge case: radius = 0\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\n\n# Edge case: radius = -5\nassert math.isnan(surfacearea_sphere(-5))\n\n# Edge case: radius = 1.5\nassert math.isclose(surfacearea_sphere(1.5), 28.27433388230814, rel_tol=0.001)\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef surfacearea_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return 4 * math.pi * radius ** 2",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef surfacearea_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return 4 * math.pi * radius ** 2\n```",
+        "fixer": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return 4 * math.pi * radius ** 2\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\r\n\r\ndef surfacearea_sphere(radius):\r\n    assert 0 < radius <= math.inf\r\n    return 4 * math.pi * radius ** 2\r\n\r\n# Edge case: radius as negative value\r\ntry:\r\n   _surfacearea_sphere(-1)\r\nexcept AssertionError:\r\n    print(\"Edge case for negative radius passed\")\r\n\r\n# Edge case: radius as zero\r\ntry:\r\n    _ = surfacearea_sphere(0)\r\nexcept AssertionError:\r\n    print(\"Edge case for radius of zero passed\")\r\n\r\n# Typical case (radius of 10)\r\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\r\n\r\n# Another typical case (radius of 1)\r\ntry:\r\n    _ = surfacearea_sphere(1)\r\nexcept AssertionError:\r\n    print(\"Another typical case for radius of one passed\")",
+      "reference_key": "assert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 12.566, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(5), 314.159, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(100), 125663.706, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1000), 12566370.614, rel_tol=0.001)",
+      "key_differs": true,
+      "text": "```python\nimport math\r\n\r\ndef surfacearea_sphere(radius):\r\n    assert 0 < radius <= math.inf\r\n    return 4 * math.pi * radius ** 2\r\n\r\n# Edge case: radius as negative value\r\ntry:\r\n   _surfacearea_sphere(-1)\r\nexcept AssertionError:\r\n    print(\"Edge case for negative radius passed\")\r\n\r\n# Edge case: radius as zero\r\ntry:\r\n    _ = surfacearea_sphere(0)\r\nexcept AssertionError:\r\n    print(\"Edge case for radius of zero passed\")\r\n\r\n# Typical case (radius of 10)\r\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\r\n\r\n# Another typical case (radius of 1)\r\ntry:\r\n    _ = surfacearea_sphere(1)\r\nexcept AssertionError:\r\n    print(\"Another typical case for radius of one passed\")\r\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef surfacearea_sphere(radius):\n    if not isinstance(radius, (int, float)) or radius < 0:\n        raise ValueError(\"Radius must be a non-negative number\")\n    return 4 * math.pi * radius ** 2",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef surfacearea_sphere(radius):\n    if not isinstance(radius, (int, float)) or radius < 0:\n        raise ValueError(\"Radius must be a non-negative number\")\n    return 4 * math.pi * radius ** 2\n```",
+        "fixer": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    if not isinstance(radius, (int, float)) or radius < 0:\n        raise ValueError(\"Radius must be a non-negative number\")\n    return 4 * math.pi * radius ** 2\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([3, 4, 5], ()) == [3, 4, 5]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (True, True)) == [True, False, True, True]\nassert add_tuple([None], (None, None)) == [None, None, None]",
+      "reference_key": "assert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 12.566, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(5), 314.159, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(100), 125663.706, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1000), 12566370.614, rel_tol=0.001)",
+      "key_differs": true,
+      "text": "```python\nassert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([3, 4, 5], ()) == [3, 4, 5]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (True, True)) == [True, False, True, True]\nassert add_tuple([None], (None, None)) == [None, None, None]\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef surfacearea_sphere(radius):\n    return 4 * math.pi * radius ** 2\n\n# Test cases\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(15), 2827.4333882308138, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(20), 5026.548245743669, rel_tol=0.001)\n\n# Additional tests\ndef add_tuple(a, b):\n    return a + b\n\n# Test cases for add_tuple function\nassert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([3, 4, 5], ()) == [3, 4, 5]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (True, True)) == [True, False, True, True]\nassert add_tuple([None], (None, None)) == [None, None, None]",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef surfacearea_sphere(radius):\n    return 4 * math.pi * radius ** 2\n\n# Test cases\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(15), 2827.4333882308138, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(20), 5026.548245743669, rel_tol=0.001)\n\n# Additional tests\ndef add_tuple(a, b):\n    return a + b\n\n# Test cases for add_tuple function\nassert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([3, 4, 5], ()) == [3, 4, 5]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (True, True)) == [True, False, True, True]\nassert add_tuple([None], (None, None)) == [None, None, None]\n```",
+        "fixer": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    return 4 * math.pi * radius ** 2\n\n# Test cases\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(15), 2827.4333882308138, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(20), 5026.548245743669, rel_tol=0.001)\n\n# Additional tests\ndef add_tuple(a, b):\n    return a + b\n\n# Test cases for add_tuple function\nassert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([3, 4, 5], ()) == [3, 4, 5]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (True, True)) == [True, False, True, True]\nassert add_tuple([None], (None, None)) == [None, None, None]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 4 * math.pi, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(2), 25.132741228718345, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(3), 113.09733552923255, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(-1), 0, rel_tol=0.001)",
+  "sample_keys": [
+    "# Edge case: negative radius\nassert math.isclose(surfacearea_sphere(-5), 0.0, rel_tol=0.001)\n\n# Typical positive radius\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\n\n# Large radius\nassert math.isclose(surfacearea_sphere(1e6), 4.1887902047863905e+12, rel_tol=0.001)\n\n# Small radius\nassert math.isclose(surfacearea_sphere(0.1), Math.PI * 0.01, rel_tol=0.001)\n\n# Zero radius\nassert math.isclose(surfacearea_sphere(0), 0.0, rel_tol=0.001)",
+    "assert math.isclose(surfacearea_sphere(5), 785.3981633974483, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(7), 1538.623730951398, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(-1), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(2.5), 39.26990816987238, rel_tol=0.001)",
+    "import math\n\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(1), 4 * math.pi, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(2), 25.132741228718345, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(10), 1256.6370614359173, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(-1), 4 * math.pi, rel_tol=0.001)",
+    "assert math.isclose(surfacearea_sphere(1), 12.566370614359173, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(2), 50.26548245743669, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(3), 113.09733552923254, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(surfacearea_sphere(-1), 0, rel_tol=0.001)  # Edge case: radius cannot be negative",
+    "assert surfacearea_sphere(0) == 0, \"The surface area of a sphere with radius 0 is 0.\"\nassert surfacearea_sphere(1) == 4 * math.pi, \"The surface area of a sphere with radius 1 is approximately 4\u03c0.\"\nassert surfacearea_sphere(2) == 4 * math.pi * 4, \"The surface area of a sphere with radius 2 is exactly 4\u03c0 \u00d7 4.\"\nassert surfacearea_sphere(-1) == 0, \"The surface area of a sphere with negative radius is 0.\"\nassert surfacearea_sphere(3.14159) == round(4 * math.pi * (3.14159 ** 2)), \"The surface area of a sphere with radius \u03c0 is rounded to the nearest integer.\""
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1767.0,
+    "small_out": 350.0,
+    "small_s": 4.545528646995081
+  },
+  "calls_plus": {
+    "small_in": 1556.0,
+    "small_out": 139.0,
+    "small_s": 1.9763366770348512,
+    "large_in": 170.0,
+    "large_out": 151.0,
+    "large_s": 4.21122307900805
+  },
+  "calls_samples": {
+    "small_in": 850.0,
+    "small_out": 865.0,
+    "small_s": 17.062343261000933
+  }
+}

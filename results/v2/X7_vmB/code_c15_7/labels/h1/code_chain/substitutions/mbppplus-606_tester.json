@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-606",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(360) == 2 * math.pi\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(45) == 0.7853981633974483\n```",
+  "reference_key": "assert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(360) == 2 * math.pi\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(45) == 0.7853981633974483",
+  "final_key_plus": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+    "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test for common use case\nassert radian_degree(45) == 0.7853981633974483\n\n# Check boundary values\nassert radian_degree(-90) == -1.5707963267948966, \"Radian of -90 degrees should be -1.5708\"\nassert radian_degree(0) == 0, \"Radian of 0 degrees should be 0\"\n\n# Check positive edge cases beyond \u00b190\u00b0\nassert radian_degree(91) == 1.5707963267948966 + 2 * math.pi, \"Boundary value near \u00b190 should yield the first full rotation\"\nassert radian_degree(-91) == 1.5707963267948966 - 2 * math.pi, \"Boundary value near -90 should yield the final rotation before 0\"\n\n# Check negative edge cases beyond \u00b190\u00b0\nassert radian_degree(270) == math.pi, \"Boundary value 270 should be \u03c0\"\nassert radian_degree(-270) == -(math.pi), \"Boundary value -270 should be -\u03c0\"",
+      "reference_key": "assert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(360) == 2 * math.pi\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(45) == 0.7853981633974483",
+      "key_differs": true,
+      "text": "```python\n# Test for common use case\nassert radian_degree(45) == 0.7853981633974483\n\n# Check boundary values\nassert radian_degree(-90) == -1.5707963267948966, \"Radian of -90 degrees should be -1.5708\"\nassert radian_degree(0) == 0, \"Radian of 0 degrees should be 0\"\n\n# Check positive edge cases beyond \u00b190\u00b0\nassert radian_degree(91) == 1.5707963267948966 + 2 * math.pi, \"Boundary value near \u00b190 should yield the first full rotation\"\nassert radian_degree(-91) == 1.5707963267948966 - 2 * math.pi, \"Boundary value near -90 should yield the final rotation before 0\"\n\n# Check negative edge cases beyond \u00b190\u00b0\nassert radian_degree(270) == math.pi, \"Boundary value 270 should be \u03c0\"\nassert radian_degree(-270) == -(math.pi), \"Boundary value -270 should be -\u03c0\"\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n\n# Add the following assertions\nassert radian_degree(0) == 0\nassert radian_degree(90) == 1.5707963267948966\nassert radian_degree(180) == math.pi\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(45) == 0.7853981633974484",
+      "reference_key": "assert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(360) == 2 * math.pi\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(45) == 0.7853981633974483",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n\n# Add the following assertions\nassert radian_degree(0) == 0\nassert radian_degree(90) == 1.5707963267948966\nassert radian_degree(180) == math.pi\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(45) == 0.7853981633974484\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+        "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 3)) == True\nassert check_type((True, False, True)) == True\nassert check_type((None, None, None)) == True\nassert check_type((1, 'a', 3)) == False",
+      "reference_key": "assert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(360) == 2 * math.pi\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(45) == 0.7853981633974483",
+      "key_differs": true,
+      "text": "```python\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 3)) == True\nassert check_type((True, False, True)) == True\nassert check_type((None, None, None)) == True\nassert check_type((1, 'a', 3)) == False\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n\n# Test cases\nassert radian_degree(90) == 1.5707963267948966\nassert radian_degree(60) == 1.0471975511965976\nassert radian_degree(120) == 2.0943951023931953\n\n# Check function to verify the correctness of the solution\ndef check_type(input_data):\n    try:\n        # Attempt to convert input data to a tuple\n        result = tuple(input_data)\n        return True\n    except TypeError:\n        return False\n\n# Test cases for the check function\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 3)) == True\nassert check_type((True, False, True)) == True\nassert check_type((None, None, None)) == True\nassert check_type((1, 'a', 3)) == False",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n\n# Test cases\nassert radian_degree(90) == 1.5707963267948966\nassert radian_degree(60) == 1.0471975511965976\nassert radian_degree(120) == 2.0943951023931953\n\n# Check function to verify the correctness of the solution\ndef check_type(input_data):\n    try:\n        # Attempt to convert input data to a tuple\n        result = tuple(input_data)\n        return True\n    except TypeError:\n        return False\n\n# Test cases for the check function\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 3)) == True\nassert check_type((True, False, True)) == True\nassert check_type((None, None, None)) == True\nassert check_type((1, 'a', 3)) == False\n```",
+        "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n\n# Test cases\nassert radian_degree(90) == 1.5707963267948966\nassert radian_degree(60) == 1.0471975511965976\nassert radian_degree(120) == 2.0943951023931953\n\n# Check function to verify the correctness of the solution\ndef check_type(input_data):\n    try:\n        # Attempt to convert input data to a tuple\n        result = tuple(input_data)\n        return True\n    except TypeError:\n        return False\n\n# Test cases for the check function\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 3)) == True\nassert check_type((True, False, True)) == True\nassert check_type((None, None, None)) == True\nassert check_type((1, 'a', 3)) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(-90) == -math.pi/2\nassert radian_degree(360) == 2*math.pi\nassert radian_degree(181) == math.pi + math.sin(math.radians(1))",
+  "sample_keys": [
+    "assert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(360) == 2 * math.pi\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(720) == 4 * math.pi",
+    "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n\n# Test cases with expected results\nassert radian_degree(180) == math.pi  # Expected result is pi for 180 degrees\nassert radian_degree(0) == 0  # Expected result is 0 for 0 degrees\nassert radian_degree(360) == 2*math.pi  # Expected result is 2*pi for 360 degrees\nassert radian_degree(-90) == -math.pi/2  # Expected result is -pi/2 for negative 90 degrees\nassert radian_degree(180.5) == math.pi + math.pi/20  # Expected result is close to pi+pi/20 for 180.5 degrees",
+    "assert radian_degree(360) == 2*pi, \"Test case 1 failed.\"\nassert radian_degree(-90) == -pi/2, \"Test case 2 failed.\"\nassert radian_degree(0) == 0, \"Test case 3 failed.\"\nassert radian_degree(900) == pi*10, \"Test case 4 failed.\"\nassert radian_degree(3600) == 2*pi*100, \"Test case 5 failed.\"",
+    "assert radian_degree(0) == 0\nassert radian_degree(360) == 2*math.pi\nassert radian_degree(-180) == -math.pi\nassert radian_degree(90) == 1.5707963267948966\nassert radian_degree(365) == 3.141592653589793",
+    "assert radian_degree(360) == 6.283185307179586\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(0) == 0.0\nassert radian_degree(180) == math.pi\nassert radian_degree(181) == math.pi + 0.0001  # A tiny positive number due to floating-point precision"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1353.0,
+    "small_out": 231.0,
+    "small_s": 4.788483611046104
+  },
+  "calls_plus": {
+    "small_in": 1256.0,
+    "small_out": 185.0,
+    "small_s": 3.0925808280007914,
+    "large_in": 160.0,
+    "large_out": 103.0,
+    "large_s": 2.186741923011141
+  },
+  "calls_samples": {
+    "small_in": 800.0,
+    "small_out": 615.0,
+    "small_s": 10.981970361986896
+  }
+}

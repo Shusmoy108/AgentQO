@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-123",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```",
+  "reference_key": "def is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+  "final_key_plus": "def is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert amicable_numbers_sum(1000) == 3162\nassert amicable_numbers_sum(10000) == 41784\nassert amicable_numbers_sum(100000) == 31626\nassert amicable_numbers_sum(1000000) == 41784\nassert amicable_numbers_sum(10000000) == 31626\n```",
+    "verifier": "PICK: A\n\n```python\ndef is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```",
+    "fixer": "```python\ndef is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "reference_key": "def is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "key_differs": true,
+      "text": "```python\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```",
+      "quality": 0.0,
+      "final_key": "def amicable_numbers_sum(limit):\n    def is_amicable(n):\n        divisors_sum = sum([i for i in range(1, n) if n % i == 0])\n        return divisors_sum != n and sum([j for j in range(1, divisors_sum) if divisors_sum % j == 0]) == n\n\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert amicable_numbers_sum(28) == 28\nassert amicable_numbers_sum(6) == 6\nassert amicable_numbers_sum(1000) == 31626\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(100000) == 31626\n```",
+        "verifier": "PICK: B\n\n```python\ndef amicable_numbers_sum(limit):\n    def is_amicable(n):\n        divisors_sum = sum([i for i in range(1, n) if n % i == 0])\n        return divisors_sum != n and sum([j for j in range(1, divisors_sum) if divisors_sum % j == 0]) == n\n\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```",
+        "fixer": "```python\ndef amicable_numbers_sum(limit):\n    def is_amicable(n):\n        divisors_sum = sum([i for i in range(1, n) if n % i == 0])\n        return divisors_sum != n and sum([j for j in range(1, divisors_sum) if divisors_sum % j == 0]) == n\n\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "from functools import reduce\n\ndef is_amicable(n):\n    # Helper function to calculate the sum of proper divisors\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "reference_key": "def is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "key_differs": true,
+      "text": "```python\nfrom functools import reduce\n\ndef is_amicable(n):\n    # Helper function to calculate the sum of proper divisors\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert amicable_numbers_sum(1000) == 3162\nassert amicable_numbers_sum(10000) == 41784\nassert amicable_numbers_sum(100000) == 31626\nassert amicable_numbers_sum(1000000) == 41784\nassert amicable_numbers_sum(10000000) == 31626\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nfrom functools import reduce\n\ndef is_amicable(n):\n    # Helper function to calculate the sum of proper divisors\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal",
+      "reference_key": "def is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "key_differs": true,
+      "text": "```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_element([1, 2, 3], 1) == True\nassert check_element([1, 2, 3], 2) == True\nassert check_element([1, 2, 3], 3) == True\nassert check_element([1, 2, 3], 4) == False\nassert check_element([], 1) == False\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef amicable_numbers_sum(n):\n    def find_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return divisors\n\n    def is_amicable(a, b):\n        return sum(find_divisors(a)) == b and sum(find_divisors(b)) == a\n\n    total_sum = 0\n    for i in range(1, n + 1):\n        for j in range(i + 1, n + 1):\n            if is_amicable(i, j):\n                total_sum += i + j\n    return total_sum\n\n# Test cases\nassert amicable_numbers_sum(999) == 504\nassert amicable_numbers_sum(9999) == 31626\nassert amicable_numbers_sum(99) == 0\nassert check_element([1, 2, 3], 1) == True\nassert check_element([1, 2, 3], 2) == True\nassert check_element([1, 2, 3], 3) == True\nassert check_element([1, 2, 3], 4) == False\nassert check_element([], 1) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+  "sample_keys": [
+    "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+    "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+    "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+    "from typing import *\nfrom collections import *\n\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+    "def amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1539.0,
+    "small_out": 720.0,
+    "small_s": 14.62673587500467
+  },
+  "calls_plus": {
+    "small_in": 1267.0,
+    "small_out": 790.0,
+    "small_s": 15.199073286989005,
+    "large_in": 424.0,
+    "large_out": 178.0,
+    "large_s": 3.8976719139900524
+  },
+  "calls_samples": {
+    "small_in": 2120.0,
+    "small_out": 619.0,
+    "small_s": 11.115760635962943
+  }
+}

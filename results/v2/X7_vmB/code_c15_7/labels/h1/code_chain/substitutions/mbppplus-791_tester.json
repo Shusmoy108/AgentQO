@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-791",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert remove_nested((3, 8, (2, 9))) == (3, 8, 2, 9)\nassert remove_nested(((1,), 2, 3)) == (1, 2, 3)\nassert remove_nested((1, 2, 3)) == (1, 2, 3)\nassert remove_nested(()) == ()\nassert remove_nested(((), (()), ((())))) == ()\n```",
+  "reference_key": "assert remove_nested((3, 8, (2, 9))) == (3, 8, 2, 9)\nassert remove_nested(((1,), 2, 3)) == (1, 2, 3)\nassert remove_nested((1, 2, 3)) == (1, 2, 3)\nassert remove_nested(()) == ()\nassert remove_nested(((), (()), ((())))) == ()",
+  "final_key_plus": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```",
+    "fixer": "```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)  # This checks the standard case.\nassert remove_nested(()) == ()  # This checks the edge case of an empty tuple.\nassert remove_nested((99)) == (99, )  # This checks the edge case of single element tuple with integer.\nassert remove_nested((([], [2], [[3]]))) == ([], 2, [3])  # This checks the more complex nested structure.\nassert remove_nested(([\"tuple\", \"of\", [], {\"nested\": \"dict\"}])) == (\"tuple\", \"of\", [], {\"nested\": \"dict\"})  # This checks the non-nested list within a nested dict.",
+      "reference_key": "assert remove_nested((3, 8, (2, 9))) == (3, 8, 2, 9)\nassert remove_nested(((1,), 2, 3)) == (1, 2, 3)\nassert remove_nested((1, 2, 3)) == (1, 2, 3)\nassert remove_nested(()) == ()\nassert remove_nested(((), (()), ((())))) == ()",
+      "key_differs": true,
+      "text": "```python\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)  # This checks the standard case.\nassert remove_nested(()) == ()  # This checks the edge case of an empty tuple.\nassert remove_nested((99)) == (99, )  # This checks the edge case of single element tuple with integer.\nassert remove_nested((([], [2], [[3]]))) == ([], 2, [3])  # This checks the more complex nested structure.\nassert remove_nested(([\"tuple\", \"of\", [], {\"nested\": \"dict\"}])) == (\"tuple\", \"of\", [], {\"nested\": \"dict\"})  # This checks the non-nested list within a nested dict.\n```",
+      "quality": 0.0,
+      "final_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```",
+        "fixer": "```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested((\"\", 2, (\" \", 3), (\" \", \" \"), 4)) == (2, 3, 4)\nassert remove_nested((((\" \"), )), ((()), )) == ((), ())\nassert remove_nested(([], [])) == ([], [])\nassert remove_nested((9, 7, [(5, 3), (1, [7])]))",
+      "reference_key": "assert remove_nested((3, 8, (2, 9))) == (3, 8, 2, 9)\nassert remove_nested(((1,), 2, 3)) == (1, 2, 3)\nassert remove_nested((1, 2, 3)) == (1, 2, 3)\nassert remove_nested(()) == ()\nassert remove_nested(((), (()), ((())))) == ()",
+      "key_differs": true,
+      "text": "```python\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested((\"\", 2, (\" \", 3), (\" \", \" \"), 4)) == (2, 3, 4)\nassert remove_nested((((\" \"), )), ((()), )) == ((), ())\nassert remove_nested(([], [])) == ([], [])\nassert remove_nested((9, 7, [(5, 3), (1, [7])]))\n```",
+      "quality": 0.0,
+      "final_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```",
+        "fixer": "```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 6) == 19.0\nassert get_median([], [], 0) == 0.0\nassert get_median([1], [1], 1) == 1.0\nassert get_median([-1, -2, -3, -4, -5], [-6, -7, -8, -9, -10], 5) == -5.0",
+      "reference_key": "assert remove_nested((3, 8, (2, 9))) == (3, 8, 2, 9)\nassert remove_nested(((1,), 2, 3)) == (1, 2, 3)\nassert remove_nested((1, 2, 3)) == (1, 2, 3)\nassert remove_nested(()) == ()\nassert remove_nested(((), (()), ((())))) == ()",
+      "key_differs": true,
+      "text": "```python\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 6) == 19.0\nassert get_median([], [], 0) == 0.0\nassert get_median([1], [1], 1) == 1.0\nassert get_median([-1, -2, -3, -4, -5], [-6, -7, -8, -9, -10], 5) == -5.0\n```",
+      "quality": 0.0,
+      "final_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```",
+        "fixer": "```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n\n# Test cases\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested((2, 6, 8, (5, 7), 11)) == (2, 6, 8, 11)\nassert remove_nested((3, 7, 9, (6, 8), 12)) == (3, 7, 9, 12)\nassert remove_nested((3, 7, 9, (6, 8), (5,12), 12)) == (3, 7, 9, 12)\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 6) == 19.0\nassert get_median([], [], 0) == 0.0\nassert get_median([1], [1], 1) == 1.0\nassert get_median([-1, -2, -3, -4, -5], [-6, -7, -8, -9, -10], 5) == -5.0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((1,), 2, (3,))) == (1, 2, 3)\nassert remove_nested(((),)) == ()\nassert remove_nested((1, 2, 3, 4, 5)) == (1, 2, 3, 4, 5)\nassert remove_nested((1, 2, 3, 4, 5, (6, 7, 8))) == (1, 2, 3, 4, 5, 6, 7, 8)",
+  "sample_keys": [
+    "assert remove_nested((3, 7, (8, 9), [10, 12], 16)) == (3, 7, 8, 9, 10, 12, 16)\nassert remove_nested((1, 4, 5, (1, 2, 3, (4, 5)), (6, 7, 8))) == (1, 4, 5, 6, 7, 8)\nassert remove_nested(((1, 2), (3, 4), (5, 6))) == (1, 2, 3, 4, 5, 6)\nassert remove_nested(((), (1,), (1, 2, 3), (0, 0, 0, 0))) == (1, 1, 2, 3, 0)\nassert remove_nested((10, (20, (30,)), [(40,)], {50: 60})) == (10, 20, 30, 40, 50)",
+    "assert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((), 2, 3, ((4,)), [5])) == (2, 3, 4, 5)\nassert remove_nested(((((), (),()), 9))) == (9,)\nassert remove_nested(((1,), 2, 3, (2,), 4, 5)) == (1, 2, 3, 2, 4, 5)\nassert remove_nested(((1, 2), 3, 4, 5)) == (1, 2, 3, 4, 5)  # No nested tuples present",
+    "assert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((1, 2), (3, 4))) == (1, 2, 3, 4)\nassert remove_nested(((), (1, 2), (3, 4))) == (1, 2, 3, 4)\nassert remove_nested((1, 2, (3, 4), [], (), (1, 2, 3, 4))) == (1, 2, 3, 4, 1, 2, 3, 4)\nassert remove_nested(((1,), ((2,), (3,)), (4, 5), (6, 7, (8,)))) == (1, 2, 3, 4, 5, 6, 7, 8)",
+    "assert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((),)) == ()\nassert remove_nested(((1,), ((2,),))) == (1, 2)\nassert remove_nested((((1,), (2,), (3,)),)) == (1, 2, 3)\nassert remove_nested((((1,),), (((2,),),))) == (1, 2)",
+    "# Edge case: Empty tuple\nassert remove_nested(()) == ()\n\n# Typical case with no nested tuples\nassert remove_nested((1, 2, 3)) == (1, 2, 3)\n\n# Typical case with nested tuples at any level\nassert remove_nested((1, (2, (3, (4, 5))), 6)) == (1, 2, 3, 4, 5, 6)\n\n# Typical case with nested tuples at all levels\nassert remove_nested(((1,), ((2,), ((3,), ((4,), ((5,), (6,))))))) == (1, 2, 3, 4, 5, 6)\n\n# Typical case with nested tuples of different types\nassert remove_nested((1, \"hello\", None, (True, False))) == (1, \"hello\", None, True, False)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2014.0,
+    "small_out": 449.0,
+    "small_s": 6.566948453983059
+  },
+  "calls_plus": {
+    "small_in": 1628.0,
+    "small_out": 291.0,
+    "small_s": 4.346860067977104,
+    "large_in": 191.0,
+    "large_out": 96.0,
+    "large_s": 2.9133722010010388
+  },
+  "calls_samples": {
+    "small_in": 955.0,
+    "small_out": 937.0,
+    "small_s": 19.153054795984644
+  }
+}

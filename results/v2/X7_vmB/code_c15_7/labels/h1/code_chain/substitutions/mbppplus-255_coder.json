@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-255",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for i in range(len(colors_list)):\n        for j in range(n):\n            result.append((colors_list[i],))\n    return result\n```",
+  "reference_key": "def combinations_colors(colors_list, n):\n    result = []\n    for i in range(len(colors_list)):\n        for j in range(n):\n            result.append((colors_list[i],))\n    return result",
+  "final_key_plus": "def combinations_colors(colors_list, n):\n    if n < 0:\n        return []\n    elif n == 0:\n        return [[]]\n    else:\n        result = []\n        for color in colors_list:\n            for sub_combination in combinations_colors(colors_list, n - 1):\n                result.append((color,) + sub_combination)\n        return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],2)==[('Red','Red'), ('Red','Green'), ('Red','Blue'), ('Green','Red'), ('Green','Green'), ('Green','Blue'), ('Blue','Red'), ('Blue','Green'), ('Blue','Blue')]\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],3)==[('Red','Red','Red'), ('Red','Red','Green'), ('Red','Red','Blue'), ('Red','Green','Red'), ('Red','Green','Green'), ('Red','Green','Blue'), ('Red','Blue','Red'), ('Red','Blue','Green'), ('Red','Blue','Blue'), ('Green','Red','Red'), ('Green','Red','Green'), ('Green','Red','Blue'), ('Green','Green','Red'), ('Green','Green','Green'), ('Green','Green','Blue'), ('Green','Blue','Red'), ('Green','Blue','Green'), ('Green','Blue','Blue'), ('Blue','Red','Red'), ('Blue','Red','Green'), ('Blue','Red','Blue'), ('Blue','Green','Red'), ('Blue','Green','Green'), ('Blue','Green','Blue'), ('Blue','Blue','Red'), ('Blue','Blue','Green'), ('Blue','Blue','Blue')]\nassert combinations_colors([],0)==[]\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],-1)==[]\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],4)==[()]\n```",
+    "verifier": "PICK: B\n\n```python\ndef combinations_colors(colors_list, n):\n    if n < 0:\n        return []\n    elif n == 0:\n        return [[]]\n    else:\n        result = []\n        for color in colors_list:\n            for sub_combination in combinations_colors(colors_list, n - 1):\n                result.append((color,) + sub_combination)\n        return result\n```",
+    "fixer": "```python\ndef combinations_colors(colors_list, n):\n    if n < 0:\n        return []\n    elif n == 0:\n        return [[]]\n    else:\n        result = []\n        for color in colors_list:\n            for sub_combination in combinations_colors(colors_list, n - 1):\n                result.append((color,) + sub_combination)\n        return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def combinations_colors(colors_list, n):\n    result = []\n    for i, color in enumerate(colors_list):\n        for j in range(n):\n            result.append((color, j))\n    return result",
+      "reference_key": "def combinations_colors(colors_list, n):\n    result = []\n    for i in range(len(colors_list)):\n        for j in range(n):\n            result.append((colors_list[i],))\n    return result",
+      "key_differs": true,
+      "text": "```python \ndef combinations_colors(colors_list, n):\n    result = []\n    for i, color in enumerate(colors_list):\n        for j in range(n):\n            result.append((color, j))\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def combinations_colors(colors_list, n):\n    result = []\n    for i, color in enumerate(colors_list):\n        for j in range(n):\n            result.append((color, j))\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],2)==[('Red', 0), ('Red', 1), ('Red', 2), ('Green', 0), ('Green', 1), ('Green', 2), ('Blue', 0), ('Blue', 1), ('Blue', 2)]\nassert combinations_colors([],3)==[]\nassert combinations_colors([\"Yellow\"],4)==[('Yellow', 0), ('Yellow', 1), ('Yellow', 2), ('Yellow', 3)]\nassert combinations_colors([\"Purple\",\"Orange\"],1)==[('Purple',), ('Orange',)]\nassert combinations_colors([\"Black\",\"White\",\"Gray\"],0)==[()]\n```",
+        "verifier": "PICK: A\n\n```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for i, color in enumerate(colors_list):\n        for j in range(n):\n            result.append((color, j))\n    return result\n```",
+        "fixer": "```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for i, color in enumerate(colors_list):\n        for j in range(n):\n            result.append((color, j))\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import List\n\ndef combinations_colors(colors_list: List[str], n: int) -> List[tuple]:\n    result = []\n    \n    for color in colors_list:\n        for i in range(n):\n            result.append((color,))\n            \n    for j in range(1, n):\n        for i in range(n - 1):\n            for k in range(j + 1):\n                if i == 0 and k > 0 or i != 0 and k < 0:\n                    continue\n                result.append(tuple(colors_list[x] for x in range(i, j + 1)))\n    \n    return result",
+      "reference_key": "def combinations_colors(colors_list, n):\n    result = []\n    for i in range(len(colors_list)):\n        for j in range(n):\n            result.append((colors_list[i],))\n    return result",
+      "key_differs": true,
+      "text": "```python\nfrom typing import List\n\ndef combinations_colors(colors_list: List[str], n: int) -> List[tuple]:\n    result = []\n    \n    for color in colors_list:\n        for i in range(n):\n            result.append((color,))\n            \n    for j in range(1, n):\n        for i in range(n - 1):\n            for k in range(j + 1):\n                if i == 0 and k > 0 or i != 0 and k < 0:\n                    continue\n                result.append(tuple(colors_list[x] for x in range(i, j + 1)))\n    \n    return result\n```",
+      "quality": 0.0,
+      "final_key": "from typing import List\n\ndef combinations_colors(colors_list: List[str], n: int) -> List[tuple]:\n    result = []\n    \n    for color in colors_list:\n        for i in range(n):\n            result.append((color,))\n            \n    for j in range(1, n):\n        for i in range(n - 1):\n            for k in range(j + 1):\n                if i == 0 and k > 0 or i != 0 and k < 0:\n                    continue\n                result.append(tuple(colors_list[x] for x in range(i, j + 1)))\n    \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],2)==[('Red','Red'), ('Red','Green'), ('Red','Blue'), ('Green','Green'), ('Green','Blue'), ('Blue','Blue')]\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],3)==[('Red','Red','Red'), ('Red','Red','Green'), ('Red','Red','Blue'), ('Red','Green','Green'), ('Red','Green','Blue'), ('Red','Blue','Blue'), ('Green','Green','Green'), ('Green','Green','Blue'), ('Green','Blue','Blue'), ('Blue','Blue','Blue')]\nassert combinations_colors([],1)==[]\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],0)==[()]\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],4)==[('Red','Red','Red','Red'), ('Red','Red','Red','Green'), ('Red','Red','Red','Blue'), ('Red','Red','Green','Green'), ('Red','Red','Green','Blue'), ('Red','Red','Blue','Blue'), ('Red','Green','Green','Green'), ('Red','Green','Green','Blue'), ('Red','Green','Blue','Blue'), ('Red','Blue','Blue','Blue'), ('Green','Green','Green','Green'), ('Green','Green','Green','Blue'), ('Green','Green','Blue','Blue'), ('Green','Blue','Blue','Blue'), ('Blue','Blue','Blue','Blue')]\n```",
+        "verifier": "PICK: B\n\n```python\nfrom typing import List\n\ndef combinations_colors(colors_list: List[str], n: int) -> List[tuple]:\n    result = []\n    \n    for color in colors_list:\n        for i in range(n):\n            result.append((color,))\n            \n    for j in range(1, n):\n        for i in range(n - 1):\n            for k in range(j + 1):\n                if i == 0 and k > 0 or i != 0 and k < 0:\n                    continue\n                result.append(tuple(colors_list[x] for x in range(i, j + 1)))\n    \n    return result\n```",
+        "fixer": "```python\nfrom typing import List\n\ndef combinations_colors(colors_list: List[str], n: int) -> List[tuple]:\n    result = []\n    \n    for color in colors_list:\n        for i in range(n):\n            result.append((color,))\n            \n    for j in range(1, n):\n        for i in range(n - 1):\n            for k in range(j + 1):\n                if i == 0 and k > 0 or i != 0 and k < 0:\n                    continue\n                result.append(tuple(colors_list[x] for x in range(i, j + 1)))\n    \n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum",
+      "reference_key": "def combinations_colors(colors_list, n):\n    result = []\n    for i in range(len(colors_list)):\n        for j in range(n):\n            result.append((colors_list[i],))\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef find_sum(nums):\n    seen = set()\n    sum = 0\n    for num in nums:\n        if num not in seen:\n            seen.add(num)\n            sum += num\n    return sum\n```",
+      "quality": 0.0,
+      "final_key": "from itertools import product\n\ndef combinations_colors(colors, n):\n    return [tuple(color) for color in product(colors, repeat=n)]\n\n# Test cases\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],1)==[('Red',), ('Green',), ('Blue',)]\nassert combinations_colors( [\"Red\",\"Green\",\"Blue\"],2)==[('Red', 'Red'), ('Red', 'Green'), ('Red', 'Blue'), ('Green', 'Green'), ('Green', 'Blue'), ('Blue', 'Blue')]\nassert combinations_colors( [\"Red\",\"Green\",\"Blue\"],3)==[('Red', 'Red', 'Red'), ('Red', 'Red', 'Green'), ('Red', 'Red', 'Blue'), ('Red', 'Green', 'Green'), ('Red', 'Green', 'Blue'), ('Red', 'Blue', 'Blue'), ('Green', 'Green', 'Green'), ('Green', 'Green', 'Blue'), ('Green', 'Blue', 'Blue'), ('Blue', 'Blue', 'Blue')]\nassert find_sum([1,2,3]) == 6\nassert find_sum([-1,-2,-3]) == -6\nassert find_sum([]) == 0\nassert find_sum([0]) == 0\nassert find_sum([10]) == 10",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_sum([1,2,3]) == 6\nassert find_sum([-1,-2,-3]) == -6\nassert find_sum([]) == 0\nassert find_sum([0]) == 0\nassert find_sum([10]) == 10\n```",
+        "verifier": "PICK: B\n\n```python\nfrom itertools import product\n\ndef combinations_colors(colors, n):\n    return [tuple(color) for color in product(colors, repeat=n)]\n\n# Test cases\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],1)==[('Red',), ('Green',), ('Blue',)]\nassert combinations_colors( [\"Red\",\"Green\",\"Blue\"],2)==[('Red', 'Red'), ('Red', 'Green'), ('Red', 'Blue'), ('Green', 'Green'), ('Green', 'Blue'), ('Blue', 'Blue')]\nassert combinations_colors( [\"Red\",\"Green\",\"Blue\"],3)==[('Red', 'Red', 'Red'), ('Red', 'Red', 'Green'), ('Red', 'Red', 'Blue'), ('Red', 'Green', 'Green'), ('Red', 'Green', 'Blue'), ('Red', 'Blue', 'Blue'), ('Green', 'Green', 'Green'), ('Green', 'Green', 'Blue'), ('Green', 'Blue', 'Blue'), ('Blue', 'Blue', 'Blue')]\nassert find_sum([1,2,3]) == 6\nassert find_sum([-1,-2,-3]) == -6\nassert find_sum([]) == 0\nassert find_sum([0]) == 0\nassert find_sum([10]) == 10\n```",
+        "fixer": "```python\nfrom itertools import product\n\ndef combinations_colors(colors, n):\n    return [tuple(color) for color in product(colors, repeat=n)]\n\n# Test cases\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],1)==[('Red',), ('Green',), ('Blue',)]\nassert combinations_colors( [\"Red\",\"Green\",\"Blue\"],2)==[('Red', 'Red'), ('Red', 'Green'), ('Red', 'Blue'), ('Green', 'Green'), ('Green', 'Blue'), ('Blue', 'Blue')]\nassert combinations_colors( [\"Red\",\"Green\",\"Blue\"],3)==[('Red', 'Red', 'Red'), ('Red', 'Red', 'Green'), ('Red', 'Red', 'Blue'), ('Red', 'Green', 'Green'), ('Red', 'Green', 'Blue'), ('Red', 'Blue', 'Blue'), ('Green', 'Green', 'Green'), ('Green', 'Green', 'Blue'), ('Green', 'Blue', 'Blue'), ('Blue', 'Blue', 'Blue')]\nassert find_sum([1,2,3]) == 6\nassert find_sum([-1,-2,-3]) == -6\nassert find_sum([]) == 0\nassert find_sum([0]) == 0\nassert find_sum([10]) == 10\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result",
+  "sample_keys": [
+    "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result",
+    "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for index in range(n):\n            result.append((color, index))\n    return result",
+    "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result",
+    "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result",
+    "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2171.0,
+    "small_out": 466.0,
+    "small_s": 7.015460283000721
+  },
+  "calls_plus": {
+    "small_in": 2421.0,
+    "small_out": 650.0,
+    "small_s": 11.404877799010137,
+    "large_in": 323.0,
+    "large_out": 46.0,
+    "large_s": 1.3499020290037151
+  },
+  "calls_samples": {
+    "small_in": 1615.0,
+    "small_out": 215.0,
+    "small_s": 4.543708936020266
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-130",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Import the `collections` module to use the `Counter` class for counting occurrences.\n2. Define the function `max_occurrences` that takes a list as its parameter.\n3. Use `Counter` to count the frequency of each element in the list.\n4. Find the element with the highest frequency using the `most_common()` method of `Counter`.\n5. Return the element with the maximum frequency.",
+  "reference_key": null,
+  "final_key_plus": "from collections import Counter\n\ndef max_occurrences(lst):\n    # Count the frequency of each element in the list\n    freq_counter = Counter(lst)\n    # Find the element with the highest frequency\n    max_freq_item = freq_counter.most_common(1)[0][0]\n    return max_freq_item",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_occurrences([1,2,2,3,3,3,4,4,4,4]) == 4\nassert max_occurrences([]) == None\nassert max_occurrences([1,1,1,1,1]) == 1\nassert max_occurrences(['a','b','c','d','e']) == 'e'\nassert max_occurrences([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]) == 20\n```",
+    "coder": "```python\nfrom collections import Counter\n\ndef max_occurrences(lst):\n    # Count the frequency of each element in the list\n    freq_counter = Counter(lst)\n    # Find the element with the highest frequency\n    max_freq_item = freq_counter.most_common(1)[0][0]\n    return max_freq_item\n```",
+    "verifier": "PICK: A\n```python\nfrom collections import Counter\n\ndef max_occurrences(lst):\n    # Count the frequency of each element in the list\n    freq_counter = Counter(lst)\n    # Find the element with the highest frequency\n    max_freq_item = freq_counter.most_common(1)[0][0]\n    return max_freq_item\n```",
+    "fixer": "```python\nfrom collections import Counter\n\ndef max_occurrences(lst):\n    # Count the frequency of each element in the list\n    freq_counter = Counter(lst)\n    # Find the element with the highest frequency\n    max_freq_item = freq_counter.most_common(1)[0][0]\n    return max_freq_item\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_samepatterns` that takes two lists as arguments, `patterns` and `sequence`.\n2. Check if both lists have the same length.\n3. Iterate through the `patterns` list and compare each element with the corresponding element in the `sequence` list.\n4. If any elements do not match, return `False`.\n5. If all elements match, return `True`.\n\nHere's the implementation:\n\n```python\ndef is_samepatterns(patterns, sequence):\n    # Step 1: Check if both lists have the same length\n    if len(patterns) != len(sequence):\n        return False\n    \n    # Step 2: Iterate through the patterns list\n    for pattern, seq in zip(patterns, sequence):\n        # Step 3: Compare each element\n        if pattern != seq:\n            return False\n    \n    # Step 4: All elements matched\n    return True\n```\n\nThis function will correctly determine if the `sequence` matches the `patterns` sequence.",
+      "quality": 1.0,
+      "final_key": "from collections import Counter\n\ndef max_occurrences(sequence):\n    if not sequence:\n        return None\n    \n    # Count occurrences of each element in the sequence\n    counts = Counter(sequence)\n\n    # Find the element with the maximum count\n    max_element = counts.most_common(1)[0][0]\n\n    return max_element",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_occurrences([]) == None\nassert max_occurrences([1]) == 1\nassert max_occurrences([1, 1, 1, 1]) == 1\nassert max_occurrences([1, 2, 3, 2, 3, 2, 3]) == 2\nassert max_occurrences([1, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3,",
+        "coder": "```python\ndef max_occurrences(sequence):\n    from collections import Counter\n\n    # Count occurrences of each element in the sequence\n    counts = Counter(sequence)\n\n    # Find the element with the maximum count\n    max_element = counts.most_common(1)[0][0]\n\n    return max_element\n```",
+        "verifier": "PICK: B\n\n```python\nfrom collections import Counter\n\ndef max_occurrences(sequence):\n    if not sequence:\n        return None\n    \n    # Count occurrences of each element in the sequence\n    counts = Counter(sequence)\n\n    # Find the element with the maximum count\n    max_element = counts.most_common(1)[0][0]\n\n    return max_element\n```",
+        "fixer": "```python\nfrom collections import Counter\n\ndef max_occurrences(sequence):\n    if not sequence:\n        return None\n    \n    # Count occurrences of each element in the sequence\n    counts = Counter(sequence)\n\n    # Find the element with the maximum count\n    max_element = counts.most_common(1)[0][0]\n\n    return max_element\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import the `collections` module to use the `Counter` class for counting occurrences.\n2. Define the function `max_occurrences` that takes a list as its parameter.\n3. Use `Counter` to count the frequency of each element in the list.\n4. Find the element with the maximum frequency using the `most_common()` method of `Counter`.\n5. Return the first element from the list of elements with the maximum frequency.",
+      "quality": 1.0,
+      "final_key": "from collections import Counter\n\ndef max_occurrences(lst):\n    # Count the frequency of each element in the list\n    freq_counter = Counter(lst)\n    # Get the element with the maximum frequency\n    max_freq_element = freq_counter.most_common(1)[0][0]\n    return max_freq_element",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_occurrences([]) == None\nassert max_occurrences([1]) == 1\nassert max_occurrences([1,1,1,1]) == 1\nassert max_occurrences([1,2,3,4,5,6,7,8,9,10]) == 10\nassert max_occurrences([1,2,3,4,5,6,7,8,9,10,10,10]) == 10\n```",
+        "coder": "```python\nfrom collections import Counter\n\ndef max_occurrences(lst):\n    # Count the frequency of each element in the list\n    freq_counter = Counter(lst)\n    # Get the element with the maximum frequency\n    max_freq_element = freq_counter.most_common(1)[0][0]\n    return max_freq_element\n```",
+        "verifier": "PICK: A\n```python\nfrom collections import Counter\n\ndef max_occurrences(lst):\n    # Count the frequency of each element in the list\n    freq_counter = Counter(lst)\n    # Get the element with the maximum frequency\n    max_freq_element = freq_counter.most_common(1)[0][0]\n    return max_freq_element\n```",
+        "fixer": "```python\nfrom collections import Counter\n\ndef max_occurrences(lst):\n    # Count the frequency of each element in the list\n    freq_counter = Counter(lst)\n    # Get the element with the maximum frequency\n    max_freq_element = freq_counter.most_common(1)[0][0]\n    return max_freq_element\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_samepair` that takes three lists as input parameters.\n2. Initialize a counter variable to zero.\n3. Iterate through the indices of the lists using a for loop.\n4. For each index, check if the elements at that index in all three lists are equal.\n5. If they are equal, increment the counter by one.\n6. After iterating through all indices, return the counter value.\n\nThis approach ensures that we correctly count the number of identical pairs at the same positions across the three lists.",
+      "quality": 0.0,
+      "final_key": "def max_occurrences(list1, list2, list3):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i] == list3[i]:\n            counter += 1\n    return counter",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_occurrences([1,2,3,4,5]) == 1\nassert max_occurrences([]) == 0\nassert max_occurrences([1,1,1,1,1]) == 5\nassert max_occurrences([1,2,3,4,5,6,7,8,9,10]) == 1\nassert max_occurrences([1,1,1,1,1,1,1,1,1,1]) == 10\n```",
+        "coder": "```python\ndef count_samepair(list1, list2, list3):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i] == list3[i]:\n            counter += 1\n    return counter\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_occurrences(list1, list2, list3):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i] == list3[i]:\n            counter += 1\n    return counter\n```",
+        "fixer": "```python\ndef max_occurrences(list1, list2, list3):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i] == list3[i]:\n            counter += 1\n    return counter\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element",
+  "sample_keys": [
+    "def max_occurrences(lst):\n    if not lst:\n        raise ValueError(\"max() arg is an empty sequence\")\n    freq_dict = {}\n    for item in lst:\n        if item in freq_dict:\n            freq_dict[item] += 1\n        else:\n            freq_dict[item] = 1\n    max_freq_item = max(freq_dict, key=freq_dict.get)\n    return max_freq_item",
+    "def max_occurrences(lst):\n    occurrence_count = {}\n    max_value = None\n    for num in lst:\n        if num in occurrence_count:\n            occurrence_count[num] += 1\n        else:\n            occurrence_count[num] = 1\n        if max_value is None or occurrence_count[num] >= occurrence_count[max_value]:\n            max_value = num\n    return max_value",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3705.0,
+    "small_out": 1254.0,
+    "small_s": 27.144186545046978
+  },
+  "calls_plus": {
+    "large_in": 142.0,
+    "large_out": 87.0,
+    "large_s": 2.5700429980061017,
+    "small_in": 1884.0,
+    "small_out": 351.0,
+    "small_s": 7.209558406990254
+  },
+  "calls_samples": {
+    "small_in": 6219.0,
+    "small_out": 1529.0,
+    "small_s": 31.285014678927837
+  }
+}

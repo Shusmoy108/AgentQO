@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-306",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `max_sum_increasing_subseq` that takes a list `arr`, its length `n`, an index `i`, and another index `k`.\n2. Create a list `dp` where `dp[i]` will store the maximum sum of increasing subsequence ending at index `i`.\n3. Initialize `dp[0]` to `arr[0]` since the smallest subsequence is just the first element itself.\n4. Iterate through the list from index 1 to `i-1` to fill in the `dp` array by considering all possible increasing subsequences up to `i`.\n5. For each element at index `i`, check if there's an increasing subsequence ending before `i` that can be extended by `arr[i]`. Update `dp[i]` accordingly.\n6. After filling the `dp` array, calculate the maximum sum of increasing subsequence including the element at index `k` by adding `arr[k]` to the appropriate value in the `dp` array.\n7. Return the calculated maximum sum.",
+  "reference_key": null,
+  "final_key_plus": "def max_sum_increasing_subseq(arr, n, i, k):\n    dp = [0] * n\n    dp[0] = arr[0]\n    \n    for j in range(1, i):\n        for l in range(j):\n            if arr[j] > arr[l]:\n                dp[j] = max(dp[j], dp[l] + arr[j])\n    \n    max_sum = dp[i - 1]\n    if k < n:\n        max_sum += arr[k]\n    \n    return max_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 5) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 4) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 3) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 2) == 11\n```",
+    "coder": "```python\ndef max_sum_increasing_subseq(arr, n, i, k):\n    dp = [0] * n\n    dp[0] = arr[0]\n    \n    for j in range(1, i):\n        for l in range(j):\n            if arr[j] > arr[l]:\n                dp[j] = max(dp[j], dp[l] + arr[j])\n    \n    max_sum = dp[i - 1]\n    if k < n:\n        max_sum += arr[k]\n    \n    return max_sum\n```",
+    "verifier": "PICK: B\n\n```python\ndef max_sum_increasing_subseq(arr, n, i, k):\n    dp = [0] * n\n    dp[0] = arr[0]\n    \n    for j in range(1, i):\n        for l in range(j):\n            if arr[j] > arr[l]:\n                dp[j] = max(dp[j], dp[l] + arr[j])\n    \n    max_sum = dp[i - 1]\n    if k < n:\n        max_sum += arr[k]\n    \n    return max_sum\n```",
+    "fixer": "```python\ndef max_sum_increasing_subseq(arr, n, i, k):\n    dp = [0] * n\n    dp[0] = arr[0]\n    \n    for j in range(1, i):\n        for l in range(j):\n            if arr[j] > arr[l]:\n                dp[j] = max(dp[j], dp[l] + arr[j])\n    \n    max_sum = dp[i - 1]\n    if k < n:\n        max_sum += arr[k]\n    \n    return max_sum\n\n# Test cases\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 2, 5) == 7\nassert max_sum_increasing_subseq([11, 15, 19, 21, 26, 28, 31], 7, 2, 4) == 71\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 5) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 4) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 3) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 2) == 11\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `is_even` that takes one parameter, `num`.\n2. Inside the function, use the modulus operator `%` to find the remainder when `num` is divided by 2.\n3. If the remainder is 0, return `True`, indicating that `num` is even.\n4. Otherwise, return `False`, indicating that `num` is odd.\n5. Test the function with the provided assertion to ensure it works correctly.",
+      "quality": 0.0,
+      "final_key": "def max_sum_increasing_subseq(nums, n, k, m):\n    if n < m:\n        return -1\n    \n    dp = [0] * (n + 1)\n    \n    for i in range(1, n + 1):\n        for j in range(i):\n            if nums[i - 1] > nums[j - 1]:\n                dp[i] = max(dp[i], dp[j] + nums[i - 1])\n    \n    return dp[n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5], 7, 4, 5) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5], 7, 4, 4) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5], 7, 4, 3) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5], 7, 4, 2) == 11\n```",
+        "coder": "```python\ndef is_even(num):\n    return num % 2 == 0\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_sum_increasing_subseq(nums, n, k, m):\n    if n < m:\n        return -1\n    \n    dp = [0] * (n + 1)\n    \n    for i in range(1, n + 1):\n        for j in range(i):\n            if nums[i - 1] > nums[j - 1]:\n                dp[i] = max(dp[i], dp[j] + nums[i - 1])\n    \n    return dp[n]\n```",
+        "fixer": "```python\ndef max_sum_increasing_subseq(nums, n, k, m):\n    if n < m:\n        return -1\n    \n    dp = [0] * (n + 1)\n    \n    for i in range(1, n + 1):\n        for j in range(i):\n            if nums[i - 1] > nums[j - 1]:\n                dp[i] = max(dp[i], dp[j] + nums[i - 1])\n    \n    return dp[n]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `max_sum_increasing_subseq` that takes a list `arr`, its length `n`, an index `i`, and another index `k`.\n2. Create a list `dp` where `dp[i]` will store the maximum sum of increasing subsequence ending at index `i`.\n3. Initialize `dp[0]` to `arr[0]` since the smallest subsequence is just the first element itself.\n4. Iterate through the list from index 1 to `i-1` to fill in the `dp` array by considering all possible increasing subsequences up to `i`.\n5. For each element at index `i`, check if there's an increasing subsequence ending before `i` that can be extended by `arr[i]`. If so, update `dp[i]` based on the maximum between `dp[i]` and `dp[j] + arr[i]` for all `j < i`.\n6. After filling the `dp` array, calculate the maximum sum of increasing subsequence including the element at index `k` by adding `arr[k]` to the appropriate value in the `dp` array.\n7. Return the calculated maximum sum.",
+      "quality": 0.0,
+      "final_key": "def max_sum_increasing_subseq(arr, n, i, k):\n    dp = [0] * n\n    dp[0] = arr[0]\n    \n    for j in range(1, i):\n        dp[j] = max(dp[j], dp[j - 1] + arr[j])\n    \n    return dp[i - 1] + arr[k]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 5) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 4) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 3) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 2) == 11\n```",
+        "coder": "```python\ndef max_sum_increasing_subseq(arr, n, i, k):\n    dp = [0] * n\n    dp[0] = arr[0]\n    \n    for j in range(1, i):\n        dp[j] = max(dp[j], dp[j - 1] + arr[j])\n    \n    return dp[i - 1] + arr[k]\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_sum_increasing_subseq(arr, n, i, k):\n    dp = [0] * n\n    dp[0] = arr[0]\n    \n    for j in range(1, i):\n        dp[j] = max(dp[j], dp[j - 1] + arr[j])\n    \n    return dp[i - 1] + arr[k]\n```",
+        "fixer": "```python\ndef max_sum_increasing_subseq(arr, n, i, k):\n    dp = [0] * n\n    dp[0] = arr[0]\n    \n    for j in range(1, i):\n        dp[j] = max(dp[j], dp[j - 1] + arr[j])\n    \n    return dp[i - 1] + arr[k]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_common_divisors` that takes two parameters, `num1` and `num2`.\n2. Initialize a variable `common_sum` to zero.\n3. Iterate through all numbers from 1 to the minimum of `num1` and `num2`.\n4. For each number, check if it is a divisor of both `num1` and `num2`.\n5. If it is, add the number to `common_sum`.\n6. After iterating through all possible divisors, return the value of `common_sum`.\n\nThis approach ensures that we efficiently calculate the sum of common divisors by leveraging the fact that any common divisor must be less than or equal to the smaller of the two numbers.",
+      "quality": 0.0,
+      "final_key": "def max_sum_increasing_subseq(nums, n, k, m):\n    dp = [[0] * (m+1) for _ in range(n+1)]\n    \n    for i in range(1, n+1):\n        for j in range(1, m+1):\n            if nums[i-1] <= j:\n                dp[i][j] = max(dp[i-1][j], dp[i-1][j-nums[i-1]] + nums[i-1])\n            else:\n                dp[i][j] = dp[i-1][j]\n    \n    return dp[n][m]\n\n# Test cases\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 2, 5) == 7\nassert max_sum_increasing_subseq([11, 15, 19, 21, 26, 28, 31], 7, 2, 4) == 71\nassert sum_common_divisors(10, 20) == 10\nassert sum_common_divisors(100, 200) == 100\nassert sum_common_divisors(10, 10) == 10\nassert sum_common_divisors(10, 0) == 0\nassert sum_common_divisors(0, 10) == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_common_divisors(10, 20) == 10\nassert sum_common_divisors(100, 200) == 100\nassert sum_common_divisors(10, 10) == 10\nassert sum_common_divisors(10, 0) == 0\nassert sum_common_divisors(0, 10) == 0\n```",
+        "coder": "```python\ndef sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_sum_increasing_subseq(nums, n, k, m):\n    dp = [[0] * (m+1) for _ in range(n+1)]\n    \n    for i in range(1, n+1):\n        for j in range(1, m+1):\n            if nums[i-1] <= j:\n                dp[i][j] = max(dp[i-1][j], dp[i-1][j-nums[i-1]] + nums[i-1])\n            else:\n                dp[i][j] = dp[i-1][j]\n    \n    return dp[n][m]\n\n# Test cases\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 2, 5) == 7\nassert max_sum_increasing_subseq([11, 15, 19, 21, 26, 28, 31], 7, 2, 4) == 71\nassert sum_common_divisors(10, 20) == 10\nassert sum_common_divisors(100, 200) == 100\nassert sum_common_divisors(10, 10) == 10\nassert sum_common_divisors(10, 0) == 0\nassert sum_common_divisors(0, 10) == 0\n```",
+        "fixer": "```python\ndef max_sum_increasing_subseq(nums, n, k, m):\n    dp = [[0] * (m+1) for _ in range(n+1)]\n    \n    for i in range(1, n+1):\n        for j in range(1, m+1):\n            if nums[i-1] <= j:\n                dp[i][j] = max(dp[i-1][j], dp[i-1][j-nums[i-1]] + nums[i-1])\n            else:\n                dp[i][j] = dp[i-1][j]\n    \n    return dp[n][m]\n\n# Test cases\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 2, 5) == 7\nassert max_sum_increasing_subseq([11, 15, 19, 21, 26, 28, 31], 7, 2, 4) == 71\nassert sum_common_divisors(10, 20) == 10\nassert sum_common_divisors(100, 200) == 100\nassert sum_common_divisors(10, 10) == 10\nassert sum_common_divisors(10, 0) == 0\nassert sum_common_divisors(0, 10) == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+  "sample_keys": [
+    "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize a list to store the maximum sum ending at each index up to k\n    dp = [0] * (n + 1)\n    \n    # Iterate through the array to update the maximum sums\n    for i in range(1, n + 1):\n        for j in range(i - 1, k):\n            if arr[i - 1] > arr[j]:\n                dp[i] = max(dp[i], dp[j] + arr[i - 1])\n    \n    # Check if the kth element can be included in the subsequence\n    if k <= n and arr[k - 1] > arr[n - 1]:\n        dp[k] = max(dp[k], dp[n] + arr[k - 1])\n    \n    # Return the maximum sum\n    return dp[k]",
+    "def max_sum_increasing_subseq(arr, i, k, j):\n    max_sum = 0\n    max_value = arr[i]\n    \n    for j in range(i+1, len(arr)):\n        if arr[j] > max_value:\n            max_value += arr[j]\n            max_sum += max_value\n    \n    total_sum = sum(arr)\n    return total_sum - max_value - max_sum",
+    "def max_sum_increasing_subseq(nums, i, k, j):\n    max_sum = nums[i]\n    current_sum = nums[i]\n    \n    for num in range(i + 1, j + 1):\n        if nums[num] > nums[i]:\n            current_sum += nums[num]\n            if current_sum > max_sum:\n                max_sum = current_sum\n    \n    return max_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3172.0,
+    "small_out": 1023.0,
+    "small_s": 19.084579018992372
+  },
+  "calls_plus": {
+    "large_in": 161.0,
+    "large_out": 225.0,
+    "large_s": 6.873287660011556,
+    "small_in": 2619.0,
+    "small_out": 950.0,
+    "small_s": 20.26787407597294
+  },
+  "calls_samples": {
+    "small_in": 8177.0,
+    "small_out": 2232.0,
+    "small_s": 45.65355783898849
+  }
+}

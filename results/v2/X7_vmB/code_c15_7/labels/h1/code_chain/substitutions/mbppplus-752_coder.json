@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-752",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    \n    return b\n```",
+  "reference_key": "def jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    \n    return b",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\n```",
+    "verifier": "PICK: B",
+    "fixer": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    \n    return b\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def jacobsthal_num(n):\n    a, b = 0, 1\n    if n < 2:\n        return n\n    for _ in range(2, n + 1):\n        b = a + b\n        a = b\n    return b",
+      "reference_key": "def jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    \n    return b",
+      "key_differs": true,
+      "text": "```python\ndef jacobsthal_num(n):\n    a, b = 0, 1\n    if n < 2:\n        return n\n    for _ in range(2, n + 1):\n        b = a + b\n        a = b\n    return b\n```\nNote that this code does not include the provided test cases `assert jacobsthal_num(5) == 11` because the problem asks for a function that computes the Jacobsthal number directly rather than asserting against a result. The actual implementation focuses on generating the Jacobsthal numbers iteratively without any predefined tests.",
+      "quality": 0.0,
+      "final_key": "def jacobsthal_num(n):\n    a, b = 0, 1\n    if n < 2:\n        return n\n    for _ in range(2, n + 1):\n        b = a + b\n        a = b\n    return b",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\n```",
+        "verifier": "PICK: A\n\n```python\ndef jacobsthal_num(n):\n    a, b = 0, 1\n    if n < 2:\n        return n\n    for _ in range(2, n + 1):\n        b = a + b\n        a = b\n    return b\n```",
+        "fixer": "```python\ndef jacobsthal_num(n):\n    a, b = 0, 1\n    if n < 2:\n        return n\n    for _ in range(2, n + 1):\n        b = a + b\n        a = b\n    return b\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def jacobsthal_num(n):\n    a = 0\n    b = 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a = b\n        b = c\n    return b",
+      "reference_key": "def jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    \n    return b",
+      "key_differs": true,
+      "text": "```python\ndef jacobsthal_num(n):\n    a = 0\n    b = 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a = b\n        b = c\n    return b\n```",
+      "quality": 0.0,
+      "final_key": "def jacobsthal_num(n):\n    if n < 0:\n        raise ValueError(\"Input must be non-negative\")\n    elif n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a = 0\n        b = 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a = b\n            b = c\n        return b",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\n```",
+        "verifier": "PICK: B\n\n```python\ndef jacobsthal_num(n):\n    if n < 0:\n        raise ValueError(\"Input must be non-negative\")\n    elif n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a = 0\n        b = 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a = b\n            b = c\n        return b\n```",
+        "fixer": "```python\ndef jacobsthal_num(n):\n    if n < 0:\n        raise ValueError(\"Input must be non-negative\")\n    elif n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a = 0\n        b = 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a = b\n            b = c\n        return b\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result",
+      "reference_key": "def jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    \n    return b",
+      "key_differs": true,
+      "text": "```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert string_to_tuple(\"hello\") == [('h', 'e'), ('l', 'l'), ('o')]\nassert string_to_tuple(\"\") == []\nassert string_to_tuple(\"a\") == [('a',)]\nassert string_to_tuple(\"ab\") == [('a',), ('b',)]\nassert string_to_tuple(\"abc\") == [('a',), ('b',), ('c',)]\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            a, b = b, 2 * b + a\n        return b\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert string_to_tuple(\"hello\") == [('h', 'e'), ('l', 'l'), ('o')]\nassert string_to_tuple(\"\") == []\nassert string_to_tuple(\"a\") == [('a',)]\nassert string_to_tuple(\"ab\") == [('a',), ('b',)]\nassert string_to_tuple(\"abc\") == [('a',), ('b',), ('c',)]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b",
+  "sample_keys": [
+    "def jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b",
+    "def jacobsthal_num(n):\n    a, b = 0, 1\n    for _ in range(2, n+1):\n        c = a + b\n        a, b = b, c\n    return b",
+    "def jacobsthal_num(n):\n    if n < 2:\n        return n\n    a, b = 0, 1\n    for i in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    return b",
+    "def jacobsthal_num(n):\n    if n <= 1:\n        return n\n    \n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    \n    return b",
+    "def jacobsthal_num(n):\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    return b"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1918.0,
+    "small_out": 487.0,
+    "small_s": 10.560626969003351
+  },
+  "calls_plus": {
+    "small_in": 1598.0,
+    "small_out": 442.0,
+    "small_s": 8.94056907200138,
+    "large_in": 341.0,
+    "large_out": 81.0,
+    "large_s": 1.8681009460124187
+  },
+  "calls_samples": {
+    "small_in": 1705.0,
+    "small_out": 333.0,
+    "small_s": 6.522903856006451
+  }
+}

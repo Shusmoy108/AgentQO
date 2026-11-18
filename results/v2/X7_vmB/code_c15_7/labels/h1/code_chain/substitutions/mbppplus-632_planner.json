@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-632",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Initialize two pointers, `i` and `j`, where `i` is used for iterating through the list and `j` keeps track of the position to place non-zero elements.\n2. Iterate through the list using the `i` pointer.\n3. If the current element is non-zero, swap it with the element at the `j` pointer and increment both `i` and `j`.\n4. After the loop, fill the remaining positions from `j` to the end of the list with zeros.\n5. Return the modified list.",
+  "reference_key": null,
+  "final_key_plus": "def move_zero(nums):\n    i = 0\n    j = 0\n    while i < len(nums):\n        if nums[i] != 0:\n            nums[j], nums[i] = nums[i], nums[j]\n            j += 1\n        i += 1\n    while j < len(nums):\n        nums[j] = 0\n        j += 1\n    return nums",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert move_zero([0,1,0,3,12]) == [1,3,12,0,0]\nassert move_zero([]) == []\nassert move_zero([0,0,0]) == [0,0,0]\nassert move_zero([1,2,3]) == [1,2,3]\nassert move_zero([0,0,0,0]) == [0,0,0,0]\n```",
+    "coder": "```python\ndef move_zero(nums):\n    i = 0\n    j = 0\n    while i < len(nums):\n        if nums[i] != 0:\n            nums[j], nums[i] = nums[i], nums[j]\n            j += 1\n        i += 1\n    while j < len(nums):\n        nums[j] = 0\n        j += 1\n    return nums\n```",
+    "verifier": "PICK: A\n\n```python\ndef move_zero(nums):\n    i = 0\n    j = 0\n    while i < len(nums):\n        if nums[i] != 0:\n            nums[j], nums[i] = nums[i], nums[j]\n            j += 1\n        i += 1\n    while j < len(nums):\n        nums[j] = 0\n        j += 1\n    return nums\n```",
+    "fixer": "```python\ndef move_zero(nums):\n    i = 0\n    j = 0\n    while i < len(nums):\n        if nums[i] != 0:\n            nums[j], nums[i] = nums[i], nums[j]\n            j += 1\n        i += 1\n    while j < len(nums):\n        nums[j] = 0\n        j += 1\n    return nums\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `odd_equivalent` that takes two parameters: `binary_string` (the input binary string) and `rotations` (the number of rotations).\n2. Initialize a counter variable `count` to zero.\n3. For each rotation from 0 to `rotations - 1`, perform the following steps:\n   a. Rotate the binary string by one position to the left using slicing (`binary_string[1:] + binary_string[0]`).\n   b. Check if the rotated string has an odd number of '1's using the `sum()` function and modulo operation (`sum(binary_string) % 2 != 0`).\n   c. If the condition is true, increment the `count`.\n4. Return the final count.\n\nThis approach ensures that all possible rotations are considered and accurately counts the number of strings with an odd number of '1's after the specified number of rotations.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert move_zero([0,1,0,3,123]) == [1,3,123,0,0]\nassert move_zero([]) == []\nassert move_zero([0,0,0]) == [0,0,0]\nassert move_zero([1,2,3]) == [1,2,3]\nassert move_zero([0,0,0,0]) == [0,0,0,0]\n```",
+        "coder": "```python\ndef move_zero(lst):\n    def odd_equivalent(binary_string, rotations):\n        count = 0\n        for _ in range(rotations):\n            binary_string = binary_string[1:] + binary_string[0]\n            if sum(binary_string) % 2 != 0:\n                count += 1\n        return count\n\n    # Convert the list to a binary string\n    binary_str = ''.join(str(x) for x in lst)\n    \n    # Calculate the maximum number of rotations needed\n    max_rotations = len(binary_str)\n    \n    # Find the minimum number of rotations required to have an odd number of '1's\n    min_rotations = odd_equivalent(binary_str, max_rotations)\n    \n    # Perform the rotations\n    result = []\n    for i in range(min_rotations):\n        binary_str = binary_str[1:] + binary_str[0]\n        result.append(int(binary_str, 2))\n    \n    return result\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef move_zero(lst):\n    def odd_equivalent(binary_string, rotations):\n        count = 0\n        for _ in range(rotations):\n            binary_string = binary_string[1:] + binary_string[0]\n            if sum(binary_string) % 2 != 0:\n                count += 1\n        return count\n\n    # Convert the list to a binary string\n    binary_str = ''.join(str(x) for x in lst)\n    \n    # Calculate the maximum number of rotations needed\n    max_rotations = len(binary_str)\n    \n    # Find the minimum number of rotations required to have an odd number of '1's\n    min_rotations = odd_equivalent(binary_str, max_rotations)\n    \n    # Perform the rotations\n    result = []\n    for i in range(min_rotations):\n        binary_str = binary_str[1:] + binary_str[0]\n        result.append(int(binary_str, 2))\n    \n    return result\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two pointers, `i` and `j`, where `i` is used for iterating through the list and `j` keeps track of the position to place non-zero elements.\n2. Iterate through the list using the `i` pointer.\n3. If the current element is non-zero, swap it with the element at the `j` pointer and increment both `i` and `j`.\n4. After the loop, fill the remaining positions from `j` to the end of the list with zeros.\n5. The modified list now has all non-zero elements positioned to the left and zeros to the right.",
+      "quality": 1.0,
+      "final_key": "def move_zero(lst):\n    i = 0\n    j = 0\n    while i < len(lst):\n        if lst[i] != 0:\n            lst[j], lst[i] = lst[i], lst[j]\n            j += 1\n        i += 1\n    while j < len(lst):\n        lst[j] = 0\n        j += 1\n    return lst",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert move_zero([0,1,0,3,12]) == [1,3,12,0,0]\nassert move_zero([]) == []\nassert move_zero([0,0,0]) == [0,0,0]\nassert move_zero([1,2,3]) == [1,2,3]\nassert move_zero([0,0,0,0]) == [0,0,0,0]\n```",
+        "coder": "```python\ndef move_zero(lst):\n    i = 0\n    j = 0\n    while i < len(lst):\n        if lst[i] != 0:\n            lst[j], lst[i] = lst[i], lst[j]\n            j += 1\n        i += 1\n    while j < len(lst):\n        lst[j] = 0\n        j += 1\n    return lst\n```",
+        "verifier": "PICK: A\n\n```python\ndef move_zero(lst):\n    i = 0\n    j = 0\n    while i < len(lst):\n        if lst[i] != 0:\n            lst[j], lst[i] = lst[i], lst[j]\n            j += 1\n        i += 1\n    while j < len(lst):\n        lst[j] = 0\n        j += 1\n    return lst\n```",
+        "fixer": "```python\ndef move_zero(lst):\n    i = 0\n    j = 0\n    while i < len(lst):\n        if lst[i] != 0:\n            lst[j], lst[i] = lst[i], lst[j]\n            j += 1\n        i += 1\n    while j < len(lst):\n        lst[j] = 0\n        j += 1\n    return lst\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `larg_nnum` that accepts two parameters: `lst` (the input list) and `n` (the number of largest elements to return).\n2. Use the built-in `sorted()` function on the input list `lst` to sort it in descending order.\n3. Slice the sorted list to get the first `n` elements using slicing syntax `[0:n]`.\n4. Convert the sliced list into a set to remove any duplicate values.\n5. Return the resulting set.\n\nThis approach ensures that the function correctly identifies and returns the n largest numbers from the given list without duplicates.",
+      "quality": 1.0,
+      "final_key": "def move_zero(lst):\n    # Count the number of zeros in the list\n    zero_count = lst.count(0)\n    # Remove all zeros from the list\n    lst = [x for x in lst if x != 0]\n    # Append the count of zeros back to the list\n    lst.extend([0]*zero_count)\n    return lst",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert move_zero([1,0,2,0,3,4]) == [1,2,3,4,0,0], \"Test case 1 failed\"\nassert move_zero([]) == [], \"Test case 2 failed\"\nassert move_zero([0]) == [0], \"Test case 3 failed\"\nassert move_zero([0,0,0]) == [0,0,0], \"Test case 4 failed\"\nassert move_zero([1,2,3,4,5,6,7,8,9,0]) == [1,2,3,4,5,6,7,8,9,0], \"Test case 5 failed\"\n```",
+        "coder": "```python\ndef move_zero(lst):\n    # Sort the list in descending order\n    sorted_lst = sorted(lst, reverse=True)\n    # Get the first n elements\n    result = sorted_lst[:n]\n    # Remove duplicates by converting to a set\n    unique_result = set(result)\n    return unique_result\n```",
+        "verifier": "PICK: B\n\n```python\ndef move_zero(lst):\n    # Count the number of zeros in the list\n    zero_count = lst.count(0)\n    # Remove all zeros from the list\n    lst = [x for x in lst if x != 0]\n    # Append the count of zeros back to the list\n    lst.extend([0]*zero_count)\n    return lst\n```",
+        "fixer": "```python\ndef move_zero(lst):\n    # Count the number of zeros in the list\n    zero_count = lst.count(0)\n    # Remove all zeros from the list\n    lst = [x for x in lst if x != 0]\n    # Append the count of zeros back to the list\n    lst.extend([0]*zero_count)\n    return lst\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def move_zero(nums):\n    left = 0\n    right = 0\n    \n    while right < len(nums):\n        if nums[right] != 0:\n            nums[left], nums[right] = nums[right], nums[left]\n            left += 1\n        right += 1\n\n    return nums",
+  "sample_keys": [
+    "def move_zero(nums):\n    left = 0\n    for right in range(len(nums)):\n        if nums[right] != 0:\n            nums[left], nums[right] = nums[right], nums[left]\n            left += 1\n    return nums",
+    "def move_zero(nums):\n    zeroes = nums.count(0)\n    nums[:] = (i for i in nums if i != 0)\n    nums.extend([0] * zeroes)\n    return nums",
+    "def move_zero(nums):\n    slow = 0\n    fast = 0\n    while fast < len(nums):\n        if nums[fast] != 0:\n            nums[slow], nums[fast] = nums[fast], nums[slow]\n            slow += 1\n        fast += 1\n    return nums"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1722.0,
+    "small_out": 455.0,
+    "small_s": 9.298579133988824
+  },
+  "calls_plus": {
+    "large_in": 124.0,
+    "large_out": 116.0,
+    "large_s": 2.6244379809941165,
+    "small_in": 1634.0,
+    "small_out": 370.0,
+    "small_s": 6.084335624997038
+  },
+  "calls_samples": {
+    "small_in": 5028.0,
+    "small_out": 1318.0,
+    "small_s": 23.483981779019814
+  }
+}

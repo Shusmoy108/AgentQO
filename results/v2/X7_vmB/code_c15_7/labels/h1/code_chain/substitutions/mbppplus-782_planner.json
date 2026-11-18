@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-782",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `odd_length_sum` that takes a list of integers as input.\n2. Initialize a variable `total_sum` to store the sum of all odd length subarrays.\n3. Iterate over each possible starting index of subarrays using a loop.\n4. For each starting index, iterate over possible lengths of subarrays that are odd numbers.\n5. Calculate the sum of elements for each valid subarray and add it to `total_sum`.\n6. Return the value of `total_sum` after iterating through all subarrays.",
+  "reference_key": null,
+  "final_key_plus": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):\n        for j in range(i, n, 2):  # Only consider odd lengths\n            total_sum += sum(arr[i:j+1])\n            \n    return total_sum",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\n```",
+    "coder": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):\n        for j in range(i, n, 2):  # Only consider odd lengths\n            total_sum += sum(arr[i:j+1])\n            \n    return total_sum\n```",
+    "verifier": "PICK: A\n\n```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):\n        for j in range(i, n, 2):  # Only consider odd lengths\n            total_sum += sum(arr[i:j+1])\n            \n    return total_sum\n```",
+    "fixer": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):\n        for j in range(i, n, 2):  # Only consider odd lengths\n            total_sum += sum(arr[i:j+1])\n            \n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `dog_age` that takes one parameter, `human_years`.\n2. Check if `human_years` is less than or equal to 0. If true, raise a ValueError with the message \"Age cannot be negative\".\n3. Initialize a variable `dog_years` to 0.\n4. If `human_years` is greater than or equal to 1, add 10 to `dog_years`.\n5. If `human_years` is greater than or equal to 2, add 7 to `dog_years`.\n6. Return the value of `dog_years`.",
+      "quality": 0.0,
+      "final_key": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i, n, 2):\n            total_sum += sum(arr[i:j+1])\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,3,5,7,9]) == 65",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1,3,5,7,9]) == 65\nassert odd_length_sum([-1,-2,-3,-4,-5]) == -15\nassert odd_length_sum([10]) == 10\n```",
+        "coder": "```python\ndef dog_age(human_years):\n    if human_years <= 0:\n        raise ValueError(\"Age cannot be negative\")\n    dog_years = 0\n    if human_years >= 1:\n        dog_years += 10\n    if human_years >= 2:\n        dog_years += 7\n    return dog_years\n```",
+        "verifier": "PICK: B\n```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i, n, 2):\n            total_sum += sum(arr[i:j+1])\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,3,5,7,9]) == 65\n```",
+        "fixer": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i, n, 2):\n            total_sum += sum(arr[i:j+1])\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1,3,5,7,9]) == 65\nassert odd_length_sum([-1,-2,-3,-4,-5]) == -15\nassert odd_length_sum([10]) == 10\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "REWRITTEN OUTPUT:\nPLAN:\n1. Define a function `odd_length_sum` that takes a list of integers as input.\n2. Initialize a variable `total_sum` to store the sum of all odd length subarrays.\n3. Iterate over each possible starting index of subarrays using a loop.\n4. For each starting index, iterate over possible lengths of subarrays that are odd numbers.\n5. Calculate the sum of elements for each valid subarray and add it to `total_sum`.\n6. Return the value of `total_sum` after iterating through all subarrays.",
+      "quality": 0.0,
+      "final_key": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):\n        for j in range(i + 1, n + 1, 2):  # Only consider odd lengths\n            subarray = arr[i:j]\n            total_sum += sum(subarray)\n            \n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\n```",
+        "coder": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):\n        for j in range(i + 1, n + 1, 2):  # Only consider odd lengths\n            subarray = arr[i:j]\n            total_sum += sum(subarray)\n            \n    return total_sum\n```",
+        "verifier": "PICK: B\n\n```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):\n        for j in range(i + 1, n + 1, 2):  # Only consider odd lengths\n            subarray = arr[i:j]\n            total_sum += sum(subarray)\n            \n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\n```",
+        "fixer": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):\n        for j in range(i + 1, n + 1, 2):  # Only consider odd lengths\n            subarray = arr[i:j]\n            total_sum += sum(subarray)\n            \n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `freq_count` that takes one parameter: `lst`, which is the input list.\n2. Initialize an empty dictionary named `frequency_dict`.\n3. Iterate over each element `element` in the input list `lst`.\n4. For each element, check if it already exists as a key in the `frequency_dict`. If it does, increment its value by 1; otherwise, add the element as a new key with a value of 1.\n5. After iterating through all elements, return the `frequency_dict`.\n\nThis approach ensures that each element's frequency is accurately counted and stored in a dictionary format.",
+      "quality": 1.0,
+      "final_key": "def odd_length_sum(lst):\n    total_sum = 0\n    n = len(lst)\n    for i in range(n):\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                total_sum += sum(lst[i:j+1])\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\n```",
+        "coder": "```python\ndef freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict\n```",
+        "verifier": "PICK: B\n```python\ndef odd_length_sum(lst):\n    total_sum = 0\n    n = len(lst)\n    for i in range(n):\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                total_sum += sum(lst[i:j+1])\n    return total_sum\n```",
+        "fixer": "```python\ndef odd_length_sum(lst):\n    total_sum = 0\n    n = len(lst)\n    for i in range(n):\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                total_sum += sum(lst[i:j+1])\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum",
+  "sample_keys": [
+    "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        start_index = i\n        end_index = i + n - 1\n        if (end_index - start_index) % 2 != 0:\n            total_sum += ((start_index * (start_index + 1)) // 2) + ((end_index + 1) * end_index // 2)\n    return total_sum",
+    "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                subarray = arr[i:j+1]\n                total_sum += sum(subarray)\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180",
+    "def odd_length_sum(arr):\n    result = 0\n    n = len(arr)\n    for start in range(n):\n        end = start + (n - start) // 2\n        subarray = arr[start:end+1]\n        result += sum(subarray)\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1683.0,
+    "small_out": 535.0,
+    "small_s": 11.771298501989804
+  },
+  "calls_plus": {
+    "large_in": 127.0,
+    "large_out": 113.0,
+    "large_s": 2.554457167017972,
+    "small_in": 1409.0,
+    "small_out": 302.0,
+    "small_s": 5.464728517981712
+  },
+  "calls_samples": {
+    "small_in": 5253.0,
+    "small_out": 2038.0,
+    "small_s": 36.148871116980445
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-725",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `extract_quotation` that takes a single string argument.\n2. Use the `split()` method to divide the string into parts based on spaces, storing the result in a list.\n3. Initialize an empty list called `result` to store the extracted values.\n4. Iterate over each part in the list from step 2:\n   - Check if the part starts and ends with a double quote (\").\n   - If it does, remove the quotes and append the cleaned part to the `result` list.\n5. Return the `result` list containing all the values extracted between quotation marks.",
+  "reference_key": null,
+  "final_key_plus": "def extract_quotation(s):\n    parts = s.split()\n    result = []\n    for part in parts:\n        if part.startswith('\"') and part.endswith('\"'):\n            result.append(part[1:-1])\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Single quote\"') == ['Single quote']\nassert extract_quotation('\"Double quotes\" \"Another double quote\"') == ['Double quotes', 'Another double quote']\nassert extract_quotation('\"With spaces inside\" \"Spaces outside\"') == ['With spaces inside', 'Spaces outside']\n```",
+    "coder": "```python\ndef extract_quotation(s):\n    parts = s.split()\n    result = []\n    for part in parts:\n        if part.startswith('\"') and part.endswith('\"'):\n            result.append(part[1:-1])\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef extract_quotation(s):\n    parts = s.split()\n    result = []\n    for part in parts:\n        if part.startswith('\"') and part.endswith('\"'):\n            result.append(part[1:-1])\n    return result\n```",
+    "fixer": "```python\ndef extract_quotation(s):\n    parts = s.split()\n    result = []\n    for part in parts:\n        if part.startswith('\"') and part.endswith('\"'):\n            result.append(part[1:-1])\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `number_ctr` that takes one parameter, `input_str`.\n3. Initialize a counter variable to zero.\n4. Iterate over each character in the input string using a for loop.\n5. Check if the current character is a digit by using the `isdigit()` method.\n6. If it is a digit, increment the counter.\n7. After iterating through all characters, return the counter value.\n\nHere's the complete implementation:\n\n```python\ndef number_ctr(input_str):\n    # Initialize counter\n    count = 0\n    \n    # Iterate over each character in the input string\n    for char in input_str:\n        # Check if the character is a digit\n        if char.isdigit():\n            # Increment the counter\n            count += 1\n            \n    # Return the counter value\n    return count\n```\n\nThis function will correctly count the number of digits in the provided string.",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef extract_quotation(input_str):\n    pattern = r'\"([^\"]*)\"'\n    matches = re.findall(pattern, input_str)\n    \n    return matches",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Hello\" World!') == ['Hello', 'World!']\nassert extract_quotation('No quotes here.') == []\nassert extract_quotation('\"Single quote\" \"Double quote\" \"Both quotes\"') == ['Single quote', 'Double quote', 'Both quotes']\nassert extract_quotation('\"With spaces\" \"And punctuation\"') == ['With spaces', 'And punctuation']\n```",
+        "coder": "```python\ndef number_ctr(input_str):\n    count = 0\n    \n    for char in input_str:\n        if char.isdigit():\n            count += 1\n            \n    return count\n```",
+        "verifier": "PICK: B\n```python\nimport re\n\ndef extract_quotation(input_str):\n    pattern = r'\"([^\"]*)\"'\n    matches = re.findall(pattern, input_str)\n    \n    return matches\n```",
+        "fixer": "```python\nimport re\n\ndef extract_quotation(input_str):\n    pattern = r'\"([^\"]*)\"'\n    matches = re.findall(pattern, input_str)\n    \n    return matches\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `opposite_signs` that takes two parameters, `a` and `b`.\n2. Inside the function, use the logical operator `!=` to compare the signs of `a` and `b`. If they are different, it means they have opposite signs, so return `True`.\n3. If the signs are the same, return `False`.\n\nHere's the complete implementation:\n\n```python\ndef opposite_signs(a, b):\n    # Compare the signs of a and b using !=\n    if a != b:\n        return True\n    else:\n        return False\n```\n\nThis function will correctly determine whether two integers have opposite signs based on the provided test case.",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef extract_quotation(s):\n    # Use regular expression to find all substrings enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches\n\n# Test cases\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('Cast your \"favorite\" entertainment \"apps\"') == ['favorite', 'apps']\nassert extract_quotation('Watch content \"4k Ultra HD\" resolution with \"HDR 10\" Support') == ['4k Ultra HD', 'HDR 10']\nassert extract_quotation(\"Watch content '4k Ultra HD' resolution with 'HDR 10' Support\") == []\nassert opposite_signs(10, -20) == True\nassert opposite_signs(-5, 5) == False\nassert opposite_signs(0, 0) == False\nassert opposite_signs(100, 100) == False\nassert opposite_signs(-100, -100) == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert opposite_signs(10, -20) == True\nassert opposite_signs(-5, 5) == False\nassert opposite_signs(0, 0) == False\nassert opposite_signs(100, 100) == False\nassert opposite_signs(-100, -100) == False\n```",
+        "coder": "```python\ndef opposite_signs(a, b):\n    # Compare the signs of a and b using !=\n    if a != b:\n        return True\n    else:\n        return False\n```",
+        "verifier": "PICK: B\n```python\nimport re\n\ndef extract_quotation(s):\n    # Use regular expression to find all substrings enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches\n\n# Test cases\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('Cast your \"favorite\" entertainment \"apps\"') == ['favorite', 'apps']\nassert extract_quotation('Watch content \"4k Ultra HD\" resolution with \"HDR 10\" Support') == ['4k Ultra HD', 'HDR 10']\nassert extract_quotation(\"Watch content '4k Ultra HD' resolution with 'HDR 10' Support\") == []\nassert opposite_signs(10, -20) == True\nassert opposite_signs(-5, 5) == False\nassert opposite_signs(0, 0) == False\nassert opposite_signs(100, 100) == False\nassert opposite_signs(-100, -100) == False\n```",
+        "fixer": "```python\nimport re\n\ndef extract_quotation(s):\n    # Use regular expression to find all substrings enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', s)\n    return matches\n\n# Test cases\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('Cast your \"favorite\" entertainment \"apps\"') == ['favorite', 'apps']\nassert extract_quotation('Watch content \"4k Ultra HD\" resolution with \"HDR 10\" Support') == ['4k Ultra HD', 'HDR 10']\nassert extract_quotation(\"Watch content '4k Ultra HD' resolution with 'HDR 10' Support\") == []\nassert opposite_signs(10, -20) == True\nassert opposite_signs(-5, 5) == False\nassert opposite_signs(0, 0) == False\nassert opposite_signs(100, 100) == False\nassert opposite_signs(-100, -100) == False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to keep track of the maximum subset size found and the current subset size.\n2. Iterate through each number in the list.\n3. For each number, check if it can be added to the current subset without violating the condition (i.e., both numbers must be divisible).\n4. If the number can be added, update the current subset size.\n5. After checking all numbers, return the maximum subset size found.\n\nThis approach ensures that we efficiently find the largest subset where every pair is divisible by checking each number against the existing subset.",
+      "quality": 0.0,
+      "final_key": "def extract_quotation(s):\n    max_subset_size = 0\n    current_subset_size = 0\n    for num in s.split():\n        if num.isdigit() and int(num) % current_subset_size == 0:\n            current_subset_size += 1\n            max_subset_size = max(max_subset_size, current_subset_size)\n        else:\n            current_subset_size = 0\n    return [num for num in s.split() if num.isdigit()]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Hello\" World!') == ['Hello']\nassert extract_quotation('No quotes here.') == []\nassert extract_quotation('\"Single quote\" \"Double quote\" \"Both quotes\"') == ['Single quote', 'Double quote', 'Both quotes']\nassert extract_quotation('\"This is a \"test\" with \"quotes\" inside\"') == ['This is a ', 'test', 'with ', 'quotes', 'inside']\n```",
+        "coder": "```python\ndef extract_quotation(s):\n    max_subset_size = 0\n    current_subset_size = 0\n    for num in s.split():\n        if num.isdigit() and int(num) % current_subset_size == 0:\n            current_subset_size += 1\n            max_subset_size = max(max_subset_size, current_subset_size)\n        else:\n            current_subset_size = 0\n    return [num for num in s.split() if num.isdigit()]\n```",
+        "verifier": "PICK: A\n\n```python\ndef extract_quotation(s):\n    max_subset_size = 0\n    current_subset_size = 0\n    for num in s.split():\n        if num.isdigit() and int(num) % current_subset_size == 0:\n            current_subset_size += 1\n            max_subset_size = max(max_subset_size, current_subset_size)\n        else:\n            current_subset_size = 0\n    return [num for num in s.split() if num.isdigit()]\n```",
+        "fixer": "```python\ndef extract_quotation(s):\n    max_subset_size = 0\n    current_subset_size = 0\n    for num in s.split():\n        if num.isdigit() and int(num) % current_subset_size == 0:\n            current_subset_size += 1\n            max_subset_size = max(max_subset_size, current_subset_size)\n        else:\n            current_subset_size = 0\n    return [num for num in s.split() if num.isdigit()]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches",
+  "sample_keys": [
+    "def extract_quotation(input_string):\n    # Split the input string by spaces\n    words = input_string.split()\n    # Initialize an empty list to store the extracted quoted texts\n    quoted_texts = []\n    # Iterate over the list to find quotations\n    for word in words:\n        if word.startswith('\"') and word.endswith('\"'):\n            # Extract the quoted text and add it to the list\n            quoted_texts.append(word[1:-1])\n    # Return the list of extracted quoted texts\n    return quoted_texts",
+    "def extract_quotation(input_string):\n    result = []\n    in_quotes = False\n    current_value = \"\"\n    \n    for char in input_string:\n        if char == '\"':\n            in_quotes = not in_quotes\n            if in_quotes:\n                current_value += char\n        elif in_quotes:\n            current_value += char\n    \n    if current_value:\n        result.append(current_value)\n    \n    return result",
+    "def extract_quotation(input_string):\n    # Find all occurrences of strings enclosed in double quotes\n    quotations = [s.strip('\"') for s in input_string.split('\"')]\n    return quotations"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1698.0,
+    "small_out": 356.0,
+    "small_s": 7.876229859975865
+  },
+  "calls_plus": {
+    "large_in": 128.0,
+    "large_out": 128.0,
+    "large_s": 2.7847551020095125,
+    "small_in": 1648.0,
+    "small_out": 270.0,
+    "small_s": 5.016024490003474
+  },
+  "calls_samples": {
+    "small_in": 5768.0,
+    "small_out": 1414.0,
+    "small_s": 24.667354114935733
+  }
+}

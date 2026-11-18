@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-167",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power\n```",
+  "reference_key": "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+  "final_key_plus": "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import *\nfrom collections import *\n\nclass Solution:\n    def largest_palindrome(self, x: int) -> bool:\n        # Ensure the number is non-negative\n        if x < 0:\n            return False\n        \n        # Check for special cases\n        if abs(x) % 11 != 0:\n            return False\n        \n        # Generate candidates from reverse\n        palidromes = [self.reverser(i * i) for i in range(int(math.sqrt(abs(x))))]\n        \n        # Check all generated palindromes against the target number\n        for palindrome in palidromes:\n            if palindrome < abs(x):\n                continue\n            if abs(palindrome - x) == x:\n                return True\n            \n        return False\n    \n    \n    # Helper method for reversing the digits of an integer\n    def reverser(self, num: int) -> int:\n        reversed_num = 0\n        while num > 0:\n            digit = num % 10\n            reversed_num = reversed_num * 10 + digit\n            num //= 10\n        return reversed_num",
+      "reference_key": "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+      "key_differs": true,
+      "text": "```python\n\nfrom typing import *\nfrom collections import *\n\nclass Solution:\n    def largest_palindrome(self, x: int) -> bool:\n        # Ensure the number is non-negative\n        if x < 0:\n            return False\n        \n        # Check for special cases\n        if abs(x) % 11 != 0:\n            return False\n        \n        # Generate candidates from reverse\n        palidromes = [self.reverser(i * i) for i in range(int(math.sqrt(abs(x))))]\n        \n        # Check all generated palindromes against the target number\n        for palindrome in palidromes:\n            if palindrome < abs(x):\n                continue\n            if abs(palindrome - x) == x:\n                return True\n            \n        return False\n    \n    \n    # Helper method for reversing the digits of an integer\n    def reverser(self, num: int) -> int:\n        reversed_num = 0\n        while num > 0:\n            digit = num % 10\n            reversed_num = reversed_num * 10 + digit\n            num //= 10\n        return reversed_num\n```",
+      "quality": 1.0,
+      "final_key": "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import pytest\n\ndef next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power\n\n# Test cases\n@pytest.mark.parametrize(\"n, expected\", [(0, 1), (5, 8), (17, 32), (1, 1), (2, 2), (3, 4), (8, 8), (9, 16)])\ndef test_next_power_of_2(n, expected):\n    result = next_power_of_2(n)\n    assert result == expected, f\"Failed for {n}: expected {expected}, got {result}\"",
+      "reference_key": "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+      "key_differs": true,
+      "text": "```python\nimport pytest\n\ndef next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power\n\n# Test cases\n@pytest.mark.parametrize(\"n, expected\", [(0, 1), (5, 8), (17, 32), (1, 1), (2, 2), (3, 4), (8, 8), (9, 16)])\ndef test_next_power_of_2(n, expected):\n    result = next_power_of_2(n)\n    assert result == expected, f\"Failed for {n}: expected {expected}, got {result}\"\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students",
+      "reference_key": "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+      "key_differs": true,
+      "text": "```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```",
+      "quality": 1.0,
+      "final_key": "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+  "sample_keys": [
+    "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+    "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+    "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+    "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+    "import math\n\ndef next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = math.ceil(math.log2(n))\n    return 2 ** power\n\n# Test cases\nassert next_power_of_2(0) == 1\nassert next_power_of_2(5) == 8\nassert next_power_of_2(17) == 32\nassert next_power_of_2(1) == 1\nassert next_power_of_2(2) == 2\nassert next_power_of_2(3) == 4\nassert next_power_of_2(8) == 8\nassert next_power_of_2(9) == 16"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1293.0,
+    "small_out": 358.0,
+    "small_s": 8.091368739987956
+  },
+  "calls_plus": {
+    "small_in": 990.0,
+    "small_out": 311.0,
+    "small_s": 7.132316675997572,
+    "large_in": 303.0,
+    "large_out": 47.0,
+    "large_s": 1.3895414450089447
+  },
+  "calls_samples": {
+    "small_in": 1515.0,
+    "small_out": 344.0,
+    "small_s": 6.517714628978865
+  }
+}

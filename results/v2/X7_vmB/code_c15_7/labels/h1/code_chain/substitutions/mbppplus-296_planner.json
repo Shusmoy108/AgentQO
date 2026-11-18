@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-296",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `get_Inv_Count` that takes an array as input.\n2. Initialize a counter variable to zero to keep track of inversions.\n3. Use nested loops to compare each element with every other element that comes after it in the array.\n4. If an inversion is found (i.e., an earlier element is greater than a later element), increment the counter.\n5. Return the counter value as the total number of inversions in the array.",
+  "reference_key": null,
+  "final_key_plus": "def get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([1,2,3,4,5]) == 0\nassert get_Inv_Count([5,4,3,2,1]) == 10\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([10]) == 0\n```",
+    "coder": "```python\ndef get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```",
+    "verifier": "PICK: A\n\n```python\ndef get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```",
+    "fixer": "```python\ndef get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two variables, `first_even` and `first_odd`, to store the first even and odd numbers found in the list, respectively.\n2. Iterate through the list using a for loop.\n3. For each element, check if it is even or odd:\n   - If it's even, compare it with `first_even`. If `first_even` is still None (indicating no even numbers have been found yet), set `first_even` to this even number.\n   - If it's odd, compare it with `first_odd`. If `first_odd` is still None (indicating no odd numbers have been found yet), set `first_odd` to this odd number.\n4. After iterating through the entire list, calculate the difference between `first_even` and `first_odd`.\n5. Return the calculated difference.",
+      "quality": 0.0,
+      "final_key": "def get_Inv_Count(arr):\n    first_even = None\n    first_odd = None\n    \n    for num in arr:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        raise ValueError(\"Array must contain at least one even and one odd number.\")\n    \n    return abs(first_even - first_odd)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([1,3,5,7,9]) == 0\nassert get_Inv_Count([2,4,6,8,10]) == 0\nassert get_Inv_Count([1,3,5,7,9,11]) == 0\nassert get_Inv_Count([1,3,5,7,9,11,13]) == 0\n```",
+        "coder": "```python\ndef get_Inv_Count(arr):\n    first_even = None\n    first_odd = None\n    \n    for num in arr:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    return abs(first_even - first_odd)\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_Inv_Count(arr):\n    first_even = None\n    first_odd = None\n    \n    for num in arr:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        raise ValueError(\"Array must contain at least one even and one odd number.\")\n    \n    return abs(first_even - first_odd)\n```",
+        "fixer": "```python\ndef get_Inv_Count(arr):\n    first_even = None\n    first_odd = None\n    \n    for num in arr:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        raise ValueError(\"Array must contain at least one even and one odd number.\")\n    \n    return abs(first_even - first_odd)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `get_Inv_Count` that takes an array as input.\n2. Initialize a counter variable to zero to count the inversions.\n3. Use nested loops to iterate through each element in the array, comparing it against every subsequent element.\n4. If an element at index i is greater than an element at index j where i < j, increment the counter.\n5. Return the counter value as the total number of inversions in the array.",
+      "quality": 1.0,
+      "final_key": "def get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([1,2,3,4,5]) == 0\nassert get_Inv_Count([5,4,3,2,1]) == 10\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([10]) == 0\n```",
+        "coder": "```python\ndef get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```",
+        "verifier": "PICK: A\n\n```python\ndef get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```",
+        "fixer": "```python\ndef get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `Diff` that takes two parameters, `list1` and `list2`.\n2. Initialize an empty list called `result` to store the differences.\n3. Iterate over each element in `list1`.\n4. For each element in `list1`, check if it is present in `list2`.\n5. If the element is not found in `list2`, append it to `result`.\n6. Return the `result` list.\n\nHere's the complete implementation:\n\n```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n\n# Test case\nassert (Diff([10, 15, 20, 25, 30, 35, 40], [25, 40, 35])) == [10, 20, 30, 15]\n```\n\nThis function correctly identifies the elements that are unique to `list1` by comparing them with `list2`.",
+      "quality": 1.0,
+      "final_key": "def get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([1,1,1,1]) == 0\nassert get_Inv_Count([1,2,3,4,5]) == 0\nassert get_Inv_Count([5,4,3,2,1]) == 10\n```",
+        "coder": "```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n```",
+        "verifier": "PICK: B\n```python\ndef get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```",
+        "fixer": "```python\ndef get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n\n# Test cases\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([1,2,1]) == 1\nassert get_Inv_Count([1,2,5,6,1]) == 3\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([1,1,1,1]) == 0\nassert get_Inv_Count([1,2,3,4,5]) == 0\nassert get_Inv_Count([5,4,3,2,1]) == 10\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+  "sample_keys": [
+    "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+    "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+    "def get_Inv_Count(arr):\n    n = len(arr)\n    inv_count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1433.0,
+    "small_out": 391.0,
+    "small_s": 8.622342366026714
+  },
+  "calls_plus": {
+    "large_in": 111.0,
+    "large_out": 99.0,
+    "large_s": 2.9325768940034322,
+    "small_in": 1325.0,
+    "small_out": 291.0,
+    "small_s": 5.846540811035084
+  },
+  "calls_samples": {
+    "small_in": 4275.0,
+    "small_out": 1145.0,
+    "small_s": 23.69097802907345
+  }
+}

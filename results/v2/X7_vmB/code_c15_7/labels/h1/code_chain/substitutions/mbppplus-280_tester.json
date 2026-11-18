@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-280",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert sequential_search([], 5) == (False, -1)\nassert sequential_search([10, 20, 30, 40, 50], 25) == (False, -1)\nassert sequential_search([1, 2, 3, 4, 5], 5) == (True, 4)\nassert sequential_search(['a', 'b', 'c', 'd'], 'c') == (True, 2)\nassert sequential_search([100, 200, 300], 300) == (True, 2)\n```",
+  "reference_key": "assert sequential_search([], 5) == (False, -1)\nassert sequential_search([10, 20, 30, 40, 50], 25) == (False, -1)\nassert sequential_search([1, 2, 3, 4, 5], 5) == (True, 4)\nassert sequential_search(['a', 'b', 'c', 'd'], 'c') == (True, 2)\nassert sequential_search([100, 200, 300], 300) == (True, 2)",
+  "final_key_plus": "def sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n```",
+    "fixer": "```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sequential_search([], 31) == (False, -1)\nassert sequential_search([12, 13, 14, 15, 16, 17, 18], 3) == (False, -1)\nassert sequential_search([1, 2, 3, 4, 5, 6, 7, 8, 9], 7) == (True, 6)\nassert sequential_search([100, 200, 300, 400, 500, 600, 700, 800, 900], 900) == (True, 8)\nassert sequential_search([-10, -20, -30, -40, -50, -60, -70, -80, -90, -100], -100) == (True, 9)",
+      "reference_key": "assert sequential_search([], 5) == (False, -1)\nassert sequential_search([10, 20, 30, 40, 50], 25) == (False, -1)\nassert sequential_search([1, 2, 3, 4, 5], 5) == (True, 4)\nassert sequential_search(['a', 'b', 'c', 'd'], 'c') == (True, 2)\nassert sequential_search([100, 200, 300], 300) == (True, 2)",
+      "key_differs": true,
+      "text": "```python\nassert sequential_search([], 31) == (False, -1)\nassert sequential_search([12, 13, 14, 15, 16, 17, 18], 3) == (False, -1)\nassert sequential_search([1, 2, 3, 4, 5, 6, 7, 8, 9], 7) == (True, 6)\nassert sequential_search([100, 200, 300, 400, 500, 600, 700, 800, 900], 900) == (True, 8)\nassert sequential_search([-10, -20, -30, -40, -50, -60, -70, -80, -90, -100], -100) == (True, 9)\n```",
+      "quality": 1.0,
+      "final_key": "def sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n```",
+        "fixer": "```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import numpy as np\n\n# Test case 1 with multiple matches in the array\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],31) == (True, 3)\n\n# Test case 2 with a single match at the beginning of the array\nassert sequential_search([52,23,58,31,56,77,43,12,65,19],11) == (True, 0)\n\n# Test case 3 with a single match at the end of the array\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],43) == (True, 7)\n\n# Test case 4 with a non-existent element\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],580) == (False, -1)\n\n# Test case 5 with an empty array\nassert sequential_search([],5) == (False, -1)",
+      "reference_key": "assert sequential_search([], 5) == (False, -1)\nassert sequential_search([10, 20, 30, 40, 50], 25) == (False, -1)\nassert sequential_search([1, 2, 3, 4, 5], 5) == (True, 4)\nassert sequential_search(['a', 'b', 'c', 'd'], 'c') == (True, 2)\nassert sequential_search([100, 200, 300], 300) == (True, 2)",
+      "key_differs": true,
+      "text": "```python\nimport numpy as np\n\n# Test case 1 with multiple matches in the array\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],31) == (True, 3)\n\n# Test case 2 with a single match at the beginning of the array\nassert sequential_search([52,23,58,31,56,77,43,12,65,19],11) == (True, 0)\n\n# Test case 3 with a single match at the end of the array\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],43) == (True, 7)\n\n# Test case 4 with a non-existent element\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],580) == (False, -1)\n\n# Test case 5 with an empty array\nassert sequential_search([],5) == (False, -1)\n```",
+      "quality": 1.0,
+      "final_key": "def sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n```",
+        "fixer": "```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((7,8,9,0)) == 7890\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((10,20,30)) == 102030\nassert tuple_to_int((-1,-2,-3)) == -123",
+      "reference_key": "assert sequential_search([], 5) == (False, -1)\nassert sequential_search([10, 20, 30, 40, 50], 25) == (False, -1)\nassert sequential_search([1, 2, 3, 4, 5], 5) == (True, 4)\nassert sequential_search(['a', 'b', 'c', 'd'], 'c') == (True, 2)\nassert sequential_search([100, 200, 300], 300) == (True, 2)",
+      "key_differs": true,
+      "text": "```python\nassert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((7,8,9,0)) == 7890\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((10,20,30)) == 102030\nassert tuple_to_int((-1,-2,-3)) == -123\n```",
+      "quality": 1.0,
+      "final_key": "def sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n```",
+        "fixer": "```python\ndef sequential_search(arr, elem):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == elem:\n            found = True\n            index = i\n            break\n    return (found, index)\n\n# Test cases\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],31) == (True, 3)\nassert sequential_search([12, 32, 45, 62, 35, 47, 44, 61],61) == (True, 7)\nassert sequential_search([9, 10, 17, 19, 22, 39, 48, 56],48) == (True, 6)\nassert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((7,8,9,0)) == 7890\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((10,20,30)) == 102030\nassert tuple_to_int((-1,-2,-3)) == -123\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert sequential_search([], 31) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 19) == (True, 9)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 0) == (False, -1)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 58) == (True, 2)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19], 77) == (True, 5)",
+  "sample_keys": [
+    "assert sequential_search([], 10) == (False, -1)\nassert sequential_search([7], 7) == (True, 0)\nassert sequential_search([\"apple\", \"banana\", \"cherry\"], \"orange\") == (False, -1)\nassert sequential_search([10, 20, 30, 40, 50], 40) == (True, 3)\nassert sequential_search([\"dog\", \"cat\", \"bird\"], \"elephant\") == (False, -1)",
+    "assert sequential_search([],31) == (False, -1)\nassert sequential_search([31],31) == (True, 0)\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],65) == (True, 9)\nassert sequential_search([15,25,35,45,55,65],64) == (False, -1)\nassert sequential_search([15,25,35,45,55,65],65,3) == (True, 2)",
+    "# Test case 1\nassert sequential_search([11,23,58,31,56,77,43,12,65,19],31) == (True, 3)\n\n# Test case 2\nassert sequential_search([],5) == (False, -1)\n\n# Test case 3\nassert sequential_search([100,200,300,400,500],450) == (False, -1)\n\n# Test case 4\nassert sequential_search([1,2,3,4,5],5) == (True, 4)\n\n# Test case 5\nassert sequential_search([1,2,3,4,5],6) == (False, -1)",
+    "assert sequential_search([], 'a') == (False, -1)\nassert sequential_search(['a'], 'a') == (True, 0)\nassert sequential_search(['b', 'c', 'd'], 'e') == (False, -1)\nassert sequential_search([3, 5, 7, 11, 13], 11) == (True, 3)\nassert sequential_search([-2, -5, -8, -11, -14], -14) == (True, 4)",
+    "assert sequential_search([], 100) == (False, -1)\nassert sequential_search([42], 42) == (True, 0)\nassert sequential_search(['apple', 'banana', 'cherry'], 'banana') == (True, 1)\nassert sequential_search([8, 15, 23, 42, 88], 60) == (False, -1)\nassert sequential_search(['hello', 'world'], 'hello') == (True, 0)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2254.0,
+    "small_out": 495.0,
+    "small_s": 10.443173121020664
+  },
+  "calls_plus": {
+    "small_in": 1827.0,
+    "small_out": 296.0,
+    "small_s": 5.9258316599880345,
+    "large_in": 238.0,
+    "large_out": 136.0,
+    "large_s": 3.015451339975698
+  },
+  "calls_samples": {
+    "small_in": 1190.0,
+    "small_out": 668.0,
+    "small_s": 11.822554651967948
+  }
+}

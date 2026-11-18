@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-782",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert odd_length_sum([1, 2, 3, 4]) == 20\nassert odd_length_sum([10, 20, 30, 40, 50]) == 490\nassert odd_length_sum([-1, -2, -3, -4]) == -14\nassert odd_length_sum([0, 0, 0, 0]) == 0\nassert odd_length_sum([7]) == 7\n```",
+  "reference_key": "assert odd_length_sum([1, 2, 3, 4]) == 20\nassert odd_length_sum([10, 20, 30, 40, 50]) == 490\nassert odd_length_sum([-1, -2, -3, -4]) == -14\nassert odd_length_sum([0, 0, 0, 0]) == 0\nassert odd_length_sum([7]) == 7",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B",
+    "fixer": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1, 2, 3, 4]) == 20\nassert odd_length_sum([10, 20, 30, 40, 50]) == 490\nassert odd_length_sum([-1, -2, -3, -4]) == -14\nassert odd_length_sum([0, 0, 0, 0]) == 0\nassert odd_length_sum([7]) == 7\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# edge case where there's only one element\nassert odd_length_sum([1]) == 1\n\n# edge case where there are two elements\nassert odd_length_sum([1, 2]) == 3\n\n# typical case with more than two elements\nassert odd_length_sum([3, 3, 3]) == 18\n\n# typical case with mixed even and odd numbers\nassert odd_length_sum([2, 4, 6, 8, 9]) == 72\n\n# edge case where there's a single odd number at the end\nassert odd_length_sum([2, 4, 6, 8, 1]) == 20",
+      "reference_key": "assert odd_length_sum([1, 2, 3, 4]) == 20\nassert odd_length_sum([10, 20, 30, 40, 50]) == 490\nassert odd_length_sum([-1, -2, -3, -4]) == -14\nassert odd_length_sum([0, 0, 0, 0]) == 0\nassert odd_length_sum([7]) == 7",
+      "key_differs": true,
+      "text": "```python\n\n# edge case where there's only one element\nassert odd_length_sum([1]) == 1\n\n# edge case where there are two elements\nassert odd_length_sum([1, 2]) == 3\n\n# typical case with more than two elements\nassert odd_length_sum([3, 3, 3]) == 18\n\n# typical case with mixed even and odd numbers\nassert odd_length_sum([2, 4, 6, 8, 9]) == 72\n\n# edge case where there's a single odd number at the end\nassert odd_length_sum([2, 4, 6, 8, 1]) == 20\n```",
+      "quality": 0.0,
+      "final_key": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1, 2]) == 3\nassert odd_length_sum([3, 3, 3]) == 18\nassert odd_length_sum([2, 4, 6, 8, 9]) == 72\nassert odd_length_sum([2, 4, 6, 8, 1]) == 20",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1, 2]) == 3\nassert odd_length_sum([3, 3, 3]) == 18\nassert odd_length_sum([2, 4, 6, 8, 9]) == 72\nassert odd_length_sum([2, 4, 6, 8, 1]) == 20\n```",
+        "fixer": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1, 2]) == 3\nassert odd_length_sum([3, 3, 3]) == 18\nassert odd_length_sum([2, 4, 6, 8, 9]) == 72\nassert odd_length_sum([2, 4, 6, 8, 1]) == 20\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4]) == 20\nassert odd_length_sum([1,2,3,4,5]) == 56\nassert odd_length_sum([1,2,3,4,5,6,7,8]) == 135",
+      "reference_key": "assert odd_length_sum([1, 2, 3, 4]) == 20\nassert odd_length_sum([10, 20, 30, 40, 50]) == 490\nassert odd_length_sum([-1, -2, -3, -4]) == -14\nassert odd_length_sum([0, 0, 0, 0]) == 0\nassert odd_length_sum([7]) == 7",
+      "key_differs": true,
+      "text": "```python\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4]) == 20\nassert odd_length_sum([1,2,3,4,5]) == 56\nassert odd_length_sum([1,2,3,4,5,6,7,8]) == 135\n```",
+      "quality": 0.0,
+      "final_key": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4]) == 20\nassert odd_length_sum([1,2,3,4,5]) == 56\nassert odd_length_sum([1,2,3,4,5,6,7,8]) == 135",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4]) == 20\nassert odd_length_sum([1,2,3,4,5]) == 56\nassert odd_length_sum([1,2,3,4,5,6,7,8]) == 135\n```",
+        "fixer": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4]) == 20\nassert odd_length_sum([1,2,3,4,5]) == 56\nassert odd_length_sum([1,2,3,4,5,6,7,8]) == 135\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert freq_count([]) == {}\nassert freq_count([1]) == {1: 1}\nassert freq_count([1, 1, 1, 1]) == {1: 4}\nassert freq_count(['a', 'b', 'c']) == {'a': 1, 'b': 1, 'c': 1}\nassert freq_count(['a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']) == {'a': 3, 'b': 3, 'c': 3}",
+      "reference_key": "assert odd_length_sum([1, 2, 3, 4]) == 20\nassert odd_length_sum([10, 20, 30, 40, 50]) == 490\nassert odd_length_sum([-1, -2, -3, -4]) == -14\nassert odd_length_sum([0, 0, 0, 0]) == 0\nassert odd_length_sum([7]) == 7",
+      "key_differs": true,
+      "text": "```python\nassert freq_count([]) == {}\nassert freq_count([1]) == {1: 1}\nassert freq_count([1, 1, 1, 1]) == {1: 4}\nassert freq_count(['a', 'b', 'c']) == {'a': 1, 'b': 1, 'c': 1}\nassert freq_count(['a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']) == {'a': 3, 'b': 3, 'c': 3}\n```",
+      "quality": 0.0,
+      "final_key": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert freq_count([]) == {}\nassert freq_count([1]) == {1: 1}\nassert freq_count([1, 1, 1, 1]) == {1: 4}\nassert freq_count(['a', 'b', 'c']) == {'a': 1, 'b': 1, 'c': 1}\nassert freq_count(['a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']) == {'a': 3, 'b': 3, 'c': 3}",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert freq_count([]) == {}\nassert freq_count([1]) == {1: 1}\nassert freq_count([1, 1, 1, 1]) == {1: 4}\nassert freq_count(['a', 'b', 'c']) == {'a': 1, 'b': 1, 'c': 1}\nassert freq_count(['a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']) == {'a': 3, 'b': 3, 'c': 3}\n```",
+        "fixer": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert freq_count([]) == {}\nassert freq_count([1]) == {1: 1}\nassert freq_count([1, 1, 1, 1]) == {1: 4}\nassert freq_count(['a', 'b', 'c']) == {'a': 1, 'b': 1, 'c': 1}\nassert freq_count(['a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']) == {'a': 3, 'b': 3, 'c': 3}\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180",
+  "sample_keys": [
+    "# Test case 1 with all distinct elements\nassert odd_length_sum([1, 2, 3, 4, 5]) == 60\n\n# Test case 2 with all same element\nassert odd_length_sum([7, 7, 7, 7, 7]) == 150\n\n# Test case 3 with empty list\nassert odd_length_sum([]) == 0\n\n# Test case 4 with single element\nassert odd_length_sum([1]) == 1\n\n# Test case 5 with large array\nassert odd_length_sum([10, 20, 30, 40, 50, 60, 70, 80, 90, 100]) == 6100",
+    "assert odd_length_sum([1,2,3]) == 6\nassert odd_length_sum([1,2,3,4,5]) == 9\nassert odd_length_sum([1,2,3,4,5,6]) == 20\nassert odd_length_sum([]) == 0\nassert odd_length_sum([7]) == 7",
+    "assert odd_length_sum([0, 3, 2, 6, 2, 7]) == 45\nassert odd_length_sum([1, 4]) == 5\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1, 2, 3, 4, 5]) == 35\nassert odd_length_sum([10, 12, 14, 16, 18]) == 95",
+    "assert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1] * 100) == 25000\nassert odd_length_sum([1, 3, 5, 7, 9]) == 255\nassert odd_length_sum([-1, -3, -5, -7, -9]) == -255",
+    "# Typical case\nassert odd_length_sum([1, 2, 3, 4, 5]) == 35\n\n# Edge case with empty array\nassert odd_length_sum([]) == 0\n\n# Edge case with single element\nassert odd_length_sum([7]) == 7\n\n# Edge case with even number of elements\nassert odd_length_sum([1, 2, 3, 4, 5, 6]) == 58\n\n# Edge case with negative numbers\nassert odd_length_sum([-1, -2, -3, -4, -5]) == -25"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1683.0,
+    "small_out": 535.0,
+    "small_s": 11.771298501989804
+  },
+  "calls_plus": {
+    "small_in": 1541.0,
+    "small_out": 513.0,
+    "small_s": 10.456506288988749,
+    "large_in": 223.0,
+    "large_out": 108.0,
+    "large_s": 2.4618364040215965
+  },
+  "calls_samples": {
+    "small_in": 1115.0,
+    "small_out": 602.0,
+    "small_s": 9.924253712990321
+  }
+}

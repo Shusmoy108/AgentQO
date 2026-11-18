@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-765",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n```",
+  "reference_key": "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert is_polite(1) == 1\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 6\nassert is_polite(5) == 8\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    # Helper function to determine if a number is polite\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+      "reference_key": "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+      "key_differs": true,
+      "text": "```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    # Helper function to determine if a number is polite\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert is_polite(1) == 1\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 6\nassert is_polite(5) == 8\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    # Helper function to determine if a number is polite\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+      "reference_key": "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+      "key_differs": true,
+      "text": "```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```",
+      "quality": 0.0,
+      "final_key": "def is_polite(n):\n    if n < 1:\n        return None\n    \n    def pancake_sort(arr):\n        n = len(arr)\n        while n > 1:\n            # Find the maximum element and its index\n            max_index = arr.index(max(arr[:n]))\n            \n            # Reverse the sublist from the start to the index of the maximum element\n            arr[:max_index+1] = arr[:max_index+1][::-1]\n            \n            # Reverse the entire list to move the maximum element to its correct position\n            arr[:n] = arr[:n][::-1]\n            \n            # Decrease the size of the unsorted part\n            n -= 1\n        return arr\n    \n    # Generate the first n polite numbers\n    polite_numbers = []\n    i = 1\n    while len(polite_numbers) < n:\n        polite_numbers.append(i)\n        i += 1\n        arr = [i for i in range(1, i + 1)]\n        pancake_sort(arr)\n    \n    return polite_numbers[-1]\n\n# Test cases\nassert is_polite(7) == 11\nassert is_polite(4) == 7\nassert is_polite(9) == 13\nassert is_polite(1) == 2\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 5\nassert is_polite(5) == 6",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_polite(1) == 2\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 5\nassert is_polite(5) == 6\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_polite(n):\n    if n < 1:\n        return None\n    \n    def pancake_sort(arr):\n        n = len(arr)\n        while n > 1:\n            # Find the maximum element and its index\n            max_index = arr.index(max(arr[:n]))\n            \n            # Reverse the sublist from the start to the index of the maximum element\n            arr[:max_index+1] = arr[:max_index+1][::-1]\n            \n            # Reverse the entire list to move the maximum element to its correct position\n            arr[:n] = arr[:n][::-1]\n            \n            # Decrease the size of the unsorted part\n            n -= 1\n        return arr\n    \n    # Generate the first n polite numbers\n    polite_numbers = []\n    i = 1\n    while len(polite_numbers) < n:\n        polite_numbers.append(i)\n        i += 1\n        arr = [i for i in range(1, i + 1)]\n        pancake_sort(arr)\n    \n    return polite_numbers[-1]\n\n# Test cases\nassert is_polite(7) == 11\nassert is_polite(4) == 7\nassert is_polite(9) == 13\nassert is_polite(1) == 2\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 5\nassert is_polite(5) == 6\n```",
+        "fixer": "```python\ndef is_polite(n):\n    if n < 1:\n        return None\n    \n    def pancake_sort(arr):\n        n = len(arr)\n        while n > 1:\n            # Find the maximum element and its index\n            max_index = arr.index(max(arr[:n]))\n            \n            # Reverse the sublist from the start to the index of the maximum element\n            arr[:max_index+1] = arr[:max_index+1][::-1]\n            \n            # Reverse the entire list to move the maximum element to its correct position\n            arr[:n] = arr[:n][::-1]\n            \n            # Decrease the size of the unsorted part\n            n -= 1\n        return arr\n    \n    # Generate the first n polite numbers\n    polite_numbers = []\n    i = 1\n    while len(polite_numbers) < n:\n        polite_numbers.append(i)\n        i += 1\n        arr = [i for i in range(1, i + 1)]\n        pancake_sort(arr)\n    \n    return polite_numbers[-1]\n\n# Test cases\nassert is_polite(7) == 11\nassert is_polite(4) == 7\nassert is_polite(9) == 13\nassert is_polite(1) == 2\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 5\nassert is_polite(5) == 6\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+      "reference_key": "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+      "key_differs": true,
+      "text": "```python\ndef remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)\n```",
+      "quality": 0.0,
+      "final_key": "def is_polite(n):\n    if n <= 0:\n        return None\n    count = 0\n    num = 1\n    while True:\n        if all(num % i != 0 for i in range(2, int(num**0.5) + 1)):\n            count += 1\n            if count == n:\n                return num\n        num += 1\n\n# Test cases\nassert is_polite(7) == 11\nassert is_polite(4) == 7\nassert is_polite(9) == 13\nassert is_polite(1) == 2\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 6\nassert is_polite(5) == 8",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_polite(1) == 2\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 6\nassert is_polite(5) == 8\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_polite(n):\n    if n <= 0:\n        return None\n    count = 0\n    num = 1\n    while True:\n        if all(num % i != 0 for i in range(2, int(num**0.5) + 1)):\n            count += 1\n            if count == n:\n                return num\n        num += 1\n\n# Test cases\nassert is_polite(7) == 11\nassert is_polite(4) == 7\nassert is_polite(9) == 13\nassert is_polite(1) == 2\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 6\nassert is_polite(5) == 8\n```",
+        "fixer": "```python\ndef is_polite(n):\n    if n <= 0:\n        return None\n    count = 0\n    num = 1\n    while True:\n        if all(num % i != 0 for i in range(2, int(num**0.5) + 1)):\n            count += 1\n            if count == n:\n                return num\n        num += 1\n\n# Test cases\nassert is_polite(7) == 11\nassert is_polite(4) == 7\nassert is_polite(9) == 13\nassert is_polite(1) == 2\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 6\nassert is_polite(5) == 8\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+  "sample_keys": [
+    "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+    "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+    "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+    "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+    "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1725.0,
+    "small_out": 593.0,
+    "small_s": 9.6197627770307
+  },
+  "calls_plus": {
+    "small_in": 1334.0,
+    "small_out": 472.0,
+    "small_s": 7.710488525015535,
+    "large_in": 391.0,
+    "large_out": 121.0,
+    "large_s": 3.612470933003351
+  },
+  "calls_samples": {
+    "small_in": 1955.0,
+    "small_out": 605.0,
+    "small_s": 12.13290404799045
+  }
+}

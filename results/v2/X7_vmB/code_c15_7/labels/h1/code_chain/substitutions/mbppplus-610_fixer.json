@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-610",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = input_list[:k] + input_list[k+1:]\n    \n    return result_list\n```",
+  "reference_key": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = input_list[:k] + input_list[k+1:]\n    \n    return result_list",
+  "final_key_plus": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = input_list[:k] + input_list[k+1:]\n    \n    return result_list",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = input_list[:k] + input_list[k+1:]\n    \n    return result_list\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = input_list[:k] + input_list[k+1:]\n    \n    return result_list",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TestRemoveKthElement(unittest.TestCase):\n    def test_remove_kth_element(self):\n        self.assertEqual(remove_kth_element([1,1,2,3,4,4,5,1],3), [1, 1, 3, 4, 4, 5, 1])\n        self.assertEqual(remove_kth_element([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4],4), [0, 0, 1, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])\n        self.assertEqual(remove_kth_element([10, 10, 15, 19, 18, 18, 17, 26, 26, 17, 18, 10],5), [10,10,15,19, 18, 17, 26, 26, 17, 18, 10])\n        self.assertEqual(remove_kth_element([], 0), [])\n        self.assertEqual(remove_kth_element([1], 0), [1])\n        self.assertEqual(remove_kth_element([1, 2, 3], 1), [1, 3])\n        self.assertEqual(remove_kth_element([1, 2, 3, 4], 2), [1, 2, 4])\n        self.assertEqual(remove_kth_element([1, 2, 3, 4, 5], 4), [1, 2, 3, 5])\n        self.assertEqual(remove_kth_element([1, 2, 3, 4, 5, 6], 5), [1, 2, 3, 4, 6])\n        self.assertEqual(remove_kth_element([1, 2, 3, 4, 5], 6), [1, 2, 3, 4, 5])\n        self.assertEqual(remove_kth_element([1, 2, 3, 4, 5, 6, 7], 7), [1, 2,",
+      "quality": 0.0,
+      "final_key": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n\n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n\n    return result_list\n\n# Test cases to verify the correctness\nassert remove_kth_element([1, 1, 2, 3, 4, 4, 5, 1], 3) == [1, 1, 3, 4, 4, 5, 1]\nassert remove_kth_element([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4], 4) == [0, 0, 1, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]\nassert remove_kth_element([10, 10, 15, 19, 18, 18, 17, 26, 26, 17, 18, 10], 5) == [10,10,15,19, 18, 17, 26, 26, 17, 18, 10]\ntry: remove_kth_element([], 0) except IndexError:\n    print(\"Passing test case for empty list.\")\nexcept TypeError:\n    print(\"TypeError: remove_kth_element() missing 1 required positional argument: 'k'\")\n    print(\"Example usage:\", remove_kth_element([], 0)) # Should not be reached\nexcept AssertionError: \n    print(\"Error: remove_kth_element() returned an unexpected value.\")\nelse:\n    print(\"Error: remove_kth_element() did not throw an exception.\")",
+      "reference_key": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = input_list[:k] + input_list[k+1:]\n    \n    return result_list",
+      "key_differs": true,
+      "text": "```python\ndef remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n\n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n\n    return result_list\n\n# Test cases to verify the correctness\nassert remove_kth_element([1, 1, 2, 3, 4, 4, 5, 1], 3) == [1, 1, 3, 4, 4, 5, 1]\nassert remove_kth_element([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4], 4) == [0, 0, 1, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]\nassert remove_kth_element([10, 10, 15, 19, 18, 18, 17, 26, 26, 17, 18, 10], 5) == [10,10,15,19, 18, 17, 26, 26, 17, 18, 10]\ntry: remove_kth_element([], 0) except IndexError:\n    print(\"Passing test case for empty list.\")\nexcept TypeError:\n    print(\"TypeError: remove_kth_element() missing 1 required positional argument: 'k'\")\n    print(\"Example usage:\", remove_kth_element([], 0)) # Should not be reached\nexcept AssertionError: \n    print(\"Error: remove_kth_element() returned an unexpected value.\")\nelse:\n    print(\"Error: remove_kth_element() did not throw an exception.\")\n```",
+      "quality": 0.0,
+      "final_key": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n\n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n\n    return result_list\n\n# Test cases to verify the correctness\nassert remove_kth_element([1, 1, 2, 3, 4, 4, 5, 1], 3) == [1, 1, 3, 4, 4, 5, 1]\nassert remove_kth_element([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4], 4) == [0, 0, 1, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]\nassert remove_kth_element([10, 10, 15, 19, 18, 18, 17, 26, 26, 17, 18, 10], 5) == [10,10,15,19, 18, 17, 26, 26, 17, 18, 10]\ntry: remove_kth_element([], 0) except IndexError:\n    print(\"Passing test case for empty list.\")\nexcept TypeError:\n    print(\"TypeError: remove_kth_element() missing 1 required positional argument: 'k'\")\n    print(\"Example usage:\", remove_kth_element([], 0)) # Should not be reached\nexcept AssertionError: \n    print(\"Error: remove_kth_element() returned an unexpected value.\")\nelse:\n    print(\"Error: remove_kth_element() did not throw an exception.\")",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n\n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n\n    return result_list\n\n# Test cases to verify the correctness\nassert remove_kth_element([1, 1, 2, 3, 4, 4, 5, 1], 3) == [1, 1, 3, 4, 4, 5, 1]\nassert remove_kth_element([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4], 4) == [0, 0, 1, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]\nassert remove_kth_element([10, 10, 15, 19, 18, 18, 17, 26, 26, 17, 18, 10], 5) == [10,10,15,19, 18, 17, 26, 26, 17, 18, 10]\ntry: remove_kth_element([], 0) except IndexError:\n    print(\"Passing test case for empty list.\")\nexcept TypeError:\n    print(\"TypeError: remove_kth_element() missing 1 required positional argument: 'k'\")\n    print(\"Example usage:\", remove_kth_element([], 0)) # Should not be reached\nexcept AssertionError: \n    print(\"Error: remove_kth_element() returned an unexpected value.\")\nelse:\n    print(\"Error: remove_kth_element() did not throw an exception.\")\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "from math import comb\n\ndef even_binomial_Coeff_Sum(n):\n    sum_even_coeffs = 0\n    for i in range(n):\n        if i % 2 == 0:\n            sum_even_coeffs += comb(n, i)\n    return sum_even_coeffs",
+      "reference_key": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = input_list[:k] + input_list[k+1:]\n    \n    return result_list",
+      "key_differs": true,
+      "text": "```python\nfrom math import comb\n\ndef even_binomial_Coeff_Sum(n):\n    sum_even_coeffs = 0\n    for i in range(n):\n        if i % 2 == 0:\n            sum_even_coeffs += comb(n, i)\n    return sum_even_coeffs\n```",
+      "quality": 0.0,
+      "final_key": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list",
+  "sample_keys": [
+    null,
+    "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list",
+    "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list",
+    "from typing import List\n\ndef remove_kth_element(input_list: List[int], k: int) -> List[int]:\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list",
+    "def remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2891.0,
+    "small_out": 916.0,
+    "small_s": 16.86037683003815
+  },
+  "calls_plus": {
+    "small_in": 2091.0,
+    "small_out": 832.0,
+    "small_s": 14.795253753050929,
+    "large_in": 788.0,
+    "large_out": 60.0,
+    "large_s": 1.8257922519987915
+  },
+  "calls_samples": {
+    "small_in": 3940.0,
+    "small_out": 814.0,
+    "small_s": 16.17793530403287
+  }
+}

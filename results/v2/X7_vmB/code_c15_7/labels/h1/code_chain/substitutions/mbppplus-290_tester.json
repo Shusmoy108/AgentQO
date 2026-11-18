@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-290",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert max_length([[0], [1, 2], [3, 4, 5], [6, 7], [8]]) == (3, [3, 4, 5])\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7], []]) == (4, [4, 5, 6, 7])\nassert max_length([[10, 20], [30, 40, 50], [60], [70, 80]]) == (3, [30, 40, 50])\nassert max_length([[100]]) == (1, [100])\nassert max_length([]) == (0, [])\n```",
+  "reference_key": "assert max_length([[0], [1, 2], [3, 4, 5], [6, 7], [8]]) == (3, [3, 4, 5])\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7], []]) == (4, [4, 5, 6, 7])\nassert max_length([[10, 20], [30, 40, 50], [60], [70, 80]]) == (3, [30, 40, 50])\nassert max_length([[100]]) == (1, [100])\nassert max_length([]) == (0, [])",
+  "final_key_plus": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```",
+    "fixer": "```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert max_length([])==(0, [])\nassert max_length([[], [1], [2, 3]])==(2, [2, 3])\nassert max_length([[4, 5, 6, 7], [8, 9, 10], [11, 12]])==(4, [11, 12])\nassert max_length([[1, 2], [3, 4], [5, 6, 7], [8]])==(3, [8])\nassert max_length([[9]])==(1, [9])",
+      "reference_key": "assert max_length([[0], [1, 2], [3, 4, 5], [6, 7], [8]]) == (3, [3, 4, 5])\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7], []]) == (4, [4, 5, 6, 7])\nassert max_length([[10, 20], [30, 40, 50], [60], [70, 80]]) == (3, [30, 40, 50])\nassert max_length([[100]]) == (1, [100])\nassert max_length([]) == (0, [])",
+      "key_differs": true,
+      "text": "```python\nassert max_length([])==(0, [])\nassert max_length([[], [1], [2, 3]])==(2, [2, 3])\nassert max_length([[4, 5, 6, 7], [8, 9, 10], [11, 12]])==(4, [11, 12])\nassert max_length([[1, 2], [3, 4], [5, 6, 7], [8]])==(3, [8])\nassert max_length([[9]])==(1, [9])\n```",
+      "quality": 1.0,
+      "final_key": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```",
+        "fixer": "```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert max_length([[], [1, 2], [3, 4, 5]]) == (3, [3, 4, 5])\nassert max_length([]) == (0, [])\nassert max_length([[-1, -2, -3], [-4, -5]]) == (3, [-4, -5])\nassert max_length ([[1, 2]]) == (2, [1, 2])\nassert max_length([[10]]) == (1, [10])",
+      "reference_key": "assert max_length([[0], [1, 2], [3, 4, 5], [6, 7], [8]]) == (3, [3, 4, 5])\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7], []]) == (4, [4, 5, 6, 7])\nassert max_length([[10, 20], [30, 40, 50], [60], [70, 80]]) == (3, [30, 40, 50])\nassert max_length([[100]]) == (1, [100])\nassert max_length([]) == (0, [])",
+      "key_differs": true,
+      "text": "```python\nassert max_length([[], [1, 2], [3, 4, 5]]) == (3, [3, 4, 5])\nassert max_length([]) == (0, [])\nassert max_length([[-1, -2, -3], [-4, -5]]) == (3, [-4, -5])\nassert max_length ([[1, 2]]) == (2, [1, 2])\nassert max_length([[10]]) == (1, [10])\n```",
+      "quality": 1.0,
+      "final_key": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```",
+        "fixer": "```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert return_sum({'a': 100, 'b':200, 'c':300}) == 600\nassert return_sum({}) == 0\nassert return_sum({'x': -10, 'y': 20, 'z': 30}) == 40\nassert return_sum({'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5}) == 15\nassert return_sum({'zero': 0}) == 0",
+      "reference_key": "assert max_length([[0], [1, 2], [3, 4, 5], [6, 7], [8]]) == (3, [3, 4, 5])\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7], []]) == (4, [4, 5, 6, 7])\nassert max_length([[10, 20], [30, 40, 50], [60], [70, 80]]) == (3, [30, 40, 50])\nassert max_length([[100]]) == (1, [100])\nassert max_length([]) == (0, [])",
+      "key_differs": true,
+      "text": "```python\nassert return_sum({'a': 100, 'b':200, 'c':300}) == 600\nassert return_sum({}) == 0\nassert return_sum({'x': -10, 'y': 20, 'z': 30}) == 40\nassert return_sum({'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5}) == 15\nassert return_sum({'zero': 0}) == 0\n```",
+      "quality": 1.0,
+      "final_key": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```",
+        "fixer": "```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert max_length([[], [1], [2, 3], [4, 5, 6, 7], [8, 9, 10, 11, 12, 13]]) == (6, [8, 9, 10, 11, 12, 13])\nassert max_length([[1, 2, 3], [4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15, 16, 17]]) == (6, [11, 12, 13, 14, 15, 16, 17])\nassert max_length([[1], [2], [3], [4], [5]]) == (1, [1])\nassert max_length([]) == (0, [])\nassert max_length([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]]) == (18, [18])",
+  "sample_keys": [
+    "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n\n# Test cases\nassert max_length([[0], [1, 3], [5, 7], [9, 11], [13, 15, 17]]) == (3, [13, 15, 17])\nassert max_length([[0], [], [5, 7], [9, 11], [13, 15, 17]]) == (2, [])\nassert max_length([[], [], []]) == (0, [])\nassert max_length([[1, 2, 3], [4, 5, 6, 7], [8, 9]]) == (4, [4, 5, 6, 7])\nassert max_length([]) == (0, [])",
+    "assert max_length([[], [1], [2, 3], [4, 5, 6], [7, 8, 9, 10]]) == (4, [7, 8, 9, 10])\nassert max_length([['a', 'b'], ['c', 'd', 'e'], ['f']]) == (3, ['c', 'd', 'e'])\nassert max_length([[1, 2, 3], [], [4, 5], [6, 7], [8, 9]]) == (3, [4, 5, 6])\nassert max_length([]) == (0, [])\nassert max_length([[1, 2], [3, 4, 5], [6, 7, 8, 9, 10]]) == (5, [10])",
+    "assert max_length([[], [1], [2, 3], [4, 5, 6, 7]])==(4, [4, 5, 6, 7])\nassert max_length([[8], [], [9, 10, 11, 12, 13]])==(5, [13])\nassert max_length([])==(0, [])\nassert max_length([[1, 2, 3], [4], [5, 6]])==(2, [4])\nassert max_length([['a', 'b'], ['c', 'd', 'e'], ['f']])==(3, ['f'])",
+    "assert max_length([[]]) == (0, [])\nassert max_length([[1234567890]]) == (1, [1234567890])\nassert max_length([[1, 2, 3], [4, 5], [6, 7, 8, 9]]) == (4, [6, 7, 8, 9])\nassert max_length([[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13, 14, 15]]) == (6, [7, 8, 9, 10, 11, 12, 13, 14, 15])\nassert max_length([]) == (0, [])",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2437.0,
+    "small_out": 613.0,
+    "small_s": 12.154905128001701
+  },
+  "calls_plus": {
+    "small_in": 1862.0,
+    "small_out": 330.0,
+    "small_s": 5.732225473999279,
+    "large_in": 218.0,
+    "large_out": 170.0,
+    "large_s": 3.745730127004208
+  },
+  "calls_samples": {
+    "small_in": 1090.0,
+    "small_out": 867.0,
+    "small_s": 13.51866189800785
+  }
+}

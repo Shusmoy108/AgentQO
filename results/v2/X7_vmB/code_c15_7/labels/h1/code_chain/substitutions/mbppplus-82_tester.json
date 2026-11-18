@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-82",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.1887902047863905, rel_tol=0.001)\nassert math.isclose(volume_sphere(5), 523.5987755982989, rel_tol=0.001)\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(100), 4188790.2047863905, rel_tol=0.001)\n```",
+  "reference_key": "assert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.1887902047863905, rel_tol=0.001)\nassert math.isclose(volume_sphere(5), 523.5987755982989, rel_tol=0.001)\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(100), 4188790.2047863905, rel_tol=0.001)",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "from math import pi\n\n# Test with radius = 10cm\nradius_10 = 10\nexpected_volume_10 = 4188.790204786391\nassert math.isclose(volume_sphere(radius_10), expected_volume_10, rel_tol=0.001)\n\n# Test with radius = 0m (small sphere)\nradius_0m = 0\nexpected_volume_0m = 0\nassert math.isclose(volume_sphere(radius_0m), expected_volume_0m, rel_tol=0.001)\n\n# Test with extremely large radius (> 1e6 m)\nradius_1e6_m = 1E6\nexpected_volume_1e6_m = (4/3) * pi * (1E6)**3\nassert math.isclose(volume_sphere(radius_1e6_m), expected_volume_1e6_m, rel_tol=0.001)\n\n# Test with negative radius (should raise ValueError)\nnegative_radius = -5\ntry:\n    volume_sphere(negative_radius)\nexcept ValueError as e:\n    assert str(e) == \"Radius cannot be negative\"\n\n# Test with very small radius (should return almost zero due to precision issues)\nsmall_radius = 0.001\nexpected_volume_small_radius = (4/3) * pi * (small_radius)**3\nassert math.isclose(volume_sphere(small_radius), expected_volume_small_radius, rel_tol=1e-5)",
+      "reference_key": "assert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.1887902047863905, rel_tol=0.001)\nassert math.isclose(volume_sphere(5), 523.5987755982989, rel_tol=0.001)\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(100), 4188790.2047863905, rel_tol=0.001)",
+      "key_differs": true,
+      "text": "```python\nfrom math import pi\n\n# Test with radius = 10cm\nradius_10 = 10\nexpected_volume_10 = 4188.790204786391\nassert math.isclose(volume_sphere(radius_10), expected_volume_10, rel_tol=0.001)\n\n# Test with radius = 0m (small sphere)\nradius_0m = 0\nexpected_volume_0m = 0\nassert math.isclose(volume_sphere(radius_0m), expected_volume_0m, rel_tol=0.001)\n\n# Test with extremely large radius (> 1e6 m)\nradius_1e6_m = 1E6\nexpected_volume_1e6_m = (4/3) * pi * (1E6)**3\nassert math.isclose(volume_sphere(radius_1e6_m), expected_volume_1e6_m, rel_tol=0.001)\n\n# Test with negative radius (should raise ValueError)\nnegative_radius = -5\ntry:\n    volume_sphere(negative_radius)\nexcept ValueError as e:\n    assert str(e) == \"Radius cannot be negative\"\n\n# Test with very small radius (should return almost zero due to precision issues)\nsmall_radius = 0.001\nexpected_volume_small_radius = (4/3) * pi * (small_radius)**3\nassert math.isclose(volume_sphere(small_radius), expected_volume_small_radius, rel_tol=1e-5)\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef volume_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return (4/3) * math.pi * radius**3",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef volume_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return (4/3) * math.pi * radius**3\n```",
+        "fixer": "```python\nimport math\n\ndef volume_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return (4/3) * math.pi * radius**3\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert math.isclose(volume_sphere(7), 1413.716694115407, rel_tol=0.0001)\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.0001)\nassert math.isclose(volume_sphere(-1), 0, rel_tol=0.0001)\nassert round(volume_sphere(1.5), 2) == 42.14\nassert round(volume_sphere(0.5), 2) == 0.53",
+      "reference_key": "assert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.1887902047863905, rel_tol=0.001)\nassert math.isclose(volume_sphere(5), 523.5987755982989, rel_tol=0.001)\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(100), 4188790.2047863905, rel_tol=0.001)",
+      "key_differs": true,
+      "text": "```python\nassert math.isclose(volume_sphere(7), 1413.716694115407, rel_tol=0.0001)\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.0001)\nassert math.isclose(volume_sphere(-1), 0, rel_tol=0.0001)\nassert round(volume_sphere(1.5), 2) == 42.14\nassert round(volume_sphere(0.5), 2) == 0.53\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef volume_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return (4/3) * math.pi * radius**3",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef volume_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return (4/3) * math.pi * radius**3\n```",
+        "fixer": "```python\nimport math\n\ndef volume_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    return (4/3) * math.pi * radius**3\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert sum_in_range(3,7) == 16\nassert sum_in_range(1,1) == 1\nassert sum_in_range(10,10) == 10\nassert sum_in_range(-1,1) == 0\nassert sum_in_range(0,0) == 0",
+      "reference_key": "assert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.1887902047863905, rel_tol=0.001)\nassert math.isclose(volume_sphere(5), 523.5987755982989, rel_tol=0.001)\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(100), 4188790.2047863905, rel_tol=0.001)",
+      "key_differs": true,
+      "text": "```python\nassert sum_in_range(3,7) == 16\nassert sum_in_range(1,1) == 1\nassert sum_in_range(10,10) == 10\nassert sum_in_range(-1,1) == 0\nassert sum_in_range(0,0) == 0\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\nimport math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3\n\n# Test cases\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(25), 65449.84694978735, rel_tol=0.001)\nassert math.isclose(volume_sphere(20), 33510.32163829113, rel_tol=0.001)\n\n# Additional tests\ndef sum_in_range(start, end):\n    if start > end:\n        raise ValueError(\"Start must be less than or equal to end\")\n    return sum(range(start, end + 1))\n\n# Test cases for sum_in_range\ntry:\n    assert sum_in_range(3,7) == 16\nexcept AssertionError as e:\n    print(f\"Test failed: {e}\")\nelse:\n    print(\"Test passed\")\n\ntry:\n    assert sum_in_range(1,1) == 1\nexcept AssertionError as e:\n    print(f\"Test failed: {e}\")\nelse:\n    print(\"Test passed\")\n\ntry:\n    assert sum_in_range(10,10) == 10\nexcept AssertionError as e:\n    print(f\"Test failed: {e}\")\nelse:\n    print(\"Test passed\")\n\ntry:\n    assert sum_in_range(-1,1) == 0\nexcept AssertionError as e:\n    print(f\"Test failed: {e}\")\nelse:\n    print(\"Test passed\")\n\ntry:\n    assert sum_in_range(0,0) == 0\nexcept AssertionError as e:\n    print(f\"Test failed: {e}\")\nelse:\n    print(\"Test passed\")\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.188790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(2), 33.51032163829848, rel_tol=0.001)\nassert math.isclose(volume_sphere(3), 113.09733552923254, rel_tol=0.001)\nassert math.isclose(volume_sphere(-1), -4.188790204786391, rel_tol=0.001)",
+  "sample_keys": [
+    "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3\n\n# Test cases\nassert math.isclose(volume_sphere(1), 4.188790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(2), 33.51032163829844, rel_tol=0.001)\nassert math.isclose(volume_sphere(3), 113.09733552923255, rel_tol=0.001)\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(-1), 0, rel_tol=0.001)",
+    null,
+    "assert math.isclose(volume_sphere(5), 523.5987755982989, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.188790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(2), 33.5103216382988, rel_tol=0.001)\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(-1), -4.188790204786391, rel_tol=0.001)",
+    "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3\n\n# Test cases with given data points\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(5), 523.5987755982989, rel_tol=0.001)\nassert math.isclose(volume_sphere(0), 0.0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1.5), 141.3716694115407, rel_tol=0.001)\nassert math.isclose(volume_sphere(-3), 0.0, rel_tol=0.001)",
+    "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3\n\n# Check with a typical case\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\n\n# Check with a zero radius (edge case)\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\n\n# Check with a negative radius (edge case)\nassert math.isnan(volume_sphere(-1))\n\n# Check with a very large radius\nassert math.isclose(volume_sphere(1e6), 4.1887e+11, rel_tol=0.001)\n\n# Check with a very small radius\nassert math.isclose(volume_sphere(1e-6), 5.235998776988776e-11, rel_tol=0.001)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1777.0,
+    "small_out": 349.0,
+    "small_s": 3.019639609992737
+  },
+  "calls_plus": {
+    "small_in": 1621.0,
+    "small_out": 146.0,
+    "small_s": 1.9180167310114484,
+    "large_in": 168.0,
+    "large_out": 179.0,
+    "large_s": 3.1674456499749795
+  },
+  "calls_samples": {
+    "small_in": 840.0,
+    "small_out": 1281.0,
+    "small_s": 25.69764950897661
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-555",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert difference(1) == 0\nassert difference(4) == 70\nassert difference(10) == 2640\nassert difference(100) == 25502500\nassert difference(0) == 0\n```",
+  "reference_key": "assert difference(1) == 0\nassert difference(4) == 70\nassert difference(10) == 2640\nassert difference(100) == 25502500\nassert difference(0) == 0",
+  "final_key_plus": "def difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n```",
+    "fixer": "```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert difference(4) == 70\nassert difference(10) == 1650\nassert difference(-1) == 1\nassert difference(0) == 0\nassert difference(21) == 3855",
+      "reference_key": "assert difference(1) == 0\nassert difference(4) == 70\nassert difference(10) == 2640\nassert difference(100) == 25502500\nassert difference(0) == 0",
+      "key_differs": true,
+      "text": "```python\nassert difference(4) == 70\nassert difference(10) == 1650\nassert difference(-1) == 1\nassert difference(0) == 0\nassert difference(21) == 3855\n```",
+      "quality": 0.0,
+      "final_key": "def difference(n):\n    if n < 0:\n        return 1\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef difference(n):\n    if n < 0:\n        return 1\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n```",
+        "fixer": "```python\ndef difference(n):\n    if n < 0:\n        return 1\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert difference(4) == \nassert difference(5) == \nassert difference(0) == \nassert difference(-1) == \nassert difference(10) ==",
+      "reference_key": "assert difference(1) == 0\nassert difference(4) == 70\nassert difference(10) == 2640\nassert difference(100) == 25502500\nassert difference(0) == 0",
+      "key_differs": true,
+      "text": "```python\nassert difference(4) == \nassert difference(5) == \nassert difference(0) == \nassert difference(-1) == \nassert difference(10) == \n```",
+      "quality": 0.0,
+      "final_key": "def difference(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    \n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef difference(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    \n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n```",
+        "fixer": "```python\ndef difference(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    \n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert remove_whitespaces('') == ''\nassert remove_whitespaces('   ') == ''\nassert remove_whitespaces('Hello World!') == 'HelloWorld!'\nassert remove_whitespaces('Python 3.8') == 'Python3.8'\nassert remove_whitespaces('1234567890') == '1234567890'",
+      "reference_key": "assert difference(1) == 0\nassert difference(4) == 70\nassert difference(10) == 2640\nassert difference(100) == 25502500\nassert difference(0) == 0",
+      "key_differs": true,
+      "text": "```python\nassert remove_whitespaces('') == ''\nassert remove_whitespaces('   ') == ''\nassert remove_whitespaces('Hello World!') == 'HelloWorld!'\nassert remove_whitespaces('Python 3.8') == 'Python3.8'\nassert remove_whitespaces('1234567890') == '1234567890'\n```",
+      "quality": 0.0,
+      "final_key": "def difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n```",
+        "fixer": "```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert difference(4) == 70\nassert difference(5) == 120\nassert difference(1) == 0\nassert difference(0) == 0\nassert difference(-1) == 0",
+  "sample_keys": [
+    "def difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n\n# Test function with provided data points\nassert difference(3) == 30\n\n# Additional tests for other values of n\nassert difference(4) == 70\nassert difference(5) == 165\nassert difference(10) == 3850\nassert difference(0) == 0",
+    "assert difference(0) == 0\nassert difference(1) == 1\nassert difference(2) == 4\nassert difference(4) == 90\nassert difference(7) == 1820",
+    "assert difference(4) == 70\nassert difference(5) == 120\nassert difference(-5) == 0\nassert difference(0) == 0\nassert difference(1) == 0",
+    "assert difference(4) == 100\nassert difference(1) == 0\nassert difference(0) == 0\nassert difference(10) == 980\nassert difference(-1) == 0",
+    "# Test case with a typical positive integer\nassert difference(5) == 80\n\n# Test case with a zero input\nassert difference(0) == 0\n\n# Test case with a single element\nassert difference(1) == 1\n\n# Test case with a large number\nassert difference(1000) == 9700000\n\n# Edge case with a negative number\nassert difference(-3) == -32"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1307.0,
+    "small_out": 362.0,
+    "small_s": 7.805128389009042
+  },
+  "calls_plus": {
+    "small_in": 1155.0,
+    "small_out": 309.0,
+    "small_s": 6.300012457009871,
+    "large_in": 191.0,
+    "large_out": 64.0,
+    "large_s": 1.4235777790017892
+  },
+  "calls_samples": {
+    "small_in": 955.0,
+    "small_out": 395.0,
+    "small_s": 7.010607958945911
+  }
+}

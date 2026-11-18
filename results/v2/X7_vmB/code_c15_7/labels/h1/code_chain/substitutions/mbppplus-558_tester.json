@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-558",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert digit_distance_nums(123, 456) == 9\nassert digit_distance_nums(789, 789) == 0\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(12345, 54321) == 20\nassert digit_distance_nums(-123, 321) == 6\n```",
+  "reference_key": "assert digit_distance_nums(123, 456) == 9\nassert digit_distance_nums(789, 789) == 0\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(12345, 54321) == 20\nassert digit_distance_nums(-123, 321) == 6",
+  "final_key_plus": "def digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            sum_diff += diff\n        except ValueError:\n            if num1 < 0 and num2 > 0:\n                continue\n            elif num1 > 0 and num2 < 0:\n                continue\n            else:\n                raise ValueError(\"Invalid input: both numbers must be non-negative\")\n    \n    return sum_diff",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            sum_diff += diff\n        except ValueError:\n            if num1 < 0 and num2 > 0:\n                continue\n            elif num1 > 0 and num2 < 0:\n                continue\n            else:\n                raise ValueError(\"Invalid input: both numbers must be non-negative\")\n    \n    return sum_diff\n```",
+    "fixer": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            sum_diff += diff\n        except ValueError:\n            if num1 < 0 and num2 > 0:\n                continue\n            elif num1 > 0 and num2 < 0:\n                continue\n            else:\n                raise ValueError(\"Invalid input: both numbers must be non-negative\")\n    \n    return sum_diff\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert digit_distance_nums(987654321, 123456789) == 90\r\nassert digit_distance_nums(123456789, 987654321) == 80\r\nassert digit_distance_nums(-10, -9) == 1\r\nassert digit_distance_nums(0, 2) == 2\r\nassert digit_distance_nums(1, 0) == 1",
+      "reference_key": "assert digit_distance_nums(123, 456) == 9\nassert digit_distance_nums(789, 789) == 0\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(12345, 54321) == 20\nassert digit_distance_nums(-123, 321) == 6",
+      "key_differs": true,
+      "text": "```python\nassert digit_distance_nums(987654321, 123456789) == 90\r\nassert digit_distance_nums(123456789, 987654321) == 80\r\nassert digit_distance_nums(-10, -9) == 1\r\nassert digit_distance_nums(0, 2) == 2\r\nassert digit_distance_nums(1, 0) == 1\n```",
+      "quality": 0.0,
+      "final_key": "def digit_distance_nums(num1, num2):\n    if not isinstance(num1, int) or not isinstance(num2, int):\n        raise ValueError(\"Both inputs must be integers.\")\n    \n    str_num1 = str(abs(num1))\n    str_num2 = str(abs(num2))\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    \n    return sum_diff",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef digit_distance_nums(num1, num2):\n    if not isinstance(num1, int) or not isinstance(num2, int):\n        raise ValueError(\"Both inputs must be integers.\")\n    \n    str_num1 = str(abs(num1))\n    str_num2 = str(abs(num2))\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    \n    return sum_diff\n```",
+        "fixer": "```python\ndef digit_distance_nums(num1, num2):\n    if not isinstance(num1, int) or not isinstance(num2, int):\n        raise ValueError(\"Both inputs must be integers.\")\n    \n    str_num1 = str(abs(num1))\n    str_num2 = str(abs(num2))\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    \n    return sum_diff\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "from math import inf\n\nassert digit_distance_nums(-1, 1) == 0\nassert digit_distance_nums(98, 10) == 9\nassert digit_distance_nums(78, 78) == 0\nassert digit_distance_nums(100, 200) == 1\nassert digit_distance_nums(inf, inf) == 0\n# edge case where numbers contain negative digits\nassert digit_distance_nums(345, -678) == 12\n# edge case where numbers contain zero\nassert digit_distance_nums(0, 0) == 0\n# edge case where numbers share the same digits\nassert digit_distance_nums(111, 111) == 0\n# edge case where numbers have differing lengths\nassert digit_distance_nums(1, 2**53-1) == 52",
+      "reference_key": "assert digit_distance_nums(123, 456) == 9\nassert digit_distance_nums(789, 789) == 0\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(12345, 54321) == 20\nassert digit_distance_nums(-123, 321) == 6",
+      "key_differs": true,
+      "text": "```python\nfrom math import inf\n\nassert digit_distance_nums(-1, 1) == 0\nassert digit_distance_nums(98, 10) == 9\nassert digit_distance_nums(78, 78) == 0\nassert digit_distance_nums(100, 200) == 1\nassert digit_distance_nums(inf, inf) == 0\n# edge case where numbers contain negative digits\nassert digit_distance_nums(345, -678) == 12\n# edge case where numbers contain zero\nassert digit_distance_nums(0, 0) == 0\n# edge case where numbers share the same digits\nassert digit_distance_nums(111, 111) == 0\n# edge case where numbers have differing lengths\nassert digit_distance_nums(1, 2**53-1) == 52\n```",
+      "quality": 0.0,
+      "final_key": "def digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            sum_diff += diff\n        except ValueError:\n            continue\n    \n    return sum_diff",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            sum_diff += diff\n        except ValueError:\n            continue\n    \n    return sum_diff\n```",
+        "fixer": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        try:\n            diff = abs(int(str_num1[i]) - int(str_num2[i]))\n            sum_diff += diff\n        except ValueError:\n            continue\n    \n    return sum_diff\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"+789\") == True",
+      "reference_key": "assert digit_distance_nums(123, 456) == 9\nassert digit_distance_nums(789, 789) == 0\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(12345, 54321) == 20\nassert digit_distance_nums(-123, 321) == 6",
+      "key_differs": true,
+      "text": "```python\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"+789\") == True\n```",
+      "quality": 0.0,
+      "final_key": "def digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    \n    return sum_diff",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    \n    return sum_diff\n```",
+        "fixer": "```python\ndef digit_distance_nums(num1, num2):\n    str_num1 = str(num1)\n    str_num2 = str(num2)\n    sum_diff = 0\n    \n    for i in range(len(str_num1)):\n        diff = abs(int(str_num1[i]) - int(str_num2[i]))\n        sum_diff += diff\n    \n    return sum_diff\n\n# Test cases\nassert digit_distance_nums(1,2) == 1\nassert digit_distance_nums(23,56) == 6\nassert digit_distance_nums(123,256) == 7\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"+789\") == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert digit_distance_nums(10, 9) == 1\nassert digit_distance_nums(123, 456) == 3\nassert digit_distance_nums(789, 123) == 6\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(-1, 1) == 2",
+  "sample_keys": [
+    "assert digit_distance_nums(987, 123) == 6\nassert digit_distance_nums(456, 456) == 0\nassert digit_distance_nums(-123, -321) == 6\nassert digit_distance_nums(0, 0) == 0\nassert digit_distance_nums(1000, 9000) == 9",
+    "assert digit_distance_nums(10, 20) == 3\nassert digit_distance_nums(99, 88) == 11\nassert digit_distance_nums(-7, -4) == 3\nassert digit_distance_nums(123456789, 987654321) == 0\nassert digit_distance_nums(1234567899, 1234567890) == 9",
+    "assert digit_distance_nums(48,59) == 11\nassert digit_distance_nums(-75,63) == 18\nassert digit_distance_nums(1000,9000) == 9000\nassert digit_distance_nums(123,456) == 3\nassert digit_distance_nums(0,0) == 0",
+    null,
+    "assert digit_distance_nums(2789, 2345) == 2\nassert digit_distance_nums(-1023, 4567) == 12\nassert digit_distance_nums(9999, 0) == 9\nassert digit_distance_nums(0, 9999) == 9\nassert digit_distance_nums(8888, 5555) == 33"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1528.0,
+    "small_out": 492.0,
+    "small_s": 11.009467548021348
+  },
+  "calls_plus": {
+    "small_in": 1381.0,
+    "small_out": 484.0,
+    "small_s": 10.056312542990781,
+    "large_in": 199.0,
+    "large_out": 96.0,
+    "large_s": 2.8479859119979665
+  },
+  "calls_samples": {
+    "small_in": 995.0,
+    "small_out": 475.0,
+    "small_s": 9.36495626802207
+  }
+}

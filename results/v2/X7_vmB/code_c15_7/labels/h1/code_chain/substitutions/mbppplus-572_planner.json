@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-572",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `two_unique_nums` that takes a list as its parameter.\n2. Convert the input list into a set to remove duplicates since sets automatically eliminate duplicates.\n3. Convert the set back into a list to match the expected output format.\n4. Return the resulting list from the function.\n5. Test the function with the provided test case to ensure it works correctly.",
+  "reference_key": null,
+  "final_key_plus": "def two_unique_nums(nums):\n    # Convert the list to a set to remove duplicates\n    unique_nums = set(nums)\n    # Convert the set back to a list\n    result = list(unique_nums)\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert two_unique_nums([]) == []\nassert two_unique_nums([1]) == [1]\nassert two_unique_nums([1, 1]) == [1]\nassert two_unique_nums([1, 2, 3, 2, 3, 4, 5]) == [1, 4, 5]\nassert two_unique_nums([1, 2, 3, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nassert two_unique_nums([-1, -2, -3, -2, -3, -4, -5]) == [-1, -4, -5]\n```",
+    "coder": "```python\ndef two_unique_nums(nums):\n    # Convert the list to a set to remove duplicates\n    unique_nums = set(nums)\n    # Convert the set back to a list\n    result = list(unique_nums)\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef two_unique_nums(nums):\n    # Convert the list to a set to remove duplicates\n    unique_nums = set(nums)\n    # Convert the set back to a list\n    result = list(unique_nums)\n    return result\n```",
+    "fixer": "```python\ndef two_unique_nums(nums):\n    # Convert the list to a set to remove duplicates\n    unique_nums = set(nums)\n    # Convert the set back to a list\n    result = list(unique_nums)\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_digits` that takes one parameter, `num`.\n2. Initialize a variable `total_sum` to 0.\n3. Use a while loop to iterate as long as `num` is greater than 0.\n4. Inside the loop, add the last digit of `num` to `total_sum` using the modulo operator (`%`) and then remove the last digit from `num` by performing integer division (`//`).\n5. After the loop completes, return the value of `total_sum`.\n\nThis approach ensures that all digits of the input number are summed up correctly.",
+      "quality": 0.0,
+      "final_key": "def two_unique_nums(nums):\n    unique_nums = []\n    for num in nums:\n        if num not in unique_nums:\n            unique_nums.append(num)\n    return unique_nums",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_digits(123) == 6\nassert sum_digits(-123) == -6\nassert sum_digits(0) == 0\nassert sum_digits(987654321) == 9\nassert sum_digits(-987654321) == -9\n```",
+        "coder": "```python\ndef sum_digits(num):\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```",
+        "verifier": "PICK: B\n```python\ndef two_unique_nums(nums):\n    unique_nums = []\n    for num in nums:\n        if num not in unique_nums:\n            unique_nums.append(num)\n    return unique_nums\n```",
+        "fixer": "```python\ndef two_unique_nums(nums):\n    unique_nums = []\n    for num in nums:\n        if num not in unique_nums:\n            unique_nums.append(num)\n    return unique_nums\n\n# Test cases\nassert two_unique_nums([1,2,3,2,3,4,5]) == [1, 4, 5]\nassert two_unique_nums([1,2,3,2,4,5]) == [1, 3, 4, 5]\nassert two_unique_nums([1,2,3,4,5]) == [1, 2, 3, 4, 5]\nassert sum_digits(123) == 6\nassert sum_digits(-123) == -6\nassert sum_digits(0) == 0\nassert sum_digits(987654321) == 9\nassert sum_digits(-987654321) == -9\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `two_unique_nums` that takes a list as its parameter.\n2. Convert the input list into a set to remove duplicates since sets automatically eliminate duplicates.\n3. Convert the set back into a list to match the expected output format.\n4. Return the resulting list from the function.\n5. Test the function with the provided test case to ensure it works correctly.\n\nError: The code should return two unique numbers, not just one.",
+      "quality": 0.0,
+      "final_key": "def two_unique_nums(nums):\n    # Remove duplicates by converting the list to a set\n    unique_nums = set(nums)\n    # Convert the set back to a list\n    result = list(unique_nums)\n    # Ensure the result has exactly two elements\n    if len(result) != 2:\n        raise ValueError(\"The function should return exactly two unique numbers.\")\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert two_unique_nums([1,2,3,2,3,4,5]) == [1, 4, 5]\nassert two_unique_nums([]) == []\nassert two_unique_nums([1,1,1,1,1]) == []\nassert two_unique_nums([10,20,30,40,50,60,70,80,90,100]) == [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]\nassert two_unique_nums([-1,-2,-3,-4,-5]) == [-1, -2, -3, -4, -5]\n```",
+        "coder": "```python\ndef two_unique_nums(nums):\n    # Remove duplicates by converting the list to a set\n    unique_nums = set(nums)\n    # Convert the set back to a list\n    result = list(unique_nums)\n    # Ensure the result has exactly two elements\n    if len(result) != 2:\n        raise ValueError(\"The function should return exactly two unique numbers.\")\n    return result\n```",
+        "verifier": "PICK: A\n\n```python\ndef two_unique_nums(nums):\n    # Remove duplicates by converting the list to a set\n    unique_nums = set(nums)\n    # Convert the set back to a list\n    result = list(unique_nums)\n    # Ensure the result has exactly two elements\n    if len(result) != 2:\n        raise ValueError(\"The function should return exactly two unique numbers.\")\n    return result\n```",
+        "fixer": "```python\ndef two_unique_nums(nums):\n    # Remove duplicates by converting the list to a set\n    unique_nums = set(nums)\n    # Convert the set back to a list\n    result = list(unique_nums)\n    # Ensure the result has exactly two elements\n    if len(result) != 2:\n        raise ValueError(\"The function should return exactly two unique numbers.\")\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_list` that accepts two parameters, `list_a` and `list_b`.\n2. Initialize an empty list called `result` to store the sums of corresponding elements from `list_a` and `list_b`.\n3. Iterate over the indices of both lists simultaneously using a for loop.\n4. For each index, add the corresponding elements from `list_a` and `list_b`, and append the result to the `result` list.\n5. Return the `result` list containing the sums of the corresponding elements from the input lists.",
+      "quality": 0.0,
+      "final_key": "def two_unique_nums(nums):\n    unique_nums = set(nums)\n    return list(unique_nums)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert two_unique_nums([1,2,3,2,3,4,5]) == [1, 4, 5]\nassert two_unique_nums([]) == []\nassert two_unique_nums([1,1,1,1,1]) == []\nassert two_unique_nums([10,20,30]) == [10, 20, 30]\nassert two_unique_nums([-1, -2, -3, -2, -3, -4, -5]) == [-1, -4, -5]\n```",
+        "coder": "```python\ndef sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef two_unique_nums(nums):\n    unique_nums = set(nums)\n    return list(unique_nums)\n```",
+        "fixer": "```python\ndef two_unique_nums(nums):\n    unique_nums = set(nums)\n    return list(unique_nums)\n\n# Test cases\nassert two_unique_nums([1,2,3,2,3,4,5]) == [1, 4, 5]\nassert two_unique_nums([1,2,3,2,4,5]) == [1, 3, 4, 5]\nassert two_unique_nums([1,2,3,4,5]) == [1, 2, 3, 4, 5]\nassert two_unique_nums([1,2,3,2,3,4,5]) == [1, 4, 5]\nassert two_unique_nums([]) == []\nassert two_unique_nums([1,1,1,1,1]) == []\nassert two_unique_nums([10,20,30]) == [10, 20, 30]\nassert two_unique_nums([-1, -2, -3, -2, -3, -4, -5]) == [-1, -4, -5]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def two_unique_nums(nums):\n    unique_nums = []\n    for num in nums:\n        if num not in unique_nums:\n            unique_nums.append(num)\n    return unique_nums",
+  "sample_keys": [
+    "def two_unique_nums(nums_list):\n    unique_nums = set()\n    for sublist in nums_list:\n        for num in sublist:\n            unique_nums.add(num)\n    return list(unique_nums)",
+    "def two_unique_nums(input_lists):\n    unique_nums = []\n    for sublist in input_lists:\n        if isinstance(sublist, list):\n            unique_nums.extend(list(set(sublist)))\n        else:\n            raise TypeError(\"All elements in the input lists must be lists.\")\n    return unique_nums",
+    "def two_unique_nums(numbers):\n    # Step 2: Define the input list\n    input_list = numbers\n    \n    # Step 3: Iterate through the list\n    unique_numbers_set = {number for number in input_list}\n    \n    # Step 4: Use set to eliminate duplicates\n    unique_numbers_list = list(unique_numbers_set)\n    \n    # Step 5: Convert the set back to a list\n    final_result = unique_numbers_list\n    \n    # Step 6: Return the resulting list\n    return final_result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1808.0,
+    "small_out": 439.0,
+    "small_s": 8.895976557047106
+  },
+  "calls_plus": {
+    "large_in": 122.0,
+    "large_out": 82.0,
+    "large_s": 1.7547352190013044,
+    "small_in": 1704.0,
+    "small_out": 339.0,
+    "small_s": 6.346604318008758
+  },
+  "calls_samples": {
+    "small_in": 7223.0,
+    "small_out": 2268.0,
+    "small_s": 39.447653704031836
+  }
+}

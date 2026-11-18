@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-7",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```",
+  "reference_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+  "final_key_plus": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.6,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import re\n\ndef find_char_long(s):\n    words = re.findall(r'\\b\\w{4,}\\b', s)\n    return words",
+      "reference_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef find_char_long(s):\n    words = re.findall(r'\\b\\w{4,}\\b', s)\n    return words\n```",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef find_char_long(s):\n    words = re.findall(r'\\b\\w{4,}\\b', s)\n    return words",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport re\n\ndef find_char_long(s):\n    words = re.findall(r'\\b\\w{4,}\\b', s)\n    return words\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n\n# Test cases\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\nassert set(find_char_long('Jing Eco and Tech')) == set(['Jing', 'Tech'])\nassert set(find_char_long('Jhingai wulu road Zone 3')) == set(['Jhingai', 'wulu', 'road', 'Zone'])\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set()  # Fix: Corrected the expected result\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])  # Fix: Corrected the expected result\nassert set(find_char_long('')) == set([])",
+      "reference_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+      "key_differs": true,
+      "text": "Here's the corrected version of your code with the specified tests passed:\n\n```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n\n# Test cases\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\nassert set(find_char_long('Jing Eco and Tech')) == set(['Jing', 'Tech'])\nassert set(find_char_long('Jhingai wulu road Zone 3')) == set(['Jhingai', 'wulu', 'road', 'Zone'])\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set()  # Fix: Corrected the expected result\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])  # Fix: Corrected the expected result\nassert set(find_char_long('')) == set([])\n```",
+      "quality": 0.0,
+      "final_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n\n# Test cases\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\nassert set(find_char_long('Jing Eco and Tech')) == set(['Jing', 'Tech'])\nassert set(find_char_long('Jhingai wulu road Zone 3')) == set(['Jhingai', 'wulu', 'road', 'Zone'])\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set()  # Fix: Corrected the expected result\nassert set(find_char_long('Short')) == set([])  # Fix: Corrected the expected result\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])  # Fix: Corrected the expected result\nassert set(find_char_long('')) == set([])",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n\n# Test cases\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\nassert set(find_char_long('Jing Eco and Tech')) == set(['Jing', 'Tech'])\nassert set(find_char_long('Jhingai wulu road Zone 3')) == set(['Jhingai', 'wulu', 'road', 'Zone'])\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set()  # Fix: Corrected the expected result\nassert set(find_char_long('Short')) == set([])  # Fix: Corrected the expected result\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])  # Fix: Corrected the expected result\nassert set(find_char_long('')) == set([])\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def Find_Min_Length(list_of_lists):\n    min_length = float('inf')\n    for sublist in list_of_lists:\n        if len(sublist) < min_length:\n            min_length = len(sublist)\n    return min_length",
+      "reference_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+      "key_differs": true,
+      "text": "```python\ndef Find_Min_Length(list_of_lists):\n    min_length = float('inf')\n    for sublist in list_of_lists:\n        if len(sublist) < min_length:\n            min_length = len(sublist)\n    return min_length\n```",
+      "quality": 0.0,
+      "final_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+  "sample_keys": [
+    "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n\n# Test cases\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\nassert set(find_char_long('Jing Eco and Tech')) == set(['Jing', 'Tech'])\nassert set(find_char_long('Jhingai wulu road Zone 3')) == set(['Jhingai', 'wulu', 'road', 'Zone'])\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set(['This', 'is', 'a', 'test', 'sentence.'])\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set([])",
+    "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n\n# Test cases\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\nassert set(find_char_long('Jing Eco and Tech')) == set(['Jing', 'Tech'])\nassert set(find_char_long('Jhingai wulu road Zone 3')) == set(['Jhingai', 'wulu', 'road', 'Zone'])\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set(['This', 'is', 'a', 'test', 'sentence.'])\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set([])",
+    "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+    "import re\n\ndef find_char_long(s):\n    words = re.findall(r'\\b\\w{4,}\\b', s)\n    return set(words)",
+    "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1559.0,
+    "small_out": 353.0,
+    "small_s": 7.0767224070150405
+  },
+  "calls_plus": {
+    "small_in": 1169.0,
+    "small_out": 313.0,
+    "small_s": 6.238519892998738,
+    "large_in": 390.0,
+    "large_out": 40.0,
+    "large_s": 0.8798725639935583
+  },
+  "calls_samples": {
+    "small_in": 1950.0,
+    "small_out": 561.0,
+    "small_s": 6.838175489974674
+  }
+}

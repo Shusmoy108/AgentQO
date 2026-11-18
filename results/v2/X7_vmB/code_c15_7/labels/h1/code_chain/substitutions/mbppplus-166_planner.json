@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-166",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `find_even_pair` that takes a list of integers as input.\n2. Initialize a counter variable to zero to keep track of the number of valid pairs.\n3. Use nested loops to iterate through all possible pairs of integers in the list.\n4. For each pair, calculate their XOR using the `^` operator.\n5. Check if the result is even by using the modulus operator `%`. If it's even, increment the counter.\n6. After checking all pairs, return the counter value as the result.",
+  "reference_key": null,
+  "final_key_plus": "def find_even_pair(nums):\n    count = 0\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert find_even_pair([1, 3, 5, 7]) == 0\nassert find_even_pair([2, 4, 6, 8]) == 6\nassert find_even_pair([-1, -2, -3, -4]) == 4\nassert find_even_pair([0, 0, 0, 0]) == 6\nassert find_even_pair([]) == 0\n```",
+    "coder": "```python\ndef find_even_pair(nums):\n    count = 0\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count\n```",
+    "verifier": "PICK: A\n\n```python\ndef find_even_pair(nums):\n    count = 0\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count\n```",
+    "fixer": "```python\ndef find_even_pair(nums):\n    count = 0\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `convert_list_dictionary` that takes three parameters: `list1`, `list2`, and `list3`.\n2. Initialize an empty list called `result`.\n3. Iterate over the indices of `list1` using a for loop.\n4. For each index, create a new dictionary with the key as `list1[index]` and the value as another dictionary.\n5. Inside the inner dictionary, use the index as the key and the corresponding element from `list2` as the value.\n6. Append the inner dictionary to the `result` list.\n7. Return the `result` list.\n\nThis approach ensures that each element from `list1` is paired with its corresponding elements from `list2` and `list3` in a nested dictionary format.",
+      "quality": 1.0,
+      "final_key": "def find_even_pair(lst):\n    count = 0\n    for i in range(len(lst)):\n        for j in range(i + 1, len(lst)):\n            if (lst[i] ^ lst[j]) % 2 == 0:\n                count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_even_pair([0, 1, 2, 3, 4]) == 6\nassert find_even_pair([-1, -2, -3, -4, -5]) == 10\nassert find_even_pair([1, 3, 5, 7, 9]) == 0\nassert find_even_pair([]) == 0\nassert find_even_pair([1, 1, 1, 1, 1]) == 0\n```",
+        "coder": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {i: list2[i], i+1: list3[i]}}\n        result.append(inner_dict)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef find_even_pair(lst):\n    count = 0\n    for i in range(len(lst)):\n        for j in range(i + 1, len(lst)):\n            if (lst[i] ^ lst[j]) % 2 == 0:\n                count += 1\n    return count\n```",
+        "fixer": "```python\ndef find_even_pair(lst):\n    count = 0\n    for i in range(len(lst)):\n        for j in range(i + 1, len(lst)):\n            if (lst[i] ^ lst[j]) % 2 == 0:\n                count += 1\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `find_even_pair` that takes a list of integers as input.\n2. Initialize a counter variable to zero to keep track of the number of valid pairs.\n3. Use nested loops to iterate through all possible pairs of integers in the list.\n4. For each pair, calculate their XOR using the `^` operator.\n5. Check if the result modulo 2 equals zero using the modulus operator `%`. If it does, increment the counter.\n6. After checking all pairs, return the counter value as the result.",
+      "quality": 1.0,
+      "final_key": "def find_even_pair(nums):\n    count = 0\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert find_even_pair([1, 3, 5, 7]) == 0\nassert find_even_pair([2, 4, 6, 8]) == 6\nassert find_even_pair([-1, -2, -3, -4]) == 4\nassert find_even_pair([0, 0, 0, 0]) == 6\nassert find_even_pair([]) == 0\n```",
+        "coder": "```python\ndef find_even_pair(nums):\n    count = 0\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count\n```",
+        "verifier": "PICK: A\n\n```python\ndef find_even_pair(nums):\n    count = 0\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count\n```",
+        "fixer": "```python\ndef find_even_pair(nums):\n    count = 0\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `get_pairs_count` that takes two parameters: `numbers` (a list of integers) and `sum`.\n2. Initialize a counter variable `count` to zero.\n3. Iterate through each pair of numbers in the list using nested loops.\n4. For each pair, check if their sum equals the given `sum`.\n5. If they do, increment the `count` by one.\n6. After iterating through all possible pairs, return the `count`.\n\nHere's the complete implementation:\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n```\n\nThis function will correctly count the number of pairs whose sum equals the specified `sum`.",
+      "quality": 1.0,
+      "final_key": "def find_even_pair(numbers):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if (numbers[i] ^ numbers[j]) % 2 == 0:\n                count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_even_pair([1, 3, 5, 7]) == 0\nassert find_even_pair([2, 4, 6, 8]) == 6\nassert find_even_pair([-1, -2, -3, -4]) == 4\nassert find_even_pair([0, 0, 0, 0]) == 6\nassert find_even_pair([]) == 0\n```",
+        "coder": "```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef find_even_pair(numbers):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if (numbers[i] ^ numbers[j]) % 2 == 0:\n                count += 1\n    return count\n```",
+        "fixer": "```python\ndef find_even_pair(numbers):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] ^ numbers[j] % 2 == 0:\n                count += 1\n    return count\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def find_even_pair(nums):\n    count = 0\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count",
+  "sample_keys": [
+    "def find_even_pair(nums):\n    count = 0\n    n = len(nums)\n    for i in range(n):\n        for j in range(i+1, n):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count",
+    "def find_even_pair(nums):\n    count = 0\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count",
+    "def find_even_pair(nums):\n    count = 0\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if (nums[i] ^ nums[j]) % 2 == 0:\n                count += 1\n    return count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1548.0,
+    "small_out": 384.0,
+    "small_s": 7.5739751579531
+  },
+  "calls_plus": {
+    "large_in": 122.0,
+    "large_out": 112.0,
+    "large_s": 2.5010385179775767,
+    "small_in": 1445.0,
+    "small_out": 295.0,
+    "small_s": 5.585408990038559
+  },
+  "calls_samples": {
+    "small_in": 4692.0,
+    "small_out": 1201.0,
+    "small_s": 21.07708775185165
+  }
+}

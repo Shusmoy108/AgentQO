@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-82",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\nimport math\n\ndef volume_sphere(radius):\n    volume = (4/3) * math.pi * radius**3\n    return volume\n```",
+  "reference_key": "import math\n\ndef volume_sphere(radius):\n    volume = (4/3) * math.pi * radius**3\n    return volume",
+  "final_key_plus": "import math\n\ndef volume_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    volume = (4/3) * math.pi * radius**3\n    return volume",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.188790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(2), 33.51032163829848, rel_tol=0.001)\nassert math.isclose(volume_sphere(3), 113.09733552923254, rel_tol=0.001)\nassert math.isclose(volume_sphere(-1), 0, rel_tol=0.001)\n```",
+    "verifier": "PICK: B\n```python\nimport math\n\ndef volume_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    volume = (4/3) * math.pi * radius**3\n    return volume\n```",
+    "fixer": "```python\nimport math\n\ndef volume_sphere(radius):\n    if radius < 0:\n        raise ValueError(\"Radius cannot be negative\")\n    volume = (4/3) * math.pi * radius**3\n    return volume\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef volume_sphere(radius):\n    V = (4/3) * math.pi * radius ** 3\n    return V",
+      "reference_key": "import math\n\ndef volume_sphere(radius):\n    volume = (4/3) * math.pi * radius**3\n    return volume",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef volume_sphere(radius):\n    V = (4/3) * math.pi * radius ** 3\n    return V\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.188790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(2), 33.51032163829848, rel_tol=0.001)\nassert math.isclose(volume_sphere(3), 113.09733552923254, rel_tol=0.001)\nassert math.isclose(volume_sphere(-1), -4.188790204786391, rel_tol=0.001)\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef volume_sphere(radius):\n    V = (4/3) * math.pi * radius ** 3\n    return V\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3",
+      "reference_key": "import math\n\ndef volume_sphere(radius):\n    volume = (4/3) * math.pi * radius**3\n    return volume",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert math.isclose(volume_sphere(0), 0, rel_tol=0.001)\nassert math.isclose(volume_sphere(1), 4.188790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(2), 33.51032163829848, rel_tol=0.001)\nassert math.isclose(volume_sphere(3), 113.09733552923254, rel_tol=0.001)\nassert math.isclose(volume_sphere(-1), -4.188790204786391, rel_tol=0.001)\n```",
+        "verifier": "PICK: A\n```python\nimport math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3\n```",
+        "fixer": "```python\nimport math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum",
+      "reference_key": "import math\n\ndef volume_sphere(radius):\n    volume = (4/3) * math.pi * radius**3\n    return volume",
+      "key_differs": true,
+      "text": "```python\ndef sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius ** 3\n\n# Test cases\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(25), 65449.84694978735, rel_tol=0.001)\nassert math.isclose(volume_sphere(20), 33510.32163829113, rel_tol=0.001)\nassert sum_in_range(-10, 10) == 0\nassert sum_in_range(0, 0) == 0\nassert sum_in_range(1, 1) == 1\nassert sum_in_range(10, 10) == 10\nassert sum_in_range(-10, -10) == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_in_range(-10, 10) == 0\nassert sum_in_range(0, 0) == 0\nassert sum_in_range(1, 1) == 1\nassert sum_in_range(10, 10) == 10\nassert sum_in_range(-10, -10) == 0\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius ** 3\n\n# Test cases\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(25), 65449.84694978735, rel_tol=0.001)\nassert math.isclose(volume_sphere(20), 33510.32163829113, rel_tol=0.001)\nassert sum_in_range(-10, 10) == 0\nassert sum_in_range(0, 0) == 0\nassert sum_in_range(1, 1) == 1\nassert sum_in_range(10, 10) == 10\nassert sum_in_range(-10, -10) == 0\n```",
+        "fixer": "```python\nimport math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius ** 3\n\n# Test cases\nassert math.isclose(volume_sphere(10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_sphere(25), 65449.84694978735, rel_tol=0.001)\nassert math.isclose(volume_sphere(20), 33510.32163829113, rel_tol=0.001)\nassert sum_in_range(-10, 10) == 0\nassert sum_in_range(0, 0) == 0\nassert sum_in_range(1, 1) == 1\nassert sum_in_range(10, 10) == 10\nassert sum_in_range(-10, -10) == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3",
+  "sample_keys": [
+    "import math\n\ndef volume_sphere(radius):\n    # Calculate the volume of a sphere using the formula 4/3 * pi * r^3\n    volume = (4/3) * math.pi * radius**3\n    return volume",
+    "import math\n\ndef volume_sphere(radius):\n    \"\"\"\n    Calculates the volume of a sphere given its radius.\n\n    Args:\n    radius (float): The radius of the sphere.\n\n    Returns:\n    float: The volume of the sphere.\n    \"\"\"\n    volume = (4/3) * math.pi * (radius ** 3)\n    return volume",
+    "import math\n\ndef volume_sphere(radius):\n    \"\"\"\n    Calculate the volume of a sphere given its radius.\n\n    Parameters:\n    - radius (float): The radius of the sphere.\n\n    Returns:\n    float: The volume of the sphere.\n    \"\"\"\n    volume = (4/3) * math.pi * (radius ** 3)\n    return volume",
+    "import math\n\ndef volume_sphere(radius):\n    # Calculate volume using the formula V = (4/3) * pi * r^3\n    volume = (4/3) * math.pi * radius ** 3\n    return volume",
+    "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1777.0,
+    "small_out": 349.0,
+    "small_s": 3.019639609992737
+  },
+  "calls_plus": {
+    "small_in": 1571.0,
+    "small_out": 347.0,
+    "small_s": 6.04375734803034,
+    "large_in": 207.0,
+    "large_out": 33.0,
+    "large_s": 0.9646524109994061
+  },
+  "calls_samples": {
+    "small_in": 1035.0,
+    "small_out": 318.0,
+    "small_s": 6.707563714997377
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-308",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef large_product(list1, list2, n):\n    result = []\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            result.append(list1[i] * list2[j])\n    result.sort(reverse=True)\n    return result[:n]\n```",
+  "reference_key": "def large_product(list1, list2, n):\n    result = []\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            result.append(list1[i] * list2[j])\n    result.sort(reverse=True)\n    return result[:n]",
+  "final_key_plus": "def large_product(list1, list2, n):\n    result = []\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            result.append(list1[i] * list2[j])\n    result.sort(reverse=True)\n    return result[:n]",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],1)==[60]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],7)==[60, 54, 50, 48, 45, 40, 36]\nassert large_product([], [1, 2, 3, 4, 5, 6], 3) == []\nassert large_product([1, 2, 3, 4, 5, 6], [], 3) == []\n```",
+    "verifier": "PICK: B\n\n```python\ndef large_product(list1, list2, n):\n    result = []\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            result.append(list1[i] * list2[j])\n    result.sort(reverse=True)\n    return result[:n]\n```",
+    "fixer": "```python\ndef large_product(list1, list2, n):\n    result = []\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            result.append(list1[i] * list2[j])\n    result.sort(reverse=True)\n    return result[:n]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def large_product(list1, list2, count):\n    result = []\n    for i in list1:\n        for j in list2:\n            products = i * j\n            result.append(products)\n    sorted_result = sorted(result, reverse=True)\n    return sorted_result[:count]",
+      "reference_key": "def large_product(list1, list2, n):\n    result = []\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            result.append(list1[i] * list2[j])\n    result.sort(reverse=True)\n    return result[:n]",
+      "key_differs": true,
+      "text": "```python\ndef large_product(list1, list2, count):\n    result = []\n    for i in list1:\n        for j in list2:\n            products = i * j\n            result.append(products)\n    sorted_result = sorted(result, reverse=True)\n    return sorted_result[:count]\n```",
+      "quality": 1.0,
+      "final_key": "def large_product(list1, list2, count):\n    result = []\n    for i in list1:\n        for j in list2:\n            products = i * j\n            result.append(products)\n    sorted_result = sorted(result, reverse=True)\n    return sorted_result[:count]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([-1, -2, -3, -4, -5, -6],[3, 6, 8, 9, 10, 6],3)==[-60, -54, -50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],7)==[60, 54, 50, 48, 42, 36, 30]\nassert large_product([], [1, 2, 3, 4, 5, 6],3)==[]\nassert large_product([1, 2, 3, 4, 5, 6], [], 3)==[]\n```",
+        "verifier": "PICK: A\n\n```python\ndef large_product(list1, list2, count):\n    result = []\n    for i in list1:\n        for j in list2:\n            products = i * j\n            result.append(products)\n    sorted_result = sorted(result, reverse=True)\n    return sorted_result[:count]\n```",
+        "fixer": "```python\ndef large_product(list1, list2, count):\n    result = []\n    for i in list1:\n        for j in list2:\n            products = i * j\n            result.append(products)\n    sorted_result = sorted(result, reverse=True)\n    return sorted_result[:count]\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def large_product(list1, list2, num_pairs):\n    result = []\n    # Iterate over all possible pairs of factors\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            product = list1[i] * list2[j]\n            result.append(product)\n    \n    # Sort the result list in descending order\n    result.sort(reverse=True)\n    \n    # Return the first num_pairs elements\n    return result[:num_pairs]",
+      "reference_key": "def large_product(list1, list2, n):\n    result = []\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            result.append(list1[i] * list2[j])\n    result.sort(reverse=True)\n    return result[:n]",
+      "key_differs": true,
+      "text": "```python\ndef large_product(list1, list2, num_pairs):\n    result = []\n    # Iterate over all possible pairs of factors\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            product = list1[i] * list2[j]\n            result.append(product)\n    \n    # Sort the result list in descending order\n    result.sort(reverse=True)\n    \n    # Return the first num_pairs elements\n    return result[:num_pairs]\n```",
+      "quality": 1.0,
+      "final_key": "def large_product(list1, list2, num_pairs):\n    result = []\n    # Iterate over all possible pairs of factors\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            product = list1[i] * list2[j]\n            result.append(product)\n    \n    # Sort the result list in descending order\n    result.sort(reverse=True)\n    \n    # Return the first num_pairs elements\n    return result[:num_pairs]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],1)==[60]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],7)==[60, 54, 50, 48, 45, 40, 36]\nassert large_product([],[],3)==[]\nassert large_product([10, 20, 30],[],3)==[]\n```",
+        "verifier": "PICK: A\n\n```python\ndef large_product(list1, list2, num_pairs):\n    result = []\n    # Iterate over all possible pairs of factors\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            product = list1[i] * list2[j]\n            result.append(product)\n    \n    # Sort the result list in descending order\n    result.sort(reverse=True)\n    \n    # Return the first num_pairs elements\n    return result[:num_pairs]\n```",
+        "fixer": "```python\ndef large_product(list1, list2, num_pairs):\n    result = []\n    # Iterate over all possible pairs of factors\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            product = list1[i] * list2[j]\n            result.append(product)\n    \n    # Sort the result list in descending order\n    result.sort(reverse=True)\n    \n    # Return the first num_pairs elements\n    return result[:num_pairs]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def first_Digit(num):\n    num_str = str(num)\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit",
+      "reference_key": "def large_product(list1, list2, n):\n    result = []\n    for i in range(len(list1)):\n        for j in range(len(list2)):\n            result.append(list1[i] * list2[j])\n    result.sort(reverse=True)\n    return result[:n]",
+      "key_differs": true,
+      "text": "```python\ndef first_Digit(num):\n    num_str = str(num)\n    first_char = num_str[0]\n    first_digit = int(first_char)\n    return first_digit\n```",
+      "quality": 0.0,
+      "final_key": "def large_product(list1, list2, n):\n    # Sort both lists in descending order\n    list1.sort(reverse=True)\n    list2.sort(reverse=True)\n    \n    # Initialize an empty list to store the largest products\n    largest_products = []\n    \n    # Iterate through the first n elements of both lists\n    for i in range(n):\n        # Calculate the product of the current elements from both lists\n        product = list1[i] * list2[i]\n        \n        # Append the product to the list of largest products\n        largest_products.append(product)\n    \n    return largest_products\n\n# Test cases\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],4)==[60, 54, 50, 48]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],5)==[60, 54, 50, 48, 45]\nassert first_Digit(123) == 1\nassert first_Digit(-456) == 4\nassert first_Digit(7890) == 7\nassert first_Digit(0) == 0\nassert first_Digit(1000000) == 1",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert first_Digit(123) == 1\nassert first_Digit(-456) == 4\nassert first_Digit(7890) == 7\nassert first_Digit(0) == 0\nassert first_Digit(1000000) == 1",
+        "verifier": "PICK: B\n\n```python\ndef large_product(list1, list2, n):\n    # Sort both lists in descending order\n    list1.sort(reverse=True)\n    list2.sort(reverse=True)\n    \n    # Initialize an empty list to store the largest products\n    largest_products = []\n    \n    # Iterate through the first n elements of both lists\n    for i in range(n):\n        # Calculate the product of the current elements from both lists\n        product = list1[i] * list2[i]\n        \n        # Append the product to the list of largest products\n        largest_products.append(product)\n    \n    return largest_products\n\n# Test cases\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],4)==[60, 54, 50, 48]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],5)==[60, 54, 50, 48, 45]\nassert first_Digit(123) == 1\nassert first_Digit(-456) == 4\nassert first_Digit(7890) == 7\nassert first_Digit(0) == 0\nassert first_Digit(1000000) == 1\n```",
+        "fixer": "```python\ndef large_product(list1, list2, n):\n    # Sort both lists in descending order\n    list1.sort(reverse=True)\n    list2.sort(reverse=True)\n    \n    # Initialize an empty list to store the largest products\n    largest_products = []\n    \n    # Iterate through the first n elements of both lists\n    for i in range(n):\n        # Calculate the product of the current elements from both lists\n        product = list1[i] * list2[i]\n        \n        # Append the product to the list of largest products\n        largest_products.append(product)\n    \n    return largest_products\n\n# Test cases\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],4)==[60, 54, 50, 48]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],5)==[60, 54, 50, 48, 45]\nassert first_Digit(123) == 1\nassert first_Digit(-456) == 4\nassert first_Digit(7890) == 7\nassert first_Digit(0) == 0\nassert first_Digit(1000000) == 1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+  "sample_keys": [
+    "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            product = i * j\n            result.append(product)\n    result.sort(reverse=True)\n    return result[:n] if n <= len(result) else result",
+    "def large_product(list1, list2, count):\n    result = []\n    for num1 in list1:\n        for num2 in list2:\n            product = num1 * num2\n            result.append(product)\n    result.sort(reverse=True)\n    return result[:count]",
+    "def large_product(list1, list2, num):\n    result = []\n    for num1 in list1:\n        for num2 in list2:\n            result.append(num1 * num2)\n    result.sort(reverse=True)\n    return result[:num]",
+    "def large_product(list1, list2, n):\n    result = []\n    for num1 in list1:\n        for num2 in list2:\n            result.append(num1 * num2)\n    result.sort(reverse=True)\n    return result[:n]",
+    "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            product = i * j\n            result.append(product)\n    result.sort(reverse=True)\n    return result[:n]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2410.0,
+    "small_out": 540.0,
+    "small_s": 12.188493308029138
+  },
+  "calls_plus": {
+    "small_in": 2147.0,
+    "small_out": 505.0,
+    "small_s": 10.723599291028222,
+    "large_in": 299.0,
+    "large_out": 62.0,
+    "large_s": 1.6903937539900653
+  },
+  "calls_samples": {
+    "small_in": 1495.0,
+    "small_out": 369.0,
+    "small_s": 7.184279376000632
+  }
+}

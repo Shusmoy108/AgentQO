@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-752",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Understand the definition of Jacobsthal numbers from the given link.\n2. Identify the base cases for the first two Jacobsthal numbers (jacobsthal_num(0) = 0 and jacobsthal_num(1) = 1).\n3. Recognize that each subsequent Jacobsthal number can be calculated using the formula: jacobsthal_num(n) = 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2).\n4. Implement a recursive function that uses the identified formula to calculate the nth Jacobsthal number.\n5. Test the function with the provided test case to ensure it returns the correct result.",
+  "reference_key": null,
+  "final_key_plus": "def jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2)",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\n```",
+    "coder": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2)\n```",
+    "verifier": "PICK: A\n\n```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2)\n```",
+    "fixer": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `convert` that takes one parameter, `complex_num`.\n2. Inside the function, use the `cmath.polar()` method to convert the complex number to polar coordinates.\n3. Return the result of the conversion.\n\nHere's the complete code:\n\n```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```\n\nThis function will correctly convert any given complex number to its polar representation as expected.",
+      "quality": 0.0,
+      "final_key": "import cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n\ndef jacobsthal_num(n):\n    \"\"\"\n    Calculate the nth Jacobsthal number.\n\n    Parameters:\n    - n: The position in the Jacobsthal sequence.\n\n    Returns:\n    - The nth Jacobsthal number as an integer.\n    \"\"\"\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return jacobsthal_num(n-1) + 2*jacobsthal_num(n-2)\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert convert(1+1j) == (1.4142135623730951, 0.7853981633974483)\nassert convert(-1-1j) == (1.4142135623730951, -0.7853981633974483)\nassert convert(0) == (0, 0)\nassert convert(1) == (1, 0)\nassert convert(1j) == (1, cmath.pi / 2)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert(1+1j) == (1.4142135623730951, 0.7853981633974483)\nassert convert(-1-1j) == (1.4142135623730951, -0.7853981633974483)\nassert convert(0) == (0, 0)\nassert convert(1) == (1, 0)\nassert convert(1j) == (1, cmath.pi / 2)\n```",
+        "coder": "```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```",
+        "verifier": "PICK: B\n\n```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n\ndef jacobsthal_num(n):\n    \"\"\"\n    Calculate the nth Jacobsthal number.\n\n    Parameters:\n    - n: The position in the Jacobsthal sequence.\n\n    Returns:\n    - The nth Jacobsthal number as an integer.\n    \"\"\"\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return jacobsthal_num(n-1) + 2*jacobsthal_num(n-2)\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert convert(1+1j) == (1.4142135623730951, 0.7853981633974483)\nassert convert(-1-1j) == (1.4142135623730951, -0.7853981633974483)\nassert convert(0) == (0, 0)\nassert convert(1) == (1, 0)\nassert convert(1j) == (1, cmath.pi / 2)\n```",
+        "fixer": "```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n\ndef jacobsthal_num(n):\n    \"\"\"\n    Calculate the nth Jacobsthal number.\n\n    Parameters:\n    - n: The position in the Jacobsthal sequence.\n\n    Returns:\n    - The nth Jacobsthal number as an integer.\n    \"\"\"\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return jacobsthal_num(n-1) + 2*jacobsthal_num(n-2)\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert convert(1+1j) == (1.4142135623730951, 0.7853981633974483)\nassert convert(-1-1j) == (1.4142135623730951, -0.7853981633974483)\nassert convert(0) == (0, 0)\nassert convert(1) == (1, 0)\nassert convert(1j) == (1, cmath.pi / 2)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Understand the definition of Jacobsthal numbers from the given link.\n2. Identify the base cases for the first two Jacobsthal numbers (jacobsthal_num(0) = 0 and jacobsthal_num(1) = 1).\n3. Recognize that each subsequent Jacobsthal number can be calculated using the formula: jacobsthal_num(n) = 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2).\n4. Implement a recursive function that uses the identified formula to calculate the nth Jacobsthal number.\n5. Test the function with the provided test case to check if it correctly returns the result.",
+      "quality": 0.0,
+      "final_key": "def jacobsthal_num(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    # Recursive calculation\n    return 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2)\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\n```",
+        "coder": "```python\ndef jacobsthal_num(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    # Recursive calculation\n    return 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2)\n```",
+        "verifier": "PICK: B\n\n```python\ndef jacobsthal_num(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    # Recursive calculation\n    return 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2)\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\n```",
+        "fixer": "```python\ndef jacobsthal_num(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    # Recursive calculation\n    return 2 * jacobsthal_num(n - 1) + jacobsthal_num(n - 2)\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `string_to_tuple` that takes one parameter, `input_string`.\n2. Inside the function, use a list comprehension to iterate over each character in the input string.\n3. Convert each character into a tuple using parentheses.\n4. Return the resulting list of tuples.\n\nHere's the complete implementation:\n\n```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n\n# Test the function\nassert string_to_tuple(\"python 3.0\") == ('p', 'y', 't', 'h', 'o', 'n', '3', '.', '0')\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that meets the requirements of the task. The function is designed to be easily understandable and maintainable, adhering to best practices for Python programming.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert string_to_tuple(\"hello\") == [('h', 'e'), ('l', 'l'), ('o')]\nassert string_to_tuple(\"\") == []\nassert string_to_tuple(\"a\") == [('a',)]\nassert string_to_tuple(\"ab\") == [('a',), ('b',)]\nassert string_to_tuple(\"abc\") == [('a',), ('b',), ('c',)]\n```",
+        "coder": "```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            a, b = b, 2 * b + a\n        return b\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert string_to_tuple(\"hello\") == [('h', 'e'), ('l', 'l'), ('o')]\nassert string_to_tuple(\"\") == []\nassert string_to_tuple(\"a\") == [('a',)]\nassert string_to_tuple(\"ab\") == [('a',), ('b',)]\nassert string_to_tuple(\"abc\") == [('a',), ('b',), ('c',)]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b",
+  "sample_keys": [
+    "def jacobsthal_num(n):\n    if n <= 1:\n        return n\n    a, b = 0, 1\n    for i in range(2, n + 1):\n        c = a + b\n        a, b = b, c\n    return b",
+    "def jacobsthal_num(n):\n    # Base case: the first two Jacobsthal numbers are 0 and 1\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    # Recursive case: J(n) = 2 * J(n-1) + J(n-2)\n    else:\n        return 2 * jacobsthal_num(n-1) + jacobsthal_num(n-2)\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1918.0,
+    "small_out": 487.0,
+    "small_s": 10.560626969003351
+  },
+  "calls_plus": {
+    "large_in": 186.0,
+    "large_out": 145.0,
+    "large_s": 3.11170563599444,
+    "small_in": 1657.0,
+    "small_out": 273.0,
+    "small_s": 4.808496968034888
+  },
+  "calls_samples": {
+    "small_in": 5779.0,
+    "small_out": 1680.0,
+    "small_s": 31.117686793993926
+  }
+}

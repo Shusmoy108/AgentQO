@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-472",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert check_Consecutive([10, 11, 12, 13, 14]) == True\nassert check_Consecutive([-1, 0, 1, 2, 3]) == True\nassert check_Consecutive([5, 7, 8, 9, 10]) == False\nassert check_Consecutive([100]) == True\nassert check_Consecutive([]) == True\n```",
+  "reference_key": "assert check_Consecutive([10, 11, 12, 13, 14]) == True\nassert check_Consecutive([-1, 0, 1, 2, 3]) == True\nassert check_Consecutive([5, 7, 8, 9, 10]) == False\nassert check_Consecutive([100]) == True\nassert check_Consecutive([]) == True",
+  "final_key_plus": "def check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n```",
+    "fixer": "```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n\n# Typical case\nassert check_Consecutive([1, 2, 3, 4, 5]) == True\n\n# Edge case 1: All numbers are the same\nassert check_Consecutive([7, 7, 7, 7, 6]) == False  # Expected False\n\n# Edge case 2: Single number\nassert check_Consecutive([8]) == True  # Expected True, because there's just one number.\n\n# Edge case 3: Numbers are decreasing\nassert check_Consecutive([10, 9, 8, 7, 6]) == False  # Expected False\n\n# Edge case 4: Numbers are increasing by different steps\nassert check_Consecutive([15, 20, 25]) == True  # Expected True\n\n# Edge case 5: Empty list\nassert check_Consecutive([]) == True  # Expected True, because it has no numbers.",
+      "reference_key": "assert check_Consecutive([10, 11, 12, 13, 14]) == True\nassert check_Consecutive([-1, 0, 1, 2, 3]) == True\nassert check_Consecutive([5, 7, 8, 9, 10]) == False\nassert check_Consecutive([100]) == True\nassert check_Consecutive([]) == True",
+      "key_differs": true,
+      "text": "```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n\n# Typical case\nassert check_Consecutive([1, 2, 3, 4, 5]) == True\n\n# Edge case 1: All numbers are the same\nassert check_Consecutive([7, 7, 7, 7, 6]) == False  # Expected False\n\n# Edge case 2: Single number\nassert check_Consecutive([8]) == True  # Expected True, because there's just one number.\n\n# Edge case 3: Numbers are decreasing\nassert check_Consecutive([10, 9, 8, 7, 6]) == False  # Expected False\n\n# Edge case 4: Numbers are increasing by different steps\nassert check_Consecutive([15, 20, 25]) == True  # Expected True\n\n# Edge case 5: Empty list\nassert check_Consecutive([]) == True  # Expected True, because it has no numbers.\n```",
+      "quality": 0.0,
+      "final_key": "def check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n```",
+        "fixer": "```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import numpy as np\n\n# Add assertions to check the function with the provided test case\nassert check_Consecutive([1,2,3,4,5]) == True\nassert check_Consecutive([2,2,3,3,4]) == True\nassert check_Consecutive([2,1,2,3,4]) == True\nassert check_Consecutive([1,2,3,4,9]) == False\nassert check_Consecutive([]) == True\nassert check_Consecutive([0]) == True",
+      "reference_key": "assert check_Consecutive([10, 11, 12, 13, 14]) == True\nassert check_Consecutive([-1, 0, 1, 2, 3]) == True\nassert check_Consecutive([5, 7, 8, 9, 10]) == False\nassert check_Consecutive([100]) == True\nassert check_Consecutive([]) == True",
+      "key_differs": true,
+      "text": "```python\nimport numpy as np\n\n# Add assertions to check the function with the provided test case\nassert check_Consecutive([1,2,3,4,5]) == True\nassert check_Consecutive([2,2,3,3,4]) == True\nassert check_Consecutive([2,1,2,3,4]) == True\nassert check_Consecutive([1,2,3,4,9]) == False\nassert check_Consecutive([]) == True\nassert check_Consecutive([0]) == True\n```",
+      "quality": 0.0,
+      "final_key": "def check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n```",
+        "fixer": "```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\") == False\nassert find_substring([], \"abc\") == False\nassert find_substring([\"a\", \"b\", \"c\"], \"\") == True\nassert find_substring([\"hello\", \"world\", \"python\"], \"o\")",
+      "reference_key": "assert check_Consecutive([10, 11, 12, 13, 14]) == True\nassert check_Consecutive([-1, 0, 1, 2, 3]) == True\nassert check_Consecutive([5, 7, 8, 9, 10]) == False\nassert check_Consecutive([100]) == True\nassert check_Consecutive([]) == True",
+      "key_differs": true,
+      "text": "```python\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\") == False\nassert find_substring([], \"abc\") == False\nassert find_substring([\"a\", \"b\", \"c\"], \"\") == True\nassert find_substring([\"hello\", \"world\", \"python\"], \"o\")\n```",
+      "quality": 0.0,
+      "final_key": "def check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n\n# Test cases\nassert check_Consecutive([1,2,3,4,5]) == True\nassert check_Consecutive([1,2,3,5,6]) == False\nassert check_Consecutive([1,2,1]) == False\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\") == False\nassert find_substring([], \"abc\") == False\nassert find_substring([\"a\", \"b\", \"c\"], \"\") == True\nassert find_substring([\"hello\", \"world\", \"python\"], \"o\") == True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n\n# Test cases\nassert check_Consecutive([1,2,3,4,5]) == True\nassert check_Consecutive([1,2,3,5,6]) == False\nassert check_Consecutive([1,2,1]) == False\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\") == False\nassert find_substring([], \"abc\") == False\nassert find_substring([\"a\", \"b\", \"c\"], \"\") == True\nassert find_substring([\"hello\", \"world\", \"python\"], \"o\") == True\n```",
+        "fixer": "```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n\n# Test cases\nassert check_Consecutive([1,2,3,4,5]) == True\nassert check_Consecutive([1,2,3,5,6]) == False\nassert check_Consecutive([1,2,1]) == False\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\") == False\nassert find_substring([], \"abc\") == False\nassert find_substring([\"a\", \"b\", \"c\"], \"\") == True\nassert find_substring([\"hello\", \"world\", \"python\"], \"o\") == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert check_Consecutive([1,2,3,4,5]) == True\nassert check_Consecutive([1,2,3,4,6]) == False\nassert check_Consecutive([1,2,3,4,5,6]) == True\nassert check_Consecutive([1,2,3,4,5,6,7]) == True\nassert check_Consecutive([]) == True",
+  "sample_keys": [
+    "assert check_Consecutive([1,2,3,4,5]) == True\nassert check_Consecutive([]) == False\nassert check_Consecutive([10]) == True\nassert check_Consecutive([1,2,3,5]) == False\nassert check_Consecutive([1,3,5,7,9]) == True",
+    "assert check_Consecutive([]) == False\nassert check_Consecutive([1,5,3,7,9]) == True\nassert check_Consecutive([-1,-2,-3,-4]) == True\nassert check_Consecutive([0,1,2,3,4]) == True\nassert check_Consecutive([5,5,5,5]) == True",
+    "assert check_Consecutive([1,2,3,4,5]) == True\nassert check_Consecutive([1,3,5,7]) == True\nassert check_Consecutive([10,9,8,7,6]) == True\nassert check_Consecutive([1,2,4,5]) == False\nassert check_Consecutive([]) == True",
+    "assert check_Consecutive([10, 11, 12, 13, 14]) == True\nassert check_Consecutive([1, 3, 5, 7, 9]) == True\nassert check_Consecutive([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\nassert check_Consecutive([10, 20, 30, 40]) == True\nassert check_Consecutive([]) == True",
+    "assert check_Consecutive([1,2,3,4,5]) == True\nassert check_Consecutive([]) == True\nassert check_Consecutive([0]) == True\nassert check_Consecutive([-1,-2,-3,-4,-5]) == True\nassert check_Consecutive([-1,0,1]) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1453.0,
+    "small_out": 404.0,
+    "small_s": 9.037825885985512
+  },
+  "calls_plus": {
+    "small_in": 1282.0,
+    "small_out": 312.0,
+    "small_s": 6.581798767962027,
+    "large_in": 183.0,
+    "large_out": 98.0,
+    "large_s": 2.830707715009339
+  },
+  "calls_samples": {
+    "small_in": 915.0,
+    "small_out": 440.0,
+    "small_s": 8.821351522958139
+  }
+}

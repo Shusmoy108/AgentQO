@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-414",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef overlapping(seq1, seq2):\n    for i in seq1:\n        for j in seq2:\n            if i == j:\n                return True\n    return False\n```",
+  "reference_key": "def overlapping(seq1, seq2):\n    for i in seq1:\n        for j in seq2:\n            if i == j:\n                return True\n    return False",
+  "final_key_plus": "def overlapping(seq1, seq2):\n    for i in seq1:\n        for j in seq2:\n            if i == j:\n                return True\n    return False",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([], []) == False\nassert overlapping([1], [1]) == True\nassert overlapping([1,2,3], [3,4,5]) == True\nassert overlapping([1,2,3,4,5], [1,2,3,4,5]) == True\n```",
+    "verifier": "PICK: A\n\n```python\ndef overlapping(seq1, seq2):\n    for i in seq1:\n        for j in seq2:\n            if i == j:\n                return True\n    return False\n```",
+    "fixer": "```python\ndef overlapping(seq1, seq2):\n    for i in seq1:\n        for j in seq2:\n            if i == j:\n                return True\n    return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False",
+      "reference_key": "def overlapping(seq1, seq2):\n    for i in seq1:\n        for j in seq2:\n            if i == j:\n                return True\n    return False",
+      "key_differs": true,
+      "text": "```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n```",
+      "quality": 1.0,
+      "final_key": "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([], []) == False\nassert overlapping([1,2,3], [1,2,3]) == True\nassert overlapping([1,2,3,4,5], [1,2,3,4,5]) == True\nassert overlapping([1,2,3,4,5], [1,2,3,4,5,6]) == True\n```",
+        "verifier": "PICK: A\n\n```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n```",
+        "fixer": "```python\ndef overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def overlapping(seq1, seq2):\n    for item in seq1:\n        if item in seq2:\n            return True\n    return False",
+      "reference_key": "def overlapping(seq1, seq2):\n    for i in seq1:\n        for j in seq2:\n            if i == j:\n                return True\n    return False",
+      "key_differs": true,
+      "text": "```python\ndef overlapping(seq1, seq2):\n    for item in seq1:\n        if item in seq2:\n            return True\n    return False\n```\n\nThis solution defines the `overlapping` function which iterates through each item of the first sequence (`seq1`) and checks if it exists in the second sequence (`seq2`). If a match is found, it immediately returns `True`. If the loop completes without finding any matches, it returns `False`.",
+      "quality": 1.0,
+      "final_key": "def overlapping(seq1, seq2):\n    for item in seq1:\n        if item in seq2:\n            return True\n    return False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([], []) == False\nassert overlapping([1,2,3], [1,2,3]) == True\nassert overlapping([1,2,3,4,5], [1,2,3,4,5]) == True\nassert overlapping([1,2,3,4,5], [1,2,3,4,5,6]) == True\n```",
+        "verifier": "PICK: A\n\n```python\ndef overlapping(seq1, seq2):\n    for item in seq1:\n        if item in seq2:\n            return True\n    return False\n```",
+        "fixer": "```python\ndef overlapping(seq1, seq2):\n    for item in seq1:\n        if item in seq2:\n            return True\n    return False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+      "reference_key": "def overlapping(seq1, seq2):\n    for i in seq1:\n        for j in seq2:\n            if i == j:\n                return True\n    return False",
+      "key_differs": true,
+      "text": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```",
+      "quality": 1.0,
+      "final_key": "def overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert overlapping([1,2,3,4,5],[6,7,8,9]) == False\nassert overlapping([],[]) == False\nassert overlapping(['a','b','c'],['d','e','f']) == True\nassert overlapping(['A','B','C'],['a','b','c']) == True\nassert overlapping(['a','b','c','D'],['a','b','c']) == True\n```",
+        "verifier": "PICK: B\n\n```python\ndef overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)\n```",
+        "fixer": "```python\ndef overlapping(seq1, seq2):\n    return any(item in seq2 for item in seq1)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False",
+  "sample_keys": [
+    "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False",
+    "def overlapping(seq1, seq2):\n    for elem1 in seq1:\n        for elem2 in seq2:\n            if elem1 == elem2:\n                return True\n    return False",
+    "def overlapping(seq1, seq2):\n    for elem1 in seq1:\n        for elem2 in seq2:\n            if elem1 == elem2:\n                return True\n    return False",
+    "def overlapping(seq1, seq2):\n    for item1 in seq1:\n        for item2 in seq2:\n            if item1 == item2:\n                return True\n    return False",
+    "def overlapping(seq1, seq2): \n    for e in seq1: \n        for f in seq2: \n            if e == f: \n                return True\n    return False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1482.0,
+    "small_out": 357.0,
+    "small_s": 4.632155140017858
+  },
+  "calls_plus": {
+    "small_in": 1190.0,
+    "small_out": 286.0,
+    "small_s": 4.963000574003672,
+    "large_in": 222.0,
+    "large_out": 41.0,
+    "large_s": 1.2346426380099729
+  },
+  "calls_samples": {
+    "small_in": 1110.0,
+    "small_out": 225.0,
+    "small_s": 4.904290217004018
+  }
+}

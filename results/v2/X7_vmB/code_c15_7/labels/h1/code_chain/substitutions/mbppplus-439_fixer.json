@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-439",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = \"\"\n    for num in numbers:\n        result += str(abs(num))\n    return int('-' + result) if any(n < 0 for n in numbers) else int(result)\n```",
+  "reference_key": "def multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = \"\"\n    for num in numbers:\n        result += str(abs(num))\n    return int('-' + result) if any(n < 0 for n in numbers) else int(result)",
+  "final_key_plus": "def multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = \"\"\n    for num in numbers:\n        result += str(abs(num))\n    return int('-' + result) if any(n < 0 for n in numbers) else int(result)",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = \"\"\n    for num in numbers:\n        result += str(abs(num))\n    return int('-' + result) if any(n < 0 for n in numbers) else int(result)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    if not result:\n        raise ValueError(\"Invalid input\")\n    return int(result)",
+      "reference_key": "def multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = \"\"\n    for num in numbers:\n        result += str(abs(num))\n    return int('-' + result) if any(n < 0 for n in numbers) else int(result)",
+      "key_differs": true,
+      "text": "```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    if not result:\n        raise ValueError(\"Invalid input\")\n    return int(result)\n```\n\nThe test failures were due to invalid characters at the end of the string when joining the numbers. The `result` variable was initially empty which caused the ValueError when trying to convert to an integer using `int(result)`. After adding a check for an empty `result`, the function now handles this case gracefully and raises a meaningful error message.",
+      "quality": 1.0,
+      "final_key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    if not result:\n        raise ValueError(\"Invalid input\")\n    return int(result)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    if not result:\n        raise ValueError(\"Invalid input\")\n    return int(result)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n\nassert multiple_to_single([11, 33, 50])==113350\nassert multiple_to_single([-1,2,3,4,5,6])==-123456\nassert multiple_to_single([10,15,20,25])==10152025\n# assert multiple_to_single([])==0 -> ValueError invalid literal for int() with base 10: ''\n# assert multiple_to_single([1])==1\n# assert multiple_to_single([-1,-2,-3])==-6 -> ValueError invalid literal for int() with base 10: '-1-2-3'\n# assert multiple_to_single([0,0,0])==0\n# assert multiple_to_single([999,999,999])==2997 -> AssertionError",
+      "reference_key": "def multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = \"\"\n    for num in numbers:\n        result += str(abs(num))\n    return int('-' + result) if any(n < 0 for n in numbers) else int(result)",
+      "key_differs": true,
+      "text": "```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n\nassert multiple_to_single([11, 33, 50])==113350\nassert multiple_to_single([-1,2,3,4,5,6])==-123456\nassert multiple_to_single([10,15,20,25])==10152025\n# assert multiple_to_single([])==0 -> ValueError invalid literal for int() with base 10: ''\n# assert multiple_to_single([1])==1\n# assert multiple_to_single([-1,-2,-3])==-6 -> ValueError invalid literal for int() with base 10: '-1-2-3'\n# assert multiple_to_single([0,0,0])==0\n# assert multiple_to_single([999,999,999])==2997 -> AssertionError\n```",
+      "quality": 1.0,
+      "final_key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "reference_key": "def multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = \"\"\n    for num in numbers:\n        result += str(abs(num))\n    return int('-' + result) if any(n < 0 for n in numbers) else int(result)",
+      "key_differs": true,
+      "text": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+      "quality": 1.0,
+      "final_key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+  "sample_keys": [
+    "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+    "def multiple_to_single(numbers):\n    if not numbers:\n        raise ValueError(\"Invalid input list\")\n    result = \"\"\n    for num in numbers:\n        if not isinstance(num, int):\n            raise TypeError(\"All elements must be integers\")\n        result += str(num)\n    return int(result)",
+    "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+    "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n# Test results (the task's example test and the extra asserts, run on this code)\nassert multiple_to_single([11, 33, 50])==113350\nassert multiple_to_single([-1,2,3,4,5,6])==-123456\nassert multiple_to_single([10,15,20,25])==10152025\nfail assert multiple_to_single([])==0 -> ValueError invalid literal for int() with base 10: ''\nassert multiple_to_single([1])==1\nfail assert multiple_to_single([-1,-2,-3])==-6 -> ValueError invalid literal for int() with base 10: '-1-2-3'\nassert multiple_to_single([0,0,0])==0\nfail assert multiple_to_single([999,999,999])==2997 -> AssertionError",
+    "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n\n# Test cases\nassert multiple_to_single([11, 33, 50])==113350\nassert multiple_to_single([-1,2,3,4,5,6])==-123456\nassert multiple_to_single([10,15,20,25])==10152025\n# Extra test cases\ntry:\n    assert multiple_to_single([])==0\nexcept ValueError:\n    print(\"ValueError caught as expected\")\ntry:\n    assert multiple_to_single([1])==1\nexcept ValueError:\n    print(\"ValueError caught as expected\")\ntry:\n    assert multiple_to_single([-1,-2,-3])==-6\nexcept ValueError:\n    print(\"ValueError caught as expected\")\ntry:\n    assert multiple_to_single([999,999,999])==2997\nexcept AssertionError:\n    print(\"AssertionError caught as expected\")"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1488.0,
+    "small_out": 340.0,
+    "small_s": 7.262389323965181
+  },
+  "calls_plus": {
+    "small_in": 1126.0,
+    "small_out": 337.0,
+    "small_s": 7.141805062943604,
+    "large_in": 361.0,
+    "large_out": 61.0,
+    "large_s": 1.3537959329842124
+  },
+  "calls_samples": {
+    "small_in": 1805.0,
+    "small_out": 639.0,
+    "small_s": 12.445479021960637
+  }
+}

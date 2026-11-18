@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-310",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `string_to_tuple`.\n2. The function should take one parameter, which is the string to be converted.\n3. Inside the function, use the built-in `tuple()` function to convert the string into a tuple of its characters.\n4. Return the resulting tuple from the function.\n5. Ensure that the function handles any string input correctly, including strings with spaces and special characters.",
+  "reference_key": null,
+  "final_key_plus": "def string_to_tuple(s):\n    return tuple(s)",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"ab\") == ('a', 'b')\nassert string_to_tuple(\"abc\") == ('a', 'b', 'c')\nassert string_to_tuple(\"1234567890\") == ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')\n```",
+    "coder": "```python\ndef string_to_tuple(s):\n    return tuple(s)\n```",
+    "verifier": "PICK: A\n\n```python\ndef string_to_tuple(s):\n    return tuple(s)\n```",
+    "fixer": "```python\ndef string_to_tuple(s):\n    return tuple(s)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `even_bit_set_number` that takes one parameter, `num`.\n2. Initialize a variable `result` to store the final result.\n3. Use bitwise operations to iterate through each bit of the input number.\n4. For each bit, check if it is even (i.e., divisible by 2).\n5. If the bit is even, set it in the `result` using the bitwise OR operation.\n6. Return the `result`.\n\nHere's the complete implementation:\n\n```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```\n\nThis function iterates through each bit of the input number, checks if it is even, and sets it in the result using bitwise OR operations. The result is then returned as the output.",
+      "quality": 0.0,
+      "final_key": "def string_to_tuple(s):\n    return tuple(s)",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"ab\") == ('a', 'b')\nassert string_to_tuple(\"abc\") == ('a', 'b', 'c')\nassert string_to_tuple(\"1234567890\") == ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')\n```",
+        "coder": "```python\ndef string_to_tuple(s):\n    return tuple(s)\n```",
+        "verifier": "PICK: A\n\n```python\ndef string_to_tuple(s):\n    return tuple(s)\n```",
+        "fixer": "```python\ndef string_to_tuple(s):\n    return tuple(s)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `string_to_tuple`.\n2. The function should take one parameter, which is the string to be converted.\n3. Inside the function, use the built-in `tuple()` function to convert the string into a tuple of its characters.\n4. Return the resulting tuple from the function.\n5. Ensure that the function handles any string input correctly, including strings with spaces and special characters, but also handle empty strings by converting them into a single-element tuple containing an empty string.",
+      "quality": 0.0,
+      "final_key": "def string_to_tuple(s):\n    if s == \"\":\n        return (\"\",)\n    else:\n        return tuple(s)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert string_to_tuple(\"\") == ('',)\nassert string_to_tuple(\"123\") == (1, 2, 3)\nassert string_to_tuple(\"abc\") == ('a', 'b', 'c')\nassert string_to_tuple(\"hello world\") == ('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd')\nassert string_to_tuple(\"1234567890\") == (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)\n```",
+        "coder": "```python\ndef string_to_tuple(s):\n    if s == \"\":\n        return (\"\",)\n    else:\n        return tuple(s)\n```",
+        "verifier": "PICK: A\n\n```python\ndef string_to_tuple(s):\n    if s == \"\":\n        return (\"\",)\n    else:\n        return tuple(s)\n```",
+        "fixer": "```python\ndef string_to_tuple(s):\n    if s == \"\":\n        return (\"\",)\n    else:\n        return tuple(s)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `concatenate_tuple` that takes one parameter: `tup`.\n2. Initialize an empty string variable `result`.\n3. Iterate over each element in the tuple using a for loop.\n4. For each element, convert it to a string if it's not already (to handle non-string types).\n5. Concatenate the converted string to the `result` string with the specified delimiter ('-').\n6. After the loop completes, return the `result` string.\n\nHere is the complete implementation:\n\n```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        # Convert non-string items to strings\n        item_str = str(item)\n        # Concatenate with the delimiter\n        result += item_str + \"-\"\n    # Remove the trailing delimiter\n    return result[:-1]\n```\n\nThis function will correctly concatenate each element of the given tuple by the specified delimiter, as demonstrated by the provided test case.",
+      "quality": 0.0,
+      "final_key": "def string_to_tuple(s):\n    return tuple(c for c in s)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert string_to_tuple(\"hello world\") == ('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd')\nassert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"1234567890\") == ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"A\") == ('A',)\n```",
+        "coder": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```",
+        "verifier": "PICK: B\n\n```python\ndef string_to_tuple(s):\n    return tuple(c for c in s)\n```",
+        "fixer": "```python\ndef string_to_tuple(s):\n    return tuple(c for c in s)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result",
+  "sample_keys": [
+    "def string_to_tuple(s):\n    return tuple(s)",
+    "def string_to_tuple(s):\n    chars_list = []\n    for char in s:\n        chars_list.append(char)\n    return tuple(chars_list)",
+    "def string_to_tuple(input_string):\n    return tuple(input_string)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1739.0,
+    "small_out": 480.0,
+    "small_s": 10.40737642502063
+  },
+  "calls_plus": {
+    "large_in": 128.0,
+    "large_out": 86.0,
+    "large_s": 1.8942192459944636,
+    "small_in": 1301.0,
+    "small_out": 154.0,
+    "small_s": 3.108336981968023
+  },
+  "calls_samples": {
+    "small_in": 4433.0,
+    "small_out": 774.0,
+    "small_s": 13.94941952789668
+  }
+}

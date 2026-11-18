@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-741",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert all_characters_same(\"aaaaa\") == True\nassert all_characters_same(\"abcde\") == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"zzz\") == True\nassert all_characters_same(\"abccba\") == False\n```",
+  "reference_key": "assert all_characters_same(\"aaaaa\") == True\nassert all_characters_same(\"abcde\") == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"zzz\") == True\nassert all_characters_same(\"abccba\") == False",
+  "final_key_plus": "def all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n```",
+    "fixer": "```python\ndef all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TextValidationTestCase(unittest.TestCase):\n    def test_all_characters_same(self):\n        self.assertEqual(all_characters_same(\"\", \"A\"), True)\n        self.assertEqual(all_characters_same(\"a\", \"b\"), False)\n        self.assertEqual(all_characters_same(\"AAA\", \"AAA\"), False)\n        self.assertEqual(all_characters_same(\"aaaaaaa\"), True)\n        self.assertEqual(all_characters_same(\"AbCabc\"), True)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)",
+      "reference_key": "assert all_characters_same(\"aaaaa\") == True\nassert all_characters_same(\"abcde\") == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"zzz\") == True\nassert all_characters_same(\"abccba\") == False",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TextValidationTestCase(unittest.TestCase):\n    def test_all_characters_same(self):\n        self.assertEqual(all_characters_same(\"\", \"A\"), True)\n        self.assertEqual(all_characters_same(\"a\", \"b\"), False)\n        self.assertEqual(all_characters_same(\"AAA\", \"AAA\"), False)\n        self.assertEqual(all_characters_same(\"aaaaaaa\"), True)\n        self.assertEqual(all_characters_same(\"AbCabc\"), True)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)\n```",
+      "quality": 0.0,
+      "final_key": "def all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n\n# Test cases\nassert all_characters_same(\"python\") == False\nassert all_characters_same(\"aaa\") == True\nassert all_characters_same(\"data\") == False",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n```python\ndef all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n\n# Test cases\nassert all_characters_same(\"python\") == False\nassert all_characters_same(\"aaa\") == True\nassert all_characters_same(\"data\") == False\n```",
+        "fixer": "```python\ndef all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n\n# Test cases\nassert all_characters_same(\"python\") == False\nassert all_characters_same(\"aaa\") == True\nassert all_characters_same(\"data\") == False\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert all_characters_same(\"\") == True\nassert all_characters_same(\"-\") == True\nassert all_characters_same(\"aabbcc\") == True\nassert all_characters_same(\"aabbb\") == False\nassert all_characters_same(\"0123456789\") == True",
+      "reference_key": "assert all_characters_same(\"aaaaa\") == True\nassert all_characters_same(\"abcde\") == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"zzz\") == True\nassert all_characters_same(\"abccba\") == False",
+      "key_differs": true,
+      "text": "```python\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"-\") == True\nassert all_characters_same(\"aabbcc\") == True\nassert all_characters_same(\"aabbb\") == False\nassert all_characters_same(\"0123456789\") == True\n```",
+      "quality": 0.0,
+      "final_key": "def all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n\n# Test cases\nassert all_characters_same(\"python\") == False\nassert all_characters_same(\"aaa\") == True\nassert all_characters_same(\"data\") == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"-\") == True\nassert all_characters_same(\"aabbcc\") == True\nassert all_characters_same(\"aabbb\") == False\nassert all_characters_same(\"0123456789\") == True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n\n# Test cases\nassert all_characters_same(\"python\") == False\nassert all_characters_same(\"aaa\") == True\nassert all_characters_same(\"data\") == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"-\") == True\nassert all_characters_same(\"aabbcc\") == True\nassert all_characters_same(\"aabbb\") == False\nassert all_characters_same(\"0123456789\") == True\n```",
+        "fixer": "```python\ndef all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n\n# Test cases\nassert all_characters_same(\"python\") == False\nassert all_characters_same(\"aaa\") == True\nassert all_characters_same(\"data\") == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"-\") == True\nassert all_characters_same(\"aabbcc\") == True\nassert all_characters_same(\"aabbb\") == False\nassert all_characters_same(\"0123456789\") == True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [3, 2, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [3, 2, 1]]\nassert sort_matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]",
+      "reference_key": "assert all_characters_same(\"aaaaa\") == True\nassert all_characters_same(\"abcde\") == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"zzz\") == True\nassert all_characters_same(\"abccba\") == False",
+      "key_differs": true,
+      "text": "```python\nassert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [3, 2, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [3, 2, 1]]\nassert sort_matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]\n```",
+      "quality": 0.0,
+      "final_key": "def all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n\n# Test cases\nassert all_characters_same(\"python\") == False\nassert all_characters_same(\"aaa\") == True\nassert all_characters_same(\"data\") == False\nassert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [3, 2, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [3, 2, 1]]\nassert sort_matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n\n# Test cases\nassert all_characters_same(\"python\") == False\nassert all_characters_same(\"aaa\") == True\nassert all_characters_same(\"data\") == False\nassert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [3, 2, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [3, 2, 1]]\nassert sort_matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]\n```",
+        "fixer": "```python\ndef all_characters_same(input_string):\n    if len(input_string) < 2:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n\n# Test cases\nassert all_characters_same(\"python\") == False\nassert all_characters_same(\"aaa\") == True\nassert all_characters_same(\"data\") == False\nassert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [3, 2, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [3, 2, 1]]\nassert sort_matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\nassert all_characters_same(\"aa\") == True\nassert all_characters_same(\"ab\") == False\nassert all_characters_same(\"aaa\") == True",
+  "sample_keys": [
+    "# Test with typical string (all characters are the same)\nassert all_characters_same(\"aaaaa\") == True\n\n# Test with single character string\nassert all_characters_same(\"a\") == True\n\n# Test with empty string\nassert all_characters_same(\"\") == True\n\n# Test with string with different characters\nassert all_characters_same(\"ab\") == False\n\n# Test with mixed case string\nassert all_characters_same(\"AbcD\") == False",
+    "assert all_characters_same(\"\") == True\nassert all_characters_same(\"aabbcc\") == True\nassert all_characters_same(\"aabbccc\") == True\nassert all_characters_same(\"aabbc\") == False\nassert all_characters_same(\"aabbccdd\") == False",
+    "assert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\nassert all_characters_same(\"aa\") == True\nassert all_characters_same(\"aab\") == False\nassert all_characters_same(\"aaa\") == True",
+    "assert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\nassert all_characters_same(\"aa\") == True\nassert all_characters_same(\"ab\") == False\nassert all_characters_same(\"aaa\") == True",
+    "assert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\nassert all_characters_same(\"aaaaa\") == True\nassert all_characters_same(\"abccba\") == True\nassert all_characters_same(\"abcabc\") == False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1350.0,
+    "small_out": 353.0,
+    "small_s": 7.577972167026019
+  },
+  "calls_plus": {
+    "small_in": 1188.0,
+    "small_out": 300.0,
+    "small_s": 6.153242307016626,
+    "large_in": 177.0,
+    "large_out": 58.0,
+    "large_s": 1.2674326309934258
+  },
+  "calls_samples": {
+    "small_in": 885.0,
+    "small_out": 320.0,
+    "small_s": 5.720825978991343
+  }
+}

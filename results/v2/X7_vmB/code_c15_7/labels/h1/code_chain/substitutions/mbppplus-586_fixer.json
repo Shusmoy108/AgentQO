@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-586",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef split_Arr(arr, n):\n    if n <= 0:\n        return arr\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = second_part + first_part\n    return result\n```",
+  "reference_key": "def split_Arr(arr, n):\n    if n <= 0:\n        return arr\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = second_part + first_part\n    return result",
+  "final_key_plus": "def split_Arr(arr, n):\n    if n <= 0:\n        return arr\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = second_part + first_part\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef split_Arr(arr, n):\n    if n <= 0:\n        return arr\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = second_part + first_part\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    if not len(result) == len(arr):\n        raise ValueError(\"The sum of the lengths of first and second parts should equal the original array length.\")\n    return result\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\n# Additional tests for correct behavior and edge cases\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]",
+      "reference_key": "def split_Arr(arr, n):\n    if n <= 0:\n        return arr\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = second_part + first_part\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    if not len(result) == len(arr):\n        raise ValueError(\"The sum of the lengths of first and second parts should equal the original array length.\")\n    return result\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\n# Additional tests for correct behavior and edge cases\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]\n```",
+      "quality": 0.0,
+      "final_key": "def split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    if not len(result) == len(arr):\n        raise ValueError(\"The sum of the lengths of first and second parts should equal the original array length.\")\n    return result\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\n# Additional tests for correct behavior and edge cases\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    if not len(result) == len(arr):\n        raise ValueError(\"The sum of the lengths of first and second parts should equal the original array length.\")\n    return result\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\n# Additional tests for correct behavior and edge cases\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def split_Arr(arr, n):\n    if len(arr) < 2:\n        return 'List must contain at least two elements'\n    else:\n        return arr[n:] + arr[:n]\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\nassert split_Arr([1,2,3,4,5],2) == [5,6,52,36,12,10]\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]",
+      "reference_key": "def split_Arr(arr, n):\n    if n <= 0:\n        return arr\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = second_part + first_part\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef split_Arr(arr, n):\n    if len(arr) < 2:\n        return 'List must contain at least two elements'\n    else:\n        return arr[n:] + arr[:n]\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\nassert split_Arr([1,2,3,4,5],2) == [5,6,52,36,12,10]\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]\n```",
+      "quality": 0.0,
+      "final_key": "def split_Arr(arr, n):\n    if len(arr) < 2:\n        return 'List must contain at least two elements'\n    else:\n        return arr[n:] + arr[:n]",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef split_Arr(arr, n):\n    if len(arr) < 2:\n        return 'List must contain at least two elements'\n    else:\n        return arr[n:] + arr[:n]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count",
+      "reference_key": "def split_Arr(arr, n):\n    if n <= 0:\n        return arr\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = second_part + first_part\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n```",
+      "quality": 0.0,
+      "final_key": "def split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def split_Arr(arr, n):\n    if n <= 0 or n > len(arr):\n        raise ValueError(\"Invalid index\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result",
+  "sample_keys": [
+    "def split_Arr(arr, n):\n    if not isinstance(arr, list) or not all(isinstance(item, int) for item in arr):\n        raise ValueError(\"Input must be a list of integers.\")\n\n    if n <= 0 or n > len(arr):\n        raise ValueError(\"Index out of range.\")\n    \n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result",
+    "def split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]  # This test failed, so it's kept as is\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]",
+    "def split_Arr(arr, n):\n    if len(arr) < n:\n        raise ValueError(\"The length of the array must be greater than or equal to n.\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]",
+    "def split_Arr(arr, n):\n    if n > len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n\n# Test cases to verify correctness\nassert split_Arr([12, 10, 5, 6, 52, 36], 2) == [5, 6, 52, 36, 12, 10]\nassert split_Arr([1, 2, 3, 4], 1) == [2, 3, 4, 1]\nassert split_Arr([0, 1, 2, 3, 4, 5, 6, 7], 3) == [3, 4, 5, 6, 7, 0, 1, 2]\nassert split_Arr([], 2) == []\nassert split_Arr([1], 2) == [1]\nassert split_Arr([1, 2, 3, 4, 5], 0) == [1, 2, 3, 4, 5]\nassert split_Arr([1, 2, 3, 4, 5], 5) == [1, 2, 3, 4, 5]",
+    "def split_Arr(arr, n):\n    if n >= len(arr):\n        return arr  # Return the array as it is if n is out of bounds\n    else:\n        first_part = arr[:n]\n        second_part = arr[n:]\n        result = first_part + second_part\n        return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1915.0,
+    "small_out": 486.0,
+    "small_s": 10.577228467998793
+  },
+  "calls_plus": {
+    "small_in": 1418.0,
+    "small_out": 418.0,
+    "small_s": 9.045292496011825,
+    "large_in": 462.0,
+    "large_out": 52.0,
+    "large_s": 1.1770745149988215
+  },
+  "calls_samples": {
+    "small_in": 2310.0,
+    "small_out": 1055.0,
+    "small_s": 18.927681140979985
+  }
+}

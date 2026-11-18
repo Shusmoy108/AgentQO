@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-232",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `larg_nnum` that accepts two parameters: a list (`lst`) and an integer (`n`).\n2. Use the `sorted()` function to sort the list in descending order.\n3. Slice the sorted list to get the first `n` elements.\n4. Return the sliced list as the result.\n5. Ensure the function handles cases where `n` is greater than the length of the list by using slicing with a default end index.",
+  "reference_key": null,
+  "final_key_plus": "def larg_nnum(lst, n):\n    # Sort the list in descending order\n    sorted_lst = sorted(lst, reverse=True)\n    # Slice the sorted list to get the first n elements\n    result = sorted_lst[:n]\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert set(larg_nnum([10, 20, 50, 70, 90, 20, 50, 40, 60, 80, 100],2))==set([100,90])\nassert set(larg_nnum([-10, -20, -30, -40, -50, -60, -70, -80, -90, -100],3))==set([-100,-90,-80])\nassert set(larg_nnum([],3))==set([])\nassert set(larg_nnum([100],1))==set([100])\nassert set(larg_nnum([100,100,100],3))==set([100,100,100])\n```",
+    "coder": "```python\ndef larg_nnum(lst, n):\n    # Sort the list in descending order\n    sorted_lst = sorted(lst, reverse=True)\n    # Slice the sorted list to get the first n elements\n    result = sorted_lst[:n]\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef larg_nnum(lst, n):\n    # Sort the list in descending order\n    sorted_lst = sorted(lst, reverse=True)\n    # Slice the sorted list to get the first n elements\n    result = sorted_lst[:n]\n    return result\n```",
+    "fixer": "```python\ndef larg_nnum(lst, n):\n    # Sort the list in descending order\n    sorted_lst = sorted(lst, reverse=True)\n    # Slice the sorted list to get the first n elements\n    result = sorted_lst[:n]\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Understand the problem: The task is to write a function that calculates the nth Catalan number, which is a sequence of natural numbers that have many applications in combinatorial mathematics.\n2. Recall the formula for Catalan numbers: The nth Catalan number C(n) can be calculated using the formula C(n) = (2n)! / ((n+1)! * n!).\n3. Implement the function: Use the formula to calculate the nth Catalan number.\n4. Test the function: Verify that the function returns the correct result for the given test case.\n5. Refine the function: If necessary, refine the implementation based on feedback or additional requirements.",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef larg_nnum(lst, n):\n    # Sort the list in descending order\n    lst.sort(reverse=True)\n    # Return the first n elements of the sorted list\n    return lst[:n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert set(larg_nnum([10, 20, 50, 70, 90, 20, 50, 40, 60, 80, 100],2))==set([100,90])\nassert set(larg_nnum([-10, -20, -30, -40, -50, -60, -70, -80, -90, -100],2))==set([-100,-90])\nassert set(larg_nnum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10],2))==set([10,9])\nassert set(larg_nnum([1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],2))==set([10000,9000])\nassert set(larg_nnum([],2))==set([])\n```",
+        "coder": "```python\ndef catalan_number(n):\n    # Calculate the factorial of 2n\n    fact_2n = math.factorial(2*n)\n    # Calculate the factorial of (n+1)\n    fact_n_plus_1 = math.factorial(n+1)\n    # Calculate the factorial of n\n    fact_n = math.factorial(n)\n    # Calculate the nth Catalan number using the formula\n    catalan = fact_2n // (fact_n_plus_1 * fact_n)\n    return catalan\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef larg_nnum(lst, n):\n    # Sort the list in descending order\n    lst.sort(reverse=True)\n    # Return the first n elements of the sorted list\n    return lst[:n]\n```",
+        "fixer": "```python\nimport math\n\ndef larg_nnum(lst, n):\n    # Sort the list in descending order\n    lst.sort(reverse=True)\n    # Return the first n elements of the sorted list\n    return lst[:n]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `larg_nnum` that accepts two parameters: a list (`lst`) and an integer (`n`).\n2. Use the `sorted()` function to sort the list in ascending order.\n3. Slice the sorted list to get the last `n` elements.\n4. Return the sliced list as the result.\n5. Ensure the function handles cases where `n` is greater than the length of the list by using slicing with a default start index.",
+      "quality": 1.0,
+      "final_key": "def larg_nnum(lst, n):\n    # Sort the list in descending order\n    sorted_lst = sorted(lst, reverse=True)\n    # Slice the sorted list to get the first n elements\n    result = sorted_lst[:n]\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert set(larg_nnum([10, 20, 50, 70, 90, 20, 50, 40, 60, 80, 100],2))==set([100,90])\nassert set(larg_nnum([-10, -20, -30, -40, -50, -60, -70, -80, -90, -100],3))==set([-10,-9,-8])\nassert set(larg_nnum([1, 2, 3, 4, 5],0))==set([])\nassert set(larg_nnum([],5))==set([])\nassert set(larg_nnum([100, 200, 300, 400, 500],1))==set([500])\n```",
+        "coder": "```python\ndef larg_nnum(lst, n):\n    # Sort the list in ascending order\n    sorted_lst = sorted(lst)\n    # Slice the sorted list to get the last n elements\n    result = sorted_lst[-n:]\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef larg_nnum(lst, n):\n    # Sort the list in descending order\n    sorted_lst = sorted(lst, reverse=True)\n    # Slice the sorted list to get the first n elements\n    result = sorted_lst[:n]\n    return result\n```",
+        "fixer": "```python\ndef larg_nnum(lst, n):\n    # Sort the list in descending order\n    sorted_lst = sorted(lst, reverse=True)\n    # Slice the sorted list to get the first n elements\n    result = sorted_lst[:n]\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `radian_degree` that takes one parameter, `degrees`.\n2. Inside the function, use the formula `radians = degrees * (pi / 180)` to convert degrees to radians.\n3. Return the calculated value of `radians`.\n\nThis solution directly follows the problem description and uses the standard mathematical conversion factor between degrees and radians.",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n\ndef larg_nnum(nums, n):\n    nums.sort(reverse=True)\n    return nums[:n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert set(radian_degree([30, 45, 60, 90]))==set([0.5235987755982989, 0.7853981633974483, 1.0471975511965976, 1.5707963267948966])\nassert set(radian_degree([-30, -45, -60, -90]))==set([-0.5235987755982989, -0.7853981633974483, -1.0471975511965976, -1.5707963267948966])\nassert set(radian_degree([0, 180]))==set([0, math.pi])\nassert set(radian_degree([-180, 0]))==set([-math.pi, 0])\nassert set(radian_degree([]))==set([])\n```",
+        "coder": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n\ndef larg_nnum(nums, n):\n    nums.sort(reverse=True)\n    return nums[:n]\n```",
+        "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n\ndef larg_nnum(nums, n):\n    nums.sort(reverse=True)\n    return nums[:n]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def larg_nnum(lst, n):\n    # Sort the list in descending order\n    sorted_lst = sorted(lst, reverse=True)\n    # Get the first n elements\n    top_n = sorted_lst[:n]\n    # Remove duplicates by converting to a set\n    unique_top_n = set(top_n)\n    return unique_top_n",
+  "sample_keys": [
+    "def larg_nnum(nums, n):\n    largest_items = []\n    for num in nums:\n        if num >= min(largest_items):\n            largest_items.append(num)\n    largest_items.sort(reverse=True)\n    return largest_items[:n]",
+    "def larg_nnum(lst, n):\n    if not lst:\n        raise IndexError(\"List is empty\")\n    result = []\n    sorted_lst = sorted(lst, key=lambda x: -x)\n    for i in range(n):\n        result.append(sorted_lst[i])\n    return result",
+    "def larg_nnum(lst, n):\n    if len(lst) == 0 or n > len(lst):\n        raise ValueError(\"Invalid input\")\n    \n    lst.sort(reverse=True)\n    \n    return lst[:n]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2486.0,
+    "small_out": 541.0,
+    "small_s": 11.175946231000125
+  },
+  "calls_plus": {
+    "large_in": 165.0,
+    "large_out": 99.0,
+    "large_s": 2.168806423986098,
+    "small_in": 2247.0,
+    "small_out": 369.0,
+    "small_s": 6.329607043007854
+  },
+  "calls_samples": {
+    "small_in": 7412.0,
+    "small_out": 1477.0,
+    "small_s": 27.24702735405299
+  }
+}

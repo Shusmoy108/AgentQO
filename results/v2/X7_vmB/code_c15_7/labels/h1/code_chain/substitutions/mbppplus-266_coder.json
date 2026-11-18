@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-266",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface\n```",
+  "reference_key": "def lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface",
+  "final_key_plus": "def lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.6,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert lateralsurface_cube(3) == 36\nassert lateralsurface_cube(7) == 196\nassert lateralsurface_cube(0) == 0\nassert lateralsurface_cube(10) == 400\nassert lateralsurface_cube(-5) == 0\n```",
+    "verifier": "PICK: A\n\n```python\ndef lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface\n```",
+    "fixer": "```python\ndef lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface",
+      "key_differs": true,
+      "text": "```python function def lateralsurface_cube(side_length):\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface\n```",
+      "quality": 1.0,
+      "final_key": "def lateralsurface_cube(side_length):\n    if side_length < 0:\n        raise ValueError(\"Side length cannot be negative\")\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert lateralsurface_cube(3) == 36\nassert lateralsurface_cube(7) == 196\nassert lateralsurface_cube(0) == 0\nassert lateralsurface_cube(10) == 400\nassert lateralsurface_cube(-5) == 0\n```",
+        "verifier": "PICK: B\n\n```python\ndef lateralsurface_cube(side_length):\n    if side_length < 0:\n        raise ValueError(\"Side length cannot be negative\")\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface\n```",
+        "fixer": "```python\ndef lateralsurface_cube(side_length):\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def lateralsurface_cube(side_length):\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface",
+      "reference_key": "def lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface",
+      "key_differs": true,
+      "text": "```python\ndef lateralsurface_cube(side_length):\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface\n```",
+      "quality": 1.0,
+      "final_key": "def lateralsurface_cube(side_length):\n    if side_length < 0:\n        raise ValueError(\"Side length cannot be negative\")\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert lateralsurface_cube(3) == 36\nassert lateralsurface_cube(7) == 196\nassert lateralsurface_cube(0) == 0\nassert lateralsurface_cube(10) == 400\nassert lateralsurface_cube(-5) == 0\n```",
+        "verifier": "PICK: B\n\n```python\ndef lateralsurface_cube(side_length):\n    if side_length < 0:\n        raise ValueError(\"Side length cannot be negative\")\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface\n```",
+        "fixer": "```python\ndef lateralsurface_cube(side_length):\n    if side_length < 0:\n        raise ValueError(\"Side length cannot be negative\")\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+      "reference_key": "def lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface",
+      "key_differs": true,
+      "text": "```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```",
+      "quality": 0.0,
+      "final_key": "def lateralsurface_cube(side_length):\n    return 4 * side_length ** 2\n\n# Test cases\nassert lateralsurface_cube(5) == 100\nassert lateralsurface_cube(9) == 324\nassert lateralsurface_cube(10) == 400\nassert is_product_even([2, 3]) == False\nassert is_product_even([4, 6]) == True\nassert is_product_even([7, 9]) == False\nassert is_product_even([10, 10]) == True\nassert is_product_even([]) == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_product_even([2, 3]) == False\nassert is_product_even([4, 6]) == True\nassert is_product_even([7, 9]) == False\nassert is_product_even([10, 10]) == True\nassert is_product_even([]) == False\n```",
+        "verifier": "PICK: B\n```python\ndef lateralsurface_cube(side_length):\n    return 4 * side_length ** 2\n\n# Test cases\nassert lateralsurface_cube(5) == 100\nassert lateralsurface_cube(9) == 324\nassert lateralsurface_cube(10) == 400\nassert is_product_even([2, 3]) == False\nassert is_product_even([4, 6]) == True\nassert is_product_even([7, 9]) == False\nassert is_product_even([10, 10]) == True\nassert is_product_even([]) == False\n```",
+        "fixer": "```python\ndef lateralsurface_cube(side_length):\n    return 4 * side_length ** 2\n\n# Test cases\nassert lateralsurface_cube(5) == 100\nassert lateralsurface_cube(9) == 324\nassert lateralsurface_cube(10) == 400\nassert is_product_even([2, 3]) == False\nassert is_product_even([4, 6]) == True\nassert is_product_even([7, 9]) == False\nassert is_product_even([10, 10]) == True\nassert is_product_even([]) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def lateralsurface_cube(side_length):\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface",
+  "sample_keys": [
+    "def lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface",
+    "def lateralsurface_cube(side_length):\n    # Calculate the lateral surface area\n    lateral_surface = 4 * (side_length ** 2)\n    # Return the result\n    return lateral_surface",
+    "def lateralsurface_cube(side_length):\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface",
+    "def lateralsurface_cube(side_length):\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface",
+    "def lateralsurface_cube(side_length):\n    lateral_surface = 4 * (side_length ** 2)\n    return lateral_surface"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1226.0,
+    "small_out": 340.0,
+    "small_s": 7.647678925015498
+  },
+  "calls_plus": {
+    "small_in": 1025.0,
+    "small_out": 300.0,
+    "small_s": 6.486666696990142,
+    "large_in": 234.0,
+    "large_out": 46.0,
+    "large_s": 1.5582546940131579
+  },
+  "calls_samples": {
+    "small_in": 1170.0,
+    "small_out": 188.0,
+    "small_s": 3.880616315000225
+  }
+}

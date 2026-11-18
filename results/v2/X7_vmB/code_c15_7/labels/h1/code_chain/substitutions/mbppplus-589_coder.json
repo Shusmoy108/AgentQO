@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-589",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.sqrt(num)\n        if sqrt_num.is_integer():\n            squares.append(num)\n    return squares\n```",
+  "reference_key": "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.sqrt(num)\n        if sqrt_num.is_integer():\n            squares.append(num)\n    return squares",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert perfect_squares(1,30) == [1, 4, 9, 16, 25]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(1,0) == []\nassert perfect_squares(-1,1) == [1]\nassert perfect_squares(1,-1) == []\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.sqrt(num)\n        if sqrt_num.is_integer():\n            squares.append(num)\n    return squares\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for i in range(start, end + 1):\n        root = math.isqrt(i)\n        if root * root == i:\n            squares.append(i)\n    return squares",
+      "reference_key": "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.sqrt(num)\n        if sqrt_num.is_integer():\n            squares.append(num)\n    return squares",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for i in range(start, end + 1):\n        root = math.isqrt(i)\n        if root * root == i:\n            squares.append(i)\n    return squares\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert perfect_squares(1,30) == [1, 4, 9, 16, 25]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(1,0) == []\nassert perfect_squares(-1,1) == [1]\nassert perfect_squares(1,-1) == []\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for i in range(start, end + 1):\n        root = math.isqrt(i)\n        if root * root == i:\n            squares.append(i)\n    return squares\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for i in range(start, end + 1):\n        root = math.sqrt(i)\n        if int(root) == root:\n            squares.append(i)\n    return squares",
+      "reference_key": "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.sqrt(num)\n        if sqrt_num.is_integer():\n            squares.append(num)\n    return squares",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for i in range(start, end + 1):\n        root = math.sqrt(i)\n        if int(root) == root:\n            squares.append(i)\n    return squares\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert perfect_squares(1,30)==[1, 4, 9, 16, 25]\nassert perfect_squares(1,1)==[1]\nassert perfect_squares(1,0)==[]\nassert perfect_squares(-1,1)==[1]\nassert perfect_squares(1,-1)==[]\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for i in range(start, end + 1):\n        root = math.sqrt(i)\n        if int(root) == root:\n            squares.append(i)\n    return squares\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "from heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers",
+      "reference_key": "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.sqrt(num)\n        if sqrt_num.is_integer():\n            squares.append(num)\n    return squares",
+      "key_differs": true,
+      "text": "```python\nfrom heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers\n```",
+      "quality": 0.0,
+      "final_key": "from heapq import nlargest\n\ndef perfect_squares(start, end):\n    # Generate all perfect squares within the range [start, end]\n    squares = [i**2 for i in range(int(start**0.5), int(end**0.5)+1)]\n    # Use nlargest to find the n largest squares\n    largest_squares = nlargest(len(squares), squares)\n    # Return the result as a list\n    return largest_squares",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert perfect_squares(1,30) == [1, 4, 9, 16, 25]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(1,0) == []\nassert perfect_squares(-1,1) == [-1, 0, 1]\nassert perfect_squares(10,100) == [16, 25, 36, 49, 64, 81, 100]\n```",
+        "verifier": "PICK: B\n\n```python\nfrom heapq import nlargest\n\ndef perfect_squares(start, end):\n    # Generate all perfect squares within the range [start, end]\n    squares = [i**2 for i in range(int(start**0.5), int(end**0.5)+1)]\n    # Use nlargest to find the n largest squares\n    largest_squares = nlargest(len(squares), squares)\n    # Return the result as a list\n    return largest_squares\n```",
+        "fixer": "```python\nfrom heapq import nlargest\n\ndef perfect_squares(start, end):\n    # Generate all perfect squares within the range [start, end]\n    squares = [i**2 for i in range(int(start**0.5), int(end**0.5)+1)]\n    # Use nlargest to find the n largest squares\n    largest_squares = nlargest(len(squares), squares)\n    # Return the result as a list\n    return largest_squares\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares",
+  "sample_keys": [
+    "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        if math.isqrt(num) ** 2 == num:\n            squares.append(num)\n    return squares",
+    "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares",
+    "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        root = math.isqrt(num)\n        if root * root == num:\n            squares.append(num)\n    return squares",
+    "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares",
+    "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        if(math.isqrt(num) ** 2 == num):\n            squares.append(num)\n    return squares"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1661.0,
+    "small_out": 357.0,
+    "small_s": 7.869810361997224
+  },
+  "calls_plus": {
+    "small_in": 1306.0,
+    "small_out": 267.0,
+    "small_s": 5.248268282972276,
+    "large_in": 237.0,
+    "large_out": 56.0,
+    "large_s": 1.2670343539793976
+  },
+  "calls_samples": {
+    "small_in": 1185.0,
+    "small_out": 285.0,
+    "small_s": 4.95851036804379
+  }
+}

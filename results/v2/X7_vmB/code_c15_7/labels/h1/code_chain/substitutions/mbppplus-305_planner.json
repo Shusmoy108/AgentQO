@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-305",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `start_withp` that takes a list of strings as input.\n2. Use a list comprehension to filter out strings that start with the letter 'P' or 'p'.\n3. Check if there are exactly two such strings in the filtered list.\n4. If there are, return the first two elements as a tuple.\n5. If not, raise an exception indicating that the input does not meet the criteria.",
+  "reference_key": null,
+  "final_key_plus": "def start_withp(words):\n    # Filter words starting with 'P' or 'p'\n    filtered_words = [word for word in words if word.lower().startswith('p')]\n    \n    # Check if there are exactly two such words\n    if len(filtered_words) != 2:\n        raise ValueError(\"Input must contain exactly two words starting with 'P' or 'p'\")\n    \n    # Return the first two words as a tuple\n    return tuple(filtered_words)",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([\"Programming Python\", \"Python Programming\", \"Python\"]) == ('Programming', 'Python')\nassert start_withp([\"PHP\", \"Python\", \"JavaScript\"]) == ('PHP', 'Python')\nassert start_withp([\"Python\", \"Python\", \"Python\"]) == ('Python', 'Python')\nassert start_withp([]) == ()\n```",
+    "coder": "```python\ndef start_withp(words):\n    # Filter words starting with 'P' or 'p'\n    filtered_words = [word for word in words if word.lower().startswith('p')]\n    \n    # Check if there are exactly two such words\n    if len(filtered_words) != 2:\n        raise ValueError(\"Input must contain exactly two words starting with 'P' or 'p'\")\n    \n    # Return the first two words as a tuple\n    return tuple(filtered_words)\n```",
+    "verifier": "PICK: A\n\n```python\ndef start_withp(words):\n    # Filter words starting with 'P' or 'p'\n    filtered_words = [word for word in words if word.lower().startswith('p')]\n    \n    # Check if there are exactly two such words\n    if len(filtered_words) != 2:\n        raise ValueError(\"Input must contain exactly two words starting with 'P' or 'p'\")\n    \n    # Return the first two words as a tuple\n    return tuple(filtered_words)\n```",
+    "fixer": "```python\ndef start_withp(words):\n    # Filter words starting with 'P' or 'p'\n    filtered_words = [word for word in words if word.lower().startswith('p')]\n    \n    # Check if there are exactly two such words\n    if len(filtered_words) != 2:\n        raise ValueError(\"Input must contain exactly two words starting with 'P' or 'p'\")\n    \n    # Return the first two words as a tuple\n    return tuple(filtered_words)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to keep track of the current maximum product and the maximum product found so far.\n2. Iterate through the array starting from the second element.\n3. For each element, check if it can be added to the current subsequence (i.e., if it is greater than the last element in the subsequence).\n4. If it can be added, update the current subsequence with the new element.\n5. Calculate the product of the current subsequence.\n6. Update the maximum product found so far if the current product is greater.\n7. Continue until all elements have been processed.\n8. Return the maximum product found.",
+      "quality": 0.0,
+      "final_key": "def start_withp(words):\n    max_product = 0\n    current_product = 1\n    for word in words[1:]:\n        if word.startswith('P'):\n            current_product *= int(word)\n            if current_product > max_product:\n                max_product = current_product\n    return max_product",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([\"Pineapple\", \"Peach\", \"Pear\"]) == ('Pineapple', 'Peach')\nassert start_withp([\"Penguin\", \"Parrot\", \"Panda\"]) == ('Penguin', 'Parrot')\nassert start_withp([\"Pineapple\", \"Peach\", \"Pear\", \"Pineapple\"]) == ('Pineapple', 'Pineapple')\nassert start_withp([]) == ()\n```",
+        "coder": "```python\ndef start_withp(words):\n    max_product = 0\n    current_product = 1\n    for word in words[1:]:\n        if int(word[0]) == 86:\n            current_product *= int(word)\n            if current_product > max_product:\n                max_product = current_product\n    return max_product\n```",
+        "verifier": "PICK: B\n\n```python\ndef start_withp(words):\n    max_product = 0\n    current_product = 1\n    for word in words[1:]:\n        if word.startswith('P'):\n            current_product *= int(word)\n            if current_product > max_product:\n                max_product = current_product\n    return max_product\n```",
+        "fixer": "```python\ndef start_withp(words):\n    max_product = 0\n    current_product = 1\n    for word in words[1:]:\n        if word.startswith('P'):\n            current_product *= int(word)\n            if current_product > max_product:\n                max_product = current_product\n    return max_product\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `start_with_p` that takes a list of strings as input.\n2. Use a list comprehension to filter out strings that start with the letter 'P' or 'p'.\n3. Check if there are exactly two such strings in the filtered list.\n4. If there are, return the first two elements as a tuple.\n5. If not, raise an exception indicating that the input does not satisfy the criteria.",
+      "quality": 0.0,
+      "final_key": "def start_with_p(words):\n    # Filter words starting with 'P' or 'p'\n    filtered_words = [word for word in words if word.lower().startswith('p')]\n    \n    # Check if there are exactly two such words\n    if len(filtered_words) != 2:\n        raise ValueError(\"Input must contain exactly two words starting with 'P' or 'p'\")\n    \n    # Return the first two words as a tuple\n    return tuple(filtered_words)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert start_with_p([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_with_p([\"Programming Python\", \"Python Programming\", \"Python\"]) == ('Programming', 'Python')\nassert start_with_p([\"PHP\", \"Python\", \"JavaScript\"]) == ('PHP', 'Python')\nassert start_with_p([\"Python\", \"Python\", \"Python\"]) == ('Python', 'Python')\nassert start_with_p([]) == ()\n```",
+        "coder": "```python\ndef start_with_p(words):\n    # Filter words starting with 'P' or 'p'\n    filtered_words = [word for word in words if word.lower().startswith('p')]\n    \n    # Check if there are exactly two such words\n    if len(filtered_words) != 2:\n        raise ValueError(\"Input must contain exactly two words starting with 'P' or 'p'\")\n    \n    # Return the first two words as a tuple\n    return tuple(filtered_words)\n```",
+        "verifier": "PICK: A\n\n```python\ndef start_with_p(words):\n    # Filter words starting with 'P' or 'p'\n    filtered_words = [word for word in words if word.lower().startswith('p')]\n    \n    # Check if there are exactly two such words\n    if len(filtered_words) != 2:\n        raise ValueError(\"Input must contain exactly two words starting with 'P' or 'p'\")\n    \n    # Return the first two words as a tuple\n    return tuple(filtered_words)\n```",
+        "fixer": "```python\ndef start_with_p(words):\n    # Filter words starting with 'P' or 'p'\n    filtered_words = [word for word in words if word.lower().startswith('p')]\n    \n    # Check if there are exactly two such words\n    if len(filtered_words) != 2:\n        raise ValueError(\"Input must contain exactly two words starting with 'P' or 'p'\")\n    \n    # Return the first two words as a tuple\n    return tuple(filtered_words)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `find_star_num` that takes one parameter, `n`.\n2. Initialize a variable `star_num` to store the result.\n3. Use a loop to calculate the sum of the first `n` natural numbers.\n4. Multiply the sum by 6 to get the nth star number.\n5. Return the calculated `star_num`.",
+      "quality": 0.0,
+      "final_key": "def start_withp(words):\n    p_words = [word for word in words if word.startswith('P')]\n    return tuple(p_words[:2])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_star_num(0) == 0\nassert find_star_num(1) == 3\nassert find_star_num(2) == 15\nassert find_star_num(3) == 35\nassert find_star_num(4) == 70\n```",
+        "coder": "```python\ndef find_star_num(n):\n    star_num = (n * (n + 1)) // 2 * 6\n    return star_num\n```",
+        "verifier": "PICK: B\n\n```python\ndef start_withp(words):\n    p_words = [word for word in words if word.startswith('P')]\n    return tuple(p_words[:2])\n```",
+        "fixer": "```python\ndef start_withp(words):\n    p_words = [word for word in words if word.startswith('P')]\n    return tuple(p_words[:2])\n\n# Test cases\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([\"Python Programming\",\"Java Programming\"]) == ('Python','Programming')\nassert start_withp([\"Pqrst Pqr\",\"qrstuv\"]) == ('Pqrst','Pqr')\nassert find_star_num(0) == 0\nassert find_star_num(1) == 3\nassert find_star_num(2) == 15\nassert find_star_num(3) == 35\nassert find_star_num(4) == 70\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result",
+  "sample_keys": [
+    "def start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result",
+    "def start_with_p(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word[0], word[1])\n    return result",
+    "def start_withp(words):\n    p_words = []\n    non_p_words = []\n    for word in words:\n        if word.lower().startswith('p'):\n            p_words.append(word)\n        else:\n            non_p_words.append(word)\n    return (p_words, non_p_words)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1554.0,
+    "small_out": 372.0,
+    "small_s": 7.9064052639878355
+  },
+  "calls_plus": {
+    "large_in": 120.0,
+    "large_out": 93.0,
+    "large_s": 2.0250048409798183,
+    "small_in": 1895.0,
+    "small_out": 407.0,
+    "small_s": 6.402712464972865
+  },
+  "calls_samples": {
+    "small_in": 4842.0,
+    "small_out": 1183.0,
+    "small_s": 21.84372389796772
+  }
+}

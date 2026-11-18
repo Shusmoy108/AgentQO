@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-638",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0:\n        raise ValueError(\"Wind velocity cannot be negative\")\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```",
+  "reference_key": "def wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0:\n        raise ValueError(\"Wind velocity cannot be negative\")\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+  "final_key_plus": "def wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0:\n        raise ValueError(\"Wind velocity cannot be negative\")\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0:\n        raise ValueError(\"Wind velocity cannot be negative\")\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def wind_chill(wind_velocity, temperature):\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n\n# Test results\nassert wind_chill(120,35)==40\nassert wind_chill(40,20)==19\nassert wind_chill(10,8)==6\n\n# Failing tests\nassert wind_chill(100, 20) == 28 -> AssertionError \nassert wind_chill(50, 10) == 10 -> AssertionError \nassert wind_chill(0, 0) == 0 -> AssertionError \nassert wind_chill(150, 30) == 40 -> AssertionError \nassert wind_chill(-10, 25) == 10 -> TypeError type complex doesn't define __round__ method",
+      "reference_key": "def wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0:\n        raise ValueError(\"Wind velocity cannot be negative\")\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+      "key_differs": true,
+      "text": "```python\ndef wind_chill(wind_velocity, temperature):\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n\n# Test results\nassert wind_chill(120,35)==40\nassert wind_chill(40,20)==19\nassert wind_chill(10,8)==6\n\n# Failing tests\nassert wind_chill(100, 20) == 28 -> AssertionError \nassert wind_chill(50, 10) == 10 -> AssertionError \nassert wind_chill(0, 0) == 0 -> AssertionError \nassert wind_chill(150, 30) == 40 -> AssertionError \nassert wind_chill(-10, 25) == 10 -> TypeError type complex doesn't define __round__ method\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import pytest\n\n@pytest.mark.parametrize(\"wind_velocity, temperature\", [\n    (120, 35),\n    (40, 20),\n    (10, 8),\n])\ndef test_wind_chill(wind_velocity, temperature):\n    assert wind_chill(wind_velocity, temperature) == pytest.approx(40, abs_tol=1)\n\ndef wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    try:\n        wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity**0.16)\n        return round(wci)\n    except OverflowError:\n        return None",
+      "reference_key": "def wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0:\n        raise ValueError(\"Wind velocity cannot be negative\")\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+      "key_differs": true,
+      "text": "```Python\nimport pytest\n\n@pytest.mark.parametrize(\"wind_velocity, temperature\", [\n    (120, 35),\n    (40, 20),\n    (10, 8),\n])\ndef test_wind_chill(wind_velocity, temperature):\n    assert wind_chill(wind_velocity, temperature) == pytest.approx(40, abs_tol=1)\n\ndef wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    try:\n        wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity**0.16)\n        return round(wci)\n    except OverflowError:\n        return None\n```",
+      "quality": 0.0,
+      "final_key": "import pytest\n\n@pytest.mark.parametrize(\"wind_velocity, temperature\", [\n    (120, 35),\n    (40, 20),\n    (10, 8),\n])\ndef test_wind_chill(wind_velocity, temperature):\n    assert wind_chill(wind_velocity, temperature) == pytest.approx(40, abs_tol=1)\n\ndef wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    try:\n        wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity**0.16)\n        return round(wci)\n    except OverflowError:\n        return None",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport pytest\n\n@pytest.mark.parametrize(\"wind_velocity, temperature\", [\n    (120, 35),\n    (40, 20),\n    (10, 8),\n])\ndef test_wind_chill(wind_velocity, temperature):\n    assert wind_chill(wind_velocity, temperature) == pytest.approx(40, abs_tol=1)\n\ndef wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    try:\n        wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity**0.16)\n        return round(wci)\n    except OverflowError:\n        return None\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def find_even_numbers(numbers):\n    even_numbers = []\n    for num in numbers:\n        if num % 2 == 0:\n            even_numbers.append(num)\n    return even_numbers",
+      "reference_key": "def wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0:\n        raise ValueError(\"Wind velocity cannot be negative\")\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+      "key_differs": true,
+      "text": "```python\ndef find_even_numbers(numbers):\n    even_numbers = []\n    for num in numbers:\n        if num % 2 == 0:\n            even_numbers.append(num)\n    return even_numbers\n```",
+      "quality": 1.0,
+      "final_key": "def wind_chill(wind_velocity, temperature):\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef wind_chill(wind_velocity, temperature):\n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+  "sample_keys": [
+    "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < 0:\n        raise ValueError(\"Wind velocity and temperature cannot be negative.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n\n# Test cases\nassert wind_chill(120, 35)==40\nassert wind_chill(40,20)==19\nassert wind_chill(10,8)==6\nassert wind_chill(100, 20) != 28\nassert wind_chill(50, 10) != 10\nassert wind_chill(0, 0) != 0\nassert wind_chill(150, 30) != 40\nassert wind_chill(-10, 25) != 10",
+    "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if not (0 <= wind_velocity <= 120) or not (-20 <= temperature <= 50):\n        raise ValueError(\"Wind velocity must be between 0 and 120 km/h, and temperature must be between -20\u00b0C and 50\u00b0C.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+    "def wind_chill(wind_velocity, temperature):\n    if isinstance(wind_velocity, complex):\n        raise TypeError(\"Wind velocity cannot be a complex number.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n\n# Test results (the task's example test and the extra asserts, run on this code):\nassert wind_chill(120,35)==40\nassert wind_chill(40,20)==19\nassert wind_chill(10,8)==6\nassert wind_chill(100, 20) == 28\nassert wind_chill(50, 10) == 10\nassert wind_chill(0, 0) == 0\nassert wind_chill(150, 30) == 40\nassert wind_chill(-10, 25) == 10",
+    "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n\n# Test cases\nassert wind_chill(120,35)==40\nassert wind_chill(40,20)==19\nassert wind_chill(10,8)==6\n\n# Failures and corrections\ntry:\n    assert wind_chill(100, 20) == 28\nexcept AssertionError as e:\n    print(f\"AssertionError: {e}\")\nelse:\n    print(\"No error\")\n\ntry:\n    assert wind_chill(50, 10) == 10\nexcept AssertionError as e:\n    print(f\"AssertionError: {e}\")\nelse:\n    print(\"No error\")\n\ntry:\n    assert wind_chill(0, 0) == 0\nexcept AssertionError as e:\n    print(f\"AssertionError: {e}\")\nelse:\n    print(\"No error\")\n\ntry:\n    assert wind_chill(150, 30) == 40\nexcept AssertionError as e:\n    print(f\"AssertionError: {e}\")\nelse:\n    print(\"No error\")\n\ntry:\n    assert wind_chill(-10, 25) == 10\nexcept TypeError as e:\n    print(f\"TypeError: {e}\")",
+    "import math\n\ndef wind_chill(wind_velocity, temperature):\n    if not isinstance(temperature, (int, float)) or not isinstance(wind_velocity, (int, float)):\n        raise TypeError(\"Both temperature and wind_velocity must be numbers.\")\n    \n    if not (0 <= temperature <= 40) or not (0 <= wind_velocity <= 120):\n        raise ValueError(\"Temperature must be between 0\u00b0C and 40\u00b0C, and wind velocity must be between 0 km/h and 120 km/h.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1655.0,
+    "small_out": 606.0,
+    "small_s": 13.216812983999262
+  },
+  "calls_plus": {
+    "small_in": 1206.0,
+    "small_out": 398.0,
+    "small_s": 7.711395989987068,
+    "large_in": 384.0,
+    "large_out": 98.0,
+    "large_s": 2.2266197160060983
+  },
+  "calls_samples": {
+    "small_in": 1920.0,
+    "small_out": 1330.0,
+    "small_s": 24.353708246024325
+  }
+}

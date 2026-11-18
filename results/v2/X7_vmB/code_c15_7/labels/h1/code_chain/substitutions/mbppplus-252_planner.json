@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-252",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Import the `cmath` module to handle complex numbers.\n2. Define a function named `convert` that takes a single argument, which is the complex number to be converted.\n3. Inside the function, use the `cmath.polar()` method to convert the complex number to polar coordinates.\n4. Return the result from the `cmath.polar()` method as it directly provides the magnitude and phase angle in radians.\n5. Ensure the function handles the input correctly by testing it with the provided test case.",
+  "reference_key": null,
+  "final_key_plus": "import cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Args:\n    complex_num (complex): The complex number to convert.\n\n    Returns:\n    tuple: A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert convert(2 + 3j) == (sqrt(13), atan2(3, 2))\nassert convert(-1 - 1j) == (sqrt(2), pi)\nassert convert(0) == (0, 0)\nassert convert(1j) == (1, pi/2)\nassert convert(-1j) == (1, -pi/2)\n```",
+    "coder": "```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Args:\n    complex_num (complex): The complex number to convert.\n\n    Returns:\n    tuple: A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```",
+    "verifier": "PICK: A\n```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Args:\n    complex_num (complex): The complex number to convert.\n\n    Returns:\n    tuple: A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```",
+    "fixer": "```python\nimport cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Args:\n    complex_num (complex): The complex number to convert.\n\n    Returns:\n    tuple: A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `heap_sort` that takes a list as input.\n3. Implement the heapify process to transform the list into a max-heap.\n4. Use the heapify process to sort the list by repeatedly extracting the maximum element from the heap and placing it at the end of the list.\n5. Return the sorted list.\n\n```python\ndef heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that meets the requirements. The function `heap_sort` is designed to sort a list using the heap sort algorithm, which is efficient for large lists.",
+      "quality": 1.0,
+      "final_key": "import cmath\n\ndef convert(complex_num):\n    real_part = complex_num.real\n    imag_part = complex_num.imag\n    magnitude = abs(complex_num)\n    angle = cmath.phase(complex_num)\n    return magnitude, angle",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert(2+3j) == (sqrt(13), atan2(3, 2))\nassert convert(-4-5j) == (sqrt(41), atan2(5, -4))\nassert convert(0) == (0.0, 0.0)\nassert convert(1j) == (1.0, pi/2)\nassert convert(-1j) == (1.0, -pi/2)\n```",
+        "coder": "```python\ndef convert(complex_num):\n    real_part = complex_num.real\n    imag_part = complex_num.imag\n    magnitude = abs(complex_num)\n    angle = cmath.phase(complex_num)\n    return magnitude, angle\n```",
+        "verifier": "PICK: B\n```python\nimport cmath\n\ndef convert(complex_num):\n    real_part = complex_num.real\n    imag_part = complex_num.imag\n    magnitude = abs(complex_num)\n    angle = cmath.phase(complex_num)\n    return magnitude, angle\n```",
+        "fixer": "```python\nimport cmath\n\ndef convert(complex_num):\n    real_part = complex_num.real\n    imag_part = complex_num.imag\n    magnitude = abs(complex_num)\n    angle = cmath.phase(complex_num)\n    return magnitude, angle\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import the `cmath` module to handle complex numbers.\n2. Define a function named `convert` that takes a single argument, which is the complex number to be converted.\n3. Inside the function, use the `cmath.polar()` method to convert the complex number to polar coordinates.\n4. Return the result from the `cmath.polar()` method as it directly provides the magnitude and phase angle in radians.\n5. Verify the function's correctness by testing it with the provided test case.",
+      "quality": 1.0,
+      "final_key": "import cmath\n\ndef convert(complex_num):\n    return cmath.polar(complex_num)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert(-1) == (1.0, 3.141592653589793)\nassert convert(0) == (0.0, 0.0)\nassert convert(1j) == (1.0, 1.5707963267948966)\nassert convert(-1j) == (1.0, -1.5707963267948966)\nassert convert(1 + 1j) == (1.4142135623730951, 0.7853981633974483)\n```",
+        "coder": "```python\nimport cmath\n\ndef convert(complex_num):\n    return cmath.polar(complex_num)\n```",
+        "verifier": "PICK: A\n```python\nimport cmath\n\ndef convert(complex_num):\n    return cmath.polar(complex_num)\n```",
+        "fixer": "```python\nimport cmath\n\ndef convert(complex_num):\n    return cmath.polar(complex_num)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `even_bit_set_number` that takes one parameter, `num`.\n2. Initialize a variable `result` to store the final result.\n3. Use bitwise operations to iterate through each bit of the input number.\n4. For each bit, check if it is even (i.e., divisible by 2).\n5. If the bit is even, set it in the `result` using the bitwise OR operation.\n6. Return the `result`.\n\nHere's the complete implementation:\n\n```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```\n\nThis function iterates through each bit of the input number, checks if it is even, and sets it in the result using bitwise OR operations. The result is then returned as the output.",
+      "quality": 1.0,
+      "final_key": "import cmath\n\ndef convert(complex_num):\n    return cmath.polar(complex_num)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert convert(-1) == (-1.0, 3.141592653589793)\nassert convert(0) == (0.0, 0.0)\nassert convert(10) == (10.0, 0.0)\nassert convert(2**31 - 1) == (1.0, 3.141592653589793)\nassert convert(-2**31) == (-1.0, 3.141592653589793)\n```",
+        "coder": "```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```",
+        "verifier": "PICK: B\n```python\nimport cmath\n\ndef convert(complex_num):\n    return cmath.polar(complex_num)\n```",
+        "fixer": "```python\nimport cmath\n\ndef convert(complex_num):\n    return cmath.polar(complex_num)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import cmath\n\ndef convert(complex_num):\n    \"\"\"\n    Convert a complex number to polar coordinates.\n\n    Parameters:\n    - complex_num: A complex number.\n\n    Returns:\n    - A tuple containing the magnitude and phase angle of the complex number in radians.\n    \"\"\"\n    return cmath.polar(complex_num)",
+  "sample_keys": [
+    "import cmath\n\ndef convert(complex_num):\n    magnitude = abs(complex_num)\n    angle = cmath.phase(complex_num)\n    return magnitude, angle",
+    "import cmath\n\ndef convert(z):\n    r = abs(z)\n    theta = cmath.phase(z)\n    return (r, theta)",
+    "import cmath\n\ndef convert(z):\n    r = abs(z)\n    theta = cmath.phase(z)\n    return (r, theta)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1564.0,
+    "small_out": 447.0,
+    "small_s": 9.743785901955562
+  },
+  "calls_plus": {
+    "large_in": 106.0,
+    "large_out": 106.0,
+    "large_s": 2.308540814992739,
+    "small_in": 1435.0,
+    "small_out": 314.0,
+    "small_s": 6.332257509027841
+  },
+  "calls_samples": {
+    "small_in": 4393.0,
+    "small_out": 1073.0,
+    "small_s": 19.092149456992047
+  }
+}

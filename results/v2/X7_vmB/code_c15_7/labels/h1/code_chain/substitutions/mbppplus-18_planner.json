@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-18",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `remove_dirty_chars` that takes two parameters, `str1` and `str2`.\n2. Create an empty list to store characters from `str1` that are not in `str2`.\n3. Iterate through each character in `str1`. If the character is not found in `str2`, add it to the list created in step 2.\n4. Join all characters in the list into a single string using the `join()` method.\n5. Return the resulting string as the output of the function.",
+  "reference_key": null,
+  "final_key_plus": "def remove_dirty_chars(str1, str2):\n    dirty_chars = [char for char in str1 if char not in str2]\n    return ''.join(dirty_chars)\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdfg'\nassert remove_dirty_chars(\"\", \"a\") == ''\nassert remove_dirty_chars(\"a\", \"\") == 'a'\nassert remove_dirty_chars(\"abababa\", \"ba\") == 'abababa'",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdfg'\nassert remove_dirty_chars(\"\", \"a\") == ''\nassert remove_dirty_chars(\"a\", \"\") == 'a'\nassert remove_dirty_chars(\"abababa\", \"ba\") == 'abababa'\n```",
+    "coder": "```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = [char for char in str1 if char not in str2]\n    return ''.join(dirty_chars)\n```",
+    "verifier": "PICK: B\n\n```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = [char for char in str1 if char not in str2]\n    return ''.join(dirty_chars)\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdfg'\nassert remove_dirty_chars(\"\", \"a\") == ''\nassert remove_dirty_chars(\"a\", \"\") == 'a'\nassert remove_dirty_chars(\"abababa\", \"ba\") == 'abababa'\n```",
+    "fixer": "```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = [char for char in str1 if char not in str2]\n    return ''.join(dirty_chars)\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdfg'\nassert remove_dirty_chars(\"\", \"a\") == ''\nassert remove_dirty_chars(\"a\", \"\") == 'a'\nassert remove_dirty_chars(\"abababa\", \"ba\") == 'abababa'\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_Monotonic` that takes an array as input.\n2. Check if the array is sorted in ascending order.\n3. If it is, return `True`.\n4. If not, check if the array is sorted in descending order.\n5. If it is, return `True`.\n6. If neither condition is met, return `False`.",
+      "quality": 0.0,
+      "final_key": "def remove_dirty_chars(s1, s2):\n    # Convert both strings to sets for efficient lookup\n    set_s2 = set(s2)\n    # Use list comprehension to filter out characters from s1 that are in s2\n    result = ''.join(char for char in s1 if char not in set_s2)\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert is_monotonic([1, 2, 3]) == True\nassert is_monotonic([3, 2, 1]) == True\nassert is_monotonic([]) == True\nassert is_monotonic([10]) == True\nassert is_monotonic([1, 2, 2, 3]) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_monotonic([1, 2, 3]) == True\nassert is_monotonic([3, 2, 1]) == True\nassert is_monotonic([]) == True\nassert is_monotonic([10]) == True\nassert is_monotonic([1, 2, 2, 3]) == True\n```",
+        "coder": "```python\ndef is_monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n```",
+        "verifier": "PICK: B\n```python\ndef remove_dirty_chars(s1, s2):\n    # Convert both strings to sets for efficient lookup\n    set_s2 = set(s2)\n    # Use list comprehension to filter out characters from s1 that are in s2\n    result = ''.join(char for char in s1 if char not in set_s2)\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert is_monotonic([1, 2, 3]) == True\nassert is_monotonic([3, 2, 1]) == True\nassert is_monotonic([]) == True\nassert is_monotonic([10]) == True\nassert is_monotonic([1, 2, 2, 3]) == True\n```",
+        "fixer": "```python\ndef remove_dirty_chars(s1, s2):\n    # Convert both strings to sets for efficient lookup\n    set_s2 = set(s2)\n    # Use list comprehension to filter out characters from s1 that are in s2\n    result = ''.join(char for char in s1 if char not in set_s2)\n    return result\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert is_monotonic([1, 2, 3]) == True\nassert is_monotonic([3, 2, 1]) == True\nassert is_monotonic([]) == True\nassert is_monotonic([10]) == True\nassert is_monotonic([1, 2, 2, 3]) == True\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `remove_dirty_chars` that takes two parameters, `str1` and `str2`.\n2. Create an empty list to store characters from `str1` that are not in `str2`.\n3. Iterate through each character in `str1`. If the character is not found in `str2`, add it to the list.\n4. Join all characters in the list into a single string using the `join()` method.\n5. Return the resulting string as the output of the function.",
+      "quality": 0.0,
+      "final_key": "def remove_dirty_chars(str1, str2):\n    dirty_chars = [char for char in str1 if char not in str2]\n    return ''.join(dirty_chars)\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdfg'\nassert remove_dirty_chars(\"\", \"a\") == ''\nassert remove_dirty_chars(\"a\", \"\") == 'a'\nassert remove_dirty_chars(\"abababa\", \"ba\") == 'abababa'",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdfg'\nassert remove_dirty_chars(\"\", \"a\") == ''\nassert remove_dirty_chars(\"a\", \"\") == 'a'\nassert remove_dirty_chars(\"abababa\", \"ba\") == 'abababa'\n```",
+        "coder": "```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = [char for char in str1 if char not in str2]\n    return ''.join(dirty_chars)\n```",
+        "verifier": "PICK: B\n\n```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = [char for char in str1 if char not in str2]\n    return ''.join(dirty_chars)\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdfg'\nassert remove_dirty_chars(\"\", \"a\") == ''\nassert remove_dirty_chars(\"a\", \"\") == 'a'\nassert remove_dirty_chars(\"abababa\", \"ba\") == 'abababa'\n```",
+        "fixer": "```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = [char for char in str1 if char not in str2]\n    return ''.join(dirty_chars)\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"xyz\") == 'abcdfg'\nassert remove_dirty_chars(\"\", \"a\") == ''\nassert remove_dirty_chars(\"a\", \"\") == 'a'\nassert remove_dirty_chars(\"abababa\", \"ba\") == 'abababa'\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `divisible_by_digits` that takes two parameters: `startnum` and `endnum`.\n2. Initialize an empty list `result` to store the numbers that meet the criteria.\n3. Iterate over each number in the range from `startnum` to `endnum` (inclusive).\n4. For each number, convert it to a string to easily access its digits.\n5. Check if all digits in the number are non-zero and if the number itself is divisible by each of these digits.\n6. If both conditions are met, add the number to the `result` list.\n7. Return the `result` list after iterating through all numbers in the range.\n\nThis approach ensures that we efficiently check each number against the specified criteria without generating unnecessary intermediate results.",
+      "quality": 1.0,
+      "final_key": "def remove_dirty_chars(str1, str2):\n    dirty_chars = set(str2)\n    clean_str = ''.join(char for char in str1 if char not in dirty_chars)\n    return clean_str",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert divisible_by_digits(1, 20) == [2, 4, 6, 8, 10, 12, 14, 16, 18]\nassert divisible_by_digits(10, 30) == [10, 20, 30]\nassert divisible_by_digits(1, 1) == [1]\nassert divisible_by_digits(100, 100) == [100]\nassert divisible_by_digits(100, 99) == []\n```",
+        "coder": "```python\ndef divisible_by_digits(startnum, endnum):\n    result = []\n    for num in range(startnum, endnum + 1):\n        num_str = str(num)\n        if all(int(digit) != 0 for digit in num_str) and num % int(digit) == 0 for digit in num_str):\n            result.append(num)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = set(str2)\n    clean_str = ''.join(char for char in str1 if char not in dirty_chars)\n    return clean_str\n```",
+        "fixer": "```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = set(str2)\n    clean_str = ''.join(char for char in str1 if char not in dirty_chars)\n    return clean_str\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+  "sample_keys": [
+    "def remove_dirty_chars(s1, s2):\n    result = ''\n    for char in s1:\n        if char not in s2:\n            result += char\n    return result",
+    "def remove_dirty_chars(dirty_string, clean_string):\n    result_list = []\n    for char in dirty_string:\n        if char not in clean_string:\n            result_list.append(char)\n    return ''.join(result_list)",
+    "def remove_dirty_chars(dirty_str, clean_str):\n    clean_chars = []\n    for char in dirty_str:\n        if char not in clean_str:\n            clean_chars.append(char)\n    return ''.join(clean_chars)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1496.0,
+    "small_out": 451.0,
+    "small_s": 9.581778405001387
+  },
+  "calls_plus": {
+    "large_in": 114.0,
+    "large_out": 115.0,
+    "large_s": 2.6123347140091937,
+    "small_in": 1277.0,
+    "small_out": 475.0,
+    "small_s": 9.095134398026858
+  },
+  "calls_samples": {
+    "small_in": 4322.0,
+    "small_out": 1181.0,
+    "small_s": 21.125795230007498
+  }
+}

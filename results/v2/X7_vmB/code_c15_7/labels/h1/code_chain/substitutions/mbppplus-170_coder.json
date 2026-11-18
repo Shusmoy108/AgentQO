@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-170",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+  "reference_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+  "final_key_plus": "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+  "q_plus": 0.0,
+  "q_minus": 1.0,
+  "consequence": -1.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert sum_range_list([], 0, 0) == 0\nassert sum_range_list([1, 2, 3, 4, 5], 1, 3) == 9\nassert sum_range_list([-1, -2, -3, -4, -5], 2, 4) == -9\nassert sum_range_list([10, 20, 30, 40, 50], 0, 4) == 150\nassert sum_range_list([100, 200, 300, 400, 500], 2, 4) == 700\n```",
+    "verifier": "PICK: B\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+    "fixer": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n\n# Test cases to verify the correctness of the solution\nclass SumRangeListTest(unittest.TestCase):\n    def test_sum_range_list(self):\n        self.assertEqual(sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10), 29)\n        self.assertEqual(sum_range_list([-5, -3, -4, 0, 1, 6], -3, 2), -7)\n        self.assertEqual(sum_range_list([10, 20, 30, 40, 50], 1, 3), 70)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)",
+      "reference_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n\n# Test cases to verify the correctness of the solution\nclass SumRangeListTest(unittest.TestCase):\n    def test_sum_range_list(self):\n        self.assertEqual(sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10), 29)\n        self.assertEqual(sum_range_list([-5, -3, -4, 0, 1, 6], -3, 2), -7)\n        self.assertEqual(sum_range_list([10, 20, 30, 40, 50], 1, 3), 70)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)\n```",
+      "quality": 1.0,
+      "final_key": "import unittest\n\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n\n# Test cases to verify the correctness of the solution\nclass SumRangeListTest(unittest.TestCase):\n    def test_sum_range_list(self):\n        self.assertEqual(sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10), 29)\n        self.assertEqual(sum_range_list([-5, -3, -4, 0, 1, 6], -3, 2), -7)\n        self.assertEqual(sum_range_list([10, 20, 30, 40, 50], 1, 3), 70)\n        self.assertEqual(sum_range_list([1, 2, 3, 4, 5], 0, 4), 15)\n        self.assertEqual(sum_range_list([-1, -2, -3, -4, -5], 2, 4), -6)\n        self.assertEqual(sum_range_list([100, 200, 300, 400, 500], 0, 4), 1500)\n        self.assertEqual(sum_range_list([], 0, 2), 0)\n        self.assertEqual(sum_range_list([10, 20, 30, 40, 50], 5, 5), 0)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_range_list([1, 2, 3, 4, 5], 0, 4) == 15\nassert sum_range_list([-1, -2, -3, -4, -5], 2, 4) == -6\nassert sum_range_list([100, 200, 300, 400, 500], 0, 4) == 1500\nassert sum_range_list([], 0, 2) == 0\nassert sum_range_list([10, 20, 30, 40, 50], 5, 5) == 0\n```",
+        "verifier": "PICK: A\n```python\nimport unittest\n\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n\n# Test cases to verify the correctness of the solution\nclass SumRangeListTest(unittest.TestCase):\n    def test_sum_range_list(self):\n        self.assertEqual(sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10), 29)\n        self.assertEqual(sum_range_list([-5, -3, -4, 0, 1, 6], -3, 2), -7)\n        self.assertEqual(sum_range_list([10, 20, 30, 40, 50], 1, 3), 70)\n        self.assertEqual(sum_range_list([1, 2, 3, 4, 5], 0, 4), 15)\n        self.assertEqual(sum_range_list([-1, -2, -3, -4, -5], 2, 4), -6)\n        self.assertEqual(sum_range_list([100, 200, 300, 400, 500], 0, 4), 1500)\n        self.assertEqual(sum_range_list([], 0, 2), 0)\n        self.assertEqual(sum_range_list([10, 20, 30, 40, 50], 5, 5), 0)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)\n```",
+        "fixer": "```python\nimport unittest\n\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n\n# Test cases to verify the correctness of the solution\nclass SumRangeListTest(unittest.TestCase):\n    def test_sum_range_list(self):\n        self.assertEqual(sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10), 29)\n        self.assertEqual(sum_range_list([-5, -3, -4, 0, 1, 6], -3, 2), -7)\n        self.assertEqual(sum_range_list([10, 20, 30, 40, 50], 1, 3), 70)\n        self.assertEqual(sum_range_list([1, 2, 3, 4, 5], 0, 4), 15)\n        self.assertEqual(sum_range_list([-1, -2, -3, -4, -5], 2, 4), -6)\n        self.assertEqual(sum_range_list([100, 200, 300, 400, 500], 0, 4), 1500)\n        self.assertEqual(sum_range_list([], 0, 2), 0)\n        self.assertEqual(sum_range_list([10, 20, 30, 40, 50], 5, 5), 0)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def move_zero(nums):\n    left = 0\n    right = 0\n    \n    while right < len(nums):\n        if nums[right] != 0:\n            nums[left], nums[right] = nums[right], nums[left]\n            left += 1\n        right += 1\n\n    return nums",
+      "reference_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "key_differs": true,
+      "text": "```python\ndef move_zero(nums):\n    left = 0\n    right = 0\n    \n    while right < len(nums):\n        if nums[right] != 0:\n            nums[left], nums[right] = nums[right], nums[left]\n            left += 1\n        right += 1\n\n    return nums\n```",
+      "quality": 1.0,
+      "final_key": "def sum_range_list(nums, start, end):\n    total_sum = 0\n    for i in range(start, end + 1):\n        total_sum += nums[i]\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_range_list([], 0, 0) == 0\nassert sum_range_list([1, 2, 3, 4, 5], 0, 4) == 15\nassert sum_range_list([-1, -2, -3, -4, -5], 0, 4) == -15\nassert sum_range_list([10, 20, 30, 40, 50], 2, 4) == 70\nassert sum_range_list([100, 200, 300, 400, 500], 3, 5) == 900\n```",
+        "verifier": "PICK: B\n```python\ndef sum_range_list(nums, start, end):\n    total_sum = 0\n    for i in range(start, end + 1):\n        total_sum += nums[i]\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_range_list(nums, start, end):\n    total_sum = 0\n    for i in range(start, end + 1):\n        total_sum += nums[i]\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(binary_string) % 2 != 0:\n            count += 1\n    return count",
+      "reference_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "key_differs": true,
+      "text": "```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(binary_string) % 2 != 0:\n            count += 1\n    return count\n```",
+      "quality": 1.0,
+      "final_key": "def sum_range_list(numbers, start_index, end_index):\n    return sum(numbers[start_index:end_index+1])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert odd_equivalent(\"1010\", 1) == 0\nassert odd_equivalent(\"1111\", 2) == 4\nassert odd_equivalent(\"0000\", 3) == 0\nassert odd_equivalent(\"1111\", 4) == 4\nassert odd_equivalent(\"10101010\", 5) == 4\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    return sum(numbers[start_index:end_index+1])\n```",
+        "fixer": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    return sum(numbers[start_index:end_index+1])\n\n# Test cases\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10) == 29\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 5, 7) == 16\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 7, 10) == 38\nassert odd_equivalent(\"1010\", 1) == 0\nassert odd_equivalent(\"1111\", 2) == 4\nassert odd_equivalent(\"0000\", 3) == 0\nassert odd_equivalent(\"1111\", 4) == 4\nassert odd_equivalent(\"10101010\", 5) == 4\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+  "sample_keys": [
+    "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n\n# Example usage:\nresult = sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10)\nprint(result)  # Output: 29",
+    "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+    "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+    "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+    "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2062.0,
+    "small_out": 524.0,
+    "small_s": 10.815307963028317
+  },
+  "calls_plus": {
+    "small_in": 1767.0,
+    "small_out": 474.0,
+    "small_s": 9.79745874501532,
+    "large_in": 295.0,
+    "large_out": 50.0,
+    "large_s": 1.1558573379879817
+  },
+  "calls_samples": {
+    "small_in": 1475.0,
+    "small_out": 305.0,
+    "small_s": 6.036625614011427
+  }
+}

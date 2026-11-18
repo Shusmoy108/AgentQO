@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-740",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `tuple_to_dict` that takes one parameter, `tup`.\n2. Initialize an empty dictionary named `result_dict`.\n3. Iterate over the tuple using a loop, stopping before the last element.\n4. For each iteration, use the current element as the key and the next element as the value in `result_dict`.\n5. Return `result_dict` after the loop completes.",
+  "reference_key": null,
+  "final_key_plus": "def tuple_to_dict(tup):\n    result_dict = {}\n    for i in range(len(tup) - 1):\n        result_dict[tup[i]] = tup[i + 1]\n    return result_dict",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict(('x')) == {}\nassert tuple_to_dict(()) == {}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) == {1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10}\n```",
+    "coder": "```python\ndef tuple_to_dict(tup):\n    result_dict = {}\n    for i in range(len(tup) - 1):\n        result_dict[tup[i]] = tup[i + 1]\n    return result_dict\n```",
+    "verifier": "PICK: A\n\n```python\ndef tuple_to_dict(tup):\n    result_dict = {}\n    for i in range(len(tup) - 1):\n        result_dict[tup[i]] = tup[i + 1]\n    return result_dict\n```",
+    "fixer": "```python\ndef tuple_to_dict(tup):\n    result_dict = {}\n    for i in range(len(tup) - 1):\n        result_dict[tup[i]] = tup[i + 1]\n    return result_dict\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `replace_specialchar` that takes one parameter: `input_string`.\n3. Use the `str.replace()` method to replace spaces, commas, and dots with colons.\n4. Return the modified string.\n\nHere's the complete implementation:\n\n```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Test the function\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that solves the problem as described. The function is named differently from the given example (`replace_spaces_with_colon`) to ensure uniqueness while maintaining the core functionality.",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(input_tuple):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_tuple.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    # Split the modified string into pairs of adjacent elements\n    pairs = modified_string.split(\":\")\n    # Create a dictionary from the pairs\n    result_dict = dict(zip(pairs[::2], pairs[1::2]))\n    return result_dict\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 2, 3: 4, 5: 6}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((\"apple\", \"banana\", \"cherry\")) == {\"apple\": \"banana\", \"banana\": \"cherry\"}\nassert tuple_to_dict((\"hello\", \"world\")) == {\"hello\": \"world\"}\nassert tuple_to_dict((\"a\", \"b\", \"c\", \"d\", \"e\")) == {\"a\": \"b\", \"b\": \"c\", \"c\": \"d\", \"d\": \"e\"}\nassert tuple_to_dict(()) == {}",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((\"apple\", \"banana\", \"cherry\")) == {\"apple\": \"banana\", \"banana\": \"cherry\"}\nassert tuple_to_dict((\"hello\", \"world\")) == {\"hello\": \"world\"}\nassert tuple_to_dict((\"a\", \"b\", \"c\", \"d\", \"e\")) == {\"a\": \"b\", \"b\": \"c\", \"c\": \"d\", \"d\": \"e\"}\nassert tuple_to_dict(()) == {}\n```",
+        "coder": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_dict(input_tuple):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_tuple.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    # Split the modified string into pairs of adjacent elements\n    pairs = modified_string.split(\":\")\n    # Create a dictionary from the pairs\n    result_dict = dict(zip(pairs[::2], pairs[1::2]))\n    return result_dict\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 2, 3: 4, 5: 6}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((\"apple\", \"banana\", \"cherry\")) == {\"apple\": \"banana\", \"banana\": \"cherry\"}\nassert tuple_to_dict((\"hello\", \"world\")) == {\"hello\": \"world\"}\nassert tuple_to_dict((\"a\", \"b\", \"c\", \"d\", \"e\")) == {\"a\": \"b\", \"b\": \"c\", \"c\": \"d\", \"d\": \"e\"}\nassert tuple_to_dict(()) == {}\n```",
+        "fixer": "```python\ndef tuple_to_dict(input_tuple):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_tuple.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    # Split the modified string into pairs of adjacent elements\n    pairs = modified_string.split(\":\")\n    # Create a dictionary from the pairs\n    result_dict = dict(zip(pairs[::2], pairs[1::2]))\n    return result_dict\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 2, 3: 4, 5: 6}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((\"apple\", \"banana\", \"cherry\")) == {\"apple\": \"banana\", \"banana\": \"cherry\"}\nassert tuple_to_dict((\"hello\", \"world\")) == {\"hello\": \"world\"}\nassert tuple_to_dict((\"a\", \"b\", \"c\", \"d\", \"e\")) == {\"a\": \"b\", \"b\": \"c\", \"c\": \"d\", \"d\": \"e\"}\nassert tuple_to_dict(()) == {}\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `tuple_to_dict` that takes one parameter, `tup`.\n2. Initialize an empty dictionary named `result_dict`.\n3. Iterate over the tuple using a loop, stopping before the last element.\n4. For each iteration, use the current element as the key and the previous element as the value in `result_dict`.\n5. Return `result_dict` after the loop completes.",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    result_dict = {}\n    for i in range(len(tup) - 1):\n        result_dict[tup[i]] = tup[i + 1]\n    return result_dict",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict(('x')) == {}\nassert tuple_to_dict(()) == {}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) == {1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10}\n```",
+        "coder": "```python\ndef tuple_to_dict(tup):\n    result_dict = {}\n    for i in range(len(tup) - 1):\n        result_dict[tup[i]] = tup[i + 1]\n    return result_dict\n```",
+        "verifier": "PICK: A\n\n```python\ndef tuple_to_dict(tup):\n    result_dict = {}\n    for i in range(len(tup) - 1):\n        result_dict[tup[i]] = tup[i + 1]\n    return result_dict\n```",
+        "fixer": "```python\ndef tuple_to_dict(tup):\n    result_dict = {}\n    for i in range(len(tup) - 1):\n        result_dict[tup[i]] = tup[i + 1]\n    return result_dict\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `get_equal` that takes one parameter: `tuples_list`.\n2. Initialize a variable `length` to store the length of the first tuple in the list.\n3. Iterate through each tuple in the list using a for loop.\n4. For each tuple, check if its length is equal to the `length` variable.\n5. If any tuple has a different length from the initial `length`, return `False`.\n6. If all tuples have the same length, return `True`.\n\nThis approach ensures that we efficiently check the lengths of all tuples in the list without needing to compare them individually.",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tuples_list):\n    if not all(get_equal(tuples_list)):\n        raise ValueError(\"All tuples must have the same length\")\n    \n    result = {}\n    for i in range(len(tuples_list[0])):\n        result[tuples_list[0][i]] = tuples_list[1][i]\n    \n    return result\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 2, 3: 4, 5: 6}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict((1, 2, 3)) == {1: 2, 2: 3}\nassert tuple_to_dict(('x',)) == {'x': None}\nassert tuple_to_dict(()) == {}",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict((1, 2, 3)) == {1: 2, 2: 3}\nassert tuple_to_dict(('x',)) == {'x': None}\nassert tuple_to_dict(()) == {}\n```",
+        "coder": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for t in tuples_list:\n        if len(t) != length:\n            return False\n    return True\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_dict(tuples_list):\n    if not all(get_equal(tuples_list)):\n        raise ValueError(\"All tuples must have the same length\")\n    \n    result = {}\n    for i in range(len(tuples_list[0])):\n        result[tuples_list[0][i]] = tuples_list[1][i]\n    \n    return result\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 2, 3: 4, 5: 6}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict((1, 2, 3)) == {1: 2, 2: 3}\nassert tuple_to_dict(('x',)) == {'x': None}\nassert tuple_to_dict(()) == {}\n```",
+        "fixer": "```python\ndef tuple_to_dict(tuples_list):\n    if not all(get_equal(tuples_list)):\n        raise ValueError(\"All tuples must have the same length\")\n    \n    result = {}\n    for i in range(len(tuples_list[0])):\n        result[tuples_list[0][i]] = tuples_list[1][i]\n    \n    return result\n\n# Test cases\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict((1, 2, 3, 4, 5, 6)) == {1: 2, 3: 4, 5: 6}\nassert tuple_to_dict((7, 8, 9, 10, 11, 12)) == {7: 8, 9: 10, 11: 12}\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\nassert tuple_to_dict(('a', 'b', 'c')) == {'a': 'b', 'b': 'c'}\nassert tuple_to_dict((1, 2, 3)) == {1: 2, 2: 3}\nassert tuple_to_dict(('x',)) == {'x': None}\nassert tuple_to_dict(()) == {}\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "sample_keys": [
+    "def tuple_to_dict(input_tuple):\n    if not input_tuple:\n        return {}\n    \n    result = {}\n    for i in range(len(input_tuple) - 1):\n        result[str(i)] = str(input_tuple[i + 1])\n    \n    return result",
+    "def tuple_to_dict(tup):\n    dict_result = {}\n    for idx, val in enumerate(tup):\n        dict_result[idx] = val\n    return dict_result",
+    "def tuple_to_dict(tup):\n    result = {tup[i]: tup[i + 1] for i in range(len(tup) - 1)}\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2350.0,
+    "small_out": 610.0,
+    "small_s": 12.412047993042506
+  },
+  "calls_plus": {
+    "large_in": 162.0,
+    "large_out": 87.0,
+    "large_s": 1.8877944450068753,
+    "small_in": 1996.0,
+    "small_out": 336.0,
+    "small_s": 5.996843448985601
+  },
+  "calls_samples": {
+    "small_in": 6925.0,
+    "small_out": 1587.0,
+    "small_s": 30.242997568944702
+  }
+}

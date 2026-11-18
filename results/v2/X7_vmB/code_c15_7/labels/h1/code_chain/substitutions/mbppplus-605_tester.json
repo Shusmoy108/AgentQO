@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-605",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(17) == True\nassert prime_num(18) == False\nassert prime_num(97) == True\n```",
+  "reference_key": "assert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(17) == True\nassert prime_num(18) == False\nassert prime_num(97) == True",
+  "final_key_plus": "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n```python\nimport math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```",
+    "fixer": "```python\nimport math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert prime_num(14)==False\nassert prime_num(2)==True\nassert prime_num(29)==True\nassert prime_num(100007)==True\nassert prime_num(1<<63)==False",
+      "reference_key": "assert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(17) == True\nassert prime_num(18) == False\nassert prime_num(97) == True",
+      "key_differs": true,
+      "text": "```python\nassert prime_num(14)==False\nassert prime_num(2)==True\nassert prime_num(29)==True\nassert prime_num(100007)==True\nassert prime_num(1<<63)==False\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\nimport math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert prime_num(19)==True  # 19 is a prime number\nassert prime_num(77)==False  # 77 has more factors than needed\nassert prime_num(2)!=True   # 2 is not a prime number after checking all factors from 3 onwards including it itself\nassert prime_num(-7)==False  # Negative numbers cannot be prime\nassert prime_num(1)==False  # The smallest prime number is 2",
+      "reference_key": "assert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(17) == True\nassert prime_num(18) == False\nassert prime_num(97) == True",
+      "key_differs": true,
+      "text": "```python\nassert prime_num(19)==True  # 19 is a prime number\nassert prime_num(77)==False  # 77 has more factors than needed\nassert prime_num(2)!=True   # 2 is not a prime number after checking all factors from 3 onwards including it itself\nassert prime_num(-7)==False  # Negative numbers cannot be prime\nassert prime_num(1)==False  # The smallest prime number is 2\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert kth_element([12,3,5,7,19], 5) == 19\nassert kth_element([12,3,5,7,19], 6) == None\nassert kth_element([], 1) == None\nassert kth_element([12,3,5,7,19], 0) == None\nassert kth_element([12,3,5,7,19], -1) == None",
+      "reference_key": "assert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(17) == True\nassert prime_num(18) == False\nassert prime_num(97) == True",
+      "key_differs": true,
+      "text": "```python\nassert kth_element([12,3,5,7,19], 5) == 19\nassert kth_element([12,3,5,7,19], 6) == None\nassert kth_element([], 1) == None\nassert kth_element([12,3,5,7,19], 0) == None\nassert kth_element([12,3,5,7,19], -1) == None\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\nimport math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n\n# Test cases\nassert prime_num(13) == True\nassert prime_num(7) == True\nassert prime_num(-1010) == False\nassert kth_element([12,3,5,7,19], 5) == 19\nassert kth_element([12,3,5,7,19], 6) == None\nassert kth_element([], 1) == None\nassert kth_element([12,3,5,7,19], 0) == None\nassert kth_element([12,3,5,7,19], -1) == None\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(97) == True\nassert prime_num(100) == False\nassert prime_num(1) == False",
+  "sample_keys": [
+    "assert prime_num(7)==True\nassert prime_num(18)==False\nassert prime_num(-3)==False\nassert prime_num(2)==True\nassert prime_num(4)==False",
+    "assert prime_num(1) == False\nassert prime_num(2) == True\nassert prime_num(3) == True\nassert prime_num(4) == False\nassert prime_num(17) == True",
+    "# Edge case: Prime number\nassert prime_num(2) == True\n\n# Typical case: Small positive number\nassert prime_num(7) == True\n\n# Typical case: Large positive number\nassert prime_num(1499) == True\n\n# Typical case: Even number\nassert prime_num(8) == False\n\n# Typical case: Zero\nassert prime_num(0) == False",
+    "assert prime_num(2) == True\nassert prime_num(17) == True\nassert prime_num(18) == False\nassert prime_num(97) == True\nassert prime_num(1) == False",
+    "assert prime_num(4) == False\nassert prime_num(7) == True\nassert prime_num(9) == False\nassert prime_num(11) == True\nassert prime_num(16) == False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1249.0,
+    "small_out": 411.0,
+    "small_s": 9.404178711003624
+  },
+  "calls_plus": {
+    "small_in": 1065.0,
+    "small_out": 358.0,
+    "small_s": 7.828830250015017,
+    "large_in": 184.0,
+    "large_out": 53.0,
+    "large_s": 1.5637932890094817
+  },
+  "calls_samples": {
+    "small_in": 920.0,
+    "small_out": 291.0,
+    "small_s": 6.168699972040486
+  }
+}

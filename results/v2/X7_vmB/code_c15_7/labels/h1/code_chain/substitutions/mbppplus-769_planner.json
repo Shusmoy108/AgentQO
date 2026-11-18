@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-769",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `Diff` that takes two parameters, both expected to be lists.\n2. Use list comprehension to iterate through the first list and filter out elements that are present in the second list.\n3. Return the resulting list which contains elements unique to the first list.\n4. Ensure the function handles cases where there might be duplicate elements or empty lists.\n5. Test the function with the provided test case to verify its correctness.",
+  "reference_key": null,
+  "final_key_plus": "def Diff(list1, list2):\n    return [item for item in list1 if item not in list2]",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert (Diff([], [])) == []\nassert (Diff([1, 2, 3], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [4, 5, 6])) == [1, 2, 3]\nassert (Diff([1, 2, 3, 4, 5], [1, 2, 3])) == [4, 5]\nassert (Diff([1, 2, 3, 4, 5], [1, 2, 3, 4, 5])) == []\n```",
+    "coder": "```python\ndef Diff(list1, list2):\n    return [item for item in list1 if item not in list2]\n```",
+    "verifier": "PICK: A\n\n```python\ndef Diff(list1, list2):\n    return [item for item in list1 if item not in list2]\n```",
+    "fixer": "```python\ndef Diff(list1, list2):\n    return [item for item in list1 if item not in list2]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sort_counter` that takes one parameter: a dictionary `counter`.\n2. Use the built-in `sorted()` function on the dictionary items, specifying the key as the values (`key=counter.get`) and the reverse order (`reverse=True`).\n3. Return the sorted list of tuples.\n\nHere's the complete implementation:\n\n```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```\n\nThis function will correctly sort the dictionary by its values in descending order, as required.",
+      "quality": 0.0,
+      "final_key": "from collections import Counter\n\ndef Diff(list1, list2):\n    counter1 = Counter(list1)\n    counter2 = Counter(list2)\n    \n    # Find the difference between the two counters\n    diff_counter = counter1 - counter2\n    \n    # Convert the difference counter back to a list\n    result = list(diff_counter.elements())\n    \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert Diff([10, 15, 20, 25, 30, 35, 40], [25, 40, 35]) == [10, 20, 30, 15]\nassert Diff([], []) == []\nassert Diff([1, 2, 3], [3, 2, 1]) == [1, 2, 3]\nassert Diff([1, 2, 3, 4], [4, 3, 2, 1]) == [1, 2, 3, 4]\nassert Diff(['apple', 'banana', 'cherry'], ['banana', 'cherry']) == ['apple']\n```",
+        "coder": "```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+        "verifier": "PICK: B\n\n```python\nfrom collections import Counter\n\ndef Diff(list1, list2):\n    counter1 = Counter(list1)\n    counter2 = Counter(list2)\n    \n    # Find the difference between the two counters\n    diff_counter = counter1 - counter2\n    \n    # Convert the difference counter back to a list\n    result = list(diff_counter.elements())\n    \n    return result\n```",
+        "fixer": "```python\nfrom collections import Counter\n\ndef Diff(list1, list2):\n    counter1 = Counter(list1)\n    counter2 = Counter(list2)\n    \n    # Find the difference between the two counters\n    diff_counter = counter1 - counter2\n    \n    # Convert the difference counter back to a list\n    result = list(diff_counter.elements())\n    \n    return result\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `Diff` that takes two parameters, both expected to be lists.\n2. Use list comprehension to iterate through the first list and filter out elements that are present in the second list.\n3. Return the resulting list which contains elements unique to the first list.\n4. Handle cases where there might be duplicate elements or empty lists by returning an empty list if either input is empty.\n5. Test the function with the provided test case to verify its correctness.",
+      "quality": 0.0,
+      "final_key": "def Diff(list1, list2):\n    # Check for empty lists\n    if not list1 or not list2:\n        return []\n    \n    # Use list comprehension to find unique elements\n    result = [element for element in list1 if element not in list2]\n    \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert (Diff([], [])) == []\nassert (Diff([1, 2, 3], [3, 4, 5])) == [1, 2]\nassert (Diff([1, 2, 3], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [1, 2, 3, 4])) == [4]\nassert (Diff([1, 2, 3, 4], [1, 2, 3])) == [4]\n```",
+        "coder": "```python\ndef Diff(list1, list2):\n    # Check for empty lists\n    if not list1 or not list2:\n        return []\n    \n    # Use list comprehension to find unique elements\n    result = [element for element in list1 if element not in list2]\n    \n    return result\n```",
+        "verifier": "PICK: A\n\n```python\ndef Diff(list1, list2):\n    # Check for empty lists\n    if not list1 or not list2:\n        return []\n    \n    # Use list comprehension to find unique elements\n    result = [element for element in list1 if element not in list2]\n    \n    return result\n```",
+        "fixer": "```python\ndef Diff(list1, list2):\n    # Check for empty lists\n    if not list1 or not list2:\n        return []\n    \n    # Use list comprehension to find unique elements\n    result = [element for element in list1 if element not in list2]\n    \n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `surfacearea_cube` that takes one parameter, `size`.\n2. Inside the function, calculate the surface area using the formula for the surface area of a cube: \\(6 \\times \\text{side}^2\\).\n3. Return the calculated surface area.\n\nHere's the complete function:\n\n```python\ndef surfacearea_cube(size):\n    # Calculate the surface area of a cube\n    surface_area = 6 * (size ** 2)\n    # Return the result\n    return surface_area\n```\n\nThis function will correctly compute the surface area of a cube given its side length.",
+      "quality": 0.0,
+      "final_key": "def Diff(list1, list2):\n    # Calculate the difference between two lists\n    diff_list = [x for x in list1 if x not in list2]\n    # Return the result\n    return diff_list",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert Diff([10, 15, 20, 25, 30, 35, 40], [25, 40, 35]) == [10, 20, 30, 15]\nassert Diff([], []) == []\nassert Diff([1, 2, 3], [3, 2, 1]) == [1, 2, 3]\nassert Diff([1, 2, 3, 4], [1, 2, 3, 4, 5]) == [5]\nassert Diff([1, 2, 3, 4, 5], [1, 2, 3, 4]) == [5]\n```",
+        "coder": "```python\ndef surfacearea_cube(size):\n    # Calculate the surface area of a cube\n    surface_area = 6 * (size ** 2)\n    # Return the result\n    return surface_area\n```",
+        "verifier": "PICK: B\n\n```python\ndef Diff(list1, list2):\n    # Calculate the difference between two lists\n    diff_list = [x for x in list1 if x not in list2]\n    # Return the result\n    return diff_list\n```",
+        "fixer": "```python\ndef Diff(list1, list2):\n    # Calculate the difference between two lists\n    diff_list = [x for x in list1 if x not in list2]\n    # Return the result\n    return diff_list\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result",
+  "sample_keys": [
+    "def Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result",
+    "def Diff(list1, list2):\n    result = []\n    for i in range(min(len(list1), len(list2))):\n        if list1[i] != list2[i]:\n            result.append(list1[i])\n    return result",
+    "def Diff(list1, list2):\n    # Find elements in list1 but not in list2\n    diff = [element for element in list1 if element not in list2]\n    return diff"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2032.0,
+    "small_out": 496.0,
+    "small_s": 10.853132146963617
+  },
+  "calls_plus": {
+    "large_in": 150.0,
+    "large_out": 93.0,
+    "large_s": 2.3896202630130574,
+    "small_in": 1688.0,
+    "small_out": 228.0,
+    "small_s": 4.4324033449811395
+  },
+  "calls_samples": {
+    "small_in": 5848.0,
+    "small_out": 1222.0,
+    "small_s": 24.33468211791478
+  }
+}

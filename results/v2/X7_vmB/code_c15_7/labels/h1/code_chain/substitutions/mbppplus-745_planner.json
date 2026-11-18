@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-745",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a helper function that checks if a number is divisible by each of its digits.\n2. Use a lambda function to filter numbers in the specified range based on the divisibility condition.\n3. Convert the filtered numbers into a list and return it.\n4. Test the function with the provided test case to ensure correctness.\n5. Document the function with a docstring explaining its purpose and parameters.",
+  "reference_key": null,
+  "final_key_plus": "def divisible_by_digits(startnum, endnum):\n    \"\"\"\n    Returns a list of numbers within the range [startnum, endnum] where every number is divisible by every digit it contains.\n    \n    Parameters:\n    - startnum (int): The starting number of the range.\n    - endnum (int): The ending number of the range.\n    \n    Returns:\n    - list: A list of numbers meeting the criteria.\n    \"\"\"\n    def is_divisible_by_digits(num):\n        for digit in str(num):\n            if num % int(digit) != 0:\n                return False\n        return True\n    \n    return [num for num in range(startnum, endnum + 1) if is_divisible_by_digits(num)]",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert divisible_by_digits(1,22) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]\nassert divisible_by_digits(10,100) == [10, 12, 15, 20, 24, 30, 36, 40, 45, 50, 54, 60, 66, 70, 75, 80, 84, 90, 96]\nassert divisible_by_digits(100,1000) == [100, 120, 150, 200, 240, 300, 360, 400, 450, 500, 540, 600, 660, 700, 750, 800, 840, 900, 960]\nassert divisible_by_digits(1000,10000) == [1000, 1200, 1500, 2000, 2400, 3000, 3600, 4000, 4500, 5000, 5400, 6000, 6600, 7000, 7500, 8000, 8400, 9000, 9600]\nassert divisible_by_digits(10000,100000) == [10000, 12000, 15000, 20000, 24000, 30000, 36000, 40000, 45000, 50000, 54000, 60000, 66000, 70000, 75000,",
+    "coder": "```python\ndef divisible_by_digits(startnum, endnum):\n    \"\"\"\n    Returns a list of numbers within the range [startnum, endnum] where every number is divisible by every digit it contains.\n    \n    Parameters:\n    - startnum (int): The starting number of the range.\n    - endnum (int): The ending number of the range.\n    \n    Returns:\n    - list: A list of numbers meeting the criteria.\n    \"\"\"\n    def is_divisible_by_digits(num):\n        for digit in str(num):\n            if num % int(digit) != 0:\n                return False\n        return True\n    \n    return [num for num in range(startnum, endnum + 1) if is_divisible_by_digits(num)]\n```",
+    "verifier": "PICK: A\n\n```python\ndef divisible_by_digits(startnum, endnum):\n    \"\"\"\n    Returns a list of numbers within the range [startnum, endnum] where every number is divisible by every digit it contains.\n    \n    Parameters:\n    - startnum (int): The starting number of the range.\n    - endnum (int): The ending number of the range.\n    \n    Returns:\n    - list: A list of numbers meeting the criteria.\n    \"\"\"\n    def is_divisible_by_digits(num):\n        for digit in str(num):\n            if num % int(digit) != 0:\n                return False\n        return True\n    \n    return [num for num in range(startnum, endnum + 1) if is_divisible_by_digits(num)]\n```",
+    "fixer": "```python\ndef divisible_by_digits(startnum, endnum):\n    \"\"\"\n    Returns a list of numbers within the range [startnum, endnum] where every number is divisible by every digit it contains.\n    \n    Parameters:\n    - startnum (int): The starting number of the range.\n    - endnum (int): The ending number of the range.\n    \n    Returns:\n    - list: A list of numbers meeting the criteria.\n    \"\"\"\n    def is_divisible_by_digits(num):\n        for digit in str(num):\n            if num % int(digit) != 0:\n                return False\n        return True\n    \n    return [num for num in range(startnum, endnum + 1) if is_divisible_by_digits(num)]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `all_characters_same` that takes one parameter, `input_string`.\n2. Initialize a variable `first_char` with the first character of the input string.\n3. Iterate over each character in the input string starting from the second character.\n4. For each character, compare it with `first_char`.\n5. If any character is different from `first_char`, return `False`.\n6. If the loop completes without finding any differences, return `True`.\n\nThis approach ensures that we efficiently check for uniformity across all characters in the string.",
+      "quality": 0.0,
+      "final_key": "def divisible_by_digits(startnum, endnum):\n    def all_characters_same(input_string):\n        if len(input_string) <= 1:\n            return True\n        first_char = input_string[0]\n        for char in input_string[1:]:\n            if char != first_char:\n                return False\n        return True\n\n    result = []\n    for num in range(startnum, endnum + 1):\n        if all_characters_same(str(num)):\n            if num % int(str(num)) == 0:\n                result.append(num)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert all_characters_same(\"abc\") == True\nassert all_characters_same(\"aabbcc\") == True\nassert all_characters_same(\"aabbc\") == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\n```",
+        "coder": "```python\ndef all_characters_same(input_string):\n    if len(input_string) <= 1:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n```",
+        "verifier": "PICK: B\n\n```python\ndef divisible_by_digits(startnum, endnum):\n    def all_characters_same(input_string):\n        if len(input_string) <= 1:\n            return True\n        first_char = input_string[0]\n        for char in input_string[1:]:\n            if char != first_char:\n                return False\n        return True\n\n    result = []\n    for num in range(startnum, endnum + 1):\n        if all_characters_same(str(num)):\n            if num % int(str(num)) == 0:\n                result.append(num)\n    return result\n```",
+        "fixer": "```python\ndef divisible_by_digits(startnum, endnum):\n    def all_characters_same(input_string):\n        if len(input_string) <= 1:\n            return True\n        first_char = input_string[0]\n        for char in input_string[1:]:\n            if char != first_char:\n                return False\n        return True\n\n    result = []\n    for num in range(startnum, endnum + 1):\n        if all_characters_same(str(num)):\n            if num % int(str(num)) == 0:\n                result.append(num)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `multiple_to_single` that takes one parameter: `numbers`, which is expected to be a list of integers.\n2. Initialize a variable `result` to store the final combined integer.\n3. Iterate over each number in the `numbers` list using a for loop.\n4. For each number, convert it to a string and concatenate it to the `result` string.\n5. After the loop completes, convert the concatenated string back to an integer using the `int()` function and assign it to the `result` variable.\n6. Return the `result` variable as the output of the function.\n\nThis approach ensures that all numbers in the input list are converted to strings, concatenated together, and then converted back to an integer, effectively joining them into a single integer.",
+      "quality": 1.0,
+      "final_key": "def divisible_by_digits(startnum, endnum):\n    result = []\n    for num in range(startnum, endnum + 1):\n        if all(int(digit) != 0 and num % int(digit) == 0 for digit in str(num)):\n            result.append(num)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert divisible_by_digits(1,22) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]\nassert divisible_by_digits(0,10) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\nassert divisible_by_digits(-1,1) == [-1, 0, 1]\nassert divisible_by_digits(100,1000) == [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175,",
+        "coder": "```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```",
+        "verifier": "PICK: B\n\n```python\ndef divisible_by_digits(startnum, endnum):\n    result = []\n    for num in range(startnum, endnum + 1):\n        if all(int(digit) != 0 and num % int(digit) == 0 for digit in str(num)):\n            result.append(num)\n    return result\n```",
+        "fixer": "```python\ndef divisible_by_digits(startnum, endnum):\n    result = []\n    for num in range(startnum, endnum + 1):\n        if all(int(digit) != 0 and num % int(digit) == 0 for digit in str(num)):\n            result.append(num)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a recursive function to calculate Bell numbers.\n2. Base case for the recursion: B(0) = 1, B(1) = 1.\n3. Recursive case: For n > 1, B(n) = sum(B(k) * C(n-1, k)) where C(n-1, k) is the binomial coefficient.\n4. Use memoization to store previously calculated values to avoid redundant calculations.\n5. Return the result for the given input n.",
+      "quality": 0.0,
+      "final_key": "from functools import lru_cache\nfrom math import comb\n\n@lru_cache(maxsize=None)\ndef bell_numbers(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_numbers(k) * comb(n - 1, k) for k in range(n))\n\ndef divisible_by_digits(startnum, endnum):\n    def has_all_unique_digits(num):\n        return len(set(str(num))) == len(str(num))\n\n    def is_divisible_by_digits(num):\n        return all(int(digit) != 0 and num % int(digit) == 0 for digit in str(num))\n\n    return [i for i in range(startnum, endnum + 1) if has_all_unique_digits(i) and is_divisible_by_digits(i)]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert divisible_by_digits(1, 22) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]\nassert divisible_by_digits(10, 100) == [10, 20, 30, 40, 50, 60, 70, 80, 90]\nassert divisible_by_digits(100, 1000) == [100, 200, 300, 400, 500, 600, 700, 800, 900]\nassert divisible_by_digits(1000, 10000) == [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]\nassert divisible_by_digits(10000, 100000) == [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000]\n```",
+        "coder": "```python\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef bell_numbers(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_numbers(k) * comb(n - 1, k) for k in range(n))\n\n# Example usage\nprint(divisible_by_digits(1, 22))\n```",
+        "verifier": "PICK: B\n\n```python\nfrom functools import lru_cache\nfrom math import comb\n\n@lru_cache(maxsize=None)\ndef bell_numbers(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_numbers(k) * comb(n - 1, k) for k in range(n))\n\ndef divisible_by_digits(startnum, endnum):\n    def has_all_unique_digits(num):\n        return len(set(str(num))) == len(str(num))\n\n    def is_divisible_by_digits(num):\n        return all(int(digit) != 0 and num % int(digit) == 0 for digit in str(num))\n\n    return [i for i in range(startnum, endnum + 1) if has_all_unique_digits(i) and is_divisible_by_digits(i)]\n```",
+        "fixer": "```python\nfrom functools import lru_cache\nfrom math import comb\n\n@lru_cache(maxsize=None)\ndef bell_numbers(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_numbers(k) * comb(n - 1, k) for k in range(n))\n\ndef divisible_by_digits(startnum, endnum):\n    def has_all_unique_digits(num):\n        return len(set(str(num))) == len(str(num))\n\n    def is_divisible_by_digits(num):\n        return all(int(digit) != 0 and num % int(digit) == 0 for digit in str(num))\n\n    return [i for i in range(startnum, endnum + 1) if has_all_unique_digits(i) and is_divisible_by_digits(i)]\n\n# Example usage\nprint(divisible_by_digits(1, 22))\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def divisible_by_digits(startnum, endnum):\n    result = []\n    for num in range(startnum, endnum + 1):\n        str_num = str(num)\n        if '0' in str_num:\n            continue\n        divisible = True\n        for digit in str_num:\n            if int(digit) == 0 or num % int(digit) != 0:\n                divisible = False\n                break\n        if divisible:\n            result.append(num)\n    return result",
+  "sample_keys": [
+    "def divisible_by_digits(startnum, endnum):\n    return [num for num in range(startnum, endnum + 1) if all(int(digit) != 0 and num % int(digit) == 0 for digit in str(num))]",
+    null,
+    "def is_divisible_by_digits(number):\n    \"\"\"Check if a number is divisible by all its digits.\"\"\"\n    for digit in str(number):\n        if int(digit) == 0 or number % int(digit) != 0:\n            return False\n    return True\n\ndef find_divisible_numbers(start_num, end_num):\n    \"\"\"Find numbers within a given range that are divisible by all their digits.\"\"\"\n    divisible_numbers = []\n    for num in range(start_num, end_num + 1):\n        if is_divisible_by_digits(num):\n            divisible_numbers.append(num)\n    return divisible_numbers"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3533.0,
+    "small_out": 996.0,
+    "small_s": 20.66179681700305
+  },
+  "calls_plus": {
+    "large_in": 180.0,
+    "large_out": 84.0,
+    "large_s": 1.9069444130000193,
+    "small_in": 3677.0,
+    "small_out": 982.0,
+    "small_s": 18.87050505998195
+  },
+  "calls_samples": {
+    "small_in": 8953.0,
+    "small_out": 2105.0,
+    "small_s": 37.02026144001866
+  }
+}

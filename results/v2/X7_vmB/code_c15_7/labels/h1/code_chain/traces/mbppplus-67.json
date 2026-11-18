@@ -1,0 +1,69 @@
+{
+  "task_id": "mbppplus-67",
+  "gold": "mbppplus:67",
+  "problem": "Write a function to find the number of ways to partition a set of Bell numbers.\nYour code should pass this test:\nassert bell_number(2)==2",
+  "final_quality": 0.0,
+  "final_key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+  "nodes": {
+    "planner": {
+      "prompt": "You are planning how to write a Python function. Do not write code.\nTask: Write a function to find the number of ways to partition a set of Bell numbers.\nYour code should pass this test:\nassert bell_number(2)==2\nWrite a numbered plan of at most 5 short steps.\nStart your answer with \"PLAN:\".",
+      "output": "PLAN:\n1. Define a recursive function to calculate Bell numbers.\n2. Base case for the recursion: B(0) = 1, B(1) = 1.\n3. Recursive case: For n > 1, B(n) = sum(B(k) * C(n-1, k)) where C(n-1, k) is the binomial coefficient.\n4. Use memoization to store previously calculated values to avoid redundant calculations.\n5. Return the result for the given input n.",
+      "key": null,
+      "confidence": 0.7939257768189398,
+      "fidelity": "small",
+      "prompt_tokens": 103,
+      "completion_tokens": 105,
+      "latency_s": 2.287387439981103,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "coder": {
+      "prompt": "Task: Write a function to find the number of ways to partition a set of Bell numbers.\nYour code should pass this test:\nassert bell_number(2)==2\nPlan:\nPLAN:\n1. Define a recursive function to calculate Bell numbers.\n2. Base case for the recursion: B(0) = 1, B(1) = 1.\n3. Recursive case: For n > 1, B(n) = sum(B(k) * C(n-1, k)) where C(n-1, k) is the binomial coefficient.\n4. Use memoization to store previously calculated values to avoid redundant calculations.\n5. Return the result for the given input n.\nWrite the complete Python function, with any imports it needs. Do not include tests or example calls.\nReturn only one ```python code block.",
+      "output": "```python\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n```",
+      "key": "def bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+      "confidence": 0.8566442255490527,
+      "fidelity": "small",
+      "prompt_tokens": 203,
+      "completion_tokens": 117,
+      "latency_s": 2.4530460389796644,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "tester": {
+      "prompt": "Task: Write a function to find the number of ways to partition a set of Bell numbers.\nYour code should pass this test:\nassert bell_number(2)==2\nCandidate code:\n```python\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n```\nWrite 5 extra Python assert statements that check this function on typical and edge cases. Work out each\nexpected result from the task, not from the code.\nReturn only one ```python code block containing the assert lines.",
+      "output": "```python\nassert bell_number(3)==5\nassert bell_number(4)==15\nassert bell_number(5)==45\nassert bell_number(6)==135\nassert bell_number(7)==495\n```",
+      "key": "assert bell_number(3)==5\nassert bell_number(4)==15\nassert bell_number(5)==45\nassert bell_number(6)==135\nassert bell_number(7)==495",
+      "confidence": 0.9318595296445574,
+      "fidelity": "small",
+      "prompt_tokens": 233,
+      "completion_tokens": 51,
+      "latency_s": 1.1192326059972402,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "fixer": {
+      "prompt": "Task: Write a function to find the number of ways to partition a set of Bell numbers.\nYour code should pass this test:\nassert bell_number(2)==2\nCode:\n```python\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n```\nTest results (the task's example test and the extra asserts, run on this code):\nFAIL assert bell_number(2)==2 -> NameError name 'comb' is not defined\nFAIL assert bell_number(10)==115975 -> NameError name 'comb' is not defined\nFAIL assert bell_number(56)==6775685320645824322581483068371419745979053216268760300 -> NameError name 'comb' is not defined\nFAIL assert bell_number(3)==5 -> NameError name 'comb' is not defined\nFAIL assert bell_number(4)==15 -> NameError name 'comb' is not defined\nFAIL assert bell_number(5)==45 -> NameError name 'comb' is not defined\nFAIL assert bell_number(6)==135 -> NameError name 'comb' is not defined\nFAIL assert bell_number(7)==495 -> NameError name 'comb' is not defined\nIf a test failed because the code is wrong, fix the code. If the code is right, or a failing assert is itself\nwrong, keep the code unchanged.\nReturn the complete code in one ```python code block.",
+      "output": "```python\nfrom math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n```",
+      "key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+      "confidence": 0.99,
+      "fidelity": "small",
+      "prompt_tokens": 470,
+      "completion_tokens": 122,
+      "latency_s": 2.4023565459938254,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "verifier": {
+      "prompt": "Task: Write a function to find the number of ways to partition a set of Bell numbers.\nYour code should pass this test:\nassert bell_number(2)==2\nCandidate A:\n```python\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n```\nTest results for A:\nFAIL assert bell_number(2)==2 -> NameError name 'comb' is not defined\nFAIL assert bell_number(10)==115975 -> NameError name 'comb' is not defined\nFAIL assert bell_number(56)==6775685320645824322581483068371419745979053216268760300 -> NameError name 'comb' is not defined\nFAIL assert bell_number(3)==5 -> NameError name 'comb' is not defined\nFAIL assert bell_number(4)==15 -> NameError name 'comb' is not defined\nFAIL assert bell_number(5)==45 -> NameError name 'comb' is not defined\nFAIL assert bell_number(6)==135 -> NameError name 'comb' is not defined\nFAIL assert bell_number(7)==495 -> NameError name 'comb' is not defined\nCandidate B (a revision of A):\n```python\nfrom math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n```\nTest results for B:\nFAIL assert bell_number(2)==2 -> RecursionError maximum recursion depth exceeded\nFAIL assert bell_number(10)==115975 -> RecursionError maximum recursion depth exceeded\nFAIL assert bell_number(56)==6775685320645824322581483068371419745979053216268760300 -> RecursionError maximum recursion depth exceeded\nFAIL assert bell_number(3)==5 -> RecursionError maximum recursion depth exceeded\nFAIL assert bell_number(4)==15 -> RecursionError maximum recursion depth exceeded\nFAIL assert bell_number(5)==45 -> RecursionError maximum recursion depth exceeded\nFAIL assert bell_number(6)==135 -> RecursionError maximum recursion depth exceeded\nFAIL assert bell_number(7)==495 -> RecursionError maximum recursion depth exceeded\nPick the candidate more likely to be correct for the task. Write \"PICK: A\" or \"PICK: B\", then return the\ncomplete code of the picked candidate in one ```python code block.",
+      "output": "PICK: B\n\n```python\nfrom math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n```",
+      "key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+      "confidence": 0.99,
+      "fidelity": "small",
+      "prompt_tokens": 794,
+      "completion_tokens": 127,
+      "latency_s": 2.490308899024967,
+      "cache_hit": false,
+      "code_node": null
+    }
+  }
+}

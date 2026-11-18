@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-101",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if k < 1 or k > len(arr):\n        raise IndexError(\"k is out of bounds\")\n    \n    # Return the kth element (1-based index)\n    return arr[k - 1]\n```",
+  "reference_key": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if k < 1 or k > len(arr):\n        raise IndexError(\"k is out of bounds\")\n    \n    # Return the kth element (1-based index)\n    return arr[k - 1]",
+  "final_key_plus": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if k < 1 or k > len(arr):\n        raise IndexError(\"k is out of bounds\")\n    \n    # Return the kth element (1-based index)\n    return arr[k - 1]",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert kth_element([10, 20, 30, 40, 50], 3) == 30\nassert kth_element([-1, -2, -3, -4, -5], 1) == -1\nassert kth_element([1, 2, 3, 4, 5], 6) == None\nassert kth_element([], 1) == None\nassert kth_element([1, 2, 3], 0) == None\n```",
+    "verifier": "PICK: A\n\n```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if k < 1 or k > len(arr):\n        raise IndexError(\"k is out of bounds\")\n    \n    # Return the kth element (1-based index)\n    return arr[k - 1]\n```",
+    "fixer": "```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if k < 1 or k > len(arr):\n        raise IndexError(\"k is out of bounds\")\n    \n    # Return the kth element (1-based index)\n    return arr[k - 1]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def kth_element(arr, k):\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of bounds\")\n    return arr[k-1]",
+      "reference_key": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if k < 1 or k > len(arr):\n        raise IndexError(\"k is out of bounds\")\n    \n    # Return the kth element (1-based index)\n    return arr[k - 1]",
+      "key_differs": true,
+      "text": "```python\ndef kth_element(arr, k):\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of bounds\")\n    return arr[k-1]\n```",
+      "quality": 1.0,
+      "final_key": "def kth_element(arr, k):\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of bounds\")\n    return arr[k-1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert kth_element([10,20,30,40,50], 5) == 50\nassert kth_element([-1, -2, -3, -4, -5], 1) == -5\nassert kth_element([1, 2, 3, 4, 5], 6) == None\nassert kth_element([], 1) == None\nassert kth_element([1, 2, 3], 0) == None\n```",
+        "verifier": "PICK: A\n\n```python\ndef kth_element(arr, k):\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of bounds\")\n    return arr[k-1]\n```",
+        "fixer": "```python\ndef kth_element(arr, k):\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of bounds\")\n    return arr[k-1]\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def kth_element(arr, k):\n    # Check if k is in the valid range\n    if not (1 <= k <= len(arr)):\n        raise ValueError(\"Index k must be between 1 and len(arr)\")\n    \n    # Return the element at the k-th position\n    return arr[k-1]  # Adjusting for Python's 0-based indexing",
+      "reference_key": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if k < 1 or k > len(arr):\n        raise IndexError(\"k is out of bounds\")\n    \n    # Return the kth element (1-based index)\n    return arr[k - 1]",
+      "key_differs": true,
+      "text": "```python\ndef kth_element(arr, k):\n    # Check if k is in the valid range\n    if not (1 <= k <= len(arr)):\n        raise ValueError(\"Index k must be between 1 and len(arr)\")\n    \n    # Return the element at the k-th position\n    return arr[k-1]  # Adjusting for Python's 0-based indexing\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert kth_element([12,3,5,7,19], 5) == 19\nassert kth_element([12,3,5,7,19], 6) == None  # Edge case: k is out of bounds\nassert kth_element([], 1) == None  # Edge case: empty list\nassert kth_element([1], 1) == 1\nassert kth_element([1,2,3,4,5], 3) == 3\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef kth_element(arr, k):\n    # Check if k is in the valid range\n    if not (1 <= k <= len(arr)):\n        raise ValueError(\"Index k must be between 1 and len(arr)\")\n    \n    # Return the element at the k-th position\n    return arr[k-1]  # Adjusting for Python's 0-based indexing\n\n# Test cases\nassert kth_element([12,3,5,7,19], 2) == 3\nassert kth_element([17,24,8,23], 3) == 8\nassert kth_element([16,21,25,36,4], 4) == 36\nassert kth_element([12,3,5,7,19], 5) == 19\nassert kth_element([12,3,5,7,19], 6) == None  # Edge case: k is out of bounds -> ValueError Index k must be between 1 and len(arr)\nassert kth_element([], 1) == None  # Edge case: empty list -> ValueError Index k must be between 1 and len(arr)\nassert kth_element([1], 1) == 1\nassert kth_element([1,2,3,4,5], 3) == 3\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def swap_List(lst):\n    if len(lst) < 2:\n        return lst\n    first_element = lst[0]\n    last_element = lst[-1]\n    lst[0] = last_element\n    lst[-1] = first_element\n    return lst",
+      "reference_key": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if k < 1 or k > len(arr):\n        raise IndexError(\"k is out of bounds\")\n    \n    # Return the kth element (1-based index)\n    return arr[k - 1]",
+      "key_differs": true,
+      "text": "```python\ndef swap_List(lst):\n    if len(lst) < 2:\n        return lst\n    first_element = lst[0]\n    last_element = lst[-1]\n    lst[0] = last_element\n    lst[-1] = first_element\n    return lst\n```",
+      "quality": 1.0,
+      "final_key": "def kth_element(lst, k):\n    if len(lst) < k:\n        return None\n    return lst[k-1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert kth_element([12,3,5,7,19], 2) == 3\nassert kth_element([1,2,3,4,5], 1) == 1\nassert kth_element([6,7,8,9,10], 5) == 10\nassert kth_element([], 1) == None\nassert kth_element([1], 1) == 1\n```",
+        "verifier": "PICK: B\n\n```python\ndef kth_element(lst, k):\n    if len(lst) < k:\n        return None\n    return lst[k-1]\n```",
+        "fixer": "```python\ndef kth_element(lst, k):\n    if len(lst) < k:\n        return None\n    return lst[k-1]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]",
+  "sample_keys": [
+    "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Invalid index k. It must be between 1 and len(arr).\")\n    \n    # Return the element at the k-th position (1-based indexing)\n    return arr[k-1]",
+    "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if not (1 <= k <= len(arr)):\n        raise ValueError(\"Index out of range\")\n    # Return the element at position k-1\n    return arr[k-1]",
+    "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if not (1 <= k <= len(arr)):\n        raise ValueError(\"Invalid index for k\")\n    \n    # Return the element at position k (1-based indexing)\n    return arr[k - 1]",
+    "def kth_element(arr, k):\n    if not isinstance(k, int) or not (1 <= k <= len(arr)):\n        raise ValueError(\"The value of k must be an integer between 1 and the length of the array.\")\n    return arr[k - 1]",
+    "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if not (1 <= k <= len(arr)):\n        raise ValueError(\"Index out of bounds\")\n    \n    return arr[k-1]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1722.0,
+    "small_out": 459.0,
+    "small_s": 10.46609346405603
+  },
+  "calls_plus": {
+    "small_in": 1474.0,
+    "small_out": 388.0,
+    "small_s": 8.149713347986108,
+    "large_in": 247.0,
+    "large_out": 67.0,
+    "large_s": 1.975357309973333
+  },
+  "calls_samples": {
+    "small_in": 1235.0,
+    "small_out": 356.0,
+    "small_s": 7.508554222993553
+  }
+}

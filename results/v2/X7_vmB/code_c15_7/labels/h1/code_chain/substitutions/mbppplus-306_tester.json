@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-306",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 4, 5) == 15\nassert max_sum_increasing_subseq([10, 20, 30, 50, 40, 60], 6, 3, 6) == 180\nassert max_sum_increasing_subseq([3, 4, 5, 10], 4, 2, 4) == 19\nassert max_sum_increasing_subseq([10, 22, 9, 33, 21, 50, 41, 60], 8, 4, 8) == 122\nassert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 1, 5) == 15\n```",
+  "reference_key": "assert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 4, 5) == 15\nassert max_sum_increasing_subseq([10, 20, 30, 50, 40, 60], 6, 3, 6) == 180\nassert max_sum_increasing_subseq([3, 4, 5, 10], 4, 2, 4) == 19\nassert max_sum_increasing_subseq([10, 22, 9, 33, 21, 50, 41, 60], 8, 4, 8) == 122\nassert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 1, 5) == 15",
+  "final_key_plus": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum\n```",
+    "fixer": "```python\ndef max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test case 1\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\n\n# Test case 2\nassert max_sum_increasing_subseq([3, 6, 4, 8, 5, 9], 6, 3, 5) == 23\n\n# Test case 3\nassert max_sum_increasing_subseq([2, 1, 5, 3, 6], 5, 3, 4) == 9\n\n# Test case 4\nassert max_sum_increasing_subseq([10, 5, 20, 25, 30], 5, 2, 3) == 85\n\n# Edge case: All elements are distinct\nassert max_sum_increasing_subseq([5, 3, 8, 2, 4], 5, 1, 3) == 18",
+      "reference_key": "assert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 4, 5) == 15\nassert max_sum_increasing_subseq([10, 20, 30, 50, 40, 60], 6, 3, 6) == 180\nassert max_sum_increasing_subseq([3, 4, 5, 10], 4, 2, 4) == 19\nassert max_sum_increasing_subseq([10, 22, 9, 33, 21, 50, 41, 60], 8, 4, 8) == 122\nassert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 1, 5) == 15",
+      "key_differs": true,
+      "text": "```python\n# Test case 1\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\n\n# Test case 2\nassert max_sum_increasing_subseq([3, 6, 4, 8, 5, 9], 6, 3, 5) == 23\n\n# Test case 3\nassert max_sum_increasing_subseq([2, 1, 5, 3, 6], 5, 3, 4) == 9\n\n# Test case 4\nassert max_sum_increasing_subseq([10, 5, 20, 25, 30], 5, 2, 3) == 85\n\n# Edge case: All elements are distinct\nassert max_sum_increasing_subseq([5, 3, 8, 2, 4], 5, 1, 3) == 18\n```",
+      "quality": 0.0,
+      "final_key": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum\n```",
+        "fixer": "```python\ndef max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Add test cases to verify the solution\nassert max_sum_increasing_subseq([5, 6, 1, 2, 3, 3, 4], 8, 5, 3) == 19  # This tests the case where no new sequence starts with 3 but the previous one does.\n\nassert max_sum_increasing_subseq([10, 10, 1, 10, 1, 1, 2, 2], 9, 8, 5).startswith('83')  # This tests the case where the last element is part of another valid sequence.\n\nassert max_sum_increasing_subseq([9, 4, 3, 5, 7, 3, 1, 8, 7], 9, 8, 4).startswith('26')  # This tests the case where the sequence includes duplicate elements.\n\nassert max_sum_increasing_subseq([], 10, 9, 6).equals(0)  # This tests the case where the input list is empty.\n\nassert max_sum_increasing_subseq([9, 5, 6, 10].sort(), 4, 4, 4).endswith('3920')  # This tests the case where the input array is sorted in ascending order and the target k exceeds the length of the array.",
+      "reference_key": "assert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 4, 5) == 15\nassert max_sum_increasing_subseq([10, 20, 30, 50, 40, 60], 6, 3, 6) == 180\nassert max_sum_increasing_subseq([3, 4, 5, 10], 4, 2, 4) == 19\nassert max_sum_increasing_subseq([10, 22, 9, 33, 21, 50, 41, 60], 8, 4, 8) == 122\nassert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 1, 5) == 15",
+      "key_differs": true,
+      "text": "```python\n# Add test cases to verify the solution\nassert max_sum_increasing_subseq([5, 6, 1, 2, 3, 3, 4], 8, 5, 3) == 19  # This tests the case where no new sequence starts with 3 but the previous one does.\n\nassert max_sum_increasing_subseq([10, 10, 1, 10, 1, 1, 2, 2], 9, 8, 5).startswith('83')  # This tests the case where the last element is part of another valid sequence.\n\nassert max_sum_increasing_subseq([9, 4, 3, 5, 7, 3, 1, 8, 7], 9, 8, 4).startswith('26')  # This tests the case where the sequence includes duplicate elements.\n\nassert max_sum_increasing_subseq([], 10, 9, 6).equals(0)  # This tests the case where the input list is empty.\n\nassert max_sum_increasing_subseq([9, 5, 6, 10].sort(), 4, 4, 4).endswith('3920')  # This tests the case where the input array is sorted in ascending order and the target k exceeds the length of the array.\n```",
+      "quality": 0.0,
+      "final_key": "def max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum\n```",
+        "fixer": "```python\ndef max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert sum_common_divisors(8, 12) == 4\nassert sum_common_divisors(10, 15) == 6\nassert sum_common_divisors(17, 31) == 0\nassert sum_common_divisors(100, 200) == 100\nassert sum_common_divisors(100, 1000) == 100",
+      "reference_key": "assert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 4, 5) == 15\nassert max_sum_increasing_subseq([10, 20, 30, 50, 40, 60], 6, 3, 6) == 180\nassert max_sum_increasing_subseq([3, 4, 5, 10], 4, 2, 4) == 19\nassert max_sum_increasing_subseq([10, 22, 9, 33, 21, 50, 41, 60], 8, 4, 8) == 122\nassert max_sum_increasing_subseq([1, 2, 3, 4, 5], 5, 1, 5) == 15",
+      "key_differs": true,
+      "text": "```python\nassert sum_common_divisors(8, 12) == 4\nassert sum_common_divisors(10, 15) == 6\nassert sum_common_divisors(17, 31) == 0\nassert sum_common_divisors(100, 200) == 100\nassert sum_common_divisors(100, 1000) == 100\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef max_sum_increasing_subseq(arr, n, k, m):\n    # Initialize variables\n    dp = [0] * (n + 1)\n    max_sum = 0\n    \n    # Iterate through the array up to the (i-1)th index\n    for i in range(1, n + 1):\n        # Check if the current element can be added to the current increasing subsequence ending at that index\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + arr[i])\n        \n        # Update the maximum sum of increasing subsequences up to each index\n        max_sum = max(max_sum, dp[i])\n    \n    # Update the maximum sum including the kth element by adding the value of the kth element to the maximum sum of increasing subsequences up to the (k-1)th index\n    max_sum += arr[k - 1]\n    \n    return max_sum\n\n# Test cases\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 2, 5) == 7\nassert max_sum_increasing_subseq([11, 15, 19, 21, 26, 28, 31], 7, 2, 4) == 71\nassert sum_common_divisors(8, 12) == 4\nassert sum_common_divisors(10, 15) == 6\nassert sum_common_divisors(17, 31) == 0\nassert sum_common_divisors(100, 200) == 100\nassert sum_common_divisors(100, 1000) == 100\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 7) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 8) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 9) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 10) == 11",
+  "sample_keys": [
+    "assert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 7) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 8) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 9) == 11\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 10) == 11",
+    "assert max_sum_increasing_subseq([1], 1, 1, 1) == 1\nassert max_sum_increasing_subseq([1, 2], 2, 2, 3) == 3\nassert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, 10, 10) == 55\nassert max_sum_increasing_subseq([-1, -2, -3, -4, -5], 5, 5, 5) == -1",
+    "assert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11\nassert max_sum_increasing_subseq([5, 5, 5, 5, 5], 5, 5, 5) == 25\nassert max_sum_increasing_subseq([], 0, 0, 0) == 0\nassert max_sum_increasing_subseq([1], 1, 1, 1) == 1\nassert max_sum_increasing_subseq([1, 2, 3, 4], 4, 4, 4) == 10",
+    "# Test case 1\narr = [1, 101, 2, 3, 100, 4, 5 ]\nn = 7\nk = 7\nm = 6\nassert max_sum_increasing_subseq(arr, n, k, m) == 11\n\n# Test case 2\narr = [1, 20, 3, 4, 5, 6 ]\nn = 6\nk = 8\nm = 9\nassert max_sum_increasing_subseq(arr, n, k, m) == 21\n\n# Test case 3\narr = [1, 2, 3, 4, 5, 6, 7 ]\nn = 7\nk = 10\nm = 10\nassert max_sum_increasing_subseq(arr, n, k, m) == 28\n\n# Test case 4\narr = [1, 2, 3, 4, 5, 6, 7, 8 ]\nn = 8\nk = 11\nm = 12\nassert max_sum_increasing_subseq(arr, n, k, m) == 36\n\n# Test case 5\narr = [1, 2, 3, 4, 5, 6, 7, 8, 9 ]\nn = 9\nk = 12\nm = 13\nassert max_sum_increasing_subseq(arr, n, k, m) == 48",
+    "# Edge case 1: Empty array\nassert max_sum_increasing_subseq([], 0, 0, 0) == 0\n\n# Edge case 2: Array with all elements being the same\nassert max_sum_increasing_subseq([1, 1, 1, 1, 1], 5, 5, 5) == 5\n\n# Typical case 1: Increasing sequence\nassert max_sum_increasing_subseq([1, 3, 5, 7], 4, 4, 4) == 18\n\n# Typical case 2: Decreasing sequence\nassert max_sum_increasing_subseq([7, 5, 3, 1], 4, 4, 4) == 9\n\n# Typical case 3: Mixed sequence\nassert max_sum_increasing_subseq([1, 5, 3, 7, 2, 4], 6, 6, 6) == 21"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3172.0,
+    "small_out": 1023.0,
+    "small_s": 19.084579018992372
+  },
+  "calls_plus": {
+    "small_in": 2709.0,
+    "small_out": 787.0,
+    "small_s": 13.508608156000264,
+    "large_in": 385.0,
+    "large_out": 210.0,
+    "large_s": 6.023638068989385
+  },
+  "calls_samples": {
+    "small_in": 1925.0,
+    "small_out": 1148.0,
+    "small_s": 22.849395502067637
+  }
+}

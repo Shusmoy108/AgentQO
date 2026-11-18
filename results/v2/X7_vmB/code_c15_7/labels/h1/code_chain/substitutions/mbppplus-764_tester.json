@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-764",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert number_ctr('hello123world456') == 6\nassert number_ctr('no_digits_here!') == 0\nassert number_ctr('1234567890') == 10\nassert number_ctr('single9') == 1\nassert number_ctr('') == 0\n```",
+  "reference_key": "assert number_ctr('hello123world456') == 6\nassert number_ctr('no_digits_here!') == 0\nassert number_ctr('1234567890') == 10\nassert number_ctr('single9') == 1\nassert number_ctr('') == 0",
+  "final_key_plus": "def number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n```",
+    "fixer": "```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n\n# Testing with a string without any digits\nassert number_ctr('programminglanguage') == 0\n\n# Testing with a string that only contains digits\nassert number_ctr('1234567890') == 10\n\n# Testing with a mixture of digits and alphabetic characters\nassert number_ctr('a1b2c3d4e5f6g7h8i9j0') == 10\n\n# Edge case: testing with an empty string\nassert number_ctr('') == 0\n\n# Additional test case: Testing with all non-numeric characters\nassert number_ctr('@#$%^&*()') == 0",
+      "reference_key": "assert number_ctr('hello123world456') == 6\nassert number_ctr('no_digits_here!') == 0\nassert number_ctr('1234567890') == 10\nassert number_ctr('single9') == 1\nassert number_ctr('') == 0",
+      "key_differs": true,
+      "text": "```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n\n# Testing with a string without any digits\nassert number_ctr('programminglanguage') == 0\n\n# Testing with a string that only contains digits\nassert number_ctr('1234567890') == 10\n\n# Testing with a mixture of digits and alphabetic characters\nassert number_ctr('a1b2c3d4e5f6g7h8i9j0') == 10\n\n# Edge case: testing with an empty string\nassert number_ctr('') == 0\n\n# Additional test case: Testing with all non-numeric characters\nassert number_ctr('@#$%^&*()') == 0\n```",
+      "quality": 1.0,
+      "final_key": "def number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n```",
+        "fixer": "```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Adding five additional assertion lines to validate the function for different scenarios\n\n# Edge case: Empty string\nassert number_ctr(\"\") == 0\n\n# Edge case: String consisting only of non-digit characters\nassert number_ctr(\"abc\") == 0\n\n# Edge case: String with leading digit character\nassert number_ctr(\"a1b2c3d4e\") == 8\n\n# Edge case: String with trailing digit character\nassert number_ctr(\"abcdefg1h\") == 2\n\n# Edge case: Unicode digit in string\nassert number_ctr(u\"hello123world!\") == 6",
+      "reference_key": "assert number_ctr('hello123world456') == 6\nassert number_ctr('no_digits_here!') == 0\nassert number_ctr('1234567890') == 10\nassert number_ctr('single9') == 1\nassert number_ctr('') == 0",
+      "key_differs": true,
+      "text": "```python\n# Adding five additional assertion lines to validate the function for different scenarios\n\n# Edge case: Empty string\nassert number_ctr(\"\") == 0\n\n# Edge case: String consisting only of non-digit characters\nassert number_ctr(\"abc\") == 0\n\n# Edge case: String with leading digit character\nassert number_ctr(\"a1b2c3d4e\") == 8\n\n# Edge case: String with trailing digit character\nassert number_ctr(\"abcdefg1h\") == 2\n\n# Edge case: Unicode digit in string\nassert number_ctr(u\"hello123world!\") == 6\n```",
+      "quality": 1.0,
+      "final_key": "def number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n```",
+        "fixer": "```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((0, 10)) == [[-1, 9], [-1, 10], [-1, 11], [0, 9], [0, 10], [0, 11], [1, 9], [1, 10], [1, 11]]\nassert get_coordinates((-10, -10)) == [[-11, -11], [-11, -10], [-11, -9], [-10, -11], [-10, -10], [-10, -9], [-9, -11], [-9, -10], [-9, -9]]",
+      "reference_key": "assert number_ctr('hello123world456') == 6\nassert number_ctr('no_digits_here!') == 0\nassert number_ctr('1234567890') == 10\nassert number_ctr('single9') == 1\nassert number_ctr('') == 0",
+      "key_differs": true,
+      "text": "```python\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((0, 10)) == [[-1, 9], [-1, 10], [-1, 11], [0, 9], [0, 10], [0, 11], [1, 9], [1, 10], [1, 11]]\nassert get_coordinates((-10, -10)) == [[-11, -11], [-11, -10], [-11, -9], [-10, -11], [-10, -10], [-10, -9], [-9, -11], [-9, -10], [-9, -9]]\n```",
+      "quality": 1.0,
+      "final_key": "def number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n```",
+        "fixer": "```python\ndef number_ctr(input_str):\n    count = 0\n    for char in input_str:\n        if char.isdigit():\n            count += 1\n    return count\n\n# Test cases\nassert number_ctr('program2bedone') == 1\nassert number_ctr('3wonders') == 1\nassert number_ctr('123') == 3\nassert number_ctr('3wond-1ers2') == 3\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((0, 10)) == [[-1, 9], [-1, 10], [-1, 11], [0, 9], [0, 10], [0, 11], [1, 9], [1, 10], [1, 11]]\nassert get_coordinates((-10, -10)) == [[-11, -11], [-11, -10], [-11, -9], [-10, -11], [-10, -10], [-10, -9], [-9, -11], [-9, -10], [-9, -9]]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert number_ctr('1234567890') == 10\nassert number_ctr('abcde') == 0\nassert number_ctr('12345678901234567890') == 20\nassert number_ctr('0') == 1\nassert number_ctr('') == 0",
+  "sample_keys": [
+    "assert number_ctr('hello4world7') == 3\nassert number_ctr('987654321') == 10\nassert number_ctr('no_numbers_here!') == 0\nassert number_ctr('12345678901234567890123456789') == 30\nassert number_ctr('00000000000000000000000') == 20",
+    "assert number_ctr('789456') == 6\nassert number_ctr('abcde') == 0\nassert number_ctr('0') == 1\nassert number_ctr('123456789') == 9\nassert number_ctr('-123456789') == 9",
+    "assert number_ctr('program2bedone') == 1\nassert number_ctr('hello123world456789') == 9\nassert number_ctr('no_numbers_here') == 0\nassert number_ctr('1234567890') == 10\nassert number_ctr('0000000000') == 10",
+    "assert number_ctr('2023') == 4\nassert number_ctr('hello1world2') == 6\nassert number_ctr('0') == 1\nassert number_ctr('a1b2c3d4e5f6g7h8i9j0k') == 10\nassert number_ctr('no numbers') == 0",
+    "assert number_ctr('42') == 2\nassert number_ctr('hello123world') == 6\nassert number_ctr('no_numbers_here') == 0\nassert number_ctr('007') == 3\nassert number_ctr('1234567890') == 10"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1371.0,
+    "small_out": 402.0,
+    "small_s": 8.826256344997091
+  },
+  "calls_plus": {
+    "small_in": 1184.0,
+    "small_out": 317.0,
+    "small_s": 6.562926529994002,
+    "large_in": 157.0,
+    "large_out": 75.0,
+    "large_s": 1.6230588070175145
+  },
+  "calls_samples": {
+    "small_in": 785.0,
+    "small_out": 446.0,
+    "small_s": 8.223752145015169
+  }
+}

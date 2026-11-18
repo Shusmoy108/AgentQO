@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-445",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `index_multiplication` that takes two tuples as input.\n2. Use a generator expression within a tuple constructor to iterate over pairs of elements from both tuples simultaneously using `zip`.\n3. Multiply corresponding elements from each pair together.\n4. Return the resulting tuple containing the products.\n5. Ensure the function handles tuples of different lengths gracefully by using `zip_longest` from the `itertools` module if necessary.",
+  "reference_key": null,
+  "final_key_plus": "from itertools import zip_longest\n\ndef index_multiplication(tuple1, tuple2):\n    # Using zip_longest to handle tuples of different lengths\n    result = tuple(a * b for a, b in zip_longest(tuple1, tuple2, fillvalue=1))\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1,), (2, 3), (4, 5, 6)),((7, 8), (9, 10), (11, 12))) == ((7, 8), (18, 30), (44, 60))\nassert index_multiplication(((1, 2, 3),), ((4, 5), (6, 7), (8, 9))) == ((4, 10), (6, 14), (12, 27))\nassert index_multiplication(((1, 2, 3, 4),), ((5,), (6,), (7,), (8,))) == ((5, 10, 15, 20),)\nassert index_multiplication((), ()) == ()\n```",
+    "coder": "```python\nfrom itertools import zip_longest\n\ndef index_multiplication(tuple1, tuple2):\n    # Using zip_longest to handle tuples of different lengths\n    result = tuple(a * b for a, b in zip_longest(tuple1, tuple2, fillvalue=1))\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\nfrom itertools import zip_longest\n\ndef index_multiplication(tuple1, tuple2):\n    # Using zip_longest to handle tuples of different lengths\n    result = tuple(a * b for a, b in zip_longest(tuple1, tuple2, fillvalue=1))\n    return result\n```",
+    "fixer": "```python\nfrom itertools import zip_longest\n\ndef index_multiplication(tuple1, tuple2):\n    # Using zip_longest to handle tuples of different lengths\n    result = tuple(a * b for a, b in zip_longest(tuple1, tuple2, fillvalue=1))\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `filter_data` that takes three parameters: `students`, `min_height`, and `min_weight`.\n2. Initialize an empty dictionary `filtered_students` to store the filtered results.\n3. Iterate over each student in the `students` dictionary using a for loop.\n4. For each student, check if their height (`height`) is greater than `min_height` and their weight (`weight`) is greater than `min_weight`.\n5. If both conditions are met, add the student's information to the `filtered_students` dictionary.\n6. Return the `filtered_students` dictionary.\n\nThis approach ensures that all students meeting the criteria are included in the final result.",
+      "quality": 0.0,
+      "final_key": "def index_multiplication(tuple1, tuple2):\n    result = []\n    for i in range(len(tuple1)):\n        result.append((tuple1[i][0] * tuple2[i][0], tuple1[i][1] * tuple2[i][1]))\n    return tuple(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\n```",
+        "coder": "```python\ndef filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student_id, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student_id] = (height, weight)\n    return filtered_students\n```",
+        "verifier": "PICK: B\n\n```python\ndef index_multiplication(tuple1, tuple2):\n    result = []\n    for i in range(len(tuple1)):\n        result.append((tuple1[i][0] * tuple2[i][0], tuple1[i][1] * tuple2[i][1]))\n    return tuple(result)\n```",
+        "fixer": "```python\ndef index_multiplication(tuple1, tuple2):\n    result = []\n    for i in range(len(tuple1)):\n        result.append((tuple1[i][0] * tuple2[i][0], tuple1[i][1] * tuple2[i][1]))\n    return tuple(result)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `index_multiplication` that takes two tuples as input.\n2. Use a generator expression within a tuple constructor to iterate over pairs of elements from both tuples simultaneously using `zip_longest`.\n3. Multiply corresponding elements from each pair together.\n4. Return the resulting tuple containing the products.\n5. Ensure the function handles tuples of different lengths gracefully by using `zip_longest` from the `itertools` module if necessary.",
+      "quality": 0.0,
+      "final_key": "from itertools import zip_longest\n\ndef index_multiplication(tuple1, tuple2):\n    # Using zip_longest to handle tuples of different lengths\n    result = tuple(a * b for a, b in zip_longest(tuple1, tuple2, fillvalue=1))\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1,), (2, 3), (4, 5, 6)),((7, 8), (9, 10), (11, 12))) == ((7, 8), (18, 30), (44, 60))\nassert index_multiplication(((1, 2, 3),), ((4, 5), (6, 7), (8, 9))) == ((4, 10), (6, 14), (12, 27))\nassert index_multiplication(((1, 2, 3, 4),), ((5,), (6,), (7,), (8,))) == ((5, 10, 15, 20),)\nassert index_multiplication((), ()) == ()\n```",
+        "coder": "```python\nfrom itertools import zip_longest\n\ndef index_multiplication(tuple1, tuple2):\n    # Using zip_longest to handle tuples of different lengths\n    result = tuple(a * b for a, b in zip_longest(tuple1, tuple2, fillvalue=1))\n    return result\n```",
+        "verifier": "PICK: A\n\n```python\nfrom itertools import zip_longest\n\ndef index_multiplication(tuple1, tuple2):\n    # Using zip_longest to handle tuples of different lengths\n    result = tuple(a * b for a, b in zip_longest(tuple1, tuple2, fillvalue=1))\n    return result\n```",
+        "fixer": "```python\nfrom itertools import zip_longest\n\ndef index_multiplication(tuple1, tuple2):\n    # Using zip_longest to handle tuples of different lengths\n    result = tuple(a * b for a, b in zip_longest(tuple1, tuple2, fillvalue=1))\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_samepatterns` that takes two lists as arguments, `patterns` and `sequence`.\n2. Check if both lists have the same length.\n3. Iterate through the `patterns` list and compare each element with the corresponding element in the `sequence` list.\n4. If any elements do not match, return `False`.\n5. If all elements match, return `True`.\n\nHere's the implementation:\n\n```python\ndef is_samepatterns(patterns, sequence):\n    # Step 1: Check if both lists have the same length\n    if len(patterns) != len(sequence):\n        return False\n    \n    # Step 2: Iterate through the patterns list\n    for pattern, seq in zip(patterns, sequence):\n        # Step 3: Compare each element\n        if pattern != seq:\n            return False\n    \n    # Step 4: All elements matched\n    return True\n```\n\nThis function will correctly determine if the `sequence` matches the `patterns` sequence.",
+      "quality": 0.0,
+      "final_key": "def index_multiplication(tuple1, tuple2):\n    # Extracting the first elements of each tuple\n    first_elements_tuple1 = [t[0] for t in tuple1]\n    first_elements_tuple2 = [t[0] for t in tuple2]\n    \n    # Checking if the first elements of both tuples match\n    if not is_samepatterns(first_elements_tuple1, first_elements_tuple2):\n        return None\n    \n    # Performing index-wise multiplication\n    result = [(a * b) for a, b in zip(first_elements_tuple1, first_elements_tuple2)]\n    \n    return tuple(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\n```",
+        "coder": "```python\ndef index_multiplication(tuple1, tuple2):\n    # Extracting the first elements of each tuple\n    first_elements_tuple1 = [t[0] for t in tuple1]\n    first_elements_tuple2 = [t[0] for t in tuple2]\n    \n    # Checking if the first elements of both tuples match\n    if not is_samepatterns(first_elements_tuple1, first_elements_tuple2):\n        return None\n    \n    # Performing index-wise multiplication\n    result = [(a * b) for a, b in zip(first_elements_tuple1, first_elements_tuple2)]\n    \n    return tuple(result)\n```",
+        "verifier": "PICK: A\n\n```python\ndef index_multiplication(tuple1, tuple2):\n    # Extracting the first elements of each tuple\n    first_elements_tuple1 = [t[0] for t in tuple1]\n    first_elements_tuple2 = [t[0] for t in tuple2]\n    \n    # Checking if the first elements of both tuples match\n    if not is_samepatterns(first_elements_tuple1, first_elements_tuple2):\n        return None\n    \n    # Performing index-wise multiplication\n    result = [(a * b) for a, b in zip(first_elements_tuple1, first_elements_tuple2)]\n    \n    return tuple(result)\n```",
+        "fixer": "```python\ndef index_multiplication(tuple1, tuple2):\n    # Extracting the first elements of each tuple\n    first_elements_tuple1 = [t[0] for t in tuple1]\n    first_elements_tuple2 = [t[0] for t in tuple2]\n    \n    # Checking if the first elements of both tuples match\n    if not all(a == b for a, b in zip(first_elements_tuple1, first_elements_tuple2)):\n        return None\n    \n    # Performing index-wise multiplication\n    result = [(a * b) for a, b in zip(first_elements_tuple1, first_elements_tuple2)]\n    \n    return tuple(result)\n\n# Test cases\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((2, 4), (5, 6), (3, 10), (2, 11)),((7, 8), (4, 10), (2, 2), (8, 4))) == ((14, 32), (20, 60), (6, 20), (16, 44))\nassert index_multiplication(((3, 5), (6, 7), (4, 11), (3, 12)),((8, 9), (5, 11), (3, 3), (9, 5))) == ((24, 45), (30, 77), (12, 33), (27, 60))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7), (3, 9), (1, 1), (7, 3))) == ((6, 21), (12, 45), (2, 9), (7, 30))\nassert index_multiplication(((1, 3), (4, 5), (2, 9), (1, 10)),((6, 7"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def index_multiplication(tuple1, tuple2):\n    result = []\n    for i in range(len(tuple1)):\n        result.append(tuple1[i][0] * tuple2[i][0])\n    return tuple(result)",
+  "sample_keys": [
+    "def index_multiplication(tuple1, tuple2):\n    result = []\n    for i in range(len(tuple1)):\n        product_tuple = tuple(a * b for a, b in zip(tuple1[i], tuple2[i]))\n        result.append(product_tuple)\n    return result",
+    "def index_multiplication(tuple1, tuple2):\n    result_list = []\n    for t1, t2 in zip(tuple1, tuple2):\n        result_list.append((t1[0] * t2[0], t1[1] * t2[1]))\n    return result_list",
+    "def index_multiplication(tuple1, tuple2):\n    # Using list comprehension to multiply corresponding elements\n    result = [(a*b) for a, b in zip(tuple1, tuple2)]\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3363.0,
+    "small_out": 669.0,
+    "small_s": 14.79376006394159
+  },
+  "calls_plus": {
+    "large_in": 178.0,
+    "large_out": 93.0,
+    "large_s": 2.546333335019881,
+    "small_in": 3009.0,
+    "small_out": 464.0,
+    "small_s": 9.418823005980812
+  },
+  "calls_samples": {
+    "small_in": 10604.0,
+    "small_out": 2230.0,
+    "small_s": 45.497418452985585
+  }
+}

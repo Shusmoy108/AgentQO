@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-475",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+  "reference_key": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+  "final_key_plus": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85, 'Art':86}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85), ('Art', 86)]\n```",
+    "verifier": "PICK: A\n\n```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+    "fixer": "```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def sort_counter(counter):\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+      "reference_key": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+      "key_differs": true,
+      "text": "```python\ndef sort_counter(counter):\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+      "quality": 0.0,
+      "final_key": "def sort_counter(counter):\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85, 'Art':86}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85), ('Art', 86)]\n```",
+        "verifier": "PICK: A\n\n```python\ndef sort_counter(counter):\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+        "fixer": "```python\ndef sort_counter(counter):\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def surfacearea_cube(size):\n    # Calculate the surface area of a cube\n    surface_area = 6 * (size ** 2)\n    # Return the result\n    return surface_area",
+      "reference_key": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+      "key_differs": true,
+      "text": "```python\ndef surfacearea_cube(size):\n    # Calculate the surface area of a cube\n    surface_area = 6 * (size ** 2)\n    # Return the result\n    return surface_area\n```",
+      "quality": 0.0,
+      "final_key": "def sort_counter(dictionary):\n    # Sort the dictionary by its values in descending order\n    sorted_items = sorted(dictionary.items(), key=lambda item: item[1], reverse=True)\n    # Return the sorted list of tuples\n    return sorted_items\n\n# Test cases\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':400, 'Physics':300, 'Chemistry':250}) == [('Math', 400), ('Physics', 300), ('Chemistry', 250)]\nassert sort_counter({'Math':900, 'Physics':1000, 'Chemistry':1250}) == [('Chemistry', 1250), ('Physics', 1000), ('Math', 900)]\nassert surfacearea_cube(0) == 0\nassert surfacearea_cube(1) == 6\nassert surfacearea_cube(2) == 24\nassert surfacearea_cube(-1) == 0\nassert surfacearea_cube(3) == 54",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert surfacearea_cube(0) == 0\nassert surfacearea_cube(1) == 6\nassert surfacearea_cube(2) == 24\nassert surfacearea_cube(-1) == 0\nassert surfacearea_cube(3) == 54\n```",
+        "verifier": "PICK: B\n```python\ndef sort_counter(dictionary):\n    # Sort the dictionary by its values in descending order\n    sorted_items = sorted(dictionary.items(), key=lambda item: item[1], reverse=True)\n    # Return the sorted list of tuples\n    return sorted_items\n\n# Test cases\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':400, 'Physics':300, 'Chemistry':250}) == [('Math', 400), ('Physics', 300), ('Chemistry', 250)]\nassert sort_counter({'Math':900, 'Physics':1000, 'Chemistry':1250}) == [('Chemistry', 1250), ('Physics', 1000), ('Math', 900)]\nassert surfacearea_cube(0) == 0\nassert surfacearea_cube(1) == 6\nassert surfacearea_cube(2) == 24\nassert surfacearea_cube(-1) == 0\nassert surfacearea_cube(3) == 54\n```",
+        "fixer": "```python\ndef sort_counter(dictionary):\n    # Sort the dictionary by its values in descending order\n    sorted_items = sorted(dictionary.items(), key=lambda item: item[1], reverse=True)\n    # Return the sorted list of tuples\n    return sorted_items\n\n# Test cases\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':400, 'Physics':300, 'Chemistry':250}) == [('Math', 400), ('Physics', 300), ('Chemistry', 250)]\nassert sort_counter({'Math':900, 'Physics':1000, 'Chemistry':1250}) == [('Chemistry', 1250), ('Physics', 1000), ('Math', 900)]\nassert surfacearea_cube(0) == 0\nassert surfacearea_cube(1) == 6\nassert surfacearea_cube(2) == 24\nassert surfacearea_cube(-1) == 0\nassert surfacearea_cube(3) == 54\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "import re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False",
+      "reference_key": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False\n```",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef sort_counter(counter_dict):\n    # Sort the dictionary by its values in descending order\n    sorted_items = sorted(counter_dict.items(), key=lambda item: item[1], reverse=True)\n    return sorted_items\n\n# Test cases\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':400, 'Physics':300, 'Chemistry':250}) == [('Math', 400), ('Physics', 300), ('Chemistry', 250)]\nassert sort_counter({'Math':900, 'Physics':1000, 'Chemistry':1250}) == [('Chemistry', 1250), ('Physics', 1000), ('Math', 900)]\nassert text_lowercase_underscore(\"hello_world\") == True\nassert text_lowercase_underscore(\"Hello_World\") == False\nassert text_lowercase_underscore(\"HELLO_WORLD\") == False\nassert text_lowercase_underscore(\"hello world\") == False\nassert text_lowercase_underscore(\"\") == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert text_lowercase_underscore(\"hello_world\") == True\nassert text_lowercase_underscore(\"Hello_World\") == False\nassert text_lowercase_underscore(\"HELLO_WORLD\") == False\nassert text_lowercase_underscore(\"hello world\") == False\nassert text_lowercase_underscore(\"\") == False\n```",
+        "verifier": "PICK: B\n\n```python\nimport re\n\ndef sort_counter(counter_dict):\n    # Sort the dictionary by its values in descending order\n    sorted_items = sorted(counter_dict.items(), key=lambda item: item[1], reverse=True)\n    return sorted_items\n\n# Test cases\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':400, 'Physics':300, 'Chemistry':250}) == [('Math', 400), ('Physics', 300), ('Chemistry', 250)]\nassert sort_counter({'Math':900, 'Physics':1000, 'Chemistry':1250}) == [('Chemistry', 1250), ('Physics', 1000), ('Math', 900)]\nassert text_lowercase_underscore(\"hello_world\") == True\nassert text_lowercase_underscore(\"Hello_World\") == False\nassert text_lowercase_underscore(\"HELLO_WORLD\") == False\nassert text_lowercase_underscore(\"hello world\") == False\nassert text_lowercase_underscore(\"\") == False\n```",
+        "fixer": "```python\nimport re\n\ndef sort_counter(counter_dict):\n    # Sort the dictionary by its values in descending order\n    sorted_items = sorted(counter_dict.items(), key=lambda item: item[1], reverse=True)\n    return sorted_items\n\n# Test cases\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':400, 'Physics':300, 'Chemistry':250}) == [('Math', 400), ('Physics', 300), ('Chemistry', 250)]\nassert sort_counter({'Math':900, 'Physics':1000, 'Chemistry':1250}) == [('Chemistry', 1250), ('Physics', 1000), ('Math', 900)]\nassert text_lowercase_underscore(\"hello_world\") == True\nassert text_lowercase_underscore(\"Hello_World\") == False\nassert text_lowercase_underscore(\"HELLO_WORLD\") == False\nassert text_lowercase_underscore(\"hello world\") == False\nassert text_lowercase_underscore(\"\") == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+  "sample_keys": [
+    "import collections\n\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+    "def sort_counter(counter):\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+    "from typing import Dict\n\ndef sort_counter(counter: Dict[str, int]) -> List[Tuple[str, int]]:\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+    "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items",
+    "def sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3080.0,
+    "small_out": 650.0,
+    "small_s": 14.309225242992397
+  },
+  "calls_plus": {
+    "small_in": 2815.0,
+    "small_out": 605.0,
+    "small_s": 13.3166282470047,
+    "large_in": 265.0,
+    "large_out": 45.0,
+    "large_s": 1.0612215820001438
+  },
+  "calls_samples": {
+    "small_in": 1325.0,
+    "small_out": 232.0,
+    "small_s": 4.735550743032945
+  }
+}

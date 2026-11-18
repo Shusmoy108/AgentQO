@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-102",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char\n        else:\n            camel_str += char.capitalize()\n    return camel_str[0].upper() + camel_str[1:]\n```",
+  "reference_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char\n        else:\n            camel_str += char.capitalize()\n    return camel_str[0].upper() + camel_str[1:]",
+  "final_key_plus": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char\n        else:\n            camel_str += char.capitalize()\n    return camel_str[0].upper() + camel_str[1:]",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('single_word') == 'SingleWord'\nassert snake_to_camel('') == ''\n```",
+    "verifier": "PICK: B\n\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char\n        else:\n            camel_str += char.capitalize()\n    return camel_str[0].upper() + camel_str[1:]\n```",
+    "fixer": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char\n        else:\n            camel_str += char.capitalize()\n    return camel_str[0].upper() + camel_str[1:]\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('python_language') == 'PythonLanguage'\nassert snake_to_camel('programming_language') == 'ProgrammingLanguage'\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('single_word') == 'SingleWord'\nassert snake_to_camel('') == ''\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for ch in snake_str:\n        if ch.isupper():\n            camel_str += ' '+ch.lower()\n        else:\n            camel_str+= ch\n    return camel_str.strip().capitalize()",
+      "reference_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char\n        else:\n            camel_str += char.capitalize()\n    return camel_str[0].upper() + camel_str[1:]",
+      "key_differs": true,
+      "text": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for ch in snake_str:\n        if ch.isupper():\n            camel_str += ' '+ch.lower()\n        else:\n            camel_str+= ch\n    return camel_str.strip().capitalize()\n```",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for ch in snake_str:\n        if ch.isupper():\n            camel_str += ' '+ch.lower()\n        else:\n            camel_str+= ch\n    return camel_str.strip().capitalize()",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123abc') == '123Abc'\nassert snake_to_camel('') == ''\n```",
+        "verifier": "PICK: A\n\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for ch in snake_str:\n        if ch.isupper():\n            camel_str += ' '+ch.lower()\n        else:\n            camel_str+= ch\n    return camel_str.strip().capitalize()\n```",
+        "fixer": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for ch in snake_str:\n        if ch.isupper():\n            camel_str += ' '+ch.lower()\n        else:\n            camel_str+= ch\n    return camel_str.strip().capitalize()\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():  # Capitalize the first letter of words\n            camel_str += '_' + char.lower()\n        elif not char.isalnum() and len(camel_str) > 0:  # Append non-alphanumeric characters\n            camel_str += char\n    return camel_str.capitalize()\n\n# Test the function\nprint(snake_to_camel('python_program'))  # Output: PythonProgram",
+      "reference_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char\n        else:\n            camel_str += char.capitalize()\n    return camel_str[0].upper() + camel_str[1:]",
+      "key_differs": true,
+      "text": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():  # Capitalize the first letter of words\n            camel_str += '_' + char.lower()\n        elif not char.isalnum() and len(camel_str) > 0:  # Append non-alphanumeric characters\n            camel_str += char\n    return camel_str.capitalize()\n\n# Test the function\nprint(snake_to_camel('python_program'))  # Output: PythonProgram\n```",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():  # Capitalize the first letter of words\n            camel_str += '_' + char.lower()\n        elif not char.isalnum() and len(camel_str) > 0:  # Append non-alphanumeric characters\n            camel_str += char\n    return camel_str.capitalize()\n\n# Test the function\nprint(snake_to_camel('python_program'))  # Output: PythonProgram\nprint(snake_to_camel('python_language'))  # Output: PythonLanguage\nprint(snake_to_camel('programming_language'))  # Output: ProgrammingLanguage\nprint(snake_to_camel('hello_world'))  # Output: HelloWorld\nprint(snake_to_camel('snake_case_string'))  # Output: SnakeCaseString\nprint(snake_to_camel('123abcABC'))  # Output: 123AbcABC\nprint(snake_to_camel(''))  # Output: ''\nprint(snake_to_camel('singleword'))  # Output: SingleWord",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('snake_case_string') == 'SnakeCaseString'\nassert snake_to_camel('123abcABC') == '123AbcABC'\nassert snake_to_camel('') == ''\nassert snake_to_camel('singleword') == 'SingleWord'\n```",
+        "verifier": "PICK: A\n\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():  # Capitalize the first letter of words\n            camel_str += '_' + char.lower()\n        elif not char.isalnum() and len(camel_str) > 0:  # Append non-alphanumeric characters\n            camel_str += char\n    return camel_str.capitalize()\n\n# Test the function\nprint(snake_to_camel('python_program'))  # Output: PythonProgram\nprint(snake_to_camel('python_language'))  # Output: PythonLanguage\nprint(snake_to_camel('programming_language'))  # Output: ProgrammingLanguage\nprint(snake_to_camel('hello_world'))  # Output: HelloWorld\nprint(snake_to_camel('snake_case_string'))  # Output: SnakeCaseString\nprint(snake_to_camel('123abcABC'))  # Output: 123AbcABC\nprint(snake_to_camel(''))  # Output: ''\nprint(snake_to_camel('singleword'))  # Output: SingleWord\n```",
+        "fixer": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():  # Capitalize the first letter of words\n            camel_str += '_' + char.lower()\n        elif not char.isalnum() and len(camel_str) > 0:  # Append non-alphanumeric characters\n            camel_str += char\n    return camel_str.capitalize()\n\n# Test the function\nprint(snake_to_camel('python_program'))  # Output: PythonProgram\nprint(snake_to_camel('python_language'))  # Output: PythonLanguage\nprint(snake_to_camel('programming_language'))  # Output: ProgrammingLanguage\nprint(snake_to_camel('hello_world'))  # Output: HelloWorld\nprint(snake_to_camel('snake_case_string'))  # Output: SnakeCaseString\nprint(snake_to_camel('123abcABC'))  # Output: 123AbcABC\nprint(snake_to_camel(''))  # Output: ''\nprint(snake_to_camel('singleword'))  # Output: SingleWord\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def last_Digit_Factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result = (result * i) % 10\n    return result",
+      "reference_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char\n        else:\n            camel_str += char.capitalize()\n    return camel_str[0].upper() + camel_str[1:]",
+      "key_differs": true,
+      "text": "```python\ndef last_Digit_Factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result = (result * i) % 10\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_case_str = ''.join(word.capitalize() for word in words)\n    return camel_case_str\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('python_language') == 'PythonLanguage'\nassert snake_to_camel('programming_language') == 'ProgrammingLanguage'",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert last_Digit_Factorial(1)==1\nassert last_Digit_Factorial(2)==2\nassert last_Digit_Factorial(3)==6\nassert last_Digit_Factorial(4)==4\nassert last_Digit_Factorial(5)==0\n```",
+        "verifier": "PICK: B\n```python\ndef snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_case_str = ''.join(word.capitalize() for word in words)\n    return camel_case_str\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('python_language') == 'PythonLanguage'\nassert snake_to_camel('programming_language') == 'ProgrammingLanguage'\n```",
+        "fixer": "```python\ndef snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_case_str = ''.join(word.capitalize() for word in words)\n    return camel_case_str\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('python_language') == 'PythonLanguage'\nassert snake_to_camel('programming_language') == 'ProgrammingLanguage'\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+  "sample_keys": [
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str[1:]  # Remove the initial underscore",
+    "def snake_to_camel(snake_str):\n    camel_str = \"\"\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i in range(len(snake_str)):\n        if i > 0 and snake_str[i].isupper():\n            camel_str += '_' + snake_str[i].lower()\n        else:\n            camel_str += snake_str[i]\n    return camel_str",
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str.capitalize()",
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str[0].upper() + camel_str[1:]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1372.0,
+    "small_out": 386.0,
+    "small_s": 5.010803992016008
+  },
+  "calls_plus": {
+    "small_in": 1205.0,
+    "small_out": 441.0,
+    "small_s": 7.824872975033941,
+    "large_in": 217.0,
+    "large_out": 63.0,
+    "large_s": 1.971615542017389
+  },
+  "calls_samples": {
+    "small_in": 1085.0,
+    "small_out": 330.0,
+    "small_s": 7.1164687699929345
+  }
+}

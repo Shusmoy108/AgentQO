@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-170",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `sum_range_list` that takes three parameters: a list of integers (`numbers`), and two indices (`start_index` and `end_index`).\n2. Initialize a variable `total_sum` to zero. This will hold the cumulative sum of the elements within the specified range.\n3. Use a for loop to iterate over the sublist from `start_index` to `end_index` (inclusive). For each element in this sublist, add its value to `total_sum`.\n4. After the loop completes, return the value of `total_sum`, which now represents the sum of all elements between the two specified indices.\n5. Test the function with the provided test case to ensure it works as expected.",
+  "reference_key": null,
+  "final_key_plus": "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert sum_range_list([], 0, 0) == 0\nassert sum_range_list([1, 2, 3, 4, 5], 1, 3) == 9\nassert sum_range_list([-1, -2, -3, -4, -5], 2, 4) == -9\nassert sum_range_list([10, 20, 30, 40, 50], 0, 4) == 150\nassert sum_range_list([100, 200, 300, 400, 500], 2, 4) == 700\n```",
+    "coder": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+    "verifier": "PICK: B\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+    "fixer": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `text_match_three` that takes one parameter, `text`.\n2. Use a regular expression to check if the input string starts with 'a' followed by exactly three 'b's.\n3. Return `True` if the condition is met, otherwise return `False`.\n\nHere's the complete function:\n\n```python\nimport re\n\ndef text_match_three(text):\n    # Regular expression pattern to match 'a' followed by exactly three 'b's\n    pattern = r'^ab{3}$'\n    \n    # Check if the text matches the pattern\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```\n\nThis function uses the `re` module to compile a regular expression pattern that matches strings starting with 'a' followed by exactly three 'b's. The `match` method checks if the entire string matches this pattern. If it does, the function returns `True`; otherwise, it returns `False`.",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef sum_range_list(numbers, start_index, end_index):\n    # Calculate the sum of numbers within the specified range\n    return sum(numbers[start_index:end_index + 1])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert text_match_three(\"abc\") == False\nassert text_match_three(\"aabbb\") == True\nassert text_match_three(\"abbbb\") == False\nassert text_match_three(\"aabbcc\") == True\nassert text_match_three(\"aabbccc\") == False\n```",
+        "coder": "```python\nimport re\n\ndef text_match_three(text):\n    # Regular expression pattern to match 'a' followed by exactly three 'b's\n    pattern = r'^ab{3}$'\n    \n    # Check if the text matches the pattern\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+        "verifier": "PICK: B\n```python\nimport re\n\ndef sum_range_list(numbers, start_index, end_index):\n    # Calculate the sum of numbers within the specified range\n    return sum(numbers[start_index:end_index + 1])\n```",
+        "fixer": "```python\nimport re\n\ndef sum_range_list(numbers, start_index, end_index):\n    # Calculate the sum of numbers within the specified range\n    return sum(numbers[start_index:end_index + 1])\n\n# Test cases\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10) == 29\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 5, 7) == 16\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 7, 10) == 38\nassert text_match_three(\"abc\") == False\nassert text_match_three(\"aabbb\") == True\nassert text_match_three(\"abbbb\") == False\nassert text_match_three(\"aabbcc\") == True\nassert text_match_three(\"aabbccc\") == False\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_range_list` that takes three parameters: a list of integers (`numbers`), and two indices (`start_index` and `end_index`).\n2. Initialize a variable `total_sum` to zero. This will hold the cumulative sum of the elements within the specified range.\n3. Use a for loop to iterate over the sublist from `start_index` to `end_index` (exclusive). For each element in this sublist, add its value to `total_sum`.\n4. After the loop completes, return the value of `total_sum`, which now represents the sum of all elements between the two specified indices.\n5. Test the function with the provided test case to ensure it works as expected.",
+      "quality": 0.0,
+      "final_key": "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10) == 29\nassert sum_range_list([], 0, 2) == 0\nassert sum_range_list([1, 2, 3, 4, 5], 0, 5) == 15\nassert sum_range_list([-1, -2, -3, -4, -5], 0, 2) == -6\nassert sum_range_list([10, 20, 30, 40, 50], 2, 4) == 70\n```",
+        "coder": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index):\n        total_sum += numbers[i]\n    return total_sum\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `odd_equivalent` that takes two parameters: `binary_string` (the input binary string) and `rotations` (the number of rotations).\n2. Initialize a counter variable `count` to zero.\n3. For each rotation from 0 to `rotations - 1`, perform the following steps:\n   a. Rotate the binary string by one position to the left using slicing (`binary_string[1:] + binary_string[0]`).\n   b. Check if the rotated string has an odd number of '1's using the `sum()` function and modulo operation (`sum(binary_string) % 2 != 0`).\n   c. If the condition is true, increment the `count`.\n4. Return the final count.\n\nThis approach ensures that all possible rotations are considered and accurately counts the number of strings with an odd number of '1's after the specified number of rotations.",
+      "quality": 1.0,
+      "final_key": "def sum_range_list(numbers, start_index, end_index):\n    return sum(numbers[start_index:end_index+1])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert odd_equivalent(\"1010\", 1) == 0\nassert odd_equivalent(\"1111\", 2) == 4\nassert odd_equivalent(\"0000\", 3) == 0\nassert odd_equivalent(\"1111\", 4) == 4\nassert odd_equivalent(\"10101010\", 5) == 4\n```",
+        "coder": "```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(binary_string) % 2 != 0:\n            count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    return sum(numbers[start_index:end_index+1])\n```",
+        "fixer": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    return sum(numbers[start_index:end_index+1])\n\n# Test cases\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10) == 29\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 5, 7) == 16\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 7, 10) == 38\nassert odd_equivalent(\"1010\", 1) == 0\nassert odd_equivalent(\"1111\", 2) == 4\nassert odd_equivalent(\"0000\", 3) == 0\nassert odd_equivalent(\"1111\", 4) == 4\nassert odd_equivalent(\"10101010\", 5) == 4\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+  "sample_keys": [
+    "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+    "def sum_range_list(lst, start_index, end_index):\n    if not lst or start_index < 0 or end_index >= len(lst) or start_index > end_index:\n        raise ValueError(\"Invalid input\")\n    sum = 0\n    for i in range(start_index, end_index + 1):\n        sum += lst[i]\n    return sum",
+    "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers):\n        raise ValueError(\"Invalid index values\")\n    \n    total = 0\n    for i in range(start_index, end_index):\n        total += numbers[i]\n    \n    return total"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2062.0,
+    "small_out": 524.0,
+    "small_s": 10.815307963028317
+  },
+  "calls_plus": {
+    "large_in": 142.0,
+    "large_out": 151.0,
+    "large_s": 3.390801058994839,
+    "small_in": 1913.0,
+    "small_out": 366.0,
+    "small_s": 7.688892801001202
+  },
+  "calls_samples": {
+    "small_in": 6360.0,
+    "small_out": 1625.0,
+    "small_s": 29.670618551026564
+  }
+}

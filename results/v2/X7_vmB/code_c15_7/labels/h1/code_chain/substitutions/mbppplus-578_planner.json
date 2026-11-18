@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-578",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `interleave_lists` that takes three parameters, each representing one of the lists to be interleaved.\n2. Initialize an empty list called `result` to store the interleaved elements.\n3. Use a loop to iterate over the indices of the lists (since all lists have the same length).\n4. Inside the loop, append the element from each list at the current index to the `result` list.\n5. Return the `result` list after the loop completes.",
+  "reference_key": null,
+  "final_key_plus": "def interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert interleave_lists([], [], []) == []\nassert interleave_lists([1], [2], [3]) == [1, 2, 3]\nassert interleave_lists(['a', 'b'], ['c', 'd'], ['e', 'f']) == ['a', 'c', 'e', 'b', 'd', 'f']\nassert interleave_lists([True, False], [True, False], [True, False]) == [True, True, False, False, True, False]\nassert interleave_lists([None], [None], [None]) == [None, None, None]\n```",
+    "coder": "```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```",
+    "fixer": "```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize an empty dictionary to store the counts of each list.\n2. Iterate through each sublist in the input list.\n3. Convert each sublist to a tuple.\n4. If the tuple is already in the dictionary, increment its count by 1; otherwise, add it to the dictionary with a count of 1.\n5. Return the dictionary containing the counts of each list.\n\nThis approach ensures that all sublists are treated as unique tuples for counting purposes, regardless of their order or content.",
+      "quality": 0.0,
+      "final_key": "def interleave_lists(list1, list2, list3):\n    counts = {}\n    for lst in [list1, list2, list3]:\n        key = tuple(lst)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert interleave_lists([], [], []) == {}\nassert interleave_lists([1], [2], [3]) == {tuple([1, 2, 3]): 1}\nassert interleave_lists(['a', 'b'], ['c', 'd'], ['e', 'f']) == {tuple(['a', 'c', 'e']): 1, tuple(['b', 'd', 'f']): 1}\nassert interleave_lists([1, 2, 3], [4, 5, 6], [7, 8, 9]) == {tuple([1, 4, 7]): 1, tuple([2, 5, 8]): 1, tuple([3, 6, 9]): 1}\nassert interleave_lists([1, 2, 3, 4, 5, 6, 7, 8, 9], [10, 20, 30, 40, 50, 60, 70, 80, 90], [100, 200, 300, 400, 500, 600, 700, 800, 900]) == {tuple([1, 10, 100]): 1, tuple([2, 20, 200]): 1, tuple([3, 30, 300]): 1, tuple([4, 40, 400]): 1, tuple([5, 50, 500]): 1, tuple([6, 60, 600]): 1, tuple([7, 70, 700]): 1, tuple([8, 80, 800]): 1, tuple([9, 90, 900]): 1}\n```",
+        "coder": "```python\ndef interleave_lists(list1, list2, list3):\n    counts = {}\n    for lst in [list1, list2, list3]:\n        key = tuple(lst)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```",
+        "verifier": "PICK: B\n\n```python\ndef interleave_lists(list1, list2, list3):\n    counts = {}\n    for lst in [list1, list2, list3]:\n        key = tuple(lst)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```",
+        "fixer": "```python\ndef interleave_lists(list1, list2, list3):\n    counts = {}\n    for lst in [list1, list2, list3]:\n        key = tuple(lst)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `interleave_lists` that accepts three parameters, each representing one of the lists to be interleaved.\n2. Initialize an empty list called `result` to hold the interleaved elements.\n3. Utilize a loop to traverse through the indices of the lists, ensuring all lists maintain the same length.\n4. At each iteration, insert the element from each list at the current index into the `result` list.\n5. Following the loop execution, return the `result` list, providing the correct interleaving pattern.",
+      "quality": 1.0,
+      "final_key": "def interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert interleave_lists([], [], []) == []\nassert interleave_lists([1], [2], [3]) == [1, 2, 3]\nassert interleave_lists(['a', 'b'], ['c', 'd'], ['e', 'f']) == ['a', 'c', 'e', 'b', 'd', 'f']\nassert interleave_lists([True, False], [True, False], [True, False]) == [True, True, False, False, True, False]\nassert interleave_lists([None], [None], [None]) == [None, None, None]\n```",
+        "coder": "```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```",
+        "verifier": "PICK: A\n\n```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```",
+        "fixer": "```python\ndef interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `max_of_nth` that takes two parameters: `matrix`, which is a list of lists representing the matrix, and `n`, which is the index of the column for which we want to find the maximum value.\n2. Initialize a variable `max_value` to store the maximum value found so far.\n3. Iterate over each row in the matrix using a loop.\n4. For each row, access the element at the specified column (index `n`) and compare it to `max_value`.\n5. If the current element is greater than `max_value`, update `max_value` to be the current element.\n6. After iterating through all rows, return the value of `max_value`.\n\nThis approach ensures that we efficiently find the maximum value in the specified column without needing to sort the entire matrix.",
+      "quality": 0.0,
+      "final_key": "def interleave_lists(list1, list2, list3):\n    interleaved_list = []\n    for i in range(len(list1)):\n        interleaved_list.extend([list1[i], list2[i], list3[i]])\n    return interleaved_list\n\n# Test cases\nassert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700]\nassert interleave_lists([10,20],[15,2],[5,10])==[10,15,5,20,2,10]\nassert interleave_lists([11,44], [10,15], [20,5])==[11,10,20,44,15,5]\nassert max_of_nth([[1,2,3], [4,5,6], [7,8,9]], 0) == 1\nassert max_of_nth([[10,20,30], [40,50,60], [70,80,90]], 1) == 20\nassert max_of_nth([[100,200,300], [400,500,600], [700,800,900]], 2) == 300\nassert max_of_nth([[1,2,3,4,5,6,7,8,9]], 4) == 8\nassert max_of_nth([[1,2,3,4,5,6,7,8,9], [], []], 3) == 3",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_of_nth([[1,2,3], [4,5,6], [7,8,9]], 0) == 1\nassert max_of_nth([[10,20,30], [40,50,60], [70,80,90]], 1) == 20\nassert max_of_nth([[100,200,300], [400,500,600], [700,800,900]], 2) == 300\nassert max_of_nth([[1,2,3,4,5,6,7,8,9]], 4) == 8\nassert max_of_nth([[1,2,3,4,5,6,7,8,9], [], []], 3) == 3\n```",
+        "coder": "```python\ndef max_of_nth(matrix, n):\n    max_value = float('-inf')\n    for row in matrix:\n        if row[n] > max_value:\n            max_value = row[n]\n    return max_value\n```",
+        "verifier": "PICK: B\n\n```python\ndef interleave_lists(list1, list2, list3):\n    interleaved_list = []\n    for i in range(len(list1)):\n        interleaved_list.extend([list1[i], list2[i], list3[i]])\n    return interleaved_list\n\n# Test cases\nassert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700]\nassert interleave_lists([10,20],[15,2],[5,10])==[10,15,5,20,2,10]\nassert interleave_lists([11,44], [10,15], [20,5])==[11,10,20,44,15,5]\nassert max_of_nth([[1,2,3], [4,5,6], [7,8,9]], 0) == 1\nassert max_of_nth([[10,20,30], [40,50,60], [70,80,90]], 1) == 20\nassert max_of_nth([[100,200,300], [400,500,600], [700,800,900]], 2) == 300\nassert max_of_nth([[1,2,3,4,5,6,7,8,9]], 4) == 8\nassert max_of_nth([[1,2,3,4,5,6,7,8,9], [], []], 3) == 3\n```",
+        "fixer": "```python\ndef interleave_lists(list1, list2, list3):\n    interleaved_list = []\n    for i in range(len(list1)):\n        interleaved_list.extend([list1[i], list2[i], list3[i]])\n    return interleaved_list\n\n# Test cases\nassert interleave_lists([1,2,3,4,5,6,7],[10,20,30,40,50,60,70],[100,200,300,400,500,600,700])==[1, 10, 100, 2, 20, 200, 3, 30, 300, 4, 40, 400, 5, 50, 500, 6, 60, 600, 7, 70, 700]\nassert interleave_lists([10,20],[15,2],[5,10])==[10,15,5,20,2,10]\nassert interleave_lists([11,44], [10,15], [20,5])==[11,10,20,44,15,5]\nassert max_of_nth([[1,2,3], [4,5,6], [7,8,9]], 0) == 1\nassert max_of_nth([[10,20,30], [40,50,60], [70,80,90]], 1) == 20\nassert max_of_nth([[100,200,300], [400,500,600], [700,800,900]], 2) == 300\nassert max_of_nth([[1,2,3,4,5,6,7,8,9]], 4) == 8\nassert max_of_nth([[1,2,3,4,5,6,7,8,9], [], []], 3) == 3\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.append(list1[i])\n        result.append(list2[i])\n        result.append(list3[i])\n    return result",
+  "sample_keys": [
+    "def interleave_lists(list_1, list_2, list_3):\n    result_list = []\n    for i in range(len(list_1)):\n        result_list.append(list_1[i])\n        result_list.append(list_2[i])\n        result_list.append(list_3[i])\n    return result_list",
+    "def interleave_lists(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        result.extend([list1[i], list2[i], list3[i]])\n    return result",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2786.0,
+    "small_out": 443.0,
+    "small_s": 9.708431689970894
+  },
+  "calls_plus": {
+    "large_in": 249.0,
+    "large_out": 105.0,
+    "large_s": 3.2670007789856754,
+    "small_in": 2504.0,
+    "small_out": 305.0,
+    "small_s": 6.446283683995716
+  },
+  "calls_samples": {
+    "small_in": 8685.0,
+    "small_out": 1874.0,
+    "small_s": 38.363820473023225
+  }
+}

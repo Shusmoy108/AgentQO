@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-235",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `even_bit_set_number` that takes an integer `n` as input.\n2. Initialize a variable `mask` to 0. This will be used to create a bitmask where all even bits are set to 1.\n3. Use a loop to iterate through each bit position from 0 to the number of bits in `n`.\n4. In each iteration, check if the current bit position is even (i.e., divisible by 2).\n5. If the bit position is even, set the corresponding bit in the `mask` using bitwise OR and left shift operations.\n6. After the loop, use the bitwise OR operation between `n` and `mask` to set all even bits of `n` to 1.\n7. Return the result of the bitwise OR operation.",
+  "reference_key": null,
+  "final_key_plus": "def even_bit_set_number(n):\n    mask = 0\n    for i in range(0, n.bit_length()):\n        if i % 2 == 0:\n            mask |= (1 << i)\n    return n | mask",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert even_bit_set_number(10) == 10\nassert even_bit_set_number(3) == 4\nassert even_bit_set_number(8) == 8\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(1) == 2\n```",
+    "coder": "```python\ndef even_bit_set_number(n):\n    mask = 0\n    for i in range(0, n.bit_length()):\n        if i % 2 == 0:\n            mask |= (1 << i)\n    return n | mask\n```",
+    "verifier": "PICK: A\n\n```python\ndef even_bit_set_number(n):\n    mask = 0\n    for i in range(0, n.bit_length()):\n        if i % 2 == 0:\n            mask |= (1 << i)\n    return n | mask\n```",
+    "fixer": "```python\ndef even_bit_set_number(n):\n    mask = 0\n    for i in range(0, n.bit_length()):\n        if i % 2 == 0:\n            mask |= (1 << i)\n    return n | mask\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `difference` that takes one parameter, `n`.\n2. Calculate the sum of the first `n` natural numbers using the formula `n * (n + 1) // 2`.\n3. Calculate the sum of the cubes of the first `n` natural numbers using the formula `(n * (n + 1) * (2 * n + 1)) // 6`.\n4. Subtract the sum of the cubes from the sum of the first `n` natural numbers to get the difference.\n5. Return the calculated difference.",
+      "quality": 0.0,
+      "final_key": "def even_bit_set_number(n):\n    # Calculate the sum of the first n natural numbers\n    sum_n = n * (n + 1) // 2\n    \n    # Calculate the sum of the cubes of the first n natural numbers\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    \n    # Subtract the sum of the cubes from the sum of the first n natural numbers\n    difference = sum_n - sum_cubes\n    \n    return difference",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert even_bit_set_number(10) == 10\nassert even_bit_set_number(3) == 4\nassert even_bit_set_number(8) == 8\nassert even_bit_set_number(1) == 1\nassert even_bit_set_number(0) == 0\n```",
+        "coder": "```python\ndef even_bit_set_number(n):\n    # Calculate the sum of the first n natural numbers\n    sum_n = n * (n + 1) // 2\n    \n    # Calculate the sum of the cubes of the first n natural numbers\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    \n    # Subtract the sum of the cubes from the sum of the first n natural numbers\n    difference = sum_n - sum_cubes\n    \n    return difference\n```",
+        "verifier": "PICK: A\n\n```python\ndef even_bit_set_number(n):\n    # Calculate the sum of the first n natural numbers\n    sum_n = n * (n + 1) // 2\n    \n    # Calculate the sum of the cubes of the first n natural numbers\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    \n    # Subtract the sum of the cubes from the sum of the first n natural numbers\n    difference = sum_n - sum_cubes\n    \n    return difference\n```",
+        "fixer": "```python\ndef even_bit_set_number(n):\n    # Calculate the sum of the first n natural numbers\n    sum_n = n * (n + 1) // 2\n    \n    # Calculate the sum of the cubes of the first n natural numbers\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    \n    # Subtract the sum of the cubes from the sum of the first n natural numbers\n    difference = sum_n - sum_cubes\n    \n    return difference\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `even_bit_set_number` that takes an integer `n` as input.\n2. Initialize a variable `mask` to 0. This will be used to create a bitmask where all even bits are set to 1.\n3. Use a loop to iterate through each bit position from 0 to the number of bits in `n`.\n4. In each iteration, check if the current bit position is odd (i.e., not divisible by 2).\n5. If the bit position is odd, set the corresponding bit in the `mask` using bitwise OR and left shift operations.\n6. After the loop, use the bitwise OR operation between `n` and `mask` to set all even bits of `n` to 1.\n7. Return the result of the bitwise OR operation.",
+      "quality": 1.0,
+      "final_key": "def even_bit_set_number(n):\n    mask = 0\n    for i in range(n.bit_length()):\n        if i % 2 != 0:\n            mask |= (1 << i)\n    return n | mask",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert even_bit_set_number(10) == 10\nassert even_bit_set_number(3) == 6\nassert even_bit_set_number(8) == 8\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(1) == 2\n```",
+        "coder": "```python\ndef even_bit_set_number(n):\n    mask = 0\n    for i in range(n.bit_length()):\n        if i % 2 != 0:\n            mask |= (1 << i)\n    return n | mask\n```",
+        "verifier": "PICK: A\n\n```python\ndef even_bit_set_number(n):\n    mask = 0\n    for i in range(n.bit_length()):\n        if i % 2 != 0:\n            mask |= (1 << i)\n    return n | mask\n```",
+        "fixer": "```python\ndef even_bit_set_number(n):\n    mask = 0\n    for i in range(n.bit_length()):\n        if i % 2 != 0:\n            mask |= (1 << i)\n    return n | mask\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `median_trapezium` that takes three parameters: `a`, `b`, and `c`.\n2. Calculate the average of the two shorter sides (`a` and `b`) using the formula `(a + b) / 2`.\n3. Add the longer side (`c`) to the result from step 2.\n4. Divide the sum by 2 again to get the median length of the trapezium.\n5. Return the calculated median length.",
+      "quality": 0.0,
+      "final_key": "def even_bit_set_number(n):\n    # Convert the number to binary string\n    bin_str = bin(n)[2:]\n    \n    # Initialize an empty string to store the result\n    result = \"\"\n    \n    # Iterate over each bit in the binary string\n    for i in range(len(bin_str)):\n        # If the current bit is even (0), add '1' to the result\n        if int(bin_str[i]) % 2 == 0:\n            result += \"1\"\n        else:\n            result += \"0\"\n    \n    # Convert the result back to an integer\n    return int(result, 2)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert even_bit_set_number(10) == 10\nassert even_bit_set_number(15) == 14\nassert even_bit_set_number(8) == 8\nassert even_bit_set_number(7) == 6\nassert even_bit_set_number(0) == 0\n```",
+        "coder": "```python\ndef even_bit_set_number(n):\n    # Convert the number to binary string\n    bin_str = bin(n)[2:]\n    \n    # Initialize an empty string to store the result\n    result = \"\"\n    \n    # Iterate over each bit in the binary string\n    for i in range(len(bin_str)):\n        # If the current bit is even (0), add '1' to the result\n        if int(bin_str[i]) % 2 == 0:\n            result += \"1\"\n        else:\n            result += \"0\"\n    \n    # Convert the result back to an integer\n    return int(result, 2)\n```",
+        "verifier": "PICK: A\n\n```python\ndef even_bit_set_number(n):\n    # Convert the number to binary string\n    bin_str = bin(n)[2:]\n    \n    # Initialize an empty string to store the result\n    result = \"\"\n    \n    # Iterate over each bit in the binary string\n    for i in range(len(bin_str)):\n        # If the current bit is even (0), add '1' to the result\n        if int(bin_str[i]) % 2 == 0:\n            result += \"1\"\n        else:\n            result += \"0\"\n    \n    # Convert the result back to an integer\n    return int(result, 2)\n```",
+        "fixer": "```python\ndef even_bit_set_number(n):\n    # Convert the number to binary string\n    bin_str = bin(n)[2:]\n    \n    # Initialize an empty string to store the result\n    result = \"\"\n    \n    # Iterate over each bit in the binary string\n    for i in range(len(bin_str)):\n        # If the current bit is even (0), add '1' to the result\n        if int(bin_str[i]) % 2 == 0:\n            result += \"1\"\n        else:\n            result += \"0\"\n    \n    # Convert the result back to an integer\n    return int(result, 2)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result",
+  "sample_keys": [
+    "def even_bit_set_number(n):\n    # Convert the number to binary\n    binary_str = bin(n)[2:]\n    \n    # Initialize the result as an empty string\n    result = ''\n    \n    # Iterate through each character in the binary string\n    for char in binary_str:\n        # Check if the character is '0' or '2'\n        if char in ['0', '2']:\n            # Append '1' to the result\n            result += '1'\n        else:\n            # Append the original character to the result\n            result += char\n    \n    # Convert the result back to an integer\n    return int(result, 2)",
+    "def even_bit_set_number(num):\n    result = 0\n    while num > 0:\n        # Check if the current bit position is even\n        if num & 1 == 0:\n            # Set the corresponding bit in result\n            result |= 1 << (len(bin(num)) - 2)\n        # Right shift num by 1 bit\n        num >>= 1\n    return result",
+    "def even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming num is a 32-bit integer\n        if i % 2 == 0:  # Check if the current bit index is even\n            result |= (num >> i)  # Set the even bit of the result\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1537.0,
+    "small_out": 556.0,
+    "small_s": 11.865822576975916
+  },
+  "calls_plus": {
+    "large_in": 106.0,
+    "large_out": 169.0,
+    "large_s": 3.6678998449933715,
+    "small_in": 1256.0,
+    "small_out": 234.0,
+    "small_s": 4.13779347401578
+  },
+  "calls_samples": {
+    "small_in": 4640.0,
+    "small_out": 1626.0,
+    "small_s": 30.206773344019894
+  }
+}

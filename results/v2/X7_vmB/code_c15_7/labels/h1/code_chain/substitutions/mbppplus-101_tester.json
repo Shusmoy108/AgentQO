@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-101",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert kth_element([1, 2, 3, 4, 5], 1) == 1\nassert kth_element([10, 20, 30, 40, 50], 5) == 50\nassert kth_element([-5, -1, -6, -2], 3) == -6\nassert kth_element([100], 1) == 100\nassert kth_element([1, 2, 3, 4, 5], 5) == 5\n```",
+  "reference_key": "assert kth_element([1, 2, 3, 4, 5], 1) == 1\nassert kth_element([10, 20, 30, 40, 50], 5) == 50\nassert kth_element([-5, -1, -6, -2], 3) == -6\nassert kth_element([100], 1) == 100\nassert kth_element([1, 2, 3, 4, 5], 5) == 5",
+  "final_key_plus": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]\n```",
+    "fixer": "```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test the first element which should be 12 as per the problem statement\nassert kth_element([12,3,5,7,19], 1) == 12\n\n# Test the last element which should be 19\nassert kth_element([12,3,5,7,19], 5) == 19\n\n# Test finding the middle element (which should be 7)\nassert kth_element([12,3,5,7,19], 3) == 7\n\n# Edge case test where k is negative (should raise error)\ntry:\n    print(kth_element([12,3,5,7,19], -1))\nexcept AssertionError:\n    pass\n\n# Edge case test where k exceeds the array length (should raise error)\ntry:\n    print(kth_element([12,3,5,7,19], 6))\nexcept AssertionError:\n    pass",
+      "reference_key": "assert kth_element([1, 2, 3, 4, 5], 1) == 1\nassert kth_element([10, 20, 30, 40, 50], 5) == 50\nassert kth_element([-5, -1, -6, -2], 3) == -6\nassert kth_element([100], 1) == 100\nassert kth_element([1, 2, 3, 4, 5], 5) == 5",
+      "key_differs": true,
+      "text": "```python\n# Test the first element which should be 12 as per the problem statement\nassert kth_element([12,3,5,7,19], 1) == 12\n\n# Test the last element which should be 19\nassert kth_element([12,3,5,7,19], 5) == 19\n\n# Test finding the middle element (which should be 7)\nassert kth_element([12,3,5,7,19], 3) == 7\n\n# Edge case test where k is negative (should raise error)\ntry:\n    print(kth_element([12,3,5,7,19], -1))\nexcept AssertionError:\n    pass\n\n# Edge case test where k exceeds the array length (should raise error)\ntry:\n    print(kth_element([12,3,5,7,19], 6))\nexcept AssertionError:\n    pass\n```",
+      "quality": 1.0,
+      "final_key": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]\n```",
+        "fixer": "```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]\n\n# Test cases\nassert kth_element([12,3,5,7,19], 2) == 3\nassert kth_element([17,24,8,23], 3) == 8\nassert kth_element([16,21,25,36,4], 4) == 36\nassert kth_element([12,3,5,7,19], 1) == 12\nassert kth_element([12,3,5,7,19], 5) == 19\nassert kth_element([12,3,5,7,19], 3) == 7\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert kth_element([4,6,8,10,12], 5) == 12\nassert kth_element([0,1,2,3,4,5,6,7,8,9,10], 10) == 10\n assert kth_element([-1,-2,-3,-4,-5], 4) == -3\nassert kth_element([-1,1], 1) == 1\nassert kth_element([], 1) == Exception(\"Array is empty\")  # This will cause an exception as per the original code",
+      "reference_key": "assert kth_element([1, 2, 3, 4, 5], 1) == 1\nassert kth_element([10, 20, 30, 40, 50], 5) == 50\nassert kth_element([-5, -1, -6, -2], 3) == -6\nassert kth_element([100], 1) == 100\nassert kth_element([1, 2, 3, 4, 5], 5) == 5",
+      "key_differs": true,
+      "text": "```python\nassert kth_element([4,6,8,10,12], 5) == 12\nassert kth_element([0,1,2,3,4,5,6,7,8,9,10], 10) == 10\n assert kth_element([-1,-2,-3,-4,-5], 4) == -3\nassert kth_element([-1,1], 1) == 1\nassert kth_element([], 1) == Exception(\"Array is empty\")  # This will cause an exception as per the original code\n```",
+      "quality": 1.0,
+      "final_key": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]\n\n# Test cases\nassert kth_element([12,3,5,7,19], 2) == 3\nassert kth_element([17,24,8,23], 3) == 8\nassert kth_element([16,21,25,36,4], 4) == 36\nassert kth_element([4,6,8,10,12], 5) == 12\ntry:\n    kth_element([0,1,2,3,4,5,6,7,8,9,10], 10)\nexcept ValueError as e:\n    print(e)  # Output: Index out of range\ntry:\n    kth_element([-1,-2,-3,-4,-5], 4)\nexcept ValueError as e:\n    print(e)  # Output: Index out of range\ntry:\n    kth_element([-1,1], 1)\nexcept ValueError as e:\n    print(e)  # Output: Index out of range\ntry:\n    kth_element([], 1)\nexcept ValueError as e:\n    print(e)  # Output: Array is empty",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]\n\n# Test cases\nassert kth_element([12,3,5,7,19], 2) == 3\nassert kth_element([17,24,8,23], 3) == 8\nassert kth_element([16,21,25,36,4], 4) == 36\nassert kth_element([4,6,8,10,12], 5) == 12\ntry:\n    kth_element([0,1,2,3,4,5,6,7,8,9,10], 10)\nexcept ValueError as e:\n    print(e)  # Output: Index out of range\ntry:\n    kth_element([-1,-2,-3,-4,-5], 4)\nexcept ValueError as e:\n    print(e)  # Output: Index out of range\ntry:\n    kth_element([-1,1], 1)\nexcept ValueError as e:\n    print(e)  # Output: Index out of range\ntry:\n    kth_element([], 1)\nexcept ValueError as e:\n    print(e)  # Output: Array is empty\n```",
+        "fixer": "```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]\n\n# Test cases\nassert kth_element([12,3,5,7,19], 2) == 3\nassert kth_element([17,24,8,23], 3) == 8\nassert kth_element([16,21,25,36,4], 4) == 36\nassert kth_element([4,6,8,10,12], 5) == 12\ntry:\n    kth_element([0,1,2,3,4,5,6,7,8,9,10], 10)\nexcept ValueError as e:\n    print(e)  # Output: Index out of range\ntry:\n    kth_element([-1,-2,-3,-4,-5], 4)\nexcept ValueError as e:\n    print(e)  # Output: Index out of range\ntry:\n    kth_element([-1,1], 1)\nexcept ValueError as e:\n    print(e)  # Output: Index out of range\ntry:\n    kth_element([], 1)\nexcept ValueError as e:\n    print(e)  # Output: Array is empty\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert swap_List([]) == []\nassert swap_List([1]) == [1]\nassert swap_List([1, 2]) == [2, 1]\nassert swap_List([1, 2, 3]) == [3, 2, 1]\nassert swap_List([1, 2, 3, 4]) == [4, 2, 3, 1]",
+      "reference_key": "assert kth_element([1, 2, 3, 4, 5], 1) == 1\nassert kth_element([10, 20, 30, 40, 50], 5) == 50\nassert kth_element([-5, -1, -6, -2], 3) == -6\nassert kth_element([100], 1) == 100\nassert kth_element([1, 2, 3, 4, 5], 5) == 5",
+      "key_differs": true,
+      "text": "```python\nassert swap_List([]) == []\nassert swap_List([1]) == [1]\nassert swap_List([1, 2]) == [2, 1]\nassert swap_List([1, 2, 3]) == [3, 2, 1]\nassert swap_List([1, 2, 3, 4]) == [4, 2, 3, 1]\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]\n\n# Test cases\nassert kth_element([12,3,5,7,19], 2) == 3\nassert kth_element([17,24,8,23], 3) == 8\nassert kth_element([16,21,25,36,4], 4) == 36\n\n# Failing tests\n# swap_List([]) == []\n# swap_List([1]) == [1]\n# swap_List([1, 2]) == [2, 1]\n# swap_List([1, 2, 3]) == [3, 2, 1]\n# swap_List([1, 2, 3, 4]) == [4, 2, 3, 1]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert kth_element([12,3,5,7,19], 5) == 19\nassert kth_element([12,3,5,7,19], 6) == None\nassert kth_element([], 1) == None\nassert kth_element([12,3,5,7,19], 0) == None\nassert kth_element([12,3,5,7,19], -1) == None",
+  "sample_keys": [
+    "# Test with a simple case where K=1 returns the first element\nassert kth_element([4, 6, 8, 10, 12], 1) == 4\n\n# Test with a case where K=len(arr) returns the last element\nassert kth_element([1, 2, 3, 4, 5], 5) == 5\n\n# Test with a case where the input array contains a single element\nassert kth_element([7], 1) == 7\n\n# Test with a case where K is negative, which should raise an error\ntry:\n    kth_element([9, 11, 13], -1)\nexcept ValueError as e:\n    assert str(e) == \"Index out of range\"\n\n# Test with a case where K is equal to the length of the array plus 1, which should raise an error\ntry:\n    kth_element([2, 4, 6], 4)\nexcept ValueError as e:\n    assert str(e) == \"Index out of range\"",
+    "# Additional tests for the kth_element function\nassert kth_element([1, 2, 3, 4, 5], 6) == None  # Edge case where k is out of bounds\nassert kth_element([], 1) == None  # Empty array test\nassert kth_element([10], 1) == 10  # Single-element array test\nassert kth_element([-5, -3, -1, 1, 3], 6) == None  # Large index test\nassert kth_element([1, 2, 3, 4, 5, 6, 7, 8], 4) == 5  # Valid index test",
+    "assert kth_element([], 1) == None\nassert kth_element([1], 1) == 1\nassert kth_element([1,2,3,4,5], 3) == 3\nassert kth_element([1,2,3,4,5], 6) == None\nassert kth_element([1,2,3,4,5,6,7,8,9,10], 5) == 5",
+    "assert kth_element([1,2,3,4,5], 6) == ValueError(\"Index out of range\")\nassert kth_element([], 2) == IndexError(\"Array is empty\")\nassert kth_element([10,20,30,40,50,60], 7) == 60\nassert kth_element([-5,0,-3,-1,2], 4) == -1\nassert kth_element([100,200,300,400,500], 3) == 300",
+    "assert kth_element([], 1) == None\nassert kth_element([42], 1) == 42\nassert kth_element([8, 16, 32, 64], 3) == 32\nassert kth_element([1, 2, 3, 4, 5, 6], 5) == 5\nassert kth_element([-10, -20, -30, -40, -50], 4) == -40"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1722.0,
+    "small_out": 459.0,
+    "small_s": 10.46609346405603
+  },
+  "calls_plus": {
+    "small_in": 1505.0,
+    "small_out": 349.0,
+    "small_s": 7.651114492007764,
+    "large_in": 205.0,
+    "large_out": 130.0,
+    "large_s": 3.6791345609817654
+  },
+  "calls_samples": {
+    "small_in": 1025.0,
+    "small_out": 748.0,
+    "small_s": 14.773813959007384
+  }
+}

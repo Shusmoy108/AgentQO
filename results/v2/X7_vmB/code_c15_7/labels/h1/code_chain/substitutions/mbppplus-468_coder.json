@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-468",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef max_product(arr):\n    n = len(arr)\n    max_product_so_far = arr[0]\n    current_max_product = arr[0]\n\n    for i in range(1, n):\n        current_max_product = max(arr[i], current_max_product * arr[i])\n        max_product_so_far = max(max_product_so_far, current_max_product)\n\n    return max_product_so_far\n```",
+  "reference_key": "def max_product(arr):\n    n = len(arr)\n    max_product_so_far = arr[0]\n    current_max_product = arr[0]\n\n    for i in range(1, n):\n        current_max_product = max(arr[i], current_max_product * arr[i])\n        max_product_so_far = max(max_product_so_far, current_max_product)\n\n    return max_product_so_far",
+  "final_key_plus": "def max_product(arr):\n    if not arr:\n        return 1\n\n    n = len(arr)\n    max_product_so_far = arr[0]\n    current_max_product = arr[0]\n\n    for i in range(1, n):\n        current_max_product = max(arr[i], current_max_product * arr[i])\n        max_product_so_far = max(max_product_so_far, current_max_product)\n\n    return max_product_so_far",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([-1, -2, -3, -4, -5]) == 120\nassert max_product([]) == 1\nassert max_product([0]) == 0\nassert max_product([10, 20, 30, 40, 50]) == 12000\n```",
+    "verifier": "PICK: B\n```python\ndef max_product(arr):\n    if not arr:\n        return 1\n\n    n = len(arr)\n    max_product_so_far = arr[0]\n    current_max_product = arr[0]\n\n    for i in range(1, n):\n        current_max_product = max(arr[i], current_max_product * arr[i])\n        max_product_so_far = max(max_product_so_far, current_max_product)\n\n    return max_product_so_far\n```",
+    "fixer": "```python\ndef max_product(arr):\n    if not arr:\n        return 1\n\n    n = len(arr)\n    max_product_so_far = arr[0]\n    current_max_product = arr[0]\n\n    for i in range(1, n):\n        current_max_product = max(arr[i], current_max_product * arr[i])\n        max_product_so_far = max(max_product_so_far, current_max_product)\n\n    return max_product_so_far\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def max_product(arr):\n    # Edge case where the input array is empty\n    return 0 if len(arr) == 0 else arr[0]\n    \n    current_max = arr[0]  # Current subsequence's maximum product\n    max_so_far = arr[0]  # Maximum product encountered so far\n    \n    for i in range(1, len(arr)):\n        if arr[i] > current_max:\n            current_max = arr[i]\n        elif arr[i] < current_max:\n            current_max *= arr[i]\n        \n        # Ensure the subsequence is maintained in non-decreasing order\n        current_max = min(current_max, arr[i])\n        \n        # Update the maximum product found so far\n        max_so_far = max(max_so_far, current_max)\n    \n    return max_so_far",
+      "reference_key": "def max_product(arr):\n    n = len(arr)\n    max_product_so_far = arr[0]\n    current_max_product = arr[0]\n\n    for i in range(1, n):\n        current_max_product = max(arr[i], current_max_product * arr[i])\n        max_product_so_far = max(max_product_so_far, current_max_product)\n\n    return max_product_so_far",
+      "key_differs": true,
+      "text": "```python\ndef max_product(arr):\n    # Edge case where the input array is empty\n    return 0 if len(arr) == 0 else arr[0]\n    \n    current_max = arr[0]  # Current subsequence's maximum product\n    max_so_far = arr[0]  # Maximum product encountered so far\n    \n    for i in range(1, len(arr)):\n        if arr[i] > current_max:\n            current_max = arr[i]\n        elif arr[i] < current_max:\n            current_max *= arr[i]\n        \n        # Ensure the subsequence is maintained in non-decreasing order\n        current_max = min(current_max, arr[i])\n        \n        # Update the maximum product found so far\n        max_so_far = max(max_so_far, current_max)\n    \n    return max_so_far\n```",
+      "quality": 0.0,
+      "final_key": "def max_product(arr):\n    # Edge case where the input array is empty\n    return 0 if len(arr) == 0 else arr[0]\n    \n    current_max = arr[0]  # Current subsequence's maximum product\n    max_so_far = arr[0]  # Maximum product encountered so far\n    \n    for i in range(1, len(arr)):\n        if arr[i] > current_max:\n            current_max = arr[i]\n        elif arr[i] < current_max:\n            current_max *= arr[i]\n        \n        # Ensure the subsequence is maintained in non-decreasing order\n        current_max = min(current_max, arr[i])\n        \n        # Update the maximum product found so far\n        max_so_far = max(max_so_far, current_max)\n    \n    return max_so_far",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_product([]) == 0\nassert max_product([1]) == 1\nassert max_product([-2, -3, -4]) == 24\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([5, 4, 3, 2, 1]) == 120\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_product(arr):\n    # Edge case where the input array is empty\n    return 0 if len(arr) == 0 else arr[0]\n    \n    current_max = arr[0]  # Current subsequence's maximum product\n    max_so_far = arr[0]  # Maximum product encountered so far\n    \n    for i in range(1, len(arr)):\n        if arr[i] > current_max:\n            current_max = arr[i]\n        elif arr[i] < current_max:\n            current_max *= arr[i]\n        \n        # Ensure the subsequence is maintained in non-decreasing order\n        current_max = min(current_max, arr[i])\n        \n        # Update the maximum product found so far\n        max_so_far = max(max_so_far, current_max)\n    \n    return max_so_far\n```",
+        "fixer": "```python\ndef max_product(arr):\n    # Edge case where the input array is empty\n    return 0 if len(arr) == 0 else arr[0]\n    \n    current_max = arr[0]  # Current subsequence's maximum product\n    max_so_far = arr[0]  # Maximum product encountered so far\n    \n    for i in range(1, len(arr)):\n        if arr[i] > current_max:\n            current_max = arr[i]\n        elif arr[i] < current_max:\n            current_max *= arr[i]\n        \n        # Ensure the subsequence is maintained in non-decreasing order\n        current_max = min(current_max, arr[i])\n        \n        # Update the maximum product found so far\n        max_so_far = max(max_so_far, current_max)\n    \n    return max_so_far\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def max_product(arr):\n    if len(arr) < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_seq = [arr[0]]\n    max_prod = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_seq[-1]:\n            # Replace the previous subsequence with the new one if adding arr[i] makes it larger\n            max_seq = [arr[i]]\n        else:\n            # Extend the existing subsequence with arr[i]\n            max_seq.append(arr[i])\n        \n        # Calculate the product of the current subsequence\n        current_prod = 1\n        for num in max_seq:\n            current_prod *= num\n        \n        # Update the maximum product found so far\n        max_prod = max(max_prod, current_prod)\n    \n    return max_prod",
+      "reference_key": "def max_product(arr):\n    n = len(arr)\n    max_product_so_far = arr[0]\n    current_max_product = arr[0]\n\n    for i in range(1, n):\n        current_max_product = max(arr[i], current_max_product * arr[i])\n        max_product_so_far = max(max_product_so_far, current_max_product)\n\n    return max_product_so_far",
+      "key_differs": true,
+      "text": "```python\ndef max_product(arr):\n    if len(arr) < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_seq = [arr[0]]\n    max_prod = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_seq[-1]:\n            # Replace the previous subsequence with the new one if adding arr[i] makes it larger\n            max_seq = [arr[i]]\n        else:\n            # Extend the existing subsequence with arr[i]\n            max_seq.append(arr[i])\n        \n        # Calculate the product of the current subsequence\n        current_prod = 1\n        for num in max_seq:\n            current_prod *= num\n        \n        # Update the maximum product found so far\n        max_prod = max(max_prod, current_prod)\n    \n    return max_prod\n```\n\nNote: The function name has been changed from `max_subseq_product` to `max_product` as per the task instruction. Also, the logic inside the loop is structured to handle the case where adding an element can either start a new subsequence or extend an existing one based on if it is greater than the last element in the current subsequence.",
+      "quality": 0.0,
+      "final_key": "def max_product(arr):\n    if len(arr) < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_seq = [arr[0]]\n    max_prod = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_seq[-1]:\n            # Replace the previous subsequence with the new one if adding arr[i] makes it larger\n            max_seq = [arr[i]]\n        else:\n            # Extend the existing subsequence with arr[i]\n            max_seq.append(arr[i])\n        \n        # Calculate the product of the current subsequence\n        current_prod = 1\n        for num in max_seq:\n            current_prod *= num\n        \n        # Update the maximum product found so far\n        max_prod = max(max_prod, current_prod)\n    \n    return max_prod",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([-1, -2, -3, -4, -5]) == 120\nassert max_product([]) == ValueError(\"Array must contain at least two elements\")\nassert max_product([10]) == 10\nassert max_product([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 3628800\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_product(arr):\n    if len(arr) < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_seq = [arr[0]]\n    max_prod = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_seq[-1]:\n            # Replace the previous subsequence with the new one if adding arr[i] makes it larger\n            max_seq = [arr[i]]\n        else:\n            # Extend the existing subsequence with arr[i]\n            max_seq.append(arr[i])\n        \n        # Calculate the product of the current subsequence\n        current_prod = 1\n        for num in max_seq:\n            current_prod *= num\n        \n        # Update the maximum product found so far\n        max_prod = max(max_prod, current_prod)\n    \n    return max_prod\n```",
+        "fixer": "```python\ndef max_product(arr):\n    if len(arr) < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_seq = [arr[0]]\n    max_prod = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_seq[-1]:\n            # Replace the previous subsequence with the new one if adding arr[i] makes it larger\n            max_seq = [arr[i]]\n        else:\n            # Extend the existing subsequence with arr[i]\n            max_seq.append(arr[i])\n        \n        # Calculate the product of the current subsequence\n        current_prod = 1\n        for num in max_seq:\n            current_prod *= num\n        \n        # Update the maximum product found so far\n        max_prod = max(max_prod, current_prod)\n    \n    return max_prod\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+      "reference_key": "def max_product(arr):\n    n = len(arr)\n    max_product_so_far = arr[0]\n    current_max_product = arr[0]\n\n    for i in range(1, n):\n        current_max_product = max(arr[i], current_max_product * arr[i])\n        max_product_so_far = max(max_product_so_far, current_max_product)\n\n    return max_product_so_far",
+      "key_differs": true,
+      "text": "```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def max_product(arr):\n    if not arr:\n        return 1\n    \n    n = len(arr)\n    dp = [1] * n\n    \n    for i in range(1, n):\n        for j in range(i):\n            if arr[i] > arr[j]:\n                dp[i] = max(dp[i], dp[j] * arr[i])\n    \n    return max(dp)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_product([3, 100, 4, 5, 150, 6]) == 3000\nassert max_product([]) == 1\nassert max_product([-1, -2, -3, -4]) == -1\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([5, 4, 3, 2, 1]) == 1\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_product(arr):\n    if not arr:\n        return 1\n    \n    n = len(arr)\n    dp = [1] * n\n    \n    for i in range(1, n):\n        for j in range(i):\n            if arr[i] > arr[j]:\n                dp[i] = max(dp[i], dp[j] * arr[i])\n    \n    return max(dp)\n```",
+        "fixer": "```python\ndef max_product(arr):\n    if not arr:\n        return 1\n    \n    n = len(arr)\n    dp = [1] * n\n    \n    for i in range(1, n):\n        for j in range(i):\n            if arr[i] > arr[j]:\n                dp[i] = max(dp[i], dp[j] * arr[i])\n    \n    return max(dp)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far",
+  "sample_keys": [
+    "def max_product(nums):\n    # Initialize variables for the current maximum subsequence and the overall maximum product\n    curr_max = nums[0]\n    max_product = nums[0]\n    \n    # Iterate through the array starting from the second element\n    for num in nums[1:]:\n        # Check if the current number can be added to the current subsequence\n        if num > curr_max:\n            # If it can, update the current subsequence with the new element\n            curr_max = num\n        else:\n            # If not, start a new subsequence with the current number\n            curr_max = num\n        \n        # Calculate the product of the current subsequence\n        curr_product = curr_max\n        \n        # Update the maximum product found so far if the current product is greater\n        max_product = max(curr_product, max_product)\n    \n    # Return the maximum product found\n    return max_product",
+    "def max_product(nums):\n    if not nums:\n        return 0\n    \n    max_so_far = nums[0]\n    max_current = nums[0]\n    \n    for num in nums[1:]:\n        if num < max_current:\n            max_current = num\n        else:\n            max_current *= num\n        \n        max_so_far = max(max_so_far, max_current)\n    \n    return max_so_far",
+    "def max_product(arr):\n    if not arr:\n        return 0\n    \n    max_subseq = [arr[0]]\n    max_product_found = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        if current_product > max_product_found:\n            max_product_found = current_product\n    \n    return max_product_found",
+    "def max_product(arr):\n    n = len(arr)\n    # Initialize variables for current subsequence and maximum product\n    cur_max = arr[0]\n    max_prod = arr[0]\n    \n    for i in range(1, n):\n        # Check if current element can be added to the current subsequence\n        if arr[i] > cur_max:\n            # Update current subsequence with the new element\n            cur_max = arr[i]\n        else:\n            # If not, start a new subsequence with the current element\n            cur_max = arr[i]\n        \n        # Calculate the product of the current subsequence\n        product = cur_max\n        \n        # Update maximum product found so far\n        max_prod = max(product, max_prod)\n    \n    return max_prod",
+    "def max_product(nums):\n    if len(nums) <= 1:\n        return nums[0]\n    \n    current_max = nums[0]\n    max_so_far = nums[0]\n    \n    for num in nums[1:]:\n        if num > current_max:\n            current_max, temp = num, current_max\n        else:\n            temp = current_max * num\n        \n        max_so_far = max(max_so_far, temp)\n        \n    return max_so_far"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2065.0,
+    "small_out": 645.0,
+    "small_s": 13.175019225018332
+  },
+  "calls_plus": {
+    "small_in": 1618.0,
+    "small_out": 428.0,
+    "small_s": 8.28312960502808,
+    "large_in": 258.0,
+    "large_out": 84.0,
+    "large_s": 1.8423842169868294
+  },
+  "calls_samples": {
+    "small_in": 1290.0,
+    "small_out": 869.0,
+    "small_s": 13.979512206977233
+  }
+}

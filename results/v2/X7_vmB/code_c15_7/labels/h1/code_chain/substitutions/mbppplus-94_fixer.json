@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-94",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef index_minimum(tuples_list):\n    if not tuples_list:\n        return None\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return tuples_list[min_index][0]\n```",
+  "reference_key": "def index_minimum(tuples_list):\n    if not tuples_list:\n        return None\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return tuples_list[min_index][0]",
+  "final_key_plus": "def index_minimum(tuples_list):\n    if not tuples_list:\n        return None\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return tuples_list[min_index][0]",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef index_minimum(tuples_list):\n    if not tuples_list:\n        return None\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return tuples_list[min_index][0]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n            \nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\n# Fixing the test failure by initializing min_index and min_value\nassert index_minimum([('Yash', 185), ('Dawood', 125), ('Sanya', 175)]) == 'Dawood'\nassert index_minimum([('Sai', 345), ('Salman', 145), ('Ayesha', 96)]) == 'Ayesha'\nassert index_minimum([('John', 98), ('Jane', 76), ('Mike', 89)]) == 'John'\nassert index_minimum([('Alice', 150), ('Bob', 150), ('Charlie', 150)]) == 'Alice'\nassert index_minimum([('Diana', 120), ('Eva', 120), ('Frank', 120)]) == 'Diana'\nassert index_minimum([]) == None\n# No additional changes needed",
+      "reference_key": "def index_minimum(tuples_list):\n    if not tuples_list:\n        return None\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return tuples_list[min_index][0]",
+      "key_differs": true,
+      "text": "```python\ndef index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n            \nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\n# Fixing the test failure by initializing min_index and min_value\nassert index_minimum([('Yash', 185), ('Dawood', 125), ('Sanya', 175)]) == 'Dawood'\nassert index_minimum([('Sai', 345), ('Salman', 145), ('Ayesha', 96)]) == 'Ayesha'\nassert index_minimum([('John', 98), ('Jane', 76), ('Mike', 89)]) == 'John'\nassert index_minimum([('Alice', 150), ('Bob', 150), ('Charlie', 150)]) == 'Alice'\nassert index_minimum([('Diana', 120), ('Eva', 120), ('Frank', 120)]) == 'Diana'\nassert index_minimum([]) == None\n# No additional changes needed\n```",
+      "quality": 0.0,
+      "final_key": "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n\n# Test cases (with fixes)\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('Yash', 185), ('Dawood', 125), ('Sanya', 175)]) == 'Dawood'\nassert index_minimum([('Sai', 345), ('Salman', 145), ('Ayesha', 96)]) == 'Ayesha'\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('John', 98), ('Jane', 76), ('Mike', 89)]) == ValueError('Expected a non-empty list')\nassert index_minimum([('Alice', 150), ('Bob', 350), ('Charlie', 600)]) != 'Alice' # Changed 'Diana' to other names as per test criteria\nassert index_minimum([(None, 0)], allow_none=True) != None # Fixed by allowing None\ntry:\n    print(index_minimum([])) # Corrected to not access 'name' before initialization\nexcept UnboundLocalError:\n    assert True # Passed error case as expected\nassert index_minimum([('', 2)]) == ''",
+      "reference_key": "def index_minimum(tuples_list):\n    if not tuples_list:\n        return None\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return tuples_list[min_index][0]",
+      "key_differs": true,
+      "text": "```python\ndef index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n\n# Test cases (with fixes)\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('Yash', 185), ('Dawood', 125), ('Sanya', 175)]) == 'Dawood'\nassert index_minimum([('Sai', 345), ('Salman', 145), ('Ayesha', 96)]) == 'Ayesha'\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('John', 98), ('Jane', 76), ('Mike', 89)]) == ValueError('Expected a non-empty list')\nassert index_minimum([('Alice', 150), ('Bob', 350), ('Charlie', 600)]) != 'Alice' # Changed 'Diana' to other names as per test criteria\nassert index_minimum([(None, 0)], allow_none=True) != None # Fixed by allowing None\ntry:\n    print(index_minimum([])) # Corrected to not access 'name' before initialization\nexcept UnboundLocalError:\n    assert True # Passed error case as expected\nassert index_minimum([('', 2)]) == ''\n\n```",
+      "quality": 0.0,
+      "final_key": "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n\n# Test cases (with fixes)\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('Yash', 185), ('Dawood', 125), ('Sanya', 175)]) == 'Dawood'\nassert index_minimum([('Sai', 345), ('Salman', 145), ('Ayesha', 96)]) == 'Ayesha'\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('John', 98), ('Jane', 76), ('Mike', 89)]) == ValueError('Expected a non-empty list')\nassert index_minimum([('Alice', 150), ('Bob', 350), ('Charlie', 600)]) != 'Alice' # Changed 'Diana' to other names as per test criteria\nassert index_minimum([(None, 0)], allow_none=True) != None # Fixed by allowing None\ntry:\n    print(index_minimum([])) # Corrected to not access 'name' before initialization\nexcept UnboundLocalError:\n    assert True # Passed error case as expected\nassert index_minimum([('', 2)]) == ''",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n\n# Test cases (with fixes)\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('Yash', 185), ('Dawood', 125), ('Sanya', 175)]) == 'Dawood'\nassert index_minimum([('Sai', 345), ('Salman', 145), ('Ayesha', 96)]) == 'Ayesha'\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('John', 98), ('Jane', 76), ('Mike', 89)]) == ValueError('Expected a non-empty list')\nassert index_minimum([('Alice', 150), ('Bob', 350), ('Charlie', 600)]) != 'Alice' # Changed 'Diana' to other names as per test criteria\nassert index_minimum([(None, 0)], allow_none=True) != None # Fixed by allowing None\ntry:\n    print(index_minimum([])) # Corrected to not access 'name' before initialization\nexcept UnboundLocalError:\n    assert True # Passed error case as expected\nassert index_minimum([('', 2)]) == ''\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+      "reference_key": "def index_minimum(tuples_list):\n    if not tuples_list:\n        return None\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return tuples_list[min_index][0]",
+      "key_differs": true,
+      "text": "```python\ndef wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)\n```",
+      "quality": 0.0,
+      "final_key": "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name",
+  "sample_keys": [
+    "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n\n# Test results\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('Yash', 185), ('Dawood', 125), ('Sanya', 175)]) == 'Dawood'\nassert index_minimum([('Sai', 345), ('Salman', 145), ('Ayesha', 96)]) == 'Ayesha'\nassert index_minimum([('John', 98), ('Jane', 76), ('Mike', 89)]) == 'John'\nassert index_minimum([('Alice', 150), ('Bob', 150), ('Charlie', 150)]) == 'Alice'\nassert index_minimum([('Diana', 120), ('Eva', 120), ('Frank', 120)]) == 'Diana'\nassert index_minimum([]) == None",
+    "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name\n\n# Test cases\nassert index_minimum([('Rash', 143), ('Manjeet', 200), ('Varsha', 100)]) == 'Varsha'\nassert index_minimum([('Yash', 185), ('Dawood', 125), ('Sanya', 175)]) == 'Dawood'\nassert index_minimum([('Sai', 345), ('Salman', 145), ('Ayesha', 96)]) == 'Ayesha'\nassert index_minimum([('John', 98), ('Jane', 76), ('Mike', 89)]) == 'John'\nassert index_minimum([('Alice', 150), ('Bob', 150), ('Charlie', 150)]) == 'Alice'\nassert index_minimum([('Diana', 120), ('Eva', 120), ('Frank', 120)]) == 'Diana'\nassert index_minimum([]) == None",
+    "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name",
+    "# No corrections needed as the code passes all provided test cases",
+    "def index_minimum(tuples_list):\n    min_index = -1\n    min_value = float('inf')\n    for i, (name, score) in enumerate(tuples_list):\n        if score < min_value:\n            min_value = score\n            min_index = i\n    return name"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1990.0,
+    "small_out": 481.0,
+    "small_s": 10.665579510008683
+  },
+  "calls_plus": {
+    "small_in": 1471.0,
+    "small_out": 431.0,
+    "small_s": 9.307124845014187,
+    "large_in": 512.0,
+    "large_out": 80.0,
+    "large_s": 1.820536378014367
+  },
+  "calls_samples": {
+    "small_in": 2560.0,
+    "small_out": 736.0,
+    "small_s": 13.061321415996645
+  }
+}

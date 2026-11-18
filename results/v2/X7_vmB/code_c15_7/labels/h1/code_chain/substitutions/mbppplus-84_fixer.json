@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-84",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(newman_conway(n - 1)) + newman_conway(n - newman_conway(n - 1))\n```",
+  "reference_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(newman_conway(n - 1)) + newman_conway(n - newman_conway(n - 1))",
+  "final_key_plus": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(newman_conway(n - 1)) + newman_conway(n - newman_conway(n - 1))",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(newman_conway(n - 1)) + newman_conway(n - newman_conway(n - 1))\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def newman_conway(n):\n    # Initialize base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Helper dictionary to store already computed values\n    table = {1: 1, 2: 1}\n    \n    # Recursive case with memoization\n    def calc(n):\n        if n not in table:\n            table[n] = calc(n-1) + calc(n-2)\n        return table[n]\n    \n    return calc(n)\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert newman_conway(10) == 6  # This should be correct now\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 2  # This should be correct now",
+      "reference_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(newman_conway(n - 1)) + newman_conway(n - newman_conway(n - 1))",
+      "key_differs": true,
+      "text": "```python\ndef newman_conway(n):\n    # Initialize base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Helper dictionary to store already computed values\n    table = {1: 1, 2: 1}\n    \n    # Recursive case with memoization\n    def calc(n):\n        if n not in table:\n            table[n] = calc(n-1) + calc(n-2)\n        return table[n]\n    \n    return calc(n)\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert newman_conway(10) == 6  # This should be correct now\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 2  # This should be correct now\n```",
+      "quality": 0.0,
+      "final_key": "def newman_conway(n):\n    # Initialize base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Helper dictionary to store already computed values\n    table = {1: 1, 2: 1}\n    \n    # Recursive case with memoization\n    def calc(n):\n        if n not in table:\n            table[n] = calc(n-1) + calc(n-2)\n        return table[n]\n    \n    return calc(n)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef newman_conway(n):\n    # Initialize base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Helper dictionary to store already computed values\n    table = {1: 1, 2: 1}\n    \n    # Recursive case with memoization\n    def calc(n):\n        if n not in table:\n            table[n] = calc(n-1) + calc(n-2)\n        return table[n]\n    \n    return calc(n)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case with memoization\n    memo = {0: 0, 1: 1, 2: 1}\n    for i in range(3, n+1):\n        # Compute the value of the nth number using the recurrence relation\n        memo[i] = memo[i-1] + memo[i-2]\n    \n    return memo[n]",
+      "reference_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(newman_conway(n - 1)) + newman_conway(n - newman_conway(n - 1))",
+      "key_differs": true,
+      "text": "```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case with memoization\n    memo = {0: 0, 1: 1, 2: 1}\n    for i in range(3, n+1):\n        # Compute the value of the nth number using the recurrence relation\n        memo[i] = memo[i-1] + memo[i-2]\n    \n    return memo[n]\n```",
+      "quality": 0.0,
+      "final_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case with memoization\n    memo = {0: 0, 1: 1, 2: 1}\n    for i in range(3, n+1):\n        # Compute the value of the nth number using the recurrence relation\n        memo[i] = memo[i-1] + memo[i-2]\n    \n    return memo[n]",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case with memoization\n    memo = {0: 0, 1: 1, 2: 1}\n    for i in range(3, n+1):\n        # Compute the value of the nth number using the recurrence relation\n        memo[i] = memo[i-1] + memo[i-2]\n    \n    return memo[n]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def two_unique_nums(nums):\n    unique_nums = []\n    for num in nums:\n        if num not in unique_nums:\n            unique_nums.append(num)\n    return unique_nums",
+      "reference_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(newman_conway(n - 1)) + newman_conway(n - newman_conway(n - 1))",
+      "key_differs": true,
+      "text": "```python\ndef two_unique_nums(nums):\n    unique_nums = []\n    for num in nums:\n        if num not in unique_nums:\n            unique_nums.append(num)\n    return unique_nums\n```",
+      "quality": 0.0,
+      "final_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert newman_conway(10) == 6\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 2",
+  "sample_keys": [
+    "from typing import *\nfrom collections import *\n\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Initialize the first two numbers of the sequence\n    seq = [0, 1, 1]\n    \n    # Calculate subsequent numbers using recursion\n    for i in range(3, n+1):\n        seq.append(seq[i-1] + seq[i-2])\n    \n    return seq[n]\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert newman_conway(10) == 6\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2",
+    null,
+    "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n\n# Test cases\nassert newman_conway(10) == 6\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 2",
+    null,
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1479.0,
+    "small_out": 670.0,
+    "small_s": 13.172570818976965
+  },
+  "calls_plus": {
+    "small_in": 1137.0,
+    "small_out": 426.0,
+    "small_s": 7.786508544988465,
+    "large_in": 336.0,
+    "large_out": 82.0,
+    "large_s": 1.7849823779833969
+  },
+  "calls_samples": {
+    "small_in": 1680.0,
+    "small_out": 1858.0,
+    "small_s": 23.127871086035157
+  }
+}

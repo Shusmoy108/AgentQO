@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-573",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `unique_product` that takes a list of integers as its parameter.\n2. Use a set to remove duplicate numbers from the list, as sets automatically contain only unique elements.\n3. Initialize a variable to store the product of the unique numbers, starting with a value of 1.\n4. Iterate over each number in the set of unique numbers, multiplying the current product by the number.\n5. Return the final product after the loop completes.",
+  "reference_key": null,
+  "final_key_plus": "def unique_product(numbers):\n    unique_numbers = set(numbers)\n    product = 1\n    for num in unique_numbers:\n        product *= num\n    return product",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert unique_product([1, 2, 3, 4, 5]) == 120\nassert unique_product([-1, -2, -3, -4, -5]) == 120\nassert unique_product([]) == 1\nassert unique_product([0]) == 0\nassert unique_product([100, 100, 100]) == 1000000000\n```",
+    "coder": "```python\ndef unique_product(numbers):\n    unique_numbers = set(numbers)\n    product = 1\n    for num in unique_numbers:\n        product *= num\n    return product\n```",
+    "verifier": "PICK: A\n\n```python\ndef unique_product(numbers):\n    unique_numbers = set(numbers)\n    product = 1\n    for num in unique_numbers:\n        product *= num\n    return product\n```",
+    "fixer": "```python\ndef unique_product(numbers):\n    unique_numbers = set(numbers)\n    product = 1\n    for num in unique_numbers:\n        product *= num\n    return product\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `index_multiplication` that takes two tuples as input parameters.\n2. Initialize an empty list called `result`.\n3. Iterate over the indices of both tuples simultaneously using a for loop.\n4. For each pair of corresponding elements from the two tuples, multiply them and append the result to the `result` list.\n5. Return the `result` list after completing the iteration.\n\nThis approach ensures that the function correctly performs index-wise multiplication on the given tuples.",
+      "quality": 1.0,
+      "final_key": "def unique_product(numbers):\n    unique_numbers = set(numbers)\n    if len(unique_numbers) == 0:\n        return 1\n    product = 1\n    for number in unique_numbers:\n        product *= number\n    return product",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert unique_product([1, 2, 3, 4, 5]) == 120\nassert unique_product([]) == 1\nassert unique_product([10, 10, 10]) == 1000\nassert unique_product([-1, -2, -3, -4, -5]) == 120\nassert unique_product([0, 0, 0, 0, 0]) == 0\n```",
+        "coder": "```python\ndef index_multiplication(tuple1, tuple2):\n    result = []\n    for i in range(len(tuple1)):\n        result.append(tuple1[i] * tuple2[i])\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef unique_product(numbers):\n    unique_numbers = set(numbers)\n    if len(unique_numbers) == 0:\n        return 1\n    product = 1\n    for number in unique_numbers:\n        product *= number\n    return product\n```",
+        "fixer": "```python\ndef unique_product(numbers):\n    unique_numbers = set(numbers)\n    if len(unique_numbers) == 0:\n        return 1\n    product = 1\n    for number in unique_numbers:\n        product *= number\n    return product\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `unique_product` that takes a list of integers as its parameter.\n2. Use a set to remove duplicate numbers from the list, as sets automatically contain only unique elements.\n3. Initialize a variable to store the product of the unique numbers, starting with a value of 0.\n4. Iterate over each number in the set of unique numbers, multiplying the current product by the number.\n5. Return the final product after the loop completes.",
+      "quality": 1.0,
+      "final_key": "def unique_product(numbers):\n    unique_numbers = set(numbers)\n    product = 1\n    for num in unique_numbers:\n        product *= num\n    return product",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert unique_product([1, 2, 3, 4, 5]) == 120\nassert unique_product([-1, -2, -3, -4, -5]) == 120\nassert unique_product([]) == 1\nassert unique_product([0]) == 0\nassert unique_product([100, 100, 100]) == 1000000000\n```",
+        "coder": "```python\ndef unique_product(numbers):\n    unique_numbers = set(numbers)\n    product = 1\n    for num in unique_numbers:\n        product *= num\n    return product\n```",
+        "verifier": "PICK: A\n\n```python\ndef unique_product(numbers):\n    unique_numbers = set(numbers)\n    product = 1\n    for num in unique_numbers:\n        product *= num\n    return product\n```",
+        "fixer": "```python\ndef unique_product(numbers):\n    unique_numbers = set(numbers)\n    product = 1\n    for num in unique_numbers:\n        product *= num\n    return product\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `max_occurrences` that takes a list as input.\n3. Initialize variables to keep track of the maximum occurrence count and the corresponding element.\n4. Iterate through each element in the list:\n   - Use a dictionary to count occurrences of each element.\n   - Update the maximum occurrence count and the corresponding element if a higher count is found.\n5. Return the element with the maximum occurrence count.\n\n```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that solves the problem described. It includes all necessary imports, defines the function with a descriptive docstring, and uses a dictionary to efficiently count occurrences. The provided test case verifies the correctness of the implemented function.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert unique_product([10, 20, 30, 40, 20, 50, 60, 40]) ==  720000000\nassert unique_product([]) == 1\nassert unique_product([1, 1, 1, 1]) == 1\nassert unique_product([100, 200, 300, 400, 500]) == 1200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "coder": "```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```",
+        "verifier": "PICK: B\n\n```python\ndef unique_product(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n\n# Test cases\nassert unique_product([10, 20, 30, 40, 20, 50, 60, 40]) ==  720000000\nassert unique_product([1, 2, 3, 1,]) == 6\nassert unique_product([7, 8, 9, 0, 1, 1]) == 0\nassert unique_product([10, 20, 30, 40, 20, 50, 60, 40]) ==  720000000\nassert unique_product([]) == 1\nassert unique_product([1, 1, 1, 1]) == 1\nassert unique_product([100, 200, 300, 400, 500]) == 12000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "fixer": "```python\ndef unique_product(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n\n# Test cases\nassert unique_product([10, 20, 30, 40, 20, 50, 60, 40]) ==  720000000\nassert unique_product([1, 2, 3, 1,]) == 6\nassert unique_product([7, 8, 9, 0, 1, 1]) == 0\nassert unique_product([10, 20, 30, 40, 20, 50, 60, 40]) ==  720000000\nassert unique_product([]) == 1\nassert unique_product([1, 1, 1, 1]) == 1\nassert unique_product([100, 200, 300, 400, 500]) == 1200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import math\n\ndef unique_product(numbers):\n    # Remove duplicates by converting the list to a set\n    unique_numbers = set(numbers)\n    \n    # Calculate the product of the unique numbers\n    product = math.prod(unique_numbers)\n    \n    # Return the result\n    return product",
+  "sample_keys": [
+    "from functools import reduce\nimport operator\n\ndef unique_product(nums):\n    # Step 2: Remove duplicates using a set\n    unique_nums = list(set(nums))\n    \n    # Step 3: Calculate the product of the unique numbers\n    product = reduce(operator.mul, unique_nums)\n    \n    # Step 4: Return the product\n    return product",
+    "from collections import set\n\ndef unique_product(numbers):\n    return sum(map(*[number] * number for number in set(numbers)))",
+    "import math\n\ndef unique_product(numbers):\n    # Convert the list to a set to remove duplicates\n    unique_numbers = set(numbers)\n    \n    # Calculate the product of all elements in the set\n    result = math.prod(unique_numbers)\n    \n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3027.0,
+    "small_out": 853.0,
+    "small_s": 18.79816935796407
+  },
+  "calls_plus": {
+    "large_in": 143.0,
+    "large_out": 98.0,
+    "large_s": 2.8774309460131917,
+    "small_in": 1504.0,
+    "small_out": 225.0,
+    "small_s": 4.809650284994859
+  },
+  "calls_samples": {
+    "small_in": 5175.0,
+    "small_out": 2132.0,
+    "small_s": 42.63540515006753
+  }
+}

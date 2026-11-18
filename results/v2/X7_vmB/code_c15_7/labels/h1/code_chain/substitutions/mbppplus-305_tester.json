@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-305",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Perl Perl\", \"PHP Python\"]) == ('Python', 'PHP')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"C C++\", \"Python Python\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\", \"Perl Perl\"]) == ('Python', 'Python')\nassert start_withp([]) == ()\n```",
+  "reference_key": "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"Perl Perl\", \"PHP Python\"]) == ('Python', 'PHP')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"C C++\", \"Python Python\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\", \"Perl Perl\"]) == ('Python', 'Python')\nassert start_withp([]) == ()",
+  "final_key_plus": "def start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result\n```",
+    "fixer": "```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([]) == () # Edge case: empty list\nassert start_withp(['p', '', 'P']) == ('p', '', 'P') # Edge case: list with mixed case values\nassert start_withp(['P'] * 10) == tuple([f'P{i}' for i in range(10)]) # Edge case: list of ten 'P's\nassert start_withp(['p Programming']) == ('p', 'Programming') # Edge case: mixed single-word list\nassert start_withp(['Pronunciation', 'Principle', 'Pyramid']) == ('Pronunciation', 'Principle', 'Pyramid') # Edge case: longer list of words",
+      "reference_key": "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"Perl Perl\", \"PHP Python\"]) == ('Python', 'PHP')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"C C++\", \"Python Python\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\", \"Perl Perl\"]) == ('Python', 'Python')\nassert start_withp([]) == ()",
+      "key_differs": true,
+      "text": "```python\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([]) == () # Edge case: empty list\nassert start_withp(['p', '', 'P']) == ('p', '', 'P') # Edge case: list with mixed case values\nassert start_withp(['P'] * 10) == tuple([f'P{i}' for i in range(10)]) # Edge case: list of ten 'P's\nassert start_withp(['p Programming']) == ('p', 'Programming') # Edge case: mixed single-word list\nassert start_withp(['Pronunciation', 'Principle', 'Pyramid']) == ('Pronunciation', 'Principle', 'Pyramid') # Edge case: longer list of words\n```",
+      "quality": 0.0,
+      "final_key": "def start_withp(words):\n    result = ()\n    for word in words:\n        if word[0].lower() == 'p':\n            result += (word,)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0].lower() == 'p':\n            result += (word,)\n    return result\n```",
+        "fixer": "```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0].lower() == 'p':\n            result += (word,)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def assert_test(start_withp):\n    # Testing the case where no element starts with 'p'\n    assert start_withp([]) == (), \"Expected empty tuple for empty list\"\n    \n    # Testing the case when there is only one element starting with 'p'\n    assert start_withp(['PHP']) == ('PHP',), \"Expected single tuple with 'PHP' from one-element list\"\n    \n    # Testing the case when multiple elements start with 'p'\n    assert start_withp(['Python', 'PHP', 'Perl']) == (('Python', 'PHP'),), \"Expected tuple with both 'Python' and 'PHP'\"\n    \n    # Testing the case with multiple lists\n    assert start_withp([['C++', 'Python'], ['JavaScript', 'Go'], ['Perl']]) == (('C++', 'Python'),), \"Expected tuple from nested lists\"\n    \n    # Testing the case with leading spaces or newlines before the word\n    assert start_withp(['   Python PHP', 'Java\\nJavaScript', '\\nPerl']) == ('Python PHP', 'Perl'), \"Expected tuples for lines with leading spaces/newlines\"",
+      "reference_key": "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"Perl Perl\", \"PHP Python\"]) == ('Python', 'PHP')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"C C++\", \"Python Python\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\", \"Perl Perl\"]) == ('Python', 'Python')\nassert start_withp([]) == ()",
+      "key_differs": true,
+      "text": "```python\ndef assert_test(start_withp):\n    # Testing the case where no element starts with 'p'\n    assert start_withp([]) == (), \"Expected empty tuple for empty list\"\n    \n    # Testing the case when there is only one element starting with 'p'\n    assert start_withp(['PHP']) == ('PHP',), \"Expected single tuple with 'PHP' from one-element list\"\n    \n    # Testing the case when multiple elements start with 'p'\n    assert start_withp(['Python', 'PHP', 'Perl']) == (('Python', 'PHP'),), \"Expected tuple with both 'Python' and 'PHP'\"\n    \n    # Testing the case with multiple lists\n    assert start_withp([['C++', 'Python'], ['JavaScript', 'Go'], ['Perl']]) == (('C++', 'Python'),), \"Expected tuple from nested lists\"\n    \n    # Testing the case with leading spaces or newlines before the word\n    assert start_withp(['   Python PHP', 'Java\\nJavaScript', '\\nPerl']) == ('Python PHP', 'Perl'), \"Expected tuples for lines with leading spaces/newlines\"\n```",
+      "quality": 0.0,
+      "final_key": "def start_withp(words):\n    result = ()\n    for word in words:\n        if word[0].lower() == 'p':\n            result += (word,)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0].lower() == 'p':\n            result += (word,)\n    return result\n```",
+        "fixer": "```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0].lower() == 'p':\n            result += (word,)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert find_star_num(4) == 80\nassert find_star_num(5) == 121\nassert find_star_num(6) == 186\nassert find_star_num(7) == 273\nassert find_star_num(8) == 396",
+      "reference_key": "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"Perl Perl\", \"PHP Python\"]) == ('Python', 'PHP')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"C C++\", \"Python Python\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\"]) == ('Python', 'Python')\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"Python Python\", \"PHP PHP\", \"Perl Perl\"]) == ('Python', 'Python')\nassert start_withp([]) == ()",
+      "key_differs": true,
+      "text": "```python\nassert find_star_num(4) == 80\nassert find_star_num(5) == 121\nassert find_star_num(6) == 186\nassert find_star_num(7) == 273\nassert find_star_num(8) == 396\n```",
+      "quality": 0.0,
+      "final_key": "def start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result\n```",
+        "fixer": "```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result\n\n# Test cases\nassert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([\"Python Programming\",\"Java Programming\"]) == ('Python','Programming')\nassert start_withp([\"Pqrst Pqr\",\"qrstuv\"]) == ('Pqrst','Pqr')\nassert find_star_num(4) == 80\nassert find_star_num(5) == 121\nassert find_star_num(6) == 186\nassert find_star_num(7) == 273\nassert find_star_num(8) == 396\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([]) == ()\nassert start_withp(['Pineapple', 'Peach', 'Plum']) == ('Pineapple', 'Peach', 'Plum')\nassert start_withp(['Apple', 'Banana', 'Cherry']) == ()\nassert start_withp(['Papaya', 'Peach', 'Pear']) == ('Papaya', 'Peach', 'Pear')",
+  "sample_keys": [
+    "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([]) == ()\nassert start_withp(['Perl PerlScript']) == ('Perl',)\nassert start_withp([\"Programming Python\"]) == ('Programming',)\nassert start_withp([\"PHP Java C++\"]) == ('PHP',)",
+    "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([]) == ()\nassert start_withp(['JavaScript', 'Python']) == ('Python',)\nassert start_withp(['Pandas', 'NumPy', 'Scikit-learn']) == ('Pandas',)\nassert start_withp(['apple', 'banana', 'pear']) == ('apple',)",
+    "assert start_withp([]) == ()\nassert start_withp(['Penguin Python']) == ('Penguin',)\nassert start_withp(['C++ C#']) == ()\nassert start_withp(['Panda Pythons']) == ('Panda',)\nassert start_withp(['Programming PHP']) == ('Programming',)",
+    "assert start_withp([]) == ()\nassert start_withp(['apple', 'banana', 'pear']) == ('pear',)\nassert start_withp(['Programming', 'Python', 'JavaScript']) == ('Programming', 'Python')\nassert start_withp(['Perl', 'PHP', 'Python', 'PerlScript']) == ('Perl', 'PerlScript')\nassert start_withp(['Panda', 'Penguin', 'Parrot']) == ('Panda', 'Penguin')",
+    "assert start_withp([\"Python PHP\", \"Java JavaScript\", \"c c++\"]) == ('Python', 'PHP')\nassert start_withp([\"pandas pandas\", \"numpy numpy\", \"scipy scipy\"]) == ('pandas', 'numpy', 'scipy')\nassert start_withp([\"Hello World\", \"Python Programming\", \"Data Science\"]) == ('Python', 'Programming', 'Science')\nassert start_withp([\"Pineapple Pears\", \"Apples Apples\", \"Bananas Bananas\"]) == ('Pineapple', 'Pears', 'Apples', 'Bananas')\nassert start_withp([]) == ()"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1554.0,
+    "small_out": 372.0,
+    "small_s": 7.9064052639878355
+  },
+  "calls_plus": {
+    "small_in": 1425.0,
+    "small_out": 258.0,
+    "small_s": 5.408085476025008,
+    "large_in": 174.0,
+    "large_out": 126.0,
+    "large_s": 2.7121848730021156
+  },
+  "calls_samples": {
+    "small_in": 870.0,
+    "small_out": 468.0,
+    "small_s": 8.844527543988079
+  }
+}

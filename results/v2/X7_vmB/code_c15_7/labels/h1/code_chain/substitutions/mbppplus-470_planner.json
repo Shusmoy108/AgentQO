@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-470",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `add_pairwise` that takes a single argument, a tuple of numbers.\n2. Initialize an empty list to store the results of the pairwise additions.\n3. Iterate through the tuple using a loop, stopping one element before the end.\n4. For each iteration, add the current element and the next element together, then append the result to the list.\n5. Convert the list back to a tuple and return it as the function's output.",
+  "reference_key": null,
+  "final_key_plus": "def add_pairwise(numbers):\n    result = []\n    for i in range(len(numbers) - 1):\n        result.append(numbers[i] + numbers[i + 1])\n    return tuple(result)",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-4, -8, -12, -16)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((100, 200, 300, 400, 500)) == (300, 500, 700, 900)\nassert add_pairwise((1, 2, 3, 4, 5, 6)) == (3, 5, 7, 9, 11)\n```",
+    "coder": "```python\ndef add_pairwise(numbers):\n    result = []\n    for i in range(len(numbers) - 1):\n        result.append(numbers[i] + numbers[i + 1])\n    return tuple(result)\n```",
+    "verifier": "PICK: A\n\n```python\ndef add_pairwise(numbers):\n    result = []\n    for i in range(len(numbers) - 1):\n        result.append(numbers[i] + numbers[i + 1])\n    return tuple(result)\n```",
+    "fixer": "```python\ndef add_pairwise(numbers):\n    result = []\n    for i in range(len(numbers) - 1):\n        result.append(numbers[i] + numbers[i + 1])\n    return tuple(result)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `closest_num` that takes one parameter, `n`.\n2. Initialize a variable `result` to store the closest smaller number found so far.\n3. Iterate through all numbers from `n-1` down to 1.\n4. For each number, check if it is smaller than `n`.\n5. If it is, update `result` to be this number.\n6. After iterating through all possible numbers, return `result`.\n\nThis approach ensures that we find the closest smaller number by checking each number in descending order, which guarantees that the first number we encounter that is smaller than `n` will be our result.",
+      "quality": 1.0,
+      "final_key": "def add_pairwise(tup):\n    result = []\n    for i in range(len(tup)-1):\n        result.append(tup[i] + tup[i+1])\n    return tuple(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-2, -4, -6, -8)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10, 20, 30, 40, 50)) == (30, 50, 70, 90)\nassert add_pairwise((-10, -20, -30, -40, -50)) == (-20, -40, -60, -80)\n```",
+        "coder": "```python\ndef closest_num(n):\n    result = float('inf')\n    for i in range(n-1, 0, -1):\n        if i < n:\n            result = i\n            break\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef add_pairwise(tup):\n    result = []\n    for i in range(len(tup)-1):\n        result.append(tup[i] + tup[i+1])\n    return tuple(result)\n```",
+        "fixer": "```python\ndef add_pairwise(tup):\n    result = []\n    for i in range(len(tup)-1):\n        result.append(tup[i] + tup[i+1])\n    return tuple(result)\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((2, 6, 8, 9, 11)) == (8, 14, 17, 20)\nassert add_pairwise((3, 7, 9, 10, 12)) == (10, 16, 19, 22)\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-2, -4, -6, -8)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10, 20, 30, 40, 50)) == (30, 50, 70, 90)\nassert add_pairwise((-10, -20, -30, -40, -50)) == (-20, -40, -60, -80)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `Find_Min` that takes one parameter: `sublists`.\n2. Initialize a variable `min_length` to store the minimum length found so far. Set it to the length of the first sublist in `sublists`.\n3. Iterate through each sublist in `sublists` using a for loop.\n4. For each sublist, calculate its length.\n5. If the current sublist's length is less than `min_length`, update `min_length` to be the current sublist's length.\n6. After iterating through all sublists, return the sublist with the minimum length.\n\nThis approach ensures that we efficiently find the sublist with the smallest length by comparing the lengths of each sublist as we iterate through them.",
+      "quality": 0.0,
+      "final_key": "def add_pairwise(sublists):\n    result = []\n    for sublist in sublists:\n        if len(sublist) > 1:\n            result.extend([sublist[i] + sublist[i+1] for i in range(len(sublist)-1)])\n        else:\n            result.append(sublist[0])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == [6, 12, 15, 18]\nassert add_pairwise((2, 6, 8, 9, 11)) == [8, 14, 17, 20]\nassert add_pairwise((3, 7, 9, 10, 12)) == [10, 16, 19, 22]\nassert add_pairwise((1, 5, 7, 8, 10)) == [6, 12, 15, 18]\nassert add_pairwise((-1, -3, -5, -7, -9)) == [-4, -6, -8, -10]\nassert add_pairwise((0, 0, 0, 0, 0)) == [0, 0, 0, 0]\nassert add_pairwise((10, 20, 30, 40, 50)) == [30, 50, 70, 90]\nassert add_pairwise((-10, -20, -30, -40, -50)) == [-30, -50, -70, -90]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-4, -6, -8, -10)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10, 20, 30, 40, 50)) == (30, 50, 70, 90)\nassert add_pairwise((-10, -20, -30, -40, -50)) == (-30, -50, -70, -90)\n```",
+        "coder": "```python\ndef Find_Min(sublists):\n    min_length = len(sublists[0])\n    for sublist in sublists:\n        if len(sublist) < min_length:\n            min_length = len(sublist)\n    return sublist\n```",
+        "verifier": "PICK: B\n\n```python\ndef add_pairwise(sublists):\n    result = []\n    for sublist in sublists:\n        if len(sublist) > 1:\n            result.extend([sublist[i] + sublist[i+1] for i in range(len(sublist)-1)])\n        else:\n            result.append(sublist[0])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == [6, 12, 15, 18]\nassert add_pairwise((2, 6, 8, 9, 11)) == [8, 14, 17, 20]\nassert add_pairwise((3, 7, 9, 10, 12)) == [10, 16, 19, 22]\nassert add_pairwise((1, 5, 7, 8, 10)) == [6, 12, 15, 18]\nassert add_pairwise((-1, -3, -5, -7, -9)) == [-4, -6, -8, -10]\nassert add_pairwise((0, 0, 0, 0, 0)) == [0, 0, 0, 0]\nassert add_pairwise((10, 20, 30, 40, 50)) == [30, 50, 70, 90]\nassert add_pairwise((-10, -20, -30, -40, -50)) == [-30, -50, -70, -90]\n```",
+        "fixer": "```python\ndef add_pairwise(sublists):\n    result = []\n    for sublist in sublists:\n        if len(sublist) > 1:\n            result.extend([sublist[i] + sublist[i+1] for i in range(len(sublist)-1)])\n        else:\n            result.append(sublist[0])\n    return result\n\n# Test cases\nassert add_pairwise((1, 5, 7, 8, 10)) == [6, 12, 15, 18]\nassert add_pairwise((2, 6, 8, 9, 11)) == [8, 14, 17, 20]\nassert add_pairwise((3, 7, 9, 10, 12)) == [10, 16, 19, 22]\nassert add_pairwise((1, 5, 7, 8, 10)) == [6, 12, 15, 18]\nassert add_pairwise((-1, -3, -5, -7, -9)) == [-4, -6, -8, -10]\nassert add_pairwise((0, 0, 0, 0, 0)) == [0, 0, 0, 0]\nassert add_pairwise((10, 20, 30, 40, 50)) == [30, 50, 70, 90]\nassert add_pairwise((-10, -20, -30, -40, -50)) == [-30, -50, -70, -90]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a variable `found` to `False`.\n2. Iterate through each element in the array using a for loop.\n3. For each element, check if it matches the given element.\n4. If a match is found, set `found` to `True` and store the current index in a variable `index`.\n5. After the loop completes, return a tuple containing `found` and `index`.\n6. If no match is found after the loop, return a tuple containing `found` as `False` and `-1`.",
+      "quality": 0.0,
+      "final_key": "def add_pairwise(arr):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == 5:\n            found = True\n            index = i\n            break\n    return (found, index)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert add_pairwise((1, 5, 7, 8, 10)) == (True, 1)\nassert add_pairwise((3, 4, 5, 6, 7)) == (False, -1)\nassert add_pairwise((10, 20, 30, 40, 50)) == (True, 2)\nassert add_pairwise((1, 1, 1, 1, 1)) == (True, 0)\nassert add_pairwise((2, 3, 4, 5, 6)) == (True, 1)\n```",
+        "coder": "```python\ndef add_pairwise(arr):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == 5:\n            found = True\n            index = i\n            break\n    return (found, index)\n```",
+        "verifier": "PICK: A\n\n```python\ndef add_pairwise(arr):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == 5:\n            found = True\n            index = i\n            break\n    return (found, index)\n```",
+        "fixer": "```python\ndef add_pairwise(arr):\n    found = False\n    index = -1\n    for i in range(len(arr)):\n        if arr[i] == 5:\n            found = True\n            index = i\n            break\n    return (found, index)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def add_pairwise(input_tuple):\n    result = []\n    for i in range(len(input_tuple)):\n        if i > 0:\n            result.append(input_tuple[i] + input_tuple[i-1])\n    return result",
+  "sample_keys": [
+    "def add_pairwise(input_tuple):\n    result_list = []\n    for i in range(len(input_tuple) - 1):\n        result_list.append(input_tuple[i] + input_tuple[i+1])\n    return result_list",
+    "def add_pairwise(input_tuple):\n    result_list = []\n    for i in range(len(input_tuple) - 1):\n        result_list.append(input_tuple[i] + input_tuple[i+1])\n    \n    return result_list",
+    "def add_pairwise(input_tuple):\n    result_list = []\n    for i in range(len(input_tuple) - 1):\n        pairwise_sum = input_tuple[i] + input_tuple[i + 1]\n        result_list.append(pairwise_sum)\n    return result_list"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.6666666666666666
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1883.0,
+    "small_out": 420.0,
+    "small_s": 9.034634483949048
+  },
+  "calls_plus": {
+    "large_in": 131.0,
+    "large_out": 99.0,
+    "large_s": 2.19807077999576,
+    "small_in": 1799.0,
+    "small_out": 336.0,
+    "small_s": 6.26489992797724
+  },
+  "calls_samples": {
+    "small_in": 6198.0,
+    "small_out": 1673.0,
+    "small_s": 31.72132054393296
+  }
+}

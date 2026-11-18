@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-598",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert armstrong_number(370) == True\nassert armstrong_number(9474) == True\nassert armstrong_number(9475) == False\nassert armstrong_number(0) == True\nassert armstrong_number(1) == True\n```",
+  "reference_key": "assert armstrong_number(370) == True\nassert armstrong_number(9474) == True\nassert armstrong_number(9475) == False\nassert armstrong_number(0) == True\nassert armstrong_number(1) == True",
+  "final_key_plus": "def armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n```",
+    "fixer": "```python\ndef armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Edge case: Negative numbers (return False)\nassert armstrong_number(-153) == False\n\n# Edge case: Single digit numbers (return True)\nassert armstrong_number(7) == True\n\n# Edge case: Two-digit numbers (return True)\nassert armstrong_number(163) == True\n\n# Edge case: Five-digit numbers (return True)\nassert armstrong_number(4071) == True\n\n# Edge case: Number with repeating digits (return True)\nassert armstrong_number(370) == True",
+      "reference_key": "assert armstrong_number(370) == True\nassert armstrong_number(9474) == True\nassert armstrong_number(9475) == False\nassert armstrong_number(0) == True\nassert armstrong_number(1) == True",
+      "key_differs": true,
+      "text": "```python\n# Edge case: Negative numbers (return False)\nassert armstrong_number(-153) == False\n\n# Edge case: Single digit numbers (return True)\nassert armstrong_number(7) == True\n\n# Edge case: Two-digit numbers (return True)\nassert armstrong_number(163) == True\n\n# Edge case: Five-digit numbers (return True)\nassert armstrong_number(4071) == True\n\n# Edge case: Number with repeating digits (return True)\nassert armstrong_number(370) == True\n```",
+      "quality": 1.0,
+      "final_key": "def armstrong_number(num):\n    if num < 0:\n        raise ValueError(\"Invalid input. Number must be non-negative.\")\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef armstrong_number(num):\n    if num < 0:\n        raise ValueError(\"Invalid input. Number must be non-negative.\")\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n```",
+        "fixer": "```python\ndef armstrong_number(num):\n    if num < 0:\n        raise ValueError(\"Invalid input. Number must be non-negative.\")\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert armstrong_number(1024) == True\nassert armstrong_number(153) == True\nassert armstrong_number(9474) == True\nassert armstrong_number(4153) == False\nassert armstrong_number(56) == False",
+      "reference_key": "assert armstrong_number(370) == True\nassert armstrong_number(9474) == True\nassert armstrong_number(9475) == False\nassert armstrong_number(0) == True\nassert armstrong_number(1) == True",
+      "key_differs": true,
+      "text": "```python\nassert armstrong_number(1024) == True\nassert armstrong_number(153) == True\nassert armstrong_number(9474) == True\nassert armstrong_number(4153) == False\nassert armstrong_number(56) == False\n```",
+      "quality": 1.0,
+      "final_key": "def armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n```",
+        "fixer": "```python\ndef armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n\n# Test cases\nassert armstrong_number(153) == True\nassert armstrong_number(259) == False\nassert armstrong_number(4458) == False\nassert armstrong_number(1024) == True\nassert armstrong_number(153) == True\nassert armstrong_number(9474) == True\nassert armstrong_number(4153) == False\nassert armstrong_number(56) == False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]]) == [10, 11, 12]\nassert max_sum_list([[-1,-2,-3], [-4,-5,-6], [-10,-11,-12], [-7,-8,-9]]) == [-10, -11, -12]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300]]) == [100, 200, 300]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300], [1000,2000,3000]]) == [1000, 2000, 3000]\nassert max_sum_list([]) == []",
+      "reference_key": "assert armstrong_number(370) == True\nassert armstrong_number(9474) == True\nassert armstrong_number(9475) == False\nassert armstrong_number(0) == True\nassert armstrong_number(1) == True",
+      "key_differs": true,
+      "text": "```python\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]]) == [10, 11, 12]\nassert max_sum_list([[-1,-2,-3], [-4,-5,-6], [-10,-11,-12], [-7,-8,-9]]) == [-10, -11, -12]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300]]) == [100, 200, 300]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300], [1000,2000,3000]]) == [1000, 2000, 3000]\nassert max_sum_list([]) == []\n```",
+      "quality": 0.0,
+      "final_key": "def armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n\n# Test cases\nassert armstrong_number(153) == True\nassert armstrong_number(259) == False\nassert armstrong_number(4458) == False\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]]) == [10, 11, 12]\nassert max_sum_list([[-1,-2,-3], [-4,-5,-6], [-10,-11,-12], [-7,-8,-9]]) == [-10, -11, -12]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300]]) == [100, 200, 300]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300], [1000,2000,3000]]) == [1000, 2000, 3000]\nassert max_sum_list([]) == []",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n\n# Test cases\nassert armstrong_number(153) == True\nassert armstrong_number(259) == False\nassert armstrong_number(4458) == False\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]]) == [10, 11, 12]\nassert max_sum_list([[-1,-2,-3], [-4,-5,-6], [-10,-11,-12], [-7,-8,-9]]) == [-10, -11, -12]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300]]) == [100, 200, 300]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300], [1000,2000,3000]]) == [1000, 2000, 3000]\nassert max_sum_list([]) == []\n```",
+        "fixer": "```python\ndef armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n\n# Test cases\nassert armstrong_number(153) == True\nassert armstrong_number(259) == False\nassert armstrong_number(4458) == False\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]]) == [10, 11, 12]\nassert max_sum_list([[-1,-2,-3], [-4,-5,-6], [-10,-11,-12], [-7,-8,-9]]) == [-10, -11, -12]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300]]) == [100, 200, 300]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300], [1000,2000,3000]]) == [1000, 2000, 3000]\nassert max_sum_list([]) == []\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert armstrong_number(9474) == True\nassert armstrong_number(9475) == False\nassert armstrong_number(0) == True\nassert armstrong_number(1) == True\nassert armstrong_number(27) == True",
+  "sample_keys": [
+    "assert armstrong_number(9474) == True\nassert armstrong_number(9) == True\nassert armstrong_number(0) == True\nassert armstrong_number(1634) == True\nassert armstrong_number(152) == False",
+    "import math\n\n# Edge case 1: Negative numbers are not considered Armstrong numbers\nassert armstrong_number(-1) == False\n\n# Edge case 2: Zero is considered an Armstrong number\nassert armstrong_number(0) == True\n\n# Edge case 3: Single-digit numbers are Armstrong numbers\nfor i in range(1, 10):\n    assert armstrong_number(i) == True\n\n# Edge case 4: Two-digit numbers are Armstrong numbers\nfor i in range(10, 100):\n    if i == round(math.pow(i, 2)):\n        assert armstrong_number(i) == True\n\n# Edge case 5: Three-digit numbers are Armstrong numbers\nfor i in range(100, 1000):\n    if i == round(math.pow(i, 3)):\n        assert armstrong_number(i) == True",
+    "# Typical tests\nassert armstrong_number(153) == True\nassert armstrong_number(8208) == True\nassert armstrong_number(9474) == True\n\n# Edge cases\nassert armstrong_number(0) == True  # Edge case: any number raised to the power of 0 equals 1\nassert armstrong_number(-153) == False  # Edge case: negative numbers cannot be Armstrong\nassert armstrong_number(10) == False  # Edge case: single-digit numbers are not considered Armstrong\nassert armstrong_number(9) == True   # Edge case: numbers less than 10 and equal to their own cubes are Armstrong",
+    "assert armstrong_number(1634)==True\nassert armstrong_number(9474)==True\nassert armstrong_number(123)==False\nassert armstrong_number(407)==True\nassert armstrong_number(8208)==True",
+    "assert armstrong_number(152) == False\nassert armstrong_number(0) == True\nassert armstrong_number(9) == True\nassert armstrong_number(1634) == True\nassert armstrong_number(8208) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1329.0,
+    "small_out": 502.0,
+    "small_s": 10.299232655990636
+  },
+  "calls_plus": {
+    "small_in": 1109.0,
+    "small_out": 342.0,
+    "small_s": 6.374337966000894,
+    "large_in": 175.0,
+    "large_out": 63.0,
+    "large_s": 1.3359697189880535
+  },
+  "calls_samples": {
+    "small_in": 875.0,
+    "small_out": 528.0,
+    "small_s": 9.251616588968318
+  }
+}

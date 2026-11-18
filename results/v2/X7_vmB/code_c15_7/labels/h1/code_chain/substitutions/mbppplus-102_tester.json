@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-102",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('snake_case_to_camel_case') == 'SnakeCaseToCamelCase'\nassert snake_to_camel('alreadyCamel') == 'AlreadyCamel'\nassert snake_to_camel('with__multiple___underscores') == 'WithMultipleUnderscores'\nassert snake_to_camel('single') == 'Single'\n```",
+  "reference_key": "assert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('snake_case_to_camel_case') == 'SnakeCaseToCamelCase'\nassert snake_to_camel('alreadyCamel') == 'AlreadyCamel'\nassert snake_to_camel('with__multiple___underscores') == 'WithMultipleUnderscores'\nassert snake_to_camel('single') == 'Single'",
+  "final_key_plus": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```",
+    "fixer": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Check with a string starting with uppercase\nassert snake_to_camel('snake_case_string') == 'SnakeCaseString'\n\n# Check with a string starting with lowercase\nassert snake_to_camel('camelCaseString') == 'CamelCaseString'\n\n# Check with an empty string\nassert snake_to_camel('') == ''\n\n# Check with a single character string\nassert snake_to_camel('a') == 'A'\n\n# Check with all uppercase characters\nassert snake_to_camel('ALL_UPCASE') == 'AllUppercase'",
+      "reference_key": "assert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('snake_case_to_camel_case') == 'SnakeCaseToCamelCase'\nassert snake_to_camel('alreadyCamel') == 'AlreadyCamel'\nassert snake_to_camel('with__multiple___underscores') == 'WithMultipleUnderscores'\nassert snake_to_camel('single') == 'Single'",
+      "key_differs": true,
+      "text": "```python\n# Check with a string starting with uppercase\nassert snake_to_camel('snake_case_string') == 'SnakeCaseString'\n\n# Check with a string starting with lowercase\nassert snake_to_camel('camelCaseString') == 'CamelCaseString'\n\n# Check with an empty string\nassert snake_to_camel('') == ''\n\n# Check with a single character string\nassert snake_to_camel('a') == 'A'\n\n# Check with all uppercase characters\nassert snake_to_camel('ALL_UPCASE') == 'AllUppercase'\n```",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```",
+        "fixer": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert snake_to_camel('snake_case_string') == 'SnakeCaseString', \"Expected 'PythonProgram'\"\nassert snake_to_camel('alreadyCamelCase') == 'AlreadyCamelCase', \"Expected 'AlreadyCamelCase'\"\nassert snake_to_camel('123Start') == '123Start', \"Expected '123Start'\"\nassert snake_to_camel('UPPERCASE') == 'UpperCase', \"Expected 'UpperCase'\"\nassert snake_to_camel('__leadingUnderscores') == '__LeadingUnderscores', \"Expected '__LeadingUnderscores'\"\nassert snake_to_camel('trailingUnderscores__') == 'trailingUnderscores__', \"Expected 'trailingUnderscores__'\"",
+      "reference_key": "assert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('snake_case_to_camel_case') == 'SnakeCaseToCamelCase'\nassert snake_to_camel('alreadyCamel') == 'AlreadyCamel'\nassert snake_to_camel('with__multiple___underscores') == 'WithMultipleUnderscores'\nassert snake_to_camel('single') == 'Single'",
+      "key_differs": true,
+      "text": "```python\nassert snake_to_camel('snake_case_string') == 'SnakeCaseString', \"Expected 'PythonProgram'\"\nassert snake_to_camel('alreadyCamelCase') == 'AlreadyCamelCase', \"Expected 'AlreadyCamelCase'\"\nassert snake_to_camel('123Start') == '123Start', \"Expected '123Start'\"\nassert snake_to_camel('UPPERCASE') == 'UpperCase', \"Expected 'UpperCase'\"\nassert snake_to_camel('__leadingUnderscores') == '__LeadingUnderscores', \"Expected '__LeadingUnderscores'\"\nassert snake_to_camel('trailingUnderscores__') == 'trailingUnderscores__', \"Expected 'trailingUnderscores__'\"\n```",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper() and snake_str[i-1].islower():\n            camel_str += '_' + char.lower()\n        elif char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper() and snake_str[i-1].islower():\n            camel_str += '_' + char.lower()\n        elif char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```",
+        "fixer": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper() and snake_str[i-1].islower():\n            camel_str += '_' + char.lower()\n        elif char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert last_Digit_Factorial(1) == 1\nassert last_Digit_Factorial(2) == 2\nassert last_Digit_Factorial(3) == 6\nassert last_Digit_Factorial(4) == 4\nassert last_Digit_Factorial(5) == 0",
+      "reference_key": "assert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('snake_case_to_camel_case') == 'SnakeCaseToCamelCase'\nassert snake_to_camel('alreadyCamel') == 'AlreadyCamel'\nassert snake_to_camel('with__multiple___underscores') == 'WithMultipleUnderscores'\nassert snake_to_camel('single') == 'Single'",
+      "key_differs": true,
+      "text": "```python\nassert last_Digit_Factorial(1) == 1\nassert last_Digit_Factorial(2) == 2\nassert last_Digit_Factorial(3) == 6\nassert last_Digit_Factorial(4) == 4\nassert last_Digit_Factorial(5) == 0\n```",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```",
+        "fixer": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('python_language') == 'PythonLanguage'\nassert snake_to_camel('programming_language') == 'ProgrammingLanguage'\nassert last_Digit_Factorial(1) == 1\nassert last_Digit_Factorial(2) == 2\nassert last_Digit_Factorial(3) == 6\nassert last_Digit_Factorial(4) == 4\nassert last_Digit_Factorial(5) == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123abcABC') == '123AbcABC'\nassert snake_to_camel('') == ''",
+  "sample_keys": [
+    "assert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('convert_this') == 'ConvertThis'\nassert snake_to_camel('snake_case_to_camel_case') == 'SnakeCaseToCamelCase'\nassert snake_to_camel('camelCase') == 'CamelCase'\nassert snake_to_camel('_single_underscore_case') == '_SingleUnderscoreCase'",
+    null,
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n\nassert snake_to_camel('python_program') == 'PythonProgram', f\"Expected 'PythonProgram', but got {snake_to_camel('python_program')}\"\nassert snake_to_camel('hello_world') == 'HelloWorld', f\"Expected 'HelloWorld', but got {snake_to_camel('hello_world')}\"\nassert snake_to_camel('test') == 'Test', f\"Expected 'Test', but got {snake_to_camel('test')}\"\nassert snake_to_camel('123abc') == '123Abc', f\"Expected '123Abc', but got {snake_to_camel('123abc')}\"\nassert snake_to_camel('') == '', f\"Expected '', but got {snake_to_camel('')}\"\n\n# Additional tests to handle edge cases like multiple uppercase letters\nassert snake_to_camel('ThisIsAString') == 'thisIsAString', f\"Expected 'thisIsAString', but got {snake_to_camel('ThisIsAString')}\"\nassert snake_to_camel('AllUpper') == 'allUpper', f\"Expected 'allUpper', but got {snake_to_camel('AllUpper')}\"\nassert snake_to_camel('lowercase') == 'lowercase', f\"Expected 'lowercase', but got {snake_to_camel('lowercase')}\"",
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('123_numbers') == '123Numbers'\nassert snake_to_camel('no_uppercase') == 'NoUppercase'\nassert snake_to_camel('multiple__underscores') == 'MultipleUnderscores'\nassert snake_to_camel('multiple_underscores_with_number123') == 'MultipleUnderscoresWithNumber123'",
+    "assert snake_to_camel('snake_case_example') == 'SnakeCaseExample'\nassert snake_to_camel('this_is_a_long_snake_case_string') == 'ThisIsALongSnakeCaseString'\nassert snake_to_camel('no_uppercase_chars') == 'NoUppercaseChars'\nassert snake_to_camel('123abcABC') == '123AbcABC'\nassert snake_to_camel('') == ''"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1372.0,
+    "small_out": 386.0,
+    "small_s": 5.010803992016008
+  },
+  "calls_plus": {
+    "small_in": 1231.0,
+    "small_out": 303.0,
+    "small_s": 4.858960315032164,
+    "large_in": 171.0,
+    "large_out": 90.0,
+    "large_s": 2.4895176580175757
+  },
+  "calls_samples": {
+    "small_in": 855.0,
+    "small_out": 820.0,
+    "small_s": 16.47872874099994
+  }
+}

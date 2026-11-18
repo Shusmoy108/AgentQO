@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-566",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert sum_digits(0) == 0\nassert sum_digits(9) == 9\nassert sum_digits(123456789) == 45\nassert sum_digits(111111111) == 9\nassert sum_digits(987654321) == 45\n```",
+  "reference_key": "assert sum_digits(0) == 0\nassert sum_digits(9) == 9\nassert sum_digits(123456789) == 45\nassert sum_digits(111111111) == 9\nassert sum_digits(987654321) == 45",
+  "final_key_plus": "def sum_digits(num):\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef sum_digits(num):\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```",
+    "fixer": "```python\ndef sum_digits(num):\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sum_digits(0) == 0\nassert sum_digits(9) == 9\nassert sum_digits(1234) == 10\nassert sum_digits(80765) == 26\nassert sum_digits(-321) == 16",
+      "reference_key": "assert sum_digits(0) == 0\nassert sum_digits(9) == 9\nassert sum_digits(123456789) == 45\nassert sum_digits(111111111) == 9\nassert sum_digits(987654321) == 45",
+      "key_differs": true,
+      "text": "```python\nassert sum_digits(0) == 0\nassert sum_digits(9) == 9\nassert sum_digits(1234) == 10\nassert sum_digits(80765) == 26\nassert sum_digits(-321) == 16\n```",
+      "quality": 1.0,
+      "final_key": "def sum_digits(num):\n    if num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_digits(num):\n    if num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_digits(num):\n    if num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sum_digits(23) == 5  # Single digit number\nassert sum_digits(123456789) == 45  # Large number with multiple digits\nassert sum_digits(0) == 0  # Zero\nassert sum_digits(-5) == ValueError(\"Input must be a non-negative integer\")  # Negative input\nassert sum_digits(3.5) == AssertionError(\"Input must be an integer\")",
+      "reference_key": "assert sum_digits(0) == 0\nassert sum_digits(9) == 9\nassert sum_digits(123456789) == 45\nassert sum_digits(111111111) == 9\nassert sum_digits(987654321) == 45",
+      "key_differs": true,
+      "text": "```python\nassert sum_digits(23) == 5  # Single digit number\nassert sum_digits(123456789) == 45  # Large number with multiple digits\nassert sum_digits(0) == 0  # Zero\nassert sum_digits(-5) == ValueError(\"Input must be a non-negative integer\")  # Negative input\nassert sum_digits(3.5) == AssertionError(\"Input must be an integer\")\n```",
+      "quality": 1.0,
+      "final_key": "def sum_digits(num):\n    if not isinstance(num, int) or num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_digits(num):\n    if not isinstance(num, int) or num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_digits(num):\n    if not isinstance(num, int) or num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(7) == 3\nassert count_Set_Bits(8) == 1\nassert count_Set_Bits(9) == 2",
+      "reference_key": "assert sum_digits(0) == 0\nassert sum_digits(9) == 9\nassert sum_digits(123456789) == 45\nassert sum_digits(111111111) == 9\nassert sum_digits(987654321) == 45",
+      "key_differs": true,
+      "text": "```python\nassert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(7) == 3\nassert count_Set_Bits(8) == 1\nassert count_Set_Bits(9) == 2\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef sum_digits(num):\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n\n# Test cases\nassert sum_digits(345) == 12\nassert sum_digits(12) == 3\nassert sum_digits(97) == 16\nassert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(7) == 3\nassert count_Set_Bits(8) == 1\nassert count_Set_Bits(9) == 2\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(-12345) == 15",
+  "sample_keys": [
+    "assert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999) == 27\nassert sum_digits(-123) == 6",
+    "# Test cases for the sum_digits function\nassert sum_digits(9) == 9\nassert sum_digits(876) == 21\nassert sum_digits(0) == 0\nassert sum_digits(1234567890) == 45\nassert sum_digits(10000000000) == 1",
+    "assert sum_digits(98765)==25\nassert sum_digits(0)==0\nassert sum_digits(123456789)==45\nassert sum_digits(999999999)==45\nassert sum_digits(111111111)==12",
+    "assert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(-123) == 6",
+    "assert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123) == 6\nassert sum_digits(456789) == 45\nassert sum_digits(9999999) == 45"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1336.0,
+    "small_out": 510.0,
+    "small_s": 10.223199604981346
+  },
+  "calls_plus": {
+    "small_in": 1084.0,
+    "small_out": 271.0,
+    "small_s": 5.438473549002083,
+    "large_in": 164.0,
+    "large_out": 81.0,
+    "large_s": 1.8256549189973157
+  },
+  "calls_samples": {
+    "small_in": 820.0,
+    "small_out": 393.0,
+    "small_s": 7.568402890028665
+  }
+}

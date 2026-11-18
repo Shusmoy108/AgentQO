@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-4",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Import the `heapq` module which provides an implementation of the heap queue algorithm, also known as the priority queue algorithm.\n2. Define a function named `heap_queue_largest` that takes two parameters: a list of numbers (`nums`) and an integer `n`.\n3. Use the `nlargest` method from the `heapq` module to find the `n` largest elements in the list `nums`. This method returns these elements in descending order by default.\n4. Return the result from step 3.\n5. Ensure the function is tested with the provided test case to verify its correctness.",
+  "reference_key": null,
+  "final_key_plus": "import heapq\n\ndef heap_queue_largest(nums, n):\n    return heapq.nlargest(n, nums)",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],3)==[85, 75, 65]\nassert heap_queue_largest([-10, -20, -30, -40, -50],2)==[-40, -30]\nassert heap_queue_largest([],3)==[]\nassert heap_queue_largest([100],1)==[100]\nassert heap_queue_largest([1, 2, 3, 4, 5],0)==[]\n```",
+    "coder": "```python\nimport heapq\n\ndef heap_queue_largest(nums, n):\n    return heapq.nlargest(n, nums)\n```",
+    "verifier": "PICK: A\n```python\nimport heapq\n\ndef heap_queue_largest(nums, n):\n    return heapq.nlargest(n, nums)\n```",
+    "fixer": "```python\nimport heapq\n\ndef heap_queue_largest(nums, n):\n    return heapq.nlargest(n, nums)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `extract_quotation` that takes a single argument, a string.\n3. Use regular expressions to find all occurrences of text enclosed in double quotes.\n4. Return the list of found strings.\n5. Test the function with provided data points.",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef extract_quotation(text):\n    # Use regular expression to find all occurrences of text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', text)\n    return matches",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert extract_quotation('The quick brown fox jumps over the lazy dog') == ['quick', 'brown', 'fox', 'jumps', 'over', 'lazy', 'dog']\nassert extract_quotation('\"Hello\" \"World\" \"Python\"') == ['Hello', 'World', 'Python']\nassert extract_quotation('No quotes here!') == []\nassert extract_quotation('\"Single quote\" \"Double quote\" \"\"') == ['Single quote', 'Double quote', '']\nassert extract_quotation('\"A\" \"B\" \"C\" \"D\" \"E\" \"F\" \"G\" \"H\" \"I\" \"J\" \"K\" \"L\" \"M\" \"N\" \"O\" \"P\" \"Q\" \"R\" \"S\" \"T\" \"U\" \"V\" \"W\" \"X\" \"Y\" \"Z\" \"a\" \"b\" \"c\" \"d\" \"e\" \"f\" \"g\" \"h\" \"i\" \"j\" \"k\" \"l\" \"m\" \"n\" \"o\" \"p\" \"q\" \"r\" \"s\" \"t\" \"u\" \"v\" \"w\" \"x\" \"y\" \"z\" \"!@#$%^&*()_+-=[]{}|;:,.<>/?`~')\n```",
+        "coder": "```python\nimport re\n\ndef extract_quotation(text):\n    # Use regular expression to find all occurrences of text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', text)\n    return matches\n```",
+        "verifier": "PICK: B\n\n```python\nimport re\n\ndef extract_quotation(text):\n    # Use regular expression to find all occurrences of text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', text)\n    return matches\n```",
+        "fixer": "```python\nimport re\n\ndef extract_quotation(text):\n    # Use regular expression to find all occurrences of text enclosed in double quotes\n    matches = re.findall(r'\"([^\"]+)\"', text)\n    return matches\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import the `heapq` module which provides an implementation of the heap queue algorithm, also known as the priority queue algorithm.\n2. Define a function named `heap_queue_largest` that takes two parameters: a list of numbers (`nums`) and an integer `n`.\n3. Use the `nlargest` method from the `heapq` module to find the `n` largest elements in the list `nums`. The `nlargest` method by default returns these elements in ascending order.\n4. Return the result from step 3.\n5. Ensure the function is tested with the provided test case to verify its correctness.",
+      "quality": 1.0,
+      "final_key": "import heapq\n\ndef heap_queue_largest(nums, n):\n    # Find the n largest elements in the list nums\n    largest_elements = heapq.nlargest(n, nums)\n    # Return the result\n    return largest_elements",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],3)==[85, 75, 65]\nassert heap_queue_largest([-10, -20, -30, -40, -50],2)==[-40, -30]\nassert heap_queue_largest([],3)==[]\nassert heap_queue_largest([100],1)==[100]\nassert heap_queue_largest([1, 2, 3, 4, 5],0)==[]\n```",
+        "coder": "```python\nimport heapq\n\ndef heap_queue_largest(nums, n):\n    # Find the n largest elements in the list nums\n    largest_elements = heapq.nlargest(n, nums)\n    # Return the result\n    return largest_elements\n```",
+        "verifier": "PICK: A\n```python\nimport heapq\n\ndef heap_queue_largest(nums, n):\n    # Find the n largest elements in the list nums\n    largest_elements = heapq.nlargest(n, nums)\n    # Return the result\n    return largest_elements\n```",
+        "fixer": "```python\nimport heapq\n\ndef heap_queue_largest(nums, n):\n    # Find the n largest elements in the list nums\n    largest_elements = heapq.nlargest(n, nums)\n    # Return the result\n    return largest_elements\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `opposite_signs` that takes two parameters, `a` and `b`.\n2. Inside the function, use the logical operator `!=` to compare the signs of `a` and `b`. If they are different, it means they have opposite signs, so return `True`.\n3. If the signs are the same, return `False`.\n\nHere's the complete implementation:\n\n```python\ndef opposite_signs(a, b):\n    # Compare the signs of a and b using !=\n    if a != b:\n        return True\n    else:\n        return False\n```\n\nThis function will correctly determine whether two integers have opposite signs based on the provided test case.",
+      "quality": 0.0,
+      "final_key": "import heapq\n\ndef heap_queue_largest(nums, n):\n    # Use nlargest from heapq to get the n largest elements\n    largest_nums = heapq.nlargest(n, nums)\n    # Return the largest numbers sorted in descending order\n    return sorted(largest_nums, reverse=True)\n\n# Test cases\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],3)==[85, 75, 65]\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],2)==[85, 75]\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],5)==[85, 75, 65, 58, 35]\nassert opposite_signs(-5, -10) == True\nassert opposite_signs(0, 0) == False\nassert opposite_signs(10, 20) == True\nassert opposite_signs(-10, 10) == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert opposite_signs(-5, -10) == True\nassert opposite_signs(0, 0) == False\nassert opposite_signs(10, 20) == True\nassert opposite_signs(-10, 10) == False\nassert opposite_signs(0, 1) == True\n```",
+        "coder": "```python\ndef opposite_signs(a, b):\n    # Compare the signs of a and b using !=\n    if a != b:\n        return True\n    else:\n        return False\n```",
+        "verifier": "PICK: B\n\n```python\nimport heapq\n\ndef heap_queue_largest(nums, n):\n    # Use nlargest from heapq to get the n largest elements\n    largest_nums = heapq.nlargest(n, nums)\n    # Return the largest numbers sorted in descending order\n    return sorted(largest_nums, reverse=True)\n\n# Test cases\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],3)==[85, 75, 65]\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],2)==[85, 75]\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],5)==[85, 75, 65, 58, 35]\nassert opposite_signs(-5, -10) == True\nassert opposite_signs(0, 0) == False\nassert opposite_signs(10, 20) == True\nassert opposite_signs(-10, 10) == False\n```",
+        "fixer": "```python\nimport heapq\n\ndef heap_queue_largest(nums, n):\n    # Use nlargest from heapq to get the n largest elements\n    largest_nums = heapq.nlargest(n, nums)\n    # Return the largest numbers sorted in descending order\n    return sorted(largest_nums, reverse=True)\n\n# Test cases\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],3)==[85, 75, 65]\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],2)==[85, 75]\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],5)==[85, 75, 65, 58, 35]\nassert opposite_signs(-5, -10) == True\nassert opposite_signs(0, 0) == False\nassert opposite_signs(10, 20) == True\nassert opposite_signs(-10, 10) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "from heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers",
+  "sample_keys": [
+    "import heapq\n\ndef heap_queue_largest(numbers, n):\n    # Use nlargest from heapq to get the n largest elements\n    largest_numbers = heapq.nlargest(n, numbers)\n    return largest_numbers",
+    "import heapq\n\ndef heap_queue_largest(numbers, n):\n    return heapq.nlargest(n, numbers)",
+    "import heapq\n\ndef heap_queue_largest(numbers, n):\n    largest_elements = heapq.nlargest(n, numbers)\n    largest_elements.sort(reverse=True)\n    return largest_elements"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2181.0,
+    "small_out": 438.0,
+    "small_s": 9.559393584990175
+  },
+  "calls_plus": {
+    "large_in": 155.0,
+    "large_out": 128.0,
+    "large_s": 2.8072599850129336,
+    "small_in": 1891.0,
+    "small_out": 230.0,
+    "small_s": 4.171473605994834
+  },
+  "calls_samples": {
+    "small_in": 6306.0,
+    "small_out": 1218.0,
+    "small_s": 21.31352385005448
+  }
+}

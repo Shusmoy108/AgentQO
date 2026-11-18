@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-257",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+  "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "final_key_plus": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def swap_numbers(num1, num2):\n    return (num2, num1)\n    \n# Test assertions to verify correctness\nassert swap_numbers(10,20)==(20,10)\nassert swap_numbers(15,17)==(17,15)\nassert swap_numbers(100,200)==(200,100)\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert\tswap_numbers(1000, -1000) == (-1000, 1000)\n\nprint(\"All tests passed!\")",
+      "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "key_differs": true,
+      "text": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n    \n# Test assertions to verify correctness\nassert swap_numbers(10,20)==(20,10)\nassert swap_numbers(15,17)==(17,15)\nassert swap_numbers(100,200)==(200,100)\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert\tswap_numbers(1000, -1000) == (-1000, 1000)\n\nprint(\"All tests passed!\")\n```",
+      "quality": 1.0,
+      "final_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def swap_numbers(num1, num2):\n    return (num2, num1)\n\nassert swap_numbers(10,20)==(20,10)\nassert swap_numbers(15,17)==(17,15)\nassert swap_numbers(100,200)==(200,100)\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\n# Pass for test cases not explicitly mentioned but passed by expected output\nassert swap_numbers(1000, -1000) == (-1000, 1000)",
+      "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "key_differs": true,
+      "text": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n\nassert swap_numbers(10,20)==(20,10)\nassert swap_numbers(15,17)==(17,15)\nassert swap_numbers(100,200)==(200,100)\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\n# Pass for test cases not explicitly mentioned but passed by expected output\nassert swap_numbers(1000, -1000) == (-1000, 1000)\n```",
+      "quality": 1.0,
+      "final_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False",
+      "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "key_differs": true,
+      "text": "```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False\n```",
+      "quality": 1.0,
+      "final_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "sample_keys": [
+    "def swap_numbers(num1, num2):\n    return (num2, num1)",
+    "def swap_numbers(num1, num2):\n    return (num2, num1)",
+    "def swap_numbers(num1, num2):\n    return (num2, num1)",
+    "def swap_numbers(num1, num2):\n    return (num2, num1)",
+    "def swap_numbers(num1, num2):\n    return (num2, num1)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1299.0,
+    "small_out": 243.0,
+    "small_s": 5.342892476008274
+  },
+  "calls_plus": {
+    "small_in": 965.0,
+    "small_out": 220.0,
+    "small_s": 4.852378307987237,
+    "large_in": 334.0,
+    "large_out": 23.0,
+    "large_s": 0.5462850290059578
+  },
+  "calls_samples": {
+    "small_in": 1670.0,
+    "small_out": 115.0,
+    "small_s": 1.4780525700189173
+  }
+}

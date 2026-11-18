@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-268",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert find_star_num(1) == 1\nassert find_star_num(2) == 13\nassert find_star_num(4) == 91\nassert find_star_num(5) == 151\nassert find_star_num(0) == 0\n```",
+  "reference_key": "assert find_star_num(1) == 1\nassert find_star_num(2) == 13\nassert find_star_num(4) == 91\nassert find_star_num(5) == 151\nassert find_star_num(0) == 0",
+  "final_key_plus": "def find_star_num(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    star_num = (n * (n + 1)) // 2 * 6\n    return star_num",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef find_star_num(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    star_num = (n * (n + 1)) // 2 * 6\n    return star_num\n```",
+    "fixer": "```python\ndef find_star_num(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    star_num = (n * (n + 1)) // 2 * 6\n    return star_num\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert find_star_num(4) == 98, \"Test case 4 failed\"\nassert find_star_num(0) == -1, \"Test case 0 failed\"  # Edge case where n is 0\nassert find_star_num(-1) == -1, \"Test case -1 failed\"  # Edge case for negative input\nassert find_star_num(1) == 3, \"Test case 1 failed\"  # Single star is just itself\nassert find_star_num(2) == 13, \"Test case 2 failed\"  # Two stars form an equilateral triangle\nassert find_star_num(10) == 945, \"Test case 10 failed\"  # More stars form a triangular pyramid-like shape",
+      "reference_key": "assert find_star_num(1) == 1\nassert find_star_num(2) == 13\nassert find_star_num(4) == 91\nassert find_star_num(5) == 151\nassert find_star_num(0) == 0",
+      "key_differs": true,
+      "text": "```python\nassert find_star_num(4) == 98, \"Test case 4 failed\"\nassert find_star_num(0) == -1, \"Test case 0 failed\"  # Edge case where n is 0\nassert find_star_num(-1) == -1, \"Test case -1 failed\"  # Edge case for negative input\nassert find_star_num(1) == 3, \"Test case 1 failed\"  # Single star is just itself\nassert find_star_num(2) == 13, \"Test case 2 failed\"  # Two stars form an equilateral triangle\nassert find_star_num(10) == 945, \"Test case 10 failed\"  # More stars form a triangular pyramid-like shape\n```",
+      "quality": 0.0,
+      "final_key": "def find_star_num(n):\n    if n < 0:\n        return -1\n    elif n == 0:\n        return -1\n    else:\n        star_num = (n * (n + 1)) // 2 * 6\n        return star_num",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef find_star_num(n):\n    if n < 0:\n        return -1\n    elif n == 0:\n        return -1\n    else:\n        star_num = (n * (n + 1)) // 2 * 6\n        return star_num\n```",
+        "fixer": "```python\ndef find_star_num(n):\n    if n < 0:\n        return -1\n    elif n == 0:\n        return -1\n    else:\n        star_num = (n * (n + 1)) // 2 * 6\n        return star_num\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert find_star_num(4) == 89\nassert find_star_num(5) == 145\nassert find_star_num(0) == 3\nassert find_star_num(1) == 1",
+      "reference_key": "assert find_star_num(1) == 1\nassert find_star_num(2) == 13\nassert find_star_num(4) == 91\nassert find_star_num(5) == 151\nassert find_star_num(0) == 0",
+      "key_differs": true,
+      "text": "```python\nassert find_star_num(4) == 89\nassert find_star_num(5) == 145\nassert find_star_num(0) == 3\nassert find_star_num(1) == 1\n```",
+      "quality": 0.0,
+      "final_key": "def find_star_num(n):\n    star_num = (n * (n + 1)) // 2 * 6\n    return star_num",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find_star_num(n):\n    star_num = (n * (n + 1)) // 2 * 6\n    return star_num\n```",
+        "fixer": "```python\ndef find_star_num(n):\n    star_num = (n * (n + 1)) // 2 * 6\n    return star_num\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert find_adverb_position(\"quickly! let's go\") == (1, 6, 'quickly')\nassert find_adverb_position(\"he was very quickly\") == (3, 8, 'very')\nassert find_adverb_position(\"the sky is clear\") == (4, 5, 'clear')\nassert find_adverb_position(\"it is raining heavily\") == (4, 9, 'heavily')\nassert find_adverb_position(\"no adverbs here\") == None",
+      "reference_key": "assert find_star_num(1) == 1\nassert find_star_num(2) == 13\nassert find_star_num(4) == 91\nassert find_star_num(5) == 151\nassert find_star_num(0) == 0",
+      "key_differs": true,
+      "text": "```python\nassert find_adverb_position(\"quickly! let's go\") == (1, 6, 'quickly')\nassert find_adverb_position(\"he was very quickly\") == (3, 8, 'very')\nassert find_adverb_position(\"the sky is clear\") == (4, 5, 'clear')\nassert find_adverb_position(\"it is raining heavily\") == (4, 9, 'heavily')\nassert find_adverb_position(\"no adverbs here\") == None\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef find_star_num(n):\n    star_num = (n * (n + 1)) // 2 * 6\n    return star_num\n\n# Test cases\nassert find_star_num(3) == 37\nassert find_star_num(4) == 73\nassert find_star_num(5) == 121\nassert find_adverb_position(\"quickly! let's go\") == (1, 6, 'quickly')\nassert find_adverb_position(\"he was very quickly\") == (3, 8, 'very')\nassert find_adverb_position(\"the sky is clear\") == (4, 5, 'clear')\nassert find_adverb_position(\"it is raining heavily\") == (4, 9, 'heavily')\nassert find_adverb_position(\"no adverbs here\") == None\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert find_star_num(4) == 80\nassert find_star_num(5) == 121\nassert find_star_num(6) == 186\nassert find_star_num(7) == 273\nassert find_star_num(8) == 396",
+  "sample_keys": [
+    "assert find_star_num(4) == 84\nassert find_star_num(5) == 153\nassert find_star_num(1) == 1\nassert find_star_num(0) == 1\nassert find_star_num(-1) == -1",
+    "assert find_star_num(5) == 90\nassert find_star_num(1) == 1\nassert find_star_num(-1) == -1\nassert find_star_num(0) == 0\nassert find_star_num(6) == 366",
+    "assert find_star_num(4) == 61\nassert find_star_num(5) == 91\nassert find_star_num(0) == 0\nassert find_star_num(-1) == 0\nassert find_star_num(2) == 25",
+    "assert find_star_num(4) == 81\nassert find_star_num(5) == 132\nassert find_star_num(7) == 190\nassert find_star_num(10) == 285\nassert find_star_num(1) == 2",
+    "assert find_star_num(0) == 0\nassert find_star_num(1) == 3\nassert find_star_num(2) == 19\nassert find_star_num(4) == 81\nassert find_star_num(5) == 187"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1176.0,
+    "small_out": 260.0,
+    "small_s": 5.697602231026394
+  },
+  "calls_plus": {
+    "small_in": 1023.0,
+    "small_out": 229.0,
+    "small_s": 4.221198159008054,
+    "large_in": 151.0,
+    "large_out": 64.0,
+    "large_s": 1.4938913630030584
+  },
+  "calls_samples": {
+    "small_in": 755.0,
+    "small_out": 385.0,
+    "small_s": 7.243009492056444
+  }
+}

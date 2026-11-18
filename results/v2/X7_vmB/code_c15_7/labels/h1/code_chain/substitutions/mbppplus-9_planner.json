@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-9",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `find_Rotations` that takes a single parameter `s`, which is the input string.\n2. Initialize a variable `n` to store the length of the string `s`.\n3. Iterate through the range from 1 to `n-1` (since rotating by `n` times will result in the original string).\n4. For each rotation, slice the string into two parts and concatenate them in reverse order to simulate the rotation.\n5. Check if the rotated string matches the original string; if it does, return the current rotation count as the result. If no match is found after all iterations, return 1, indicating the string requires at least one rotation to match itself.",
+  "reference_key": null,
+  "final_key_plus": "def find_Rotations(s):\n    n = len(s)\n    for i in range(1, n):\n        rotated_string = s[i:] + s[:i]\n        if rotated_string == s:\n            return i\n    return 1",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert find_Rotations(\"abcdef\") == 6\nassert find_Rotations(\"abab\") == 2\nassert find_Rotations(\"abcd\") == 4\nassert find_Rotations(\"a\") == 1\nassert find_Rotations(\"\") == 1\n```",
+    "coder": "```python\ndef find_Rotations(s):\n    n = len(s)\n    for i in range(1, n):\n        rotated_string = s[i:] + s[:i]\n        if rotated_string == s:\n            return i\n    return 1\n```",
+    "verifier": "PICK: A\n\n```python\ndef find_Rotations(s):\n    n = len(s)\n    for i in range(1, n):\n        rotated_string = s[i:] + s[:i]\n        if rotated_string == s:\n            return i\n    return 1\n```",
+    "fixer": "```python\ndef find_Rotations(s):\n    n = len(s)\n    for i in range(1, n):\n        rotated_string = s[i:] + s[:i]\n        if rotated_string == s:\n            return i\n    return 1\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_range_list` that takes three parameters: `numbers`, `start_index`, and `end_index`.\n2. Initialize a variable `total_sum` to zero.\n3. Iterate over the list from `start_index` to `end_index` (inclusive).\n4. Add each number in the iteration to `total_sum`.\n5. Return the value of `total_sum`.\n\nHere's the complete implementation:\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```\n\nThis function correctly calculates the sum of numbers within the specified range in the given list.",
+      "quality": 0.0,
+      "final_key": "def find_Rotations(s):\n    if len(s) <= 1:\n        return 0\n    \n    min_rotations = float('inf')\n    \n    for i in range(1, len(s)):\n        rotated_s = s[i:] + s[:i]\n        if rotated_s == s:\n            min_rotations = min(min_rotations, i)\n    \n    return min_rotations",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_Rotations(\"aaaa\") == 1\nassert find_Rotations(\"abab\") == 2\nassert find_Rotations(\"abcd\") == 4\nassert find_Rotations(\"\") == 0\nassert find_Rotations(\"a\") == 0\n```",
+        "coder": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+        "verifier": "PICK: B\n```python\ndef find_Rotations(s):\n    if len(s) <= 1:\n        return 0\n    \n    min_rotations = float('inf')\n    \n    for i in range(1, len(s)):\n        rotated_s = s[i:] + s[:i]\n        if rotated_s == s:\n            min_rotations = min(min_rotations, i)\n    \n    return min_rotations\n```",
+        "fixer": "```python\ndef find_Rotations(s):\n    if len(s) <= 1:\n        return 0\n    \n    min_rotations = float('inf')\n    \n    for i in range(1, len(s)):\n        rotated_s = s[i:] + s[:i]\n        if rotated_s == s:\n            min_rotations = min(min_rotations, i)\n    \n    return min_rotations\n\n# Test cases\nassert find_Rotations(\"aaaa\") == 1\nassert find_Rotations(\"ab\") == 2\nassert find_Rotations(\"abc\") == 3\nassert find_Rotations(\"aaaa\") == 1\nassert find_Rotations(\"abab\") == 2\nassert find_Rotations(\"abcd\") == 4\nassert find_Rotations(\"\") == 0\nassert find_Rotations(\"a\") == 0\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `find_Rotations` that takes a single parameter `s`, which is the input string.\n2. Initialize a variable `n` to store the length of the string `s`.\n3. Iterate through the range from 0 to `n-1` (since rotating by `n` times will result in the original string).\n4. For each rotation, slice the string into two parts and concatenate them in reverse order to simulate the rotation.\n5. Check if the rotated string matches the original string; if it does, return the current rotation count as the result. If no match is found after all iterations, return `n+1`, indicating the string requires at least `n` rotations to match itself.",
+      "quality": 0.0,
+      "final_key": "def find_Rotations(s):\n    n = len(s)\n    for i in range(n):\n        rotated = s[i:] + s[:i]\n        if rotated == s:\n            return i\n    return n + 1",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_Rotations(\"abcdef\") == 6\nassert find_Rotations(\"abab\") == 1\nassert find_Rotations(\"abcd\") == 4\nassert find_Rotations(\"a\") == 0\nassert find_Rotations(\"\") == 0\n```",
+        "coder": "```python\ndef find_Rotations(s):\n    n = len(s)\n    for i in range(n):\n        rotated = s[i:] + s[:i]\n        if rotated == s:\n            return i\n    return n + 1\n```",
+        "verifier": "PICK: A\n\n```python\ndef find_Rotations(s):\n    n = len(s)\n    for i in range(n):\n        rotated = s[i:] + s[:i]\n        if rotated == s:\n            return i\n    return n + 1\n```",
+        "fixer": "```python\ndef find_Rotations(s):\n    n = len(s)\n    for i in range(n):\n        rotated = s[i:] + s[:i]\n        if rotated == s:\n            return i\n    return n + 1\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two pointers, `left` and `right`, both starting at the beginning of the list.\n2. Iterate through the list using the `right` pointer.\n3. If the element at the `right` pointer is zero, increment the `right` pointer.\n4. If the element at the `right` pointer is non-zero, swap it with the element at the `left` pointer and then increment both pointers.\n5. Continue this process until the `right` pointer reaches the end of the list.\n6. Return the modified list.\n\nThis approach ensures that all zeros are moved to the end of the list while maintaining the relative order of non-zero elements.",
+      "quality": 0.0,
+      "final_key": "def find_Rotations(s):\n    left = right = 0\n    n = len(s)\n    \n    while right < n:\n        if s[right] == '0':\n            right += 1\n        else:\n            s[left], s[right] = s[right], s[left]\n            left += 1\n            right += 1\n    \n    return s",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_Rotations(\"abcd\") == \"abcd\"\nassert find_Rotations(\"abca\") == \"baca\"\nassert find_Rotations(\"abcba\") == \"cbaa\"\nassert find_Rotations(\"aa\") == \"aa\"\nassert find_Rotations(\"\") == \"\"\n```",
+        "coder": "```python\ndef find_Rotations(s):\n    left = right = 0\n    n = len(s)\n    \n    while right < n:\n        if s[right] == '0':\n            right += 1\n        else:\n            s[left], s[right] = s[right], s[left]\n            left += 1\n            right += 1\n    \n    return s\n```",
+        "verifier": "PICK: A\n\n```python\ndef find_Rotations(s):\n    left = right = 0\n    n = len(s)\n    \n    while right < n:\n        if s[right] == '0':\n            right += 1\n        else:\n            s[left], s[right] = s[right], s[left]\n            left += 1\n            right += 1\n    \n    return s\n```",
+        "fixer": "```python\ndef find_Rotations(s):\n    left = right = 0\n    n = len(s)\n    \n    while right < n:\n        if s[right] == '0':\n            right += 1\n        else:\n            s[left], s[right] = s[right], s[left]\n            left += 1\n            right += 1\n    \n    return s\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def find_Rotations(s):\n    rotations = 0\n    while s != s[1:] + s[0]:\n        s = s[1:] + s[0]\n        rotations += 1\n    return rotations",
+  "sample_keys": [
+    "def find_Rotations(s):\n    count = 0\n    for i in range(len(s)):\n        rotated = s[i:] + s[:i]\n        if rotated == s:\n            count += 1\n    return count",
+    "def find_Rotations(s):\n    rot_count = 0\n    while True:\n        if s == s[0:] + s[:0]:\n            break\n        else:\n            rot_count += 1\n            s = s[1:]\n    return rot_count",
+    "def find_Rotations(s):\n    s_list = list(s)\n    for i in range(1, len(s)):\n        s_list.insert(0, s_list.pop())\n        if ''.join(s_list) == s:\n            return i\n    return -1"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1039.0,
+    "small_out": 371.0,
+    "small_s": 7.2444680070038885
+  },
+  "calls_plus": {
+    "large_in": 114.0,
+    "large_out": 149.0,
+    "large_s": 3.346902757999487,
+    "small_in": 1231.0,
+    "small_out": 237.0,
+    "small_s": 4.6202616810041945
+  },
+  "calls_samples": {
+    "small_in": 4098.0,
+    "small_out": 1189.0,
+    "small_s": 20.545197557046777
+  }
+}

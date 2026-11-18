@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-59",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Understand that the nth octagonal number can be calculated using the formula: \\( O_n = n \\times (3n - 2) \\).\n2. Define a function named `is_octagonal` that takes an integer `n` as its parameter.\n3. Inside the function, apply the formula to calculate the nth octagonal number.\n4. Return the result of the calculation.\n5. Test the function with the provided test case to ensure it works correctly.",
+  "reference_key": null,
+  "final_key_plus": "def is_octagonal(n):\n    # Calculate the nth octagonal number using the formula O_n = n * (3n - 2)\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 40\nassert is_octagonal(5) == 65\n```",
+    "coder": "```python\ndef is_octagonal(n):\n    # Calculate the nth octagonal number using the formula O_n = n * (3n - 2)\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number\n```",
+    "verifier": "PICK: A\n\n```python\ndef is_octagonal(n):\n    # Calculate the nth octagonal number using the formula O_n = n * (3n - 2)\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number\n```",
+    "fixer": "```python\ndef is_octagonal(n):\n    # Calculate the nth octagonal number using the formula O_n = n * (3n - 2)\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `add_tuple` that takes two parameters: `lst` (the list) and `tup` (the tuple).\n2. Use the `extend()` method of the list to append all elements of the tuple to the end of the list.\n3. Return the modified list.\n\nHere's the complete implementation:\n\n```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```\n\nThis function will correctly add the elements of the tuple to the end of the list and return the updated list.",
+      "quality": 0.0,
+      "final_key": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n\ndef is_octagonal(n):\n    if n < 1:\n        return False\n    # The formula for the nth octagonal number is 3n^2 - 2n\n    return 3 * n**2 - 2 * n == n\n\n# Test cases\nassert is_octagonal(5) == 65\nassert is_octagonal(10) == 280\nassert is_octagonal(15) == 645\nassert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 49\nassert is_octagonal(5) == 65",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 49\nassert is_octagonal(5) == 65\n```",
+        "coder": "```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```",
+        "verifier": "PICK: B\n```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n\ndef is_octagonal(n):\n    if n < 1:\n        return False\n    # The formula for the nth octagonal number is 3n^2 - 2n\n    return 3 * n**2 - 2 * n == n\n\n# Test cases\nassert is_octagonal(5) == 65\nassert is_octagonal(10) == 280\nassert is_octagonal(15) == 645\nassert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 49\nassert is_octagonal(5) == 65\n```",
+        "fixer": "```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n\ndef is_octagonal(n):\n    if n < 1:\n        return False\n    # The formula for the nth octagonal number is 3n^2 - 2n\n    return 3 * n**2 - 2 * n == n\n\n# Test cases\nassert is_octagonal(5) == 65\nassert is_octagonal(10) == 280\nassert is_octagonal(15) == 645\nassert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\nassert is_octagonal(4) == 49\nassert is_octagonal(5) == 65\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Understand that the nth octagonal number can be calculated using the formula: \\( O_n = n \\times (3n - 2) \\).\n2. Define a function named `is_octagonal` that takes an integer `n` as its parameter.\n3. Inside the function, apply the formula to calculate the nth octagonal number.\n4. Return the result of the calculation.\n5. Test the function with the provided test case to ensure it returns the correct value for valid inputs, but incorrectly identifies invalid inputs as valid because the formula assumes valid n values.",
+      "quality": 1.0,
+      "final_key": "def is_octagonal(n):\n    if n < 0:\n        return False\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_octagonal(-1) == False\nassert is_octagonal(0) == 0\nassert is_octagonal(1) == 1\nassert is_octagonal(2) == 8\nassert is_octagonal(3) == 21\n```",
+        "coder": "```python\ndef is_octagonal(n):\n    if n < 0:\n        return False\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number\n```",
+        "verifier": "PICK: A\n\n```python\ndef is_octagonal(n):\n    if n < 0:\n        return False\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number\n```",
+        "fixer": "```python\ndef is_octagonal(n):\n    if n < 0:\n        return False\n    # Calculate the nth octagonal number using the formula\n    octagonal_number = n * (3 * n - 2)\n    return octagonal_number\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_charac` that takes one parameter, `s`, which is the input string.\n2. Initialize a variable `char_count` to zero.\n3. Iterate over each character in the string `s`.\n4. For each character, increment the `char_count` by one.\n5. After iterating through all characters, return the value of `char_count`.\n\nThis approach ensures that we correctly count the total number of characters in the given string.",
+      "quality": 0.0,
+      "final_key": "def count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n\ndef is_octagonal(n):\n    if n < 1:\n        return False\n    # The formula for the nth octagonal number is 3n^2 - 2n\n    return (3 * n**2 - 2 * n) % 9 == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_charac(\"hello\") == 5\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"aaaaaaa\") == 7\nassert count_charac(\"ab\") == 2\n```",
+        "coder": "```python\ndef count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n```",
+        "verifier": "PICK: B\n```python\ndef count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n\ndef is_octagonal(n):\n    if n < 1:\n        return False\n    # The formula for the nth octagonal number is 3n^2 - 2n\n    return (3 * n**2 - 2 * n) % 9 == 0\n```",
+        "fixer": "```python\ndef count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n\ndef is_octagonal(n):\n    if n < 1:\n        return False\n    # The formula for the nth octagonal number is 3n^2 - 2n\n    return (3 * n**2 - 2 * n) % 9 == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "def is_octagonal(n):\n    # Calculate the formula for the nth octagonal number\n    octagonal_number = (3 * n**2 - n) / 2\n    \n    # Check if the calculated result is equal to n\n    return octagonal_number == n",
+    null,
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1472.0,
+    "small_out": 426.0,
+    "small_s": 6.0684654700162355
+  },
+  "calls_plus": {
+    "large_in": 101.0,
+    "large_out": 99.0,
+    "large_s": 3.252511233004043,
+    "small_in": 1110.0,
+    "small_out": 233.0,
+    "small_s": 5.097712172020692
+  },
+  "calls_samples": {
+    "small_in": 4061.0,
+    "small_out": 1164.0,
+    "small_s": 24.392411575099686
+  }
+}

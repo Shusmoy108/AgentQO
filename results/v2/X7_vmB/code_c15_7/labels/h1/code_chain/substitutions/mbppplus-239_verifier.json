@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-239",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]\n```",
+  "reference_key": "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]",
+  "final_key_plus": "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.6,
+  "baseline_agrees": false,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(max(2 * (i - 1), j // 2), min(j, n)):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]\n\n# Test cases\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 2) == 6\nassert get_total_number_of_sequences(16, 3) == 84\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 2\nassert get_total_number_of_sequences(7, 6) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100",
+      "reference_key": "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]",
+      "key_differs": true,
+      "text": "PICK: B\n```python\ndef get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(max(2 * (i - 1), j // 2), min(j, n)):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]\n\n# Test cases\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 2) == 6\nassert get_total_number_of_sequences(16, 3) == 84\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 2\nassert get_total_number_of_sequences(7, 6) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100\n```",
+      "quality": 0.0,
+      "final_key": "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(max(2 * (i - 1), j // 2), min(j, n)):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]\n\n# Test cases\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 2) == 6\nassert get_total_number_of_sequences(16, 3) == 84\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 2\nassert get_total_number_of_sequences(7, 6) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]",
+      "key_differs": true,
+      "text": "PICK: B",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+      "reference_key": "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]",
+      "key_differs": true,
+      "text": "PICK: A\n\n```python\ndef min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    null,
+    "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]",
+    "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]",
+    null,
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2365.0,
+    "small_out": 836.0,
+    "small_s": 15.109712236997439
+  },
+  "calls_plus": {
+    "small_in": 1374.0,
+    "small_out": 831.0,
+    "small_s": 14.913304579997202,
+    "large_in": 991.0,
+    "large_out": 239.0,
+    "large_s": 7.083919764001621
+  },
+  "calls_samples": {
+    "small_in": 4955.0,
+    "small_out": 492.0,
+    "small_s": 10.345807920064544
+  }
+}

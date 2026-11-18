@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-261",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n```",
+  "reference_key": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+  "final_key_plus": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError: Division by zero\"",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == (0, 2, 2, 3)\n```",
+    "verifier": "PICK: B\n\n```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError: Division by zero\"\n```",
+    "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError: Division by zero\"\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def division_elements(tuple1, tuple2):\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+      "reference_key": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef division_elements(tuple1, tuple2):\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n```",
+      "quality": 1.0,
+      "final_key": "def division_elements(tuple1, tuple2):\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError division by zero\"",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == (0, 2, 2, 3)\n```",
+        "verifier": "PICK: B\n\n```python\ndef division_elements(tuple1, tuple2):\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError division by zero\"\n```",
+        "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError division by zero\"\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import Tuple\n\ndef division_elements(tuple1: Tuple[int], tuple2: Tuple[int]) -> Tuple[float]:\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+      "reference_key": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+      "key_differs": true,
+      "text": "```python\nfrom typing import Tuple\n\ndef division_elements(tuple1: Tuple[int], tuple2: Tuple[int]) -> Tuple[float]:\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n```",
+      "quality": 1.0,
+      "final_key": "from typing import Tuple\n\ndef division_elements(tuple1: Tuple[int], tuple2: Tuple[int]) -> Tuple[float]:\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return tuple(0 for _ in range(len(tuple1)))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == (0, 2, 2, 3)\n```",
+        "verifier": "PICK: B\n```python\nfrom typing import Tuple\n\ndef division_elements(tuple1: Tuple[int], tuple2: Tuple[int]) -> Tuple[float]:\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return tuple(0 for _ in range(len(tuple1)))\n```",
+        "fixer": "```python\nfrom typing import Tuple\n\ndef division_elements(tuple1: Tuple[int], tuple2: Tuple[int]) -> Tuple[float]:\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return tuple(0 for _ in range(len(tuple1)))\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def find_lucas(n):\n    if n <= 0:\n        return None\n    elif n == 1:\n        return 2\n    elif n == 2:\n        return 1\n    \n    a, b = 2, 1\n    for _ in range(2, n):\n        a, b = b, a + b\n    \n    return b",
+      "reference_key": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef find_lucas(n):\n    if n <= 0:\n        return None\n    elif n == 1:\n        return 2\n    elif n == 2:\n        return 1\n    \n    a, b = 2, 1\n    for _ in range(2, n):\n        a, b = b, a + b\n    \n    return b\n```",
+      "quality": 1.0,
+      "final_key": "def division_elements(tuple1, tuple2):\n    # Check if both tuples have the same length\n    if len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must have the same length\")\n    \n    # Perform element-wise division\n    result = tuple(a / b for a, b in zip(tuple1, tuple2))\n    \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9),(-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0),(0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0),(5, 0, 3, 0)) == (2, 0, 2, 0)\nassert division_elements((10, 4, 6, 9),(0, 2, 3, 3)) == (0, 2, 2, 3)\n```",
+        "verifier": "PICK: B\n\n```python\ndef division_elements(tuple1, tuple2):\n    # Check if both tuples have the same length\n    if len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must have the same length\")\n    \n    # Perform element-wise division\n    result = tuple(a / b for a, b in zip(tuple1, tuple2))\n    \n    return result\n```",
+        "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    # Check if both tuples have the same length\n    if len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must have the same length\")\n    \n    # Perform element-wise division\n    result = tuple(a / b for a, b in zip(tuple1, tuple2))\n    \n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+  "sample_keys": [
+    "def division_elements(tuple1, tuple2):\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+    "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+    "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+    "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+    "def division_elements(tuple1, tuple2):\n    return tuple(x / y for x, y in zip(tuple1, tuple2))"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2249.0,
+    "small_out": 612.0,
+    "small_s": 13.281711839023046
+  },
+  "calls_plus": {
+    "small_in": 1899.0,
+    "small_out": 565.0,
+    "small_s": 12.251511606009444,
+    "large_in": 350.0,
+    "large_out": 47.0,
+    "large_s": 1.026007792999735
+  },
+  "calls_samples": {
+    "small_in": 1750.0,
+    "small_out": 210.0,
+    "small_s": 4.142812214035075
+  }
+}
