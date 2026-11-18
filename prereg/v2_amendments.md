@@ -665,3 +665,26 @@ minus the pick's held-out accuracy. HELD if, in both settings, the mean held-out
 (b) is within tau = 0.0134 of the exhaustive pick's held-out regret, and the mean number of evaluations of (a) and of (b)
 is <= 40% of the exhaustive count. Otherwise NOT HELD (each condition reported separately). Offline analysis only (no
 extra model calls), computed after X11 finishes; results in results/v2/X11/H5c/.
+
+#### L2-X11 addendum: H1d (RQ1, confirmatory on X11), registered 2026-11-18 14:33:36 UTC, before any X11 model call (no X11 model output exists; results/v2/X11 holds only the two split.json files from x11prep)
+
+Ranking source (PI decision at registration): the X5 / X7 per-agent labels were computed on the "label" split, i.e. on
+exactly the 200 problems X11 scores on, and no labels exist on the eval problems; ranking by them would select and score on
+the same problems. H1d therefore ranks agents from the X5 / X7 plan-evaluation per-problem data (math500_q15_7: 64 plans x
+300 eval problems; code_c15_7: 32 plans x 178 eval problems), which is disjoint from the X11 problems.
+- plain UV of agent a = accuracy(only_a) - accuracy(all_small) on the eval problems (point estimate); agents ranked by UV,
+  ties in structural order (agentqo.policies.v2_rules.structural_order).
+- confident_uv: agents whose 95% bootstrap CI lower bound (percentile; 2,000 paired resamples of eval problems, seed 0) of
+  the per-problem difference correct(only_a) - correct(all_small) is > 0, ordered by UV; the rest in structural order.
+- structural_topk: structural_order(workflow), as in the registered rules.
+- ec_real_topk: dropped (it needs label-run resamples, which exist only on the X11 problems).
+- eval-exhaustive: the plan with <= k upgrades with the best eval accuracy (ties: lower cost_units, then plan name).
+Pick for a ranking at budget k: the plan that upgrades exactly its top-k agents (only_<a> for k = 1).
+Scoring on X11 (X11a: 200 MATH-500, X11b: 200 MBPP+ held-out problems): regret_k = best X11 accuracy among all plans with
+<= k upgrades minus the pick's X11 accuracy. HELD if, in both settings, the UV pick's regret is <= 0.02 at k = 1 and at
+k = 2, AND at both k the UV regret exceeds the eval-exhaustive pick's regret by at most tau = 0.0134. Otherwise NOT HELD
+(each condition reported). Note (PI): with plan-data UV the k = 1 UV pick (only_<top agent>) equals the eval-exhaustive
+k = 1 pick by construction (both are the best single-upgrade plan on the eval problems, up to ties), so the "not worse than
+eval-exhaustive by tau" condition is only informative at k = 2; the regret <= 0.02 condition applies at k = 1 and k = 2.
+k = 3 is reported for all rankings (exploratory, no criterion). Offline analysis only (no extra
+model calls), computed after X11 finishes; results in results/v2/X11/H1d/.
