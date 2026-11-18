@@ -114,3 +114,7 @@ Times UTC. Choices made without asking, as instructed.
   are). X5 is run with the same 14 methods, budgets, 30 seeds and metrics (2 objectives; no latency truth, so no 3D
   runs) into results/search/new_settings/results.csv and reported in NEW_SETTINGS.md as "New settings", with S3's rho
   recomputed over 12 settings as supplementary.
+
+## 20261118T0336Z: S5b registered (docs/search_prereg_s5b.md, tag search-prereg-s5b-20261118T0336Z)
+- Written and tagged before any X8 file exists on v2-lease1 or locally. scripts/search/s5b.py is frozen at the tag;
+  it refuses to read X8 without the tag. One dry run on the eval file (retention 1.0) checked the pipeline.
