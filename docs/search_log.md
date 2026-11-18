@@ -168,3 +168,10 @@ Times UTC. Choices made without asking, as instructed.
 - EXTRA setting math500_q7_32 (X6, Qwen2.5 7B -> 32B, MATH-500, 64 plans, 300 problems), tier-priced under New
   settings and size-priced (32/7) under the exploratory size-priced section. X6/latency also landed; not used
   (latency truth stays X1 + latsim for the 11 registered settings; no latsim prediction exists for X6).
+
+## 2026-11-18 ~07:50Z: X8 landed (merge 318358bf); S5b run once: HELD
+- X8 at the frozen path results/v2/X8/complex_q15_7/plans/h3_plans.csv, all 1,024 plans scored (X8 reuses P2c's
+  labels, per its LABELS.txt). s5b.py and methods.py unchanged since search-prereg-s5b-20261118T0336Z; the
+  ground_truth/surrogates changes since the tag only touch EXTRA and "@size" settings (prices None for complex_q15_7).
+- Result: retention 0.9751 for both nsga2_pairwise_m3 and nsga2_active_m3 (>= 0.95: HELD); X8 HV / best X8 front HV
+  0.9542. Cross-check: the tagged code, run from a scratch worktree on the same X8 file, gave identical per-run rows.

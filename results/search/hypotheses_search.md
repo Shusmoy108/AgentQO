@@ -185,6 +185,22 @@ All methods (supplementary; TRUE_EVAL_FRONT = the true eval front's plans re-sco
 Caveat: retention > 1 means the X2 problems score higher for the same plans
 (easier draw); the stricter column divides by the best possible front on X2 itself.
 
+## S5b: HELD
+
+complex_q15_7, B = 102 (10%), seeds 0-29. X8 file: results/v2/X8/complex_q15_7/plans/h3_plans.csv (1024 plans scored of 1024). Retention = HV of the verified front's plans with X8 accuracy / with
+eval accuracy (eval API cost). Decision: mean retention >= 0.95 per method (docs/search_prereg_s5b.md).
+
+| method | retention [95% CI] | X8 HV / best X8 front HV | front plans | front plans missing in X8 (sum) |
+|---|---|---|---|---|
+| nsga2_pairwise_m3 | 0.9751 [0.9751, 0.9751] | 0.9542 | 9.0 | 0 |
+| nsga2_active_m3 | 0.9751 [0.9751, 0.9751] | 0.9542 | 9.1 | 0 |
+
+
+Supplementary (not in the decision): the true eval front re-scored on X8 keeps 0.987 of its HV (0.977 of the
+best X8 front). Plan accuracies correlate 0.925 (Spearman) between eval and X8; mean plan accuracy 0.659 vs
+0.665. Both methods return nearly the same front in every seed (retention SD <= 0.00003), so the CI is
+seed spread only, not problem-sampling uncertainty.
+
 ## S6 (confirmatory; docs/search_prereg_s6.md)
 
 
@@ -233,7 +249,7 @@ S5 uses X2, complete for all five settings (math_q15_7, hotpot_q15_7, hotpot_iso
 Landed after the registered run, reported below under New settings: X5 MATH-500 (math500_q15_7), X6 7B/32B
 (math_q7_32, math500_q7_32, hotpot_q7_32), X7 coding (code_c15_7; no fixed-rule methods, the code workflow
 graph is not on this branch), X3 cross-family (x3_cross_family; confirmatory test is S6(a)).
-Pending: X8 (S5b), laptop q4.
+X8 (complex_q15_7 on 200 new GSM8K problems) is S5b. Pending: laptop q4.
 
 ## New settings (landed after the registered run; not part of the S1-S4 verdicts)
 
@@ -457,7 +473,7 @@ S3 rho recomputed with the new settings (17 settings, supplementary): -0.140 (p 
 
 # Exploratory, not registered
 
-Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 HELD).
+Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 HELD, S5b HELD, S6(a) FAILED, S6(b) PARTIAL).
 
 (from results/search/exploratory/EXPLORATORY.md)
 

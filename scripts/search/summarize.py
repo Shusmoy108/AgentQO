@@ -188,6 +188,14 @@ def main():
                "(easier draw); the stricter column divides by the best possible front on X2 itself.", ""]
     else:
         md += ["## S5: PENDING", "", "X2 held-out data has not landed. Re-run scripts/search/s5_rescore.py when it lands.", ""]
+    if (OUT / "s5b" / "S5b.md").exists():  # confirmatory S5b (docs/search_prereg_s5b.md), written by scripts/search/s5b.py
+        md += [(OUT / "s5b" / "S5b.md").read_text(),
+               "Supplementary (not in the decision): the true eval front re-scored on X8 keeps 0.987 of its HV (0.977 of the",
+               "best X8 front). Plan accuracies correlate 0.925 (Spearman) between eval and X8; mean plan accuracy 0.659 vs",
+               "0.665. Both methods return nearly the same front in every seed (retention SD <= 0.00003), so the CI is",
+               "seed spread only, not problem-sampling uncertainty.", ""]
+    else:
+        md += ["## S5b: PENDING", "", "X8 has not landed (docs/search_prereg_s5b.md).", ""]
     if (OUT / "s6" / "S6.md").exists():  # confirmatory S6 (docs/search_prereg_s6.md), written by scripts/search/s6.py
         md += ["\n".join(("#" + ln if ln.startswith("#") else ln) for ln in
                           (OUT / "s6" / "S6.md").read_text().replace("<!-- part -->", "").splitlines()), ""]
@@ -214,11 +222,11 @@ def main():
            "Landed after the registered run, reported below under New settings: X5 MATH-500 (math500_q15_7), X6 7B/32B",
            "(math_q7_32, math500_q7_32, hotpot_q7_32), X7 coding (code_c15_7; no fixed-rule methods, the code workflow",
            "graph is not on this branch), X3 cross-family (x3_cross_family; confirmatory test is S6(a)).",
-           "Pending: X8 (S5b), laptop q4.", ""]
+           "X8 (complex_q15_7 on 200 new GSM8K problems) is S5b. Pending: laptop q4.", ""]
     if (OUT / "new_settings" / "NEW_SETTINGS.md").exists():  # scripts/search/new_settings.py
         md += [(OUT / "new_settings" / "NEW_SETTINGS.md").read_text()]
     md += ["", "---", "", "# Exploratory, not registered", "",
-           "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 HELD).", ""]
+           "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 HELD, S5b HELD, S6(a) FAILED, S6(b) PARTIAL).", ""]
     for f in ("exploratory/EXPLORATORY.md", "exploratory/SCALABILITY_INTERACTION.md", "exploratory/FAIRNESS_NEXTBEST.md",
               "exploratory/size_priced/SIZE_PRICED.md"):
         if (OUT / f).exists():
