@@ -616,3 +616,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T19:03:21Z X10r math_phi vs X10 (4096): {"cells_compared": 25600, "cells_missing": 0, "flipped_cells": 2769, "flip_share": 0.1081640625, "plans_with_any_flip": 64, "max_abs_plan_delta": 0.125, "mean_abs_plan_delta": 0.0420703125, "front_ref": ["all_small", "only_verifier", "step_1+step_3+aggregator+verifier", "step_2+verifier"], "front_ad
 - 19:04Z X10r: Granite noise ~1.5 pts/plan, no context-length effect; Phi noise ~0.7 pts/plan, but Phi-3.5-mini all_small +7.7 pts at max-model-len 4096 vs 8192.
 - 22:05Z FINAL-early archive built and verified (FINAL_early_20261118T2145Z); 0 MISSING; small files pushed.
+- 22:12Z final_check.py: X12 finished test fixed (no DONE marker); FINAL_early/data_check_v2.md pushed.

@@ -102,7 +102,8 @@ def main():
            "| setting | status | plans x problems | result | per-problem complete |", "|---|---|---|---|---|"]
     missing = []
     for name, st, d, n, k, lab, cost in S:
-        if st in LATE and not os.path.exists(f"{d}/DONE"):
+        done = os.path.exists(f"{d}/DONE") or (st == "X12" and os.path.exists(f"{d}/h3_per_problem.csv") and os.path.exists(f"{d}/h3_summary.json"))  # X12 runs write no DONE marker
+        if st in LATE and not done:
             out.append(f"| {name} | {st} | {n} x {k} | not finished (not required; see STATUS.md) | NO |"); continue
         bad, ok = check_setting(name, d, n, k, lab, cost)
         out.append(f"| {name} | {st} | {n} x {k} | {'OK' if not bad else 'MISSING: ' + '; '.join(bad)} | {'yes' if ok else 'NO'} |")
