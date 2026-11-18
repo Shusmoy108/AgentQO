@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-99",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef decimal_to_binary(num):\n    binary_str = bin(num)[2:]\n    return binary_str\n```",
+  "reference_key": "def decimal_to_binary(num):\n    binary_str = bin(num)[2:]\n    return binary_str",
+  "final_key_plus": "def decimal_to_binary(num):\n    binary_str = bin(num)[2:]\n    return binary_str",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert decimal_to_binary(0) == '0'\nassert decimal_to_binary(1) == '1'\nassert decimal_to_binary(2) == '10'\nassert decimal_to_binary(3) == '11'\nassert decimal_to_binary(4) == '100'\n```",
+    "verifier": "PICK: A\n\n```python\ndef decimal_to_binary(num):\n    binary_str = bin(num)[2:]\n    return binary_str\n```",
+    "fixer": "```python\ndef decimal_to_binary(num):\n    binary_str = bin(num)[2:]\n    return binary_str\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def decimal_to_binary(num):\n    # Convert decimal to binary\n    binary_str = bin(num)\n    \n    # Remove the '0b' prefix and return the result\n    return binary_str[2:]",
+      "reference_key": "def decimal_to_binary(num):\n    binary_str = bin(num)[2:]\n    return binary_str",
+      "key_differs": true,
+      "text": "```python\ndef decimal_to_binary(num):\n    # Convert decimal to binary\n    binary_str = bin(num)\n    \n    # Remove the '0b' prefix and return the result\n    return binary_str[2:]\n```",
+      "quality": 0.0,
+      "final_key": "def decimal_to_binary(num):\n    # Convert decimal to binary\n    binary_str = bin(num)\n    \n    # Remove the '0b' prefix and return the result\n    return binary_str[2:]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert decimal_to_binary(0) == '0'\nassert decimal_to_binary(1) == '1'\nassert decimal_to_binary(2) == '10'\nassert decimal_to_binary(3) == '11'\nassert decimal_to_binary(4) == '100'\n```",
+        "verifier": "PICK: A\n\n```python\ndef decimal_to_binary(num):\n    # Convert decimal to binary\n    binary_str = bin(num)\n    \n    # Remove the '0b' prefix and return the result\n    return binary_str[2:]\n```",
+        "fixer": "```python\ndef decimal_to_binary(num):\n    # Convert decimal to binary\n    binary_str = bin(num)\n    \n    # Remove the '0b' prefix and return the result\n    return binary_str[2:]\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def decimal_to_binary(num):\n    # Convert decimal to binary string\n    binary_str = bin(num)[2:]\n    # Remove the '0b' prefix and trim leading zeros if any\n    return binary_str.lstrip('0')",
+      "reference_key": "def decimal_to_binary(num):\n    binary_str = bin(num)[2:]\n    return binary_str",
+      "key_differs": true,
+      "text": "```python\ndef decimal_to_binary(num):\n    # Convert decimal to binary string\n    binary_str = bin(num)[2:]\n    # Remove the '0b' prefix and trim leading zeros if any\n    return binary_str.lstrip('0')\n```",
+      "quality": 0.0,
+      "final_key": "def decimal_to_binary(num):\n    # Convert decimal to binary string\n    binary_str = bin(num)[2:]\n    # Remove the '0b' prefix and trim leading zeros if any\n    return binary_str.lstrip('0')",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert decimal_to_binary(7) == '111'\nassert decimal_to_binary(0) == '0'\nassert decimal_to_binary(15) == '1111'\nassert decimal_to_binary(32) == '100000'\nassert decimal_to_binary(64) == '1000000'\n```",
+        "verifier": "PICK: A\n\n```python\ndef decimal_to_binary(num):\n    # Convert decimal to binary string\n    binary_str = bin(num)[2:]\n    # Remove the '0b' prefix and trim leading zeros if any\n    return binary_str.lstrip('0')\n```",
+        "fixer": "```python\ndef decimal_to_binary(num):\n    # Convert decimal to binary string\n    binary_str = bin(num)[2:]\n    # Remove the '0b' prefix and trim leading zeros if any\n    return binary_str.lstrip('0')\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def power(a, b):\n    return a ** b",
+      "reference_key": "def decimal_to_binary(num):\n    binary_str = bin(num)[2:]\n    return binary_str",
+      "key_differs": true,
+      "text": "```python\ndef power(a, b):\n    return a ** b\n```",
+      "quality": 0.0,
+      "final_key": "def decimal_to_binary(n):\n    if n == 0:\n        return '0'\n    binary = ''\n    while n > 0:\n        remainder = n % 2\n        binary = str(remainder) + binary\n        n //= 2\n    return binary.lstrip('0')",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert decimal_to_binary(8) == '1000', \"Test case 1 failed\"\nassert decimal_to_binary(7) == '111', \"Test case 2 failed\"\nassert decimal_to_binary(0) == '0', \"Test case 3 failed\"\nassert decimal_to_binary(1) == '1', \"Test case 4 failed\"\nassert decimal_to_binary(255) == '11111111', \"Test case 5 failed\"\n```",
+        "verifier": "PICK: B\n\n```python\ndef decimal_to_binary(n):\n    if n == 0:\n        return '0'\n    binary = ''\n    while n > 0:\n        remainder = n % 2\n        binary = str(remainder) + binary\n        n //= 2\n    return binary.lstrip('0')\n```",
+        "fixer": "```python\ndef decimal_to_binary(n):\n    if n == 0:\n        return '0'\n    binary = ''\n    while n > 0:\n        remainder = n % 2\n        binary = str(remainder) + binary\n        n //= 2\n    return binary.lstrip('0')\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def decimal_to_binary(num):\n    # Convert the decimal number to a binary string\n    binary_str = bin(num)[2:]\n    # Return the binary string without leading zeros\n    return binary_str.lstrip('0')",
+  "sample_keys": [
+    "def decimal_to_binary(num):\n    # Convert decimal to binary using bin() and remove '0b' prefix\n    binary_str = bin(num)[2:]\n    # Return the binary string without leading zeros\n    return binary_str",
+    "def decimal_to_binary(num):\n    # Convert the decimal number to binary using bin() and remove the '0b' prefix\n    binary_str = bin(num)[2:]\n    return binary_str.rstrip('0')",
+    "def decimal_to_binary(num):\n    \"\"\"\n    Converts a given decimal number to its binary equivalent as a string without leading zeros.\n    \n    Parameters:\n    num (int): The decimal number to convert.\n    \n    Returns:\n    str: The binary equivalent of the decimal number as a string.\n    \"\"\"\n    binary_str = bin(num)[2:]\n    return binary_str",
+    "def decimal_to_binary(num):\n    # Use bin() to get the binary representation of the decimal number\n    binary_str = bin(num)[2:]\n    # Return the binary string without leading zeros\n    return binary_str",
+    "def decimal_to_binary(num):\n    # Convert decimal to binary and remove the '0b' prefix\n    binary_str = bin(num)[2:]\n    # Return the binary string without leading zeros\n    return binary_str"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1306.0,
+    "small_out": 342.0,
+    "small_s": 6.891964647045825
+  },
+  "calls_plus": {
+    "small_in": 964.0,
+    "small_out": 242.0,
+    "small_s": 4.378871416003676,
+    "large_in": 233.0,
+    "large_out": 25.0,
+    "large_s": 0.6041277539916337
+  },
+  "calls_samples": {
+    "small_in": 1165.0,
+    "small_out": 348.0,
+    "small_s": 6.708137762005208
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-90",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert len_log([\"hello\", \"world\", \"this\", \"is\", \"a\", \"test\"]) == 5\nassert len_log([\"short\", \"longer\", \"longestword\"]) == 11\nassert len_log([\"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\", \"ten\"]) == 5\nassert len_log([\"single\"]) == 6\nassert len_log([]) == 0\n```",
+  "reference_key": "assert len_log([\"hello\", \"world\", \"this\", \"is\", \"a\", \"test\"]) == 5\nassert len_log([\"short\", \"longer\", \"longestword\"]) == 11\nassert len_log([\"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\", \"ten\"]) == 5\nassert len_log([\"single\"]) == 6\nassert len_log([]) == 0",
+  "final_key_plus": "def len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length\n```",
+    "fixer": "```python\ndef len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test with multiple words\nassert len_log([\"hello\", \"world\", \"code\", \"programming\"]) == 9\n\n# Test with empty list\nassert len_log([]) == 0\n\n# Test with all words having the same length\nassert len_log([\"aaaaa\", \"bbbbb\", \"ccccc\"]) == 5\n\n# Test with leading spaces\nassert len_log([\"   hello\"]) == 6\n\n# Edge case with unicode characters\nassert len_log([\"\ud83d\ude02\", \":(\", \"\\U0001F642\"]) == 5",
+      "reference_key": "assert len_log([\"hello\", \"world\", \"this\", \"is\", \"a\", \"test\"]) == 5\nassert len_log([\"short\", \"longer\", \"longestword\"]) == 11\nassert len_log([\"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\", \"ten\"]) == 5\nassert len_log([\"single\"]) == 6\nassert len_log([]) == 0",
+      "key_differs": true,
+      "text": "```python\n# Test with multiple words\nassert len_log([\"hello\", \"world\", \"code\", \"programming\"]) == 9\n\n# Test with empty list\nassert len_log([]) == 0\n\n# Test with all words having the same length\nassert len_log([\"aaaaa\", \"bbbbb\", \"ccccc\"]) == 5\n\n# Test with leading spaces\nassert len_log([\"   hello\"]) == 6\n\n# Edge case with unicode characters\nassert len_log([\"\ud83d\ude02\", \":(\", \"\\U0001F642\"]) == 5\n```",
+      "quality": 1.0,
+      "final_key": "def len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length\n```",
+        "fixer": "```python\ndef len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "assert len_log([\"hello\", \"world\", \"this\", \"is\", \"a\", \"test\"]) == 5\nassert len_log([\"short\", \"longer\", \"longestword\"]) == 11\nassert len_log([\"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\", \"ten\"]) == 5\nassert len_log([\"single\"]) == 6\nassert len_log([]) == 0",
+      "key_differs": true,
+      "text": "```python\nassert len_log([]) == 0, \"Test case with empty list\"\nassert len_log([\"\", \"a\"]) == 1, \"Test case with single empty string\"\nassert len_log([\"aaaabbcc\", \"ab\"]) == 3, \"Test case with two distinct long strings\"\nassert len_log([\"a\"]) == 1, \"Test case with single character string\"\nassert len_log([]) == 0, \"Test case with another empty list\"",
+      "quality": 1.0,
+      "final_key": "def len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length\n```",
+        "fixer": "```python\ndef len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[2, 2, 3, 1, 2, 6, 7, 9])==4\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8, 9])==9\nassert count_same_pair([], [])==0\nassert count_same_pair([1], [1])==1",
+      "reference_key": "assert len_log([\"hello\", \"world\", \"this\", \"is\", \"a\", \"test\"]) == 5\nassert len_log([\"short\", \"longer\", \"longestword\"]) == 11\nassert len_log([\"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\", \"ten\"]) == 5\nassert len_log([\"single\"]) == 6\nassert len_log([]) == 0",
+      "key_differs": true,
+      "text": "```python\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[2, 2, 3, 1, 2, 6, 7, 9])==4\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8, 9])==9\nassert count_same_pair([], [])==0\nassert count_same_pair([1], [1])==1\n```",
+      "quality": 1.0,
+      "final_key": "def len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length\n```",
+        "fixer": "```python\ndef len_log(words):\n    max_length = 0\n    for word in words:\n        if len(word) > max_length:\n            max_length = len(word)\n    return max_length\n\n# Test cases\nassert len_log([\"python\",\"PHP\",\"bigdata\"]) == 7\nassert len_log([\"a\",\"ab\",\"abc\"]) == 3\nassert len_log([\"small\",\"big\",\"tall\"]) == 5\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[2, 2, 3, 1, 2, 6, 7, 9]) == 4\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8]) == 8\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8, 9]) == 9\nassert count_same_pair([], []) == 0\nassert count_same_pair([1], [1]) == 1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert len_log([\"hello\", \"world\", \"programming\"]) == 11\nassert len_log([\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\", \"k\", \"l\", \"m\", \"n\", \"o\", \"p\", \"q\", \"r\", \"s\", \"t\", \"u\", \"v\", \"w\", \"x\", \"y\", \"z\"]) == 26\nassert len_log([]) == 0\nassert len_log([\"singleword\"]) == 8\nassert len_log([\"longestwordinthefile.txt\"]) == 19",
+  "sample_keys": [
+    "assert len_log([\"hi\", \"hello\", \"hola\", \"bonjour\"]) == 5\nassert len_log([\"a\"]) == 1\nassert len_log([\"longestword\"]) == 9\nassert len_log([]) == 0\nassert len_log([\"veryverylongword\"]) == 14",
+    "# Edge case: empty list\nassert len_log([]) == 0\n\n# Typical case: words with varying lengths\nassert len_log([\"hello\", \"world\", \"this\", \"is\", \"a\", \"test\"]) == 5\n\n# Case with single word\nassert len_log([\"singleword\"]) == 9\n\n# Edge case: all words equal in length\nassert len_log([\"all\", \"equal\", \"words\"]) == 6\n\n# Edge case: all words have different lengths\nassert len_log([\"short\", \"longer\", \"longest\", \"longestest\"]) == 7",
+    "assert len_log([\"hello\", \"world\", \"python\"]) == 6\nassert len_log([\"a\", \"ab\", \"abc\"]) == 3\nassert len_log([\"\"]) == 0\nassert len_log([\"12345678901234567890\"]) == 20\nassert len_log([\"longestword\"]) == 10",
+    "assert len_log([\"one\", \"two\", \"three\", \"four\", \"five\"]) == 5\nassert len_log([\"a\", \"ab\", \"abc\", \"abcd\", \"abcde\"]) == 5\nassert len_log([\"longword\", \"mediumword\", \"shortword\"]) == 8\nassert len_log([]) == 0\nassert len_log([None]) == 4",
+    "assert len_log([\"a\", \"ab\", \"abc\", \"abcd\", \"abcde\"]) == 5\nassert len_log([\"hello\", \"world\", \"!\"]) == 6\nassert len_log([]) == 0\nassert len_log([\"1234567890\"]) == 10\nassert len_log([\"a1b2c3d4e5f6g7h8i9j0\"]) == 10"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1521.0,
+    "small_out": 435.0,
+    "small_s": 8.9027696979756
+  },
+  "calls_plus": {
+    "small_in": 1223.0,
+    "small_out": 289.0,
+    "small_s": 5.8046160690137185,
+    "large_in": 163.0,
+    "large_out": 106.0,
+    "large_s": 2.3403954509994946
+  },
+  "calls_samples": {
+    "small_in": 815.0,
+    "small_out": 481.0,
+    "small_s": 8.277803099044831
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-170",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+  "reference_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+  "final_key_plus": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "reference_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "key_differs": true,
+      "text": "PICK: B\n\ncode snippet:\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+      "quality": 0.0,
+      "final_key": "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import List\nfrom unittest.mock import patch, call, MagicMock, mock_open, ANY\n\n@patch('builtins.open', new_callable= MagicMock)\ndef check_sum_range_list(mock_file) -> None:\n\n    # Test the function with valid inputs\n    numbers = [2,1,5,6,8,3,4,9,10,11,8,12]\n    start_index = 8\n    end_index = 10\n    assert sum_range_list(numbers, start_index, end_index) == 29\n\n    # Test the function with invalid inputs\n    start_index = -100\n    end_index = 30\n    mock_file.assert_called_with('numbers.txt', 'r')\n    with patch.object(mock_file.return_value, 'readline', return_value='Hello'):\n        assert str(sum_range_list(numbers, start_index, end_index)) == '0'\n\n    start_index = 20\n    end_index = 0\n    mock_file.assert_called_with('numbers.txt', 'r')\n    with patch.object(mock_file.return_value, 'readline', return_value='Error'):\n        assert str(sum_range_list(numbers, start_index, end_index)) != 'Error'\n\n    # Test the function with empty list inputs\n    with patch('builtins.open', return_value=mock_open(), readmode='w'):\n        assert sum_range_list([], 9, 9) == 0 \n\n# Run the test function\ncheck_sum_range_list()",
+      "reference_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\nfrom typing import List\nfrom unittest.mock import patch, call, MagicMock, mock_open, ANY\n\n@patch('builtins.open', new_callable= MagicMock)\ndef check_sum_range_list(mock_file) -> None:\n\n    # Test the function with valid inputs\n    numbers = [2,1,5,6,8,3,4,9,10,11,8,12]\n    start_index = 8\n    end_index = 10\n    assert sum_range_list(numbers, start_index, end_index) == 29\n\n    # Test the function with invalid inputs\n    start_index = -100\n    end_index = 30\n    mock_file.assert_called_with('numbers.txt', 'r')\n    with patch.object(mock_file.return_value, 'readline', return_value='Hello'):\n        assert str(sum_range_list(numbers, start_index, end_index)) == '0'\n\n    start_index = 20\n    end_index = 0\n    mock_file.assert_called_with('numbers.txt', 'r')\n    with patch.object(mock_file.return_value, 'readline', return_value='Error'):\n        assert str(sum_range_list(numbers, start_index, end_index)) != 'Error'\n\n    # Test the function with empty list inputs\n    with patch('builtins.open', return_value=mock_open(), readmode='w'):\n        assert sum_range_list([], 9, 9) == 0 \n\n# Run the test function\ncheck_sum_range_list()\n```",
+      "quality": 0.0,
+      "final_key": "from typing import List\nfrom unittest.mock import patch, call, MagicMock, mock_open, ANY\n\n@patch('builtins.open', new_callable= MagicMock)\ndef check_sum_range_list(mock_file) -> None:\n\n    # Test the function with valid inputs\n    numbers = [2,1,5,6,8,3,4,9,10,11,8,12]\n    start_index = 8\n    end_index = 10\n    assert sum_range_list(numbers, start_index, end_index) == 29\n\n    # Test the function with invalid inputs\n    start_index = -100\n    end_index = 30\n    mock_file.assert_called_with('numbers.txt', 'r')\n    with patch.object(mock_file.return_value, 'readline', return_value='Hello'):\n        assert str(sum_range_list(numbers, start_index, end_index)) == '0'\n\n    start_index = 20\n    end_index = 0\n    mock_file.assert_called_with('numbers.txt', 'r')\n    with patch.object(mock_file.return_value, 'readline', return_value='Error'):\n        assert str(sum_range_list(numbers, start_index, end_index)) != 'Error'\n\n    # Test the function with empty list inputs\n    with patch('builtins.open', return_value=mock_open(), readmode='w'):\n        assert sum_range_list([], 9, 9) == 0 \n\n# Run the test function\ncheck_sum_range_list()",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+      "reference_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count\n```",
+      "quality": 0.0,
+      "final_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+  "sample_keys": [
+    "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+    "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+    "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+    "PICK: A",
+    "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2062.0,
+    "small_out": 524.0,
+    "small_s": 10.815307963028317
+  },
+  "calls_plus": {
+    "small_in": 1165.0,
+    "small_out": 441.0,
+    "small_s": 8.979895086027682,
+    "large_in": 897.0,
+    "large_out": 55.0,
+    "large_s": 1.2657664180151187
+  },
+  "calls_samples": {
+    "small_in": 4485.0,
+    "small_out": 314.0,
+    "small_s": 6.176713986031245
+  }
+}

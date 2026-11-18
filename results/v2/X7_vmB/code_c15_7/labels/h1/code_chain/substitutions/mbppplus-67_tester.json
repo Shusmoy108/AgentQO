@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-67",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 877\n```",
+  "reference_key": "assert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 877",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B",
+    "fixer": "```python\nfrom math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 877\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Check with n=3, expected output is 5\nassert bell_number(3)==5\n\n# Check with n=4, expected output is 15\nassert bell_number(4)==15\n\n# Check with n=5, expected output is 65\nassert bell_number(5)==65\n\n# Check with n=0, expected output is 1\nassert bell_number(0)==1\n\n# Check with n=-1, expected output raises ValueError\ntry:\n    bell_number(-1)\nexcept ValueError as e:\n    assert str(e)==\"bell number input must be non-negative\"",
+      "reference_key": "assert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 877",
+      "key_differs": true,
+      "text": "```python\n# Check with n=3, expected output is 5\nassert bell_number(3)==5\n\n# Check with n=4, expected output is 15\nassert bell_number(4)==15\n\n# Check with n=5, expected output is 65\nassert bell_number(5)==65\n\n# Check with n=0, expected output is 1\nassert bell_number(0)==1\n\n# Check with n=-1, expected output raises ValueError\ntry:\n    bell_number(-1)\nexcept ValueError as e:\n    assert str(e)==\"bell number input must be non-negative\"\n```",
+      "quality": 0.0,
+      "final_key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n\n# Test cases\nassert bell_number(2)==2\nassert bell_number(10)==115975\nassert bell_number(56)==6775685320645824322581483068371419745979053216268760300\nassert bell_number(3)==5\nassert bell_number(4)==15\nassert bell_number(5)==65\nassert bell_number(0)==1",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nfrom math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n\n# Test cases\nassert bell_number(2)==2\nassert bell_number(10)==115975\nassert bell_number(56)==6775685320645824322581483068371419745979053216268760300\nassert bell_number(3)==5\nassert bell_number(4)==15\nassert bell_number(5)==65\nassert bell_number(0)==1\n```",
+        "fixer": "```python\nfrom math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n\n# Test cases\nassert bell_number(2)==2\nassert bell_number(10)==115975\nassert bell_number(56)==6775685320645824322581483068371419745979053216268760300\nassert bell_number(3)==5\nassert bell_number(4)==15\nassert bell_number(5)==65\nassert bell_number(0)==1\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test cases to verify the correctness of the bell_number function\r\nassert bell_number(3) == 5, \"Expected 5 for n=3\"\r\nassert bell_number(4) == 14, \"Expected 14 for n=4\"\r\nassert bell_number(5) == 42, \"Expected 42 for n=5\"\r\nassert bell_number(6) == 132, \"Expected 132 for n=6\"\r\nassert bell_number(7) == 429, \"Expected 429 for n=7\"",
+      "reference_key": "assert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 877",
+      "key_differs": true,
+      "text": "```python\n# Test cases to verify the correctness of the bell_number function\r\nassert bell_number(3) == 5, \"Expected 5 for n=3\"\r\nassert bell_number(4) == 14, \"Expected 14 for n=4\"\r\nassert bell_number(5) == 42, \"Expected 42 for n=5\"\r\nassert bell_number(6) == 132, \"Expected 132 for n=6\"\r\nassert bell_number(7) == 429, \"Expected 429 for n=7\"\r\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\nfrom math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert bell_number(3) == 5\nassert bell_number(4) == 14\nassert bell_number(5) == 42\nassert bell_number(6) == 132\nassert bell_number(7) == 429\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert amicable_numbers_sum(1000) == 3162\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(100000) == 316267\nassert amicable_numbers_sum(1000000) == 3162678\nassert amicable_numbers_sum(10000000) == 31626789",
+      "reference_key": "assert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 877",
+      "key_differs": true,
+      "text": "```python\nassert amicable_numbers_sum(1000) == 3162\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(100000) == 316267\nassert amicable_numbers_sum(1000000) == 3162678\nassert amicable_numbers_sum(10000000) == 31626789\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\nfrom math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert amicable_numbers_sum(1000) == 3162\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(100000) == 316267\nassert amicable_numbers_sum(1000000) == 3162678\nassert amicable_numbers_sum(10000000) == 31626789\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert bell_number(3)==5\nassert bell_number(4)==15\nassert bell_number(5)==45\nassert bell_number(6)==135\nassert bell_number(7)==495",
+  "sample_keys": [
+    "assert bell_number(3)==5\nassert bell_number(4)==15\nassert bell_number(6)==52\nassert bell_number(7)==185\nassert bell_number(8)==546",
+    "assert bell_number(3)==5\nassert bell_number(4)==15\nassert bell_number(5)==45\nassert bell_number(6)==135\nassert bell_number(7)==495",
+    "def bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n\n# Test cases\nassert bell_number(0) == 1\nassert bell_number(1) == 1\nassert bell_number(5) == 52\nassert bell_number(6) == 126\nassert bell_number(7) == 429",
+    "assert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 258\nassert bell_number(7) == 1764",
+    "# Additional assertions for testing the bell_number function\nassert bell_number(3)==5\nassert bell_number(4)==15\nassert bell_number(5)==45\nassert bell_number(6)==135\nassert bell_number(7)==495"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1803.0,
+    "small_out": 522.0,
+    "small_s": 10.7523315299768
+  },
+  "calls_plus": {
+    "small_in": 2093.0,
+    "small_out": 500.0,
+    "small_s": 10.063559774978785,
+    "large_in": 233.0,
+    "large_out": 61.0,
+    "large_s": 1.3534232399833854
+  },
+  "calls_samples": {
+    "small_in": 1165.0,
+    "small_out": 401.0,
+    "small_s": 6.353231656976277
+  }
+}

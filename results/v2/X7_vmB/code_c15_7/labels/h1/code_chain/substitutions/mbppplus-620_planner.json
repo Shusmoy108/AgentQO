@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-620",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `largest_subset` that takes a list of integers as input.\n2. Sort the list in ascending order to facilitate finding pairs where one number is divisible by another.\n3. Initialize variables to keep track of the current subset size (`current_size`) and the maximum subset size found (`max_size`).\n4. Iterate through the sorted list, comparing each element with the previous one to check divisibility.\n5. If the current element is divisible by the previous one, increment the `current_size`. Otherwise, update `max_size` if necessary and reset `current_size` to 1.\n6. After the loop, perform a final comparison between `current_size` and `max_size` to ensure the last subset is considered.\n7. Return `max_size` as the result.",
+  "reference_key": null,
+  "final_key_plus": "def largest_subset(nums):\n    nums.sort()\n    max_size = current_size = 0\n    for i in range(1, len(nums)):\n        if nums[i] % nums[i - 1] == 0:\n            current_size += 1\n        else:\n            max_size = max(max_size, current_size)\n            current_size = 1\n    return max(max_size, current_size)\n\n# Test cases\nassert largest_subset([ 1, 3, 6, 13, 17, 18 ]) == 4\nassert largest_subset([10, 5, 3, 15, 20]) == 3\nassert largest_subset([18, 1, 3, 6, 13, 17]) == 4\nassert largest_subset([2, 4, 6, 8]) == 4\nassert largest_subset([1, 3, 5, 7]) == 1\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 5\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 6\nassert largest_subset([]) == 0",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert largest_subset([2, 4, 6, 8]) == 4\nassert largest_subset([1, 3, 5, 7]) == 1\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 5\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 6\nassert largest_subset([]) == 0\n```",
+    "coder": "```python\ndef largest_subset(nums):\n    nums.sort()\n    max_size = current_size = 0\n    for i in range(1, len(nums)):\n        if nums[i] % nums[i - 1] == 0:\n            current_size += 1\n        else:\n            max_size = max(max_size, current_size)\n            current_size = 1\n    return max(max_size, current_size)\n```",
+    "verifier": "PICK: B\n\n```python\ndef largest_subset(nums):\n    nums.sort()\n    max_size = current_size = 0\n    for i in range(1, len(nums)):\n        if nums[i] % nums[i - 1] == 0:\n            current_size += 1\n        else:\n            max_size = max(max_size, current_size)\n            current_size = 1\n    return max(max_size, current_size)\n\n# Test cases\nassert largest_subset([ 1, 3, 6, 13, 17, 18 ]) == 4\nassert largest_subset([10, 5, 3, 15, 20]) == 3\nassert largest_subset([18, 1, 3, 6, 13, 17]) == 4\nassert largest_subset([2, 4, 6, 8]) == 4\nassert largest_subset([1, 3, 5, 7]) == 1\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 5\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 6\nassert largest_subset([]) == 0\n```",
+    "fixer": "```python\ndef largest_subset(nums):\n    nums.sort()\n    max_size = current_size = 0\n    for i in range(1, len(nums)):\n        if nums[i] % nums[i - 1] == 0:\n            current_size += 1\n        else:\n            max_size = max(max_size, current_size)\n            current_size = 1\n    return max(max_size, current_size)\n\n# Test cases\nassert largest_subset([ 1, 3, 6, 13, 17, 18 ]) == 4\nassert largest_subset([10, 5, 3, 15, 20]) == 3\nassert largest_subset([18, 1, 3, 6, 13, 17]) == 4\nassert largest_subset([2, 4, 6, 8]) == 4\nassert largest_subset([1, 3, 5, 7]) == 1\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 5\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 6\nassert largest_subset([]) == 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `get_coordinates` that takes one parameter, `coordinate`, which is a tuple representing a point on a grid.\n2. Initialize an empty list called `adjacent_coords`.\n3. Iterate over the range from `-1` to `2` (inclusive) for both x and y coordinates.\n4. For each pair of coordinates `(x, y)`, check if it is within the bounds of the grid by ensuring `0 <= x < rows` and `0 <= y < cols`.\n5. If the coordinates are within bounds, append them to the `adjacent_coords` list.\n6. Return the `adjacent_coords` list.\n\nThis approach ensures that all adjacent coordinates are captured, including those on the edges of the grid.",
+      "quality": 0.0,
+      "final_key": "def largest_subset(numbers):\n    def is_divisible(a, b):\n        return a % b == 0\n\n    def dfs(start, visited):\n        nonlocal max_size\n        if start in visited:\n            return\n        visited.add(start)\n        max_size = max(max_size, len(visited))\n        for neighbor in get_coordinates(start):\n            if is_divisible(numbers[start], numbers[neighbor]):\n                dfs(neighbor, visited)\n\n    max_size = 0\n    for i in range(len(numbers)):\n        visited = set()\n        dfs(i, visited)\n    return max_size",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert largest_subset([ 1, 3, 6, 13, 17, 18 ]) == 4\nassert largest_subset([]) == 0\nassert largest_subset([1]) == 1\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 5\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) == 10\n```",
+        "coder": "```python\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= coordinate[0] + x < rows and 0 <= coordinate[1] + y < cols:\n                adjacent_coords.append((coordinate[0] + x, coordinate[1] + y))\n    return adjacent_coords\n```",
+        "verifier": "PICK: B\n\n```python\ndef largest_subset(numbers):\n    def is_divisible(a, b):\n        return a % b == 0\n\n    def dfs(start, visited):\n        nonlocal max_size\n        if start in visited:\n            return\n        visited.add(start)\n        max_size = max(max_size, len(visited))\n        for neighbor in get_coordinates(start):\n            if is_divisible(numbers[start], numbers[neighbor]):\n                dfs(neighbor, visited)\n\n    max_size = 0\n    for i in range(len(numbers)):\n        visited = set()\n        dfs(i, visited)\n    return max_size\n```",
+        "fixer": "```python\ndef largest_subset(numbers):\n    def is_divisible(a, b):\n        return a % b == 0\n\n    def dfs(start, visited):\n        nonlocal max_size\n        if start in visited:\n            return\n        visited.add(start)\n        max_size = max(max_size, len(visited))\n        for neighbor in get_coordinates(start):\n            if is_divisible(numbers[start], numbers[neighbor]):\n                dfs(neighbor, visited)\n\n    max_size = 0\n    for i in range(len(numbers)):\n        visited = set()\n        dfs(i, visited)\n    return max_size\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `largest_subset` that takes a list of integers as input.\n2. Sort the list in ascending order to facilitate finding pairs where one number is divisible by another.\n3. Initialize variables to keep track of the current subset size (`current_size`) and the maximum subset size found (`max_size`).\n4. Iterate through the sorted list, comparing each element with the previous one to check divisibility.\n5. If the current element is divisible by the previous one, increment the `current_size`. Otherwise, update `max_size` if necessary and reset `current_size` to 1.\n6. After the loop, consider the entire list again to capture any potential larger subset that might be missed.\n7. Return `max_size` as the result.",
+      "quality": 0.0,
+      "final_key": "def largest_subset(nums):\n    nums.sort()  # Sort the list to facilitate divisibility checks\n    max_size = 0\n    current_size = 1\n    \n    for i in range(1, len(nums)):\n        if nums[i] % nums[i - 1] == 0:\n            current_size += 1\n        else:\n            max_size = max(max_size, current_size)\n            current_size = 1\n    \n    # Check the entire list again to ensure no larger subset is missed\n    max_size = max(max_size, current_size)\n    \n    return max_size",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert largest_subset([2, 4, 6, 8]) == 4\nassert largest_subset([1, 3, 5, 7]) == 1\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 5\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 6\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == 7\n```",
+        "coder": "```python\ndef largest_subset(nums):\n    nums.sort()  # Sort the list to facilitate divisibility checks\n    max_size = 0\n    current_size = 1\n    \n    for i in range(1, len(nums)):\n        if nums[i] % nums[i - 1] == 0:\n            current_size += 1\n        else:\n            max_size = max(max_size, current_size)\n            current_size = 1\n    \n    # Check the entire list again to ensure no larger subset is missed\n    max_size = max(max_size, current_size)\n    \n    return max_size\n```",
+        "verifier": "PICK: A\n\n```python\ndef largest_subset(nums):\n    nums.sort()  # Sort the list to facilitate divisibility checks\n    max_size = 0\n    current_size = 1\n    \n    for i in range(1, len(nums)):\n        if nums[i] % nums[i - 1] == 0:\n            current_size += 1\n        else:\n            max_size = max(max_size, current_size)\n            current_size = 1\n    \n    # Check the entire list again to ensure no larger subset is missed\n    max_size = max(max_size, current_size)\n    \n    return max_size\n```",
+        "fixer": "```python\ndef largest_subset(nums):\n    nums.sort()  # Sort the list to facilitate divisibility checks\n    max_size = 0\n    current_size = 1\n    \n    for i in range(1, len(nums)):\n        if nums[i] % nums[i - 1] == 0:\n            current_size += 1\n        else:\n            max_size = max(max_size, current_size)\n            current_size = 1\n    \n    # Check the entire list again to ensure no larger subset is missed\n    max_size = max(max_size, current_size)\n    \n    return max_size\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_of_digits` that takes a list of integers as input.\n2. Initialize a variable `total_sum` to zero.\n3. Iterate over each number in the input list using a for loop.\n4. For each number, convert it to a string to easily iterate over its digits.\n5. Use another for loop to iterate over each digit in the string representation of the number.\n6. Convert each digit back to an integer and add it to `total_sum`.\n7. After iterating through all numbers, return the value of `total_sum`.\n\nThis approach ensures that each digit is processed correctly and efficiently, resulting in the correct sum of digits for each number in the list.",
+      "quality": 0.0,
+      "final_key": "def largest_subset(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum\n\n# Test cases\nassert largest_subset([ 1, 3, 6, 13, 17, 18 ]) == 4\nassert largest_subset([10, 5, 3, 15, 20]) == 3\nassert largest_subset([18, 1, 3, 6, 13, 17]) == 4\nassert sum_of_digits([1, 2, 3]) == 6\nassert sum_of_digits([10, 20, 30]) == 60\nassert sum_of_digits([1, 2, 3, 4, 5]) == 15\nassert sum_of_digits([1, 2, 3, 4, 5, 6]) == 21\nassert sum_of_digits([1, 2, 3, 4, 5, 6, 7]) == 28",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_of_digits([1, 2, 3]) == 6\nassert sum_of_digits([10, 20, 30]) == 60\nassert sum_of_digits([1, 2, 3, 4, 5]) == 15\nassert sum_of_digits([1, 2, 3, 4, 5, 6]) == 21\nassert sum_of_digits([1, 2, 3, 4, 5, 6, 7]) == 28\n```",
+        "coder": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum\n```",
+        "verifier": "PICK: B\n\n```python\ndef largest_subset(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum\n\n# Test cases\nassert largest_subset([ 1, 3, 6, 13, 17, 18 ]) == 4\nassert largest_subset([10, 5, 3, 15, 20]) == 3\nassert largest_subset([18, 1, 3, 6, 13, 17]) == 4\nassert sum_of_digits([1, 2, 3]) == 6\nassert sum_of_digits([10, 20, 30]) == 60\nassert sum_of_digits([1, 2, 3, 4, 5]) == 15\nassert sum_of_digits([1, 2, 3, 4, 5, 6]) == 21\nassert sum_of_digits([1, 2, 3, 4, 5, 6, 7]) == 28\n```",
+        "fixer": "```python\ndef largest_subset(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum\n\n# Test cases\nassert largest_subset([ 1, 3, 6, 13, 17, 18 ]) == 4\nassert largest_subset([10, 5, 3, 15, 20]) == 3\nassert largest_subset([18, 1, 3, 6, 13, 17]) == 4\nassert sum_of_digits([1, 2, 3]) == 6\nassert sum_of_digits([10, 20, 30]) == 60\nassert sum_of_digits([1, 2, 3, 4, 5]) == 15\nassert sum_of_digits([1, 2, 3, 4, 5, 6]) == 21\nassert sum_of_digits([1, 2, 3, 4, 5, 6, 7]) == 28\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def largest_subset(numbers):\n    max_size = 0\n    current_size = 0\n    \n    for num in numbers:\n        # Check if the current number can be added to the current subset\n        if current_size > 0 and num % current_size != 0:\n            current_size = 1\n        else:\n            current_size += 1\n        \n        # Update the maximum subset size found\n        max_size = max(max_size, current_size)\n    \n    return max_size",
+  "sample_keys": [
+    "def largest_subset(nums):\n    max_size = 0\n    for i in range(len(nums)):\n        current_size = 1\n        for j in range(i + 1, len(nums)):\n            if nums[j] % nums[i] == 0:\n                current_size += 1\n                max_size = max(max_size, current_size)\n    return max_size",
+    "def largest_subset(nums):\n    nums.sort()\n    i = 0\n    max_length = 0\n    \n    for j in range(1, len(nums)):\n        if (nums[j] - nums[i]) % nums[i] == 0:\n            i += 1\n        else:\n            max_length = max(max_length, i)\n    \n    return max(max_length, i)",
+    "def largest_subset(numbers):\n    max_size = 0\n    current_subset = []\n    \n    for num in numbers:\n        if len(current_subset) > 0 and (num % current_subset[-1] == 0 and current_subset[-1] % num == 0):\n            current_subset.append(num)\n        else:\n            max_size = max(max_size, len(current_subset))\n            current_subset = [num]\n        \n    return max_size"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1937.0,
+    "small_out": 564.0,
+    "small_s": 12.235141824028688
+  },
+  "calls_plus": {
+    "large_in": 130.0,
+    "large_out": 166.0,
+    "large_s": 3.731785535987001,
+    "small_in": 1841.0,
+    "small_out": 827.0,
+    "small_s": 13.868440694001038
+  },
+  "calls_samples": {
+    "small_in": 5863.0,
+    "small_out": 1907.0,
+    "small_s": 33.79396536096465
+  }
+}

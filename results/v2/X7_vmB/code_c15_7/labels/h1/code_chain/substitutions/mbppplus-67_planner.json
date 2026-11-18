@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-67",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Understand that Bell numbers represent the number of ways to partition a set.\n2. Recognize that the nth Bell number can be computed using the previous Bell numbers.\n3. Implement a recursive function to calculate Bell numbers, utilizing memoization for efficiency.\n4. Ensure the function handles base cases correctly (e.g., B0 = 1).\n5. Test the function with the provided test case to verify correctness.",
+  "reference_key": null,
+  "final_key_plus": "def bell_number(n):\n    # Base case: B0 is 1\n    if n == 0:\n        return 1\n    \n    # Initialize a list to store Bell numbers\n    bell = [0] * (n + 1)\n    \n    # Base case initialization\n    bell[0] = 1\n    \n    # Calculate Bell numbers iteratively\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j - 1] for j in range(i))\n    \n    return bell[n]",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 258\nassert bell_number(7) == 1764\n```",
+    "coder": "```python\ndef bell_number(n):\n    # Base case: B0 is 1\n    if n == 0:\n        return 1\n    \n    # Initialize a list to store Bell numbers\n    bell = [0] * (n + 1)\n    \n    # Base case initialization\n    bell[0] = 1\n    \n    # Calculate Bell numbers iteratively\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j - 1] for j in range(i))\n    \n    return bell[n]\n```",
+    "verifier": "PICK: B\n\n```python\ndef bell_number(n):\n    # Base case: B0 is 1\n    if n == 0:\n        return 1\n    \n    # Initialize a list to store Bell numbers\n    bell = [0] * (n + 1)\n    \n    # Base case initialization\n    bell[0] = 1\n    \n    # Calculate Bell numbers iteratively\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j - 1] for j in range(i))\n    \n    return bell[n]\n```",
+    "fixer": "```python\ndef bell_number(n):\n    # Base case: B0 is 1\n    if n == 0:\n        return 1\n    \n    # Initialize a list to store Bell numbers\n    bell = [0] * (n + 1)\n    \n    # Base case initialization\n    bell[0] = 1\n    \n    # Calculate Bell numbers iteratively\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j - 1] for j in range(i))\n    \n    return bell[n]\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 258\nassert bell_number(7) == 1764\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sort_matrix` that takes a matrix as input.\n2. Initialize an empty list called `sorted_matrix`.\n3. Iterate over each row in the input matrix using a for loop.\n4. For each row, calculate the sum of its elements using the built-in `sum()` function.\n5. Append the sorted row to the `sorted_matrix` list.\n6. Return the `sorted_matrix` list.\n\nThis approach ensures that the matrix is sorted based on the sum of its rows in ascending order.",
+      "quality": 0.0,
+      "final_key": "from math import comb\n\ndef bell_number(n):\n    if n == 0:\n        return 1\n    else:\n        return sum(comb(n, k) * bell_number(k) for k in range(n + 1))\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 966",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 966\n```",
+        "coder": "```python\ndef sort_matrix(matrix):\n    sorted_matrix = []\n    for row in matrix:\n        sorted_row = sorted(row)\n        sorted_matrix.append(sorted_row)\n    return sorted_matrix\n```",
+        "verifier": "PICK: B\n\n```python\nfrom math import comb\n\ndef bell_number(n):\n    if n == 0:\n        return 1\n    else:\n        return sum(comb(n, k) * bell_number(k) for k in range(n + 1))\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 966\n```",
+        "fixer": "```python\nfrom math import comb\n\ndef bell_number(n):\n    if n == 0:\n        return 1\n    else:\n        return sum(comb(n, k) * bell_number(k) for k in range(n + 1))\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 966\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Understand that Bell numbers represent the number of ways to partition a set.\n2. Identify that the nth Bell number can be calculated recursively based on the previous Bell numbers.\n3. Write a recursive function to compute Bell numbers, employing memoization for better performance.\n4. Make sure the function handles base cases accurately (e.g., B0 = 1).\n5. Validate the function against the given test case to confirm accuracy.",
+      "quality": 0.0,
+      "final_key": "def bell_number(n):\n    # Base case: B0 is defined as 1\n    if n == 0:\n        return 1\n    \n    # Initialize a list to store Bell numbers\n    bell = [0] * (n + 1)\n    \n    # Base case initialization\n    bell[0] = 1\n    \n    # Calculate Bell numbers using dynamic programming\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j - 1] for j in range(i))\n    \n    return bell[n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 968\n```",
+        "coder": "```python\ndef bell_number(n):\n    # Base case: B0 is defined as 1\n    if n == 0:\n        return 1\n    \n    # Initialize a list to store Bell numbers\n    bell = [0] * (n + 1)\n    \n    # Base case initialization\n    bell[0] = 1\n    \n    # Calculate Bell numbers using dynamic programming\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j - 1] for j in range(i))\n    \n    return bell[n]\n```",
+        "verifier": "PICK: B\n\n```python\ndef bell_number(n):\n    # Base case: B0 is defined as 1\n    if n == 0:\n        return 1\n    \n    # Initialize a list to store Bell numbers\n    bell = [0] * (n + 1)\n    \n    # Base case initialization\n    bell[0] = 1\n    \n    # Calculate Bell numbers using dynamic programming\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j - 1] for j in range(i))\n    \n    return bell[n]\n```",
+        "fixer": "```python\ndef bell_number(n):\n    # Base case: B0 is defined as 1\n    if n == 0:\n        return 1\n    \n    # Initialize a list to store Bell numbers\n    bell = [0] * (n + 1)\n    \n    # Base case initialization\n    bell[0] = 1\n    \n    # Calculate Bell numbers using dynamic programming\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j - 1] for j in range(i))\n    \n    return bell[n]\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 968\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a helper function `is_amicable` that checks if two numbers are amicable.\n2. Iterate through all numbers from 1 to the specified limit.\n3. For each number, check if it is amicable by calling `is_amicable`.\n4. If a number is amicable, add it to a running total.\n5. Return the total sum of all amicable numbers.\n\n```python\ndef is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that solves the problem as described. The helper function `is_amicable` is used to determine if a number is amicable, which is then summed up in the main function `amicable_numbers_sum`.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert amicable_numbers_sum(10) == 46\nassert amicable_numbers_sum(100) == 387\nassert amicable_numbers_sum(1000) == 9856\nassert amicable_numbers_sum(10000) == 174876\nassert amicable_numbers_sum(100000) == 2449746\n```",
+        "coder": "```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert amicable_numbers_sum(10) == 46\nassert amicable_numbers_sum(100) == 387\nassert amicable_numbers_sum(1000) == 9856\nassert amicable_numbers_sum(10000) == 174876\nassert amicable_numbers_sum(100000) == 2449746\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+  "sample_keys": [
+    "def bell_number(n):\n    if n == 0:\n        return 1\n    else:\n        return sum(bell_number(k) * bell_number(n - k) for k in range(n + 1))",
+    "from math import comb\n\ndef bell_number(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_number(i) * comb(n - i - 1, i) for i in range(n))",
+    "from math import comb\n\ndef bell_number(n):\n    # Dictionary to store calculated Bell numbers\n    bell_dict = {0: 1, 1: 1}\n    \n    def helper(n):\n        # Check if the result is already computed\n        if n in bell_dict:\n            return bell_dict[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_dict[n] = sum(helper(k) * comb(n, k) for k in range(n))\n        return bell_dict[n]\n    \n    # Call the helper function with the desired value of n\n    return helper(n)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1803.0,
+    "small_out": 522.0,
+    "small_s": 10.7523315299768
+  },
+  "calls_plus": {
+    "large_in": 103.0,
+    "large_out": 87.0,
+    "large_s": 1.9342525289976038,
+    "small_in": 1568.0,
+    "small_out": 573.0,
+    "small_s": 10.843927731999429
+  },
+  "calls_samples": {
+    "small_in": 4734.0,
+    "small_out": 1190.0,
+    "small_s": 21.271670511981938
+  }
+}

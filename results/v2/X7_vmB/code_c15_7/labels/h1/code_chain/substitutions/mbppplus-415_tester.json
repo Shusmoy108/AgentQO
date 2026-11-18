@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-415",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert max_Product([-1,-2,-3,-4,-5]) == (-4,-5)\nassert max_Product([0,0,0,0,0]) == (0,0)\nassert max_Product([1,1,1,1,1]) == (1,1)\nassert max_Product([-1,2,3,4,5]) == (4,5)\nassert max_Product([10,20,30,40,50]) == (40,50)\n```",
+  "reference_key": "assert max_Product([-1,-2,-3,-4,-5]) == (-4,-5)\nassert max_Product([0,0,0,0,0]) == (0,0)\nassert max_Product([1,1,1,1,1]) == (1,1)\nassert max_Product([-1,2,3,4,5]) == (4,5)\nassert max_Product([10,20,30,40,50]) == (40,50)",
+  "final_key_plus": "def max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```",
+    "fixer": "```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test case 1: Array with unique positive integers\nassert max_Product([5,6,7,8]) == (8,7)\n\n# Test case 2: Array with negative numbers and zeros\nassert max_Product([-1, -2, 0, 1]) == (6, -2)  # The pair (-2, 3) doesn't contribute as it's zero\n\n# Test case 3: Array with all negative numbers\nassert max_Product([-1, -2, -3]) == (-2, -3)\n\n# Test case 4: Array with multiple pairs with same maximum product\nassert max_Product([-1, -2, -3, -4, -5, -6]) == (-6, -5)  # The pair (-6, -5) doesn't provide a better solution but is valid\n\n# Test case 5: Edge case: Single element array\nassert max_Product([2]) == (2, 2)",
+      "reference_key": "assert max_Product([-1,-2,-3,-4,-5]) == (-4,-5)\nassert max_Product([0,0,0,0,0]) == (0,0)\nassert max_Product([1,1,1,1,1]) == (1,1)\nassert max_Product([-1,2,3,4,5]) == (4,5)\nassert max_Product([10,20,30,40,50]) == (40,50)",
+      "key_differs": true,
+      "text": "```python\n# Test case 1: Array with unique positive integers\nassert max_Product([5,6,7,8]) == (8,7)\n\n# Test case 2: Array with negative numbers and zeros\nassert max_Product([-1, -2, 0, 1]) == (6, -2)  # The pair (-2, 3) doesn't contribute as it's zero\n\n# Test case 3: Array with all negative numbers\nassert max_Product([-1, -2, -3]) == (-2, -3)\n\n# Test case 4: Array with multiple pairs with same maximum product\nassert max_Product([-1, -2, -3, -4, -5, -6]) == (-6, -5)  # The pair (-6, -5) doesn't provide a better solution but is valid\n\n# Test case 5: Edge case: Single element array\nassert max_Product([2]) == (2, 2)\n```",
+      "quality": 0.0,
+      "final_key": "def max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```",
+        "fixer": "```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test cases with typical values to verify correctness\nassert max_Product([1,-2,3,4,5]) == (5,4)  # Positive maximum products\nassert max_Product([-1,-2,-3,-4,-5]) == (-5,-5)  # All negative numbers\nassert max_Product([]) == None  # Empty list\nassert max_Product([-1]) == (-1,)  # Single number\nassert max_Product([1,2,3,4,7,0,8,4,9]) == (9,8)  # Mixed positive and negative numbers",
+      "reference_key": "assert max_Product([-1,-2,-3,-4,-5]) == (-4,-5)\nassert max_Product([0,0,0,0,0]) == (0,0)\nassert max_Product([1,1,1,1,1]) == (1,1)\nassert max_Product([-1,2,3,4,5]) == (4,5)\nassert max_Product([10,20,30,40,50]) == (40,50)",
+      "key_differs": true,
+      "text": "```python\n# Test cases with typical values to verify correctness\nassert max_Product([1,-2,3,4,5]) == (5,4)  # Positive maximum products\nassert max_Product([-1,-2,-3,-4,-5]) == (-5,-5)  # All negative numbers\nassert max_Product([]) == None  # Empty list\nassert max_Product([-1]) == (-1,)  # Single number\nassert max_Product([1,2,3,4,7,0,8,4,9]) == (9,8)  # Mixed positive and negative numbers\n```",
+      "quality": 0.0,
+      "final_key": "def max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```",
+        "fixer": "```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([-1, -2, -3, -4, -5]) == 120\nassert max_product([]) == None\nassert max_product([0]) == 0\nassert max_product([10, 20, 30, 40, 50]) == 120000",
+      "reference_key": "assert max_Product([-1,-2,-3,-4,-5]) == (-4,-5)\nassert max_Product([0,0,0,0,0]) == (0,0)\nassert max_Product([1,1,1,1,1]) == (1,1)\nassert max_Product([-1,2,3,4,5]) == (4,5)\nassert max_Product([10,20,30,40,50]) == (40,50)",
+      "key_differs": true,
+      "text": "```python\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([-1, -2, -3, -4, -5]) == 120\nassert max_product([]) == None\nassert max_product([0]) == 0\nassert max_product([10, 20, 30, 40, 50]) == 120000\n```",
+      "quality": 0.0,
+      "final_key": "def max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```",
+        "fixer": "```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert max_Product([-1, -2, -3, -4, -5, -6, -7, -8]) == (-1, -8)\nassert max_Product([1, 2, 3, 4, 5, 6, 7, 8]) == (8, 7)\nassert max_Product([0, 0, 0, 0, 0]) == (0, 0)\nassert max_Product([]) == (None, None)\nassert max_Product([10]) == (10, 10)",
+  "sample_keys": [
+    "assert max_Product([]) == None\nassert max_Product([-1,-2,-3]) == (-1,-2)\nassert max_Product([10,20]) == (10,20)\nassert max_Product([-2,0,4]) == (4,-2)\nassert max_Product([0,0,0]) == (0,0)",
+    "from typing import Tuple\n\ndef max_Product(arr: List[int]) -> Tuple[int, int]:\n    # Initialize variables to store the maximum product found and its corresponding pair\n    max_product = float('-inf')\n    max_pair = None\n    \n    # Iterate through the array to find the maximum product\n    for i in range(len(arr)):\n        for j in range(i + 1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n\n# Test cases\nassert max_Product([1, 2, 3, 4, 7, 0, 8, 4]) == (7, 8)\nassert max_Product([-1, -2, -3, -4, -5]) == (-1, -2)\nassert max_Product([]) == None\nassert max_Product([0]) == (0, 0)\nassert max_Product([1, 0, 0]) == (0, 0)",
+    "assert max_Product([-1, -2, -9]) == (-1, -2), \"Test case with negative numbers\"\nassert max_Product([]) == None, \"Test case with empty list\"\nassert max_Product([0, 0]) == (0, 0), \"Test case with zeros\"\nassert max_Product([10, 20, 30]) == (30, 20), \"Test case with large positive numbers\"\nassert max_Product([-10, -20, -30]) == (-10, -20), \"Test case with large negative numbers\"",
+    "assert max_Product([-1, -2, -3, -4]) == (-1, -2)\nassert max_Product([-1, 0, -3, -4]) == (-1, 0)\nassert max_Product([1, 2, 3, -4, -5]) == (3, -4)\nassert max_Product([1, 2, 3, 4, 5]) == (5, 4)\nassert max_Product([]) == None",
+    "assert max_Product([1,2,3,4,7,0,8,4]) == (7,8), \"Test case 1 failed\"\nassert max_Product([-1,-2,-3,-4,-7,0,8,4]) == (-4,-8), \"Test case 2 failed\"\nassert max_Product([]) == None, \"Test case 3 failed\"\nassert max_Product([-1,0]) == (0,-1), \"Test case 4 failed\"\nassert max_Product([0,0]) == (0,0), \"Test case 5 failed\""
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1725.0,
+    "small_out": 474.0,
+    "small_s": 9.961173038027482
+  },
+  "calls_plus": {
+    "small_in": 1431.0,
+    "small_out": 349.0,
+    "small_s": 7.185876410978381,
+    "large_in": 219.0,
+    "large_out": 112.0,
+    "large_s": 2.4834459139965475
+  },
+  "calls_samples": {
+    "small_in": 1095.0,
+    "small_out": 958.0,
+    "small_s": 17.600702993921004
+  }
+}

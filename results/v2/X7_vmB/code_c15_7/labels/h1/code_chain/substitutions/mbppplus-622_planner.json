@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-622",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `get_median` that takes three parameters: two sorted lists (`list1` and `list2`) and their common length (`n`).\n2. Merge the two lists into one sorted list by iterating through both lists simultaneously and appending the smaller element to the new list.\n3. Calculate the median of the merged list:\n   - If the total number of elements is odd, return the middle element.\n   - If the total number of elements is even, return the average of the two middle elements.\n4. Return the calculated median as a float.\n5. Test the function with the provided test case to ensure it works correctly.",
+  "reference_key": null,
+  "final_key_plus": "def get_median(list1, list2, n):\n    # Merge the two lists into one sorted list\n    merged_list = []\n    i, j = 0, 0\n    while i < n and j < n:\n        if list1[i] <= list2[j]:\n            merged_list.append(list1[i])\n            i += 1\n        else:\n            merged_list.append(list2[j])\n            j += 1\n    # Append remaining elements from either list\n    merged_list.extend(list1[i:])\n    merged_list.extend(list2[j:])\n    \n    # Calculate the median\n    if n % 2 == 1:\n        return float(merged_list[n // 2])\n    else:\n        return (merged_list[n // 2 - 1] + merged_list[n // 2]) / 2.0",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert get_median([], [], 0) == 0.0\nassert get_median([1], [2], 1) == 1.5\nassert get_median([-1, 2], [-2, 3], 2) == -1.0\nassert get_median([1, 2, 3], [4, 5, 6], 3) == 3.5\nassert get_median([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 5) == 5.5\n```",
+    "coder": "```python\ndef get_median(list1, list2, n):\n    # Merge the two lists into one sorted list\n    merged_list = []\n    i, j = 0, 0\n    while i < n and j < n:\n        if list1[i] <= list2[j]:\n            merged_list.append(list1[i])\n            i += 1\n        else:\n            merged_list.append(list2[j])\n            j += 1\n    # Append remaining elements from either list\n    merged_list.extend(list1[i:])\n    merged_list.extend(list2[j:])\n    \n    # Calculate the median\n    if n % 2 == 1:\n        return float(merged_list[n // 2])\n    else:\n        return (merged_list[n // 2 - 1] + merged_list[n // 2]) / 2.0\n```",
+    "verifier": "PICK: A\n\n```python\ndef get_median(list1, list2, n):\n    # Merge the two lists into one sorted list\n    merged_list = []\n    i, j = 0, 0\n    while i < n and j < n:\n        if list1[i] <= list2[j]:\n            merged_list.append(list1[i])\n            i += 1\n        else:\n            merged_list.append(list2[j])\n            j += 1\n    # Append remaining elements from either list\n    merged_list.extend(list1[i:])\n    merged_list.extend(list2[j:])\n    \n    # Calculate the median\n    if n % 2 == 1:\n        return float(merged_list[n // 2])\n    else:\n        return (merged_list[n // 2 - 1] + merged_list[n // 2]) / 2.0\n```",
+    "fixer": "```python\ndef get_median(list1, list2, n):\n    # Merge the two lists into one sorted list\n    merged_list = []\n    i, j = 0, 0\n    while i < n and j < n:\n        if list1[i] <= list2[j]:\n            merged_list.append(list1[i])\n            i += 1\n        else:\n            merged_list.append(list2[j])\n            j += 1\n    # Append remaining elements from either list\n    merged_list.extend(list1[i:])\n    merged_list.extend(list2[j:])\n    \n    # Calculate the median\n    if n % 2 == 1:\n        return float(merged_list[n // 2])\n    else:\n        return (merged_list[n // 2 - 1] + merged_list[n // 2]) / 2.0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables `even_product` and `odd_product` to 1 (since multiplying by 1 has no effect).\n2. Iterate through each number in the input list.\n3. Check if the number is even or odd:\n   - If even, multiply it to `even_product`.\n   - If odd, multiply it to `odd_product`.\n4. After iterating through all numbers, return the product of `even_product` and `odd_product`.\n\nThis approach ensures that we correctly identify the first even and odd numbers and calculate their product without modifying the original list.",
+      "quality": 0.0,
+      "final_key": "def get_median(nums1, nums2, n):\n    even_product = 1\n    odd_product = 1\n    \n    for num in nums1 + nums2:\n        if num % 2 == 0:\n            even_product *= num\n        else:\n            odd_product *= num\n    \n    return even_product * odd_product",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\nassert get_median([], [], 0) == 0.0\nassert get_median([1], [1], 1) == 1.0\nassert get_median([-1, -2, -3], [-4, -5, -6], 3) == -3.0\nassert get_median([10, 20, 30], [40, 50, 60], 6) == 40.0\n```",
+        "coder": "```python\ndef get_median(nums1, nums2, n):\n    even_product = 1\n    odd_product = 1\n    \n    for num in nums1 + nums2:\n        if num % 2 == 0:\n            even_product *= num\n        else:\n            odd_product *= num\n    \n    return even_product * odd_product\n```",
+        "verifier": "PICK: A\n\n```python\ndef get_median(nums1, nums2, n):\n    even_product = 1\n    odd_product = 1\n    \n    for num in nums1 + nums2:\n        if num % 2 == 0:\n            even_product *= num\n        else:\n            odd_product *= num\n    \n    return even_product * odd_product\n```",
+        "fixer": "```python\ndef get_median(nums1, nums2, n):\n    even_product = 1\n    odd_product = 1\n    \n    for num in nums1 + nums2:\n        if num % 2 == 0:\n            even_product *= num\n        else:\n            odd_product *= num\n    \n    return even_product * odd_product\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import the necessary module for mathematical operations.\n2. Define a function named `surfacearea_sphere` that takes one parameter, `radius`.\n3. Inside the function, calculate the surface area using the formula \\(4\\pi r^2\\).\n4. Return the calculated surface area.\n5. Test the function with the provided test case to ensure it returns the correct value.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef get_median(nums1, nums2, n):\n    \"\"\"\n    Find the median of two sorted arrays of the same size.\n\n    Parameters:\n    nums1 (list): The first sorted array.\n    nums2 (list): The second sorted array.\n    n (int): The length of both arrays.\n\n    Returns:\n    float: The median of the two sorted arrays.\n    \"\"\"\n    if n % 2 == 1:\n        return nums1[n // 2]\n    else:\n        return (nums1[n // 2 - 1] + nums1[n // 2]) / 2.0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert surfacearea_sphere(0) == 0.0\nassert surfacearea_sphere(1) == 4.0\nassert surfacearea_sphere(2) == 25.132741228718345\nassert surfacearea_sphere(3) == 113.09733552923255\nassert surfacearea_sphere(4) == 201.06192982974656\n```",
+        "coder": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    \"\"\"\n    Calculate the surface area of a sphere given its radius.\n\n    Parameters:\n    radius (float): The radius of the sphere.\n\n    Returns:\n    float: The surface area of the sphere.\n    \"\"\"\n    return 4 * math.pi * radius ** 2\n```",
+        "verifier": "PICK: A\n```python\nimport math\n\ndef get_median(nums1, nums2, n):\n    \"\"\"\n    Find the median of two sorted arrays of the same size.\n\n    Parameters:\n    nums1 (list): The first sorted array.\n    nums2 (list): The second sorted array.\n    n (int): The length of both arrays.\n\n    Returns:\n    float: The median of the two sorted arrays.\n    \"\"\"\n    if n % 2 == 1:\n        return nums1[n // 2]\n    else:\n        return (nums1[n // 2 - 1] + nums1[n // 2]) / 2.0\n```",
+        "fixer": "```python\nimport math\n\ndef surfacearea_sphere(radius):\n    \"\"\"\n    Calculate the surface area of a sphere given its radius.\n\n    Parameters:\n    radius (float): The radius of the sphere.\n\n    Returns:\n    float: The surface area of the sphere.\n    \"\"\"\n    return 4 * math.pi * radius ** 2\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_divisors` that takes one parameter, `num`.\n2. Initialize a variable `divisor_count` to 0.\n3. Iterate through all numbers from 1 to `num` (inclusive).\n4. For each number, check if it divides `num` without leaving a remainder using the modulus operator (`%`).\n5. If the condition is true, increment `divisor_count` by 1.\n6. After the loop completes, check if `divisor_count` is even.\n7. Return `True` if `divisor_count` is even, otherwise return `False`.",
+      "quality": 0.0,
+      "final_key": "def get_median(nums1, nums2, n):\n    # Merge the two sorted arrays into a single array\n    merged = sorted(nums1 + nums2)\n    \n    # Calculate the index of the median element\n    mid_index = n // 2\n    \n    # Return the median value\n    return merged[mid_index]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_divisors(1) == True\nassert count_divisors(2) == False\nassert count_divisors(3) == True\nassert count_divisors(4) == False\nassert count_divisors(5) == True\n```",
+        "coder": "```python\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_median(nums1, nums2, n):\n    # Merge the two sorted arrays into a single array\n    merged = sorted(nums1 + nums2)\n    \n    # Calculate the index of the median element\n    mid_index = n // 2\n    \n    # Return the median value\n    return merged[mid_index]\n```",
+        "fixer": "```python\ndef get_median(nums1, nums2, n):\n    # Merge the two sorted arrays into a single array\n    merged = sorted(nums1 + nums2)\n    \n    # Calculate the index of the median element\n    mid_index = n // 2\n    \n    # Return the median value\n    return merged[mid_index]\n\n# Test cases\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\nassert get_median([2, 4, 8, 9], [7, 13, 19, 28], 4) == 8.5\nassert get_median([3, 6, 14, 23, 36, 42], [2, 18, 27, 39, 49, 55], 6) == 25.0\nassert count_divisors(1) == True\nassert count_divisors(2) == False\nassert count_divisors(3) == True\nassert count_divisors(4) == False\nassert count_divisors(5) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2",
+  "sample_keys": [
+    "def get_median(nums1, nums2, n):\n    # Ensure both lists have the same number of elements\n    if len(nums1) != n or len(nums2) != n:\n        raise ValueError(\"Both lists must have the same number of elements\")\n    \n    # Combine the two lists into one sorted list\n    merged = sorted(nums1 + nums2)\n    \n    # Calculate the middle index of the combined sorted list\n    mid_index = n // 2\n    \n    # Return the median based on whether the length is odd or even\n    if n % 2 == 1:\n        return merged[mid_index]\n    else:\n        return (merged[mid_index - 1] + merged[mid_index]) / 2",
+    "def get_median(nums1, nums2, n):\n    if len(nums1) != len(nums2):\n        raise ValueError(\"Both lists must have the same length.\")\n    \n    mid = n // 2\n    \n    # Merge the two lists into a single sorted list\n    merged_list = sorted(nums1 + nums2)\n    \n    # Calculate the median based on the length of the merged list\n    if n % 2 == 1:\n        return merged_list[mid]\n    else:\n        return (merged_list[mid - 1] + merged_list[mid]) / 2",
+    "def get_median(nums1, nums2, n):\n    # Combine the two lists\n    combined = nums1 + nums2\n    \n    # Sort the combined list\n    combined.sort()\n    \n    # Calculate the median\n    if n % 2 == 1:\n        # If odd, return the middle element\n        return combined[n // 2]\n    else:\n        # If even, return the average of the two middle elements\n        return (combined[n // 2 - 1] + combined[n // 2]) / 2"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2203.0,
+    "small_out": 483.0,
+    "small_s": 7.167847695032833
+  },
+  "calls_plus": {
+    "large_in": 144.0,
+    "large_out": 135.0,
+    "large_s": 4.30934164399514,
+    "small_in": 2410.0,
+    "small_out": 673.0,
+    "small_s": 14.322790289006662
+  },
+  "calls_samples": {
+    "small_in": 7300.0,
+    "small_out": 1961.0,
+    "small_s": 40.57372278909315
+  }
+}

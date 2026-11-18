@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-126",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum\n```",
+  "reference_key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+  "final_key_plus": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum\n\nassert sum(10, 15) == 6\nassert sum(100, 150) == 93\nassert sum(4, 6) == 3\nassert sum_common_divisors(8, 12) == 4\nassert sum_common_divisors(17, 31) == 0\nassert sum_common_divisors(100, 200) == 100\nassert sum_common_divisors(100, 1000) == 100",
+      "reference_key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+      "key_differs": true,
+      "text": "```python\ndef sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum\n\nassert sum(10, 15) == 6\nassert sum(100, 150) == 93\nassert sum(4, 6) == 3\nassert sum_common_divisors(8, 12) == 4\nassert sum_common_divisors(17, 31) == 0\nassert sum_common_divisors(100, 200) == 100\nassert sum_common_divisors(100, 1000) == 100\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 // i == i and num2 // i == i:\n            common_sum += i\n    return common_sum if len(set(range(1, min(num1, num2) + 1)) == set(range(1, max(num1, num2) + 1))) else 0\n\n# Test results:\nassert sum_common_divisors(10,15) == 6  # Correct\nassert sum_common_divisors(100,150) == 93  # Correct\nassert sum_common_divisors(4,6) == 3  # Correct\nassert sum_common_divisors(8, 12) == 4  # Correct\nassert sum_common_divisors(10, 15) == 6  # Passed\nassert sum_common_divisors(17, 31) == 0  # Incorrect, fixed as sum_common_divisors(17, 31)\nassert sum_common_divisors(100, 200) == 100  # Incorrect, fixed as sum_common_divisors(100, 200)\nassert sum_common_divisors(100, 1000) == 100  # Incorrect, fixed as sum_common_divisors(100, 1000)",
+      "reference_key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+      "key_differs": true,
+      "text": "```python\ndef sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 // i == i and num2 // i == i:\n            common_sum += i\n    return common_sum if len(set(range(1, min(num1, num2) + 1)) == set(range(1, max(num1, num2) + 1))) else 0\n\n# Test results:\nassert sum_common_divisors(10,15) == 6  # Correct\nassert sum_common_divisors(100,150) == 93  # Correct\nassert sum_common_divisors(4,6) == 3  # Correct\nassert sum_common_divisors(8, 12) == 4  # Correct\nassert sum_common_divisors(10, 15) == 6  # Passed\nassert sum_common_divisors(17, 31) == 0  # Incorrect, fixed as sum_common_divisors(17, 31)\nassert sum_common_divisors(100, 200) == 100  # Incorrect, fixed as sum_common_divisors(100, 200)\nassert sum_common_divisors(100, 1000) == 100  # Incorrect, fixed as sum_common_divisors(100, 1000)\n```",
+      "quality": 0.0,
+      "final_key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 // i == i and num2 // i == i:\n            common_sum += i\n    return common_sum if len(set(range(1, min(num1, num2) + 1)) == set(range(1, max(num1, num2) + 1))) else 0",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 // i == i and num2 // i == i:\n            common_sum += i\n    return common_sum if len(set(range(1, min(num1, num2) + 1)) == set(range(1, max(num1, num2) + 1))) else 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+      "key_differs": true,
+      "text": "```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n\n# Test cases\nassert pancake_sort([15, 79, 25, 38, 69]) == [15, 25, 38, 69, 79]\nassert pancake_sort([98, 12, 54, 36, 85]) == [12, 36, 54, 85, 98]\nassert pancake_sort([41, 42, 32, 12, 23]) == [12, 23, 32, 41, 42]\nassert pancake_sort([]) == []\nassert pancake_sort([1]) == [1]\nassert pancake_sort([1, 2]) == [1, 2]\nassert pancake_sort([2, 1]) == [1, 2]\nassert pancake_sort([3, 4, 5, 6, 7]) == [1, 2, 3, 4, 5, 6, 7]\nassert pancake_sort([7, 6, 5, 4, 3]) == [1, 2, 3, 4, 5, 6, 7]\nassert pancake_sort([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nassert pancake_sort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])",
+      "quality": 0.0,
+      "final_key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+  "sample_keys": [
+    "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+    "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+    "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+    "from typing import Tuple\n\ndef sum_common_divisors(num1: int, num2: int) -> int:\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+    "import math\n\ndef sum_common_divisors(num1, num2):\n    common_sum = 0\n    larger_number = max(num1, num2)\n    for i in range(1, int(math.sqrt(larger_number)) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n            if i != larger_number // i:\n                common_sum += larger_number // i\n    return common_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1574.0,
+    "small_out": 469.0,
+    "small_s": 6.990162387985038
+  },
+  "calls_plus": {
+    "small_in": 1188.0,
+    "small_out": 398.0,
+    "small_s": 5.964094395982102,
+    "large_in": 386.0,
+    "large_out": 71.0,
+    "large_s": 2.048357774998294
+  },
+  "calls_samples": {
+    "small_in": 1930.0,
+    "small_out": 586.0,
+    "small_s": 12.201303404057398
+  }
+}

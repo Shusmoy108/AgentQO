@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-555",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `difference` that takes one parameter, `n`.\n2. Calculate the sum of the first `n` natural numbers using the formula `n * (n + 1) // 2` and store it in a variable `sum_n`.\n3. Calculate the sum of the cubes of the first `n` natural numbers by iterating from 1 to `n`, cubing each number, and adding it to a running total stored in a variable `sum_cubes`.\n4. Subtract `sum_n` from `sum_cubes` to get the desired difference and return the result.\n5. Test the function with the provided test case `assert difference(3) == 30`.",
+  "reference_key": null,
+  "final_key_plus": "def difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = sum(i**3 for i in range(1, n + 1))\n    return sum_cubes - sum_n",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert difference(4) == 70\nassert difference(5) == 165\nassert difference(10) == 3850\nassert difference(1) == 1\nassert difference(0) == 0\n```",
+    "coder": "```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = sum(i**3 for i in range(1, n + 1))\n    return sum_cubes - sum_n\n```",
+    "verifier": "PICK: A\n\n```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = sum(i**3 for i in range(1, n + 1))\n    return sum_cubes - sum_n\n```",
+    "fixer": "```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = sum(i**3 for i in range(1, n + 1))\n    return sum_cubes - sum_n\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `concatenate_tuple` that takes one parameter: `tup`.\n2. Initialize an empty string variable `result`.\n3. Iterate over each element in the tuple using a for loop.\n4. For each element, convert it to a string if it's not already (to handle non-string types).\n5. Concatenate the converted string to the `result` string with the specified delimiter ('-').\n6. After the loop completes, return the `result` string.\n\nHere is the complete implementation:\n\n```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        # Convert non-string items to strings\n        item_str = str(item)\n        # Concatenate with the delimiter\n        result += item_str + \"-\"\n    # Remove the trailing delimiter\n    return result[:-1]\n```\n\nThis function will correctly concatenate each element of the given tuple by the specified delimiter, as demonstrated by the provided test case.",
+      "quality": 1.0,
+      "final_key": "def difference(n):\n    if n < 0:\n        return n\n    sum_cubes = sum([i**3 for i in range(1, n+1)])\n    sum_natural_numbers = sum(range(1, n+1))\n    return sum_cubes - sum_natural_numbers",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert difference(4) == 96\nassert difference(5) == 225\nassert difference(1) == 1\nassert difference(0) == 0\nassert difference(-1) == -1\n```",
+        "coder": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```",
+        "verifier": "PICK: B\n```python\ndef difference(n):\n    if n < 0:\n        return n\n    sum_cubes = sum([i**3 for i in range(1, n+1)])\n    sum_natural_numbers = sum(range(1, n+1))\n    return sum_cubes - sum_natural_numbers\n```",
+        "fixer": "```python\ndef difference(n):\n    if n < 0:\n        return n\n    sum_cubes = sum([i**3 for i in range(1, n+1)])\n    sum_natural_numbers = sum(range(1, n+1))\n    return sum_cubes - sum_natural_numbers\n\n# Test cases\nassert difference(3) == 30\nassert difference(5) == 210\nassert difference(2) == 6\nassert difference(4) == 96\nassert difference(5) == 225\nassert difference(1) == 1\nassert difference(0) == 0\nassert difference(-1) == -1\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `difference` that takes one parameter, `n`.\n2. Calculate the sum of the first `n` natural numbers using the formula `n * (n + 1) // 2` and store it in a variable `sum_n`.\n3. Calculate the sum of the squares of the first `n` natural numbers by iterating from 1 to `n`, squaring each number, and adding it to a running total stored in a variable `sum_squares`.\n4. Subtract `sum_squares` from `sum_cubes` to get the desired difference and return the result.\n5. Test the function with the provided test case `assert difference(3) == 36`.",
+      "quality": 0.0,
+      "final_key": "def difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_squares = sum(i**2 for i in range(1, n + 1))\n    sum_cubes = sum(i**3 for i in range(1, n + 1))\n    return sum_cubes - sum_squares",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert difference(4) == 70\nassert difference(5) == 165\nassert difference(10) == 385\nassert difference(1) == 1\nassert difference(0) == 0\n```",
+        "coder": "```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_squares = sum(i**2 for i in range(1, n + 1))\n    return sum_cubes - sum_squares\n```",
+        "verifier": "PICK: B\n\n```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_squares = sum(i**2 for i in range(1, n + 1))\n    sum_cubes = sum(i**3 for i in range(1, n + 1))\n    return sum_cubes - sum_squares\n```",
+        "fixer": "```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_squares = sum(i**2 for i in range(1, n + 1))\n    sum_cubes = sum(i**3 for i in range(1, n + 1))\n    return sum_cubes - sum_squares\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `remove_whitespaces` that takes one parameter, `input_string`.\n3. Use the `replace()` method to replace all whitespace characters (`' '` or `\\s`) with an empty string.\n4. Return the modified string.\n\nHere's the complete function:\n\n```python\ndef remove_whitespaces(input_string):\n    # Replace all whitespace characters with an empty string\n    return input_string.replace(' ', '').replace('\\s', '')\n```\n\nThis function will correctly remove all whitespaces from the provided string.",
+      "quality": 1.0,
+      "final_key": "def difference(n):\n    # Calculate the sum of cubes of the first n natural numbers\n    sum_of_cubes = sum([i**3 for i in range(1, n+1)])\n    \n    # Calculate the sum of the first n natural numbers\n    sum_of_natural_numbers = sum(range(1, n+1))\n    \n    # Return the difference between the two sums\n    return sum_of_cubes - sum_of_natural_numbers",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert difference(4) == 70\nassert difference(5) == 120\nassert difference(6) == 210\nassert difference(7) == 364\nassert difference(8) == 560\n```",
+        "coder": "```python\ndef difference(n):\n    # Calculate the sum of cubes of the first n natural numbers\n    sum_of_cubes = sum([i**3 for i in range(1, n+1)])\n    \n    # Calculate the sum of the first n natural numbers\n    sum_of_natural_numbers = sum(range(1, n+1))\n    \n    # Return the difference between the two sums\n    return sum_of_cubes - sum_of_natural_numbers\n```",
+        "verifier": "PICK: A\n\n```python\ndef difference(n):\n    # Calculate the sum of cubes of the first n natural numbers\n    sum_of_cubes = sum([i**3 for i in range(1, n+1)])\n    \n    # Calculate the sum of the first n natural numbers\n    sum_of_natural_numbers = sum(range(1, n+1))\n    \n    # Return the difference between the two sums\n    return sum_of_cubes - sum_of_natural_numbers\n```",
+        "fixer": "```python\ndef difference(n):\n    # Calculate the sum of cubes of the first n natural numbers\n    sum_of_cubes = sum([i**3 for i in range(1, n+1)])\n    \n    # Calculate the sum of the first n natural numbers\n    sum_of_natural_numbers = sum(range(1, n+1))\n    \n    # Return the difference between the two sums\n    return sum_of_cubes - sum_of_natural_numbers\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes",
+  "sample_keys": [
+    "def difference(n):\n    # Calculate the sum of cubes of the first n natural numbers\n    sum_of_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    \n    # Calculate the sum of the first n natural numbers\n    sum_of_natural_numbers = n * (n + 1) // 2\n    \n    # Subtract the sum of the first n natural numbers from the sum of cubes of the first n natural numbers\n    result = sum_of_cubes - sum_of_natural_numbers\n    \n    # Return the result\n    return result",
+    "def difference(n):\n    sum_of_cubes = sum(i**3 for i in range(1, n+1))\n    sum_of_natural_numbers = n * (n + 1) * (2 * n + 1) // 6\n    return sum_of_cubes - sum_of_natural_numbers",
+    "def difference(n):\n    # Step 2: Sum of cubes of the first n natural numbers\n    sum_of_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    # Step 3: Sum of the first n natural numbers\n    sum_of_naturals = (n * (n + 1)) // 2\n    # Step 4: Difference calculation\n    difference = sum_of_cubes - sum_of_naturals\n    # Step 5: Return the result\n    return difference"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1307.0,
+    "small_out": 362.0,
+    "small_s": 7.805128389009042
+  },
+  "calls_plus": {
+    "large_in": 117.0,
+    "large_out": 149.0,
+    "large_s": 3.3454302689933684,
+    "small_in": 1200.0,
+    "small_out": 227.0,
+    "small_s": 2.8509352449618746
+  },
+  "calls_samples": {
+    "small_in": 4665.0,
+    "small_out": 1643.0,
+    "small_s": 30.456023717968492
+  }
+}

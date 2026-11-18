@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-67",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef bell_number(n):\n    # Initialize a list to store Bell numbers up to n\n    bell = [0] * (n + 1)\n    bell[0] = 1  # Base case: B(0) = 1\n    \n    # Function to calculate binomial coefficient\n    def binomial_coefficient(n, k):\n        if k > n:\n            return 0\n        if k == 0 or k == n:\n            return 1\n        return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)\n    \n    # Calculate Bell numbers using the recursive formula\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j] * binomial_coefficient(i - 1, j) for j in range(i))\n    \n    return bell[n]\n```",
+  "reference_key": "def bell_number(n):\n    # Initialize a list to store Bell numbers up to n\n    bell = [0] * (n + 1)\n    bell[0] = 1  # Base case: B(0) = 1\n    \n    # Function to calculate binomial coefficient\n    def binomial_coefficient(n, k):\n        if k > n:\n            return 0\n        if k == 0 or k == n:\n            return 1\n        return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)\n    \n    # Calculate Bell numbers using the recursive formula\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j] * binomial_coefficient(i - 1, j) for j in range(i))\n    \n    return bell[n]",
+  "final_key_plus": "def bell_number(n):\n    # Initialize a list to store Bell numbers up to n\n    bell = [0] * (n + 1)\n    bell[0] = 1  # Base case: B(0) = 1\n    \n    # Function to calculate binomial coefficient\n    def binomial_coefficient(n, k):\n        if k > n:\n            return 0\n        if k == 0 or k == n:\n            return 1\n        return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)\n    \n    # Calculate Bell numbers using the recursive formula\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j] * binomial_coefficient(i - 1, j) for j in range(i))\n    \n    return bell[n]",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 258\nassert bell_number(7) == 1764\n```",
+    "verifier": "PICK: A\n\n```python\ndef bell_number(n):\n    # Initialize a list to store Bell numbers up to n\n    bell = [0] * (n + 1)\n    bell[0] = 1  # Base case: B(0) = 1\n    \n    # Function to calculate binomial coefficient\n    def binomial_coefficient(n, k):\n        if k > n:\n            return 0\n        if k == 0 or k == n:\n            return 1\n        return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)\n    \n    # Calculate Bell numbers using the recursive formula\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j] * binomial_coefficient(i - 1, j) for j in range(i))\n    \n    return bell[n]\n```",
+    "fixer": "```python\ndef bell_number(n):\n    # Initialize a list to store Bell numbers up to n\n    bell = [0] * (n + 1)\n    bell[0] = 1  # Base case: B(0) = 1\n    \n    # Function to calculate binomial coefficient\n    def binomial_coefficient(n, k):\n        if k > n:\n            return 0\n        if k == 0 or k == n:\n            return 1\n        return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)\n    \n    # Calculate Bell numbers using the recursive formula\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j] * binomial_coefficient(i - 1, j) for j in range(i))\n    \n    return bell[n]\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 203\nassert bell_number(7) == 966\nassert bell_number(8) == 4862\nassert bell_number(9) == 21621\nassert bell_number(10) == 135955\nassert bell_number(11) == 817870\nassert bell_number(12) == 4637690\nassert bell_number(13) == 26744400\nassert bell_number(14) == 155117520\nassert bell_number(15) == 923784000\nassert bell_number(16) == 5702880000\nassert bell_number(17) == 33659200000\nassert bell_number(18) == 193205000000\nassert bell_number(19) == 1088880000000\nassert bell_number(20) == 6400000000000\nassert bell_number(21) == 38400"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef bell_number(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_number(k) * math.comb(n-1, k) for k in range(n))",
+      "reference_key": "def bell_number(n):\n    # Initialize a list to store Bell numbers up to n\n    bell = [0] * (n + 1)\n    bell[0] = 1  # Base case: B(0) = 1\n    \n    # Function to calculate binomial coefficient\n    def binomial_coefficient(n, k):\n        if k > n:\n            return 0\n        if k == 0 or k == n:\n            return 1\n        return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)\n    \n    # Calculate Bell numbers using the recursive formula\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j] * binomial_coefficient(i - 1, j) for j in range(i))\n    \n    return bell[n]",
+      "key_differs": true,
+      "text": "```python\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef bell_number(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_number(k) * math.comb(n-1, k) for k in range(n))\n```",
+      "quality": 1.0,
+      "final_key": "from functools import lru_cache\nimport math\n\n@lru_cache(maxsize=None)\ndef bell_number(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_number(k) * math.comb(n-1, k) for k in range(n))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert bell_number(3) == 5\nassert bell_number(4) == 15\nassert bell_number(5) == 52\nassert bell_number(6) == 258\nassert bell_number(7) == 1764\n```",
+        "verifier": "PICK: B\n```python\nfrom functools import lru_cache\nimport math\n\n@lru_cache(maxsize=None)\ndef bell_number(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_number(k) * math.comb(n-1, k) for k in range(n))\n```",
+        "fixer": "```python\nfrom functools import lru_cache\nimport math\n\n@lru_cache(maxsize=None)\ndef bell_number(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_number(k) * math.comb(n-1, k) for k in range(n))\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def b(n):\n    mem = {}\n    \n    def binom(n, k):\n        if (n,k) in mem: \n            return mem[(n,k)]\n        else:\n            if (k < n-k): \n                temp = k \n                k = n - k \n                n = temp \n            if (k == 0 or k == n): \n                mem[(n,k)] = 1\n            else: \n                mem[(n,k)] = binom(n-1, k-1) + binom(n-1, k) \n      \n    if not n: \n        return 1\n     \n    \n    if n==1:\n        return1\n\n    result = 0\n    for k in range(n+1):\n        result += binom(n-1, k)*b(k)\n    return result",
+      "reference_key": "def bell_number(n):\n    # Initialize a list to store Bell numbers up to n\n    bell = [0] * (n + 1)\n    bell[0] = 1  # Base case: B(0) = 1\n    \n    # Function to calculate binomial coefficient\n    def binomial_coefficient(n, k):\n        if k > n:\n            return 0\n        if k == 0 or k == n:\n            return 1\n        return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)\n    \n    # Calculate Bell numbers using the recursive formula\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j] * binomial_coefficient(i - 1, j) for j in range(i))\n    \n    return bell[n]",
+      "key_differs": true,
+      "text": "```python\ndef b(n):\n    mem = {}\n    \n    def binom(n, k):\n        if (n,k) in mem: \n            return mem[(n,k)]\n        else:\n            if (k < n-k): \n                temp = k \n                k = n - k \n                n = temp \n            if (k == 0 or k == n): \n                mem[(n,k)] = 1\n            else: \n                mem[(n,k)] = binom(n-1, k-1) + binom(n-1, k) \n      \n    if not n: \n        return 1\n     \n    \n    if n==1:\n        return1\n\n    result = 0\n    for k in range(n+1):\n        result += binom(n-1, k)*b(k)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert b(3) == 5\nassert b(4) == 15\nassert b(5) == 52\nassert b(6) == 258\nassert b(7) == 1764\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef b(n):\n    mem = {}\n    \n    def binom(n, k):\n        if (n,k) in mem: \n            return mem[(n,k)]\n        else:\n            if (k < n-k): \n                temp = k \n                k = n - k \n                n = temp \n            if (k == 0 or k == n): \n                mem[(n,k)] = 1\n            else: \n                mem[(n,k)] = binom(n-1, k-1) + binom(n-1, k) \n      \n    if not n: \n        return 1\n     \n    \n    if n==1:\n        return1\n\n    result = 0\n    for k in range(n+1):\n        result += binom(n-1, k)*b(k)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum",
+      "reference_key": "def bell_number(n):\n    # Initialize a list to store Bell numbers up to n\n    bell = [0] * (n + 1)\n    bell[0] = 1  # Base case: B(0) = 1\n    \n    # Function to calculate binomial coefficient\n    def binomial_coefficient(n, k):\n        if k > n:\n            return 0\n        if k == 0 or k == n:\n            return 1\n        return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)\n    \n    # Calculate Bell numbers using the recursive formula\n    for i in range(1, n + 1):\n        bell[i] = sum(bell[j] * binomial_coefficient(i - 1, j) for j in range(i))\n    \n    return bell[n]",
+      "key_differs": true,
+      "text": "```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert amicable_numbers_sum(10) == 46\nassert amicable_numbers_sum(100) == 387\nassert amicable_numbers_sum(1000) == 9856\nassert amicable_numbers_sum(10000) == 174876\nassert amicable_numbers_sum(100000) == 2449746\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n\n# Test cases\nassert bell_number(2) == 2\nassert bell_number(10) == 115975\nassert bell_number(56) == 6775685320645824322581483068371419745979053216268760300\nassert amicable_numbers_sum(10) == 46\nassert amicable_numbers_sum(100) == 387\nassert amicable_numbers_sum(1000) == 9856\nassert amicable_numbers_sum(10000) == 174876\nassert amicable_numbers_sum(100000) == 2449746\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+  "sample_keys": [
+    "def memoized_bell_numbers(n):\n    # Initialize memoization dictionary with base cases\n    memo = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n not in memo:\n            # Compute Bell number using memoization\n            memo[n] = sum(helper(k) * combination(n - 1, k) for k in range(n + 1))\n        return memo[n]\n    \n    # Helper function for binomial coefficient calculation\n    def combination(n, k):\n        if k == 0 or k == n:\n            return 1\n        return combination(n - 1, k - 1) + combination(n - 1, k)\n    \n    return helper(n)\n\n# Test the function with provided data points\ndef check_solution():\n    assert memoized_bell_numbers(2) == 2\n\ncheck_solution()",
+    "def bell_number(n):\n    def factorial(x):\n        if x == 0:\n            return 1\n        return x * factorial(x - 1)\n\n    def choose(n, k):\n        return factorial(n) // (factorial(k) * factorial(n - k))\n\n    @lru_cache(None)\n    def bell(n):\n        if n == 0:\n            return 1\n        return sum(bell(k) * choose(n - 1, k) for k in range(n + 1))\n\n    return bell(n)",
+    "def bell_number(n, memo={}):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        if n in memo:\n            return memo[n]\n        else:\n            memo[n] = sum(bell_number(k, memo) * math.comb(n-1, k) for k in range(n))\n            return memo[n]",
+    "def bell_number(n):\n    if n == 0 or n == 1:\n        return 1\n    \n    # Initialize a list to store Bell numbers\n    bell = [0] * (n + 1)\n    bell[0], bell[1] = 1, 1\n    \n    # Calculate Bell numbers using dynamic programming with memoization\n    for i in range(2, n + 1):\n        for j in range(i):\n            bell[i] += bell[j] * combinations(i - 1, j)\n    \n    return bell[n]",
+    "from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef bell_number(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return sum(bell_number(k) * combination(n - 1, k) for k in range(n))"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1803.0,
+    "small_out": 522.0,
+    "small_s": 10.7523315299768
+  },
+  "calls_plus": {
+    "small_in": 1606.0,
+    "small_out": 873.0,
+    "small_s": 16.46430452298955,
+    "large_in": 203.0,
+    "large_out": 189.0,
+    "large_s": 4.190945584996371
+  },
+  "calls_samples": {
+    "small_in": 1015.0,
+    "small_out": 645.0,
+    "small_s": 10.805214744032128
+  }
+}

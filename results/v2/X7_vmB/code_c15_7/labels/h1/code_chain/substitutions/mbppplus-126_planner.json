@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-126",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `sum` that takes two parameters, `a` and `b`.\n2. Initialize a variable `common_divisors_sum` to store the sum of common divisors.\n3. Loop through all numbers from 1 to the minimum of `a` and `b`.\n4. For each number, check if it is a divisor of both `a` and `b`.\n5. If it is, add it to `common_divisors_sum`.\n6. Return the value of `common_divisors_sum`.",
+  "reference_key": null,
+  "final_key_plus": "def sum(a, b):\n    common_divisors_sum = 0\n    for i in range(1, min(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors_sum += i\n    return common_divisors_sum\n\n# Test cases\nassert sum(10, 15) == 6\nassert sum(100, 150) == 93\nassert sum(4, 6) == 3\nassert sum(28, 35) == 42\nassert sum(7, 14) == 21\nassert sum(100, 200) == 300\nassert sum(1000, 2000) == 3000\nassert sum(1, 1) == 1",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert sum(28, 35) == 42\nassert sum(7, 14) == 21\nassert sum(100, 200) == 300\nassert sum(1000, 2000) == 3000\nassert sum(1, 1) == 1\n```",
+    "coder": "```python\ndef sum(a, b):\n    common_divisors_sum = 0\n    for i in range(1, min(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors_sum += i\n    return common_divisors_sum\n```",
+    "verifier": "PICK: B\n\n```python\ndef sum(a, b):\n    common_divisors_sum = 0\n    for i in range(1, min(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors_sum += i\n    return common_divisors_sum\n\n# Test cases\nassert sum(10, 15) == 6\nassert sum(100, 150) == 93\nassert sum(4, 6) == 3\nassert sum(28, 35) == 42\nassert sum(7, 14) == 21\nassert sum(100, 200) == 300\nassert sum(1000, 2000) == 3000\nassert sum(1, 1) == 1\n```",
+    "fixer": "```python\ndef sum(a, b):\n    common_divisors_sum = 0\n    for i in range(1, min(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors_sum += i\n    return common_divisors_sum\n\n# Test cases\nassert sum(10, 15) == 6\nassert sum(100, 150) == 93\nassert sum(4, 6) == 3\nassert sum(28, 35) == 42\nassert sum(7, 14) == 21\nassert sum(100, 200) == 300\nassert sum(1000, 2000) == 3000\nassert sum(1, 1) == 1\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_polite(n)` that takes an integer `n` as input.\n2. Initialize a variable `polite_number` to 0.\n3. Use a loop to iterate from 1 to infinity.\n4. For each number, check if it is polite by calling the helper function `is_polite_helper(number)`.\n5. If the number is polite, increment the `polite_number` counter.\n6. Return the `polite_number` when it reaches `n`.\n\nHere's the complete implementation:\n\n```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    # Helper function to determine if a number is polite\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n```\n\nThis solution uses a helper function `is_polite_helper` to check if a given number is polite. The main function iterates through numbers until it finds the `n`-th polite number.",
+      "quality": 0.0,
+      "final_key": "def sum_of_common_divisors(a, b):\n    def is_polite(n):\n        polite_number = 0\n        for number in range(1, n + 1):\n            if is_polite_helper(number):\n                polite_number += 1\n                if polite_number == n:\n                    return number\n        return None\n\n    def is_polite_helper(number):\n        count = 0\n        while number > 0:\n            digit = number % 10\n            if digit == 0 or digit == 5:\n                count += 1\n            number //= 10\n        return count % 2 == 0\n\n    common_divisors = []\n    for i in range(1, min(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors.append(i)\n\n    return sum(common_divisors)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_of_common_divisors(10,15) == 6\nassert sum_of_common_divisors(8,12) == 4\nassert sum_of_common_divisors(17,31) == 0\nassert sum_of_common_divisors(1,1) == 1\nassert sum_of_common_divisors(100,200) == 100\n```",
+        "coder": "```python\ndef sum_of_common_divisors(a, b):\n    def is_polite(n):\n        polite_number = 0\n        for number in range(1, n + 1):\n            if is_polite_helper(number):\n                polite_number += 1\n                if polite_number == n:\n                    return number\n        return None\n\n    def is_polite_helper(number):\n        count = 0\n        while number > 0:\n            digit = number % 10\n            if digit == 0 or digit == 5:\n                count += 1\n            number //= 10\n        return count % 2 == 0\n\n    common_divisors = []\n    for i in range(1, min(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors.append(i)\n\n    return sum(common_divisors)\n```",
+        "verifier": "PICK: A\n```python\ndef sum_of_common_divisors(a, b):\n    def is_polite(n):\n        polite_number = 0\n        for number in range(1, n + 1):\n            if is_polite_helper(number):\n                polite_number += 1\n                if polite_number == n:\n                    return number\n        return None\n\n    def is_polite_helper(number):\n        count = 0\n        while number > 0:\n            digit = number % 10\n            if digit == 0 or digit == 5:\n                count += 1\n            number //= 10\n        return count % 2 == 0\n\n    common_divisors = []\n    for i in range(1, min(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors.append(i)\n\n    return sum(common_divisors)\n```",
+        "fixer": "```python\ndef sum_of_common_divisors(a, b):\n    def is_polite(n):\n        polite_number = 0\n        for number in range(1, n + 1):\n            if is_polite_helper(number):\n                polite_number += 1\n                if polite_number == n:\n                    return number\n        return None\n\n    def is_polite_helper(number):\n        count = 0\n        while number > 0:\n            digit = number % 10\n            if digit == 0 or digit == 5:\n                count += 1\n            number //= 10\n        return count % 2 == 0\n\n    common_divisors = []\n    for i in range(1, min(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors.append(i)\n\n    return sum(common_divisors)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum` that takes two parameters, `a` and `b`.\n2. Initialize a variable `common_divisors_sum` to store the sum of common divisors.\n3. Loop through all numbers from 1 to the maximum of `a` and `b`.\n4. For each number, check if it is a divisor of both `a` and `b`.\n5. If it is, add it to `common_divisors_sum`.\n6. Return the value of `common_divisors_sum`.",
+      "quality": 0.0,
+      "final_key": "def sum(a, b):\n    common_divisors_sum = 0\n    for i in range(1, max(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors_sum += i\n    return common_divisors_sum\n\n# Test cases\nassert sum(10, 15) == 6\nassert sum(100, 150) == 93\nassert sum(4, 6) == 3\nassert sum(28, 35) == 42\nassert sum(7, 14) == 21\nassert sum(100, 200) == 300\nassert sum(1, 1) == 1\nassert sum(1000, 999) == 1000",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum(28, 35) == 42\nassert sum(7, 14) == 21\nassert sum(100, 200) == 300\nassert sum(1, 1) == 1\nassert sum(1000, 999) == 1000\n```",
+        "coder": "```python\ndef sum(a, b):\n    common_divisors_sum = 0\n    for i in range(1, max(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors_sum += i\n    return common_divisors_sum\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum(a, b):\n    common_divisors_sum = 0\n    for i in range(1, max(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors_sum += i\n    return common_divisors_sum\n\n# Test cases\nassert sum(10, 15) == 6\nassert sum(100, 150) == 93\nassert sum(4, 6) == 3\nassert sum(28, 35) == 42\nassert sum(7, 14) == 21\nassert sum(100, 200) == 300\nassert sum(1, 1) == 1\nassert sum(1000, 999) == 1000\n```",
+        "fixer": "```python\ndef sum(a, b):\n    common_divisors_sum = 0\n    for i in range(1, max(a, b) + 1):\n        if a % i == 0 and b % i == 0:\n            common_divisors_sum += i\n    return common_divisors_sum\n\n# Test cases\nassert sum(10, 15) == 6\nassert sum(100, 150) == 93\nassert sum(4, 6) == 3\nassert sum(28, 35) == 42\nassert sum(7, 14) == 21\nassert sum(100, 200) == 300\nassert sum(1, 1) == 1\nassert sum(1000, 999) == 1000\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `pancake_sort` that takes a list of integers as input.\n2. Check if the list is already sorted. If it is, return the list as it is.\n3. Find the maximum element in the list and its index.\n4. Reverse the sublist from the start to the index of the maximum element.\n5. Reverse the entire list to move the maximum element to its correct position.\n6. Repeat steps 3-5 for all elements in the list until the list is sorted.",
+      "quality": 0.0,
+      "final_key": "def sum_common_divisors(a, b):\n    def gcd(x, y):\n        while y != 0:\n            x, y = y, x % y\n        return x\n    \n    def divisors(n):\n        divs = []\n        for i in range(1, int(n**0.5) + 1):\n            if n % i == 0:\n                divs.append(i)\n                if i != n // i:\n                    divs.append(n // i)\n        return sorted(divs)\n    \n    common_divs = set(divisors(a)).intersection(set(divisors(b)))\n    return sum(common_divs)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum(28,35) == 49\nassert sum(7,14) == 21\nassert sum(100,100) == 100\nassert sum(100,101) == 0\nassert sum(100,102) == 102\n```",
+        "coder": "```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the index of the maximum element\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_common_divisors(a, b):\n    def gcd(x, y):\n        while y != 0:\n            x, y = y, x % y\n        return x\n    \n    def divisors(n):\n        divs = []\n        for i in range(1, int(n**0.5) + 1):\n            if n % i == 0:\n                divs.append(i)\n                if i != n // i:\n                    divs.append(n // i)\n        return sorted(divs)\n    \n    common_divs = set(divisors(a)).intersection(set(divisors(b)))\n    return sum(common_divs)\n```",
+        "fixer": "```python\ndef sum_common_divisors(a, b):\n    def gcd(x, y):\n        while y != 0:\n            x, y = y, x % y\n        return x\n    \n    def divisors(n):\n        divs = []\n        for i in range(1, int(n**0.5) + 1):\n            if n % i == 0:\n                divs.append(i)\n                if i != n // i:\n                    divs.append(n // i)\n        return sorted(divs)\n    \n    common_divs = set(divisors(a)).intersection(set(divisors(b)))\n    return sum(common_divs)\n\n# Test cases\nassert sum_common_divisors(10, 15) == 6\nassert sum_common_divisors(100, 150) == 93\nassert sum_common_divisors(4, 6) == 3\nassert sum_common_divisors(28, 35) == 49\nassert sum_common_divisors(7, 14) == 21\nassert sum_common_divisors(100, 100) == 100\nassert sum_common_divisors(100, 101) == 0\nassert sum_common_divisors(100, 102) == 102\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+  "sample_keys": [
+    "def sum_common_divisors(num1, num2):\n    divisors = []\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            divisors.append(i)\n    return sum(divisors)",
+    "def sum_common_divisors(num1, num2):\n    common_sum = 0\n    for i in range(1, min(num1, num2) + 1):\n        if num1 % i == 0 and num2 % i == 0:\n            common_sum += i\n    return common_sum",
+    "def sum_common_divisors(num1, num2):\n    # Function to find all divisors of a number\n    def find_divisors(n):\n        divisors = []\n        for i in range(1, n + 1):\n            if n % i == 0:\n                divisors.append(i)\n        return divisors\n    \n    # Get divisors for both numbers\n    divs_num1 = find_divisors(num1)\n    divs_num2 = find_divisors(num2)\n    \n    # Find common divisors\n    common_divisors = set(divs_num1).intersection(set(divs_num2))\n    \n    # Calculate the sum of common divisors\n    sum_common = sum(common_divisors)\n    \n    return sum_common"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1574.0,
+    "small_out": 469.0,
+    "small_s": 6.990162387985038
+  },
+  "calls_plus": {
+    "large_in": 108.0,
+    "large_out": 112.0,
+    "large_s": 3.601964253000915,
+    "small_in": 1333.0,
+    "small_out": 548.0,
+    "small_s": 11.598732825019397
+  },
+  "calls_samples": {
+    "small_in": 4934.0,
+    "small_out": 1659.0,
+    "small_s": 33.90830922994064
+  }
+}

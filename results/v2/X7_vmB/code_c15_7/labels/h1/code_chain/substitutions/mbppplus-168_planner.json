@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-168",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `frequency` that takes two parameters: a list `lst` and a number `num`.\n2. Initialize a counter variable to zero.\n3. Iterate through each element in the list using a for loop.\n4. For each element, check if it is equal to the given number.\n5. If the element matches the number, increment the counter by one.\n6. After the loop, return the counter value as the result.",
+  "reference_key": null,
+  "final_key_plus": "def frequency(lst, num):\n    count = 0\n    for item in lst:\n        if item == num:\n            count += 1\n    return count",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert frequency([], 1) == 0\nassert frequency([1, 1, 1, 1], 1) == 4\nassert frequency([1, 2, 3, 4, 5], 6) == 0\nassert frequency([1, 2, 3, 4, 5], 1) == 5\nassert frequency([1, 2, 3, 4, 5], 5) == 1\n```",
+    "coder": "```python\ndef frequency(lst, num):\n    count = 0\n    for item in lst:\n        if item == num:\n            count += 1\n    return count\n```",
+    "verifier": "PICK: A\n\n```python\ndef frequency(lst, num):\n    count = 0\n    for item in lst:\n        if item == num:\n            count += 1\n    return count\n```",
+    "fixer": "```python\ndef frequency(lst, num):\n    count = 0\n    for item in lst:\n        if item == num:\n            count += 1\n    return count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `extract_singly` that takes one parameter: `input_list`.\n2. Initialize an empty set called `result_set`.\n3. Iterate over each sublist in the input list using a for loop.\n4. For each sublist, iterate over each element in the sublist using another for loop.\n5. Add each element to the `result_set`.\n6. After iterating through all elements, convert the `result_set` to a set to remove any duplicates.\n7. Return the resulting set.\n\nThis approach ensures that all unique numbers from the nested lists are collected into a single set without any duplicates.",
+      "quality": 0.0,
+      "final_key": "def frequency(input_list, target):\n    count = 0\n    for sublist in input_list:\n        for element in sublist:\n            if element == target:\n                count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert frequency([], 4) == 0\nassert frequency([1,2,3], 1) == 1\nassert frequency([1,2,3], 2) == 1\nassert frequency([1,2,3], 3) == 1\nassert frequency([1,2,3,1,2,3], 1) == 3\n```",
+        "coder": "```python\ndef extract_singly(input_list):\n    result_set = set()\n    for sublist in input_list:\n        for element in sublist:\n            result_set.add(element)\n    return set(result_set)\n```",
+        "verifier": "PICK: B\n```python\ndef frequency(input_list, target):\n    count = 0\n    for sublist in input_list:\n        for element in sublist:\n            if element == target:\n                count += 1\n    return count\n```",
+        "fixer": "```python\ndef frequency(input_list, target):\n    count = 0\n    for sublist in input_list:\n        for element in sublist:\n            if element == target:\n                count += 1\n    return count\n\n# Test cases\nassert frequency([1,2,3], 4) == 0\nassert frequency([1,2,2,3,3,3,4], 3) == 3\nassert frequency([0,1,2,3,1,2], 1) == 2\nassert frequency([], 4) == 0\nassert frequency([1,2,3], 1) == 1\nassert frequency([1,2,3], 2) == 1\nassert frequency([1,2,3], 3) == 1\nassert frequency([1,2,3,1,2,3], 1) == 3\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `frequency` that takes two parameters: a list `lst` and a number `num`.\n2. Initialize a counter variable to zero.\n3. Use a while loop to iterate until the end of the list is reached (i.e., `idx < len(lst)`).\n4. For each iteration, check if the element at index `idx` in the list is equal to the given number.\n5. If the element matches the number, increment the counter by one and move to the next index (`idx += 1`).\n6. After the loop, return the counter value as the result.",
+      "quality": 1.0,
+      "final_key": "def frequency(lst, num):\n    idx = 0\n    count = 0\n    while idx < len(lst):\n        if lst[idx] == num:\n            count += 1\n            idx += 1\n        else:\n            idx += 1\n    return count",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert frequency([], 1) == 0\nassert frequency([1, 2, 3], 1) == 1\nassert frequency([1, 2, 3], 2) == 1\nassert frequency([1, 2, 3], 3) == 1\nassert frequency([1, 2, 3, 4, 5], 6) == 0\n```",
+        "coder": "```python\ndef frequency(lst, num):\n    idx = 0\n    count = 0\n    while idx < len(lst):\n        if lst[idx] == num:\n            count += 1\n            idx += 1\n        else:\n            idx += 1\n    return count\n```",
+        "verifier": "PICK: A\n\n```python\ndef frequency(lst, num):\n    idx = 0\n    count = 0\n    while idx < len(lst):\n        if lst[idx] == num:\n            count += 1\n            idx += 1\n        else:\n            idx += 1\n    return count\n```",
+        "fixer": "```python\ndef frequency(lst, num):\n    idx = 0\n    count = 0\n    while idx < len(lst):\n        if lst[idx] == num:\n            count += 1\n            idx += 1\n        else:\n            idx += 1\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two variables, `zero_count` and `one_count`, to keep track of the current count of 0s and 1s respectively.\n2. Initialize a variable `max_diff` to store the maximum difference found so far.\n3. Iterate through each character in the input string:\n   - If the character is '0', increment `zero_count`.\n   - If the character is '1', increment `one_count`.\n   - Calculate the current difference as `abs(zero_count - one_count)`.\n   - Update `max_diff` if the current difference is greater than `max_diff`.\n4. Return `max_diff`.\n\nThis approach ensures that we efficiently find the maximum difference by keeping track of the counts of both 0s and 1s and updating the maximum difference whenever a new difference is found.",
+      "quality": 0.0,
+      "final_key": "def frequency(lst, num):\n    zero_count = 0\n    one_count = 0\n    max_diff = 0\n    \n    for char in lst:\n        if char == '0':\n            zero_count += 1\n        elif char == '1':\n            one_count += 1\n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert frequency(['0', '1', '0'], 0) == 1\nassert frequency(['1', '1', '1'], 1) == 3\nassert frequency(['0', '0', '0'], 0) == 3\nassert frequency(['1', '0', '1', '0'], 0) == 2\nassert frequency(['1', '1', '1', '1'], 1) == 0\n```",
+        "coder": "```python\ndef frequency(lst, num):\n    zero_count = 0\n    one_count = 0\n    max_diff = 0\n    \n    for char in lst:\n        if char == '0':\n            zero_count += 1\n        elif char == '1':\n            one_count += 1\n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+        "verifier": "PICK: A\n\n```python\ndef frequency(lst, num):\n    zero_count = 0\n    one_count = 0\n    max_diff = 0\n    \n    for char in lst:\n        if char == '0':\n            zero_count += 1\n        elif char == '1':\n            one_count += 1\n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+        "fixer": "```python\ndef frequency(lst, num):\n    zero_count = 0\n    one_count = 0\n    max_diff = 0\n    \n    for char in lst:\n        if char == '0':\n            zero_count += 1\n        elif char == '1':\n            one_count += 1\n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count",
+  "sample_keys": [
+    "def frequency(lst, num):\n    count = 0\n    for item in lst:\n        if item == num:\n            count += 1\n    return count",
+    "def frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count",
+    "def frequency(arr, num):\n    count = 0\n    for ele in arr:\n        if ele == num:\n            count += 1\n    return count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1479.0,
+    "small_out": 400.0,
+    "small_s": 8.713572975975694
+  },
+  "calls_plus": {
+    "large_in": 111.0,
+    "large_out": 96.0,
+    "large_s": 2.6864165080187377,
+    "small_in": 1290.0,
+    "small_out": 230.0,
+    "small_s": 5.02094854801544
+  },
+  "calls_samples": {
+    "small_in": 4351.0,
+    "small_out": 1122.0,
+    "small_s": 23.45000137097668
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-594",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert diff_even_odd([2, 4, 6, 8]) == 0\nassert diff_even_odd([1, 3, 5, 7]) == -2\nassert diff_even_odd([10, 22, 34, 47]) == 19\nassert diff_even_odd([11, 23, 35, 48]) == -17\nassert diff_even_odd([5, 7, 9, 2, 4, 6]) == 2\n```",
+  "reference_key": "assert diff_even_odd([2, 4, 6, 8]) == 0\nassert diff_even_odd([1, 3, 5, 7]) == -2\nassert diff_even_odd([10, 22, 34, 47]) == 19\nassert diff_even_odd([11, 23, 35, 48]) == -17\nassert diff_even_odd([5, 7, 9, 2, 4, 6]) == 2",
+  "final_key_plus": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+    "fixer": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def test_diff_even_odd():\n    assert diff_even_odd([1,3,5,7,4,1,6,8]) == 3\n    assert diff_even_odd([]) == \"No even or odd numbers found\"\n    assert diff_even_odd([2,3,4,5,6]) == 4\n    assert diff_even_odd([7,9,11]) == 4\n    assert diff_even_odd([0,2]) == 2\n\ntest_diff_even_odd()",
+      "reference_key": "assert diff_even_odd([2, 4, 6, 8]) == 0\nassert diff_even_odd([1, 3, 5, 7]) == -2\nassert diff_even_odd([10, 22, 34, 47]) == 19\nassert diff_even_odd([11, 23, 35, 48]) == -17\nassert diff_even_odd([5, 7, 9, 2, 4, 6]) == 2",
+      "key_differs": true,
+      "text": "```python\ndef test_diff_even_odd():\n    assert diff_even_odd([1,3,5,7,4,1,6,8]) == 3\n    assert diff_even_odd([]) == \"No even or odd numbers found\"\n    assert diff_even_odd([2,3,4,5,6]) == 4\n    assert diff_even_odd([7,9,11]) == 4\n    assert diff_even_odd([0,2]) == 2\n\ntest_diff_even_odd()\n```",
+      "quality": 1.0,
+      "final_key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+        "fixer": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n\n# Testing different lists\nassert diff_even_odd([2, 4, 6, 8]) == 6, \"Test failed for odd numbers only.\"\nassert diff_even_odd([1, 3, 5, 7]) == 2, \"Test failed for even numbers only.\"\nassert diff_even_odd([]) == \"No even or odd numbers found\", \"Test failed for empty list.\"\nassert diff_even_odd([-2, -4, -6, -8]) == 6, \"Test failed for negative numbers only.\"\nassert diff_even_odd([10, 15, 20, 25]) == 5, \"Test failed for mixed numbers.\"",
+      "reference_key": "assert diff_even_odd([2, 4, 6, 8]) == 0\nassert diff_even_odd([1, 3, 5, 7]) == -2\nassert diff_even_odd([10, 22, 34, 47]) == 19\nassert diff_even_odd([11, 23, 35, 48]) == -17\nassert diff_even_odd([5, 7, 9, 2, 4, 6]) == 2",
+      "key_differs": true,
+      "text": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n\n# Testing different lists\nassert diff_even_odd([2, 4, 6, 8]) == 6, \"Test failed for odd numbers only.\"\nassert diff_even_odd([1, 3, 5, 7]) == 2, \"Test failed for even numbers only.\"\nassert diff_even_odd([]) == \"No even or odd numbers found\", \"Test failed for empty list.\"\nassert diff_even_odd([-2, -4, -6, -8]) == 6, \"Test failed for negative numbers only.\"\nassert diff_even_odd([10, 15, 20, 25]) == 5, \"Test failed for mixed numbers.\"\n```",
+      "quality": 1.0,
+      "final_key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+        "fixer": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85, 'Art':86}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85), ('Art', 86)]",
+      "reference_key": "assert diff_even_odd([2, 4, 6, 8]) == 0\nassert diff_even_odd([1, 3, 5, 7]) == -2\nassert diff_even_odd([10, 22, 34, 47]) == 19\nassert diff_even_odd([11, 23, 35, 48]) == -17\nassert diff_even_odd([5, 7, 9, 2, 4, 6]) == 2",
+      "key_differs": true,
+      "text": "```python\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85)]\nassert sort_counter({'Math':81, 'Physics':83, 'Chemistry':87, 'Biology':82, 'Geography':84, 'History':85, 'Art':86}) == [('Chemistry', 87), ('Physics', 83), ('Math', 81), ('Biology', 82), ('Geography', 84), ('History', 85), ('Art', 86)]\n```",
+      "quality": 1.0,
+      "final_key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+        "fixer": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert diff_even_odd([1,3,5,7,4,1,6,8]) == 3\nassert diff_even_odd([]) == \"No even or odd numbers found\"\nassert diff_even_odd([2,4,6,8]) == 0\nassert diff_even_odd([1,3,5,7,9]) == 8\nassert diff_even_odd([10,20,30,40,50]) == 30",
+  "sample_keys": [
+    "assert diff_even_odd([1,3,5,7,4,1,6,8]) == 3\nassert diff_even_odd([]) == \"No even or odd numbers found\"\nassert diff_even_odd([2,4]) == 2\nassert diff_even_odd([1,2,3,4,5]) == 3\nassert diff_even_odd([10,9,8,7,6,5,4,3,2,1]) == 1",
+    "assert diff_even_odd([]) == \"No even or odd numbers found\"\nassert diff_even_odd([2]) == \"No even or odd numbers found\"\nassert diff_even_odd([1,3,5,7,9,11]) == 0\nassert diff_even_odd([1,3,5,7,9,11,2]) == 1\nassert diff_even_odd([2,4,6,8,10,12]) == 1",
+    "assert diff_even_odd([1,3,5,7,4,1,6,8]) == 3\nassert diff_even_odd([]) == \"No even or odd numbers found\"\nassert diff_even_odd([2,4]) == 0\nassert diff_even_odd([1,3,5,7,9]) == 2\nassert diff_even_odd([5,7,9,11]) == 2",
+    "assert diff_even_odd([]) == \"No even or odd numbers found\", \"Test case with empty list failed\"\nassert diff_even_odd([2, 4, 6]) == 2, \"Test case with only even numbers failed\"\nassert diff_even_odd([1, 3, 5, 7]) == 3, \"Test case with only odd numbers failed\"\nassert diff_even_odd([2, 4, 6, 8]) == 4, \"Test case with mixed numbers failed\"\nassert diff_even_odd([-2, -4, -6]) == 4, \"Test case with all negative numbers failed\"",
+    "assert diff_even_odd([]) == \"No even or odd numbers found\", \"Test case with empty list failed\"\nassert diff_even_odd([2, 4, 6, 8]) == 0, \"Test case with all even numbers failed\"\nassert diff_even_odd([1, 3, 5, 7]) == 2, \"Test case with all odd numbers failed\"\nassert diff_even_odd([-1, -3, -5, -7]) == -2, \"Test case with negative numbers failed\"\nassert diff_even_odd([1, 3, 5, 7, 9]) == 8, \"Test case with mixed numbers and some evens failed\""
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1795.0,
+    "small_out": 581.0,
+    "small_s": 12.681147382972995
+  },
+  "calls_plus": {
+    "small_in": 1619.0,
+    "small_out": 475.0,
+    "small_s": 9.207916513987584,
+    "large_in": 233.0,
+    "large_out": 121.0,
+    "large_s": 2.5934168079984374
+  },
+  "calls_samples": {
+    "small_in": 1165.0,
+    "small_out": 593.0,
+    "small_s": 10.441356218943838
+  }
+}

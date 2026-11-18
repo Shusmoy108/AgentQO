@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-129",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `magic_square_test` that takes a 4x4 matrix as input.\n2. Calculate the sum of the first row to establish the target sum for a magic square.\n3. Check if all rows, columns, and both diagonals sum up to the target sum.\n4. Return `True` if all conditions are met, otherwise return `False`.\n5. Test the function with the provided test case to ensure correctness.",
+  "reference_key": null,
+  "final_key_plus": "def magic_square_test(matrix):\n    # Step 1: Calculate the sum of the first row\n    target_sum = sum(matrix[0])\n    \n    # Step 2: Check each row, column, and diagonal\n    for i in range(4):\n        if sum(matrix[i]) != target_sum or sum([matrix[j][i] for j in range(4)]) != target_sum:\n            return False\n    \n    # Step 3: Check the two diagonals\n    if sum([matrix[i][i] for i in range(4)]) != target_sum or sum([matrix[i][3-i] for i in range(4)]) != target_sum:\n        return False\n    \n    # If all checks pass, the matrix is a magic square\n    return True",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == False\nassert magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 17]]) == False\nassert magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == False\nassert magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == False\nassert magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]) == False\n```",
+    "coder": "```python\ndef magic_square_test(matrix):\n    # Step 1: Calculate the sum of the first row\n    target_sum = sum(matrix[0])\n    \n    # Step 2: Check each row, column, and diagonal\n    for i in range(4):\n        if sum(matrix[i]) != target_sum or sum([matrix[j][i] for j in range(4)]) != target_sum:\n            return False\n    \n    # Step 3: Check the two diagonals\n    if sum([matrix[i][i] for i in range(4)]) != target_sum or sum([matrix[i][3-i] for i in range(4)]) != target_sum:\n        return False\n    \n    # If all checks pass, the matrix is a magic square\n    return True\n```",
+    "verifier": "PICK: A\n\n```python\ndef magic_square_test(matrix):\n    # Step 1: Calculate the sum of the first row\n    target_sum = sum(matrix[0])\n    \n    # Step 2: Check each row, column, and diagonal\n    for i in range(4):\n        if sum(matrix[i]) != target_sum or sum([matrix[j][i] for j in range(4)]) != target_sum:\n            return False\n    \n    # Step 3: Check the two diagonals\n    if sum([matrix[i][i] for i in range(4)]) != target_sum or sum([matrix[i][3-i] for i in range(4)]) != target_sum:\n        return False\n    \n    # If all checks pass, the matrix is a magic square\n    return True\n```",
+    "fixer": "```python\ndef magic_square_test(matrix):\n    # Step 1: Calculate the sum of the first row\n    target_sum = sum(matrix[0])\n    \n    # Step 2: Check each row, column, and diagonal\n    for i in range(4):\n        if sum(matrix[i]) != target_sum or sum([matrix[j][i] for j in range(4)]) != target_sum:\n            return False\n    \n    # Step 3: Check the two diagonals\n    if sum([matrix[i][i] for i in range(4)]) != target_sum or sum([matrix[i][3-i] for i in range(4)]) != target_sum:\n        return False\n    \n    # If all checks pass, the matrix is a magic square\n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `check_element` that accepts two parameters: `lst` (the list) and `element` (the element to compare).\n2. Initialize a variable `all_equal` to `True`.\n3. Iterate over each item in the list using a for loop.\n4. For each item, compare it to the given element using the equality operator (`==`).\n5. If any item is not equal to the element, set `all_equal` to `False` and break out of the loop.\n6. After the loop completes, return the value of `all_equal`.\n\nThis approach ensures that the function correctly identifies if all elements in the list are equal to the specified element.",
+      "quality": 0.0,
+      "final_key": "def check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n\ndef magic_square_test(matrix):\n    n = len(matrix)\n    # Check rows\n    for row in matrix:\n        if not check_element(row, row[0]):\n            return False\n    \n    # Check columns\n    for col in range(n):\n        column = [matrix[row][col] for row in range(n)]\n        if not check_element(column, column[0]):\n            return False\n    \n    # Check diagonals\n    diagonal1 = [matrix[i][i] for i in range(n)]\n    diagonal2 = [matrix[i][n-i-1] for i in range(n)]\n    if not check_element(diagonal1, diagonal1[0]) or not check_element(diagonal2, diagonal2[0]):\n        return False\n    \n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == False\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 7]]) == False\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 8]]) == False\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == True\n```",
+        "coder": "```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n\ndef magic_square_test(matrix):\n    n = len(matrix)\n    # Check rows\n    for row in matrix:\n        if not check_element(row, row[0]):\n            return False\n    \n    # Check columns\n    for col in range(n):\n        column = [matrix[row][col] for row in range(n)]\n        if not check_element(column, column[0]):\n            return False\n    \n    # Check diagonals\n    diagonal1 = [matrix[i][i] for i in range(n)]\n    diagonal2 = [matrix[i][n-i-1] for i in range(n)]\n    if not check_element(diagonal1, diagonal1[0]) or not check_element(diagonal2, diagonal2[0]):\n        return False\n    \n    return True\n```",
+        "verifier": "PICK: A\n```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n\ndef magic_square_test(matrix):\n    n = len(matrix)\n    # Check rows\n    for row in matrix:\n        if not check_element(row, row[0]):\n            return False\n    \n    # Check columns\n    for col in range(n):\n        column = [matrix[row][col] for row in range(n)]\n        if not check_element(column, column[0]):\n            return False\n    \n    # Check diagonals\n    diagonal1 = [matrix[i][i] for i in range(n)]\n    diagonal2 = [matrix[i][n-i-1] for i in range(n)]\n    if not check_element(diagonal1, diagonal1[0]) or not check_element(diagonal2, diagonal2[0]):\n        return False\n    \n    return True\n```",
+        "fixer": "```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n\ndef magic_square_test(matrix):\n    n = len(matrix)\n    # Check rows\n    for row in matrix:\n        if not check_element(row, row[0]):\n            return False\n    \n    # Check columns\n    for col in range(n):\n        column = [matrix[row][col] for row in range(n)]\n        if not check_element(column, column[0]):\n            return False\n    \n    # Check diagonals\n    diagonal1 = [matrix[i][i] for i in range(n)]\n    diagonal2 = [matrix[i][n-i-1] for i in range(n)]\n    if not check_element(diagonal1, diagonal1[0]) or not check_element(diagonal2, diagonal2[0]):\n        return False\n    \n    return True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `filter_odd_numbers` that takes a list as input.\n2. Initialize an empty list called `odd_numbers`.\n3. Iterate through each number in the input list using a for loop.\n4. Check if the current number is odd by using the modulus operator (`%`). If the remainder when divided by 2 is not equal to 0, the number is odd.\n5. Append the odd number to the `odd_numbers` list.\n6. Return the `odd_numbers` list.\n\nThis approach ensures that all odd numbers from the input list are collected into a new list, which is then returned as the result.",
+      "quality": 1.0,
+      "final_key": "def filter_odd_numbers(numbers):\n    odd_numbers = []\n    for num in numbers:\n        if num % 2 != 0:\n            odd_numbers.append(num)\n    return odd_numbers\n\ndef magic_square_test(matrix):\n    n = len(matrix)\n    # Check if the matrix is square\n    if n != len(matrix[0]):\n        return False\n    \n    # Calculate the sum of each row, column, and diagonal\n    row_sums = [sum(row) for row in matrix]\n    col_sums = [sum(col) for col in zip(*matrix)]\n    diag_sum1 = sum(matrix[i][i] for i in range(n))\n    diag_sum2 = sum(matrix[i][n-i-1] for i in range(n))\n    \n    # Check if all sums are equal\n    if any(s != row_sums[0] for s in row_sums) or any(s != col_sums[0] for s in col_sums) or diag_sum1 != diag_sum2:\n        return False\n    \n    return True\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert filter_odd_numbers([1, 2, 3, 4, 5]) == [1, 3, 5]\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2, 4, 6, 8]) == []\nassert filter_odd_numbers([1, 3, 5, 7, 9]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]) == [1, 3, 5, 7, 9]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert filter_odd_numbers([1, 2, 3, 4, 5]) == [1, 3, 5]\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2, 4, 6, 8]) == []\nassert filter_odd_numbers([1, 3, 5, 7, 9]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]) == [1, 3, 5, 7, 9]\n```",
+        "coder": "```python\ndef filter_odd_numbers(numbers):\n    odd_numbers = []\n    for num in numbers:\n        if num % 2 != 0:\n            odd_numbers.append(num)\n    return odd_numbers\n```",
+        "verifier": "PICK: B\n\n```python\ndef filter_odd_numbers(numbers):\n    odd_numbers = []\n    for num in numbers:\n        if num % 2 != 0:\n            odd_numbers.append(num)\n    return odd_numbers\n\ndef magic_square_test(matrix):\n    n = len(matrix)\n    # Check if the matrix is square\n    if n != len(matrix[0]):\n        return False\n    \n    # Calculate the sum of each row, column, and diagonal\n    row_sums = [sum(row) for row in matrix]\n    col_sums = [sum(col) for col in zip(*matrix)]\n    diag_sum1 = sum(matrix[i][i] for i in range(n))\n    diag_sum2 = sum(matrix[i][n-i-1] for i in range(n))\n    \n    # Check if all sums are equal\n    if any(s != row_sums[0] for s in row_sums) or any(s != col_sums[0] for s in col_sums) or diag_sum1 != diag_sum2:\n        return False\n    \n    return True\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert filter_odd_numbers([1, 2, 3, 4, 5]) == [1, 3, 5]\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2, 4, 6, 8]) == []\nassert filter_odd_numbers([1, 3, 5, 7, 9]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9]) == [1, 3, 5, 7, 9]\n```",
+        "fixer": "```python\ndef filter_odd_numbers(numbers):\n    odd_numbers = []\n    for num in numbers:\n        if num % 2 != 0:\n            odd_numbers.append(num)\n    return odd_numbers\n\ndef magic_square_test(matrix):\n    n = len(matrix)\n    # Check if the matrix is square\n    if n != len(matrix[0]):\n        return False\n    \n    # Calculate the sum of each row, column, and diagonal\n    row_sums = [sum(row) for row in matrix]\n    col_sums = [sum(col) for col in zip(*matrix)]\n    diag_sum1 = sum(matrix[i][i] for i in range(n))\n    diag_sum2 = sum(matrix[i][n-i-1] for i in range(n))\n    \n    # Check if all sums are equal\n    if any(s != row_sums[0] for s in row_sums) or any(s != col_sums[0] for s in col_sums) or diag_sum1 != diag_sum2:\n        return False\n    \n    return True\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a helper function `max_sub_array_sum` that takes an array and returns the maximum subarray sum using Kadane's algorithm.\n2. Create a new array by repeating the original array `k` times.\n3. Use the `max_sub_array_sum` function on the new array to get the maximum sum of any contiguous subarray within one repetition.\n4. Multiply the result by `k` to get the maximum sum of any contiguous subarray within `k` repetitions.\n5. Return the final result.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False\n```",
+        "coder": "```python\ndef max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef magic_square_test(matrix):\n    k = len(matrix)\n    repeated_matrix = [[matrix[i][j] for j in range(k)] for i in range(k)]\n    max_sum = max_sub_array_sum(repeated_matrix)\n    return max_sum * k == sum(sum(row) for row in matrix)\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef magic_square_test(matrix):\n    k = len(matrix)\n    repeated_matrix = [[matrix[i][j] for j in range(k)] for i in range(k)]\n    max_sum = max_sub_array_sum(repeated_matrix)\n    return max_sum * k == sum(sum(row) for row in matrix)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False",
+  "sample_keys": [
+    "def is_magic_square(matrix):\n    # Step 1: Compute the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Check if all rows have the same sum\n    if len(set(row_sums)) != 1:\n        return False\n    \n    # Step 3: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 4: Verify if all columns have the same sum\n    if len(set(col_sums)) != 1:\n        return False\n    \n    # Step 5: Calculate the sum of both main diagonals\n    diag1_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    diag2_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 6: Confirm that both diagonals have the same sum\n    if diag1_sum != diag2_sum:\n        return False\n    \n    # If all conditions are met, return True\n    return True",
+    null,
+    "def is_row_magic(row):\n    return sum(row) == magic_constant\n\ndef is_col_magic(col):\n    return sum(col) == magic_constant\n\ndef is_diag_magic(diag):\n    return sum(diag) == magic_constant\n\ndef magic_square_test(matrix):\n    n = len(matrix)\n    magic_constant = (n * (n**2 + 1)) // 2\n    \n    for i in range(n):\n        row = matrix[i]\n        col = [matrix[j][i] for j in range(n)]\n        diag1 = [matrix[i][i] for i in range(n)]\n        diag2 = [matrix[i][n-i-1] for i in range(n)]\n        \n        if not is_row_magic(row) or not is_col_magic(col) or not is_diag_magic(diag1) or not is_diag_magic(diag2):\n            return False\n    \n    return True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2897.0,
+    "small_out": 1574.0,
+    "small_s": 30.594931814965094
+  },
+  "calls_plus": {
+    "large_in": 153.0,
+    "large_out": 94.0,
+    "large_s": 2.067687548988033,
+    "small_in": 2813.0,
+    "small_out": 809.0,
+    "small_s": 13.489390945993364
+  },
+  "calls_samples": {
+    "small_in": 8852.0,
+    "small_out": 3792.0,
+    "small_s": 68.67675800001598
+  }
+}

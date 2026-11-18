@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-638",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `wind_chill` that takes two parameters: `velocity` (km/h) and `temperature` (\u00b0C).\n2. Calculate the wind chill using the formula: \\( WCI = 13.12 + 0.6215T -  11.37V^{0.16} + 0.3965TV^{0.16} \\), where \\( T \\) is the temperature in \u00b0C and \\( V \\) is the velocity in km/h.\n3. Round the calculated wind chill index to the nearest integer using the `round()` function.\n4. Return the rounded wind chill index as the result of the function.\n5. Ensure the function passes the provided test case by calling it with `velocity=120` and `temperature=35`, expecting the output `40`.",
+  "reference_key": null,
+  "final_key_plus": "def wind_chill(velocity, temperature):\n    # Calculate the wind chill index using the given formula\n    wci = 13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16\n    # Round the calculated wind chill index to the nearest integer\n    return round(wci)",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert wind_chill(100, 20) == 18\nassert wind_chill(50, 10) == 0\nassert wind_chill(20, 0) == -1\nassert wind_chill(0, -10) == -1\nassert wind_chill(-10, -20) == -1\n```",
+    "coder": "```python\ndef wind_chill(velocity, temperature):\n    # Calculate the wind chill index using the given formula\n    wci = 13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16\n    # Round the calculated wind chill index to the nearest integer\n    return round(wci)\n```",
+    "verifier": "PICK: A\n\n```python\ndef wind_chill(velocity, temperature):\n    # Calculate the wind chill index using the given formula\n    wci = 13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16\n    # Round the calculated wind chill index to the nearest integer\n    return round(wci)\n```",
+    "fixer": "```python\ndef wind_chill(velocity, temperature):\n    # Calculate the wind chill index using the given formula\n    wci = 13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16\n    # Round the calculated wind chill index to the nearest integer\n    return round(wci)\n\n# Test cases\nassert wind_chill(120,35)==40\nassert wind_chill(40,20)==19\nassert wind_chill(10,8)==6\nassert wind_chill(100, 20) == 18\nassert wind_chill(50, 10) == 0\nassert wind_chill(20, 0) == -1\nassert wind_chill(0, -10) == -1\nassert wind_chill(-10, -20) == -1\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a variable `total_sum` to store the sum of all odd length subarrays.\n2. Iterate through each possible starting index `i` from 0 to `n-1`, where `n` is the length of the input list.\n3. For each starting index `i`, initialize a variable `current_sum` to 0.\n4. Iterate through each possible ending index `j` from `i` to `n-1`.\n5. If the length of the subarray from `i` to `j` (inclusive) is odd, add the element at index `j` to `current_sum`.\n6. After iterating through all possible ending indices for the current starting index `i`, add `current_sum` to `total_sum`.\n7. Return `total_sum`.\n\nThis approach ensures that we consider all possible odd length subarrays by iterating through all possible starting and ending indices.",
+      "quality": 0.0,
+      "final_key": "def wind_chill(wind_velocity, temperature):\n    total_sum = 0\n    n = len(wind_velocity)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += wind_velocity[j]\n        total_sum += current_sum\n    return round(total_sum)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert wind_chill(100, 20) == 28\nassert wind_chill(150, 10) == 16\nassert wind_chill(200, 5) == 7\nassert wind_chill(250, 0) == 0\nassert wind_chill(300, -5) == -5\n```",
+        "coder": "```python\ndef wind_chill(wind_velocity, temperature):\n    total_sum = 0\n    n = len(wind_velocity)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += wind_velocity[j]\n        total_sum += current_sum\n    return round(total_sum)\n```",
+        "verifier": "PICK: A\n\n```python\ndef wind_chill(wind_velocity, temperature):\n    total_sum = 0\n    n = len(wind_velocity)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += wind_velocity[j]\n        total_sum += current_sum\n    return round(total_sum)\n```",
+        "fixer": "```python\ndef wind_chill(wind_velocity, temperature):\n    total_sum = 0\n    n = len(wind_velocity)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += wind_velocity[j]\n        total_sum += current_sum\n    return round(total_sum)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `wind_chill` that takes two parameters: `velocity` (km/h) and `temperature` (\u00b0C).\n2. Calculate the wind chill using the formula: \\( WCI = 13.12 + 0.6215T -  11.37V^{0.16} + 0.3965TV^{0.16} \\), where \\( T \\) is the temperature in \u00b0C and \\( V \\) is the velocity in km/h.\n3. Round the calculated wind chill index to the nearest integer using the `round()` function.\n4. Return the rounded wind chill index as the result of the function.\n5. Ensure the function passes the provided test case by calling it with `velocity=120` and `temperature=35`, expecting the output `39`.",
+      "quality": 1.0,
+      "final_key": "def wind_chill(velocity, temperature):\n    # Calculate the wind chill index using the given formula\n    wci = 13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16\n    # Round the calculated wind chill index to the nearest integer\n    return round(wci)",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert wind_chill(100, 20) == 18\nassert wind_chill(50, 10) == 0\nassert wind_chill(20, 0) == -1\nassert wind_chill(0, -10) == -1\nassert wind_chill(-10, -20) == -1\n```",
+        "coder": "```python\ndef wind_chill(velocity, temperature):\n    # Calculate the wind chill index using the given formula\n    wci = 13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16\n    # Round the calculated wind chill index to the nearest integer\n    return round(wci)\n```",
+        "verifier": "PICK: A\n\n```python\ndef wind_chill(velocity, temperature):\n    # Calculate the wind chill index using the given formula\n    wci = 13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16\n    # Round the calculated wind chill index to the nearest integer\n    return round(wci)\n```",
+        "fixer": "```python\ndef wind_chill(velocity, temperature):\n    # Calculate the wind chill index using the given formula\n    wci = 13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16\n    # Round the calculated wind chill index to the nearest integer\n    return round(wci)\n\n# Test cases\nassert wind_chill(120,35)==40\nassert wind_chill(40,20)==19\nassert wind_chill(10,8)==6\nassert wind_chill(100, 20) == 18\nassert wind_chill(50, 10) == 0\nassert wind_chill(20, 0) == -1\nassert wind_chill(0, -10) == -1\nassert wind_chill(-10, -20) == -1\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `find_even_numbers` that takes a list of numbers as input.\n2. Initialize an empty list called `even_numbers`.\n3. Iterate through each number in the input list using a for loop.\n4. Check if the current number is even by using the modulus operator (`%`). If the remainder when divided by 2 is 0, then the number is even.\n5. If the number is even, append it to the `even_numbers` list.\n6. After iterating through all numbers, return the `even_numbers` list.\n\nThis approach ensures that all even numbers from the input list are collected and returned in a new list.",
+      "quality": 0.0,
+      "final_key": "def wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0 or temperature < -50 or temperature > 50:\n        raise ValueError(\"Invalid input values\")\n    \n    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wind_chill_index)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert wind_chill(120,35)==40\nassert wind_chill(0,0)==-16\nassert wind_chill(100,-10)==-17\nassert wind_chill(-5,20)==-18\nassert wind_chill(20,100)==-19\n```",
+        "coder": "```python\ndef find_even_numbers(numbers):\n    even_numbers = []\n    for num in numbers:\n        if num % 2 == 0:\n            even_numbers.append(num)\n    return even_numbers\n```",
+        "verifier": "PICK: B\n\n```python\ndef wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0 or temperature < -50 or temperature > 50:\n        raise ValueError(\"Invalid input values\")\n    \n    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wind_chill_index)\n```",
+        "fixer": "```python\ndef wind_chill(wind_velocity, temperature):\n    if wind_velocity < 0 or temperature < -50 or temperature > 50:\n        raise ValueError(\"Invalid input values\")\n    \n    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wind_chill_index)\n\n# Test cases\nassert wind_chill(120,35)==40\nassert wind_chill(40,20)==19\nassert wind_chill(10,8)==6\nassert wind_chill(120,35)==40\nassert wind_chill(0,0)==-16\nassert wind_chill(100,-10)==-17\nassert wind_chill(-5,20)==-18\nassert wind_chill(20,100)==-19\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -50:\n        raise ValueError(\"Wind velocity and temperature must be non-negative and below -50 degrees Celsius.\")\n    \n    wci = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(wci)",
+  "sample_keys": [
+    "def wind_chill(wind_velocity, temperature):\n    if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):\n        raise TypeError(\"Both wind_velocity and temperature must be numbers.\")\n    \n    if wind_velocity < 0 or temperature < -20:\n        raise ValueError(\"Wind velocity cannot be negative and temperature cannot be below -20 degrees Celsius.\")\n    \n    WCI = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)\n    return round(WCI)",
+    "def wind_chill(wind_speed, temp):\n    if wind_speed <= 0 or temp < -273.15 or temp > 50:\n        raise ValueError(\"Invalid input values.\")\n    \n    # Wind Chill Index Formula\n    wci = 35.74 + 0.6215 * temp - 35.75 * (wind_speed ** 0.16) + 0.4275 * temp * (wind_speed ** 0.23)\n    \n    # Round to the nearest integer\n    return round(wci)",
+    "def wind_chill(v, t):\n    # Convert temperature from Celsius to Fahrenheit\n    f = t * 9 / 5 + 32\n    \n    # Calculate wind chill index\n    wc = 13.12 + 0.6215 * f - 11.37 * v ** 0.16 + 0.3965 * v ** 0.85\n    \n    # Round the result to the nearest integer\n    return round(wc)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1655.0,
+    "small_out": 606.0,
+    "small_s": 13.216812983999262
+  },
+  "calls_plus": {
+    "large_in": 121.0,
+    "large_out": 186.0,
+    "large_s": 4.227310513990233,
+    "small_in": 1602.0,
+    "small_out": 512.0,
+    "small_s": 9.125020858977223
+  },
+  "calls_samples": {
+    "small_in": 5270.0,
+    "small_out": 2012.0,
+    "small_s": 37.94363367801998
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-286",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(arr, n, k):\n    repeated_arr = arr * k\n    max_sum_one_rep = max_sub_array_sum(repeated_arr[:n])\n    return max_sum_one_rep * k\n```",
+  "reference_key": "def max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(arr, n, k):\n    repeated_arr = arr * k\n    max_sum_one_rep = max_sub_array_sum(repeated_arr[:n])\n    return max_sum_one_rep * k",
+  "final_key_plus": "def max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(arr, n, k):\n    repeated_arr = arr * k\n    max_sum_one_rep = max_sub_array_sum(repeated_arr[:n])\n    return max_sum_one_rep * k",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_sub_array_sum_repeated([1, 2, 3, 4], 2, 3) == 18\nassert max_sub_array_sum_repeated([-1, -2, -3, -4], 3, 2) == -6\nassert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30\nassert max_sub_array_sum_repeated([0, 0, 0, 0], 5, 1) == 0\nassert max_sub_array_sum_repeated([], 1, 1) == 0\n```",
+    "verifier": "PICK: A\n```python\ndef max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(arr, n, k):\n    repeated_arr = arr * k\n    max_sum_one_rep = max_sub_array_sum(repeated_arr[:n])\n    return max_sum_one_rep * k\n```",
+    "fixer": "```python\ndef max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(arr, n, k):\n    repeated_arr = arr * k\n    max_sum_one_rep = max_sub_array_sum(repeated_arr[:n])\n    return max_sum_one_rep * k\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def max_sub_array_sum_repeated(nums, k):\n    def max_sub_array_sum(arr):\n        if len(arr) == 0:\n            return 0\n        current_sum = max_sum = nums[0]\n        for num in arr[1:]:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n        return max_sum\n    \n    repeated_nums = nums * k\n    return max_sub_array_sum(repeated_nums) * k",
+      "reference_key": "def max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(arr, n, k):\n    repeated_arr = arr * k\n    max_sum_one_rep = max_sub_array_sum(repeated_arr[:n])\n    return max_sum_one_rep * k",
+      "key_differs": true,
+      "text": "```python\ndef max_sub_array_sum_repeated(nums, k):\n    def max_sub_array_sum(arr):\n        if len(arr) == 0:\n            return 0\n        current_sum = max_sum = nums[0]\n        for num in arr[1:]:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n        return max_sum\n    \n    repeated_nums = nums * k\n    return max_sub_array_sum(repeated_nums) * k\n```",
+      "quality": 0.0,
+      "final_key": "def max_sub_array_sum_repeated(nums, k):\n    def max_sub_array_sum(arr):\n        if len(arr) == 0:\n            return 0\n        current_sum = max_sum = nums[0]\n        for num in arr[1:]:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n        return max_sum\n    \n    repeated_nums = nums * k\n    return max_sub_array_sum(repeated_nums) * k",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_sub_array_sum_repeated([], 3, 2) == 0\nassert max_sub_array_sum_repeated([-1, -2, -3], 2, 3) == -6\nassert max_sub_array_sum_repeated([1, 2, 3], 1, 1) == 6\nassert max_sub_array_sum_repeated([1, 2, 3], 2, 2) == 9\nassert max_sub_array_sum_repeated([1, 2, 3], 3, 3) == 18\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_sub_array_sum_repeated(nums, k):\n    def max_sub_array_sum(arr):\n        if len(arr) == 0:\n            return 0\n        current_sum = max_sum = nums[0]\n        for num in arr[1:]:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n        return max_sum\n    \n    repeated_nums = nums * k\n    return max_sub_array_sum(repeated_nums) * k\n```",
+        "fixer": "```python\ndef max_sub_array_sum_repeated(nums, k):\n    def max_sub_array_sum(arr):\n        if len(arr) == 0:\n            return 0\n        current_sum = max_sum = nums[0]\n        for num in arr[1:]:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n        return max_sum\n    \n    repeated_nums = nums * k\n    return max_sub_array_sum(repeated_nums) * k\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import List\n\ndef max_sub_array_sum(nums: List[int]) -> int:\n    \"\"\"\n    Helper function to find the maximum subarray sum using Kadane's algorithm.\n    \"\"\"\n    current_sum = max_sum = nums[0]\n    \n    for num in nums[1:]:\n        current_sum = max(num, current_sum + num)\n        if current_sum > max_sum:\n            max_sum = current_sum\n    \n    return max_sum\n\ndef max_sub_array_sum_repeated(nums: List[int], k: int, repeat_times: int) -> int:\n    \"\"\"\n    Finds the largest sum of a contiguous array formed by repeatedly repeating the given array k times.\n    \"\"\"\n    modified_array = k * nums\n    return max_sub_array_sum(modified_array) * repeat_times",
+      "reference_key": "def max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(arr, n, k):\n    repeated_arr = arr * k\n    max_sum_one_rep = max_sub_array_sum(repeated_arr[:n])\n    return max_sum_one_rep * k",
+      "key_differs": true,
+      "text": "```python\nfrom typing import List\n\ndef max_sub_array_sum(nums: List[int]) -> int:\n    \"\"\"\n    Helper function to find the maximum subarray sum using Kadane's algorithm.\n    \"\"\"\n    current_sum = max_sum = nums[0]\n    \n    for num in nums[1:]:\n        current_sum = max(num, current_sum + num)\n        if current_sum > max_sum:\n            max_sum = current_sum\n    \n    return max_sum\n\ndef max_sub_array_sum_repeated(nums: List[int], k: int, repeat_times: int) -> int:\n    \"\"\"\n    Finds the largest sum of a contiguous array formed by repeatedly repeating the given array k times.\n    \"\"\"\n    modified_array = k * nums\n    return max_sub_array_sum(modified_array) * repeat_times\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_sub_array_sum_repeated([1, 2, 3], 2, 3) == 9\nassert max_sub_array_sum_repeated([-1, -2, -3], 3, 2) == -6\nassert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30\nassert max_sub_array_sum_repeated([0, 0, 0], 5, 1) == 0\nassert max_sub_array_sum_repeated([], 3, 2) == 0\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nfrom typing import List\n\ndef max_sub_array_sum(nums: List[int]) -> int:\n    \"\"\"\n    Helper function to find the maximum subarray sum using Kadane's algorithm.\n    \"\"\"\n    current_sum = max_sum = nums[0]\n    \n    for num in nums[1:]:\n        current_sum = max(num, current_sum + num)\n        if current_sum > max_sum:\n            max_sum = current_sum\n    \n    return max_sum\n\ndef max_sub_array_sum_repeated(nums: List[int], k: int, repeat_times: int) -> int:\n    \"\"\"\n    Finds the largest sum of a contiguous array formed by repeatedly repeating the given array k times.\n    \"\"\"\n    modified_array = k * nums\n    return max_sub_array_sum(modified_array) * repeat_times\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result",
+      "reference_key": "def max_sub_array_sum(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(arr, n, k):\n    repeated_arr = arr * k\n    max_sum_one_rep = max_sub_array_sum(repeated_arr[:n])\n    return max_sum_one_rep * k",
+      "key_differs": true,
+      "text": "```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def max_sub_array_sum_repeated(arr, k, n):\n    def max_sub_array(nums):\n        if not nums:\n            return 0\n        current_max = global_max = nums[0]\n        for num in nums[1:]:\n            current_max = max(num, current_max + num)\n            global_max = max(global_max, current_max)\n        return global_max\n    \n    repeated_arr = arr * k\n    return max_sub_array(repeated_arr[:n])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\n# Test case 1: Typical positive numbers\nassert max_sub_array_sum_repeated([1, 2, 3, 4], 2, 2) == 10\n\n# Test case 2: Negative numbers\nassert max_sub_array_sum_repeated([-1, -2, -3, -4], 3, 2) == -6\n\n# Test case 3: Single element repeated multiple times\nassert max_sub_array_sum_repeated([5], 5, 1) == 5\n\n# Test case 4: Edge case with zero elements\nassert max_sub_array_sum_repeated([], 1, 1) == 0\n\n# Test case 5: Edge case with negative repeated elements\nassert max_sub_array_sum_repeated([-1, -2, -3, -4], 1, 2) == -6\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_sub_array_sum_repeated(arr, k, n):\n    def max_sub_array(nums):\n        if not nums:\n            return 0\n        current_max = global_max = nums[0]\n        for num in nums[1:]:\n            current_max = max(num, current_max + num)\n            global_max = max(global_max, current_max)\n        return global_max\n    \n    repeated_arr = arr * k\n    return max_sub_array(repeated_arr[:n])\n```",
+        "fixer": "```python\ndef max_sub_array_sum_repeated(arr, k, n):\n    def max_sub_array(nums):\n        if not nums:\n            return 0\n        current_max = global_max = nums[0]\n        for num in nums[1:]:\n            current_max = max(num, current_max + num)\n            global_max = max(global_max, current_max)\n        return global_max\n    \n    repeated_arr = arr * k\n    return max_sub_array(repeated_arr[:n])\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def max_sub_array_sum_repeated(arr, k, n):\n    def max_sub_array_sum(nums):\n        max_current = nums[0]\n        max_global = nums[0]\n        \n        for num in nums[1:]:\n            max_current = max(num, max_current + num)\n            max_global = max(max_global, max_current)\n        \n        return max_global\n    \n    repeated_arr = arr * k\n    return max_sub_array_sum(repeated_arr) * k",
+  "sample_keys": [
+    "def max_sub_array_sum(arr):\n    current_max = arr[0]\n    global_max = arr[0]\n    \n    for num in arr[1:]:\n        current_max = max(num, current_max + num)\n        if current_max > global_max:\n            global_max = current_max\n            \n    return global_max\n\ndef max_sub_array_sum_repeated(arr, k, n):\n    repeated_arr = [num for _ in range(n)] * k\n    return max_sub_array_sum(repeated_arr) * k",
+    "def max_sub_array_sum_repeated(arr, k, repeating):\n    def max_sub_array_sum(nums):\n        if not nums:\n            return 0\n        \n        current_max = global_max = nums[0]\n        \n        for num in nums[1:]:\n            current_max = max(num, current_max + num)\n            if current_max > global_max:\n                global_max = current_max\n                \n        return global_max\n    \n    new_arr = arr * repeating\n    return max_sub_array_sum(new_arr) * repeating",
+    "def max_sub_array_sum_repeated(arr, k, n):\n    def max_sub_array_sum(nums):\n        if not nums:\n            return 0\n        \n        max_current = max_global = nums[0]\n        \n        for num in nums[1:]:\n            max_current = max(num, max_current + num)\n            max_global = max(max_global, max_current)\n        \n        return max_global\n    \n    repeated_arr = arr * k\n    return max_sub_array_sum(repeated_arr) * k",
+    "def max_sub_array_sum(arr):\n    # Implement Kadane's algorithm to find the maximum subarray sum in this function\n\ndef max_sub_array_sum_repeated(arr, k, repeat):\n    repeated_arr = arr * repeat\n    max_sum = max_sub_array_sum(repeated_arr)\n    return max_sum * repeat",
+    "def max_sub_array_sum(nums):\n    max_current = max_global = nums[0]\n    \n    for num in nums[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    \n    return max_global\n\ndef max_sub_array_sum_repeated(nums, n, k):\n    return max_sub_array_sum(nums) * k"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1992.0,
+    "small_out": 552.0,
+    "small_s": 11.330955798039213
+  },
+  "calls_plus": {
+    "small_in": 1824.0,
+    "small_out": 476.0,
+    "small_s": 8.354077245021472,
+    "large_in": 242.0,
+    "large_out": 109.0,
+    "large_s": 2.475759579014266
+  },
+  "calls_samples": {
+    "small_in": 1210.0,
+    "small_out": 482.0,
+    "small_s": 8.887637366977287
+  }
+}

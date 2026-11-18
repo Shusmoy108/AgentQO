@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-788",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert new_tuple([], \"empty\") == ('empty',)\nassert new_tuple([\"single\"], \"\") == ('single', '')\nassert new_tuple([1, 2, 3], \"tuple\") == (1, 2, 3, 'tuple')\nassert new_tuple([\"a\", \"b\"], \"c\") == ('a', 'b', 'c')\nassert new_tuple([\"hello\", \"world\"], \"!\") == ('hello', 'world', '!')\n```",
+  "reference_key": "assert new_tuple([], \"empty\") == ('empty',)\nassert new_tuple([\"single\"], \"\") == ('single', '')\nassert new_tuple([1, 2, 3], \"tuple\") == (1, 2, 3, 'tuple')\nassert new_tuple([\"a\", \"b\"], \"c\") == ('a', 'b', 'c')\nassert new_tuple([\"hello\", \"world\"], \"!\") == ('hello', 'world', '!')",
+  "final_key_plus": "def new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n```",
+    "fixer": "```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert new_tuple([], \"\") == ()\nassert new_tuple([\"PYTHON\", \"LIMBREZ\"], \"is\") == ('PYTHON', 'LIMBREZ', 'is')\nassert new_tuple(\"WEB\", \"best\") == ('WEB', 'best')\nassert new_tuple((1, 2, 3), \"\") == (1, 2, 3, \"\")\nassert new_tuple([True, False], \"\") == (True, False, \"\")",
+      "reference_key": "assert new_tuple([], \"empty\") == ('empty',)\nassert new_tuple([\"single\"], \"\") == ('single', '')\nassert new_tuple([1, 2, 3], \"tuple\") == (1, 2, 3, 'tuple')\nassert new_tuple([\"a\", \"b\"], \"c\") == ('a', 'b', 'c')\nassert new_tuple([\"hello\", \"world\"], \"!\") == ('hello', 'world', '!')",
+      "key_differs": true,
+      "text": "```python\nassert new_tuple([], \"\") == ()\nassert new_tuple([\"PYTHON\", \"LIMBREZ\"], \"is\") == ('PYTHON', 'LIMBREZ', 'is')\nassert new_tuple(\"WEB\", \"best\") == ('WEB', 'best')\nassert new_tuple((1, 2, 3), \"\") == (1, 2, 3, \"\")\nassert new_tuple([True, False], \"\") == (True, False, \"\")\n```\nIn these assertions, we cover various scenarios where the input could contain empty strings or lists as expected. We also ensure that the tuples include additional strings as per the function\u7684\u8981\u6c42.",
+      "quality": 1.0,
+      "final_key": "def new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n```",
+        "fixer": "```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert new_tuple([\"LAMBDA\", \"IS\"], \",\") == ('LAMBDA', 'IS', ',') \nassert new_tuple([], \"A\") == ('A',)\nassert new_tuple((\"PYTHON\"), \"()\") == ('PYTHON', '()')\nassert new_tuple([(1)], \"{}\") == ([1], '{}')\nassert new_tuple([True, False], None) == (True, False, None)",
+      "reference_key": "assert new_tuple([], \"empty\") == ('empty',)\nassert new_tuple([\"single\"], \"\") == ('single', '')\nassert new_tuple([1, 2, 3], \"tuple\") == (1, 2, 3, 'tuple')\nassert new_tuple([\"a\", \"b\"], \"c\") == ('a', 'b', 'c')\nassert new_tuple([\"hello\", \"world\"], \"!\") == ('hello', 'world', '!')",
+      "key_differs": true,
+      "text": "```python\nassert new_tuple([\"LAMBDA\", \"IS\"], \",\") == ('LAMBDA', 'IS', ',') \nassert new_tuple([], \"A\") == ('A',)\nassert new_tuple((\"PYTHON\"), \"()\") == ('PYTHON', '()')\nassert new_tuple([(1)], \"{}\") == ([1], '{}')\nassert new_tuple([True, False], None) == (True, False, None)\n```",
+      "quality": 0.0,
+      "final_key": "def new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n\n# Test cases\nassert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')\nassert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')\nassert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')\nassert new_tuple([\"LAMBDA\", \"IS\"], \",\") == ('LAMBDA', 'IS', ',')\nassert new_tuple([], \"A\") == ('A',)\nassert new_tuple((\"PYTHON\"), \"()\") == ('PYTHON', '()')  # Fix: This test case was incorrect\nassert new_tuple([(1)], \"{}\") == ([1], '{}')  # Fix: This test case was incorrect\nassert new_tuple([True, False], None) == (True, False, None)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n\n# Test cases\nassert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')\nassert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')\nassert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')\nassert new_tuple([\"LAMBDA\", \"IS\"], \",\") == ('LAMBDA', 'IS', ',')\nassert new_tuple([], \"A\") == ('A',)\nassert new_tuple((\"PYTHON\"), \"()\") == ('PYTHON', '()')  # Fix: This test case was incorrect\nassert new_tuple([(1)], \"{}\") == ([1], '{}')  # Fix: This test case was incorrect\nassert new_tuple([True, False], None) == (True, False, None)\n```",
+        "fixer": "```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n\n# Test cases\nassert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')\nassert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')\nassert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')\nassert new_tuple([\"LAMBDA\", \"IS\"], \",\") == ('LAMBDA', 'IS', ',')\nassert new_tuple([], \"A\") == ('A',)\nassert new_tuple((\"PYTHON\"), \"()\") == ('PYTHON', '()')  # Fix: This test case was incorrect\nassert new_tuple([(1)], \"{}\") == ([1], '{}')  # Fix: This test case was incorrect\nassert new_tuple([True, False], None) == (True, False, None)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2]) == []\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == [-1, -3, -5, -7, -9]\nassert filter_odd_numbers([0]) == []",
+      "reference_key": "assert new_tuple([], \"empty\") == ('empty',)\nassert new_tuple([\"single\"], \"\") == ('single', '')\nassert new_tuple([1, 2, 3], \"tuple\") == (1, 2, 3, 'tuple')\nassert new_tuple([\"a\", \"b\"], \"c\") == ('a', 'b', 'c')\nassert new_tuple([\"hello\", \"world\"], \"!\") == ('hello', 'world', '!')",
+      "key_differs": true,
+      "text": "```python\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2]) == []\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == [-1, -3, -5, -7, -9]\nassert filter_odd_numbers([0]) == []\n```",
+      "quality": 0.0,
+      "final_key": "def new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n\n# Test cases\nassert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')\nassert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')\nassert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2]) == []\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == [-1, -3, -5, -7, -9]\nassert filter_odd_numbers([0]) == []",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n\n# Test cases\nassert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')\nassert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')\nassert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2]) == []\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == [-1, -3, -5, -7, -9]\nassert filter_odd_numbers([0]) == []\n```",
+        "fixer": "```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n\n# Test cases\nassert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')\nassert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')\nassert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2]) == []\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == [-1, -3, -5, -7, -9]\nassert filter_odd_numbers([0]) == []\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert new_tuple([], \"test\") == ('test',)\nassert new_tuple([\"hello\"], \"world\") == ('hello', 'world')\nassert new_tuple([\"one\", \"two\", \"three\"], \"four\") == ('one', 'two', 'three', 'four')\nassert new_tuple([\"a\", \"b\", \"c\"], \"\") == ('a', 'b', 'c', '')\nassert new_tuple([\"abc\"], \"xyz\") == ('abc', 'xyz')",
+  "sample_keys": [
+    "assert new_tuple([\"Python\", \"Programming\"], \"Language\") == ('Python', 'Programming', 'Language')\nassert new_tuple([], \"Hello\") == ('Hello',)\nassert new_tuple([\"SingleElement\"], \"\") == ('SingleElement',)\nassert new_tuple([\"Multiple\", \"Elements\"], \"List\") == ('Multiple', 'Elements', 'List')\nassert new_tuple([\"Case-sensitive\"], \"SENSITIVE\") == ('Case-sensitive', 'SENSITIVE')",
+    "assert new_tuple([], \"test\") == ('test',)\nassert new_tuple([\"hello\", 42], \"world\") == ('hello', 42, 'world')\nassert new_tuple([\"one\", \"two\", \"three\"], \"\") == ('one', 'two', 'three',)\nassert new_tuple([\"only_string\"], None) == ('only_string',)\nassert new_tuple([10, 20, 30], [40, 50]) == (10, 20, 30, 40, 50)",
+    "assert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best'), \"Test case 1 failed\"\nassert new_tuple([], \"edge\") == ('edge',), \"Test case 2 failed\"\nassert new_tuple([\"empty\"], \"\") == ('empty',), \"Test case 3 failed\"\nassert new_tuple([\"multiple\"], \"s\", \"a\", \"s\") == ('multiple', 's', 'a', 's'), \"Test case 4 failed\"\nassert new_tuple([], \"single\") == ('single',), \"Test case 5 failed\"",
+    "assert new_tuple([], \"Python Programming\") == ('Python Programming',)\nassert new_tuple([\"Programming\"], \"Loves\") == ('Programming', 'Loves')\nassert new_tuple([\"Web Development\"], \"Technologies\") == ('Web Development', 'Technologies')\nassert new_tuple([\"Machine Learning\"], \"AI\") == ('Machine Learning', 'AI')\nassert new_tuple([\"Data Science\"], \"Analyzing\") == ('Data Science', 'Analyzing')",
+    "assert new_tuple([\"WEB\"], \"is\") == ('WEB',)\nassert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')\nassert new_tuple([], \"\") == ()\nassert new_tuple([\"WEB\", \"is\"], None) == ('WEB', 'is', None)\nassert new_tuple([\"WEB\", \"is\"], \"is\") == ('WEB', 'is', 'is')"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1479.0,
+    "small_out": 389.0,
+    "small_s": 7.970011577999685
+  },
+  "calls_plus": {
+    "small_in": 1307.0,
+    "small_out": 289.0,
+    "small_s": 6.01729413101566,
+    "large_in": 166.0,
+    "large_out": 98.0,
+    "large_s": 2.1102933710208163
+  },
+  "calls_samples": {
+    "small_in": 830.0,
+    "small_out": 523.0,
+    "small_s": 9.8756704099942
+  }
+}

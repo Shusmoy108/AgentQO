@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-728",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert sum_list([0,0,0],[0,0,0]) == [0,0,0]\nassert sum_list([-1,-2,-3],[-1,-2,-3]) == [-2,-4,-6]\nassert sum_list([1,2,3],[9,8,7]) == [10,10,10]\nassert sum_list([100,200],[300,400]) == [400,600]\nassert sum_list([1.5,2.5,3.5],[4.5,5.5,6.5]) == [6.0,8.0,10.0]\n```",
+  "reference_key": "assert sum_list([0,0,0],[0,0,0]) == [0,0,0]\nassert sum_list([-1,-2,-3],[-1,-2,-3]) == [-2,-4,-6]\nassert sum_list([1,2,3],[9,8,7]) == [10,10,10]\nassert sum_list([100,200],[300,400]) == [400,600]\nassert sum_list([1.5,2.5,3.5],[4.5,5.5,6.5]) == [6.0,8.0,10.0]",
+  "final_key_plus": "def sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result\n```",
+    "fixer": "```python\ndef sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sum_list([-2,-3], [-4,-5]) == [-6,-8]\nassert sum_list([], []) == []\nassert sum_list([0, 0], [0, 0]) == [0, 0]\nassert sum_list([500, 700, 900], [100, 200, 300]) == [600, 900, 1200]\nassert sum_list([0, -300], [-5, 400]) == [200, 10]",
+      "reference_key": "assert sum_list([0,0,0],[0,0,0]) == [0,0,0]\nassert sum_list([-1,-2,-3],[-1,-2,-3]) == [-2,-4,-6]\nassert sum_list([1,2,3],[9,8,7]) == [10,10,10]\nassert sum_list([100,200],[300,400]) == [400,600]\nassert sum_list([1.5,2.5,3.5],[4.5,5.5,6.5]) == [6.0,8.0,10.0]",
+      "key_differs": true,
+      "text": "```python\nassert sum_list([-2,-3], [-4,-5]) == [-6,-8]\nassert sum_list([], []) == []\nassert sum_list([0, 0], [0, 0]) == [0, 0]\nassert sum_list([500, 700, 900], [100, 200, 300]) == [600, 900, 1200]\nassert sum_list([0, -300], [-5, 400]) == [200, 10]\n```",
+      "quality": 0.0,
+      "final_key": "def sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result\n\n# Test cases\nassert sum_list([10,20,30],[15,25,35])==[25,45,65]\nassert sum_list([1,2,3],[5,6,7])==[6,8,10]\nassert sum_list([15,20,30],[15,45,75])==[30,65,105]\nassert sum_list([-2,-3], [-4,-5]) == [-6,-8]\nassert sum_list([], []) == []\nassert sum_list([0, 0], [0, 0]) == [0, 0]\nassert sum_list([500, 700, 900], [100, 200, 300]) == [600, 900, 1200]\nassert sum_list([0, -300], [-5, 400]) == [200, 10]  # Fixed the assertion to match the expected output",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result\n\n# Test cases\nassert sum_list([10,20,30],[15,25,35])==[25,45,65]\nassert sum_list([1,2,3],[5,6,7])==[6,8,10]\nassert sum_list([15,20,30],[15,45,75])==[30,65,105]\nassert sum_list([-2,-3], [-4,-5]) == [-6,-8]\nassert sum_list([], []) == []\nassert sum_list([0, 0], [0, 0]) == [0, 0]\nassert sum_list([500, 700, 900], [100, 200, 300]) == [600, 900, 1200]\nassert sum_list([0, -300], [-5, 400]) == [200, 10]  # Fixed the assertion to match the expected output\n```",
+        "fixer": "```python\ndef sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result\n\n# Test cases\nassert sum_list([10,20,30],[15,25,35])==[25,45,65]\nassert sum_list([1,2,3],[5,6,7])==[6,8,10]\nassert sum_list([15,20,30],[15,45,75])==[30,65,105]\nassert sum_list([-2,-3], [-4,-5]) == [-6,-8]\nassert sum_list([], []) == []\nassert sum_list([0, 0], [0, 0]) == [0, 0]\nassert sum_list([500, 700, 900], [100, 200, 300]) == [600, 900, 1200]\nassert sum_list([0, -300], [-5, 400]) == [200, 10]  # Fixed the assertion to match the expected output\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sum_list([], []) == [], \"Edge case for empty lists.\"\nassert sum_list([1, 2, 3], [-1, -2]) == [0, 0], \"Testing positive and negative numbers separately.\"\nassert sum_list([0, 0, 0], [0, 0]) == [0, 0], \"All elements are zero.\"\nassert sum_list([-10, -20, -30], [10, 20]) == [0, 0], \"Negative and positive pairs.\"\nassert sum_list([5, -5, 5, -5], [10, 20, 30, 40]) == [15, 25, 35, 45], \"Random mixed signs.\"",
+      "reference_key": "assert sum_list([0,0,0],[0,0,0]) == [0,0,0]\nassert sum_list([-1,-2,-3],[-1,-2,-3]) == [-2,-4,-6]\nassert sum_list([1,2,3],[9,8,7]) == [10,10,10]\nassert sum_list([100,200],[300,400]) == [400,600]\nassert sum_list([1.5,2.5,3.5],[4.5,5.5,6.5]) == [6.0,8.0,10.0]",
+      "key_differs": true,
+      "text": "```python\nassert sum_list([], []) == [], \"Edge case for empty lists.\"\nassert sum_list([1, 2, 3], [-1, -2]) == [0, 0], \"Testing positive and negative numbers separately.\"\nassert sum_list([0, 0, 0], [0, 0]) == [0, 0], \"All elements are zero.\"\nassert sum_list([-10, -20, -30], [10, 20]) == [0, 0], \"Negative and positive pairs.\"\nassert sum_list([5, -5, 5, -5], [10, 20, 30, 40]) == [15, 25, 35, 45], \"Random mixed signs.\"\n```",
+      "quality": 0.0,
+      "final_key": "def sum_list(list_a, list_b):\n    result = []\n    for i in range(min(len(list_a), len(list_b))):\n        result.append(list_a[i] + list_b[i])\n    # Handle remaining elements from list_a\n    result.extend(list_a[i:])\n    # Handle remaining elements from list_b\n    result.extend(list_b[i:])\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_list(list_a, list_b):\n    result = []\n    for i in range(min(len(list_a), len(list_b))):\n        result.append(list_a[i] + list_b[i])\n    # Handle remaining elements from list_a\n    result.extend(list_a[i:])\n    # Handle remaining elements from list_b\n    result.extend(list_b[i:])\n    return result\n```",
+        "fixer": "```python\ndef sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        if i < len(list_b):\n            result.append(list_a[i] + list_b[i])\n        else:\n            result.append(list_a[i])\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert decimal_to_binary(0) == '0'\nassert decimal_to_binary(1) == '1'\nassert decimal_to_binary(2) == '10'\nassert decimal_to_binary(3) == '11'\nassert decimal_to_binary(4) == '100'",
+      "reference_key": "assert sum_list([0,0,0],[0,0,0]) == [0,0,0]\nassert sum_list([-1,-2,-3],[-1,-2,-3]) == [-2,-4,-6]\nassert sum_list([1,2,3],[9,8,7]) == [10,10,10]\nassert sum_list([100,200],[300,400]) == [400,600]\nassert sum_list([1.5,2.5,3.5],[4.5,5.5,6.5]) == [6.0,8.0,10.0]",
+      "key_differs": true,
+      "text": "```python\nassert decimal_to_binary(0) == '0'\nassert decimal_to_binary(1) == '1'\nassert decimal_to_binary(2) == '10'\nassert decimal_to_binary(3) == '11'\nassert decimal_to_binary(4) == '100'\n```",
+      "quality": 1.0,
+      "final_key": "def sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result\n\n# Test cases\nassert sum_list([10,20,30],[15,25,35])==[25,45,65]\nassert sum_list([1,2,3],[5,6,7])==[6,8,10]\nassert sum_list([15,20,30],[15,45,75])==[30,65,105]\n\n# Additional tests\ndef decimal_to_binary(n):\n    if n == 0:\n        return '0'\n    elif n == 1:\n        return '1'\n    else:\n        return decimal_to_binary(n // 2) + str(n % 2)\n\n# Test cases for decimal_to_binary\nassert decimal_to_binary(0) == '0'\nassert decimal_to_binary(1) == '1'\nassert decimal_to_binary(2) == '10'\nassert decimal_to_binary(3) == '11'\nassert decimal_to_binary(4) == '100'",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result\n\n# Test cases\nassert sum_list([10,20,30],[15,25,35])==[25,45,65]\nassert sum_list([1,2,3],[5,6,7])==[6,8,10]\nassert sum_list([15,20,30],[15,45,75])==[30,65,105]\n\n# Additional tests\ndef decimal_to_binary(n):\n    if n == 0:\n        return '0'\n    elif n == 1:\n        return '1'\n    else:\n        return decimal_to_binary(n // 2) + str(n % 2)\n\n# Test cases for decimal_to_binary\nassert decimal_to_binary(0) == '0'\nassert decimal_to_binary(1) == '1'\nassert decimal_to_binary(2) == '10'\nassert decimal_to_binary(3) == '11'\nassert decimal_to_binary(4) == '100'\n```",
+        "fixer": "```python\ndef sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result\n\n# Test cases\nassert sum_list([10,20,30],[15,25,35])==[25,45,65]\nassert sum_list([1,2,3],[5,6,7])==[6,8,10]\nassert sum_list([15,20,30],[15,45,75])==[30,65,105]\n\n# Additional tests\ndef decimal_to_binary(n):\n    if n == 0:\n        return '0'\n    elif n == 1:\n        return '1'\n    else:\n        return decimal_to_binary(n // 2) + str(n % 2)\n\n# Test cases for decimal_to_binary\nassert decimal_to_binary(0) == '0'\nassert decimal_to_binary(1) == '1'\nassert decimal_to_binary(2) == '10'\nassert decimal_to_binary(3) == '11'\nassert decimal_to_binary(4) == '100'\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert sum_list([], []) == []\nassert sum_list([1], [1]) == [2]\nassert sum_list([-1], [-1]) == [-2]\nassert sum_list([0], [0]) == [0]\nassert sum_list([100], [100]) == [200]",
+  "sample_keys": [
+    "# Test with identical lists\nassert sum_list([10, 20, 30], [10, 20, 30]) == [20, 40, 60]\n\n# Test with empty lists\nassert sum_list([], []) == []\n\n# Test with negative numbers\nassert sum_list([-5, -1, -2], [-3, -4, -5]) == [-8, -5, -7]\n\n# Test with large numbers\nassert sum_list([1000000000000000000, 1000000000000000000, 1000000000000000000], [1000000000000000000, 1000000000000000000, 1000000000000000000]) == [2000000000000000000, 2000000000000000000, 2000000000000000000]\n\n# Test with different lengths\nassert sum_list([1, 2, 3], [4, 5]) == [5, 7]",
+    "# Edge case: empty lists\nassert sum_list([], []) == []\n\n# Edge case: same length lists with negative numbers\nassert sum_list([-1, -2, -3], [-4, -5, -6]) == [-5, -7, -9]\n\n# Edge case: different length lists\nassert sum_list([1, 2], [3]) == [4, 2]\n\n# Additional test cases\nassert sum_list([0, 1], [1, 0]) == [1, 1]\nassert sum_list([100], [200]) == [300]",
+    "assert sum_list([], []) == []\nassert sum_list([1], [2]) == [3]\nassert sum_list([-1, -2], [-3, -4]) == [-4, -6]\nassert sum_list([5, 5], [10, 10]) == [15, 20]\nassert sum_list([-5, -5], [10, -6]) == [5, 4]",
+    "# Test with empty lists\nassert sum_list([], []) == []\n\n# Test with same numbers\nassert sum_list([1, 2, 3], [1, 2, 3]) == [2, 4, 6]\n\n# Test with negative numbers\nassert sum_list([-2, -8, -6], [-4, -5, -7]) == [-6, -13, -13]\n\n# Test with single element lists\nassert sum_list([5], [5]) == [10]\n\n# Test with floating point numbers\nassert sum_list([0.5, 1.5, 2.5], [1, 2, 3]) == [1.5, 3.5, 5.5]",
+    "assert sum_list([],[]) == []\nassert sum_list([0],[]) == [0]\nassert sum_list([],[0]) == [0]\nassert sum_list([1,-1],[-1,1]) == [0,0]\nassert sum_list([10,10,10], [-5,-5,-5]) == [5,5,5]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1607.0,
+    "small_out": 324.0,
+    "small_s": 6.658272009022767
+  },
+  "calls_plus": {
+    "small_in": 1648.0,
+    "small_out": 254.0,
+    "small_s": 5.108373135997681,
+    "large_in": 208.0,
+    "large_out": 153.0,
+    "large_s": 3.472075018013129
+  },
+  "calls_samples": {
+    "small_in": 1040.0,
+    "small_out": 807.0,
+    "small_s": 8.91158707800787
+  }
+}

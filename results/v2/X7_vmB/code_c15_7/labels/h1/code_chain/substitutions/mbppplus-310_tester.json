@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-310",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"123\") == ('1', '2', '3')\nassert string_to_tuple(\"hello world!\") == ('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!')\nassert string_to_tuple(\"1234567890\") == ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')\n```",
+  "reference_key": "assert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"123\") == ('1', '2', '3')\nassert string_to_tuple(\"hello world!\") == ('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!')\nassert string_to_tuple(\"1234567890\") == ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')",
+  "final_key_plus": "def string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n```",
+    "fixer": "```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert string_to_tuple(\"hi\") == ('h', 'i')\nassert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"12345\") == ('1', '2', '3', '4', '5')\nassert string_to_tuple(\"!@#$%^&*()-_=+[]{}|;':,./<>?\") == ('!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '|', ';', ':', ',', '.', '/', '<', '>', '?')\nassert string_to_tuple(\"#$%!@$!#%@##$#!%!\") == ('$','#',$,%,'!','@','#','@','!','#','!',#)",
+      "reference_key": "assert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"123\") == ('1', '2', '3')\nassert string_to_tuple(\"hello world!\") == ('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!')\nassert string_to_tuple(\"1234567890\") == ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')",
+      "key_differs": true,
+      "text": "```python\nassert string_to_tuple(\"hi\") == ('h', 'i')\nassert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"12345\") == ('1', '2', '3', '4', '5')\nassert string_to_tuple(\"!@#$%^&*()-_=+[]{}|;':,./<>?\") == ('!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '|', ';', ':', ',', '.', '/', '<', '>', '?')\nassert string_to_tuple(\"#$%!@$!#%@##$#!%!\") == ('$','#',$,%,'!','@','#','@','!','#','!',#)\n```",
+      "quality": 0.0,
+      "final_key": "def string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n```",
+        "fixer": "```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def test_string_to_tuple_with_typical_cases():\n    assert string_to_tuple(\"Hello\") == [('H',), ('e',), ('l',), ('l',), ('o',)]\n    assert string_to_tuple(\"\") == []\n    assert string_to_tuple(\"123456789\") == [('1',), ('2',), ('3',), ('4',), ('5',), ('6',), ('7',), ('8',), ('9',)]\n    assert string_to_tuple(\"!@#$%^&*()_+\") == [('!',), ('@'), ('$'), ('#'), ('%'), ('^'), ('&'), ('*'), ('('), (')'), ('_'), ('+')]\n    assert string_to_tuple(\"AaBbCc\") == [('A',), ('a',), ('B',), ('b',), ('C',), ('c',)]\n\ntest_string_to_tuple_with_typical_cases()\ntest_string_to_tuple_with_edge_cases()",
+      "reference_key": "assert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"123\") == ('1', '2', '3')\nassert string_to_tuple(\"hello world!\") == ('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!')\nassert string_to_tuple(\"1234567890\") == ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')",
+      "key_differs": true,
+      "text": "Certainly! Below is the test suite with five additional assertions to ensure your function works correctly:\n\n```python\ndef test_string_to_tuple_with_typical_cases():\n    assert string_to_tuple(\"Hello\") == [('H',), ('e',), ('l',), ('l',), ('o',)]\n    assert string_to_tuple(\"\") == []\n    assert string_to_tuple(\"123456789\") == [('1',), ('2',), ('3',), ('4',), ('5',), ('6',), ('7',), ('8',), ('9',)]\n    assert string_to_tuple(\"!@#$%^&*()_+\") == [('!',), ('@'), ('$'), ('#'), ('%'), ('^'), ('&'), ('*'), ('('), (')'), ('_'), ('+')]\n    assert string_to_tuple(\"AaBbCc\") == [('A',), ('a',), ('B',), ('b',), ('C',), ('c',)]\n\ntest_string_to_tuple_with_typical_cases()\ntest_string_to_tuple_with_edge_cases()\n```\n\nThese tests cover various scenarios including typical strings, empty strings, numeric strings, special characters, and uppercase/lowercase letters. Each assertion will raise an `AssertionError` if the function does not produce the expected results, ensuring the implementation is correct.",
+      "quality": 0.0,
+      "final_key": "def string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n```",
+        "fixer": "```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"apple\", \"banana\", \"cherry\")) == 'apple-banana-cherry'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('single')) == 'single'",
+      "reference_key": "assert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"123\") == ('1', '2', '3')\nassert string_to_tuple(\"hello world!\") == ('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!')\nassert string_to_tuple(\"1234567890\") == ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')",
+      "key_differs": true,
+      "text": "```python\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"apple\", \"banana\", \"cherry\")) == 'apple-banana-cherry'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('single')) == 'single'\n```",
+      "quality": 0.0,
+      "final_key": "def string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n```",
+        "fixer": "```python\ndef string_to_tuple(input_string):\n    # Step 2: Use list comprehension to create a list of tuples from each character\n    result = [tuple(char) for char in input_string]\n    # Step 4: Return the list of tuples\n    return result\n\n# Test cases\nassert string_to_tuple(\"python 3.0\") == ('p', 'y', 't', 'h', 'o', 'n', '3', '.', '0')\nassert string_to_tuple(\"item1\") == ('i', 't', 'e', 'm', '1')\nassert string_to_tuple(\"15.10\") == ('1', '5', '.', '1', '0')\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"apple\", \"banana\", \"cherry\")) == 'apple-banana-cherry'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('single')) == 'single'\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"ab\") == (('a',), ('b',))\nassert string_to_tuple(\"abc\") == (('a',), ('b',), ('c',))\nassert string_to_tuple(\"123\") == (('1',), ('2',), ('3',))",
+  "sample_keys": [
+    "# Edge case 1: Empty string\nassert string_to_tuple(\"\") == ()\n\n# Edge case 2: Single character string\nassert string_to_tuple(\"a\") == (('a',),)\n\n# Edge case 3: String with spaces\nassert string_to_tuple(\"hello world\") == (('h',), ('e',), ('l',), ('l',), ('o'), (' ',), ('w',), ('o',), ('r',), ('l',), ('d'))\n\n# Edge case 4: String with punctuation\nassert string_to_tuple(\"this is a test!\") == (('t',), ('h',), ('i',), ('s',), (' ',), ('i',), ('s',), (' ',), ('a',), (' ',), ('t',), ('e',), ('s', '!'))\n\n# Edge case 5: String with multiple identical characters\nassert string_to_tuple(\"aaaa\") == (((('a',),)), ((('a',),)), ((('a',),)), ((('a',),)))",
+    "assert string_to_tuple(\"\")==()\nassert string_to_tuple(\"123\")==(('1',''), ('2',''), ('3',''))\nassert string_to_tuple(\"a b c\")==([('a',' '), (('b',' '), (('c',' '), ())))\nassert string_to_tuple(\"Hello world!\")==([('H','e'),('l','l'),('o',' '),\n                                           ('w','o'),('r','l'),('d','!')])\nassert string_to_tuple(\"123abc\")==([('1',''), ('2',''), ('3',''), (('a',' '), (('b',' '), (('c',' '), ())))]",
+    "assert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"123\") == ('1', '2', '3')\nassert string_to_tuple(\"abc.\") == ('a', 'b', 'c', '.')\nassert string_to_tuple(\",\") == (',',)",
+    "# Additional assertions to test the function with edge cases\nassert string_to_tuple(\"\") == []\nassert string_to_tuple(\"123\") == [('1'), ('2'), ('3')]\nassert string_to_tuple(\"hello world!\") == [('h'), ('e'), ('l'), ('l'), ('o'), (' '), ('w'), ('o'), ('r'), ('l'), ('d'), ('!')]\nassert string_to_tuple(\"aA\") == [('a'), ('A')]\nassert string_to_tuple(\"1a2b3c\") == [('1'), ('a'), ('2'), ('b'), ('3'), ('c')]",
+    "assert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == (('a',))\nassert string_to_tuple(\"ab\") == (('a',), ('b',))\nassert string_to_tuple(\"abc\") == (('a',), ('b',), ('c',))\nassert string_to_tuple(\"Python 3.0\") == (('P',), ('y',), ('t',), ('h',), ('o',), ('n',), (' '), ('3',), ('.',), ('0'))"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1739.0,
+    "small_out": 480.0,
+    "small_s": 10.40737642502063
+  },
+  "calls_plus": {
+    "small_in": 1691.0,
+    "small_out": 399.0,
+    "small_s": 8.226113709999481,
+    "large_in": 201.0,
+    "large_out": 132.0,
+    "large_s": 2.7683281819918193
+  },
+  "calls_samples": {
+    "small_in": 1005.0,
+    "small_out": 662.0,
+    "small_s": 12.550155169970822
+  }
+}

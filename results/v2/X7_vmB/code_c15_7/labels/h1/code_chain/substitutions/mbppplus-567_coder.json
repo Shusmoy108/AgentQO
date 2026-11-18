@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-567",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status\n```",
+  "reference_key": "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status",
+  "final_key_plus": "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.6,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert issort_list([]) == True\nassert issort_list([1]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 18]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20]) == True\n```",
+    "verifier": "PICK: A\n\n```python\ndef issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status\n```",
+    "fixer": "```python\ndef issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status",
+      "reference_key": "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status",
+      "key_differs": true,
+      "text": "```python\ndef issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status\n```",
+      "quality": 1.0,
+      "final_key": "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert issort_list([]) == True\nassert issort_list([1]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 18]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20]) == True\n```",
+        "verifier": "PICK: A\n\n```python\ndef issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status\n```",
+        "fixer": "```python\ndef issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+      "reference_key": "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status",
+      "key_differs": true,
+      "text": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+      "quality": 0.0,
+      "final_key": "def issort_list(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert issort_list([]) == True\nassert issort_list([1]) == True\nassert issort_list([1, 3, 5, 7, 9]) == True\nassert issort_list([1, 3, 5, 7, 8]) == False\nassert issort_list([1, 3, 5, 7, 9, 11]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29]) == False\nassert issort_list([1",
+        "verifier": "PICK: B\n\n```python\ndef issort_list(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+        "fixer": "```python\ndef issort_list(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_undulating(num):\n    num_str = str(num)\n    n = len(num_str)\n    \n    # Single digit or two-digit numbers cannot be undulating\n    if n < 3:\n        return False\n    \n    # Split the string into two parts\n    first_part = num_str[:n//2]\n    second_part = num_str[n//2:]\n    \n    # Reverse the second part\n    reversed_second_part = second_part[::-1]\n    \n    # Check if the first part is equal to the reversed second part\n    return first_part == reversed_second_part",
+      "reference_key": "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status",
+      "key_differs": true,
+      "text": "```python\ndef is_undulating(num):\n    num_str = str(num)\n    n = len(num_str)\n    \n    # Single digit or two-digit numbers cannot be undulating\n    if n < 3:\n        return False\n    \n    # Split the string into two parts\n    first_part = num_str[:n//2]\n    second_part = num_str[n//2:]\n    \n    # Reverse the second part\n    reversed_second_part = second_part[::-1]\n    \n    # Check if the first part is equal to the reversed second part\n    return first_part == reversed_second_part\n```",
+      "quality": 0.0,
+      "final_key": "def is_undulating(num):\n    num_str = str(num)\n    n = len(num_str)\n    \n    # Single digit or two-digit numbers cannot be undulating\n    if n < 3:\n        return False\n    \n    # Split the string into two parts\n    first_part = num_str[:n//2]\n    second_part = num_str[n//2:]\n    \n    # Reverse the second part\n    reversed_second_part = second_part[::-1]\n    \n    # Check if the first part is equal to the reversed second part\n    return first_part == reversed_second_part\n\n# Test cases\nassert is_undulating(1) == False\nassert is_undulating(12) == True\nassert is_undulating(123) == False\nassert is_undulating(1234) == True\nassert is_undulating(12345) == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_undulating(1) == False\nassert is_undulating(12) == True\nassert is_undulating(123) == False\nassert is_undulating(1234) == True\nassert is_undulating(12345) == False\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_undulating(num):\n    num_str = str(num)\n    n = len(num_str)\n    \n    # Single digit or two-digit numbers cannot be undulating\n    if n < 3:\n        return False\n    \n    # Split the string into two parts\n    first_part = num_str[:n//2]\n    second_part = num_str[n//2:]\n    \n    # Reverse the second part\n    reversed_second_part = second_part[::-1]\n    \n    # Check if the first part is equal to the reversed second part\n    return first_part == reversed_second_part\n\n# Test cases\nassert is_undulating(1) == False\nassert is_undulating(12) == True\nassert is_undulating(123) == False\nassert is_undulating(1234) == True\nassert is_undulating(12345) == False\n```",
+        "fixer": "```python\ndef is_undulating(num):\n    num_str = str(num)\n    n = len(num_str)\n    \n    # Single digit or two-digit numbers cannot be undulating\n    if n < 3:\n        return False\n    \n    # Split the string into two parts\n    first_part = num_str[:n//2]\n    second_part = num_str[n//2:]\n    \n    # Reverse the second part\n    reversed_second_part = second_part[::-1]\n    \n    # Check if the first part is equal to the reversed second part\n    return first_part == reversed_second_part\n\n# Test cases\nassert is_undulating(1) == False\nassert is_undulating(12) == True\nassert is_undulating(123) == False\nassert is_undulating(1234) == True\nassert is_undulating(12345) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status",
+  "sample_keys": [
+    "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status",
+    "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status",
+    "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status",
+    "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status",
+    "def issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i-1]:\n            sorted_status = False\n            break\n    return sorted_status"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1876.0,
+    "small_out": 495.0,
+    "small_s": 10.857989208976505
+  },
+  "calls_plus": {
+    "small_in": 1584.0,
+    "small_out": 444.0,
+    "small_s": 9.020273410045775,
+    "large_in": 296.0,
+    "large_out": 54.0,
+    "large_s": 1.2888055430084933
+  },
+  "calls_samples": {
+    "small_in": 1480.0,
+    "small_out": 267.0,
+    "small_s": 4.0949466050369665
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-594",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Initialize variables to store the first even and first odd numbers found, setting them to None initially.\n2. Iterate through each number in the given list.\n3. For each number, check if it is even or odd using the modulus operator.\n4. If the number is even and no even number has been found yet, assign it to the variable for the first even number.\n5. If the number is odd and no odd number has been found yet, assign it to the variable for the first odd number.\n6. After iterating through the list, calculate the difference between the first even and first odd numbers.\n7. Return the calculated difference as the result of the function.",
+  "reference_key": null,
+  "final_key_plus": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0 and first_even is None:\n            first_even = num\n        elif num % 2 != 0 and first_odd is None:\n            first_odd = num\n            \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert diff_even_odd([1,3,5,7,4,1,6,8]) == 3\nassert diff_even_odd([]) == \"No even or odd numbers found\"\nassert diff_even_odd([2,4,6,8]) == 0\nassert diff_even_odd([1,3,5,7,9]) == 8\nassert diff_even_odd([10,20,30,40,50]) == 30\n```",
+    "coder": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0 and first_even is None:\n            first_even = num\n        elif num % 2 != 0 and first_odd is None:\n            first_odd = num\n            \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+    "verifier": "PICK: A\n\n```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0 and first_even is None:\n            first_even = num\n        elif num % 2 != 0 and first_odd is None:\n            first_odd = num\n            \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+    "fixer": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0 and first_even is None:\n            first_even = num\n        elif num % 2 != 0 and first_odd is None:\n            first_odd = num\n            \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_undulating` that takes one argument, `num`.\n2. Convert the input number to a string for easier manipulation.\n3. Check if the length of the string is less than 3, which means it's either a single digit or a two-digit number, and thus cannot be undulating.\n4. If the length is 3 or more, split the string into two parts: the first part (before the middle) and the second part (after the middle).\n5. Compare the first part with the reversed second part. If they are equal, the number is undulating; otherwise, it is not.\n6. Return the result as a boolean value.",
+      "quality": 0.0,
+      "final_key": "def is_undulating(num):\n    num_str = str(num)\n    if len(num_str) < 3:\n        return False\n    mid = len(num_str) // 2\n    first_part = num_str[:mid]\n    second_part = num_str[mid:]\n    return first_part == second_part[::-1]\n\ndef diff_even_odd(lst):\n    even_numbers = [num for num in lst if num % 2 == 0]\n    odd_numbers = [num for num in lst if num % 2 != 0]\n    if not even_numbers or not odd_numbers:\n        return None\n    return abs(even_numbers[0] - odd_numbers[0])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert diff_even_odd([1,3,5,7,4,1,6,8]) == 3\nassert diff_even_odd([2,4,6,8,10]) == 8\nassert diff_even_odd([1,3,5,7,9]) == 8\nassert diff_even_odd([2,4,6,8,10,12]) == 10\nassert diff_even_odd([1,3,5,7,9,11]) == 10\n```",
+        "coder": "```python\ndef is_undulating(num):\n    num_str = str(num)\n    if len(num_str) < 3:\n        return False\n    mid = len(num_str) // 2\n    first_part = num_str[:mid]\n    second_part = num_str[mid:]\n    return first_part == second_part[::-1]\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_undulating(num):\n    num_str = str(num)\n    if len(num_str) < 3:\n        return False\n    mid = len(num_str) // 2\n    first_part = num_str[:mid]\n    second_part = num_str[mid:]\n    return first_part == second_part[::-1]\n\ndef diff_even_odd(lst):\n    even_numbers = [num for num in lst if num % 2 == 0]\n    odd_numbers = [num for num in lst if num % 2 != 0]\n    if not even_numbers or not odd_numbers:\n        return None\n    return abs(even_numbers[0] - odd_numbers[0])\n```",
+        "fixer": "```python\ndef is_undulating(num):\n    num_str = str(num)\n    if len(num_str) < 3:\n        return False\n    mid = len(num_str) // 2\n    first_part = num_str[:mid]\n    second_part = num_str[mid:]\n    return first_part == second_part[::-1]\n\ndef diff_even_odd(lst):\n    even_numbers = [num for num in lst if num % 2 == 0]\n    odd_numbers = [num for num in lst if num % 2 != 0]\n    if not even_numbers or not odd_numbers:\n        return None\n    return abs(even_numbers[0] - odd_numbers[0])\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to store the first even and first odd numbers found, setting them to None initially.\n2. Iterate through each number in the given list.\n3. For each number, check if it is even or odd using the modulus operator.\n4. If the number is even and no even number has been found yet, assign it to the variable for the first even number.\n5. If the number is odd and no odd number has been found yet, assign it to the variable for the first odd number.\n6. After iterating through the list, calculate the difference between the first even and first odd numbers.\n7. Return the absolute value of the calculated difference as the result of the function.",
+      "quality": 0.0,
+      "final_key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0 and first_even is None:\n            first_even = num\n        elif num % 2 != 0 and first_odd is None:\n            first_odd = num\n            \n    if first_even is None or first_odd is None:\n        return 0  # No even or odd numbers found\n    \n    return abs(first_even - first_odd)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert diff_even_odd([1,3,5,7,4,1,6,8]) == 3\nassert diff_even_odd([]) == 0\nassert diff_even_odd([2,4,6,8]) == 0\nassert diff_even_odd([1,3,5,7,9]) == 8\nassert diff_even_odd([10,20,30,40,50]) == 30\n```",
+        "coder": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0 and first_even is None:\n            first_even = num\n        elif num % 2 != 0 and first_odd is None:\n            first_odd = num\n            \n    if first_even is None or first_odd is None:\n        return 0  # No even or odd numbers found\n    \n    return abs(first_even - first_odd)\n```",
+        "verifier": "PICK: A\n\n```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0 and first_even is None:\n            first_even = num\n        elif num % 2 != 0 and first_odd is None:\n            first_odd = num\n            \n    if first_even is None or first_odd is None:\n        return 0  # No even or odd numbers found\n    \n    return abs(first_even - first_odd)\n```",
+        "fixer": "```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0 and first_even is None:\n            first_even = num\n        elif num % 2 != 0 and first_odd is None:\n            first_odd = num\n            \n    if first_even is None or first_odd is None:\n        return 0  # No even or odd numbers found\n    \n    return abs(first_even - first_odd)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sort_counter` that takes one parameter: a dictionary `counter`.\n2. Use the built-in `sorted()` function on the dictionary items, specifying the key as the values (`key=counter.get`) and the reverse order (`reverse=True`).\n3. Return the sorted list of tuples.\n\nHere's the complete implementation:\n\n```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```\n\nThis function will correctly sort the dictionary by its values in descending order, as required.",
+      "quality": 0.0,
+      "final_key": "def diff_even_odd(lst):\n    if not lst:\n        return None\n    \n    counter = {}\n    \n    for num in lst:\n        if num % 2 == 0:\n            counter[num] = counter.get(num, 0) + 1\n        else:\n            counter[num] = counter.get(num, 0) - 1\n    \n    sorted_items = sort_counter(counter)\n    \n    if len(sorted_items) < 2:\n        return None\n    \n    first_even = sorted_items[0][0]\n    first_odd = sorted_items[1][0]\n    \n    return first_even - first_odd",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert diff_even_odd([2,4,6,8,10]) == 8\nassert diff_even_odd([1,3,5,7,9]) == 8\nassert diff_even_odd([1,3,5,7,9,11]) == 8\nassert diff_even_odd([]) == None\nassert diff_even_odd([2,4,6,8,10,12]) == 10\n```",
+        "coder": "```python\ndef sort_counter(counter):\n    # Sort the dictionary items based on their values in descending order\n    sorted_items = sorted(counter.items(), key=counter.get, reverse=True)\n    return sorted_items\n```",
+        "verifier": "PICK: B\n\n```python\ndef diff_even_odd(lst):\n    if not lst:\n        return None\n    \n    counter = {}\n    \n    for num in lst:\n        if num % 2 == 0:\n            counter[num] = counter.get(num, 0) + 1\n        else:\n            counter[num] = counter.get(num, 0) - 1\n    \n    sorted_items = sort_counter(counter)\n    \n    if len(sorted_items) < 2:\n        return None\n    \n    first_even = sorted_items[0][0]\n    first_odd = sorted_items[1][0]\n    \n    return first_even - first_odd\n```",
+        "fixer": "```python\ndef diff_even_odd(lst):\n    if not lst:\n        return None\n    \n    counter = {}\n    \n    for num in lst:\n        if num % 2 == 0:\n            counter[num] = counter.get(num, 0) + 1\n        else:\n            counter[num] = counter.get(num, 0) - 1\n    \n    sorted_items = sort_counter(counter)\n    \n    if len(sorted_items) < 2:\n        return None\n    \n    first_even = sorted_items[0][0]\n    first_odd = sorted_items[1][0]\n    \n    return first_even - first_odd\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+  "sample_keys": [
+    "def diff_even_odd(lst):\n    even_num = None\n    odd_num = None\n    for num in lst:\n        if num % 2 == 0:\n            even_num = num\n        else:\n            odd_num = num\n    if even_num is not None and odd_num is not None:\n        return even_num - odd_num\n    else:\n        raise ValueError(\"List must contain at least one even and one odd number\")",
+    "def diff_even_odd(lst):\n    if not lst:\n        raise ValueError(\"The list is empty.\")\n    \n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            first_even = num\n        elif num % 2 != 0:\n            first_odd = num\n    \n    if first_even is not None and first_odd is not None:\n        return first_even - first_odd\n    else:\n        raise ValueError(\"No even or odd numbers found.\")",
+    "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0 and first_even is None:\n            first_even = num\n        elif num % 2 != 0 and first_odd is None:\n            first_odd = num\n            \n    if first_even is None or first_odd is None:\n        raise ValueError(\"List must contain at least one even and one odd number.\")\n    \n    return abs(first_even - first_odd)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1795.0,
+    "small_out": 581.0,
+    "small_s": 12.681147382972995
+  },
+  "calls_plus": {
+    "large_in": 121.0,
+    "large_out": 140.0,
+    "large_s": 3.644445430021733,
+    "small_in": 1653.0,
+    "small_out": 417.0,
+    "small_s": 7.9468300989829
+  },
+  "calls_samples": {
+    "small_in": 5743.0,
+    "small_out": 1778.0,
+    "small_s": 32.787209942966
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-130",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert max_occurrences([1, 2, 3, 4, 5]) == 1\nassert max_occurrences(['a', 'b', 'c', 'a']) == 'a'\nassert max_occurrences([True, False, True, True]) == True\nassert max_occurrences([]) is None\nassert max_occurrences([7]) == 7\n```",
+  "reference_key": "assert max_occurrences([1, 2, 3, 4, 5]) == 1\nassert max_occurrences(['a', 'b', 'c', 'a']) == 'a'\nassert max_occurrences([True, False, True, True]) == True\nassert max_occurrences([]) is None\nassert max_occurrences([7]) == 7",
+  "final_key_plus": "def max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```",
+    "fixer": "```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "assert max_occurrences([1, 2, 3, 4, 5]) == 1\nassert max_occurrences(['a', 'b', 'c', 'a']) == 'a'\nassert max_occurrences([True, False, True, True]) == True\nassert max_occurrences([]) is None\nassert max_occurrences([7]) == 7",
+      "key_differs": true,
+      "text": "```python\nassert max_occurrences([]) == None  # Check empty input\nassert max_occurrences([1]) == 1      # Check single-element list\nassert max_occurrences([1,1,2,2,3,3,3]) == 3 # Check multiple same numbers\nassert max_occurrences(['a','b','c','d','e','f']) == 'f'  # Check string with no duplicates\nassert max_occurrences(['e','d','d','c','c','b','b','b','a','a','e','e']) == 'e' # Special case with repeated elements",
+      "quality": 1.0,
+      "final_key": "def max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```",
+        "fixer": "```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert max_occurrences([]) == None\nassert max_occurrences([3]) == 3\nassert max_occurrences([2, 2, 2, 3, 3]) == 2\nassert max_occurrences([1, 2, 3, 3, 2, 1]) == 3\nassert max_occurrences([4, 4, 4, 4]) == 4",
+      "reference_key": "assert max_occurrences([1, 2, 3, 4, 5]) == 1\nassert max_occurrences(['a', 'b', 'c', 'a']) == 'a'\nassert max_occurrences([True, False, True, True]) == True\nassert max_occurrences([]) is None\nassert max_occurrences([7]) == 7",
+      "key_differs": true,
+      "text": "```python\nassert max_occurrences([]) == None\nassert max_occurrences([3]) == 3\nassert max_occurrences([2, 2, 2, 3, 3]) == 2\nassert max_occurrences([1, 2, 3, 3, 2, 1]) == 3\nassert max_occurrences([4, 4, 4, 4]) == 4\n```",
+      "quality": 1.0,
+      "final_key": "def max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```",
+        "fixer": "```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3\nassert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,2,3,1,2,6,7,9])==3\nassert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,2,3,1,2,6,7,9])==3\nassert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,2,3,1,2,6,7,9])==3\nassert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,2,3,1,2,6,7,9])==3",
+      "reference_key": "assert max_occurrences([1, 2, 3, 4, 5]) == 1\nassert max_occurrences(['a', 'b', 'c', 'a']) == 'a'\nassert max_occurrences([True, False, True, True]) == True\nassert max_occurrences([]) is None\nassert max_occurrences([7]) == 7",
+      "key_differs": true,
+      "text": "```python\nassert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3\nassert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,2,3,1,2,6,7,9])==3\nassert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,2,3,1,2,6,7,9])==3\nassert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,2,3,1,2,6,7,9])==3\nassert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,2,3,1,2,6,7,9])==3\n```",
+      "quality": 1.0,
+      "final_key": "def max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```",
+        "fixer": "```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n\n# Test cases\nassert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2\nassert max_occurrences([2,3,8,4,7,9,8,7,9,15,14,10,12,13,16,18])==8\nassert max_occurrences([10,20,20,30,40,90,80,50,30,20,50,10])==20\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": null,
+  "sample_keys": [
+    "assert max_occurrences([1, 2, 2, 3, 3, 3]) == 3\nassert max_occurrences([]) == None\nassert max_occurrences([1, 1, 1, 1]) == 1\nassert max_occurrences(['a', 'b', 'a', 'c', 'b']) == 'a'\nassert max_occurrences('abcde') == 'e'",
+    "# Example usage of the function\nlst = [2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]\nresult = max_occurrences(lst)\nprint(result)  # Output should be 2\n\n# Edge case 1: List with all unique elements\nedge_case_1_list = [1, 2, 3, 4, 5]\nedge_case_1_result = max_occurrences(edge_case_1_list)\nprint(edge_case_1_result)  # Output should be 1 (since every number appears only once)\n\n# Edge case 2: Empty list\nempty_list = []\nedge_case_2_result = max_occurrences(empty_list)\nprint(edge_case_2_result)  # Output should be None (since there are no elements in the list)\n\n# Edge case 3: List with identical elements\nidentical_elements_list = [7, 7, 7, 7, 7]\nidentical_elements_list_result = max_occurrences(identical_elements_list)\nprint(identical_elements_list_result)  # Output should be 7 (since every number appears five times)\n\n# Edge case 4: List with negative numbers and zero\nnegative_zero_list = [-1, -2, -3, -2, -1, -2, -1, -2, -1, 0]\nnegative_zero_list_result = max_occurrences(negative_zero_list)\nprint(negative_zero_list_result)  # Output should be 0 (since 0 appears once)",
+    "assert max_occurrences([]) == None\nassert max_occurrences([1]) == 1\nassert max_occurrences([1, 2, 2, 3, 3, 3]) == 3\nassert max_occurrences(['apple', 'banana', 'apple']) == 'apple'\nassert max_occurrences(['apple', 'banana', 'apple', 'apple']) == 'apple'",
+    "assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2\nassert max_occurrences([])==None\nassert max_occurrences([1])==1\nassert max_occurrences([1,1,1,1])==1\nassert max_occurrences([1,2,2,3,3,3,3])==3",
+    "assert max_occurrences([5, 5, 5]) == 5\nassert max_occurrences(['apple', 'banana', 'apple', 'cherry']) == 'apple'\nassert max_occurrences([]) == None\nassert max_occurrences([1, 1, 1, 1, 1, 1]) == 1\nassert max_occurrences([-1, -1, -1, -1, -1, -1]) == -1"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3705.0,
+    "small_out": 1254.0,
+    "small_s": 27.144186545046978
+  },
+  "calls_plus": {
+    "small_in": 2039.0,
+    "small_out": 742.0,
+    "small_s": 15.381429929024307,
+    "large_in": 301.0,
+    "large_out": 84.0,
+    "large_s": 2.4323390499921516
+  },
+  "calls_samples": {
+    "small_in": 1505.0,
+    "small_out": 736.0,
+    "small_s": 14.055554627964739
+  }
+}

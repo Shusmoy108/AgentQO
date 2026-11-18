@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-468",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2178000\nassert max_product([0, -1, -2, -3, -4]) == 0\nassert max_product([-1, -2, -3, -4, 0]) == 0\nassert max_product([5]) == 5\n```",
+  "reference_key": "assert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2178000\nassert max_product([0, -1, -2, -3, -4]) == 0\nassert max_product([-1, -2, -3, -4, 0]) == 0\nassert max_product([5]) == 5",
+  "final_key_plus": "def max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n```",
+    "fixer": "```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test cases for edge cases\nassert max_product([]) == None # No elements\nassert max_product([7]) == 7 # One element\nassert max_product([1, -2, -3]) == 6 # Negatives with positive\nassert max_product([-1, -2, -3, -4]) == -6 # All negatives\nassert max_product([-1, 5, -2, 3, 6]) == 90 # Positive and negative mix",
+      "reference_key": "assert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2178000\nassert max_product([0, -1, -2, -3, -4]) == 0\nassert max_product([-1, -2, -3, -4, 0]) == 0\nassert max_product([5]) == 5",
+      "key_differs": true,
+      "text": "```python\n# Test cases for edge cases\nassert max_product([]) == None # No elements\nassert max_product([7]) == 7 # One element\nassert max_product([1, -2, -3]) == 6 # Negatives with positive\nassert max_product([-1, -2, -3, -4]) == -6 # All negatives\nassert max_product([-1, 5, -2, 3, 6]) == 90 # Positive and negative mix\n```",
+      "quality": 0.0,
+      "final_key": "def max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n```",
+        "fixer": "```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert max_product([1, -2, -3, 0]) == 0\nassert max_product([-2, -3, 0, 2]) == 6\nassert max_product([-2, 5, 3]) == 30\nassert max_product([]) == 0\nassert max_product([7]) == 7",
+      "reference_key": "assert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2178000\nassert max_product([0, -1, -2, -3, -4]) == 0\nassert max_product([-1, -2, -3, -4, 0]) == 0\nassert max_product([5]) == 5",
+      "key_differs": true,
+      "text": "```python\nassert max_product([1, -2, -3, 0]) == 0\nassert max_product([-2, -3, 0, 2]) == 6\nassert max_product([-2, 5, 3]) == 30\nassert max_product([]) == 0\nassert max_product([7]) == 7\n```",
+      "quality": 0.0,
+      "final_key": "def max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n```",
+        "fixer": "```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\nassert last([1,2,3,4,5],3) == 3\nassert last([1,2,3,4,5],6) == -1",
+      "reference_key": "assert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2178000\nassert max_product([0, -1, -2, -3, -4]) == 0\nassert max_product([-1, -2, -3, -4, 0]) == 0\nassert max_product([5]) == 5",
+      "key_differs": true,
+      "text": "```python\nassert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\nassert last([1,2,3,4,5],3) == 3\nassert last([1,2,3,4,5],6) == -1\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n\n# Test cases\nassert max_product([3, 100, 4, 5, 150, 6]) == 3000\nassert max_product([4, 42, 55, 68, 80]) == 50265600\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2460\nassert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\nassert last([1,2,3,4,5],3) == 3\nassert last([1,2,3,4,5],6) == -1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([-1, -2, -3, -4, -5]) == 120\nassert max_product([]) == None\nassert max_product([0]) == 0\nassert max_product([10, 20, 30, 40, 50]) == 120000",
+  "sample_keys": [
+    "# Check with an empty list\nassert max_product([]) == None\n\n# Check with a single element\nassert max_product([1]) == 1\n\n# Check with decreasing sequence\nassert max_product([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == 10\n\n# Check with increasing sequence\nassert max_product([1, 3, 5, 7, 9]) == 945\n\n# Check with sequence with repeated elements\nassert max_product([1, 3, 5, 5, 7, 9]) == 945",
+    "assert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([0, -2, 3, 4, 5]) == 480\nassert max_product([-1, -2, -3, -4, -5]) == -60\nassert max_product([]) == None\nassert max_product([10]) == 10",
+    "assert max_product([]) == 0\nassert max_product([-3, -100, -4, -5, -150, -6]) == 1800\nassert max_product([0, 3, 2, 1]) == 6\nassert max_product([5, 2, 9, 7, 6]) == 3780\nassert max_product([10, 10, 10, 10]) == 10000",
+    "assert max_product([3, 100, 4, 5, 150, 6]) == 3000\nassert max_product([]) == 0\nassert max_product([5]) == 5\nassert max_product([-1, -2, -3, -4]) == -8\nassert max_product([1, 2, 3, 4, 5]) == 120",
+    "assert max_product([]) == None\nassert max_product([10]) == 10\nassert max_product([-1, -2, -3]) == -6\nassert max_product([0, 1, 2, 3]) == 6\nassert max_product([-10, -9, -8, -7, -6, 0, 1, 2, 3]) == 6\nassert max_product([1, 2, 3, 4, 5, 4, 3, 2, 1]) == 1200"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2065.0,
+    "small_out": 645.0,
+    "small_s": 13.175019225018332
+  },
+  "calls_plus": {
+    "small_in": 1831.0,
+    "small_out": 542.0,
+    "small_s": 9.660643426032038,
+    "large_in": 279.0,
+    "large_out": 127.0,
+    "large_s": 2.7956549729860853
+  },
+  "calls_samples": {
+    "small_in": 1395.0,
+    "small_out": 591.0,
+    "small_s": 10.489107054978376
+  }
+}

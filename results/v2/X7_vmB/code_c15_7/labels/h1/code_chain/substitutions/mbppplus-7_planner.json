@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-7",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `find_char_long` that takes a single parameter, `text`.\n2. Split the input `text` into individual words using the `split()` method.\n3. Use a list comprehension to filter out words that have less than 4 characters.\n4. Return the filtered list as a set to remove duplicates and ensure uniqueness.\n5. Test the function with the provided test case to verify correctness.",
+  "reference_key": null,
+  "final_key_plus": "def find_char_long(text):\n    # Split the text into words\n    words = text.split()\n    # Filter out words with less than 4 characters\n    char_long_words = [word for word in words if len(word) >= 4]\n    # Return the filtered list as a set\n    return set(char_long_words)",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set(['This', 'is', 'a', 'test', 'sentence.'])\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set([])\n```",
+    "coder": "```python\ndef find_char_long(text):\n    # Split the text into words\n    words = text.split()\n    # Filter out words with less than 4 characters\n    char_long_words = [word for word in words if len(word) >= 4]\n    # Return the filtered list as a set\n    return set(char_long_words)\n```",
+    "verifier": "PICK: A\n\n```python\ndef find_char_long(text):\n    # Split the text into words\n    words = text.split()\n    # Filter out words with less than 4 characters\n    char_long_words = [word for word in words if len(word) >= 4]\n    # Return the filtered list as a set\n    return set(char_long_words)\n```",
+    "fixer": "```python\ndef find_char_long(text):\n    # Split the text into words\n    words = text.split()\n    # Filter out words with less than 4 characters\n    char_long_words = [word for word in words if len(word) >= 4]\n    # Return the filtered list as a set\n    return set(char_long_words)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import the necessary module for handling binary conversions.\n2. Define a function named `decimal_to_binary` that takes one parameter: `num`, which is the decimal number to be converted.\n3. Inside the function, use the built-in `bin()` function to convert the decimal number to a binary string.\n4. Remove the '0b' prefix from the binary string using slicing (`binary_str[2:]`).\n5. Return the resulting binary string without any leading zeros.\n\nThis approach ensures that the function correctly converts the decimal number to its binary representation and handles the conversion process efficiently.",
+      "quality": 0.0,
+      "final_key": "def find_char_long(s):\n    # Split the string into words\n    words = s.split()\n    # Filter out words that are less than 4 characters long\n    long_words = [word for word in words if len(word) >= 4]\n    # Return the set of long words\n    return set(long_words)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test.')) == set(['This', 'is', 'a', 'test.'])\nassert set(find_char_long('1234567890')) == set(['1234567890'])\nassert set(find_char_long('A quick brown fox jumps over the lazy dog.')) == set(['quick', 'brown', 'fox', 'jumps', 'over', 'lazy', 'dog.'])\nassert set(find_char_long('')) == set()\n```",
+        "coder": "```python\ndef decimal_to_binary(num):\n    # Convert the decimal number to a binary string\n    binary_str = bin(num)[2:]\n    # Remove the '0b' prefix from the binary string\n    return binary_str.lstrip('0')\n```",
+        "verifier": "PICK: B\n\n```python\ndef find_char_long(s):\n    # Split the string into words\n    words = s.split()\n    # Filter out words that are less than 4 characters long\n    long_words = [word for word in words if len(word) >= 4]\n    # Return the set of long words\n    return set(long_words)\n```",
+        "fixer": "```python\ndef find_char_long(s):\n    # Split the string into words\n    words = s.split()\n    # Filter out words that are less than 4 characters long\n    long_words = [word for word in words if len(word) >= 4]\n    # Return the set of long words\n    return set(long_words)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `find_char_long` that takes a single parameter, `text`.\n2. Split the input `text` into individual words using the `split()` method.\n3. Use a list comprehension to filter out words that have fewer than 4 characters.\n4. Return the filtered list as a set to remove duplicates and ensure uniqueness.\n5. Test the function with the provided test case to verify correctness.",
+      "quality": 0.0,
+      "final_key": "def find_char_long(text):\n    # Split the text into words\n    words = text.split()\n    # Filter out words with fewer than 4 characters\n    char_long_words = [word for word in words if len(word) >= 4]\n    # Return the filtered list as a set\n    return set(char_long_words)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set(['This', 'is', 'a', 'test', 'sentence.'])\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set([])\n```",
+        "coder": "```python\ndef find_char_long(text):\n    # Split the text into words\n    words = text.split()\n    # Filter out words with fewer than 4 characters\n    char_long_words = [word for word in words if len(word) >= 4]\n    # Return the filtered list as a set\n    return set(char_long_words)\n```",
+        "verifier": "PICK: A\n\n```python\ndef find_char_long(text):\n    # Split the text into words\n    words = text.split()\n    # Filter out words with fewer than 4 characters\n    char_long_words = [word for word in words if len(word) >= 4]\n    # Return the filtered list as a set\n    return set(char_long_words)\n```",
+        "fixer": "```python\ndef find_char_long(text):\n    # Split the text into words\n    words = text.split()\n    # Filter out words with fewer than 4 characters\n    char_long_words = [word for word in words if len(word) >= 4]\n    # Return the filtered list as a set\n    return set(char_long_words)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `Find_Min_Length` that takes one parameter: `list_of_lists`.\n2. Initialize a variable `min_length` to a large number (e.g., `float('inf')`) to keep track of the minimum length found.\n3. Iterate through each sublist in `list_of_lists` using a for loop.\n4. For each sublist, calculate its length using the `len()` function.\n5. If the current sublist's length is less than `min_length`, update `min_length` to be the current sublist's length.\n6. After iterating through all sublists, return `min_length`.\n\nThis approach ensures that we efficiently find the shortest sublist by comparing lengths as we go through the list.",
+      "quality": 0.0,
+      "final_key": "def find_char_long(string):\n    words = string.split()\n    char_long_words = [word for word in words if len(word) >= 4]\n    return set(char_long_words)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test.')) == set(['This', 'is', 'a', 'test.'])\nassert set(find_char_long('Short')) == set()\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set()\n```",
+        "coder": "```python\ndef Find_Min_Length(list_of_lists):\n    min_length = float('inf')\n    for sublist in list_of_lists:\n        if len(sublist) < min_length:\n            min_length = len(sublist)\n    return min_length\n```",
+        "verifier": "PICK: B\n\n```python\ndef find_char_long(string):\n    words = string.split()\n    char_long_words = [word for word in words if len(word) >= 4]\n    return set(char_long_words)\n```",
+        "fixer": "```python\ndef find_char_long(string):\n    words = string.split()\n    char_long_words = [word for word in words if len(word) >= 4]\n    return set(char_long_words)\n\n# Test cases\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\nassert set(find_char_long('Jing Eco and Tech')) == set(['Jing', 'Tech'])\nassert set(find_char_long('Jhingai wulu road Zone 3')) == set(['Jhingai', 'wulu', 'road', 'Zone'])\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test.')) == set(['This', 'is', 'a', 'test.'])\nassert set(find_char_long('Short')) == set()\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set()\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+  "sample_keys": [
+    "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+    "def find_char_long(text):\n    # Step 3: Filter out words that are less than 4 characters using list comprehension\n    long_words = [word for word in text.split() if len(word) >= 4]\n    \n    # Step 4: Convert the filtered list to a set to remove duplicates\n    unique_long_words = set(long_words)\n    \n    # Step 5: Return the set of unique long words\n    return unique_long_words\n\n# Test results (the task's example test and the extra asserts, run on this code):\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\nassert set(find_char_long('Jing Eco and Tech')) == set(['Jing', 'Tech'])\nassert set(find_char_long('Jhingai wulu road Zone 3')) == set(['Jhingai', 'wulu', 'road', 'Zone'])\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set(['This', 'is', 'a', 'test', 'sentence.'])\nassert set(find_char_long('Short')) == set()\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set()",
+    "def find_char_long(s):\n    \u957f\u5355\u8bcd = []\n    \u5355\u8bcd\u5217\u8868 = s.split()\n    for \u5355\u8bcd in \u5355\u8bcd\u5217\u8868:\n        if len(\u5355\u8bcd) >= 4:\n            \u957f\u5355\u8bcd.append(\u5355\u8bcd)\n    return \u957f\u5355\u8bcd"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1559.0,
+    "small_out": 353.0,
+    "small_s": 7.0767224070150405
+  },
+  "calls_plus": {
+    "large_in": 123.0,
+    "large_out": 88.0,
+    "large_s": 1.9470730499888305,
+    "small_in": 1529.0,
+    "small_out": 325.0,
+    "small_s": 6.4135375620098785
+  },
+  "calls_samples": {
+    "small_in": 5280.0,
+    "small_out": 1907.0,
+    "small_s": 32.888714630011236
+  }
+}

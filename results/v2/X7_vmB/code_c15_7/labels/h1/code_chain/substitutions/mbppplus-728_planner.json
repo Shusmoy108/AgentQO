@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-728",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `sum_list` that accepts two parameters, both expected to be lists of numbers.\n2. Ensure both input lists have the same length by adding a check at the beginning of the function.\n3. Use a list comprehension to iterate over the indices of the lists, adding corresponding elements from each list together.\n4. Return the resulting list containing the sums.\n5. Include a docstring within the function to describe its purpose and parameters.",
+  "reference_key": null,
+  "final_key_plus": "def sum_list(list_a, list_b):\n    \"\"\"\n    Sums corresponding elements of two lists.\n\n    Parameters:\n    - list_a (list): The first list of numbers.\n    - list_b (list): The second list of numbers.\n\n    Returns:\n    - list: A new list containing the sums of the corresponding elements of list_a and list_b.\n    \"\"\"\n    if len(list_a) != len(list_b):\n        raise ValueError(\"Both lists must have the same length.\")\n    \n    return [a + b for a, b in zip(list_a, list_b)]",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert sum_list([], []) == []\nassert sum_list([1], [1]) == [2]\nassert sum_list([-1], [-1]) == [-2]\nassert sum_list([0], [0]) == [0]\nassert sum_list([100], [100]) == [200]\n```",
+    "coder": "```python\ndef sum_list(list_a, list_b):\n    \"\"\"\n    Sums corresponding elements of two lists.\n\n    Parameters:\n    - list_a (list): The first list of numbers.\n    - list_b (list): The second list of numbers.\n\n    Returns:\n    - list: A new list containing the sums of the corresponding elements of list_a and list_b.\n    \"\"\"\n    if len(list_a) != len(list_b):\n        raise ValueError(\"Both lists must have the same length.\")\n    \n    return [a + b for a, b in zip(list_a, list_b)]\n```",
+    "verifier": "PICK: A\n\n```python\ndef sum_list(list_a, list_b):\n    \"\"\"\n    Sums corresponding elements of two lists.\n\n    Parameters:\n    - list_a (list): The first list of numbers.\n    - list_b (list): The second list of numbers.\n\n    Returns:\n    - list: A new list containing the sums of the corresponding elements of list_a and list_b.\n    \"\"\"\n    if len(list_a) != len(list_b):\n        raise ValueError(\"Both lists must have the same length.\")\n    \n    return [a + b for a, b in zip(list_a, list_b)]\n```",
+    "fixer": "```python\ndef sum_list(list_a, list_b):\n    \"\"\"\n    Sums corresponding elements of two lists.\n\n    Parameters:\n    - list_a (list): The first list of numbers.\n    - list_b (list): The second list of numbers.\n\n    Returns:\n    - list: A new list containing the sums of the corresponding elements of list_a and list_b.\n    \"\"\"\n    if len(list_a) != len(list_b):\n        raise ValueError(\"Both lists must have the same length.\")\n    \n    return [a + b for a, b in zip(list_a, list_b)]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_Set_Bits` that takes one parameter, `num`.\n2. Initialize a variable `count` to zero.\n3. Use a while loop to iterate as long as `num` is greater than zero.\n4. Inside the loop, use bitwise AND operation (`&`) between `num` and 1 to check if the least significant bit is set (i.e., equal to 1).\n5. If the result is 1, increment the `count` by 1.\n6. Right shift `num` by 1 bit using the right shift operator (`>>`) to process the next bit.\n7. Continue the loop until `num` becomes zero.\n8. Return the `count`.\n\nThis approach ensures that all set bits in the input number are counted efficiently.",
+      "quality": 1.0,
+      "final_key": "def sum_list(a, b):\n    return [x + y for x, y in zip(a, b)]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_set_bits(0) == 0\nassert count_set_bits(1) == 1\nassert count_set_bits(2) == 1\nassert count_set_bits(3) == 2\nassert count_set_bits(4) == 1\n```",
+        "coder": "```python\ndef count_set_bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_list(a, b):\n    return [x + y for x, y in zip(a, b)]\n```",
+        "fixer": "```python\ndef sum_list(a, b):\n    return [x + y for x, y in zip(a, b)]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_lists` that accepts two parameters, both expected to be lists of numbers.\n2. Ensure both input lists have the same length by adding a check at the beginning of the function.\n3. Use list comprehension to iterate over the indices of the lists, adding corresponding elements from each list together.\n4. Return the resulting list containing the sums.\n5. Include a docstring within the function describing its purpose and parameters.",
+      "quality": 0.0,
+      "final_key": "def sum_lists(list_a, list_b):\n    \"\"\"\n    Sums corresponding elements of two lists.\n\n    Parameters:\n    - list_a (list): The first list of numbers.\n    - list_b (list): The second list of numbers.\n\n    Returns:\n    - list: A new list containing the sums of the corresponding elements of list_a and list_b.\n    \"\"\"\n    if len(list_a) != len(list_b):\n        raise ValueError(\"Both lists must have the same length.\")\n    \n    return [a + b for a, b in zip(list_a, list_b)]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_lists([], []) == []\nassert sum_lists([1], [1]) == [2]\nassert sum_lists([-1], [-1]) == [-2]\nassert sum_lists([0], [0]) == [0]\nassert sum_lists([100], [100]) == [200]\n```",
+        "coder": "```python\ndef sum_lists(list_a, list_b):\n    \"\"\"\n    Sums corresponding elements of two lists.\n\n    Parameters:\n    - list_a (list): The first list of numbers.\n    - list_b (list): The second list of numbers.\n\n    Returns:\n    - list: A new list containing the sums of the corresponding elements of list_a and list_b.\n    \"\"\"\n    if len(list_a) != len(list_b):\n        raise ValueError(\"Both lists must have the same length.\")\n    \n    return [a + b for a, b in zip(list_a, list_b)]\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_lists(list_a, list_b):\n    \"\"\"\n    Sums corresponding elements of two lists.\n\n    Parameters:\n    - list_a (list): The first list of numbers.\n    - list_b (list): The second list of numbers.\n\n    Returns:\n    - list: A new list containing the sums of the corresponding elements of list_a and list_b.\n    \"\"\"\n    if len(list_a) != len(list_b):\n        raise ValueError(\"Both lists must have the same length.\")\n    \n    return [a + b for a, b in zip(list_a, list_b)]\n```",
+        "fixer": "```python\ndef sum_lists(list_a, list_b):\n    \"\"\"\n    Sums corresponding elements of two lists.\n\n    Parameters:\n    - list_a (list): The first list of numbers.\n    - list_b (list): The second list of numbers.\n\n    Returns:\n    - list: A new list containing the sums of the corresponding elements of list_a and list_b.\n    \"\"\"\n    if len(list_a) != len(list_b):\n        raise ValueError(\"Both lists must have the same length.\")\n    \n    return [a + b for a, b in zip(list_a, list_b)]\n\n# Test cases\nassert sum_lists([10,20,30],[15,25,35])==[25,45,65]\nassert sum_lists([1,2,3],[5,6,7])==[6,8,10]\nassert sum_lists([15,20,30],[15,45,75])==[30,65,105]\nassert sum_lists([], []) == []\nassert sum_lists([1], [1]) == [2]\nassert sum_lists([-1], [-1]) == [-2]\nassert sum_lists([0], [0]) == [0]\nassert sum_lists([100], [100]) == [200]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import the necessary module for handling binary conversions.\n2. Define a function named `decimal_to_binary` that takes one parameter: `num`, which is the decimal number to be converted.\n3. Inside the function, use the built-in `bin()` function to convert the decimal number to a binary string.\n4. Remove the '0b' prefix from the binary string using slicing (`binary_str[2:]`).\n5. Return the resulting binary string without any leading zeros.\n\nThis approach ensures that the function correctly converts the decimal number to its binary representation and handles the conversion process efficiently.",
+      "quality": 0.0,
+      "final_key": "def sum_list(list_a, list_b):\n    # Use list comprehension to add corresponding elements from both lists\n    result = [a + b for a, b in zip(list_a, list_b)]\n    return result\n\n# Test cases\nassert sum_list([10, 20, 30], [15, 25, 35]) == [25, 45, 65]\nassert sum_list([1, 2, 3], [5, 6, 7]) == [6, 8, 10]\nassert sum_list([15, 20, 30], [15, 45, 75]) == [30, 65, 105]\nassert sum_list([10, 20, 30], [15, 25, 35]) == [25, 45, 65]\nassert sum_list([-1, -2, -3], [-4, -5, -6]) == [-9]\nassert sum_list([0, 0, 0], [0, 0, 0]) == [0, 0, 0]\nassert sum_list([100, 200, 300], [100, 200, 300]) == [200, 400, 600]\nassert sum_list([], []) == []",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_list([10,20,30],[15,25,35])==[25,45,65]\nassert sum_list([-1,-2,-3],[-4,-5,-6])==-9\nassert sum_list([0,0,0],[0,0,0])==[0,0,0]\nassert sum_list([100,200,300],[100,200,300])==[200,400,600]\nassert sum_list([],[])==[]\n```",
+        "coder": "```python\ndef decimal_to_binary(num):\n    # Convert the decimal number to binary using bin() and remove the '0b' prefix\n    binary_str = bin(num)[2:]\n    # Return the binary string without leading zeros\n    return binary_str.lstrip('0')\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_list(list_a, list_b):\n    # Use list comprehension to add corresponding elements from both lists\n    result = [a + b for a, b in zip(list_a, list_b)]\n    return result\n\n# Test cases\nassert sum_list([10, 20, 30], [15, 25, 35]) == [25, 45, 65]\nassert sum_list([1, 2, 3], [5, 6, 7]) == [6, 8, 10]\nassert sum_list([15, 20, 30], [15, 45, 75]) == [30, 65, 105]\nassert sum_list([10, 20, 30], [15, 25, 35]) == [25, 45, 65]\nassert sum_list([-1, -2, -3], [-4, -5, -6]) == [-9]\nassert sum_list([0, 0, 0], [0, 0, 0]) == [0, 0, 0]\nassert sum_list([100, 200, 300], [100, 200, 300]) == [200, 400, 600]\nassert sum_list([], []) == []\n```",
+        "fixer": "```python\ndef sum_list(list_a, list_b):\n    # Use list comprehension to add corresponding elements from both lists\n    result = [a + b for a, b in zip(list_a, list_b)]\n    return result\n\n# Test cases\nassert sum_list([10, 20, 30], [15, 25, 35]) == [25, 45, 65]\nassert sum_list([1, 2, 3], [5, 6, 7]) == [6, 8, 10]\nassert sum_list([15, 20, 30], [15, 45, 75]) == [30, 65, 105]\nassert sum_list([10, 20, 30], [15, 25, 35]) == [25, 45, 65]\nassert sum_list([-1, -2, -3], [-4, -5, -6]) == [-9]\nassert sum_list([0, 0, 0], [0, 0, 0]) == [0, 0, 0]\nassert sum_list([100, 200, 300], [100, 200, 300]) == [200, 400, 600]\nassert sum_list([], []) == []\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def sum_list(list_a, list_b):\n    result = []\n    for i in range(len(list_a)):\n        result.append(list_a[i] + list_b[i])\n    return result",
+  "sample_keys": [
+    "def sum_lists(num_list1, num_list2):\n    result_list = []\n    for i in range(len(num_list1)):\n        result_list.append(num_list1[i] + num_list2[i])\n    return result_list\n\n# Test cases\nassert sum_lists([10,20,30],[15,25,35])==[25,45,65]\nassert sum_lists([1,2,3],[5,6,7])==[6,8,10]\nassert sum_lists([15,20,30],[15,45,75])==[30,65,105]\nassert sum_lists([], []) == []\nassert sum_lists([1], [1]) == [2]\nassert sum_lists([-1], [-1]) == [-2]\nassert sum_lists([1, -1], [1, -1]) == [2, 0]\nassert sum_lists([1, 2, 3], [4, 5, 6]) == [5, 7, 9]",
+    "def sum_list(a, b):\n    result = []\n    for i in range(len(a)):\n        result.append(a[i] + b[i])\n    return result",
+    "def sum_lists(list_a, list_b):\n    result_list = []\n    for i in range(len(list_a)):\n        result_list.append(list_a[i] + list_b[i])\n    return result_list\n\n# Test cases\nassert sum_lists([10,20,30],[15,25,35])==[25,45,65]\nassert sum_lists([1,2,3],[5,6,7])==[6,8,10]\nassert sum_lists([15,20,30],[15,45,75])==[30,65,105]\nassert sum_lists([], []) == []\nassert sum_lists([1], [1]) == [2]\nassert sum_lists([-1], [-1]) == [-2]\nassert sum_lists([1, -1], [1, -1]) == [2, 0]\nassert sum_lists([1, 2, 3], [4, 5, 6]) == [5, 7, 9]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1607.0,
+    "small_out": 324.0,
+    "small_s": 6.658272009022767
+  },
+  "calls_plus": {
+    "large_in": 152.0,
+    "large_out": 96.0,
+    "large_s": 2.09817228798056,
+    "small_in": 1747.0,
+    "small_out": 441.0,
+    "small_s": 8.575422819005325
+  },
+  "calls_samples": {
+    "small_in": 5453.0,
+    "small_out": 1968.0,
+    "small_s": 34.09495513496222
+  }
+}

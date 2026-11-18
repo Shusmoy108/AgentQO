@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-749",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result\n```",
+  "reference_key": "def sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+  "final_key_plus": "def sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert sort_numeric_strings(['4','12','45','7','0','100','200','-12','-500']) == [-500, -12, 0, 4, 7, 12, 45, 100, 200]\nassert sort_numeric_strings([]) == []\nassert sort_numeric_strings(['a', 'b', 'c']) == ['a', 'b', 'c']\nassert sort_numeric_strings(['1', '2', '3', '4', '5']) == ['1', '2', '3', '4', '5']\nassert sort_numeric_strings(['-1', '-2', '-3', '-4', '-5']) == ['-5', '-4', '-3', '-2', '-1']\n```",
+    "verifier": "PICK: A\n\n```python\ndef sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result\n```",
+    "fixer": "```python\ndef sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def sort_numeric_strings(lst):\n    # Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+      "reference_key": "def sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+      "key_differs": true,
+      "text": "```python\ndef sort_numeric_strings(lst):\n    # Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def sort_numeric_strings(lst):\n    # Convert each string in the list to an integer\n    int_lst = [int(num) if num.isdigit() else num for num in lst]\n    \n    # Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sort_numeric_strings(['4','12','45','7','0','100','200','-12','-500']) == [-500, -12, 0, 4, 7, 12, 45, 100, 200]\nassert sort_numeric_strings([]) == []\nassert sort_numeric_strings(['a', 'b', 'c']) == ['a', 'b', 'c']\nassert sort_numeric_strings(['1', '3', '2']) == ['1', '2', '3']\nassert sort_numeric_strings(['-1', '-2', '-3']) == ['-3', '-2', '-1']\n```",
+        "verifier": "PICK: B\n\n```python\ndef sort_numeric_strings(lst):\n    # Convert each string in the list to an integer\n    int_lst = [int(num) if num.isdigit() else num for num in lst]\n    \n    # Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result\n```",
+        "fixer": "```python\ndef sort_numeric_strings(lst):\n    # Convert each string in the list to an integer\n    int_lst = [int(num) if num.isdigit() else num for num in lst]\n    \n    # Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def sort_numeric_strings(lst):\n    int_lst = [int(num) for num in lst]\n    sorted_int_lst = sorted(int_lst)\n    str_lst = map(str, sorted_int_lst)\n    result = ''.join(str_lst)\n    return result",
+      "reference_key": "def sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+      "key_differs": true,
+      "text": "```python\ndef sort_numeric_strings(lst):\n    int_lst = [int(num) for num in lst]\n    sorted_int_lst = sorted(int_lst)\n    str_lst = map(str, sorted_int_lst)\n    result = ''.join(str_lst)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def sort_numeric_strings(lst):\n    int_lst = [int(num) if num.isdigit() else float(num) for num in lst]\n    sorted_int_lst = sorted(int_lst)\n    str_lst = map(str, sorted_int_lst)\n    result = ''.join(str_lst)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sort_numeric_strings(['4','12','45','7','0','100','200','-12','-500']) == [-500, -12, 0, 4, 7, 12, 45, 100, 200]\nassert sort_numeric_strings([]) == []\nassert sort_numeric_strings(['a', 'b', 'c']) == ['a', 'b', 'c']\nassert sort_numeric_strings(['1', '3', '2']) == ['1', '2', '3']\nassert sort_numeric_strings(['99', '88', '77', '66', '55']) == ['55', '66', '77', '88', '99']\n```",
+        "verifier": "PICK: B\n\n```python\ndef sort_numeric_strings(lst):\n    int_lst = [int(num) if num.isdigit() else float(num) for num in lst]\n    sorted_int_lst = sorted(int_lst)\n    str_lst = map(str, sorted_int_lst)\n    result = ''.join(str_lst)\n    return result\n```",
+        "fixer": "```python\ndef sort_numeric_strings(lst):\n    int_lst = [int(num) if num.isdigit() else float(num) for num in lst]\n    sorted_int_lst = sorted(int_lst)\n    str_lst = map(str, sorted_int_lst)\n    result = ''.join(str_lst)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)",
+      "reference_key": "def sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+      "key_differs": true,
+      "text": "```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n```",
+      "quality": 0.0,
+      "final_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n\ndef sort_numeric_strings(lst):\n    # Convert all elements to integers for comparison\n    lst = [int(x) for x in lst]\n    \n    # Sort the list numerically\n    lst.sort()\n    \n    # Convert back to string format\n    sorted_lst = [str(x) for x in lst]\n    \n    return sorted_lst\n\n# Test cases\nassert sort_numeric_strings( ['4','12','45','7','0','100','200','-12','-500'])==[-500, -12, 0, 4, 7, 12, 45, 100, 200]\nassert sort_numeric_strings(['2','3','8','4','7','9','8','2','6','5','1','6','1','2','3','4','6','9','1','2'])==[1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 6, 6, 6, 7, 8, 8, 9, 9]\nassert sort_numeric_strings(['1','3','5','7','1', '3','13', '15', '17','5', '7 ','9','1', '11'])==[1, 1, 1, 3, 3, 5, 5, 7, 7, 9, 11, 13, 15, 17]\nassert newman_conway(0) == 0\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 3",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert newman_conway(0) == 0\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 3\n```",
+        "verifier": "PICK: B\n\n```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n\ndef sort_numeric_strings(lst):\n    # Convert all elements to integers for comparison\n    lst = [int(x) for x in lst]\n    \n    # Sort the list numerically\n    lst.sort()\n    \n    # Convert back to string format\n    sorted_lst = [str(x) for x in lst]\n    \n    return sorted_lst\n\n# Test cases\nassert sort_numeric_strings( ['4','12','45','7','0','100','200','-12','-500'])==[-500, -12, 0, 4, 7, 12, 45, 100, 200]\nassert sort_numeric_strings(['2','3','8','4','7','9','8','2','6','5','1','6','1','2','3','4','6','9','1','2'])==[1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 6, 6, 6, 7, 8, 8, 9, 9]\nassert sort_numeric_strings(['1','3','5','7','1', '3','13', '15', '17','5', '7 ','9','1', '11'])==[1, 1, 1, 3, 3, 5, 5, 7, 7, 9, 11, 13, 15, 17]\nassert newman_conway(0) == 0\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 3\n```",
+        "fixer": "```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n\ndef sort_numeric_strings(lst):\n    # Convert all elements to integers for comparison\n    lst = [int(x) for x in lst]\n    \n    # Sort the list numerically\n    lst.sort()\n    \n    # Convert back to string format\n    sorted_lst = [str(x) for x in lst]\n    \n    return sorted_lst\n\n# Test cases\nassert sort_numeric_strings( ['4','12','45','7','0','100','200','-12','-500'])==[-500, -12, 0, 4, 7, 12, 45, 100, 200]\nassert sort_numeric_strings(['2','3','8','4','7','9','8','2','6','5','1','6','1','2','3','4','6','9','1','2'])==[1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 6, 6, 6, 7, 8, 8, 9, 9]\nassert sort_numeric_strings(['1','3','5','7','1', '3','13', '15', '17','5', '7 ','9','1', '11'])==[1, 1, 1, 3, 3, 5, 5, 7, 7, 9, 11, 13, 15, 17]\nassert newman_conway(0) == 0\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 3\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+  "sample_keys": [
+    "import functools\n\n@functools.lru_cache(maxsize=None)\ndef sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+    "def sort_numeric_strings(lst):\n    # Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+    "def sort_numeric_strings(lst):\n    int_lst = [int(num) for num in lst]\n    sorted_int_lst = sorted(int_lst)\n    str_lst = map(str, sorted_int_lst)\n    result = ''.join(str_lst)\n    return result",
+    "import re\n\ndef sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(re.sub(r'[^\\d]', '', num)) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+    "def sort_numeric_strings(lst):\n    int_lst = [int(num) for num in lst]\n    sorted_int_lst = sorted(int_lst)\n    str_lst = map(str, sorted_int_lst)\n    result = ''.join(str_lst)\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3220.0,
+    "small_out": 863.0,
+    "small_s": 16.74560351204127
+  },
+  "calls_plus": {
+    "small_in": 2725.0,
+    "small_out": 742.0,
+    "small_s": 14.425288108031964,
+    "large_in": 495.0,
+    "large_out": 121.0,
+    "large_s": 2.629257858992787
+  },
+  "calls_samples": {
+    "small_in": 2475.0,
+    "small_out": 484.0,
+    "small_s": 8.046439964993624
+  }
+}

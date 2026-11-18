@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-398",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for number in numbers:\n        for digit in str(number):\n            total_sum += int(digit)\n    return total_sum\n```",
+  "reference_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for number in numbers:\n        for digit in str(number):\n            total_sum += int(digit)\n    return total_sum",
+  "final_key_plus": "def sum_of_digits(numbers):\n    total_sum = 0\n    for number in numbers:\n        if isinstance(number, list):\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        for digit in str(number):\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert sum_of_digits([]) == 0\nassert sum_of_digits([-1, -2, -3]) == -6\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([9, 99, 999]) == 27\nassert sum_of_digits([123456789]) == 45\n```",
+    "verifier": "PICK: B\n\n```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for number in numbers:\n        if isinstance(number, list):\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        for digit in str(number):\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum\n```",
+    "fixer": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for number in numbers:\n        if isinstance(number, list):\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        for digit in str(number):\n            try:\n                total_sum += int(digit)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit}'\")\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit_str in str_num:\n            digit = int(digit_str)\n            total_sum += digit\n    return total_sum",
+      "reference_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for number in numbers:\n        for digit in str(number):\n            total_sum += int(digit)\n    return total_sum",
+      "key_differs": true,
+      "text": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit_str in str_num:\n            digit = int(digit_str)\n            total_sum += digit\n    return total_sum\n```",
+      "quality": 0.0,
+      "final_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if not isinstance(num, int):  # Check if the element is an integer\n            raise ValueError(\"Invalid input: All elements must be integers.\")\n        str_num = str(num)\n        for digit_str in str_num:\n            digit = int(digit_str)\n            total_sum += digit\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_of_digits([10,2,56]) == 14\nassert sum_of_digits([-1, -2, -3]) == -6\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([999, 888, 777]) == 300\nassert sum_of_digits([]) == 0\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if not isinstance(num, int):  # Check if the element is an integer\n            raise ValueError(\"Invalid input: All elements must be integers.\")\n        str_num = str(num)\n        for digit_str in str_num:\n            digit = int(digit_str)\n            total_sum += digit\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit_str in str_num:\n            digit = int(digit_str)\n            total_sum += digit\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit_str in str_num:\n            total_sum += int(digit_str)\n    return total_sum",
+      "reference_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for number in numbers:\n        for digit in str(number):\n            total_sum += int(digit)\n    return total_sum",
+      "key_differs": true,
+      "text": "```python\n\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit_str in str_num:\n            total_sum += int(digit_str)\n    return total_sum\n```",
+      "quality": 0.0,
+      "final_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit_str in str_num:\n            try:\n                total_sum += int(digit_str)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit_str}'\")\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_of_digits([]) == 0\nassert sum_of_digits([-1, -2, -3]) == -6\nassert sum_of_digits([0, 100, 200]) == 3\nassert sum_of_digits([999, 888, 777]) == 27\nassert sum_of_digits([123456789]) == 45\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit_str in str_num:\n            try:\n                total_sum += int(digit_str)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit_str}'\")\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, list):  # Check if the element is a list\n            raise ValueError(\"Invalid input: List elements must be integers.\")\n        str_num = str(num)\n        for digit_str in str_num:\n            try:\n                total_sum += int(digit_str)\n            except ValueError:\n                raise ValueError(f\"Invalid literal for int() with base 10: '{digit_str}'\")\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b",
+      "reference_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for number in numbers:\n        for digit in str(number):\n            total_sum += int(digit)\n    return total_sum",
+      "key_differs": true,
+      "text": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n```",
+      "quality": 0.0,
+      "final_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, int):  # Check if the element is an integer\n            total_sum += sum(int(digit) for digit in str(abs(num)))  # Sum the digits of the absolute value of the number\n    return total_sum\n\n# Test cases\nassert sum_of_digits([10,2,56]) == 14\nassert sum_of_digits([[10,20,4,5,'b',70,'a']]) == 19\nassert sum_of_digits([10,20,-4,5,-70]) == 19\nassert sum_of_digits([10,2,56]) == 14\nassert sum_of_digits([]) == 0\nassert sum_of_digits([-1, -2, -3]) == -6\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([999, 888, 777]) == 27",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_of_digits([10,2,56]) == 14\nassert sum_of_digits([]) == 0\nassert sum_of_digits([-1, -2, -3]) == -6\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([999, 888, 777]) == 27\n```",
+        "verifier": "PICK: B\n```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, int):  # Check if the element is an integer\n            total_sum += sum(int(digit) for digit in str(abs(num)))  # Sum the digits of the absolute value of the number\n    return total_sum\n\n# Test cases\nassert sum_of_digits([10,2,56]) == 14\nassert sum_of_digits([[10,20,4,5,'b',70,'a']]) == 19\nassert sum_of_digits([10,20,-4,5,-70]) == 19\nassert sum_of_digits([10,2,56]) == 14\nassert sum_of_digits([]) == 0\nassert sum_of_digits([-1, -2, -3]) == -6\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([999, 888, 777]) == 27\n```",
+        "fixer": "```python\ndef sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        if isinstance(num, int):  # Check if the element is an integer\n            total_sum += sum(int(digit) for digit in str(abs(num)))  # Sum the digits of the absolute value of the number\n    return total_sum\n\n# Test cases\nassert sum_of_digits([10,2,56]) == 14\nassert sum_of_digits([[10,20,4,5,'b',70,'a']]) == 19\nassert sum_of_digits([10,20,-4,5,-70]) == 19\nassert sum_of_digits([10,2,56]) == 14\nassert sum_of_digits([]) == 0\nassert sum_of_digits([-1, -2, -3]) == -6\nassert sum_of_digits([0, 0, 0]) == 0\nassert sum_of_digits([999, 888, 777]) == 27\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum",
+  "sample_keys": [
+    "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum",
+    "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum",
+    "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum",
+    "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        num_str = str(num)\n        for digit in num_str:\n            total_sum += int(digit)\n    return total_sum",
+    "def sum_of_digits(numbers):\n    total_sum = 0\n    for num in numbers:\n        str_num = str(num)\n        for digit in str_num:\n            total_sum += int(digit)\n    return total_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1633.0,
+    "small_out": 511.0,
+    "small_s": 11.066085749975173
+  },
+  "calls_plus": {
+    "small_in": 1337.0,
+    "small_out": 423.0,
+    "small_s": 8.513408591010375,
+    "large_in": 252.0,
+    "large_out": 44.0,
+    "large_s": 1.0446614079992287
+  },
+  "calls_samples": {
+    "small_in": 1260.0,
+    "small_out": 255.0,
+    "small_s": 4.756571022997377
+  }
+}

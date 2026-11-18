@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-793",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left = mid + 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```",
+  "reference_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left = mid + 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+  "final_key_plus": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left = mid + 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left = mid + 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left = mid + 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+      "key_differs": true,
+      "text": "```python\n\n```",
+      "quality": 1.0,
+      "final_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            right += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n\n# Test results\nassert last([1,2,3],1) == 0\nassert last([1,1,1,2,3,4],1) == 2\nassert last([2,3,2,3,6,8,9],3) == 3\nassert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\ntry:\n    assert last([1,2,3,4,5],3) == 3  # Should not succeed as there are two '3'\nexcept AssertionError:\n    print(\"Test case with duplicate elements passed\")\n    \n.assert last([1,2,3,4,5],6) == -1\nprint(\"All test cases passed.\")",
+      "reference_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left = mid + 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+      "key_differs": true,
+      "text": "```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            right += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n\n# Test results\nassert last([1,2,3],1) == 0\nassert last([1,1,1,2,3,4],1) == 2\nassert last([2,3,2,3,6,8,9],3) == 3\nassert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\ntry:\n    assert last([1,2,3,4,5],3) == 3  # Should not succeed as there are two '3'\nexcept AssertionError:\n    print(\"Test case with duplicate elements passed\")\n    \n.assert last([1,2,3,4,5],6) == -1\nprint(\"All test cases passed.\")\n```",
+      "quality": 0.0,
+      "final_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            right += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n\n# Test results\nassert last([1,2,3],1) == 0\nassert last([1,1,1,2,3,4],1) == 2\nassert last([2,3,2,3,6,8,9],3) == 3\nassert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\ntry:\n    assert last([1,2,3,4,5],3) == 3  # Should not succeed as there are two '3'\nexcept AssertionError:\n    print(\"Test case with duplicate elements passed\")\n    \n.assert last([1,2,3,4,5],6) == -1\nprint(\"All test cases passed.\")",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            right += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n\n# Test results\nassert last([1,2,3],1) == 0\nassert last([1,1,1,2,3,4],1) == 2\nassert last([2,3,2,3,6,8,9],3) == 3\nassert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\ntry:\n    assert last([1,2,3,4,5],3) == 3  # Should not succeed as there are two '3'\nexcept AssertionError:\n    print(\"Test case with duplicate elements passed\")\n    \n.assert last([1,2,3,4,5],6) == -1\nprint(\"All test cases passed.\")\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result",
+      "reference_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left = mid + 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+      "key_differs": true,
+      "text": "```python\ndef sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result\n```",
+      "quality": 1.0,
+      "final_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n\n# Test cases\nassert last([1,2,3],1) == 0\nassert last([1,1,1,2,3,4],1) == 2\nassert last([2,3,2,3,6,8,9],3) == 3\nassert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\nassert last([1,2,3,4,5],3) == 3\nassert last([1,2,3,4,5],6) == -1",
+  "sample_keys": [
+    "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n\n# Test results\nassert last([1,2,3],1) == 0\nassert last([1,1,1,2,3,4],1) == 2\nassert last([2,3,2,3,6,8,9],3) == 3\nassert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\nassert last([1,2,3,4,5],3) == 3  # Corrected assertion\nassert last([1,2,3,4,5],6) == -1",
+    "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n\n# Test results\nassert last([1,2,3],1) == 0\nassert last([1,1,1,2,3,4],1) == 2\nassert last([2,3,2,3,6,8,9],3) == 3\nassert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\nFAIL assert last([1,2,3,4,5],3) == 3 -> AssertionError \n PASS assert last([1,2,3,4,5],6) == -1",
+    "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n\n# Test results\nassert last([1,2,3], 1) == 0\nassert last([1,1,1,2,3,4], 1) == 2\nassert last([2,3,2,3,6,8,9], 3) == 3\nassert last([1,2,3], 4) == -1\nassert last([], 1) == -1\nassert last([1,1,1,1,1], 1) == 4\nassert last([1,2,3,4,5], 3) == 3\nassert last([1,2,3,4,5], 6) == -1",
+    "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+    "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1647.0,
+    "small_out": 566.0,
+    "small_s": 11.68364339802065
+  },
+  "calls_plus": {
+    "small_in": 1211.0,
+    "small_out": 424.0,
+    "small_s": 8.397950821003178,
+    "large_in": 391.0,
+    "large_out": 102.0,
+    "large_s": 2.2254382660030387
+  },
+  "calls_samples": {
+    "small_in": 1955.0,
+    "small_out": 949.0,
+    "small_s": 15.947006608970696
+  }
+}

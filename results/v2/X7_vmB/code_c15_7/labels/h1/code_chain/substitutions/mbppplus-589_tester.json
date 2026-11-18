@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-589",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert perfect_squares(1, 10) == [1, 4, 9]\nassert perfect_squares(10, 20) == [16]\nassert perfect_squares(21, 30) == [25]\nassert perfect_squares(0, 1) == [0, 1]\nassert perfect_squares(-5, 5) == [0, 1, 4]\n```",
+  "reference_key": "assert perfect_squares(1, 10) == [1, 4, 9]\nassert perfect_squares(10, 20) == [16]\nassert perfect_squares(21, 30) == [25]\nassert perfect_squares(0, 1) == [0, 1]\nassert perfect_squares(-5, 5) == [0, 1, 4]",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "assert perfect_squares(1, 10) == [1, 4, 9]\nassert perfect_squares(10, 20) == [16]\nassert perfect_squares(21, 30) == [25]\nassert perfect_squares(0, 1) == [0, 1]\nassert perfect_squares(-5, 5) == [0, 1, 4]",
+      "key_differs": true,
+      "text": "```python\nassert perfect_squares(1,7) == [1, 4, 9]\nassert perfect_squares(8,25) == [9, 16, 25]\nassert perfect_squares(10,36) == [16, 25, 36]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(22,51) == [25, 36, 49]",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Edge case: negative numbers\nassert perfect_squares(-10, -1) == []\n\n# Edge case: one number\nassert perfect_squares(25, 25) == [25]\n\n# Normal case with no perfect squares\nassert perfect_squares(7, 17) == []\n\n# Normal case: multiple perfect squares\nassert perfect_squares(3, 84) == [3, 4, 9, 16, 25, 36, 49, 64, 81]\n\n# Normal case with a large range\nassert perfect_squares(0, 100) == [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]",
+      "reference_key": "assert perfect_squares(1, 10) == [1, 4, 9]\nassert perfect_squares(10, 20) == [16]\nassert perfect_squares(21, 30) == [25]\nassert perfect_squares(0, 1) == [0, 1]\nassert perfect_squares(-5, 5) == [0, 1, 4]",
+      "key_differs": true,
+      "text": "```python\n# Edge case: negative numbers\nassert perfect_squares(-10, -1) == []\n\n# Edge case: one number\nassert perfect_squares(25, 25) == [25]\n\n# Normal case with no perfect squares\nassert perfect_squares(7, 17) == []\n\n# Normal case: multiple perfect squares\nassert perfect_squares(3, 84) == [3, 4, 9, 16, 25, 36, 49, 64, 81]\n\n# Normal case with a large range\nassert perfect_squares(0, 100) == [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares\n```",
+        "fixer": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert heap_queue_largest([10, 20, 30, 40, 50], 2) == [50, 40]\nassert heap_queue_largest([-1, -2, -3, -4, -5], 3) == [-1, -2, -3]\nassert heap_queue_largest([], 1) == []\nassert heap_queue_largest([100], 1) == [100]\nassert heap_queue_largest([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5) == [10, 9, 8, 7, 6]",
+      "reference_key": "assert perfect_squares(1, 10) == [1, 4, 9]\nassert perfect_squares(10, 20) == [16]\nassert perfect_squares(21, 30) == [25]\nassert perfect_squares(0, 1) == [0, 1]\nassert perfect_squares(-5, 5) == [0, 1, 4]",
+      "key_differs": true,
+      "text": "```python\nassert heap_queue_largest([10, 20, 30, 40, 50], 2) == [50, 40]\nassert heap_queue_largest([-1, -2, -3, -4, -5], 3) == [-1, -2, -3]\nassert heap_queue_largest([], 1) == []\nassert heap_queue_largest([100], 1) == [100]\nassert heap_queue_largest([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5) == [10, 9, 8, 7, 6]\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef perfect_squares(start, end):\n    squares = []\n    for num in range(start, end + 1):\n        sqrt_num = math.isqrt(num)\n        if sqrt_num * sqrt_num == num:\n            squares.append(num)\n    return squares\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert perfect_squares(1,30) == [1, 4, 9, 16, 25]\nassert perfect_squares(1,1) == [1]\nassert perfect_squares(1,0) == []\nassert perfect_squares(-1,10) == [-1, 0, 1, 4, 9, 16, 25]\nassert perfect_squares(10,10) == [10]",
+  "sample_keys": [
+    "assert perfect_squares(-1,0) == [], \"Test case 1 failed\"\nassert perfect_squares(-2,-1) == [], \"Test case 2 failed\"\nassert perfect_squares(-4,-3) == [], \"Test case 3 failed\"\nassert perfect_squares(10,14) == [16, 19], \"Test case 4 failed\"\nassert perfect_squares(2,2) == [4], \"Test case 5 failed\"",
+    null,
+    "assert perfect_squares(-10, -1) == [], \"Expected empty list for negative inputs\"\nassert perfect_squares(-5, 5) == [1, 4], \"Expected [1, 4] for [-5, 5]\"\nassert perfect_squares(0, 30) == [0, 1, 4, 9, 16, 25, 36, 49], \"Expected all perfect squares from 0 to 30\"\nassert perfect_squares(1, 1) == [1], \"Expected [1] for single number range\"\nassert perfect_squares(30, 30) == [30], \"Expected only the square of 30\"",
+    "assert perfect_squares(1, 10) == [1, 4, 9]\nassert perfect_squares(5, 18) == [9, 16, 25, 36]\nassert perfect_squares(100, 200) == [100, 121, 144, 169, 196]\nassert perfect_squares(-5, -2) == [-4, -9]\nassert perfect_squares(3, 3) == [9]",
+    "assert perfect_squares(1,100) == [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\nassert perfect_squares(-5,10) == [-4, -1]\nassert perfect_squares(0,100) == [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\nassert perfect_squares(25,75) == [25, 36, 49, 64, 81, 100]\nassert perfect_squares(50,100) == [49, 64, 81, 100]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1661.0,
+    "small_out": 357.0,
+    "small_s": 7.869810361997224
+  },
+  "calls_plus": {
+    "small_in": 1432.0,
+    "small_out": 250.0,
+    "small_s": 5.394250051002018,
+    "large_in": 190.0,
+    "large_out": 97.0,
+    "large_s": 2.1411807900003623
+  },
+  "calls_samples": {
+    "small_in": 950.0,
+    "small_out": 714.0,
+    "small_s": 13.075024538993603
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-804",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert is_product_even([1, 2, 3]) == False\nassert is_product_even([2, 4, 6]) == True\nassert is_product_even([1, 3, 5]) == False\nassert is_product_even([0, 1, 2]) == True\nassert is_product_even([-2, -4, -6]) == True\n```",
+  "reference_key": "assert is_product_even([1, 2, 3]) == False\nassert is_product_even([2, 4, 6]) == True\nassert is_product_even([1, 3, 5]) == False\nassert is_product_even([0, 1, 2]) == True\nassert is_product_even([-2, -4, -6]) == True",
+  "final_key_plus": "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```",
+    "fixer": "```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert is_product_even([]) == False, \"Empty list should return False\"\nassert is_product_even([1]) == True, \"Single number should return True\"\nassert is_product_even([-1, -2]) == True, \"Product with negative numbers should return True\"\nassert is_product_even([2, 2]) == True, \"Product of two even numbers should return True\"\nassert is_product_even([-1, -2, 4]) == False, \"Product of two odd numbers should return False\"",
+      "reference_key": "assert is_product_even([1, 2, 3]) == False\nassert is_product_even([2, 4, 6]) == True\nassert is_product_even([1, 3, 5]) == False\nassert is_product_even([0, 1, 2]) == True\nassert is_product_even([-2, -4, -6]) == True",
+      "key_differs": true,
+      "text": "```python\nassert is_product_even([]) == False, \"Empty list should return False\"\nassert is_product_even([1]) == True, \"Single number should return True\"\nassert is_product_even([-1, -2]) == True, \"Product with negative numbers should return True\"\nassert is_product_even([2, 2]) == True, \"Product of two even numbers should return True\"\nassert is_product_even([-1, -2, 4]) == False, \"Product of two odd numbers should return False\"\n```",
+      "quality": 1.0,
+      "final_key": "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```",
+        "fixer": "```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert is_product_even([0])  # True\nassert is_product_even([])   # False\nassert is_product_even([-1, -2])         # True\nassert is_product_even([1,3])              # False\nassert is_product_even([1,2,3,4,5,6,7,8,9,10])  # False",
+      "reference_key": "assert is_product_even([1, 2, 3]) == False\nassert is_product_even([2, 4, 6]) == True\nassert is_product_even([1, 3, 5]) == False\nassert is_product_even([0, 1, 2]) == True\nassert is_product_even([-2, -4, -6]) == True",
+      "key_differs": true,
+      "text": "```python\nassert is_product_even([0])  # True\nassert is_product_even([])   # False\nassert is_product_even([-1, -2])         # True\nassert is_product_even([1,3])              # False\nassert is_product_even([1,2,3,4,5,6,7,8,9,10])  # False\n```",
+      "quality": 1.0,
+      "final_key": "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```",
+        "fixer": "```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert neg_nos([1,2,3,4,5]) == []\nassert neg_nos([]) == []\nassert neg_nos([-1,-2,-3,-4,-5]) == [-1,-2,-3,-4,-5]\nassert neg_nos([0]) == []\nassert neg_nos([10,20,30]) == []",
+      "reference_key": "assert is_product_even([1, 2, 3]) == False\nassert is_product_even([2, 4, 6]) == True\nassert is_product_even([1, 3, 5]) == False\nassert is_product_even([0, 1, 2]) == True\nassert is_product_even([-2, -4, -6]) == True",
+      "key_differs": true,
+      "text": "```python\nassert neg_nos([1,2,3,4,5]) == []\nassert neg_nos([]) == []\nassert neg_nos([-1,-2,-3,-4,-5]) == [-1,-2,-3,-4,-5]\nassert neg_nos([0]) == []\nassert neg_nos([10,20,30]) == []\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n\n# Test cases\nassert is_product_even([1,2,3])\nassert is_product_even([1,2,1,4])\nassert not is_product_even([1,1])\nassert neg_nos([1,2,3,4,5]) == []\nassert neg_nos([]) == []\nassert neg_nos([-1,-2,-3,-4,-5]) == [-1,-2,-3,-4,-5]\nassert neg_nos([0]) == []\nassert neg_nos([10,20,30]) == []\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert is_product_even([1,2,3]) == True\nassert is_product_even([2,4,6]) == True\nassert is_product_even([1,3,5]) == False\nassert is_product_even([]) == False\nassert is_product_even([-2, -4, -6]) == True",
+  "sample_keys": [
+    "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n\n# Test cases\nassert is_product_even([]) == False, \"Product of empty list should be even\"\nassert is_product_even([1]) == True, \"Product of single number should be even\"\nassert is_product_even([2, 4, 6]) == True, \"Product of three even numbers should be even\"\nassert is_product_even([2, 4, 7]) == False, \"Product of two even and one odd number should be even\"\nassert is_product_even([1, 3, 5]) == False, \"Product of three odd numbers should be even\"",
+    "assert is_product_even([]) == False\nassert is_product_even([1]) == True\nassert is_product_even([1, 2]) == True\nassert is_product_even([2, -1, 4]) == False\nassert is_product_even([-1, -2, -3]) == True",
+    "# Edge case: List with all odd numbers\nassert is_product_even([1,3,5]) == False\n\n# Typical case: List with mixed numbers and some zeros\nassert is_product_even([2,4,6,0]) == True\n\n# Edge case: Single zero\nassert is_product_even([0]) == False\n\n# Edge case: List with negative numbers\nassert is_product_even([-2,-4,-6]) == True\n\n# Edge case: Empty list\nassert is_product_even([]) == False",
+    "assert is_product_even([1, 2, 3]) == False\nassert is_product_even([2, 4]) == True\nassert is_product_even([-2, -4]) == True\nassert is_product_even([]) == True\nassert is_product_even([0, 2, 3]) == False",
+    "assert is_product_even([1,2,3]) == False, \"Expected product of {numbers} to be even\"\nassert is_product_even([4,6,8]) == True, \"Expected product of {numbers} to be even\"\nassert is_product_even([-1,2,-3]) == False, \"Expected product of {numbers} to be even\"\nassert is_product_even([0,0,0]) == False, \"Expected product of {numbers} to be even\"\nassert is_product_even([7]) == False, \"Expected product of {numbers} to be even\""
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1193.0,
+    "small_out": 301.0,
+    "small_s": 6.998585121007636
+  },
+  "calls_plus": {
+    "small_in": 1080.0,
+    "small_out": 229.0,
+    "small_s": 5.076539629983017,
+    "large_in": 158.0,
+    "large_out": 85.0,
+    "large_s": 2.4035654990002513
+  },
+  "calls_samples": {
+    "small_in": 790.0,
+    "small_out": 540.0,
+    "small_s": 10.85859606199665
+  }
+}

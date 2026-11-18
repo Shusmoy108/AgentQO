@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-308",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Import the necessary module for handling mathematical operations.\n2. Define the function `large_product` that takes two lists and an integer as arguments.\n3. Use list comprehension to generate all possible products by multiplying elements from both lists.\n4. Sort the resulting list of products in descending order.\n5. Return the first 'n' elements from the sorted list, where 'n' is the specified number of largest products.",
+  "reference_key": null,
+  "final_key_plus": "from typing import List\n\ndef large_product(list1: List[int], list2: List[int], n: int) -> List[int]:\n    # Generate all possible products by multiplying elements from both lists\n    products = [x * y for x in list1 for y in list2]\n    \n    # Sort the resulting list of products in descending order\n    products.sort(reverse=True)\n    \n    # Return the first 'n' elements from the sorted list\n    return products[:n]",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],1)==[60]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],7)==[60, 54, 50, 48, 45, 40, 36]\nassert large_product([],[],3)==[]\nassert large_product([10, 20, 30],[],3)==[]\n```",
+    "coder": "```python\nfrom typing import List\n\ndef large_product(list1: List[int], list2: List[int], n: int) -> List[int]:\n    # Generate all possible products by multiplying elements from both lists\n    products = [x * y for x in list1 for y in list2]\n    \n    # Sort the resulting list of products in descending order\n    products.sort(reverse=True)\n    \n    # Return the first 'n' elements from the sorted list\n    return products[:n]\n```",
+    "verifier": "PICK: B\n\n```python\nfrom typing import List\n\ndef large_product(list1: List[int], list2: List[int], n: int) -> List[int]:\n    # Generate all possible products by multiplying elements from both lists\n    products = [x * y for x in list1 for y in list2]\n    \n    # Sort the resulting list of products in descending order\n    products.sort(reverse=True)\n    \n    # Return the first 'n' elements from the sorted list\n    return products[:n]\n```",
+    "fixer": "```python\nfrom typing import List\n\ndef large_product(list1: List[int], list2: List[int], n: int) -> List[int]:\n    # Generate all possible products by multiplying elements from both lists\n    products = [x * y for x in list1 for y in list2]\n    \n    # Sort the resulting list of products in descending order\n    products.sort(reverse=True)\n    \n    # Return the first 'n' elements from the sorted list\n    return products[:n]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `neg_nos` that takes one parameter, `numbers`.\n2. Initialize an empty list called `negative_numbers`.\n3. Iterate over each number in the input list `numbers`.\n4. Check if the current number is less than zero using the condition `if num < 0`.\n5. If the condition is true, append the number to the `negative_numbers` list.\n6. After iterating through all numbers, return the `negative_numbers` list.\n\nThis approach ensures that all negative numbers from the input list are collected into a new list, which is then returned as the result.",
+      "quality": 0.0,
+      "final_key": "def large_product(list1, list2, n):\n    # Find the negative numbers in both lists\n    negative_list1 = neg_nos(list1)\n    negative_list2 = neg_nos(list2)\n    \n    # Sort the negative numbers in descending order\n    negative_list1.sort(reverse=True)\n    negative_list2.sort(reverse=True)\n    \n    # Select the first n elements from each sorted list\n    selected_negative_list1 = negative_list1[:n]\n    selected_negative_list2 = negative_list2[:n]\n    \n    # Calculate the product of each pair of selected negative numbers\n    products = [a * b for a, b in zip(selected_negative_list1, selected_negative_list2)]\n    \n    return products\n\n# Test cases\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],4)==[60, 54, 50, 48]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],5)==[60, 54, 50, 48, 45]\nassert neg_nos([-1, -2, -3, -4, -5]) == [-1, -2, -3, -4, -5]\nassert neg_nos([]) == []\nassert neg_nos([1]) == [1] -> AssertionError \nassert neg_nos([-1, 1]) == [-1, 1] -> AssertionError \nassert neg_nos([-1, -1, -1]) == [-1, -1, -1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert neg_nos([-1, -2, -3, -4, -5]) == [-1, -2, -3, -4, -5]\nassert neg_nos([]) == []\nassert neg_nos([1]) == [1]\nassert neg_nos([-1, 1]) == [-1, 1]\nassert neg_nos([-1, -1, -1]) == [-1, -1, -1]\n```",
+        "coder": "```python\ndef neg_nos(numbers):\n    negative_numbers = []\n    for num in numbers:\n        if num < 0:\n            negative_numbers.append(num)\n    return negative_numbers\n```",
+        "verifier": "PICK: B\n\n```python\ndef large_product(list1, list2, n):\n    # Find the negative numbers in both lists\n    negative_list1 = neg_nos(list1)\n    negative_list2 = neg_nos(list2)\n    \n    # Sort the negative numbers in descending order\n    negative_list1.sort(reverse=True)\n    negative_list2.sort(reverse=True)\n    \n    # Select the first n elements from each sorted list\n    selected_negative_list1 = negative_list1[:n]\n    selected_negative_list2 = negative_list2[:n]\n    \n    # Calculate the product of each pair of selected negative numbers\n    products = [a * b for a, b in zip(selected_negative_list1, selected_negative_list2)]\n    \n    return products\n\n# Test cases\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],4)==[60, 54, 50, 48]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],5)==[60, 54, 50, 48, 45]\nassert neg_nos([-1, -2, -3, -4, -5]) == [-1, -2, -3, -4, -5]\nassert neg_nos([]) == []\nassert neg_nos([1]) == [1] -> AssertionError \nassert neg_nos([-1, 1]) == [-1, 1] -> AssertionError \nassert neg_nos([-1, -1, -1]) == [-1, -1, -1]\n```",
+        "fixer": "```python\ndef large_product(list1, list2, n):\n    # Find the negative numbers in both lists\n    negative_list1 = neg_nos(list1)\n    negative_list2 = neg_nos(list2)\n    \n    # Sort the negative numbers in descending order\n    negative_list1.sort(reverse=True)\n    negative_list2.sort(reverse=True)\n    \n    # Select the first n elements from each sorted list\n    selected_negative_list1 = negative_list1[:n]\n    selected_negative_list2 = negative_list2[:n]\n    \n    # Calculate the product of each pair of selected negative numbers\n    products = [a * b for a, b in zip(selected_negative_list1, selected_negative_list2)]\n    \n    return products\n\n# Test cases\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],4)==[60, 54, 50, 48]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],5)==[60, 54, 50, 48, 45]\nassert neg_nos([-1, -2, -3, -4, -5]) == [-1, -2, -3, -4, -5]\nassert neg_nos([]) == []\nassert neg_nos([1]) == [1] -> AssertionError \nassert neg_nos([-1, 1]) == [-1, 1] -> AssertionError \nassert neg_nos([-1, -1, -1]) == [-1, -1, -1]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import the necessary module for handling mathematical operations.\n2. Define the function `large_product` that takes two lists and an integer as arguments.\n3. Use list comprehension to generate all possible products by multiplying elements from both lists.\n4. Sort the resulting list of products in ascending order, which will give us the smallest products first.\n5. Return the first 'n' elements from the sorted list, where 'n' is the specified number of largest products.",
+      "quality": 0.0,
+      "final_key": "from typing import List\n\ndef large_product(list1: List[int], list2: List[int], n: int) -> List[int]:\n    # Generate all possible products by multiplying elements from both lists\n    products = [x * y for x in list1 for y in list2]\n    \n    # Sort the products in ascending order\n    products.sort()\n    \n    # Return the first 'n' elements from the sorted list\n    return products[:n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],1)==[60]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],7)==[60, 54, 50, 48, 45, 40, 36]\nassert large_product([],[],3)==[]\nassert large_product([10, 20, 30],[],3)==[]\n```",
+        "coder": "```python\nfrom typing import List\n\ndef large_product(list1: List[int], list2: List[int], n: int) -> List[int]:\n    # Generate all possible products by multiplying elements from both lists\n    products = [x * y for x in list1 for y in list2]\n    \n    # Sort the products in ascending order\n    products.sort()\n    \n    # Return the first 'n' elements from the sorted list\n    return products[:n]\n```",
+        "verifier": "PICK: A\n```python\nfrom typing import List\n\ndef large_product(list1: List[int], list2: List[int], n: int) -> List[int]:\n    # Generate all possible products by multiplying elements from both lists\n    products = [x * y for x in list1 for y in list2]\n    \n    # Sort the products in ascending order\n    products.sort()\n    \n    # Return the first 'n' elements from the sorted list\n    return products[:n]\n```",
+        "fixer": "```python\nfrom typing import List\n\ndef large_product(list1: List[int], list2: List[int], n: int) -> List[int]:\n    # Generate all possible products by multiplying elements from both lists\n    products = [x * y for x in list1 for y in list2]\n    \n    # Sort the products in ascending order\n    products.sort()\n    \n    # Return the first 'n' elements from the sorted list\n    return products[:n]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `first_Digit` that takes one parameter, `num`.\n2. Convert the input number to a string using the `str()` function.\n3. Use slicing to extract the first character of the string representation of the number.\n4. Convert the extracted character back to an integer using the `int()` function.\n5. Return the resulting integer.\n\nHere is the complete implementation:\n\n```python\ndef first_Digit(num):\n    # Step 2: Convert the input number to a string\n    num_str = str(num)\n    \n    # Step 3: Extract the first character of the string\n    first_char = num_str[0]\n    \n    # Step 4: Convert the extracted character back to an integer\n    first_digit = int(first_char)\n    \n    # Step 5: Return the resulting integer\n    return first_digit\n```\n\nThis function will correctly identify the first digit of any positive integer provided as input.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert first_Digit(123) == 1\nassert first_Digit(-456) == -4\nassert first_Digit(7890) == 7\nassert first_Digit(0) == 0\nassert first_Digit(1000000) == 1\n```",
+        "coder": "```python\ndef first_Digit(num):\n    # Step 2: Convert the input number to a string\n    num_str = str(num)\n    \n    # Step 3: Extract the first character of the string\n    first_char = num_str[0]\n    \n    # Step 4: Convert the extracted character back to an integer\n    first_digit = int(first_char)\n    \n    # Step 5: Return the resulting integer\n    return first_digit\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef large_product(list1, list2, n):\n    # Step 1: Sort both lists in descending order\n    sorted_list1 = sorted(list1, reverse=True)\n    sorted_list2 = sorted(list2, reverse=True)\n    \n    # Step 2: Initialize an empty list to store the result\n    result = []\n    \n    # Step 3: Iterate over the first n elements of both lists\n    for i in range(n):\n        # Step 4: Calculate the product of the current elements from both lists\n        product = sorted_list1[i] * sorted_list2[i]\n        \n        # Step 5: Append the calculated product to the result list\n        result.append(product)\n    \n    # Step 6: Return the result list\n    return result\n\n# Test cases\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],3)==[60, 54, 50]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],4)==[60, 54, 50, 48]\nassert large_product([1, 2, 3, 4, 5, 6],[3, 6, 8, 9, 10, 6],5)==[60, 54, 50, 48, 45]\nassert first_Digit(123) == 1\nassert first_Digit(-456) == -4\nassert first_Digit(7890) == 7\nassert first_Digit(0) == 0\nassert first_Digit(1000000) == 1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+  "sample_keys": [
+    "def large_product(list1, list2, n):\n    # Sort both lists in descending order\n    list1.sort(reverse=True)\n    list2.sort(reverse=True)\n    \n    # Initialize an empty list to store the largest products\n    largest_products = []\n    \n    # Iterate through the sorted lists simultaneously\n    for i in range(n):\n        # Calculate the product of the current elements from both lists\n        product = list1[i] * list2[i]\n        # Append the product to the list of largest products\n        largest_products.append(product)\n    \n    # Return the list of largest products\n    return largest_products",
+    "def large_product(list1, list2, n):\n    def product(a, b):\n        return a * b\n    \n    results = []\n    for num1 in list1:\n        for num2 in list2:\n            results.append(product(num1, num2))\n    \n    results.sort(reverse=True)\n    return results[:n]",
+    "def large_product(list1, list2, n):\n    # Calculate all possible products\n    products = [x * y for x in list1 for y in list2]\n    \n    # Sort the products in descending order\n    products.sort(reverse=True)\n    \n    # Return the first 'n' products\n    return products[:n]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2410.0,
+    "small_out": 540.0,
+    "small_s": 12.188493308029138
+  },
+  "calls_plus": {
+    "large_in": 154.0,
+    "large_out": 88.0,
+    "large_s": 2.3615646440011915,
+    "small_in": 2317.0,
+    "small_out": 516.0,
+    "small_s": 10.672576885001035
+  },
+  "calls_samples": {
+    "small_in": 7534.0,
+    "small_out": 1758.0,
+    "small_s": 35.39328910008771
+  }
+}

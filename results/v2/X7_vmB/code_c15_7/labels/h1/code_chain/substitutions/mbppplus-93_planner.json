@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-93",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `power` that takes two parameters, `a` and `b`.\n2. Inside the function, use the exponentiation operator (`**`) to raise `a` to the power of `b`.\n3. Return the result of the exponentiation.\n4. Test the function with the provided test case to ensure it returns the correct value.\n5. If the function passes the test, it is ready for implementation.",
+  "reference_key": null,
+  "final_key_plus": "def power(a, b):\n    return a ** b",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.6666666666666666,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert power(2, 0) == 1\nassert power(0, 0) == 1\nassert power(-2, 3) == -8\nassert power(3, -2) == 1/9\nassert power(0, 1) == 0\n```",
+    "coder": "```python\ndef power(a, b):\n    return a ** b\n```",
+    "verifier": "PICK: A\n\n```python\ndef power(a, b):\n    return a ** b\n```",
+    "fixer": "```python\ndef power(a, b):\n    return a ** b\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a counter for even pairs.\n2. Iterate through each pair of numbers in the list.\n3. For each pair, check if their XOR is even.\n4. If the XOR is even, increment the counter.\n5. Return the total count of even pairs.\n\nThis approach ensures that we efficiently count all pairs that meet the criteria without generating unnecessary computations.",
+      "quality": 0.0,
+      "final_key": "def power(a, b):\n    count = 0\n    for i in range(1, b + 1):\n        for j in range(i + 1, b + 1):\n            if (i ^ j) % 2 == 0:\n                count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert power(2, 3) == 8\nassert power(5, 0) == 1\nassert power(7, 1) == 7\nassert power(0, 5) == 0\nassert power(-2, 3) == -8\n```",
+        "coder": "```python\ndef power(a, b):\n    count = 0\n    for i in range(1, b + 1):\n        for j in range(i + 1, b + 1):\n            if (i ^ j) % 2 == 0:\n                count += 1\n    return count\n```",
+        "verifier": "PICK: A\n\n```python\ndef power(a, b):\n    count = 0\n    for i in range(1, b + 1):\n        for j in range(i + 1, b + 1):\n            if (i ^ j) % 2 == 0:\n                count += 1\n    return count\n```",
+        "fixer": "```python\ndef power(a, b):\n    count = 0\n    for i in range(1, b + 1):\n        for j in range(i + 1, b + 1):\n            if (i ^ j) % 2 == 0:\n                count += 1\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `multiply` that takes two parameters, `a` and `b`.\n2. Inside the function, multiply `a` by `b`.\n3. Return the result of the multiplication.\n4. Test the function with the provided test case to ensure it returns the correct value.\n5. If the function passes the test, it is ready for implementation.",
+      "quality": 1.0,
+      "final_key": "def power(a, b):\n    if b == 0:\n        return 1\n    elif b < 0:\n        return 1 / power(a, -b)\n    else:\n        result = 1\n        for _ in range(b):\n            result *= a\n        return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert power(2,0) == 1\nassert power(0,0) == 1\nassert power(-2,3) == -8\nassert power(3,-2) == 1/9\nassert power(0,1) == 0\n```",
+        "coder": "```python\ndef multiply(a, b):\n    return a * b\n```",
+        "verifier": "PICK: B\n\n```python\ndef power(a, b):\n    if b == 0:\n        return 1\n    elif b < 0:\n        return 1 / power(a, -b)\n    else:\n        result = 1\n        for _ in range(b):\n            result *= a\n        return result\n```",
+        "fixer": "```python\ndef power(a, b):\n    if b == 0:\n        return 1\n    elif b < 0:\n        return 1 / power(a, -b)\n    else:\n        result = 1\n        for _ in range(b):\n            result *= a\n        return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_equal_numbers` that takes three integer parameters.\n2. Inside the function, initialize a counter variable to zero.\n3. Use a for loop to iterate through each pair of integers in the input tuple.\n4. For each pair, check if all three integers are equal using an if statement.\n5. If they are equal, increment the counter by one.\n6. After the loop completes, return the value of the counter.\n\nHere's the complete implementation:\n\n```python\ndef count_equal_numbers(a, b, c):\n    # Initialize the counter\n    count = 0\n    \n    # Iterate through each pair of integers\n    for i in range(3):\n        for j in range(i + 1, 3):\n            for k in range(j + 1, 3):\n                # Check if all three integers are equal\n                if a == b == c:\n                    count += 1\n    \n    # Return the result\n    return count\n\n# Test the function\nassert count_equal_numbers(1, 1, 1) == 3\n```\n\nThis function will correctly count the number of equal numbers among the three given integers.",
+      "quality": 0.0,
+      "final_key": "def power(a, b):\n    result = 1\n    for _ in range(b):\n        result *= a\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert power(2,3) == 8\nassert power(0,0) == 1\nassert power(-1,2) == 1\nassert power(1,1) == 1\nassert power(2,-1) == 0.5\n```",
+        "coder": "```python\ndef count_equal_numbers(a, b, c):\n    count = 0\n    for i in range(3):\n        for j in range(i + 1, 3):\n            for k in range(j + 1, 3):\n                if a == b == c:\n                    count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef power(a, b):\n    result = 1\n    for _ in range(b):\n        result *= a\n    return result\n```",
+        "fixer": "```python\ndef power(a, b):\n    result = 1\n    for _ in range(b):\n        result *= a\n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def power(a, b):\n    return a ** b",
+  "sample_keys": [
+    "def power(a, b):\n    return a ** b",
+    "def power(a, b):\n    if b < 0:\n        return 1 / power(abs(a), abs(b))\n    result = 1\n    for _ in range(b):\n        result *= a\n    return result",
+    "def power(base, exponent):\n    result = 1\n    for _ in range(exponent):\n        result *= base\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1118.0,
+    "small_out": 248.0,
+    "small_s": 5.034518170024967
+  },
+  "calls_plus": {
+    "large_in": 107.0,
+    "large_out": 93.0,
+    "large_s": 2.015834735997487,
+    "small_in": 979.0,
+    "small_out": 123.0,
+    "small_s": 2.6421687659749296
+  },
+  "calls_samples": {
+    "small_in": 3506.0,
+    "small_out": 889.0,
+    "small_s": 15.021226491953712
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-630",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef get_coordinates(coordinate):\n    rows = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    cols = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```",
+  "reference_key": "def get_coordinates(coordinate):\n    rows = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    cols = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+  "final_key_plus": "def get_coordinates(coordinate):\n    rows = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    cols = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef get_coordinates(coordinate):\n    rows = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    cols = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import grid # Assuming grid is defined in some way\n\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n\n# Test cases\nassert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]",
+      "reference_key": "def get_coordinates(coordinate):\n    rows = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    cols = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+      "key_differs": true,
+      "text": "```python\nimport grid # Assuming grid is defined in some way\n\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n\n# Test cases\nassert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def get_coordinates(coordinate):\n    grid = [\n        [1, 2, 3],\n        [4, 5, 6],\n        [7, 8, 9]\n    ]\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+      "reference_key": "def get_coordinates(coordinate):\n    rows = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    cols = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+      "key_differs": true,
+      "text": "```python\ndef get_coordinates(coordinate):\n    grid = [\n        [1, 2, 3],\n        [4, 5, 6],\n        [7, 8, 9]\n    ]\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```",
+      "quality": 0.0,
+      "final_key": "def get_coordinates(coordinate):\n    grid = [\n        [1, 2, 3],\n        [4, 5, 6],\n        [7, 8, 9]\n    ]\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef get_coordinates(coordinate):\n    grid = [\n        [1, 2, 3],\n        [4, 5, 6],\n        [7, 8, 9]\n    ]\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def remove_odd(input_str):\n    result = \"\"\n    for i in range(len(input_str)):\n        if i % 2 == 0:\n            result += input_str[i]\n    return result",
+      "reference_key": "def get_coordinates(coordinate):\n    rows = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    cols = 11  # Assuming a grid size of 11x11 for the purpose of this function\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+      "key_differs": true,
+      "text": "```python\ndef remove_odd(input_str):\n    result = \"\"\n    for i in range(len(input_str)):\n        if i % 2 == 0:\n            result += input_str[i]\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+  "sample_keys": [
+    "def get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+    "def get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+    "# Assuming grid is already defined somewhere in your code\n\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+    "def get_coordinates(coordinate):\n    grid = [\n        [0, 0, 0],\n        [0, 0, 0],\n        [0, 0, 0]\n    ]\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+    "from typing import List\n\ndef get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3283.0,
+    "small_out": 807.0,
+    "small_s": 17.077192561031552
+  },
+  "calls_plus": {
+    "small_in": 2334.0,
+    "small_out": 743.0,
+    "small_s": 14.696461313025793,
+    "large_in": 911.0,
+    "large_out": 140.0,
+    "large_s": 3.066481710993685
+  },
+  "calls_samples": {
+    "small_in": 4555.0,
+    "small_out": 562.0,
+    "small_s": 10.399108720972436
+  }
+}

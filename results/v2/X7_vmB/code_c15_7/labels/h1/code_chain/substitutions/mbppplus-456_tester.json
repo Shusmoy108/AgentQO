@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-456",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert reverse_string_list(['apple', 'banana', 'cherry']) == ['elppa', 'ananab', 'yrrehc']\nassert reverse_string_list(['12345', '67890', 'abcde']) == ['54321', '09876', 'edcba']\nassert reverse_string_list(['', ' ', 'a']) == ['', ' ', 'a']\nassert reverse_string_list(['Python', 'is', 'fun!']) == ['nohtyP', 'si', '!nuf']\nassert reverse_string_list([]) == []\n```",
+  "reference_key": "assert reverse_string_list(['apple', 'banana', 'cherry']) == ['elppa', 'ananab', 'yrrehc']\nassert reverse_string_list(['12345', '67890', 'abcde']) == ['54321', '09876', 'edcba']\nassert reverse_string_list(['', ' ', 'a']) == ['', ' ', 'a']\nassert reverse_string_list(['Python', 'is', 'fun!']) == ['nohtyP', 'si', '!nuf']\nassert reverse_string_list([]) == []",
+  "final_key_plus": "def reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list\n```",
+    "fixer": "```python\ndef reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert reverse_string_list(['hello']) == ['olleh']\nassert reverse_string_list(['abc', 'def', 'ghi']) == ['cba', 'fed', 'ihg']\nassert reverse_string_list(['Python', 'Java']) == ['nohtyP', 'avaj']\nassert reverse_string_list([]) == []\nassert reverse_string_list(['reverse', 'reversed']) == ['esreveR', 'dnverres']  # Edge case with duplicate words",
+      "reference_key": "assert reverse_string_list(['apple', 'banana', 'cherry']) == ['elppa', 'ananab', 'yrrehc']\nassert reverse_string_list(['12345', '67890', 'abcde']) == ['54321', '09876', 'edcba']\nassert reverse_string_list(['', ' ', 'a']) == ['', ' ', 'a']\nassert reverse_string_list(['Python', 'is', 'fun!']) == ['nohtyP', 'si', '!nuf']\nassert reverse_string_list([]) == []",
+      "key_differs": true,
+      "text": "```python\nassert reverse_string_list(['hello']) == ['olleh']\nassert reverse_string_list(['abc', 'def', 'ghi']) == ['cba', 'fed', 'ihg']\nassert reverse_string_list(['Python', 'Java']) == ['nohtyP', 'avaj']\nassert reverse_string_list([]) == []\nassert reverse_string_list(['reverse', 'reversed']) == ['esreveR', 'dnverres']  # Edge case with duplicate words\n```",
+      "quality": 1.0,
+      "final_key": "def reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list\n```",
+        "fixer": "```python\ndef reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Check with empty list\nassert reverse_string_list([]) == []\n\n# Check with mixed case strings\nassert reverse_string_list(['Hello', 'world', 'Python', 'programming']) == ['olleH', 'dlrow', ynohtyp', gnimmargorp']\n\n# Check with negative numbers reversed\nassert reverse_string_list([-2, -3, -4, -5]) == [-5, -4, -3, -2]\n\n# Check with float points reversed (should give error as string reversal is not supported)\ntry:\n    reverse_string_list([10.5, 20.7, 30.8, 40.9])\nexcept TypeError as e:\r\n    assert str(e).startswith(\"unsupported operand type(s) for *: 'float' and 'str'\")\n        \n# Check with space in string\nassert reverse_string_list(['Hello World']) == ['dlroW olleH']  \n\nprint(\"All tests passed.\")",
+      "reference_key": "assert reverse_string_list(['apple', 'banana', 'cherry']) == ['elppa', 'ananab', 'yrrehc']\nassert reverse_string_list(['12345', '67890', 'abcde']) == ['54321', '09876', 'edcba']\nassert reverse_string_list(['', ' ', 'a']) == ['', ' ', 'a']\nassert reverse_string_list(['Python', 'is', 'fun!']) == ['nohtyP', 'si', '!nuf']\nassert reverse_string_list([]) == []",
+      "key_differs": true,
+      "text": "```python\n# Check with empty list\nassert reverse_string_list([]) == []\n\n# Check with mixed case strings\nassert reverse_string_list(['Hello', 'world', 'Python', 'programming']) == ['olleH', 'dlrow', ynohtyp', gnimmargorp']\n\n# Check with negative numbers reversed\nassert reverse_string_list([-2, -3, -4, -5]) == [-5, -4, -3, -2]\n\n# Check with float points reversed (should give error as string reversal is not supported)\ntry:\n    reverse_string_list([10.5, 20.7, 30.8, 40.9])\nexcept TypeError as e:\r\n    assert str(e).startswith(\"unsupported operand type(s) for *: 'float' and 'str'\")\n        \n# Check with space in string\nassert reverse_string_list(['Hello World']) == ['dlroW olleH']  \n\nprint(\"All tests passed.\")\n```",
+      "quality": 1.0,
+      "final_key": "def reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list\n```",
+        "fixer": "```python\ndef reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert find(20,4) == 5\nassert find(-20,-4) == 5\nassert find(20,0) == 0\nassert find(0,20) == 0\nassert find(20,20) == 1",
+      "reference_key": "assert reverse_string_list(['apple', 'banana', 'cherry']) == ['elppa', 'ananab', 'yrrehc']\nassert reverse_string_list(['12345', '67890', 'abcde']) == ['54321', '09876', 'edcba']\nassert reverse_string_list(['', ' ', 'a']) == ['', ' ', 'a']\nassert reverse_string_list(['Python', 'is', 'fun!']) == ['nohtyP', 'si', '!nuf']\nassert reverse_string_list([]) == []",
+      "key_differs": true,
+      "text": "```python\nassert find(20,4) == 5\nassert find(-20,-4) == 5\nassert find(20,0) == 0\nassert find(0,20) == 0\nassert find(20,20) == 1\n```",
+      "quality": 1.0,
+      "final_key": "def reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list\n```",
+        "fixer": "```python\ndef reverse_string_list(string_list):\n    reversed_list = []\n    for s in string_list:\n        reversed_list.append(s[::-1])\n    return reversed_list\n\n# Test cases\nassert reverse_string_list(['Red', 'Green', 'Blue', 'White', 'Black']) == ['deR', 'neerG', 'eulB', 'etihW', 'kcalB']\nassert reverse_string_list(['john','amal','joel','george']) == ['nhoj','lama','leoj','egroeg']\nassert reverse_string_list(['jack','john','mary']) == ['kcaj','nhoj','yram']\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert reverse_string_list([]) == []\nassert reverse_string_list(['a']) == ['a']\nassert reverse_string_list(['ab']) == ['ba']\nassert reverse_string_list(['abc']) == ['cba']\nassert reverse_string_list(['abcd']) == ['dcba']",
+  "sample_keys": [
+    "assert reverse_string_list([])==[]\nassert reverse_string_list([\"\"])==[\"\"]\nassert reverse_string_list(['a'])==['a']\nassert reverse_string_list(['ab'])==['ba']\nassert reverse_string_list(['red','green','blue','white','black'])==['deR', 'neerG', 'eulB', 'etihW', 'kcalB']",
+    "assert reverse_string_list([]) == [], \"Test case with empty list failed\"\nassert reverse_string_list(['a']) == ['a'], \"Test case with single element list failed\"\nassert reverse_string_list(['ab']) == ['ba'], \"Test case with two elements list failed\"\nassert reverse_string_list(['abc']) == ['cba'], \"Test case with three elements list failed\"\nassert reverse_string_list(['abcd']) == ['dcba'], \"Test case with four elements list failed\"",
+    "assert reverse_string_list(['a', 'ab', 'abc']) == ['a', 'b', 'cba']\nassert reverse_string_list(['hello', 'world']) == ['olleh', 'dlrow']\nassert reverse_string_list(['Python']) == ['nohtyP']\nassert reverse_string_list([]) == []\nassert reverse_string_list(['12345']) == ['54321']",
+    "assert reverse_string_list([]) == [] # Edge case: empty list\nassert reverse_string_list(['a']) == ['a'] # Edge case: single character string\nassert reverse_string_list(['hello', 'world']) == ['olleh', 'dlrow'] # Typical case: multiple strings\nassert reverse_string_list(['Python', 'Programming', 'Language']) == ['nohtyP', 'gnimmargorp', 'egaugelN'] # Case with multiple languages",
+    "# Test case with all strings reversed\nassert reverse_string_list(['a', 'b', 'c', 'd']) == ['da', 'cb', 'ba', 'ad']\n\n# Test case with empty string\nassert reverse_string_list([]) == []\n\n# Test case with single character strings\nassert reverse_string_list(['x']) == ['x']\n\n# Test case with multiple identical strings\nassert reverse_string_list(['aa', 'bb', 'cc']) == ['aA', 'bB', 'cC']\n\n# Test case with special characters\nassert reverse_string_list(['!', '@', '#', '$', '%']) == ['#', '$', '%', '@', '!']"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1495.0,
+    "small_out": 287.0,
+    "small_s": 6.574071102950256
+  },
+  "calls_plus": {
+    "small_in": 1521.0,
+    "small_out": 229.0,
+    "small_s": 5.159141206997447,
+    "large_in": 187.0,
+    "large_out": 129.0,
+    "large_s": 3.6209681410109624
+  },
+  "calls_samples": {
+    "small_in": 935.0,
+    "small_out": 518.0,
+    "small_s": 10.257432387006702
+  }
+}

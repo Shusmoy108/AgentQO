@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-579",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    for element in tuple2:\n        if element not in tuple1:\n            dissimilar_elements.append(element)\n    return tuple(dissimilar_elements)\n```",
+  "reference_key": "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    for element in tuple2:\n        if element not in tuple1:\n            dissimilar_elements.append(element)\n    return tuple(dissimilar_elements)",
+  "final_key_plus": "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    for element in tuple2:\n        if element not in tuple1:\n            dissimilar_elements.append(element)\n    return tuple(dissimilar_elements)",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    for element in tuple2:\n        if element not in tuple1:\n            dissimilar_elements.append(element)\n    return tuple(dissimilar_elements)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements",
+      "reference_key": "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    for element in tuple2:\n        if element not in tuple1:\n            dissimilar_elements.append(element)\n    return tuple(dissimilar_elements)",
+      "key_differs": true,
+      "text": "```python\ndef find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements\n```",
+      "quality": 0.0,
+      "final_key": "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    for element in tuple2:\n        if element not in tuple1:\n            dissimilar_elements.append(element)\n    return tuple(dissimilar_elements)",
+      "key_differs": true,
+      "text": "```python\ndef find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements\n\n# Test results\nassert find_dissimilar((3, 4, 5, 6), (5, 7, 4, 10)) == [3, 6, 7, 10]\nassert find_dissimilar((1, 2, 3, 4), (7, 2, 3, 9)) == [1, 4, 7, 9]\nassert find_dissimilar((21, 11, 25, 26), (26, 34, 21, 36)) == [34, 36, 11, 25]\nassert find_dissimilar((1, 2, 3, 4), (5, 6, 7, 8)) == [1, 2, 3, 4]\nassert find_dissimilar(('a', 'b', 'c'), ('d', 'e', 'f')) == ['a', 'b', 'c']\nassert find_dissimilar((10, 20, 30), (10, 20, 30)) == []\nassert find_dissimilar((), ()) == []\nassert find_dissimilar((1, 2, 3), (1, 2, 3, 4, 5)) == [4, 5]  # Incorrect output, should be None instead of [4, 5]\n\n# Fixed code\ndef find_dissimilar(tuple1, tuple2):\n    return [element for element in tuple1 if element not in tuple2]\n\n# Additional tests\nassert find_dissimilar((3, 4, 5, 6), (5, 7, 4, 10)) == [3, 6, 7, 10]\nassert find_dissimilar((1, 2, 3, 4), (7, 2, 3, 9)) == [1, 4, 7, 9]\nassert find_dissimilar((21, 11, 25, 26), (26, 34, 2",
+      "quality": 0.0,
+      "final_key": "def find_dissimilar(tuple1, tuple2):\n    return [element for element in tuple1 if element not in tuple2]",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef find_dissimilar(tuple1, tuple2):\n    return [element for element in tuple1 if element not in tuple2]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_spaces('Jumanji The Jungle') == 'Jumanji_The_Jungle'\nassert replace_spaces('The_Avengers') == 'The_Avengers'\nassert replace_spaces('Fast and Furious') == 'Fast_and_Furious'\nassert replace_spaces('Hello World') == 'Hello_World'\nassert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('1234567890') == '1234567890'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'\nassert replace_spaces('   Leading Spaces   ') == '_Leading_Spaces_'",
+      "reference_key": "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    for element in tuple2:\n        if element not in tuple1:\n            dissimilar_elements.append(element)\n    return tuple(dissimilar_elements)",
+      "key_differs": true,
+      "text": "```python\ndef replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_spaces('Jumanji The Jungle') == 'Jumanji_The_Jungle'\nassert replace_spaces('The_Avengers') == 'The_Avengers'\nassert replace_spaces('Fast and Furious') == 'Fast_and_Furious'\nassert replace_spaces('Hello World') == 'Hello_World'\nassert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('1234567890') == '1234567890'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'\nassert replace_spaces('   Leading Spaces   ') == '_Leading_Spaces_'\n```",
+      "quality": 0.0,
+      "final_key": "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements",
+  "sample_keys": [
+    "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements\n\n# Test cases\nassert find_dissimilar((3, 4, 5, 6), (5, 7, 4, 10)) == (3, 6, 7, 10)  # Assertion failed\nassert find_dissimilar((1, 2, 3, 4), (7, 2, 3, 9)) == (1, 4, 7, 9)  # Assertion failed\nassert find_dissimilar((21, 11, 25, 26), (26, 34, 21, 36)) == (34, 36, 11, 25)  # Assertion failed\nassert find_dissimilar((1, 2, 3, 4), (5, 6, 7, 8)) == [1, 2, 3, 4]  # Passed\nassert find_dissimilar(('a', 'b', 'c'), ('d', 'e', 'f')) == ['a', 'b', 'c']  # Passed\nassert find_dissimilar((10, 20, 30), (10, 20, 30)) == []  # Passed\nassert find_dissimilar((), ()) == []  # Passed\nassert find_dissimilar((1, 2, 3), (1, 2, 3, 4, 5)) == [4, 5]  # Assertion failed",
+    "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements\n\n# Test cases\nprint(find_dissimilar((3, 4, 5, 6), (5, 7, 4, 10)))  # Expected: (3, 6, 7, 10)\nprint(find_dissimilar((1, 2, 3, 4), (7, 2, 3, 9)))   # Expected: (1, 4, 7, 9)\nprint(find_dissimilar((21, 11, 25, 26), (26, 34, 21, 36)))  # Expected: (34, 36, 11, 25)\nprint(find_dissimilar((1, 2, 3, 4), (5, 6, 7, 8)))   # Expected: [1, 2, 3, 4]\nprint(find_dissimilar(('a', 'b', 'c'), ('d', 'e', 'f')))   # Expected: ['a', 'b', 'c']\nprint(find_dissimilar((10, 20, 30), (10, 20, 30)))   # Expected: []\nprint(find_dissimilar((), (())))                     # Expected: []\ntry:\n    print(find_dissimilar((1, 2, 3), (1, 2, 3, 4, 5)))  # Expected: [4, 5]\nexcept AssertionError as e:\n    print(e)  # Expected: AssertionError",
+    "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements\n\n# Test assertions\nassert find_dissimilar((3, 4, 5, 6), (5, 7, 4, 10)) == (3, 6, 7, 10)\nassert find_dissimilar((1, 2, 3, 4), (7, 2, 3, 9)) == (1, 4, 7, 9)\nassert find_dissimilar((21, 11, 25, 26), (26, 34, 21, 36)) == (34, 36, 11, 25)\nassert find_dissimilar((1, 2, 3, 4), (5, 6, 7, 8)) == [1, 2, 3, 4]\nassert find_dissimilar(('a', 'b', 'c'), ('d', 'e', 'f')) == ['a', 'b', 'c']\nassert find_dissimilar((10, 20, 30), (10, 20, 30)) == []\nassert find_dissimilar((), ()) == []\n# Additional test case with duplicates\nassert find_dissimilar((1, 2, 3, 4, 5), (1, 2, 3, 4, 5)) == []",
+    "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements",
+    "def find_dissimilar(tuple1, tuple2):\n    dissimilar_elements = []\n    for element in tuple1:\n        if element not in tuple2:\n            dissimilar_elements.append(element)\n    return dissimilar_elements\n\n# Test cases\nassert find_dissimilar((3, 4, 5, 6), (5, 7, 4, 10)) == (3, 6, 7, 10)\nassert find_dissimilar((1, 2, 3, 4), (7, 2, 3, 9)) == (1, 4, 7, 9)\nassert find_dissimilar((21, 11, 25, 26), (26, 34, 21, 36)) == (34, 36, 11, 25)\nassert find_dissimilar((1, 2, 3, 4), (5, 6, 7, 8)) == [1, 2, 3, 4]\nassert find_dissimilar(('a', 'b', 'c'), ('d', 'e', 'f')) == ['a', 'b', 'c']\nassert find_dissimilar((10, 20, 30), (10, 20, 30)) == []\nassert find_dissimilar((), ())"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2036.0,
+    "small_out": 458.0,
+    "small_s": 10.01450965704862
+  },
+  "calls_plus": {
+    "small_in": 1536.0,
+    "small_out": 432.0,
+    "small_s": 8.545812233060133,
+    "large_in": 530.0,
+    "large_out": 74.0,
+    "large_s": 1.6180146590049844
+  },
+  "calls_samples": {
+    "small_in": 2650.0,
+    "small_out": 1483.0,
+    "small_s": 25.657039426994743
+  }
+}

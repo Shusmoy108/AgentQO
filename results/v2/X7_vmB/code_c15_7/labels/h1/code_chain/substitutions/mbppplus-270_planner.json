@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-270",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `sum_even_and_even_index` that takes one parameter, a list of integers.\n2. Initialize a variable to store the sum of even numbers at even indices, starting with zero.\n3. Iterate through the list using a for loop, keeping track of the index.\n4. Check if both the current index is even and the number at that index is even.\n5. If both conditions are met, add the number to the sum variable.\n6. After the loop, return the sum variable as the result.",
+  "reference_key": null,
+  "final_key_plus": "def sum_even_and_even_index(lst):\n    total = 0\n    for i in range(len(lst)):\n        if i % 2 == 0 and lst[i] % 2 == 0:\n            total += lst[i]\n    return total",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert sum_even_and_even_index([4, 2, 6, 8, 10]) == 12\nassert sum_even_and_even_index([1, 3, 5, 7, 9]) == 0\nassert sum_even_and_even_index([]) == 0\nassert sum_even_and_even_index([2, 4, 6, 8, 10, 12]) == 30\nassert sum_even_and_even_index([1, 3, 5, 7, 9, 11]) == 0\n```",
+    "coder": "```python\ndef sum_even_and_even_index(lst):\n    total = 0\n    for i in range(len(lst)):\n        if i % 2 == 0 and lst[i] % 2 == 0:\n            total += lst[i]\n    return total\n```",
+    "verifier": "PICK: A\n\n```python\ndef sum_even_and_even_index(lst):\n    total = 0\n    for i in range(len(lst)):\n        if i % 2 == 0 and lst[i] % 2 == 0:\n            total += lst[i]\n    return total\n```",
+    "fixer": "```python\ndef sum_even_and_even_index(lst):\n    total = 0\n    for i in range(len(lst)):\n        if i % 2 == 0 and lst[i] % 2 == 0:\n            total += lst[i]\n    return total\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `start_withp` that takes a list of strings as input.\n2. Initialize an empty tuple to store the result.\n3. Iterate through each word in the input list using a for loop.\n4. Check if the first character of the current word is 'p' using the condition `word[0] == 'p'`.\n5. If the condition is true, add the word to the result tuple.\n6. After iterating through all words, return the result tuple.\n\nThis approach ensures that we correctly identify and return the first two words from the list that start with the letter 'p'.",
+      "quality": 1.0,
+      "final_key": "def sum_even_and_even_index(numbers):\n    total = 0\n    for i in range(0, len(numbers), 2):  # Start from index 0 and increment by 2\n        if numbers[i] % 2 == 0:\n            total += numbers[i]\n    return total",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_even_and_even_index([5, 6, 12, 1, 18, 8]) == 30\nassert sum_even_and_even_index([]) == 0\nassert sum_even_and_even_index([1, 3, 5, 7]) == 0\nassert sum_even_and_even_index(['apple', 'banana', 'cherry']) == 0\nassert sum_even_and_even_index(['papaya', 'pear', 'peach']) == 4\n```",
+        "coder": "```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_even_and_even_index(numbers):\n    total = 0\n    for i in range(0, len(numbers), 2):  # Start from index 0 and increment by 2\n        if numbers[i] % 2 == 0:\n            total += numbers[i]\n    return total\n```",
+        "fixer": "```python\ndef sum_even_and_even_index(numbers):\n    total = 0\n    for i in range(0, len(numbers), 2):  # Start from index 0 and increment by 2\n        if numbers[i] % 2 == 0:\n            total += numbers[i]\n    return total\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to keep track of the current maximum product and the maximum product found so far.\n2. Iterate through the array starting from the second element.\n3. For each element, check if it can be added to the current subsequence (i.e., if it is greater than the last element in the subsequence).\n4. If it can be added, update the current subsequence with the new element.\n5. Calculate the product of the current subsequence.\n6. Update the maximum product found so far if the current product is greater.\n7. Continue until all elements have been processed.\n8. Return the maximum product found.",
+      "quality": 0.0,
+      "final_key": "def sum_even_and_even_index(arr):\n    max_product = arr[0]\n    current_subseq = [arr[0]]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > current_subseq[-1]:\n            current_subseq.append(arr[i])\n        else:\n            current_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in current_subseq:\n            current_product *= num\n        \n        if current_product > max_product:\n            max_product = current_product\n    \n    return max_product",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_even_and_even_index([4, 2, 6, 8, 10]) == 48\nassert sum_even_and_even_index([1, 3, 5, 7, 9]) == 0\nassert sum_even_and_even_index([2, 4, 6, 8, 10, 12]) == 120\nassert sum_even_and_even_index([1, 3, 5, 7, 9, 11]) == 0\nassert sum_even_and_even_index([]) == 0\n```",
+        "coder": "```python\ndef sum_even_and_even_index(arr):\n    max_product = arr[0]\n    current_subseq = [arr[0]]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > current_subseq[-1]:\n            current_subseq.append(arr[i])\n        else:\n            current_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in current_subseq:\n            current_product *= num\n        \n        if current_product > max_product:\n            max_product = current_product\n    \n    return max_product\n```",
+        "verifier": "PICK: A\n\n```python\ndef sum_even_and_even_index(arr):\n    max_product = arr[0]\n    current_subseq = [arr[0]]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > current_subseq[-1]:\n            current_subseq.append(arr[i])\n        else:\n            current_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in current_subseq:\n            current_product *= num\n        \n        if current_product > max_product:\n            max_product = current_product\n    \n    return max_product\n```",
+        "fixer": "```python\ndef sum_even_and_even_index(arr):\n    max_product = arr[0]\n    current_subseq = [arr[0]]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > current_subseq[-1]:\n            current_subseq.append(arr[i])\n        else:\n            current_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in current_subseq:\n            current_product *= num\n        \n        if current_product > max_product:\n            max_product = current_product\n    \n    return max_product\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_integer` that takes one parameter: `lst`.\n2. Initialize a counter variable `count` to zero.\n3. Iterate over each element in the input list `lst`.\n4. For each element, check if it is an instance of the built-in `int` type using the `isinstance()` function.\n5. If the element is an integer, increment the `count` by one.\n6. After iterating through all elements, return the value of `count`.\n\nThis approach ensures that we correctly count only the integer elements in the list.",
+      "quality": 1.0,
+      "final_key": "def sum_even_and_even_index(lst):\n    total_sum = 0\n    for i in range(0, len(lst), 2):  # Start from index 0 and increment by 2\n        if lst[i] % 2 == 0:\n            total_sum += lst[i]\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_even_and_even_index([5, 6, 12, 1, 18, 8]) == 30\nassert sum_even_and_even_index([]) == 0\nassert sum_even_and_even_index([1, 3, 5, 7]) == 0\nassert sum_even_and_even_index([2, 4, 6, 8, 10]) == 20\nassert sum_even_and_even_index([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 20\n```",
+        "coder": "```python\ndef count_integer(lst):\n    count = 0\n    for i in lst:\n        if isinstance(i, int):\n            count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_even_and_even_index(lst):\n    total_sum = 0\n    for i in range(0, len(lst), 2):  # Start from index 0 and increment by 2\n        if lst[i] % 2 == 0:\n            total_sum += lst[i]\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_even_and_even_index(lst):\n    total_sum = 0\n    for i in range(0, len(lst), 2):  # Start from index 0 and increment by 2\n        if lst[i] % 2 == 0:\n            total_sum += lst[i]\n    return total_sum\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def sum_even_and_even_index(lst):\n    sum = 0\n    for index, element in enumerate(lst):\n        if index % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum",
+  "sample_keys": [
+    "def sum_even_and_even_index(lst):\n    sum_even = 0\n    for idx, val in enumerate(lst):\n        if idx % 2 == 0 and val % 2 == 0:\n            sum_even += val\n    return sum_even",
+    "def sum_even_and_even_index(input_list):\n    total_sum = 0\n    for i in range(0, len(input_list), 2):  # Iterate over even indices\n        if input_list[i] % 2 == 0:  # Check if the element is even\n            total_sum += input_list[i]\n    return total_sum",
+    "def sum_even_and_even_index(lst):\n    total_sum = 0\n    for i in range(0, len(lst), 2):  # Start from index 0, step by 2\n        if lst[i] % 2 == 0:  # Check if the number is even\n            total_sum += lst[i]\n    return total_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1738.0,
+    "small_out": 399.0,
+    "small_s": 8.432263188995421
+  },
+  "calls_plus": {
+    "large_in": 127.0,
+    "large_out": 112.0,
+    "large_s": 2.4443377269781195,
+    "small_in": 1631.0,
+    "small_out": 305.0,
+    "small_s": 5.373356830998091
+  },
+  "calls_samples": {
+    "small_in": 5771.0,
+    "small_out": 1586.0,
+    "small_s": 27.682437192939688
+  }
+}

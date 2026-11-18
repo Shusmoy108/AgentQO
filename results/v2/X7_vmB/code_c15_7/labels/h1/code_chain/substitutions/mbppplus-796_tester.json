@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-796",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert return_sum({'x': 5, 'y': 15, 'z': 25}) == 45\nassert return_sum({'apple': 1, 'banana': 2, 'cherry': 3}) == 6\nassert return_sum({}) == 0\nassert return_sum({'single': 42}) == 42\nassert return_sum({'negative': -10, 'positive': 10}) == 0\n```",
+  "reference_key": "assert return_sum({'x': 5, 'y': 15, 'z': 25}) == 45\nassert return_sum({'apple': 1, 'banana': 2, 'cherry': 3}) == 6\nassert return_sum({}) == 0\nassert return_sum({'single': 42}) == 42\nassert return_sum({'negative': -10, 'positive': 10}) == 0",
+  "final_key_plus": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```",
+    "fixer": "```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert return_sum({'x': -500, 'y': -100, 'z': 0}) == -600\nassert return_sum({'p': 3000}) == 3000\nassert return_sum({'m': 200, 'n': -70, 'o': 140}) == 410\nassert return_sum({}) == 0\r\nassert return_sum({'q': 1234567890}) == 1234567890",
+      "reference_key": "assert return_sum({'x': 5, 'y': 15, 'z': 25}) == 45\nassert return_sum({'apple': 1, 'banana': 2, 'cherry': 3}) == 6\nassert return_sum({}) == 0\nassert return_sum({'single': 42}) == 42\nassert return_sum({'negative': -10, 'positive': 10}) == 0",
+      "key_differs": true,
+      "text": "```python\nassert return_sum({'x': -500, 'y': -100, 'z': 0}) == -600\nassert return_sum({'p': 3000}) == 3000\nassert return_sum({'m': 200, 'n': -70, 'o': 140}) == 410\nassert return_sum({}) == 0\r\nassert return_sum({'q': 1234567890}) == 1234567890\n```",
+      "quality": 1.0,
+      "final_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```",
+        "fixer": "```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert abs(return_sum({'a': -10, 'b': 10, 'c': -5}) + 20) < 1e-9\nassert(abs(return_sum({}) + 0) < 1e-9)\nassert(abs(return_sum({200: 300}) + 500) < 1e-9)\nassert(abs(return_sum({100: 100, 'key': 100}) + 300) < 1e-9\nassert(abs(return_sum({'key1': 100, 'key2': 200, 'key3': 300}) + 600) < 1e-9",
+      "reference_key": "assert return_sum({'x': 5, 'y': 15, 'z': 25}) == 45\nassert return_sum({'apple': 1, 'banana': 2, 'cherry': 3}) == 6\nassert return_sum({}) == 0\nassert return_sum({'single': 42}) == 42\nassert return_sum({'negative': -10, 'positive': 10}) == 0",
+      "key_differs": true,
+      "text": "```python\nassert abs(return_sum({'a': -10, 'b': 10, 'c': -5}) + 20) < 1e-9\nassert(abs(return_sum({}) + 0) < 1e-9)\nassert(abs(return_sum({200: 300}) + 500) < 1e-9)\nassert(abs(return_sum({100: 100, 'key': 100}) + 300) < 1e-9\nassert(abs(return_sum({'key1': 100, 'key2': 200, 'key3': 300}) + 600) < 1e-9\n```",
+      "quality": 1.0,
+      "final_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```",
+        "fixer": "```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set(['This', 'is', 'a', 'test', 'sentence.'])\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set([])",
+      "reference_key": "assert return_sum({'x': 5, 'y': 15, 'z': 25}) == 45\nassert return_sum({'apple': 1, 'banana': 2, 'cherry': 3}) == 6\nassert return_sum({}) == 0\nassert return_sum({'single': 42}) == 42\nassert return_sum({'negative': -10, 'positive': 10}) == 0",
+      "key_differs": true,
+      "text": "```python\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set(['This', 'is', 'a', 'test', 'sentence.'])\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set([])\n```",
+      "quality": 1.0,
+      "final_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```",
+        "fixer": "```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n\n# Test cases\nassert return_sum({'a': 100, 'b':200, 'c':300}) == 600\nassert return_sum({'a': 25, 'b':18, 'c':45}) == 88\nassert return_sum({'a': 36, 'b':39, 'c':49}) == 124\nassert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set(['This', 'is', 'a', 'test', 'sentence.'])\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set([])\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert return_sum({'a': 100, 'b':200, 'c':300}) == 600\nassert return_sum({}) == 0\nassert return_sum({'x': -10, 'y': 20, 'z': 30}) == 40\nassert return_sum({'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5}) == 15\nassert return_sum({'zero': 0}) == 0",
+  "sample_keys": [
+    "assert return_sum({'x': 10, 'y': 20, 'z': 30}) == 60\nassert return_sum({'one': 50, 'two': 75, 'three': 100}) == 225\nassert return_sum({}) == 0\nassert return_sum({1: 1, 2: 2, 3: 3, 4: 4, 5: 5}) == 15\nassert return_sum({'a': -100, 'b': -200, 'c': -300}) == -600",
+    "assert return_sum({'a': 100, 'b':200, 'c':300}) == 600\nassert return_sum({}) == 0\nassert return_sum({'x': 999}) == 999\nassert return_sum({'y': -444, 'z': 555}) == 1111\nassert return_sum({'w': 0, 'v': 0}) == 0",
+    "# Test with empty dictionary\nassert return_sum({}) == 0\n\n# Test with single item dictionary\nassert return_sum({'x': 5}) == 5\n\n# Test with multiple items dictionary\nassert return_sum({'a': 100, 'b': 200, 'c': 300}) == 600\n\n# Test with negative numbers\nassert return_sum({'d': -10, 'e': -20}) == -30\n\n# Test with positive and negative numbers\nassert return_sum({'f': 10, 'g': -10}) == 0",
+    "assert return_sum({'x': 1, 'y': -2, 'z': 3}) == 2\nassert return_sum({-10: 10, 20: -20, 'abc': 30}) == 40\nassert return_sum({0: 0, 0: 0, 0: 0}) == 0\nassert return_sum({}): == 0\nassert return_sum({None: None}) == 0",
+    "# Test with empty dictionary\nassert return_sum({}) == 0\n\n# Test with single item dictionary\nassert return_sum({'single_key': 42}) == 42\n\n# Test with multiple items dictionary\nassert return_sum({'large_key': 1000, 'medium_key': 500, 'small_key': 250}) == 1750\n\n# Test with negative values\nassert return_sum({'negative_1': -1, 'negative_2': -2, 'negative_3': -3}) == -6\n\n# Test with zero values\nassert return_sum({'zero_1': 0, 'zero_2': 0, 'zero_3': 0}) == 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1561.0,
+    "small_out": 331.0,
+    "small_s": 6.747508579021087
+  },
+  "calls_plus": {
+    "small_in": 1328.0,
+    "small_out": 206.0,
+    "small_s": 4.251605736033525,
+    "large_in": 170.0,
+    "large_out": 104.0,
+    "large_s": 2.200507077999646
+  },
+  "calls_samples": {
+    "small_in": 850.0,
+    "small_out": 659.0,
+    "small_s": 11.881419537035981
+  }
+}

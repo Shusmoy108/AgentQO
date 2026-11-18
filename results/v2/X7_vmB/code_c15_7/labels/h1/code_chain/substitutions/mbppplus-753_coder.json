@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-753",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result\n```",
+  "reference_key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+  "final_key_plus": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.8,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\nassert min_k([], 3) == []\nassert min_k([('John', 7), ('Jane', 6), ('Jack', 9)], 1) == [('John', 7)]\nassert min_k([('Alice', 15), ('Bob', 10), ('Charlie', 12)], 3) == [('Alice', 15), ('Bob', 10), ('Charlie', 12)]\nassert min_k([('Diana', 5), ('Eva', 3), ('Frank', 7)], 2) == [('Diana', 5), ('Eva', 3)]\n```",
+    "verifier": "PICK: A\n\n```python\ndef min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result\n```",
+    "fixer": "```python\ndef min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append((item))\n    return result\n\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2)) == [('Akash', 2), ('Akshat', 4)]",
+      "reference_key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append((item))\n    return result\n\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2)) == [('Akash', 2), ('Akshat', 4)]\n```",
+      "quality": 0.0,
+      "final_key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append((item))\n    return result\n\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2)) == [('Akash', 2), ('Akshat', 4)]\nprint(min_k([('Sanjeev', 11), ('Angat', 5), ('Akash', 3), ('Nepin', 9)], 3)) == [('Akash', 3), ('Angat', 5), ('Nepin', 9)]\nprint(min_k([('tanmay', 14), ('Amer', 11), ('Ayesha', 9), ('SKD', 16)], 1) == [('Ayesha', 9)])\nprint(min_k([], 2) == [])\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 0) == [])\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 5) == [('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)])\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 1) == [('Manjeet', 10)])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 3) == [('Akash', 2), ('Akshat', 4), ('Nikhil', 8)]\nassert min_k([], 2) == []\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 0) == []\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 5) == [('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)]\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 1) == [('Manjeet', 10)]\n```",
+        "verifier": "PICK: B\n\n```python\ndef min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append((item))\n    return result\n\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2)) == [('Akash', 2), ('Akshat', 4)]\nprint(min_k([('Sanjeev', 11), ('Angat', 5), ('Akash', 3), ('Nepin', 9)], 3)) == [('Akash', 3), ('Angat', 5), ('Nepin', 9)]\nprint(min_k([('tanmay', 14), ('Amer', 11), ('Ayesha', 9), ('SKD', 16)], 1) == [('Ayesha', 9)])\nprint(min_k([], 2) == [])\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 0) == [])\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 5) == [('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)])\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 1) == [('Manjeet', 10)])\n```",
+        "fixer": "```python\ndef min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append((item))\n    return result\n\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2)) == [('Akash', 2), ('Akshat', 4)]\nprint(min_k([('Sanjeev', 11), ('Angat', 5), ('Akash', 3), ('Nepin', 9)], 3)) == [('Akash', 3), ('Angat', 5), ('Nepin', 9)]\nprint(min_k([('tanmay', 14), ('Amer', 11), ('Ayesha', 9), ('SKD', 16)], 1) == [('Ayesha', 9)])\nprint(min_k([], 2) == [])\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 0) == [])\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 5) == [('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)])\nprint(min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 1) == [('Manjeet', 10)])\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def min_k(lst, k):\n    result = []\n    for t in lst:\n        if len(result) <= k or t[1] <= result[-1][:1][1]:\n            result.append(t)\n    return result",
+      "reference_key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef min_k(lst, k):\n    result = []\n    for t in lst:\n        if len(result) <= k or t[1] <= result[-1][:1][1]:\n            result.append(t)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def min_k(lst, k):\n    result = []\n    for t in lst:\n        if len(result) <= k or t[1] <= result[-1][1]:\n            result.append(t)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\nassert min_k([], 3) == []\nassert min_k([('John', 7), ('Jane', 6), ('Jack', 9)], 1) == [('John', 7)]\nassert min_k([('Alice', 15), ('Bob', 12), ('Charlie', 18)], 3) == [('Alice', 15), ('Bob', 12), ('Charlie', 18)]\nassert min_k([('Diana', 20), ('Eva', 19), ('Frank', 21)], 2) == [('Diana', 20), ('Eva', 19)]\n```",
+        "verifier": "PICK: A\n\n```python\ndef min_k(lst, k):\n    result = []\n    for t in lst:\n        if len(result) <= k or t[1] <= result[-1][1]:\n            result.append(t)\n    return result\n```",
+        "fixer": "```python\ndef min_k(lst, k):\n    result = []\n    for t in lst:\n        if len(result) <= k or t[1] <= result[-1][:1][1]:\n            result.append(t)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def count_element_in_list(list_of_lists, element):\n    count = 0\n    for sublist in list_of_lists:\n        if element in sublist:\n            count += 1\n    return count",
+      "reference_key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef count_element_in_list(list_of_lists, element):\n    count = 0\n    for sublist in list_of_lists:\n        if element in sublist:\n            count += 1\n    return count\n```",
+      "quality": 0.0,
+      "final_key": "def min_k(tuple_list, k):\n    if not tuple_list or k <= 0:\n        return []\n    \n    sorted_tuples = sorted(tuple_list, key=lambda x: x[1])\n    return sorted_tuples[:k]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\nassert min_k([], 3) == []\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 0) == []\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 5) == [('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)]\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 1) == [('Akshat', 4)]\n```",
+        "verifier": "PICK: B\n\n```python\ndef min_k(tuple_list, k):\n    if not tuple_list or k <= 0:\n        return []\n    \n    sorted_tuples = sorted(tuple_list, key=lambda x: x[1])\n    return sorted_tuples[:k]\n```",
+        "fixer": "```python\ndef min_k(tuple_list, k):\n    if not tuple_list or k <= 0:\n        return []\n    \n    sorted_tuples = sorted(tuple_list, key=lambda x: x[1])\n    return sorted_tuples[:k]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+  "sample_keys": [
+    "def min_k(lst, k):\n    result = []\n    for tup in lst:\n        if tup[1] <= len(result):\n            result.append(tup)\n    return result",
+    "def min_k(lst, k):\n    result = []\n    for tup in lst:\n        if tup[1] <= len(result):\n            result.append(tup)\n    return result",
+    "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result\n\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]",
+    "def min_k(lst, k):\n    result = []\n    for item in lst:\n        if len(result) < k or item[1] <= result[-1][1]:\n            result.append(item)\n    return result",
+    "def min_k(lst, k):\n    result = []\n    for tup in lst:\n        if tup[1] <= len(result):\n            result.append(tup)\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2397.0,
+    "small_out": 489.0,
+    "small_s": 7.475189091986977
+  },
+  "calls_plus": {
+    "small_in": 2082.0,
+    "small_out": 439.0,
+    "small_s": 6.811474501970224,
+    "large_in": 315.0,
+    "large_out": 50.0,
+    "large_s": 1.4701124689891003
+  },
+  "calls_samples": {
+    "small_in": 1575.0,
+    "small_out": 355.0,
+    "small_s": 7.147629449988017
+  }
+}

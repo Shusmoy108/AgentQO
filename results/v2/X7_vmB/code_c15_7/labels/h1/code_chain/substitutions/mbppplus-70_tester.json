@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-70",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert get_equal([(1, 2), (3, 4), (5, 6)]) == True\nassert get_equal([(1, 2, 3), (4, 5), (6, 7, 8)]) == False\nassert get_equal([]) == True\nassert get_equal([(1,), (2,), (3,)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6), ()]) == False\n```",
+  "reference_key": "assert get_equal([(1, 2), (3, 4), (5, 6)]) == True\nassert get_equal([(1, 2, 3), (4, 5), (6, 7, 8)]) == False\nassert get_equal([]) == True\nassert get_equal([(1,), (2,), (3,)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6), ()]) == False",
+  "final_key_plus": "def get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```",
+    "fixer": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert get_equal([(10, 20, 30), (40, 50, 60, 70)]) == False\nassert get_equal([]) == True\nassert get_equal([tuple(range(i)) for i in range(1, 6)]) == all(len(x) == len(y) for x, y in zip(*[iter(get_equal([tuple(range(i)) for i in range(1, 6)]))]*2))\nassert get_equal([(), ()]) == True\nassert get_equal([(10,), (20, 30), (40, 50)]) == all(len(x) == len(y) for x, y in zip(*[iter(get_equal([(10,), (20, 30), (40, 50)]))]*2))",
+      "reference_key": "assert get_equal([(1, 2), (3, 4), (5, 6)]) == True\nassert get_equal([(1, 2, 3), (4, 5), (6, 7, 8)]) == False\nassert get_equal([]) == True\nassert get_equal([(1,), (2,), (3,)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6), ()]) == False",
+      "key_differs": true,
+      "text": "```python\nassert get_equal([(10, 20, 30), (40, 50, 60, 70)]) == False\nassert get_equal([]) == True\nassert get_equal([tuple(range(i)) for i in range(1, 6)]) == all(len(x) == len(y) for x, y in zip(*[iter(get_equal([tuple(range(i)) for i in range(1, 6)]))]*2))\nassert get_equal([(), ()]) == True\nassert get_equal([(10,), (20, 30), (40, 50)]) == all(len(x) == len(y) for x, y in zip(*[iter(get_equal([(10,), (20, 30), (40, 50)]))]*2))\n```",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```",
+        "fixer": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert get_equal([(11, 22), (33, 44, 55)] == False\nassert get_equal([(122, 88, 77), (222, 333)]) == True\nassert get_equal([(10, 20, 30, 40), (1, 2, 3)] == False\nassert get_equal([]) == True\nassert get_equal([(1, 2, 3)]) == True",
+      "reference_key": "assert get_equal([(1, 2), (3, 4), (5, 6)]) == True\nassert get_equal([(1, 2, 3), (4, 5), (6, 7, 8)]) == False\nassert get_equal([]) == True\nassert get_equal([(1,), (2,), (3,)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6), ()]) == False",
+      "key_differs": true,
+      "text": "```python\nassert get_equal([(11, 22), (33, 44, 55)] == False\nassert get_equal([(122, 88, 77), (222, 333)]) == True\nassert get_equal([(10, 20, 30, 40), (1, 2, 3)] == False\nassert get_equal([]) == True\nassert get_equal([(1, 2, 3)]) == True\n```",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```",
+        "fixer": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(-12345) == 15",
+      "reference_key": "assert get_equal([(1, 2), (3, 4), (5, 6)]) == True\nassert get_equal([(1, 2, 3), (4, 5), (6, 7, 8)]) == False\nassert get_equal([]) == True\nassert get_equal([(1,), (2,), (3,)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6), ()]) == False",
+      "key_differs": true,
+      "text": "```python\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(-12345) == 15\n```",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```",
+        "fixer": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(-12345) == 15\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+  "sample_keys": [
+    "assert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(), (), ()]) == True\nassert get_equal([(1,), (2, 3), (4, 5, 6)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([]) == True",
+    "# Expected results:\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11), (22, 33), (44, 55, 66)]) == False\nassert get_equal([]) == True\nassert get_equal([(11, 22), (33, 44, 55), (66, 77)]) == False\nassert get_equal([(11, 22, 33), (44, 55)]) == True",
+    "# Test with different lengths\nassert get_equal([(1, 2), (3, 4, 5)]) == False\nassert get_equal([]) == True\nassert get_equal([(1, 2, 3, 4), (5, 6, 7, 8)]) == False\nassert get_equal([(1, 2), (1, 2, 3), (1, 2, 3)]) == True\nassert get_equal([(1,), (2,), (3,)]) == True",
+    "assert get_equal([]) == True\nassert get_equal([(1,), (2,), (3,)]) == True\nassert get_equal([(1, 2), (1, 2, 3)]) == False\nassert get_equal([(\"\",), (\"a\"), (\"bc\")]) == True\nassert get_equal([(), (), ()]) == True",
+    "assert get_equal([(7, 8), (9, 10, 11)]) == False\nassert get_equal([]) == True\nassert get_equal([(2,)], [(2, 2)], [(2, 2, 2)]) == True\nassert get_equal([(1,)], [(1,)], [(1, 2, 3)]) == False\nassert get_equal([(), ()]) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1720.0,
+    "small_out": 833.0,
+    "small_s": 15.85900613895501
+  },
+  "calls_plus": {
+    "small_in": 1406.0,
+    "small_out": 294.0,
+    "small_s": 5.356709829007741,
+    "large_in": 183.0,
+    "large_out": 109.0,
+    "large_s": 2.4433778320089914
+  },
+  "calls_samples": {
+    "small_in": 915.0,
+    "small_out": 529.0,
+    "small_s": 9.01430429200991
+  }
+}

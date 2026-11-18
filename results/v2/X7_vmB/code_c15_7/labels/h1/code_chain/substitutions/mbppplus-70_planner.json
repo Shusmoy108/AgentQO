@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-70",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `get_equal` that takes a list of tuples as its parameter.\n2. Check if the list is empty. If it is, return `True` since there are no tuples to compare.\n3. Use the `len()` function to determine the length of the first tuple in the list.\n4. Iterate through each tuple in the list and check if its length matches the length of the first tuple.\n5. If any tuple has a different length, return `False`. If all tuples have the same length, return `True`.",
+  "reference_key": null,
+  "final_key_plus": "def get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    first_tuple_length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != first_tuple_length:\n            return False\n    return True",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert get_equal([]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4, 5)]) == False\nassert get_equal([(1, 2, 3), (4, 5, 6)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7, 8)]) == False\n```",
+    "coder": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    first_tuple_length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != first_tuple_length:\n            return False\n    return True\n```",
+    "verifier": "PICK: A\n\n```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    first_tuple_length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != first_tuple_length:\n            return False\n    return True\n```",
+    "fixer": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    first_tuple_length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != first_tuple_length:\n            return False\n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `max_length` that takes one parameter: `lists`.\n2. Initialize two variables: `max_length` to 0 and `result` as an empty list.\n3. Iterate over each sublist in the input list `lists`.\n4. For each sublist, calculate its length using the `len()` function.\n5. If the current sublist's length is greater than `max_length`, update `max_length` to this new value and set `result` to the current sublist.\n6. After iterating through all sublists, return a tuple containing `max_length` and `result`.\n\nThis approach ensures that we correctly identify the sublist with the maximum length and return it along with its length.",
+      "quality": 0.0,
+      "final_key": "def get_equal(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(), (1, 2), (3, 4, 5)]) == False\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2, 3), (4, 5, 6)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7, 8)]) == False\n```",
+        "coder": "```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```",
+        "verifier": "PICK: A\n\n```python\ndef get_equal(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```",
+        "fixer": "```python\ndef get_equal(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `get_equal` that takes a list of tuples as its parameter.\n2. Check if the list is empty. If it is, return `True` since there are no tuples to compare.\n3. Use the `len()` function to determine the length of the first tuple in the list.\n4. Iterate through each tuple in the list and check if its length matches the length of the first tuple.\n6. If any tuple has a different length, return `False`. If all tuples have the same length, return `True`.",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    first_tuple_length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != first_tuple_length:\n            return False\n    return True",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert get_equal([]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4, 5)]) == False\nassert get_equal([(1, 2, 3), (4, 5, 6)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7, 8)]) == False\n```",
+        "coder": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    first_tuple_length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != first_tuple_length:\n            return False\n    return True\n```",
+        "verifier": "PICK: A\n\n```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    first_tuple_length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != first_tuple_length:\n            return False\n    return True\n```",
+        "fixer": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    first_tuple_length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != first_tuple_length:\n            return False\n    return True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_digits` that takes one parameter, `num`.\n2. Initialize a variable `total_sum` to 0.\n3. Use a while loop to iterate as long as `num` is greater than 0.\n4. Inside the loop, add the last digit of `num` to `total_sum` using the modulo operator (`%`) and then remove the last digit from `num` by performing integer division (`//`).\n5. After the loop completes, return the value of `total_sum`.\n\nThis approach ensures that all digits of the input number are summed up correctly.",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    \n    first_tuple_length = len(tuples_list[0])\n    \n    for tuple_ in tuples_list:\n        if len(tuple_) != first_tuple_length:\n            return False\n    \n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7, 8)]) == False\nassert get_equal([(1, 2, 3), (4, 5, 6, 7, 8, 9)]) == True\n```",
+        "coder": "```python\ndef sum_digits(num):\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    \n    first_tuple_length = len(tuples_list[0])\n    \n    for tuple_ in tuples_list:\n        if len(tuple_) != first_tuple_length:\n            return False\n    \n    return True\n```",
+        "fixer": "```python\ndef get_equal(tuples_list):\n    if not tuples_list:\n        return True\n    \n    first_tuple_length = len(tuples_list[0])\n    \n    for tuple_ in tuples_list:\n        if len(tuple_) != first_tuple_length:\n            return False\n    \n    return True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+  "sample_keys": [
+    "def get_equal(tuples_list):\n    is_equal = True\n    for tup in tuples_list:\n        if len(tup) != len(tuples_list[0]):\n            is_equal = False\n            break\n    return is_equal",
+    null,
+    "def get_equal(tuples_list):\n    lengths = [len(t) for t in tuples_list]\n    return all(lengths[0] == l for l in lengths[1:])"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1720.0,
+    "small_out": 833.0,
+    "small_s": 15.85900613895501
+  },
+  "calls_plus": {
+    "large_in": 124.0,
+    "large_out": 116.0,
+    "large_s": 2.44910471199546,
+    "small_in": 1500.0,
+    "small_out": 300.0,
+    "small_s": 4.635684804990888
+  },
+  "calls_samples": {
+    "small_in": 5324.0,
+    "small_out": 1594.0,
+    "small_s": 30.600140983005986
+  }
+}

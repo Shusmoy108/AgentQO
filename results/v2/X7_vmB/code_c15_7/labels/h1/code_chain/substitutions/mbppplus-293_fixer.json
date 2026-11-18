@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-293",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\nimport math\n\ndef otherside_rightangle(a, b):\n    if a <= 0 or b <= 0:\n        raise ValueError(\"Sides of a triangle must be positive numbers.\")\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c\n```",
+  "reference_key": "import math\n\ndef otherside_rightangle(a, b):\n    if a <= 0 or b <= 0:\n        raise ValueError(\"Sides of a triangle must be positive numbers.\")\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+  "final_key_plus": "import math\n\ndef otherside_rightangle(a, b):\n    if a <= 0 or b <= 0:\n        raise ValueError(\"Sides of a triangle must be positive numbers.\")\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\nimport math\n\ndef otherside_rightangle(a, b):\n    if a <= 0 or b <= 0:\n        raise ValueError(\"Sides of a triangle must be positive numbers.\")\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef otherside_rightangle(a, b):\n    # Correct calculation based on the Pythagorean theorem\n    c = math.sqrt(a**2 + b**2)\n    return c\n\n# Testing for the given assertions\nassert otherside_rightangle(7,8) == 10.63014581273465\nassert otherside_rightangle(3,4) == 5\nassert otherside_rightangle(7,15) == 16.55294535724685\nassert otherside_rightangle(5,12) == 13.0\nassert otherside_rightangle(10,6) == 8.0\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(-1, -1) == 1.4142135623730951",
+      "reference_key": "import math\n\ndef otherside_rightangle(a, b):\n    if a <= 0 or b <= 0:\n        raise ValueError(\"Sides of a triangle must be positive numbers.\")\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef otherside_rightangle(a, b):\n    # Correct calculation based on the Pythagorean theorem\n    c = math.sqrt(a**2 + b**2)\n    return c\n\n# Testing for the given assertions\nassert otherside_rightangle(7,8) == 10.63014581273465\nassert otherside_rightangle(3,4) == 5\nassert otherside_rightangle(7,15) == 16.55294535724685\nassert otherside_rightangle(5,12) == 13.0\nassert otherside_rightangle(10,6) == 8.0\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(-1, -1) == 1.4142135623730951\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef otherside_rightangle(a, b):\n    # Correct calculation based on the Pythagorean theorem\n    c = math.sqrt(a**2 + b**2)\n    return c\n\n# Testing for the given assertions\nassert otherside_rightangle(7,8) == 10.63014581273465\nassert otherside_rightangle(3,4) == 5\nassert otherside_rightangle(7,15) == 16.55294535724685\nassert otherside_rightangle(5,12) == 13.0\nassert otherside_rightangle(10,6) == 8.0\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(-1, -1) == 1.4142135623730951",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef otherside_rightangle(a, b):\n    # Correct calculation based on the Pythagorean theorem\n    c = math.sqrt(a**2 + b**2)\n    return c\n\n# Testing for the given assertions\nassert otherside_rightangle(7,8) == 10.63014581273465\nassert otherside_rightangle(3,4) == 5\nassert otherside_rightangle(7,15) == 16.55294535724685\nassert otherside_rightangle(5,12) == 13.0\nassert otherside_rightangle(10,6) == 8.0\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(-1, -1) == 1.4142135623730951\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef otherside_rightangle(a, b):\n    \"\"\"\n    Function to calculate the third side of a right-angled triangle given two sides.\n    Args:\n        a: Length of the first side.\n        b: Length of the second side.\n    Returns:\n        The length of the third side.\n    \"\"\"\n    if a <= 0 or b <= 0:\n        raise ValueError(\"Side lengths must be greater than 0.\")\n    \n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    \n    # Ensure the third side is positive\n    if c < 0:\n        raise ValueError(\"The length of the third side cannot be negative.\")\n    \n    return c\n\n# Test cases\nassert otherside_rightangle(7, 8) == 10.63014581273465\nassert otherside_rightangle(3, 4) == 5\nassert otherside_rightangle(7, 15) == 16.55294535724685\nassert otherside_rightangle(5, 12) == 13.0\nassert otherside_rightangle(10, 6) == 8.0  # This was causing the assertion to fail, so it remains unchanged\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(-1, -1) == 1.4142135623730951",
+      "reference_key": "import math\n\ndef otherside_rightangle(a, b):\n    if a <= 0 or b <= 0:\n        raise ValueError(\"Sides of a triangle must be positive numbers.\")\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef otherside_rightangle(a, b):\n    \"\"\"\n    Function to calculate the third side of a right-angled triangle given two sides.\n    Args:\n        a: Length of the first side.\n        b: Length of the second side.\n    Returns:\n        The length of the third side.\n    \"\"\"\n    if a <= 0 or b <= 0:\n        raise ValueError(\"Side lengths must be greater than 0.\")\n    \n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    \n    # Ensure the third side is positive\n    if c < 0:\n        raise ValueError(\"The length of the third side cannot be negative.\")\n    \n    return c\n\n# Test cases\nassert otherside_rightangle(7, 8) == 10.63014581273465\nassert otherside_rightangle(3, 4) == 5\nassert otherside_rightangle(7, 15) == 16.55294535724685\nassert otherside_rightangle(5, 12) == 13.0\nassert otherside_rightangle(10, 6) == 8.0  # This was causing the assertion to fail, so it remains unchanged\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(-1, -1) == 1.4142135623730951\n```\n\nNote: The code has been updated to ensure that the third side of the triangle is always positive, as a triangle's side length cannot be negative.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def extract_even(nested_tuple):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item % 2 == 0:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)",
+      "reference_key": "import math\n\ndef otherside_rightangle(a, b):\n    if a <= 0 or b <= 0:\n        raise ValueError(\"Sides of a triangle must be positive numbers.\")\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+      "key_differs": true,
+      "text": "```python\ndef extract_even(nested_tuple):\n    def helper(tup):\n        even_elements = []\n        for item in tup:\n            if isinstance(item, int):\n                if item % 2 == 0:\n                    even_elements.append(item)\n            elif isinstance(item, tuple):\n                even_elements.extend(helper(item))\n        return tuple(even_elements)\n\n    return helper(nested_tuple)\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+  "sample_keys": [
+    "import math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+    "import math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c",
+    "import math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c\n\n# Test cases to verify the correctness of the solution\nassert otherside_rightangle(7, 8) == 10.63014581273465\nassert otherside_rightangle(3, 4) == 5\nassert otherside_rightangle(7, 15) == 16.55294535724685\nassert otherside_rightangle(5, 12) == 13.0\nassert otherside_rightangle(10, 6) == 8.0\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(-1, -1) == 1.4142135623730951",
+    "import math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    if c_squared < 0:\n        raise ValueError(\"Invalid dimensions for a right-angled triangle\")\n    c = math.sqrt(c_squared)\n    return c",
+    "import math\n\ndef otherside_rightangle(a, b):\n    c_squared = a**2 + b**2\n    c = math.sqrt(c_squared)\n    return c"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1526.0,
+    "small_out": 379.0,
+    "small_s": 7.427651722013252
+  },
+  "calls_plus": {
+    "small_in": 1198.0,
+    "small_out": 364.0,
+    "small_s": 6.832795777008869,
+    "large_in": 376.0,
+    "large_out": 67.0,
+    "large_s": 1.5264473190181889
+  },
+  "calls_samples": {
+    "small_in": 1880.0,
+    "small_out": 420.0,
+    "small_s": 5.084225468017394
+  }
+}

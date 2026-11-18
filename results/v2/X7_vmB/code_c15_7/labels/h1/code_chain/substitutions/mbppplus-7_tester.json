@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-7",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert set(find_char_long('This is a simple test case')) == set(['This', 'simple', 'test', 'case'])\nassert set(find_char_long('One two three four five six')) == set(['three', 'four', 'five', 'six'])\nassert set(find_char_long('Short words only')) == set([])\nassert set(find_char_long('A very long sentence with many words of various lengths')) == set(['very', 'long', 'sentence', 'with', 'many', 'words', 'of', 'various', 'lengths'])\nassert set(find_char_long('')) == set([])\n```",
+  "reference_key": "assert set(find_char_long('This is a simple test case')) == set(['This', 'simple', 'test', 'case'])\nassert set(find_char_long('One two three four five six')) == set(['three', 'four', 'five', 'six'])\nassert set(find_char_long('Short words only')) == set([])\nassert set(find_char_long('A very long sentence with many words of various lengths')) == set(['very', 'long', 'sentence', 'with', 'many', 'words', 'of', 'various', 'lengths'])\nassert set(find_char_long('')) == set([])",
+  "final_key_plus": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```",
+    "fixer": "```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert set(find_char_long('Python programming is fun')) == set(['programming', 'is', 'fun'])\nassert set(find_char_long('Hello World!')) == set([])\nassert set(find_char_long('A quick brown fox jumps over a lazy dog.')) == set(['quick', 'brown', 'fox', 'jumps', 'over', 'a', 'lazy', 'dog'])\nassert set(find_char_long('1234567890')) == set([])\nassert set(find_char_long('')) == set([])  # Handling empty input string",
+      "reference_key": "assert set(find_char_long('This is a simple test case')) == set(['This', 'simple', 'test', 'case'])\nassert set(find_char_long('One two three four five six')) == set(['three', 'four', 'five', 'six'])\nassert set(find_char_long('Short words only')) == set([])\nassert set(find_char_long('A very long sentence with many words of various lengths')) == set(['very', 'long', 'sentence', 'with', 'many', 'words', 'of', 'various', 'lengths'])\nassert set(find_char_long('')) == set([])",
+      "key_differs": true,
+      "text": "Here are five Python assert statements:\n\n```python\nassert set(find_char_long('Python programming is fun')) == set(['programming', 'is', 'fun'])\nassert set(find_char_long('Hello World!')) == set([])\nassert set(find_char_long('A quick brown fox jumps over a lazy dog.')) == set(['quick', 'brown', 'fox', 'jumps', 'over', 'a', 'lazy', 'dog'])\nassert set(find_char_long('1234567890')) == set([])\nassert set(find_char_long('')) == set([])  # Handling empty input string\n```",
+      "quality": 0.0,
+      "final_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```",
+        "fixer": "```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert set(find_char_long('Hi there!')) == set() # Edge case of no words with length 4 or more\nassert set(find_char_long('Python is awesome')) == {'Python', 'awesome'} # Typical case with more than two words meeting the criteria\nassert set(find_char_long('This is another longer test string')) == {'Another', 'test', 'string'} # Words with varying lengths greater than 3\nassert set(find_char_long('One, two, three, four')) == {'one', 'two', 'three'} # Words starting with special characters\nassert set(find_char_long('Shorty')) == set() # Edge case of single-word string",
+      "reference_key": "assert set(find_char_long('This is a simple test case')) == set(['This', 'simple', 'test', 'case'])\nassert set(find_char_long('One two three four five six')) == set(['three', 'four', 'five', 'six'])\nassert set(find_char_long('Short words only')) == set([])\nassert set(find_char_long('A very long sentence with many words of various lengths')) == set(['very', 'long', 'sentence', 'with', 'many', 'words', 'of', 'various', 'lengths'])\nassert set(find_char_long('')) == set([])",
+      "key_differs": true,
+      "text": "```python\nassert set(find_char_long('Hi there!')) == set() # Edge case of no words with length 4 or more\nassert set(find_char_long('Python is awesome')) == {'Python', 'awesome'} # Typical case with more than two words meeting the criteria\nassert set(find_char_long('This is another longer test string')) == {'Another', 'test', 'string'} # Words with varying lengths greater than 3\nassert set(find_char_long('One, two, three, four')) == {'one', 'two', 'three'} # Words starting with special characters\nassert set(find_char_long('Shorty')) == set() # Edge case of single-word string\n```",
+      "quality": 0.0,
+      "final_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```",
+        "fixer": "```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert Find_Min_Length([[1],[1,2]]) == 1\nassert Find_Min_Length([[],[1,2], [3,4,5]]) == 0\nassert Find_Min_Length([[1,2,3],[4,5,6,7],[8,9]]) == 1\nassert Find_Min_Length([[1,2,3],[4,5,6,7],[8,9,10]]) == 1\nassert Find_Min_Length([]) == 0",
+      "reference_key": "assert set(find_char_long('This is a simple test case')) == set(['This', 'simple', 'test', 'case'])\nassert set(find_char_long('One two three four five six')) == set(['three', 'four', 'five', 'six'])\nassert set(find_char_long('Short words only')) == set([])\nassert set(find_char_long('A very long sentence with many words of various lengths')) == set(['very', 'long', 'sentence', 'with', 'many', 'words', 'of', 'various', 'lengths'])\nassert set(find_char_long('')) == set([])",
+      "key_differs": true,
+      "text": "```python\nassert Find_Min_Length([[1],[1,2]]) == 1\nassert Find_Min_Length([[],[1,2], [3,4,5]]) == 0\nassert Find_Min_Length([[1,2,3],[4,5,6,7],[8,9]]) == 1\nassert Find_Min_Length([[1,2,3],[4,5,6,7],[8,9,10]]) == 1\nassert Find_Min_Length([]) == 0\n```",
+      "quality": 0.0,
+      "final_key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```",
+        "fixer": "```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n\n# Test cases\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\nassert set(find_char_long('Jing Eco and Tech')) == set(['Jing', 'Tech'])\nassert set(find_char_long('Jhingai wulu road Zone 3')) == set(['Jhingai', 'wulu', 'road', 'Zone'])\nassert find_char_long('') == []\nassert find_char_long('a') == []\nassert find_char_long('ab') == []\nassert find_char_long('abc') == ['abc']\nassert find_char_long('abcd') == ['abcd']\nassert find_char_long('abcde') == ['abcde']\nassert find_char_long('abcdefg') == ['abcdefg']\nassert find_char_long('abcdefghi') == ['abcdefghi']\nassert find_char_long('abcdefghij') == ['abcdefghij']\nassert find_char_long('abcdefghijk') == ['abcdefghijk']\nassert find_char_long('abcdefghijklm') == ['abcdefghijklm']\nassert find_char_long('abcdefghijklmn') == ['abcdefghijklmn']\nassert find_char_long('abcdefghijklmnopqrstuvwxy') == ['abcdefghijklmnopqrstuvwxyz']\nassert find_char_long('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') == ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ']\nassert find_char_long('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz') == ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz']\nassert find_char_long('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz') == ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz']\nassert find_char_long('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz') == ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz']\nassert find_char_long('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz') == ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz']\nassert find_char_long('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz') == ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz']\nassert find_char_long('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz') == ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz']\nassert find_char_long('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz') == ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz']\nassert find_char_long('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test sentence.')) == set(['This', 'is', 'a', 'test', 'sentence.'])\nassert set(find_char_long('Short')) == set([])\nassert set(find_char_long('A very long word')) == set(['A', 'very', 'long', 'word'])\nassert set(find_char_long('')) == set([])",
+  "sample_keys": [
+    "# Edge case: Empty string\nassert set(find_char_long('')) == set([])\n\n# Edge case: Single character word\nassert set(find_char_long('a')) == set()\n\n# Typical case with multiple short words\nassert set(find_char_long('short words here')) == set()\n\n# Typical case with multiple medium-length words\nassert set(find_char_long('medium length words')) == set(['medium', 'length'])\n\n# Typical case with multiple long words\nassert set(find_char_long('very long words here')) == set(['very', 'long', 'words'])",
+    "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n\n# Typical case\nassert set(find_char_long('Please move back to stream')) == set(['Please', 'move', 'back', 'stream'])\n\n# Edge case: All words are 3 characters or less\nassert set(find_char_long('Hello world')) == set([])\n\n# Edge case: All words are longer than 4 characters\nassert set(find_char_long('This is a very long sentence with multiple words')) == {'This', 'is', 'a', 'very', 'long', 'sentence', 'with', 'multiple', 'words'}\n\n# Edge case: Empty string\nassert set(find_char_long('')) == set()\n\n# Edge case: Single word\nassert set(find_char_long('A')) == set([])",
+    "assert set(find_char_long('I love coding')) == set(['love', 'coding'])\nassert set(find_char_long('This is a test sentence.')) == set(['is', 'sentence'])\nassert set(find_char_long('')) == set([])\nassert set(find_char_long('One')) == set()\nassert set(find_char_long('A quick brown fox jumps over the lazy dog')) == set(['quick', 'brown', 'fox', 'jumps', 'over', 'lazy', 'dog'])",
+    "assert set(find_char_long('Hello world!')) == set(['Hello', 'world!'])\nassert set(find_char_long('This is a test.')) == set(['This', 'is', 'a', 'test.'])\nassert set(find_char_long('')) == set([])\nassert set(find_char_long('12345')) == set([])\nassert set(find_char_long('A quick brown fox jumps over the lazy dog.')) == set(['quick', 'brown', 'fox', 'jumps', 'over', 'lazy', 'dog.'])",
+    "assert set(find_char_long('Hello, world!')) == {'Hello', 'world'}\nassert set(find_char_long('This is a sample text.')) == {'This', 'sample', 'text'}\nassert set(find_char_long('One two three four five six seven eight nine ten')) == {'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'}\nassert set(find_char_long('Short')) == set()\nassert set(find_char_long('1234567890')) == {'1234567890'}"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1559.0,
+    "small_out": 353.0,
+    "small_s": 7.0767224070150405
+  },
+  "calls_plus": {
+    "small_in": 1470.0,
+    "small_out": 252.0,
+    "small_s": 4.364089818001958,
+    "large_in": 176.0,
+    "large_out": 130.0,
+    "large_s": 2.841103299986571
+  },
+  "calls_samples": {
+    "small_in": 880.0,
+    "small_out": 729.0,
+    "small_s": 9.277875482977834
+  }
+}

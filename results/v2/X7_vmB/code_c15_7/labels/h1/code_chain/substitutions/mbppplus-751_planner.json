@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-751",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `check_min_heap` that takes an array as input.\n2. Iterate through each element of the array except the last one (since it has no children).\n3. For each element, compare it with its left child and right child (if they exist) to ensure the min heap property is maintained.\n4. If any element violates the min heap property, return False.\n5. If all elements satisfy the min heap property, return True.",
+  "reference_key": null,
+  "final_key_plus": "def check_min_heap(arr):\n    n = len(arr)\n    for i in range(n // 2 - 1, -1, -1):\n        if i * 2 + 1 < n and arr[i] > arr[i * 2 + 1]:\n            return False\n        if i * 2 + 2 < n and arr[i] > arr[i * 2 + 2]:\n            return False\n    return True",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([]) == True\nassert check_min_heap([1]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6,",
+    "coder": "```python\ndef check_min_heap(arr):\n    n = len(arr)\n    for i in range(n // 2 - 1, -1, -1):\n        if i * 2 + 1 < n and arr[i] > arr[i * 2 + 1]:\n            return False\n        if i * 2 + 2 < n and arr[i] > arr[i * 2 + 2]:\n            return False\n    return True\n```",
+    "verifier": "PICK: A\n\n```python\ndef check_min_heap(arr):\n    n = len(arr)\n    for i in range(n // 2 - 1, -1, -1):\n        if i * 2 + 1 < n and arr[i] > arr[i * 2 + 1]:\n            return False\n        if i * 2 + 2 < n and arr[i] > arr[i * 2 + 2]:\n            return False\n    return True\n```",
+    "fixer": "```python\ndef check_min_heap(arr):\n    n = len(arr)\n    for i in range(n // 2 - 1, -1, -1):\n        if i * 2 + 1 < n and arr[i] > arr[i * 2 + 1]:\n            return False\n        if i * 2 + 2 < n and arr[i] > arr[i * 2 + 2]:\n            return False\n    return True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `issort_list` that takes one parameter: `lst`.\n2. Initialize a variable `sorted_status` to `True`.\n3. Iterate through the list using a for loop starting from index 1.\n4. For each element, compare it with the previous element.\n5. If any element is found to be less than the previous element, set `sorted_status` to `False` and break out of the loop.\n6. After the loop completes, return the value of `sorted_status`.\n\nThis approach ensures that the function checks if the list is sorted by comparing each element with its predecessor. If any element is found to be smaller, the function immediately returns `False`, indicating that the list is not sorted. If the loop completes without finding any such element, the function returns `True`, confirming that the list is sorted.",
+      "quality": 0.0,
+      "final_key": "def check_min_heap(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status\n\n# Test cases\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([2, 3, 4, 5, 10, 15]) == True\nassert check_min_heap([2, 10, 4, 5, 3, 15]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([]) == True\nassert check_min_heap([10]) == True\nassert check_min_heap([1, 3, 2, 4, 5, 6]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7]) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([]) == True\nassert check_min_heap([10]) == True\nassert check_min_heap([1, 3, 2, 4, 5, 6]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7]) == True\n```",
+        "coder": "```python\ndef issort_list(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status\n```",
+        "verifier": "PICK: B\n\n```python\ndef check_min_heap(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status\n\n# Test cases\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([2, 3, 4, 5, 10, 15]) == True\nassert check_min_heap([2, 10, 4, 5, 3, 15]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([]) == True\nassert check_min_heap([10]) == True\nassert check_min_heap([1, 3, 2, 4, 5, 6]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7]) == True\n```",
+        "fixer": "```python\ndef check_min_heap(lst):\n    sorted_status = True\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            sorted_status = False\n            break\n    return sorted_status\n\n# Test cases\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([2, 3, 4, 5, 10, 15]) == True\nassert check_min_heap([2, 10, 4, 5, 3, 15]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([]) == True\nassert check_min_heap([10]) == True\nassert check_min_heap([1, 3, 2, 4, 5, 6]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7]) == True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a counter for inversions to zero.\n2. Iterate through the array from left to right.\n3. For each element, compare it with all elements that come after it.\n4. If an element is found that is smaller than the current element, increment the inversion counter.\n5. Return the total number of inversions.\n\nThis approach ensures that we correctly count all pairs of elements where one is greater than the other, which are considered inversions in the context of sorting algorithms.",
+      "quality": 0.0,
+      "final_key": "def check_min_heap(arr):\n    n = len(arr)\n    inversions = 0\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inversions += 1\n                \n    return inversions == 0\n\n# Test cases\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([2, 3, 4, 5, 10, 15]) == True\nassert check_min_heap([2, 10, 4, 5, 3, 15]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 7]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 7]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]) == True\nassert check_min_heap([1, 2, 3, 4,",
+        "coder": "```python\ndef check_min_heap(arr):\n    n = len(arr)\n    inversions = 0\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inversions += 1\n                \n    return inversions == 0\n```",
+        "verifier": "PICK: B\n\n```python\ndef check_min_heap(arr):\n    n = len(arr)\n    inversions = 0\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inversions += 1\n                \n    return inversions == 0\n\n# Test cases\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([2, 3, 4, 5, 10, 15]) == True\nassert check_min_heap([2, 10, 4, 5, 3, 15]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 7]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == True\n```",
+        "fixer": "```python\ndef check_min_heap(arr):\n    n = len(arr)\n    inversions = 0\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inversions += 1\n                \n    return inversions == 0\n\n# Test cases\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([2, 3, 4, 5, 10, 15]) == True\nassert check_min_heap([2, 10, 4, 5, 3, 15]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 7]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two variables, `first_even` and `first_odd`, to store the first even and odd numbers found in the list, respectively.\n2. Iterate through the list using a for loop.\n3. For each element, check if it is even or odd:\n   - If it's even, compare it with `first_even`. If `first_even` is still None (indicating no even numbers have been found yet), set `first_even` to this even number.\n   - If it's odd, compare it with `first_odd`. If `first_odd` is still None (indicating no odd numbers have been found yet), set `first_odd` to this odd number.\n4. After iterating through the entire list, calculate the difference between `first_even` and `first_odd`.\n5. Return the calculated difference.",
+      "quality": 0.0,
+      "final_key": "def check_min_heap(arr):\n    first_even = None\n    first_odd = None\n    \n    for num in arr:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n            else:\n                return False\n        elif num % 2 != 0:\n            if first_odd is None:\n                first_odd = num\n            else:\n                return False\n    \n    return abs(first_even - first_odd) == 1",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 7]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 8]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 9]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 10]) == True\n```",
+        "coder": "```python\ndef check_min_heap(arr):\n    first_even = None\n    first_odd = None\n    \n    for num in arr:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n            else:\n                return False\n        elif num % 2 != 0:\n            if first_odd is None:\n                first_odd = num\n            else:\n                return False\n    \n    return abs(first_even - first_odd) == 1\n```",
+        "verifier": "PICK: A\n\n```python\ndef check_min_heap(arr):\n    first_even = None\n    first_odd = None\n    \n    for num in arr:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n            else:\n                return False\n        elif num % 2 != 0:\n            if first_odd is None:\n                first_odd = num\n            else:\n                return False\n    \n    return abs(first_even - first_odd) == 1\n```",
+        "fixer": "```python\ndef check_min_heap(arr):\n    first_even = None\n    first_odd = None\n    \n    for num in arr:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n            else:\n                return False\n        elif num % 2 != 0:\n            if first_odd is None:\n                first_odd = num\n            else:\n                return False\n    \n    return abs(first_even - first_odd) == 1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "def is_valid_node(arr, i, n):\n    # Base case: if the current node is a leaf node\n    if i >= n // 2:\n        return True\n    \n    # Check if the current node is greater than its left child\n    if arr[i] > arr[2 * i + 1]:\n        return False\n    \n    # Check if the current node is greater than its right child\n    if arr[i] > arr[2 * i + 2]:\n        return False\n    \n    # Recursively check the left and right subtrees\n    return is_valid_node(arr, 2 * i + 1, n) and is_valid_node(arr, 2 * i + 2, n)\n\ndef check_min_heap(arr):\n    n = len(arr)\n    return is_valid_node(arr, 0, n)",
+    null,
+    "def check_min_heap(arr):\n    n = len(arr)\n    i = 0\n    if n <= 0:\n        return True\n    while i * 2 + 1 < n:\n        left_child = i * 2 + 1\n        right_child = i * 2 + 2\n        if left_child < n and arr[left_child] > arr[i]:\n            return False\n        if right_child < n and arr[right_child] > arr[i]:\n            return False\n        i += 1\n    return True\n\n# Test cases\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([2, 3, 4, 5, 10, 15]) == True\nassert check_min_heap([2, 10, 4, 5, 3, 15]) == False\nassert check_min_heap([]) == True\nassert check_min_heap([1]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 6]) == True\nassert check_min_heap([1, 2, 3, 4, 5, 7]) == False\nassert check_min_heap([1, 2, 3, 4, 5, 6, 8]) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2563.0,
+    "small_out": 1080.0,
+    "small_s": 23.261016257980373
+  },
+  "calls_plus": {
+    "large_in": 142.0,
+    "large_out": 97.0,
+    "large_s": 2.836681418993976,
+    "small_in": 2047.0,
+    "small_out": 811.0,
+    "small_s": 15.8167845189746
+  },
+  "calls_samples": {
+    "small_in": 7589.0,
+    "small_out": 3360.0,
+    "small_s": 61.35685463104164
+  }
+}

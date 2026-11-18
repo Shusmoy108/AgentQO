@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-16",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert text_lowercase_underscore(\"hello_world\") == True\nassert text_lowercase_underscore(\"Hello_World\") == False\nassert text_lowercase_underscore(\"helloWorld\") == False\nassert text_lowercase_underscore(\"hello__world\") == False\nassert text_lowercase_underscore(\"__hello_world\") == False\n```",
+  "reference_key": "assert text_lowercase_underscore(\"hello_world\") == True\nassert text_lowercase_underscore(\"Hello_World\") == False\nassert text_lowercase_underscore(\"helloWorld\") == False\nassert text_lowercase_underscore(\"hello__world\") == False\nassert text_lowercase_underscore(\"__hello_world\") == False",
+  "final_key_plus": "import re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False\n```",
+    "fixer": "```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert text_lowercase_underscore(\"aa\") == (False)\nassert text_lowercase_underscore(\"ab\") == (False)\nassert text_lowercase_underscore(\"aaa\") == (False)\nassert text_lowercase_underscore(\"_A_a\") == (True)\nassert text_lowercase_underscore(\"aabbcc123\") == (False)",
+      "reference_key": "assert text_lowercase_underscore(\"hello_world\") == True\nassert text_lowercase_underscore(\"Hello_World\") == False\nassert text_lowercase_underscore(\"helloWorld\") == False\nassert text_lowercase_underscore(\"hello__world\") == False\nassert text_lowercase_underscore(\"__hello_world\") == False",
+      "key_differs": true,
+      "text": "```python\nassert text_lowercase_underscore(\"aa\") == (False)\nassert text_lowercase_underscore(\"ab\") == (False)\nassert text_lowercase_underscore(\"aaa\") == (False)\nassert text_lowercase_underscore(\"_A_a\") == (True)\nassert text_lowercase_underscore(\"aabbcc123\") == (False)\n```",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "assert text_lowercase_underscore(\"hello_world\") == True\nassert text_lowercase_underscore(\"Hello_World\") == False\nassert text_lowercase_underscore(\"helloWorld\") == False\nassert text_lowercase_underscore(\"hello__world\") == False\nassert text_lowercase_underscore(\"__hello_world\") == False",
+      "key_differs": true,
+      "text": "```\nassert text_lowercase_underscore(\"\") == (False)\nassert text_lowercase_underscore(\"ab\") == (False)\nassert text_lowercase_underscore(\"AAB_CBBBC\") == (True)\nassert text_lowercase_underscore(\"a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z0123456789\") == (True)\nassert text_lowercase_underscore(\"_a_b_c\") == (False)\nassert text_lowercase_underscore(\"a_a_b_a\") == (False)\nassert text_lowercase_underscore(\"__\") == (False)\nassert text_lowercase_underscore(\"__a__\") == (False)",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert dog_age(0) == 0\nassert dog_age(-1) == ValueError(\"Age cannot be negative\")\nassert dog_age(1) == 10\nassert dog_age(2) == 17\nassert dog_age(3) == 24",
+      "reference_key": "assert text_lowercase_underscore(\"hello_world\") == True\nassert text_lowercase_underscore(\"Hello_World\") == False\nassert text_lowercase_underscore(\"helloWorld\") == False\nassert text_lowercase_underscore(\"hello__world\") == False\nassert text_lowercase_underscore(\"__hello_world\") == False",
+      "key_differs": true,
+      "text": "```python\nassert dog_age(0) == 0\nassert dog_age(-1) == ValueError(\"Age cannot be negative\")\nassert dog_age(1) == 10\nassert dog_age(2) == 17\nassert dog_age(3) == 24\n```",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert text_lowercase_underscore(\"aab_cbbbc\")==(True)\nassert text_lowercase_underscore(\"Aaab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_\")==(False)\nassert text_lowercase_underscore(\"_aab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_a\")==(False)",
+  "sample_keys": [
+    "assert text_lowercase_underscore(\"aab_cbbbc\") == (True)\nassert text_lowercase_underscore(\"Aaa_bbbccc\") == (False)\nassert text_lowercase_underscore(\"_abc\") == (False)\nassert text_lowercase_underscore(\"a_a\") == (True)\nassert text_lowercase_underscore(\"\") == (False)",
+    "# Check with typical case\nassert text_lowercase_underscore(\"aab_cbbbc\") == (True)\n\n# Check with non-lowercase characters\nassert text_lowercase_underscore(\"A_bbbbc\") == (False)\n\n# Check with multiple words\nassert text_lowercase_underscore(\"Hello_world\") == (True)\n\n# Check with mixed case\nassert text_lowercase_underscore(\"Hello_World\") == (False)\n\n# Check with empty string\nassert text_lowercase_underscore(\"\") == (False)",
+    "# Test case where there is no underscore between the lowercase letters\nassert text_lowercase_underscore(\"aabbcc\")==(False)\n\n# Test case where the sequence of lowercase letters does not start with a lowercase letter\nassert text_lowercase_underscore(\"123abc\")==(False)\n\n# Test case where the sequence of lowercase letters does not end with a lowercase letter\nassert text_lowercase_underscore(\"aabbcc1\")==(False)\n\n# Test case where the input string is empty\nassert text_lowercase_underscore(\"\")==(False)\n\n# Test case where the input string contains uppercase letters\nassert text_lowercase_underscore(\"Aaab_cbbbc\")==(False)",
+    "assert text_lowercase_underscore(\"\")==(False)\nassert text_lowercase_underscore(\"_ab\")==(False)\nassert text_lowercase_underscore(\"__ab\")==(False)\nassert text_lowercase_underscore(\"a_a\")==(True)\nassert text_lowercase_underscore(\"aa_b\")==(False)",
+    "assert text_lowercase_underscore(\"aab_cbbbc\")==(True)\nassert text_lowercase_underscore(\"Aaa_bbbb\")==(False)\nassert text_lowercase_underscore(\"a_a\")==(True)\nassert text_lowercase_underscore(\"_abc\")==(False)\nassert text_lowercase_underscore(\"\")==(False)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1420.0,
+    "small_out": 435.0,
+    "small_s": 9.629121934034629
+  },
+  "calls_plus": {
+    "small_in": 1208.0,
+    "small_out": 357.0,
+    "small_s": 7.381793810025556,
+    "large_in": 179.0,
+    "large_out": 67.0,
+    "large_s": 1.4466965969768353
+  },
+  "calls_samples": {
+    "small_in": 895.0,
+    "small_out": 439.0,
+    "small_s": 7.561088051996194
+  }
+}

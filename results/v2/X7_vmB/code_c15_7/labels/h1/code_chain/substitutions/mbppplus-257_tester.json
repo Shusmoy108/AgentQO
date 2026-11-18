@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-257",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert swap_numbers(-5, 3) == (3, -5)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(123456789, 987654321) == (987654321, 123456789)\nassert swap_numbers(float('inf'), float('-inf')) == (float('-inf'), float('inf'))\nassert swap_numbers('a', 'b') == ('b', 'a')\n```",
+  "reference_key": "assert swap_numbers(-5, 3) == (3, -5)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(123456789, 987654321) == (987654321, 123456789)\nassert swap_numbers(float('inf'), float('-inf')) == (float('-inf'), float('inf'))\nassert swap_numbers('a', 'b') == ('b', 'a')",
+  "final_key_plus": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+    "fixer": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestSwapNumbers(unittest.TestCase):\n    def test_swap_numbers(self):\n        # Typical case\n        self.assertEqual(swap_numbers(10, 20), (20, 10))\n        \n        # Edge case where both numbers are positive\n        self.assertEqual(swap_numbers(56, 43), (43, 56))\n        \n        # Edge case where both numbers are negative\n        self.assertEqual(swap_numbers(-90, -80), (-80, -90))\n        \n        # Edge case where one of the numbers is zero\n        self.assertEqual(swap_numbers(78, 0), (0, 78))\n        \n        # Edge case where both numbers are zero\n        self.assertEqual(swap_numbers(0, 0), (0, 0))\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)",
+      "reference_key": "assert swap_numbers(-5, 3) == (3, -5)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(123456789, 987654321) == (987654321, 123456789)\nassert swap_numbers(float('inf'), float('-inf')) == (float('-inf'), float('inf'))\nassert swap_numbers('a', 'b') == ('b', 'a')",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TestSwapNumbers(unittest.TestCase):\n    def test_swap_numbers(self):\n        # Typical case\n        self.assertEqual(swap_numbers(10, 20), (20, 10))\n        \n        # Edge case where both numbers are positive\n        self.assertEqual(swap_numbers(56, 43), (43, 56))\n        \n        # Edge case where both numbers are negative\n        self.assertEqual(swap_numbers(-90, -80), (-80, -90))\n        \n        # Edge case where one of the numbers is zero\n        self.assertEqual(swap_numbers(78, 0), (0, 78))\n        \n        # Edge case where both numbers are zero\n        self.assertEqual(swap_numbers(0, 0), (0, 0))\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)\n```\n\nThese test cases cover typical scenarios including integers, floating-point numbers, zeros, and ensuring the function handles edge cases gracefully.",
+      "quality": 1.0,
+      "final_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+        "fixer": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert swap_numbers(0, 3) == (3, 0), \"Test case for zero passed.\"\nassert swap_numbers(-1, -2) == (-2, -1), \"Test case for negative one passed.\"\nassert swap_numbers(0.5, -0.3) == (-0.3, 0.5), \"Test case for decimal numbers passed.\"\nassert swap_numbers(int('a'), 10) == (10, int('a')), \"Test case for special character is not converted to int.\"\nassert swap_numbers(float('3.14'), int('2')) == (int('2'), float('3.14')), \"Test case when first parameter is float and second is integer.\"",
+      "reference_key": "assert swap_numbers(-5, 3) == (3, -5)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(123456789, 987654321) == (987654321, 123456789)\nassert swap_numbers(float('inf'), float('-inf')) == (float('-inf'), float('inf'))\nassert swap_numbers('a', 'b') == ('b', 'a')",
+      "key_differs": true,
+      "text": "```python\nassert swap_numbers(0, 3) == (3, 0), \"Test case for zero passed.\"\nassert swap_numbers(-1, -2) == (-2, -1), \"Test case for negative one passed.\"\nassert swap_numbers(0.5, -0.3) == (-0.3, 0.5), \"Test case for decimal numbers passed.\"\nassert swap_numbers(int('a'), 10) == (10, int('a')), \"Test case for special character is not converted to int.\"\nassert swap_numbers(float('3.14'), int('2')) == (int('2'), float('3.14')), \"Test case when first parameter is float and second is integer.\"\n```\n\nHere's a breakdown of how these tests work for various inputs:\n\n- **`swap_numbers(0, 3)`**: Expected return `(3, 0)`, as per the task. This is correct.\n- **`swap_numbers(-1, -2)`**: Expected return `(-2, -1)`, which aligns with the function's implementation.\n- **`swap_numbers(0.5, -0.3)`**: Expected return `(-0.3, 0.5)`. This demonstrates how decimals are treated by the function.\n- **`swap_numbers(int('a'), 10)`**: Expected to raise a `TypeError` because attempting to convert a string ('a') to and from an integer results in a loss of precision and unexpected behavior.\n- **`swap_numbers(float('3.14'), int('2))`**: Expected return `(int('2'), float('3.14'))`, demonstrating that converting a float to an integer leaves the fractional part behind while treating integers as whole numbers.",
+      "quality": 1.0,
+      "final_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+        "fixer": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False",
+      "reference_key": "assert swap_numbers(-5, 3) == (3, -5)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(123456789, 987654321) == (987654321, 123456789)\nassert swap_numbers(float('inf'), float('-inf')) == (float('-inf'), float('inf'))\nassert swap_numbers('a', 'b') == ('b', 'a')",
+      "key_differs": true,
+      "text": "```python\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False\n```",
+      "quality": 1.0,
+      "final_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+        "fixer": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n\n# Test cases\nassert swap_numbers(10, 20) == (20, 10)\nassert swap_numbers(15, 17) == (17, 15)\nassert swap_numbers(100, 200) == (200, 100)\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(1000, -1000) == (-1000, 1000)",
+  "sample_keys": [
+    "assert swap_numbers(-3, 5) == (5, -3)\nassert swap_numbers(8, 8) == (8, 8)\nassert swap_numbers(0, 10) == (10, 0)\nassert swap_numbers(-100, 200) == (200, -100)\nassert swap_numbers(99, -99) == (-99, 99)",
+    "assert swap_numbers(0, 0) == (0, 0), \"Test case 0 failed\"\nassert swap_numbers(-1, 1) == (1, -1), \"Test case -1 failed\"\nassert swap_numbers(float('inf'), float('-inf')) == (-inf, inf), \"Test case inf failed\"\nassert swap_numbers(3.14, 2.718) == (2.718, 3.14), \"Test case float failed\"\nassert swap_numbers(10000000000000000, 5000000000000000) == (5000000000000000, 10000000000000000), \"Test case large numbers failed\"",
+    "assert swap_numbers(-5, -3) == (-3, -5)\nassert swap_numbers(-5, 3) == (3, -5)\nassert swap_numbers(5, -3) == (-3, 5)\nassert swap_numbers(5, 3) == (3, 5)\nassert swap_numbers(0, 0) == (0, 0)",
+    "assert swap_numbers(-5, -3) == (-3, -5)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 50) == (50, 100)\nassert swap_numbers(-1, 2) == (2, -1)\nassert swap_numbers(7, -8) == (-8, 7)",
+    "assert swap_numbers(-1, -2) == (-2, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(999, 888) == (888, 999)\nassert swap_numbers(7, 7) == (7, 7)\nassert swap_numbers(-77, -77) == (-77, -77)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1299.0,
+    "small_out": 243.0,
+    "small_s": 5.342892476008274
+  },
+  "calls_plus": {
+    "small_in": 1197.0,
+    "small_out": 138.0,
+    "small_s": 2.608860737993382,
+    "large_in": 153.0,
+    "large_out": 122.0,
+    "large_s": 2.632743007998215
+  },
+  "calls_samples": {
+    "small_in": 765.0,
+    "small_out": 567.0,
+    "small_s": 10.984802263003075
+  }
+}

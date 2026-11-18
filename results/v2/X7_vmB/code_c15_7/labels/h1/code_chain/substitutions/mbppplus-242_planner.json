@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-242",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `count_charac` that takes one parameter, `input_string`.\n2. Inside the function, use the built-in `len()` function to determine the length of `input_string`.\n3. Return the result of the `len()` function as the output of the function.\n4. Ensure the function is self-contained and does not rely on external variables or modules.\n5. Test the function with the provided test case to verify its correctness.",
+  "reference_key": null,
+  "final_key_plus": "def count_charac(input_string):\n    return len(input_string)",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"ab\") == 2\nassert count_charac(\"abc\") == 3\nassert count_charac(\"hello world\") == 11\n```",
+    "coder": "```python\ndef count_charac(input_string):\n    return len(input_string)\n```",
+    "verifier": "PICK: A\n\n```python\ndef count_charac(input_string):\n    return len(input_string)\n```",
+    "fixer": "```python\ndef count_charac(input_string):\n    return len(input_string)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `max_aggregate` that takes a single argument, which is a list of tuples.\n2. Initialize a variable `max_tuple` to store the tuple with the highest aggregate score.\n3. Iterate through each tuple in the input list using a for loop.\n4. For each tuple, extract the second element (the score) and add it to a running total.\n5. If the current total is greater than the value stored in `max_tuple`, update `max_tuple` to be the current tuple.\n6. After iterating through all tuples, return the `max_tuple`.\n\nThis approach ensures that we correctly identify the tuple with the highest aggregate score by maintaining a running total and updating the `max_tuple` whenever a higher score is found.",
+      "quality": 1.0,
+      "final_key": "def count_charac(s):\n    return len(s)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"hello world\") == 11\nassert count_charac(\"Python Programming\") == 18\nassert count_charac(\"1234567890\") == 10\n```",
+        "coder": "```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    \n    for tup in tuples_list:\n        score = tup[1]\n        total_score += score\n        \n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = tup\n            \n    return max_tuple\n```",
+        "verifier": "PICK: B\n\n```python\ndef count_charac(s):\n    return len(s)\n```",
+        "fixer": "```python\ndef count_charac(s):\n    return len(s)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `min_k` that takes two parameters: a list of tuples (`lst`) and an integer `k`.\n2. Initialize an empty list called `result` to store the minimum `k` records.\n3. Iterate over each tuple in the input list using a for loop.\n4. For each tuple, check if its second element (the score) is less than or equal to the current length of the `result` list.\n5. If it is, append the tuple to the `result` list.\n6. After iterating through all tuples, return the `result` list.\n7. Test the function with the provided test case to ensure it works as expected.",
+      "quality": 1.0,
+      "final_key": "def count_charac(s):\n    return len(s)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"hello world\") == 11\nassert count_charac(\"Python Programming\") == 18\nassert count_charac(\"1234567890\") == 10\n```",
+        "coder": "```python\ndef min_k(lst, k):\n    result = []\n    for tup in lst:\n        if tup[1] <= len(result):\n            result.append(tup)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef count_charac(s):\n    return len(s)\n```",
+        "fixer": "```python\ndef count_charac(s):\n    return len(s)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize pointers for both input arrays.\n2. Compare elements pointed by these pointers.\n3. Move the pointer of the smaller element towards the end of its array.\n4. Repeat step 2 until you reach the kth position.\n5. Return the element at the kth position.",
+      "quality": 0.0,
+      "final_key": "def count_charac(s):\n    left = 0\n    right = len(s) - 1\n    while left < right:\n        if s[left] != s[right]:\n            break\n        left += 1\n        right -= 1\n    return s[left]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"ab\") == 2\nassert count_charac(\"abc\") == 3\nassert count_charac(\"abcd\") == 4\n```",
+        "coder": "```python\ndef count_charac(s):\n    left = 0\n    right = len(s) - 1\n    while left < right:\n        if s[left] != s[right]:\n            break\n        left += 1\n        right -= 1\n    return s[left]\n```",
+        "verifier": "PICK: A\n\n```python\ndef count_charac(s):\n    left = 0\n    right = len(s) - 1\n    while left < right:\n        if s[left] != s[right]:\n            break\n        left += 1\n        right -= 1\n    return s[left]\n```",
+        "fixer": "```python\ndef count_charac(s):\n    left = 0\n    right = len(s) - 1\n    while left < right:\n        if s[left] != s[right]:\n            break\n        left += 1\n        right -= 1\n    return s[left]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count",
+  "sample_keys": [
+    "def count_charac(text):\n    char_count = 0\n    for char in text:\n        char_count += 1\n    return char_count",
+    "def count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count",
+    "def count_charac(s):\n    char_count = 0\n    for c in s:\n        char_count += 1\n    return char_count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1104.0,
+    "small_out": 273.0,
+    "small_s": 3.3170076070236973
+  },
+  "calls_plus": {
+    "large_in": 103.0,
+    "large_out": 97.0,
+    "large_s": 2.472910418000538,
+    "small_in": 926.0,
+    "small_out": 119.0,
+    "small_s": 2.757392661005724
+  },
+  "calls_samples": {
+    "small_in": 3329.0,
+    "small_out": 836.0,
+    "small_s": 15.918072125030449
+  }
+}

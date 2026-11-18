@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-426",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `filter_oddnumbers` that takes a list of integers as input.\n2. Use a list comprehension to iterate through each number in the input list.\n3. Inside the list comprehension, include a condition to check if the number is odd using the modulus operator (`%`).\n4. Return the new list containing only the odd numbers.\n5. Test the function with the provided test case to ensure it works correctly.",
+  "reference_key": null,
+  "final_key_plus": "def filter_oddnumbers(numbers):\n    return [num for num in numbers if num % 2 != 0]",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert filter_oddnumbers([]) == []\nassert filter_oddnumbers([2]) == []\nassert filter_oddnumbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 3, 5, 7, 9]\nassert filter_oddnumbers([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == [-1, -3, -5, -7, -9]\nassert filter_oddnumbers([0]) == []\n```",
+    "coder": "```python\ndef filter_oddnumbers(numbers):\n    return [num for num in numbers if num % 2 != 0]\n```",
+    "verifier": "PICK: A\n\n```python\ndef filter_oddnumbers(numbers):\n    return [num for num in numbers if num % 2 != 0]\n```",
+    "fixer": "```python\ndef filter_oddnumbers(numbers):\n    return [num for num in numbers if num % 2 != 0]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a helper function `max_sub_array_sum` that takes an array and returns the maximum subarray sum using Kadane's algorithm.\n2. Create a new array by repeating the original array `k` times.\n3. Use the `max_sub_array_sum` function on the new array to get the maximum sum of any contiguous subarray within one repetition.\n4. Multiply the result by `k` to get the maximum sum of any contiguous subarray within `k` repetitions.\n5. Return the final result.",
+      "quality": 0.0,
+      "final_key": "def max_sub_array_sum(arr):\n    n = len(arr)\n    max_so_far = arr[0]\n    current_max = arr[0]\n\n    for i in range(1, n):\n        current_max = max(arr[i], current_max + arr[i])\n        max_so_far = max(max_so_far, current_max)\n\n    return max_so_far\n\ndef filter_odd_numbers(arr):\n    k = len(arr)\n    repeated_arr = arr * k\n    max_sum = max_sub_array_sum(repeated_arr)\n    return max_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2]) == [2]\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == [-1, -3, -5, -7, -9]\nassert filter_odd_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == [1, 3, 5, 7, 9, 11]\n```",
+        "coder": "```python\ndef max_sub_array_sum(arr):\n    n = len(arr)\n    max_so_far = arr[0]\n    current_max = arr[0]\n\n    for i in range(1, n):\n        current_max = max(arr[i], current_max + arr[i])\n        max_so_far = max(max_so_far, current_max)\n\n    return max_so_far\n\ndef filter_odd_numbers(arr):\n    k = len(arr)\n    repeated_arr = arr * k\n    max_sum = max_sub_array_sum(repeated_arr)\n    return max_sum\n```",
+        "verifier": "PICK: A\n```python\ndef max_sub_array_sum(arr):\n    n = len(arr)\n    max_so_far = arr[0]\n    current_max = arr[0]\n\n    for i in range(1, n):\n        current_max = max(arr[i], current_max + arr[i])\n        max_so_far = max(max_so_far, current_max)\n\n    return max_so_far\n\ndef filter_odd_numbers(arr):\n    k = len(arr)\n    repeated_arr = arr * k\n    max_sum = max_sub_array_sum(repeated_arr)\n    return max_sum\n```",
+        "fixer": "```python\ndef max_sub_array_sum(arr):\n    n = len(arr)\n    max_so_far = arr[0]\n    current_max = arr[0]\n\n    for i in range(1, n):\n        current_max = max(arr[i], current_max + arr[i])\n        max_so_far = max(max_so_far, current_max)\n\n    return max_so_far\n\ndef filter_odd_numbers(arr):\n    k = len(arr)\n    repeated_arr = arr * k\n    max_sum = max_sub_array_sum(repeated_arr)\n    return max_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `surface_area` that takes two parameters: `base_edge` and `height`.\n2. Calculate the area of the square base using the formula `base_edge^2`.\n3. Calculate the slant height of the pyramid using the Pythagorean theorem: `slant_height = sqrt(height^2 + (base_edge/2)^2)`.\n4. Calculate the lateral surface area of the pyramid using the formula `lateral_surface_area = base_edge * slant_height`.\n5. Add the area of the base to the lateral surface area to get the total surface area.\n6. Return the total surface area.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef surface_area(base_edge, height):\n    # Calculate the area of the square base\n    base_area = base_edge ** 2\n    \n    # Calculate the slant height of the pyramid\n    slant_height = math.sqrt(height**2 + (base_edge/2)**2)\n    \n    # Calculate the lateral surface area of the pyramid\n    lateral_surface_area = base_edge * slant_height\n    \n    # Add the area of the base to the lateral surface area to get the total surface area\n    total_surface_area = base_area + lateral_surface_area\n    \n    # Return the total surface area\n    return total_surface_area\n\n# Test cases\nassert surface_area(1, 1) == 2\nassert surface_area(2, 2) == 12\nassert surface_area(3, 3) == 36\nassert surface_area(4, 4) == 64\nassert surface_area(5, 5) == 100",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert surface_area(1, 1) == 2\nassert surface_area(2, 2) == 12\nassert surface_area(3, 3) == 36\nassert surface_area(4, 4) == 64\nassert surface_area(5, 5) == 100\n```",
+        "coder": "```python\nimport math\n\ndef surface_area(base_edge, height):\n    # Calculate the area of the square base\n    base_area = base_edge ** 2\n    \n    # Calculate the slant height of the pyramid\n    slant_height = math.sqrt(height**2 + (base_edge/2)**2)\n    \n    # Calculate the lateral surface area of the pyramid\n    lateral_surface_area = base_edge * slant_height\n    \n    # Add the area of the base to the lateral surface area to get the total surface area\n    total_surface_area = base_area + lateral_surface_area\n    \n    # Return the total surface area\n    return total_surface_area\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef surface_area(base_edge, height):\n    # Calculate the area of the square base\n    base_area = base_edge ** 2\n    \n    # Calculate the slant height of the pyramid\n    slant_height = math.sqrt(height**2 + (base_edge/2)**2)\n    \n    # Calculate the lateral surface area of the pyramid\n    lateral_surface_area = base_edge * slant_height\n    \n    # Add the area of the base to the lateral surface area to get the total surface area\n    total_surface_area = base_area + lateral_surface_area\n    \n    # Return the total surface area\n    return total_surface_area\n\n# Test cases\nassert surface_area(1, 1) == 2\nassert surface_area(2, 2) == 12\nassert surface_area(3, 3) == 36\nassert surface_area(4, 4) == 64\nassert surface_area(5, 5) == 100\n```",
+        "fixer": "```python\nimport math\n\ndef surface_area(base_edge, height):\n    # Calculate the area of the square base\n    base_area = base_edge ** 2\n    \n    # Calculate the slant height of the pyramid\n    slant_height = math.sqrt(height**2 + (base_edge/2)**2)\n    \n    # Calculate the lateral surface area of the pyramid\n    lateral_surface_area = base_edge * slant_height\n    \n    # Add the area of the base to the lateral surface area to get the total surface area\n    total_surface_area = base_area + lateral_surface_area\n    \n    # Return the total surface area\n    return total_surface_area\n\n# Test cases\nassert surface_area(1, 1) == 2\nassert surface_area(2, 2) == 12\nassert surface_area(3, 3) == 36\nassert surface_area(4, 4) == 64\nassert surface_area(5, 5) == 100\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries.\n2. Define the function `tuple_str_int`.\n3. Use regular expression to extract numbers from the input string.\n4. Convert each extracted number to an integer.\n5. Return the resulting integer tuple.\n\n```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that meets the requirements. It includes all necessary imports, defines the function with a descriptive docstring, and uses a regular expression to handle the conversion process. The provided test case verifies the correctness of the implemented function.",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef filter_oddnumbers(numbers):\n    # Filter out even numbers\n    odd_numbers = [num for num in numbers if num % 2 != 0]\n    # Return the resulting list of odd numbers\n    return odd_numbers",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert filter_oddnumbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])==[1,3,5,7,9]\nassert filter_oddnumbers([])==[]\nassert filter_oddnumbers([2,4,6,8]) == []\nassert filter_oddnumbers([11,13,15,17,19]) == [11,13,15,17,19]\nassert filter_oddnumbers([-1,-3,-5,-7,-9]) == [-1,-3,-5,-7,-9]\n```",
+        "coder": "```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n```",
+        "verifier": "PICK: B\n```python\nimport re\n\ndef filter_oddnumbers(numbers):\n    # Filter out even numbers\n    odd_numbers = [num for num in numbers if num % 2 != 0]\n    # Return the resulting list of odd numbers\n    return odd_numbers\n```",
+        "fixer": "```python\nimport re\n\ndef filter_oddnumbers(numbers):\n    # Filter out even numbers\n    odd_numbers = [num for num in numbers if num % 2 != 0]\n    # Return the resulting list of odd numbers\n    return odd_numbers\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def filter_odd_numbers(numbers):\n    odd_numbers = []\n    for num in numbers:\n        if num % 2 != 0:\n            odd_numbers.append(num)\n    return odd_numbers",
+  "sample_keys": [
+    "def filter_odd_numbers(numbers):\n    odd_numbers = []\n    for num in numbers:\n        if num % 2 != 0:\n            odd_numbers.append(num)\n    return odd_numbers",
+    "def filter_oddnumbers(numbers):\n    odd_numbers = [num for num in numbers if num % 2 != 0]\n    return odd_numbers",
+    "def filter_oddnumbers(numbers):\n    odd_numbers = []\n    for num in numbers:\n        if num % 2 != 0:\n            odd_numbers.append(num)\n    return odd_numbers"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.6666666666666666
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1881.0,
+    "small_out": 401.0,
+    "small_s": 8.178094203962246
+  },
+  "calls_plus": {
+    "large_in": 132.0,
+    "large_out": 92.0,
+    "large_s": 1.9942519440082833,
+    "small_in": 1530.0,
+    "small_out": 222.0,
+    "small_s": 4.483283166016918
+  },
+  "calls_samples": {
+    "small_in": 5429.0,
+    "small_out": 1231.0,
+    "small_s": 22.66222790698521
+  }
+}

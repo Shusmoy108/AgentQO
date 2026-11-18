@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-391",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"A\"], [\"B\"], [1]) == [{'A': {'B': 1}}]\nassert convert_list_dictionary([\"X\", \"Y\"], [\"Z\"], [10, 20]) == [{'X': {'Z': 10}}, {'Y': {'Z': 20}}]\nassert convert_list_dictionary([\"P\", \"Q\", \"R\"], [\"S\", \"T\", \"U\"], [100, 200, 300]) == [{'P': {'S': 100}}, {'Q': {'T': 200}}, {'R': {'U': 300}}]\nassert convert_list_dictionary([\"a\", \"b\", \"c\"], [\"d\", \"e\", \"f\"], [1.1, 2.2, 3.3]) == [{'a': {'d': 1.1}}, {'b': {'e': 2.2}}, {'c': {'f': 3.3}}]\n```",
+  "reference_key": "assert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"A\"], [\"B\"], [1]) == [{'A': {'B': 1}}]\nassert convert_list_dictionary([\"X\", \"Y\"], [\"Z\"], [10, 20]) == [{'X': {'Z': 10}}, {'Y': {'Z': 20}}]\nassert convert_list_dictionary([\"P\", \"Q\", \"R\"], [\"S\", \"T\", \"U\"], [100, 200, 300]) == [{'P': {'S': 100}}, {'Q': {'T': 200}}, {'R': {'U': 300}}]\nassert convert_list_dictionary([\"a\", \"b\", \"c\"], [\"d\", \"e\", \"f\"], [1.1, 2.2, 3.3]) == [{'a': {'d': 1.1}}, {'b': {'e': 2.2}}, {'c': {'f': 3.3}}]",
+  "final_key_plus": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```",
+    "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert convert_list_dictionary([], [], []) == [], \"Test case with empty lists failed.\"\nassert convert_list_dictionary([\"A001\"], [\"John Doe\"], [67]) == [{'A001': {'John Doe': 67}}], \"Test case with single value in all lists failed.\"\nassert convert_list_dictionary([\"User1\", \"User2\"], [\"Data1\", \"Data2\"], [10, 20]).sort() == [{'User1': {'Data1': 10}}, {'User2': {'Data2': 20}}].sort(), \"Test case where values are negative failed.\"\nassert convert_list_dictionary([\"ID1\", \"ID2\"], [\"Item1\", \"Item0\"], [-5, 5]).sort() == [{'ID1': {'Item1': -5}}, {'ID2': {'Item0': 5}}].sort(), \"Test case with negative integers failed.\"\nassert convert_list_dictionary([\"ID3\", \"ID4\"], [], []), \"Test case where second list is empty failed, but expected result shows no error.\"",
+      "reference_key": "assert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"A\"], [\"B\"], [1]) == [{'A': {'B': 1}}]\nassert convert_list_dictionary([\"X\", \"Y\"], [\"Z\"], [10, 20]) == [{'X': {'Z': 10}}, {'Y': {'Z': 20}}]\nassert convert_list_dictionary([\"P\", \"Q\", \"R\"], [\"S\", \"T\", \"U\"], [100, 200, 300]) == [{'P': {'S': 100}}, {'Q': {'T': 200}}, {'R': {'U': 300}}]\nassert convert_list_dictionary([\"a\", \"b\", \"c\"], [\"d\", \"e\", \"f\"], [1.1, 2.2, 3.3]) == [{'a': {'d': 1.1}}, {'b': {'e': 2.2}}, {'c': {'f': 3.3}}]",
+      "key_differs": true,
+      "text": "```python\nassert convert_list_dictionary([], [], []) == [], \"Test case with empty lists failed.\"\nassert convert_list_dictionary([\"A001\"], [\"John Doe\"], [67]) == [{'A001': {'John Doe': 67}}], \"Test case with single value in all lists failed.\"\nassert convert_list_dictionary([\"User1\", \"User2\"], [\"Data1\", \"Data2\"], [10, 20]).sort() == [{'User1': {'Data1': 10}}, {'User2': {'Data2': 20}}].sort(), \"Test case where values are negative failed.\"\nassert convert_list_dictionary([\"ID1\", \"ID2\"], [\"Item1\", \"Item0\"], [-5, 5]).sort() == [{'ID1': {'Item1': -5}}, {'ID2': {'Item0': 5}}].sort(), \"Test case with negative integers failed.\"\nassert convert_list_dictionary([\"ID3\", \"ID4\"], [], []), \"Test case where second list is empty failed, but expected result shows no error.\"\n```",
+      "quality": 0.0,
+      "final_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```",
+        "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S005\"], [\"John Doe\"], [78]) == [{'S005': {'John Doe': 78}}]\nassert convert_list_dictionary([\"S006\", \"S007\"], [\"Michael Jordan\", \"Kobe Bryant\"], [93, 100]) == [{'S006': {'Michael Jordan': 93}}, {'S007': {'Kobe Bryant': 100}}]\nassert convert_list_dictionary([\"S008\", \"S009\"], [\"Steve Jobs\", \"Bill Gates\"], [])\nassert convert_list_dictionary([], [\"Alice Johnson\"], [65])",
+      "reference_key": "assert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"A\"], [\"B\"], [1]) == [{'A': {'B': 1}}]\nassert convert_list_dictionary([\"X\", \"Y\"], [\"Z\"], [10, 20]) == [{'X': {'Z': 10}}, {'Y': {'Z': 20}}]\nassert convert_list_dictionary([\"P\", \"Q\", \"R\"], [\"S\", \"T\", \"U\"], [100, 200, 300]) == [{'P': {'S': 100}}, {'Q': {'T': 200}}, {'R': {'U': 300}}]\nassert convert_list_dictionary([\"a\", \"b\", \"c\"], [\"d\", \"e\", \"f\"], [1.1, 2.2, 3.3]) == [{'a': {'d': 1.1}}, {'b': {'e': 2.2}}, {'c': {'f': 3.3}}]",
+      "key_differs": true,
+      "text": "```python\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S005\"], [\"John Doe\"], [78]) == [{'S005': {'John Doe': 78}}]\nassert convert_list_dictionary([\"S006\", \"S007\"], [\"Michael Jordan\", \"Kobe Bryant\"], [93, 100]) == [{'S006': {'Michael Jordan': 93}}, {'S007': {'Kobe Bryant': 100}}]\nassert convert_list_dictionary([\"S008\", \"S009\"], [\"Steve Jobs\", \"Bill Gates\"], [])\nassert convert_list_dictionary([], [\"Alice Johnson\"], [65])\n```",
+      "quality": 0.0,
+      "final_key": "def convert_list_dictionary(list1, list2, list3):\n    if len(list1) != len(list2) or len(list1) != len(list3):\n        raise ValueError(\"All lists must have the same length\")\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    if len(list1) != len(list2) or len(list1) != len(list3):\n        raise ValueError(\"All lists must have the same length\")\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```",
+        "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        if len(list1) != len(list2) or len(list1) != len(list3):\n            raise ValueError(\"All lists must have the same length\")\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert merge_sorted_list([], [1, 2], [3]) == [1, 2, 3]\nassert merge_sorted_list([1, 2], [], [3]) == [1, 2, 3]\nassert merge_sorted_list([1, 2], [3], []) == [1, 2, 3]\nassert merge_sorted_list([1, 2, 3], [4, 5, 6], [7, 8, 9]) == [1, 2, 3, 4, 5, 6, 7, 8, 9]\nassert merge_sorted_list([1, 2, 3, 4, 5, 6, 7, 8, 9], [10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [20, 21, 22, 23, 24, 25, 26, 27, 28, 29]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]",
+      "reference_key": "assert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"A\"], [\"B\"], [1]) == [{'A': {'B': 1}}]\nassert convert_list_dictionary([\"X\", \"Y\"], [\"Z\"], [10, 20]) == [{'X': {'Z': 10}}, {'Y': {'Z': 20}}]\nassert convert_list_dictionary([\"P\", \"Q\", \"R\"], [\"S\", \"T\", \"U\"], [100, 200, 300]) == [{'P': {'S': 100}}, {'Q': {'T': 200}}, {'R': {'U': 300}}]\nassert convert_list_dictionary([\"a\", \"b\", \"c\"], [\"d\", \"e\", \"f\"], [1.1, 2.2, 3.3]) == [{'a': {'d': 1.1}}, {'b': {'e': 2.2}}, {'c': {'f': 3.3}}]",
+      "key_differs": true,
+      "text": "```python\nassert merge_sorted_list([], [1, 2], [3]) == [1, 2, 3]\nassert merge_sorted_list([1, 2], [], [3]) == [1, 2, 3]\nassert merge_sorted_list([1, 2], [3], []) == [1, 2, 3]\nassert merge_sorted_list([1, 2, 3], [4, 5, 6], [7, 8, 9]) == [1, 2, 3, 4, 5, 6, 7, 8, 9]\nassert merge_sorted_list([1, 2, 3, 4, 5, 6, 7, 8, 9], [10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [20, 21, 22, 23, 24, 25, 26, 27, 28, 29]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]\n```",
+      "quality": 0.0,
+      "final_key": "def convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n```",
+        "fixer": "```python\ndef convert_list_dictionary(list1, list2, list3):\n    result = []\n    for i in range(len(list1)):\n        inner_dict = {list1[i]: {list2[i]: list3[i]}}\n        result.append(inner_dict)\n    return result\n\n# Test cases\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"],[\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"] ,[85, 98, 89, 92])==[{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}, {'S004': {'Saim Richards': 92}}]\nassert convert_list_dictionary([\"abc\",\"def\",\"ghi\",\"jkl\"],[\"python\",\"program\",\"language\",\"programs\"],[100,200,300,400])==[{'abc':{'python':100}},{'def':{'program':200}},{'ghi':{'language':300}},{'jkl':{'programs':400}}]\nassert convert_list_dictionary([\"A1\",\"A2\",\"A3\",\"A4\"],[\"java\",\"C\",\"C++\",\"DBMS\"],[10,20,30,40])==[{'A1':{'java':10}},{'A2':{'C':20}},{'A3':{'C++':30}},{'A4':{'DBMS':40}}]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S001\"], [\"Adina Park\"], [85]) == [{'S001': {'Adina Park': 85}}]\nassert convert_list_dictionary([\"S001\", \"S002\"], [\"Adina Park\", \"Leyton Marsh\"], [85, 98]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\"], [85, 98, 89]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"], [85, 98, 89, 92], [\"A\", \"B\", \"C\", \"D\"]) == [{'S001': {'Adina Park': 85}, 'A': 'A'}, {'S002': {'Leyton Marsh': 98}, 'B': 'B'}, {'S003': {'Duncan Boyle': 89}, 'C': 'C'}, {'S004': {'Saim Richards': 92}, 'D': 'D'}]",
+  "sample_keys": [
+    "assert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([\"S001\"], [\"Adina Park\"], [85]) == [{'S001': {'Adina Park': 85}}]\nassert convert_list_dictionary([\"S001\", \"S002\"], [\"Adina Park\", \"Leyton Marsh\"], [85, 98]) == [({'S001': {'Adina Park': 85}}), ({'S002': {'Leyton Marsh': 98}})]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\"], [85, 98, 89]) == [({'S001': {'Adina Park': 85}}), ({'S002': {'Leyton Marsh': 98}}), ({'S003': {'Duncan Boyle': 89}})]\nassert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"], [85, 98, 89, 92], [86, 97, 90, 93]) == [({'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}, {'S004': {'Saim Richards': 92}}), ({}), ({}), ({}), ({'S001': {'Adina Park': 86}}, {'S002': {'Leyton Marsh': 97}}, {'S003': {'Duncan Boyle': 90}}, {'S004': {'Saim Richards': 93}})]",
+    "# Check with empty lists\nassert convert_list_dictionary([], [], []) == []\n\n# Check with same length lists\nassert convert_list_dictionary([\"A\"], [\"B\"], [1]) == [{\"A\": {\"B\": 1}}]\n\n# Check with different lengths lists\nassert convert_list_dictionary([\"A\", \"B\"], [\"C\", \"D\"], [1, 2]) == [{'A': {'C': 1}}, {'B': {'D': 2}}]\n\n# Check with large lists\nassert convert_list_dictionary([\"Alice\", \"Bob\", \"Charlie\", \"David\"], [\"Apple\", \"Banana\", \"Cherry\", \"Date\"], [10, 20, 30, 40]) == [{'Alice': {'Apple': 10}}, {'Bob': {'Banana': 20}}, {'Charlie': {'Cherry': 30}}, {'David': {'Date': 40}}]\n\n# Check with mixed data types\nassert convert_list_dictionary([1, 2], ['a', 'b'], [True, False]) == [{1: {'a': True}}, {2: {'b': False}}]",
+    "assert convert_list_dictionary([\"S001\", \"S002\", \"S003\", \"S004\"], [\"Adina Park\", \"Leyton Marsh\", \"Duncan Boyle\", \"Saim Richards\"], [85, 98, 89, 92]) == [{'S001': {'Adina Park': 85}}, {'S002': {'Leyton Marsh': 98}}, {'S003': {'Duncan Boyle': 89}}, {'S004': {'Saim Richards': 92}}]\nassert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([1, 2], [\"A\", \"B\"], [10, 20]) == [{'1': {'A': 10}}, {'2': {'B': 20}}]\nassert convert_list_dictionary(['X', 'Y'], ['Z'], [100]) == [{'X': {'Z': 100}}, {'Y': {'Z': 100}}]\nassert convert_list_dictionary([None], [None], [None]) == [{'None': {'None': None}}]",
+    "assert convert_list_dictionary([], [], []) == []\nassert convert_list_dictionary([], [\"A\"], [1]) == [{'A': {1}}]\nassert convert_list_dictionary([\"B\"], [], []) == [{'B': {}}\nassert convert_list_dictionary([\"C\"], [\"D\"], [E]) == [{'C': {'D': E}}]\nassert convert_list_dictionary([1, 2, 3], [\"a\", \"b\", \"c\"], [10, 20, 30]) == [{'1': {'a': 10}}, {'2': {'b': 20}}, {'3': {'c': 30}}]",
+    "# Test with empty lists\nassert convert_list_dictionary([], [], []) == []\n\n# Test with single element lists\nassert convert_list_dictionary([\"A\"], [\"A\"], [1]) == [{'A': { 'A': 1 }}]\n\n# Test with different lengths of input lists\nassert convert_list_dictionary([\"A\", \"B\"], [\"A\", \"B\"], [1, 2, 3]) == [{'A': {'A': 1}}, {'B': {'B': 2}}]\n\n# Test with null values\nassert convert_list_dictionary([\"A\", None], [None, \"A\"], [1, 2]) == [{'A': { None: 1 }}, {'None': {'A': 2 }}]\n\n# Test with mixed data types (integers, floats)\nassert convert_list_dictionary([1, 2, 3], ['A', 'B', 'C'], [1.1, 2.2, 3.3]) == [{'1': {'A': 1.1}}, {'2': {'B': 2.2}}, {'3': {'C': 3.3}}]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3620.0,
+    "small_out": 731.0,
+    "small_s": 13.495941150991712
+  },
+  "calls_plus": {
+    "small_in": 2837.0,
+    "small_out": 351.0,
+    "small_s": 5.956430232996354,
+    "large_in": 291.0,
+    "large_out": 225.0,
+    "large_s": 4.95467458901112
+  },
+  "calls_samples": {
+    "small_in": 1455.0,
+    "small_out": 1311.0,
+    "small_s": 11.942321679991437
+  }
+}

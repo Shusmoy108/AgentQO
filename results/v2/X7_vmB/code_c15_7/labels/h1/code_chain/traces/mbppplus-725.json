@@ -1,0 +1,69 @@
+{
+  "task_id": "mbppplus-725",
+  "gold": "mbppplus:725",
+  "problem": "Write a function to extract values between quotation marks \" \" of the given string.\nYour code should pass this test:\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']",
+  "final_quality": 1.0,
+  "final_key": "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches",
+  "nodes": {
+    "planner": {
+      "prompt": "You are planning how to write a Python function. Do not write code.\nTask: Write a function to extract values between quotation marks \" \" of the given string.\nYour code should pass this test:\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nWrite a numbered plan of at most 5 short steps.\nStart your answer with \"PLAN:\".",
+      "output": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `extract_quotation` that takes a single argument, a string.\n3. Use regular expressions to find all occurrences of text enclosed in double quotes.\n4. Return the list of found strings.\n5. Test the function with provided data points.",
+      "key": null,
+      "confidence": 0.7669102476468435,
+      "fidelity": "small",
+      "prompt_tokens": 128,
+      "completion_tokens": 66,
+      "latency_s": 1.48087226098869,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "coder": {
+      "prompt": "Task: Write a function to extract values between quotation marks \" \" of the given string.\nYour code should pass this test:\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nPlan:\nPLAN:\n1. Import necessary libraries (if any).\n2. Define the function `extract_quotation` that takes a single argument, a string.\n3. Use regular expressions to find all occurrences of text enclosed in double quotes.\n4. Return the list of found strings.\n5. Test the function with provided data points.\nWrite the complete Python function, with any imports it needs. Do not include tests or example calls.\nReturn only one ```python code block.",
+      "output": "```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```",
+      "key": "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches",
+      "confidence": 0.8942467936901731,
+      "fidelity": "small",
+      "prompt_tokens": 189,
+      "completion_tokens": 59,
+      "latency_s": 1.2993549719976727,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "tester": {
+      "prompt": "Task: Write a function to extract values between quotation marks \" \" of the given string.\nYour code should pass this test:\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nCandidate code:\n```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```\nWrite 5 extra Python assert statements that check this function on typical and edge cases. Work out each\nexpected result from the task, not from the code.\nReturn only one ```python code block containing the assert lines.",
+      "output": "```python\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Single\" quote example') == ['Single']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Start\" \"End\"') == ['Start', 'End']\nassert extract_quotation('\"With spaces\" \"and\" \"quotes\"') == ['With spaces', 'and', 'quotes']\n```",
+      "key": "assert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Single\" quote example') == ['Single']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Start\" \"End\"') == ['Start', 'End']\nassert extract_quotation('\"With spaces\" \"and\" \"quotes\"') == ['With spaces', 'and', 'quotes']",
+      "confidence": 0.8734595168541162,
+      "fidelity": "small",
+      "prompt_tokens": 200,
+      "completion_tokens": 108,
+      "latency_s": 2.3369357699994,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "fixer": {
+      "prompt": "Task: Write a function to extract values between quotation marks \" \" of the given string.\nYour code should pass this test:\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nCode:\n```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```\nTest results (the task's example test and the extra asserts, run on this code):\nPASS assert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nPASS assert extract_quotation('Cast your \"favorite\" entertainment \"apps\"') == ['favorite', 'apps']\nPASS assert extract_quotation('Watch content \"4k Ultra HD\" resolution with \"HDR 10\" Support') == ['4k Ultra HD', 'HDR 10']\nPASS assert extract_quotation(\"Watch content '4k Ultra HD' resolution with 'HDR 10' Support\") == []\nPASS assert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nPASS assert extract_quotation('\"Single\" quote example') == ['Single']\nPASS assert extract_quotation('No quotes here') == []\nPASS assert extract_quotation('\"Start\" \"End\"') == ['Start', 'End']\nPASS assert extract_quotation('\"With spaces\" \"and\" \"quotes\"') == ['With spaces', 'and', 'quotes']\nIf a test failed because the code is wrong, fix the code. If the code is right, or a failing assert is itself\nwrong, keep the code unchanged.\nReturn the complete code in one ```python code block.",
+      "output": "```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```",
+      "key": "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches",
+      "confidence": 0.99,
+      "fidelity": "small",
+      "prompt_tokens": 447,
+      "completion_tokens": 59,
+      "latency_s": 1.3261742600006983,
+      "cache_hit": false,
+      "code_node": null
+    },
+    "verifier": {
+      "prompt": "Task: Write a function to extract values between quotation marks \" \" of the given string.\nYour code should pass this test:\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nCandidate A:\n```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```\nTest results for A:\nPASS assert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nPASS assert extract_quotation('Cast your \"favorite\" entertainment \"apps\"') == ['favorite', 'apps']\nPASS assert extract_quotation('Watch content \"4k Ultra HD\" resolution with \"HDR 10\" Support') == ['4k Ultra HD', 'HDR 10']\nPASS assert extract_quotation(\"Watch content '4k Ultra HD' resolution with 'HDR 10' Support\") == []\nPASS assert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nPASS assert extract_quotation('\"Single\" quote example') == ['Single']\nPASS assert extract_quotation('No quotes here') == []\nPASS assert extract_quotation('\"Start\" \"End\"') == ['Start', 'End']\nPASS assert extract_quotation('\"With spaces\" \"and\" \"quotes\"') == ['With spaces', 'and', 'quotes']\nCandidate B (a revision of A):\n```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```\nTest results for B:\nPASS assert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nPASS assert extract_quotation('Cast your \"favorite\" entertainment \"apps\"') == ['favorite', 'apps']\nPASS assert extract_quotation('Watch content \"4k Ultra HD\" resolution with \"HDR 10\" Support') == ['4k Ultra HD', 'HDR 10']\nPASS assert extract_quotation(\"Watch content '4k Ultra HD' resolution with 'HDR 10' Support\") == []\nPASS assert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nPASS assert extract_quotation('\"Single\" quote example') == ['Single']\nPASS assert extract_quotation('No quotes here') == []\nPASS assert extract_quotation('\"Start\" \"End\"') == ['Start', 'End']\nPASS assert extract_quotation('\"With spaces\" \"and\" \"quotes\"') == ['With spaces', 'and', 'quotes']\nPick the candidate more likely to be correct for the task. Write \"PICK: A\" or \"PICK: B\", then return the\ncomplete code of the picked candidate in one ```python code block.",
+      "output": "PICK: A\n```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```",
+      "key": "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches",
+      "confidence": 0.9814924332393165,
+      "fidelity": "small",
+      "prompt_tokens": 734,
+      "completion_tokens": 64,
+      "latency_s": 1.4328925969894044,
+      "cache_hit": false,
+      "code_node": null
+    }
+  }
+}

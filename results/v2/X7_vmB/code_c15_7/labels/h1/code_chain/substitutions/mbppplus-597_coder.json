@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-597",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef find_kth(arr1, arr2, k):\n    i = j = 0\n    \n    while i < len(arr1) and j < len(arr2):\n        if i + j == k - 1:\n            return min(arr1[i], arr2[j])\n        elif arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n    \n    if i == len(arr1):\n        return arr2[k - 1 - i]\n    else:\n        return arr1[k - 1 - j]\n```",
+  "reference_key": "def find_kth(arr1, arr2, k):\n    i = j = 0\n    \n    while i < len(arr1) and j < len(arr2):\n        if i + j == k - 1:\n            return min(arr1[i], arr2[j])\n        elif arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n    \n    if i == len(arr1):\n        return arr2[k - 1 - i]\n    else:\n        return arr1[k - 1 - j]",
+  "final_key_plus": "def find_kth(arr1, arr2, k):\n    i = j = 0\n    \n    while i < len(arr1) and j < len(arr2):\n        if i + j == k - 1:\n            return min(arr1[i], arr2[j])\n        elif arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n    \n    if i == len(arr1):\n        return arr2[k - 1 - i]\n    else:\n        return arr1[k - 1 - j]",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert find_kth([], [], 1) == None\nassert find_kth([1], [2], 1) == 1\nassert find_kth([1, 2], [3, 4], 2) == 2\nassert find_kth([1, 2, 3], [4, 5, 6], 5) == 5\nassert find_kth([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 10) == 10\n```",
+    "verifier": "PICK: A\n\n```python\ndef find_kth(arr1, arr2, k):\n    i = j = 0\n    \n    while i < len(arr1) and j < len(arr2):\n        if i + j == k - 1:\n            return min(arr1[i], arr2[j])\n        elif arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n    \n    if i == len(arr1):\n        return arr2[k - 1 - i]\n    else:\n        return arr1[k - 1 - j]\n```",
+    "fixer": "```python\ndef find_kth(arr1, arr2, k):\n    i = j = 0\n    \n    while i < len(arr1) and j < len(arr2):\n        if i + j == k - 1:\n            return min(arr1[i], arr2[j])\n        elif arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n    \n    if i == len(arr1):\n        return arr2[k - 1 - i]\n    else:\n        return arr1[k - 1 - j]\n\n# Test cases\nassert find_kth([2, 3, 6, 7, 9], [1, 4, 8, 10], 5) == 6\nassert find_kth([100, 112, 256, 349, 770], [72, 86, 113, 119, 265, 445, 892], 7) == 256\nassert find_kth([3, 4, 7, 8, 10], [2, 5, 9, 11], 6) == 8\nassert find_kth([], [], 1) == None\nassert find_kth([1], [2], 1) == 1\nassert find_kth([1, 2], [3, 4], 2) == 2\nassert find_kth([1, 2, 3], [4, 5, 6], 5) == 5\nassert find_kth([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 10) == 10\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def find_kth(arr1, arr2, k):\n    i = j = 0\n\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n\n    return (arr1[i - 1] if (i - 1 >= 0) else arr2[j - 1]) if i + j <= k else None",
+      "reference_key": "def find_kth(arr1, arr2, k):\n    i = j = 0\n    \n    while i < len(arr1) and j < len(arr2):\n        if i + j == k - 1:\n            return min(arr1[i], arr2[j])\n        elif arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n    \n    if i == len(arr1):\n        return arr2[k - 1 - i]\n    else:\n        return arr1[k - 1 - j]",
+      "key_differs": true,
+      "text": "```python\ndef find_kth(arr1, arr2, k):\n    i = j = 0\n\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n\n    return (arr1[i - 1] if (i - 1 >= 0) else arr2[j - 1]) if i + j <= k else None\n```",
+      "quality": 0.0,
+      "final_key": "def find_kth(arr1, arr2, k):\n    i = j = 0\n\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n\n    return (arr1[i - 1] if (i - 1 >= 0) else arr2[j - 1]) if i + j <= k else None",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_kth([], [], 1) is None\nassert find_kth([1], [2], 1) == 1\nassert find_kth([1, 2], [3, 4], 2) == 2\nassert find_kth([1, 2, 3], [4, 5, 6], 5) == 5\nassert find_kth([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 10) == 10\n```",
+        "verifier": "PICK: A\n```python\ndef find_kth(arr1, arr2, k):\n    i = j = 0\n\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n\n    return (arr1[i - 1] if (i - 1 >= 0) else arr2[j - 1]) if i + j <= k else None\n```",
+        "fixer": "```python\ndef find_kth(arr1, arr2, k):\n    i = j = 0\n\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n\n    return (arr1[i - 1] if (i - 1 >= 0) else arr2[j - 1]) if i + j <= k else None\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def find_kth(arr1, arr2, k):\n    i, j = 0, 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n        k -= 1\n        if k == 0:\n            return arr1[i]\n    if i < len(arr1):\n        return arr1[i + k - 1]\n    return arr2[j + k - 1]",
+      "reference_key": "def find_kth(arr1, arr2, k):\n    i = j = 0\n    \n    while i < len(arr1) and j < len(arr2):\n        if i + j == k - 1:\n            return min(arr1[i], arr2[j])\n        elif arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n    \n    if i == len(arr1):\n        return arr2[k - 1 - i]\n    else:\n        return arr1[k - 1 - j]",
+      "key_differs": true,
+      "text": "```python\ndef find_kth(arr1, arr2, k):\n    i, j = 0, 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n        k -= 1\n        if k == 0:\n            return arr1[i]\n    if i < len(arr1):\n        return arr1[i + k - 1]\n    return arr2[j + k - 1]\n```",
+      "quality": 0.0,
+      "final_key": "def find_kth(arr1, arr2, k):\n    i, j = 0, 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n        k -= 1\n        if k == 0:\n            return arr1[i]\n    if i < len(arr1):\n        return arr1[i + k - 1]\n    return arr2[j + k - 1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_kth([], [], 1) == None\nassert find_kth([1], [2], 1) == 1\nassert find_kth([1, 2], [3, 4], 2) == 2\nassert find_kth([1, 2, 3], [4, 5, 6], 5) == 5\nassert find_kth([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 10) == 10\n```",
+        "verifier": "PICK: A\n\n```python\ndef find_kth(arr1, arr2, k):\n    i, j = 0, 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n        k -= 1\n        if k == 0:\n            return arr1[i]\n    if i < len(arr1):\n        return arr1[i + k - 1]\n    return arr2[j + k - 1]\n```",
+        "fixer": "```python\ndef find_kth(arr1, arr2, k):\n    i, j = 0, 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n        k -= 1\n        if k == 0:\n            return arr1[i]\n    if i < len(arr1):\n        return arr1[i + k - 1]\n    return arr2[j + k - 1]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count",
+      "reference_key": "def find_kth(arr1, arr2, k):\n    i = j = 0\n    \n    while i < len(arr1) and j < len(arr2):\n        if i + j == k - 1:\n            return min(arr1[i], arr2[j])\n        elif arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n    \n    if i == len(arr1):\n        return arr2[k - 1 - i]\n    else:\n        return arr1[k - 1 - j]",
+      "key_differs": true,
+      "text": "```python\ndef check_expression(expression):\n    open_count = 0\n    close_count = 0\n    for char in expression:\n        if char == '(':\n            open_count += 1\n        elif char == ')':\n            close_count += 1\n    return open_count == close_count\n```",
+      "quality": 0.0,
+      "final_key": "def find_kth(arr1, arr2, k):\n    i, j = 0, 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] <= arr2[j]:\n            if k == 1:\n                return arr1[i]\n            k -= 1\n            i += 1\n        else:\n            if k == 1:\n                return arr2[j]\n            k -= 1\n            j += 1\n    if i < len(arr1):\n        while k > 0:\n            if i < len(arr1):\n                if k == 1:\n                    return arr1[i]\n                k -= 1\n                i += 1\n    else:\n        while k > 0:\n            if j < len(arr2):\n                if k == 1:\n                    return arr2[j]\n                k -= 1\n                j += 1\n    return None\n\n# Test cases\nassert find_kth([2, 3, 6, 7, 9], [1, 4, 8, 10], 5) == 6\nassert find_kth([100, 112, 256, 349, 770], [72, 86, 113, 119, 265, 445, 892], 7) == 256\nassert find_kth([3, 4, 7, 8, 10], [2, 5, 9, 11], 6) == 8\nassert check_expression(\"()\") == True\nassert check_expression(\"(())\") == True\nassert check_expression(\"(()())\") == True\nassert check_expression(\")(\") == False\nassert check_expression(\"((()))\") == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_expression(\"()\") == True\nassert check_expression(\"(())\") == True\nassert check_expression(\"(()())\") == True\nassert check_expression(\")(\") == False\nassert check_expression(\"((()))\") == True\n```",
+        "verifier": "PICK: B\n\n```python\ndef find_kth(arr1, arr2, k):\n    i, j = 0, 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] <= arr2[j]:\n            if k == 1:\n                return arr1[i]\n            k -= 1\n            i += 1\n        else:\n            if k == 1:\n                return arr2[j]\n            k -= 1\n            j += 1\n    if i < len(arr1):\n        while k > 0:\n            if i < len(arr1):\n                if k == 1:\n                    return arr1[i]\n                k -= 1\n                i += 1\n    else:\n        while k > 0:\n            if j < len(arr2):\n                if k == 1:\n                    return arr2[j]\n                k -= 1\n                j += 1\n    return None\n\n# Test cases\nassert find_kth([2, 3, 6, 7, 9], [1, 4, 8, 10], 5) == 6\nassert find_kth([100, 112, 256, 349, 770], [72, 86, 113, 119, 265, 445, 892], 7) == 256\nassert find_kth([3, 4, 7, 8, 10], [2, 5, 9, 11], 6) == 8\nassert check_expression(\"()\") == True\nassert check_expression(\"(())\") == True\nassert check_expression(\"(()())\") == True\nassert check_expression(\")(\") == False\nassert check_expression(\"((()))\") == True\n```",
+        "fixer": "```python\ndef find_kth(arr1, arr2, k):\n    i, j = 0, 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] <= arr2[j]:\n            if k == 1:\n                return arr1[i]\n            k -= 1\n            i += 1\n        else:\n            if k == 1:\n                return arr2[j]\n            k -= 1\n            j += 1\n    if i < len(arr1):\n        while k > 0:\n            if i < len(arr1):\n                if k == 1:\n                    return arr1[i]\n                k -= 1\n                i += 1\n    else:\n        while k > 0:\n            if j < len(arr2):\n                if k == 1:\n                    return arr2[j]\n                k -= 1\n                j += 1\n    return None\n\n# Test cases\nassert find_kth([2, 3, 6, 7, 9], [1, 4, 8, 10], 5) == 6\nassert find_kth([100, 112, 256, 349, 770], [72, 86, 113, 119, 265, 445, 892], 7) == 256\nassert find_kth([3, 4, 7, 8, 10], [2, 5, 9, 11], 6) == 8\nassert check_expression(\"()\") == True\nassert check_expression(\"(())\") == True\nassert check_expression(\"(()())\") == True\nassert check_expression(\")(\") == False\nassert check_expression(\"((()))\") == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def find_kth(arr1, arr2, k):\n    i = j = 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] <= arr2[j]:\n            if (i + j + 1) == k:\n                return arr1[i]\n            i += 1\n        else:\n            if (i + j + 1) == k:\n                return arr2[j]\n            j += 1\n    if i == len(arr1):\n        return arr2[k - i - 1]\n    return arr1[k - j - 1]",
+  "sample_keys": [
+    "def find_kth(arr1, arr2, k):\n    i = j = 0\n    \n    while i < len(arr1) and j < len(arr2) and k > 0:\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n        k -= 1\n    \n    # If arr1 has more elements, return the last one\n    if i < len(arr1):\n        return arr1[i]\n    # Otherwise, return the last one from arr2\n    return arr2[j]",
+    "def find_kth(arr1, arr2, k):\n    ptr1 = 0\n    ptr2 = 0\n    \n    while ptr1 < len(arr1) and ptr2 < len(arr2):\n        if arr1[ptr1] < arr2[ptr2]:\n            ptr1 += 1\n        else:\n            if not (k - 1):\n                return arr2[ptr2]\n            ptr2 += 1\n            k -= 1\n            \n    # If arr1 is exhausted, fill the remaining positions with arr2\n    while ptr2 < len(arr2):\n        if not (k - 1):\n            return arr2[ptr2]\n        ptr2 += 1\n        k -= 1\n        \n    # If arr2 is exhausted, fill the remaining positions with arr1\n    while ptr1 < len(arr1):\n        if not (k - 1):\n            return arr1[ptr1]\n        ptr1 += 1\n        k -= 1",
+    "def find_kth(arr1, arr2, k):\n    i = j = 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] <= arr2[j]:\n            if k == 1:\n                return arr1[i]\n            i += 1\n        else:\n            if k == 1:\n                return arr2[j]\n            j += 1\n        k -= 1\n    if i == len(arr1):\n        return arr2[j + k - 1]\n    elif j == len(arr2):\n        return arr1[i + k - 1]",
+    "def find_kth(arr1, arr2, k):\n    if len(arr1) < k:\n        return arr2[k - 1]\n    elif len(arr2) < k:\n        return arr1[k - 1]\n    else:\n        i = j = 0\n        while i + j < k:\n            if arr1[i] <= arr2[j]:\n                i += 1\n            else:\n                j += 1\n        return arr1[i - 1]",
+    "def find_kth(arr1, arr2, k):\n    i, j = 0, 0\n    while i < len(arr1) and j < len(arr2):\n        if arr1[i] < arr2[j]:\n            i += 1\n        else:\n            j += 1\n        k -= 1\n    if i < len(arr1):\n        return arr1[i]\n    return arr2[j]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2251.0,
+    "small_out": 886.0,
+    "small_s": 16.41369854801451
+  },
+  "calls_plus": {
+    "small_in": 2026.0,
+    "small_out": 718.0,
+    "small_s": 13.720574082020903,
+    "large_in": 189.0,
+    "large_out": 121.0,
+    "large_s": 3.775728883978445
+  },
+  "calls_samples": {
+    "small_in": 945.0,
+    "small_out": 675.0,
+    "small_s": 13.668232323980192
+  }
+}

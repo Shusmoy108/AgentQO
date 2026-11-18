@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-222",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `check_type` that takes one parameter, `tup`.\n2. Use the built-in `map()` function to apply the `type()` function to each element in the tuple `tup`, resulting in a map object of types.\n3. Convert the map object to a set using `set()`. If all elements were of the same type, the set will contain only one unique type.\n4. Check if the length of the set is equal to 1. If it is, return `True`; otherwise, return `False`.\n5. Test the function with the provided test case to ensure it works as expected.",
+  "reference_key": null,
+  "final_key_plus": "def check_type(tup):\n    # Apply type() to each element in the tuple and convert to a set\n    unique_types = set(map(type, tup))\n    # Return True if there's only one unique type, False otherwise\n    return len(unique_types) == 1",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((1, 2, 3)) == True\nassert check_type((True, False)) == True\nassert check_type((None, None)) == True\nassert check_type((1, 'a', 3)) == False\n```",
+    "coder": "```python\ndef check_type(tup):\n    # Apply type() to each element in the tuple and convert to a set\n    unique_types = set(map(type, tup))\n    # Return True if there's only one unique type, False otherwise\n    return len(unique_types) == 1\n```",
+    "verifier": "PICK: A\n\n```python\ndef check_type(tup):\n    # Apply type() to each element in the tuple and convert to a set\n    unique_types = set(map(type, tup))\n    # Return True if there's only one unique type, False otherwise\n    return len(unique_types) == 1\n```",
+    "fixer": "```python\ndef check_type(tup):\n    # Apply type() to each element in the tuple and convert to a set\n    unique_types = set(map(type, tup))\n    # Return True if there's only one unique type, False otherwise\n    return len(unique_types) == 1\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to store the maximum product found so far and the corresponding pair of numbers.\n2. Iterate through the array using two nested loops to generate all possible pairs of numbers.\n3. For each pair, calculate their product.\n4. If the current product is greater than the maximum product found so far, update the maximum product and the corresponding pair.\n5. After iterating through all possible pairs, return the pair with the highest product.",
+      "quality": 0.0,
+      "final_key": "def check_type(tup):\n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(len(tup)):\n        for j in range(i + 1, len(tup)):\n            product = tup[i] * tup[j]\n            if isinstance(product, int) and isinstance(max_product, int):\n                if product > max_product:\n                    max_product = product\n                    max_pair = (tup[i], tup[j])\n                    \n    return max_pair",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_type((5, 6, 7, 3, 5, 6)) == True\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((True, False, True)) == True\nassert check_type((1.0, 2.0, 3.0)) == True\nassert check_type((1, 2, 'a')) == False\n```",
+        "coder": "```python\ndef check_type(tup):\n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(len(tup)):\n        for j in range(i + 1, len(tup)):\n            product = tup[i] * tup[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (tup[i], tup[j])\n                \n    return max_pair\n```",
+        "verifier": "PICK: B\n\n```python\ndef check_type(tup):\n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(len(tup)):\n        for j in range(i + 1, len(tup)):\n            product = tup[i] * tup[j]\n            if isinstance(product, int) and isinstance(max_product, int):\n                if product > max_product:\n                    max_product = product\n                    max_pair = (tup[i], tup[j])\n                    \n    return max_pair\n```",
+        "fixer": "```python\ndef check_type(tup):\n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(len(tup)):\n        for j in range(i + 1, len(tup)):\n            product = tup[i] * tup[j]\n            if isinstance(product, int) and isinstance(max_product, int):\n                if product > max_product:\n                    max_product = product\n                    max_pair = (tup[i], tup[j])\n                    \n    return max_pair\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a variable `sum` to store the result.\n2. Iterate through the list using a for loop.\n3. Check if the index is even (i.e., `index % 2 == 0`) and if the element at that index is even (i.e., `element % 2 == 0`).\n4. If both conditions are met, add the element to the `sum`.\n5. After iterating through all elements, return the `sum`.",
+      "quality": 0.0,
+      "final_key": "def check_type(tup):\n    sum = 0\n    for index, element in enumerate(tup):\n        if isinstance(element, int) and index % 2 == 0:\n            sum += element\n    return sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_type((1, 2, 3)) == False\nassert check_type(('a', 'b', 'c')) == True\nassert check_type((True, False, True)) == True\nassert check_type((None, None, None)) == True\nassert check_type((1.1, 2.2, 3.3)) == True\n```",
+        "coder": "```python\ndef check_type(tup):\n    sum = 0\n    for index, element in enumerate(tup):\n        if index % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum\n```",
+        "verifier": "PICK: B\n\n```python\ndef check_type(tup):\n    sum = 0\n    for index, element in enumerate(tup):\n        if isinstance(element, int) and index % 2 == 0:\n            sum += element\n    return sum\n```",
+        "fixer": "```python\ndef check_type(tup):\n    sum = 0\n    for index, element in enumerate(tup):\n        if isinstance(element, int) and index % 2 == 0:\n            sum += element\n    return sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `start_withp` that takes a list of strings as input.\n2. Initialize an empty tuple to store the result.\n3. Iterate through each word in the input list using a for loop.\n4. Check if the first character of the current word is 'p' using the condition `word[0] == 'p'`.\n5. If the condition is true, add the word to the result tuple.\n6. After iterating through all words, return the result tuple.\n\nThis approach ensures that we correctly identify and return the first two words from the list that start with the letter 'p'.",
+      "quality": 1.0,
+      "final_key": "def check_type(tup):\n    first_element_type = type(tup[0])\n    return all(isinstance(element, first_element_type) for element in tup)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_type(('a', 'b', 'c')) == False\nassert check_type(('1', '2', '3')) == True\nassert check_type(('a', 'b', 'c', 'd')) == False\nassert check_type(('1', '2', '3', '4')) == True\nassert check_type(('a', 'b', 'c', 'd', 'e')) == False\n```",
+        "coder": "```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef check_type(tup):\n    first_element_type = type(tup[0])\n    return all(isinstance(element, first_element_type) for element in tup)\n```",
+        "fixer": "```python\ndef check_type(tup):\n    first_element_type = type(tup[0])\n    return all(isinstance(element, first_element_type) for element in tup)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def check_type(tuple):\n    # Get the data type of the first element\n    first_element_type = type(tuple[0])\n    \n    # Iterate over each element in the tuple\n    for element in tuple:\n        # Compare the current element's data type to the first element's data type\n        if type(element) != first_element_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # Return True if all elements have the same data type\n    return True",
+  "sample_keys": [
+    "def check_type(tup):\n    # Get the type of each element in the tuple\n    types = {type(x) for x in tup}\n    \n    # Check if there's only one unique type\n    return len(types) == 1",
+    "def check_type(tup):\n    if not tup:  # Check if the tuple is empty\n        return True\n    \n    first_element_type = type(tup[0])\n    \n    for element in tup[1:]:\n        if type(element) != first_element_type:\n            return False\n    \n    return True",
+    "def check_type(input_tuple):\n    # Check if the input is indeed a tuple\n    if not isinstance(input_tuple, tuple):\n        raise ValueError(\"Input must be a tuple\")\n    \n    # Get the data type of the first two elements\n    first_data_type = type(input_tuple[0])\n    if len(input_tuple) < 2:\n        # If there's less than two elements, they all have the same data type\n        return True\n    \n    # Iterate through the rest of the tuple\n    for element in input_tuple[1:]:\n        if type(element) != first_data_type:\n            # Return False if any element has a different data type\n            return False\n    \n    # If all elements have the same data type, return True\n    return True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.6666666666666666
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1666.0,
+    "small_out": 538.0,
+    "small_s": 11.188907166011631
+  },
+  "calls_plus": {
+    "large_in": 121.0,
+    "large_out": 135.0,
+    "large_s": 2.9778701330069453,
+    "small_in": 1354.0,
+    "small_out": 266.0,
+    "small_s": 4.947264866932528
+  },
+  "calls_samples": {
+    "small_in": 5091.0,
+    "small_out": 1714.0,
+    "small_s": 29.130991642014123
+  }
+}

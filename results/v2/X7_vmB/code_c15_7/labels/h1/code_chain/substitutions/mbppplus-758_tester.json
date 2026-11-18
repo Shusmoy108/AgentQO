@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-758",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert unique_sublists([[1, 2], [3, 4], [1, 2]]) == {(1, 2): 2, (3, 4): 1}\nassert unique_sublists([[], [], []]) == {(): 3}\nassert unique_sublists([[10], [20, 30], [40], [20, 30], [10]]) == {(10,): 2, (20, 30): 2, (40,): 1}\nassert unique_sublists([[1, 2, 3], [4, 5], [6, 7, 8], [1, 2, 3], [4, 5]]) == {(1, 2, 3): 2, (4, 5): 2, (6, 7, 8): 1}\nassert unique_sublists([]) == {}\n```",
+  "reference_key": "assert unique_sublists([[1, 2], [3, 4], [1, 2]]) == {(1, 2): 2, (3, 4): 1}\nassert unique_sublists([[], [], []]) == {(): 3}\nassert unique_sublists([[10], [20, 30], [40], [20, 30], [10]]) == {(10,): 2, (20, 30): 2, (40,): 1}\nassert unique_sublists([[1, 2, 3], [4, 5], [6, 7, 8], [1, 2, 3], [4, 5]]) == {(1, 2, 3): 2, (4, 5): 2, (6, 7, 8): 1}\nassert unique_sublists([]) == {}",
+  "final_key_plus": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```",
+    "fixer": "```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert unique_sublists([[]]) == {}\nassert unique_sublists([[1]]) == {(1,): 1}\nassert unique_sublists([]) == {}\nassert unique_sublists([[1, 3, 3, 4, 6, 3], [3, 6]]) == {(1, 3, 3, 4, 6, 3): 1, (3, 6): 1}\nassert unique_sublists([[True, False], [False, True]]) == {(True, False): 1, (False, True): 1}",
+      "reference_key": "assert unique_sublists([[1, 2], [3, 4], [1, 2]]) == {(1, 2): 2, (3, 4): 1}\nassert unique_sublists([[], [], []]) == {(): 3}\nassert unique_sublists([[10], [20, 30], [40], [20, 30], [10]]) == {(10,): 2, (20, 30): 2, (40,): 1}\nassert unique_sublists([[1, 2, 3], [4, 5], [6, 7, 8], [1, 2, 3], [4, 5]]) == {(1, 2, 3): 2, (4, 5): 2, (6, 7, 8): 1}\nassert unique_sublists([]) == {}",
+      "key_differs": true,
+      "text": "```python\nassert unique_sublists([[]]) == {}\nassert unique_sublists([[1]]) == {(1,): 1}\nassert unique_sublists([]) == {}\nassert unique_sublists([[1, 3, 3, 4, 6, 3], [3, 6]]) == {(1, 3, 3, 4, 6, 3): 1, (3, 6): 1}\nassert unique_sublists([[True, False], [False, True]]) == {(True, False): 1, (False, True): 1}\n```",
+      "quality": 1.0,
+      "final_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```",
+        "fixer": "```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert unique_sublists([]) == {}, \"Expected empty list to return an empty dictionary\"\nassert unique_sublists([[[1]]]) == {(1,): 1}, \"Expected [[[1]]] to contain only one subtuple\"\nassert unique_sublists([[2, 4, 6], [2, 4]]) == {(2, 4): 2}, \"Expected [[2, 4, 6], [2, 4]] to have two occurrences of [2, 4]\"\nassert unique_sublists([[], [], []]) == {(): 3}, \"Expected three empty tuples to be counted\"\nassert unique_sublists([[\"\"], [\"\", \"\"], ['a']]) == {('', ''): 2, ('a',): 1}, \"Expected multiple empty strings to be counted\"",
+      "reference_key": "assert unique_sublists([[1, 2], [3, 4], [1, 2]]) == {(1, 2): 2, (3, 4): 1}\nassert unique_sublists([[], [], []]) == {(): 3}\nassert unique_sublists([[10], [20, 30], [40], [20, 30], [10]]) == {(10,): 2, (20, 30): 2, (40,): 1}\nassert unique_sublists([[1, 2, 3], [4, 5], [6, 7, 8], [1, 2, 3], [4, 5]]) == {(1, 2, 3): 2, (4, 5): 2, (6, 7, 8): 1}\nassert unique_sublists([]) == {}",
+      "key_differs": true,
+      "text": "```python\nassert unique_sublists([]) == {}, \"Expected empty list to return an empty dictionary\"\nassert unique_sublists([[[1]]]) == {(1,): 1}, \"Expected [[[1]]] to contain only one subtuple\"\nassert unique_sublists([[2, 4, 6], [2, 4]]) == {(2, 4): 2}, \"Expected [[2, 4, 6], [2, 4]] to have two occurrences of [2, 4]\"\nassert unique_sublists([[], [], []]) == {(): 3}, \"Expected three empty tuples to be counted\"\nassert unique_sublists([[\"\"], [\"\", \"\"], ['a']]) == {('', ''): 2, ('a',): 1}, \"Expected multiple empty strings to be counted\"\n```",
+      "quality": 1.0,
+      "final_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```",
+        "fixer": "```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert frequency([], 1) == 0\nassert frequency([1, 1, 1, 1], 1) == 4\nassert frequency([1, 2, 3, 4, 5], 6) == 0\nassert frequency([1, 2, 3, 4, 5], 1) == 5\nassert frequency([1, 2, 3, 4, 5], 5) == 1",
+      "reference_key": "assert unique_sublists([[1, 2], [3, 4], [1, 2]]) == {(1, 2): 2, (3, 4): 1}\nassert unique_sublists([[], [], []]) == {(): 3}\nassert unique_sublists([[10], [20, 30], [40], [20, 30], [10]]) == {(10,): 2, (20, 30): 2, (40,): 1}\nassert unique_sublists([[1, 2, 3], [4, 5], [6, 7, 8], [1, 2, 3], [4, 5]]) == {(1, 2, 3): 2, (4, 5): 2, (6, 7, 8): 1}\nassert unique_sublists([]) == {}",
+      "key_differs": true,
+      "text": "```python\nassert frequency([], 1) == 0\nassert frequency([1, 1, 1, 1], 1) == 4\nassert frequency([1, 2, 3, 4, 5], 6) == 0\nassert frequency([1, 2, 3, 4, 5], 1) == 5\nassert frequency([1, 2, 3, 4, 5], 5) == 1\n```",
+      "quality": 1.0,
+      "final_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```",
+        "fixer": "```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n\n# Test cases\nassert unique_sublists([[1, 3], [5, 7], [1, 3], [13, 15, 17], [5, 7], [9, 11]] )=={(1, 3): 2, (5, 7): 2, (13, 15, 17): 1, (9, 11): 1}\nassert unique_sublists([['green', 'orange'], ['black'], ['green', 'orange'], ['white']])=={('green', 'orange'): 2, ('black',): 1, ('white',): 1}\nassert unique_sublists([[10, 20, 30, 40], [60, 70, 50, 50], [90, 100, 200]])=={(10, 20, 30, 40): 1, (60, 70, 50, 50): 1, (90, 100, 200): 1}\nassert unique_sublists([['john']])=={('john',): 1}\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert unique_sublists([]) == {}\nassert unique_sublists([[], [], []]) == {(): 3}\nassert unique_sublists([[1, 2], [2, 3], [1, 2]]) == {(1, 2): 2, (2, 3): 1}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3]]) == {(1, 2, 3): 2, (4, 5, 6): 1}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3], [1, 2, 3]]) == {(1, 2, 3): 3, (4, 5, 6): 1}",
+  "sample_keys": [
+    "assert unique_sublists([[], [], [[]]]) == {(): 3, ([], []): 2}\nassert unique_sublists([[], [[], []], [[], []]]) == {(): 3, ([], []): 3}\nassert unique_sublists([[[]], [[]]]) == {([]): 2}\nassert unique_sublists([[[[[]]]]]) == {([[[[]]]]): 1}\nassert unique_sublists([]) == {}",
+    "assert unique_sublists([[], [1, 2], [3, 4], [1, 2]]) == {(): 1, (1, 2): 2, (3, 4): 1}\nassert unique_sublists([[], [], [], []]) == {}\nassert unique_sublists([[], [1, 2], [3, 4], [1, 2], [1, 2]]) == {(): 1, (1, 2): 3, (3, 4): 1}\nassert unique_sublists([[], [1, 2], [3, 4], [1, 2], [1, 2], [1, 2]]) == {(): 1, (1, 2): 4, (3, 4): 1}\nassert unique_sublists([[], [1, 2], [3, 4], [1, 2], [1, 2], [1, 2]]) == {(): 1, (1, 2): 5, (3, 4): 1}",
+    "assert unique_sublists([]) == {}\nassert unique_sublists([[], [], []]) == {(): 3}\nassert unique_sublists([[], [[], [[]]], []]) == {(), ([], [[]]), []: 3}\nassert unique_sublists([[[[[]]]]]) == {(([],),): 1}\nassert unique_sublists([[], [1], [1], [1], [2]]) == {([],): 2, (1,) : 4, (2,) : 1}",
+    "assert unique_sublists([]) == {}\nassert unique_sublists([[], []]) == {(): 2}\nassert unique_sublists([[1], [2], [3], [2]]) == {(1,) : 1, (2,) : 1, (3,) : 1, (2, 2) : 1}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 3, 4], [4, 5, 6]]) == {(1, 2, 3) : 2, (4, 5, 6) : 2}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3], [4, 5, 6], [1, 2, 3]]) == {(1, 2, 3) : 3, (4, 5, 6) : 2}",
+    "# Edge case 1: Empty list\nassert unique_sublists([]) == {}\n\n# Edge case 2: Single element list\nassert unique_sublists([1]) == {(1): 1}\n\n# Edge case 3: List with mixed types\nassert unique_sublists([['a'], ['b', 'c'], ['a']]) == {('a'): 2, ('b', 'c'): 1}\n\n# Edge case 4: List with duplicate elements\nassert unique_sublists([[1, 2, 3], [2, 3, 4], [1, 2, 3]]) == {(-1, 2, 3): 2}\n\n# Edge case 5: List with nested sublists\nassert unique_sublists([[1, 2], [2, 3], [3, 4], [1, 2, 3]]) == {(-1, 2): 2, (-1, 3): 2}"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2910.0,
+    "small_out": 521.0,
+    "small_s": 11.544353786011925
+  },
+  "calls_plus": {
+    "small_in": 2657.0,
+    "small_out": 331.0,
+    "small_s": 7.009050505992491,
+    "large_in": 301.0,
+    "large_out": 206.0,
+    "large_s": 5.0388171180093195
+  },
+  "calls_samples": {
+    "small_in": 1505.0,
+    "small_out": 877.0,
+    "small_s": 16.773514185013482
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-803",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `is_perfect_square` that takes one parameter, `num`.\n2. Calculate the square root of `num` using the `math.sqrt()` function from the math module.\n3. Round the square root to the nearest integer using the `round()` function.\n4. Square the rounded value and compare it to the original `num`.\n5. Return `True` if they are equal, indicating `num` is a perfect square; otherwise, return `False`.",
+  "reference_key": null,
+  "final_key_plus": "import math\n\ndef is_perfect_square(num):\n    sqrt_num = round(math.sqrt(num))\n    return sqrt_num * sqrt_num == num",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(25)  # True\nassert is_perfect_square(36)  # True\nassert is_perfect_square(49)  # True\nassert is_perfect_square(50)  # False\n```",
+    "coder": "```python\nimport math\n\ndef is_perfect_square(num):\n    sqrt_num = round(math.sqrt(num))\n    return sqrt_num * sqrt_num == num\n```",
+    "verifier": "PICK: A\n```python\nimport math\n\ndef is_perfect_square(num):\n    sqrt_num = round(math.sqrt(num))\n    return sqrt_num * sqrt_num == num\n```",
+    "fixer": "```python\nimport math\n\ndef is_perfect_square(num):\n    sqrt_num = round(math.sqrt(num))\n    return sqrt_num * sqrt_num == num\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables for maximum sum (`max_sum`) and current sum (`current_sum`).\n2. Iterate through each element in the list.\n3. For each element, update `current_sum` by adding the element to it.\n4. If `current_sum` becomes negative, reset it to zero because starting a new subarray from the next element would be more beneficial.\n5. Update `max_sum` if `current_sum` is greater than `max_sum`.\n6. After iterating through all elements, return `max_sum`.\n\nThis approach ensures that we efficiently find the maximum sum of any contiguous subarray within the given list.",
+      "quality": 0.0,
+      "final_key": "def is_perfect_square(n):\n    max_sum = 0\n    current_sum = 0\n    \n    for num in str(n):  # Convert the integer to a string to iterate over each digit\n        current_sum += int(num)\n        if current_sum < 0:\n            current_sum = 0\n        max_sum = max(max_sum, current_sum)\n    \n    return max_sum == n[-1]  # Check if the sum of digits equals the last digit of the original number",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(25)  # True\nassert is_perfect_square(36)  # True\nassert is_perfect_square(49)  # True\nassert is_perfect_square(50)  # False\n```",
+        "coder": "```python\ndef is_perfect_square(n):\n    max_sum = 0\n    current_sum = 0\n    \n    for num in n:\n        current_sum += num\n        if current_sum < 0:\n            current_sum = 0\n        max_sum = max(max_sum, current_sum)\n    \n    return max_sum == n[-1]\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_perfect_square(n):\n    max_sum = 0\n    current_sum = 0\n    \n    for num in str(n):  # Convert the integer to a string to iterate over each digit\n        current_sum += int(num)\n        if current_sum < 0:\n            current_sum = 0\n        max_sum = max(max_sum, current_sum)\n    \n    return max_sum == n[-1]  # Check if the sum of digits equals the last digit of the original number\n```",
+        "fixer": "```python\ndef is_perfect_square(n):\n    max_sum = 0\n    current_sum = 0\n    \n    for num in str(n):  # Convert the integer to a string to iterate over each digit\n        current_sum += int(num)\n        if current_sum < 0:\n            current_sum = 0\n        max_sum = max(max_sum, current_sum)\n    \n    return max_sum == n[-1]  # Check if the sum of digits equals the last digit of the original number\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_in_range` that takes two parameters, `l` (lower bound) and `r` (upper bound).\n2. Initialize a variable `total_sum` to zero.\n3. Use a for loop to iterate through each number from `l` to `r`.\n4. Check if the current number is odd using the condition `num % 2 != 0`.\n5. If the number is odd, add it to `total_sum`.\n6. After the loop completes, return the value of `total_sum`.\n\nThis approach ensures that we correctly calculate the sum of all odd numbers within the specified range.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef is_perfect_square(n):\n    if n < 0:\n        return False\n    root = int(math.sqrt(n))\n    return root * root == n\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(16)  # True\nassert is_perfect_square(14)  # False\nassert is_perfect_square(1)   # True\nassert is_perfect_square(0)   # True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(16)  # True\nassert is_perfect_square(14)  # False\nassert is_perfect_square(1)   # True\nassert is_perfect_square(0)   # True\n```",
+        "coder": "```python\ndef sum_in_range(l, r):\n    total_sum = 0\n    for num in range(l, r + 1):\n        if num % 2 != 0:\n            total_sum += num\n    return total_sum\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef is_perfect_square(n):\n    if n < 0:\n        return False\n    root = int(math.sqrt(n))\n    return root * root == n\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(16)  # True\nassert is_perfect_square(14)  # False\nassert is_perfect_square(1)   # True\nassert is_perfect_square(0)   # True\n```",
+        "fixer": "```python\nimport math\n\ndef is_perfect_square(n):\n    if n < 0:\n        return False\n    root = int(math.sqrt(n))\n    return root * root == n\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(16)  # True\nassert is_perfect_square(14)  # False\nassert is_perfect_square(1)   # True\nassert is_perfect_square(0)   # True\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `toggle_string` that takes one parameter, `input_str`.\n2. Inside the function, use the built-in `upper()` method to convert all lowercase letters in the input string to uppercase.\n3. Use the built-in `lower()` method to convert all uppercase letters in the input string to lowercase.\n4. Return the modified string.\n\nHere's the complete implementation:\n\n```python\ndef toggle_string(input_str):\n    # Convert all lowercase letters to uppercase\n    upper_str = input_str.upper()\n    # Convert all uppercase letters to lowercase\n    lower_str = input_str.lower()\n    # Return the modified string\n    return upper_str if input_str.islower() else lower_str\n```\n\nThis function checks if the input string is entirely lowercase or entirely uppercase using the `islower()` method. If it's lowercase, it returns the result of converting all characters to uppercase; otherwise, it returns the result of converting all characters to lowercase.",
+      "quality": 0.0,
+      "final_key": "def is_perfect_square(n):\n    s = int(n**0.5)\n    return s*s == n\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(25)  # True\nassert is_perfect_square(36)  # True\nassert is_perfect_square(49)  # True\nassert not is_perfect_square(50)  # False -> AssertionError",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(25)  # True\nassert is_perfect_square(36)  # True\nassert is_perfect_square(49)  # True\nassert is_perfect_square(50)  # False\n```",
+        "coder": "```python\ndef is_perfect_square(n):\n    s = int(n**0.5)\n    return s*s == n\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_perfect_square(n):\n    s = int(n**0.5)\n    return s*s == n\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(25)  # True\nassert is_perfect_square(36)  # True\nassert is_perfect_square(49)  # True\nassert not is_perfect_square(50)  # False -> AssertionError\n```",
+        "fixer": "```python\ndef is_perfect_square(n):\n    s = int(n**0.5)\n    return s*s == n\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(25)  # True\nassert is_perfect_square(36)  # True\nassert is_perfect_square(49)  # True\nassert not is_perfect_square(50)  # False -> AssertionError\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "import math\n\ndef is_perfect_square(n):\n    sqrt_n = math.sqrt(n)\n    return sqrt_n.is_integer()\n\n# Test cases\nassert not is_perfect_square(10)\nassert is_perfect_square(36)\nassert not is_perfect_square(14)\nassert is_perfect_square(14*14)\nassert not is_perfect_square(125)\nassert is_perfect_square(125*125)\nassert not is_perfect_square(10)  # False\nassert is_perfect_square(25)  # True\nassert is_perfect_square(36)  # True\nassert is_perfect_square(49)  # True\nassert not is_perfect_square(50)  # False -> AssertionError",
+    "import math\n\ndef is_perfect_square(n):\n    sqrt_n = int(math.sqrt(n))\n    return sqrt_n * sqrt_n == n",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1464.0,
+    "small_out": 301.0,
+    "small_s": 2.616032750986051
+  },
+  "calls_plus": {
+    "large_in": 125.0,
+    "large_out": 103.0,
+    "large_s": 1.4594071739993524,
+    "small_in": 1243.0,
+    "small_out": 178.0,
+    "small_s": 2.8357966149924323
+  },
+  "calls_samples": {
+    "small_in": 4335.0,
+    "small_out": 1141.0,
+    "small_s": 23.83078971100622
+  }
+}

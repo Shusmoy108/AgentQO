@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-801",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `test_three_equal` that takes three integer parameters.\n2. Initialize a counter variable to zero.\n3. Check if all three integers are equal using conditional statements.\n4. If they are equal, increment the counter by three.\n5. Return the value of the counter.",
+  "reference_key": null,
+  "final_key_plus": "def test_three_equal(a, b, c):\n    counter = 0\n    if a == b == c:\n        counter += 3\n    return counter",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert test_three_equal(2, 2, 2) == 3\nassert test_three_equal(-1, -1, -1) == 3\nassert test_three_equal(0, 0, 0) == 3\nassert test_three_equal(1, 2, 3) == 0\nassert test_three_equal(1, 1, 2) == 2\n```",
+    "coder": "```python\ndef test_three_equal(a, b, c):\n    counter = 0\n    if a == b == c:\n        counter += 3\n    return counter\n```",
+    "verifier": "PICK: A\n\n```python\ndef test_three_equal(a, b, c):\n    counter = 0\n    if a == b == c:\n        counter += 3\n    return counter\n```",
+    "fixer": "```python\ndef test_three_equal(a, b, c):\n    counter = 0\n    if a == b == c:\n        counter += 3\n    return counter\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `get_pairs_count` that takes two parameters: `numbers` (a list of integers) and `sum`.\n2. Initialize a counter variable `count` to zero.\n3. Iterate through each pair of numbers in the list using nested loops.\n4. For each pair, check if their sum equals the given `sum`.\n5. If they do, increment the `count` by one.\n6. After iterating through all possible pairs, return the `count`.\n\nHere's the complete implementation:\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n```\n\nThis function will correctly count the number of pairs whose sum equals the specified `sum`.",
+      "quality": 0.0,
+      "final_key": "def test_three_equal(a, b, c):\n    return a == b == c\n\n# Test cases\nassert test_three_equal(1, 1, 1) == 3\nassert test_three_equal(-1, -2, -3) == 0\nassert test_three_equal(1, 2, 2) == 2\nassert test_three_equal(2, 2, 2) == 3\nassert test_three_equal(-1, -1, -1) == 3\nassert test_three_equal(0, 0, 0) == 3\nassert test_three_equal(1, 2, 3) == 0\nassert test_three_equal(4, 4, 4) == 6",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert test_three_equal(2,2,2) == 3\nassert test_three_equal(-1,-1,-1) == 3\nassert test_three_equal(0,0,0) == 3\nassert test_three_equal(1,2,3) == 0\nassert test_three_equal(4,4,4) == 6\n```",
+        "coder": "```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n```",
+        "verifier": "PICK: B\n```python\ndef test_three_equal(a, b, c):\n    return a == b == c\n\n# Test cases\nassert test_three_equal(1, 1, 1) == 3\nassert test_three_equal(-1, -2, -3) == 0\nassert test_three_equal(1, 2, 2) == 2\nassert test_three_equal(2, 2, 2) == 3\nassert test_three_equal(-1, -1, -1) == 3\nassert test_three_equal(0, 0, 0) == 3\nassert test_three_equal(1, 2, 3) == 0\nassert test_three_equal(4, 4, 4) == 6\n```",
+        "fixer": "```python\ndef test_three_equal(a, b, c):\n    return a == b == c\n\n# Test cases\nassert test_three_equal(1, 1, 1) == 3\nassert test_three_equal(-1, -2, -3) == 0\nassert test_three_equal(1, 2, 2) == 2\nassert test_three_equal(2, 2, 2) == 3\nassert test_three_equal(-1, -1, -1) == 3\nassert test_three_equal(0, 0, 0) == 3\nassert test_three_equal(1, 2, 3) == 0\nassert test_three_equal(4, 4, 4) == 6\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `test_three_equal` that takes three integer parameters.\n2. Initialize a counter variable to zero.\n3. Check if all three integers are equal using conditional statements.\n4. If they are not equal, increment the counter by three.\n5. Return the value of the counter.",
+      "quality": 0.0,
+      "final_key": "def test_three_equal(a, b, c):\n    counter = 0\n    if a != b and a != c and b != c:\n        counter += 3\n    return counter",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert test_three_equal(2, 2, 2) == 3\nassert test_three_equal(1, 2, 3) == 1\nassert test_three_equal(-1, -1, -1) == 3\nassert test_three_equal(0, 0, 0) == 3\nassert test_three_equal(1, 2, 4) == 1\n```",
+        "coder": "```python\ndef test_three_equal(a, b, c):\n    counter = 0\n    if a != b and a != c and b != c:\n        counter += 3\n    return counter\n```",
+        "verifier": "PICK: A\n\n```python\ndef test_three_equal(a, b, c):\n    counter = 0\n    if a != b and a != c and b != c:\n        counter += 3\n    return counter\n```",
+        "fixer": "```python\ndef test_three_equal(a, b, c):\n    counter = 0\n    if a != b and a != c and b != c:\n        counter += 3\n    return counter\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `even_position` that takes one parameter: `lst`.\n2. Initialize a variable `count` to zero.\n3. Iterate over the indices of the list using a for loop.\n4. For each index, check if it is even (i.e., divisible by 2).\n5. If the index is even, check if the number at that index is even.\n6. If both conditions are met, increment the `count` by 1.\n7. After iterating through all indices, check if `count` equals the length of the list.\n8. Return `True` if `count` equals the length of the list, otherwise return `False`.",
+      "quality": 0.0,
+      "final_key": "def test_three_equal(a, b, c):\n    count = 0\n    for num in [a, b, c]:\n        if num == a:\n            count += 1\n    return count == 3\n\n# Test cases\nassert test_three_equal(1,1,1) == 3\nassert test_three_equal(-1,-2,-3) == 0\nassert test_three_equal(1,2,2) == 2\nassert test_three_equal(1,1,1) == 3\nassert test_three_equal(2,2,2) == 3\nassert test_three_equal(1,2,3) == 0\nassert test_three_equal(-1,-1,-1) == 3\nassert test_three_equal(0,0,0) == 3",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert test_three_equal(1,1,1) == 3\nassert test_three_equal(2,2,2) == 3\nassert test_three_equal(1,2,3) == 0\nassert test_three_equal(-1,-1,-1) == 3\nassert test_three_equal(0,0,0) == 3\n```",
+        "coder": "```python\ndef even_position(lst):\n    count = 0\n    for i in range(len(lst)):\n        if i % 2 == 0 and lst[i] % 2 == 0:\n            count += 1\n    return count == len(lst)\n```",
+        "verifier": "PICK: B\n```python\ndef test_three_equal(a, b, c):\n    count = 0\n    for num in [a, b, c]:\n        if num == a:\n            count += 1\n    return count == 3\n\n# Test cases\nassert test_three_equal(1,1,1) == 3\nassert test_three_equal(-1,-2,-3) == 0\nassert test_three_equal(1,2,2) == 2\nassert test_three_equal(1,1,1) == 3\nassert test_three_equal(2,2,2) == 3\nassert test_three_equal(1,2,3) == 0\nassert test_three_equal(-1,-1,-1) == 3\nassert test_three_equal(0,0,0) == 3\n```",
+        "fixer": "```python\ndef test_three_equal(a, b, c):\n    count = 0\n    for num in [a, b, c]:\n        if num == a:\n            count += 1\n    return count == 3\n\n# Test cases\nassert test_three_equal(1,1,1) == 3\nassert test_three_equal(-1,-2,-3) == 0\nassert test_three_equal(1,2,2) == 2\nassert test_three_equal(1,1,1) == 3\nassert test_three_equal(2,2,2) == 3\nassert test_three_equal(1,2,3) == 0\nassert test_three_equal(-1,-1,-1) == 3\nassert test_three_equal(0,0,0) == 3\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def count_equal_numbers(a, b, c):\n    count = 0\n    for i in range(3):\n        for j in range(i + 1, 3):\n            for k in range(j + 1, 3):\n                if a == b == c:\n                    count += 1\n    return count\n\n# Test cases\nassert count_equal_numbers(1,1,1) == 3\nassert count_equal_numbers(-1,-2,-3) == 0\nassert count_equal_numbers(1,2,2) == 2\nassert count_equal_numbers(2, 2, 2) == 3\nassert count_equal_numbers(1, 2, 3) == 0\nassert count_equal_numbers(-1, -1, -1) == 3\nassert count_equal_numbers(0, 0, 0) == 3\nassert count_equal_numbers(1, 1, 2) == 2",
+  "sample_keys": [
+    "def test_three_equal(a, b, c):\n    count = 0\n    for i in range(a):\n        for j in range(b):\n            if i == j:\n                count += 1\n    return count\n\n# Test cases\nassert test_three_equal(1,1,1) == 3\nassert test_three_equal(-1,-2,-3) == 0\nassert test_three_equal(1,2,2) == 2\nassert test_three_equal(2,2,2) == 9\nassert test_three_equal(-1,-1,-1) == 9\nassert test_three_equal(0,0,0) == 9\nassert test_three_equal(1,2,3) == 0\nassert test_three_equal(4,4,4) == 8",
+    "def count_equal(a, b, c):\n    if a == b == c:\n        return 3\n    else:\n        return 0",
+    "def test_three_equal(num1, num2, num3):\n    count = 0\n    if num1 == num2:\n        count += 1\n    if num1 == num3:\n        count += 1\n    if num2 == num3:\n        count += 1\n    return count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1801.0,
+    "small_out": 826.0,
+    "small_s": 14.956370100029744
+  },
+  "calls_plus": {
+    "large_in": 109.0,
+    "large_out": 64.0,
+    "large_s": 1.3870027940138243,
+    "small_in": 1151.0,
+    "small_out": 212.0,
+    "small_s": 3.648069134011166
+  },
+  "calls_samples": {
+    "small_in": 4444.0,
+    "small_out": 1708.0,
+    "small_s": 29.613839515048312
+  }
+}

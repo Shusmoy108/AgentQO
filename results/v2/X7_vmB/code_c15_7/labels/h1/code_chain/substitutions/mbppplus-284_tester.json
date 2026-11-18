@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-284",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert check_element([1, 1, 1, 1], 1) == True\nassert check_element(['a', 'a', 'a'], 'a') == True\nassert check_element([], 'any') == True\nassert check_element(['hello', 'hello'], 'world') == False\nassert check_element([True, True, False], True) == False\n```",
+  "reference_key": "assert check_element([1, 1, 1, 1], 1) == True\nassert check_element(['a', 'a', 'a'], 'a') == True\nassert check_element([], 'any') == True\nassert check_element(['hello', 'hello'], 'world') == False\nassert check_element([True, True, False], True) == False",
+  "final_key_plus": "def check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```",
+    "fixer": "```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert check_element([10, 20, 30, 40, 50], 7) == False\nassert check_element([], 0) == True\nassert check_element(['a', 'b', 'c'], 'a') == True\nassert check_element([(1, 2), (3, 4)], (1, 2)) == False\nassert check_element([('apple', 'banana'), ('pear', 'grape')], 'apple') == False",
+      "reference_key": "assert check_element([1, 1, 1, 1], 1) == True\nassert check_element(['a', 'a', 'a'], 'a') == True\nassert check_element([], 'any') == True\nassert check_element(['hello', 'hello'], 'world') == False\nassert check_element([True, True, False], True) == False",
+      "key_differs": true,
+      "text": "```python\nassert check_element([10, 20, 30, 40, 50], 7) == False\nassert check_element([], 0) == True\nassert check_element(['a', 'b', 'c'], 'a') == True\nassert check_element([(1, 2), (3, 4)], (1, 2)) == False\nassert check_element([('apple', 'banana'), ('pear', 'grape')], 'apple') == False\n```",
+      "quality": 1.0,
+      "final_key": "def check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```",
+        "fixer": "```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import List\n\ndef check_element(lst: List[str], element: str) -> bool:\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n\n# Testing the function with various inputs\nassert check_element([], 'a') == False  # Edge case - empty list\nassert check_element(['a', 'b', 'c'], 'x') == False  # Standard case - different elements\nassert check_element(['a', 'a', 'a'], 'a') == True  # Standard case - equal elements\nassert check_element(['a', 'b', 'a'], 'a') == False  # Different cases - mixed elements\nassert check_element([1, 2, 3], 4) == False  # Different cases - numeric values",
+      "reference_key": "assert check_element([1, 1, 1, 1], 1) == True\nassert check_element(['a', 'a', 'a'], 'a') == True\nassert check_element([], 'any') == True\nassert check_element(['hello', 'hello'], 'world') == False\nassert check_element([True, True, False], True) == False",
+      "key_differs": true,
+      "text": "```python\nfrom typing import List\n\ndef check_element(lst: List[str], element: str) -> bool:\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n\n# Testing the function with various inputs\nassert check_element([], 'a') == False  # Edge case - empty list\nassert check_element(['a', 'b', 'c'], 'x') == False  # Standard case - different elements\nassert check_element(['a', 'a', 'a'], 'a') == True  # Standard case - equal elements\nassert check_element(['a', 'b', 'a'], 'a') == False  # Different cases - mixed elements\nassert check_element([1, 2, 3], 4) == False  # Different cases - numeric values\n```",
+      "quality": 1.0,
+      "final_key": "def check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```",
+        "fixer": "```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert surface_area(10, 5) == 275\nassert surface_area(5, 8) == 160\nassert surface_area(0, 10) == 0\nassert surface_area(10, 0) == 0\nassert surface_area(-1, 5) == 0",
+      "reference_key": "assert check_element([1, 1, 1, 1], 1) == True\nassert check_element(['a', 'a', 'a'], 'a') == True\nassert check_element([], 'any') == True\nassert check_element(['hello', 'hello'], 'world') == False\nassert check_element([True, True, False], True) == False",
+      "key_differs": true,
+      "text": "```python\nassert surface_area(10, 5) == 275\nassert surface_area(5, 8) == 160\nassert surface_area(0, 10) == 0\nassert surface_area(10, 0) == 0\nassert surface_area(-1, 5) == 0\n```",
+      "quality": 1.0,
+      "final_key": "def check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n```",
+        "fixer": "```python\ndef check_element(lst, element):\n    all_equal = True\n    for item in lst:\n        if item != element:\n            all_equal = False\n            break\n    return all_equal\n\n# Test cases\nassert check_element([\"green\", \"orange\", \"black\", \"white\"], 'blue') == False\nassert check_element([1, 2, 3, 4], 7) == False\nassert check_element([\"green\", \"green\", \"green\", \"green\"], 'green') == True\nassert surface_area(10, 5) == 275\nassert surface_area(5, 8) == 160\nassert surface_area(0, 10) == 0\nassert surface_area(10, 0) == 0\nassert surface_area(-1, 5) == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert check_element([], 'red') == True\nassert check_element(['red', 'red', 'red'], 'red') == True\nassert check_element(['red', 'red', 'blue'], 'red') == False\nassert check_element(['red', 'red', 'red', 'red'], 'red') == True\nassert check_element(['red', 'red', 'red', 'red', 'red'], 'red') == True",
+  "sample_keys": [
+    "assert check_element([], 'anything') == True  # Test with empty list\nassert check_element(['a'], 'a') == True   # Test with single-element list\nassert check_element(['a', 'b'], 'c') == False # Test with different elements\nassert check_element(['a', 'a', 'a'], 'a') == True  # Test with multiple identical elements\nassert check_element([10, 10, 10], 20) == False # Test with different elements other than list length",
+    "# Test case with a list of distinct elements\nassert check_element([\"apple\", \"banana\", \"cherry\"], 'pear') == False\n\n# Test case with a list of the same element repeated multiple times\nassert check_element([1, 1, 1, 1], 1) == True\n\n# Test case with an empty list\nassert check_element([], 0) == True\n\n# Test case with a list containing only one element\nassert check_element(['single'], 'single') == True\n\n# Test case with a list containing negative numbers\nassert check_element([-1, -2, -3, -4], -1) == True",
+    "assert check_element([\"red\", \"red\", \"red\"], 'red') == True\nassert check_element([], 'anything') == True\nassert check_element(['hello', 'hello', 'hello'], 'hello') == True\nassert check_element([1, 2, 3], 4) == False\nassert check_element(['true', 'true', 'false'], 'true') == True",
+    "assert check_element([10, 20, 30], 10)==True\nassert check_element([10, 20, 30], 40)==False\nassert check_element([], 'a')==True\nassert check_element(['a', 'b', 'a'], 'a')==True\nassert check_element(['a', 'b', 'c'], 'a')==True",
+    "import pytest\n\ndef is_all_elements_equal(lst, element):\n    return all(item == element for item in lst)\n\n# Test cases\npytest.raises(ValueError, is_all_elements_equal, [], 'any_value')\npytest.raises(TypeError, is_all_elements_equal, [1,2], None)\npytest.raises(IndexError, is_all_elements_equal, ['one', 'two'], 0)\n@pytest.mark.parametrize(\"lst, expected\", [\n    (['a','a','a'], True),\n    (['b','c','d'], False),\n    ([True,True,True], True),\n    ([1,2,3,4,5], True),\n    (['hello','world','foo'], False),\n])\ndef test_is_all_elements_equal(lst, expected):\n    assert is_all_elements_equal(lst, 'any_value') == expected"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1471.0,
+    "small_out": 379.0,
+    "small_s": 7.6914819369558245
+  },
+  "calls_plus": {
+    "small_in": 1255.0,
+    "small_out": 283.0,
+    "small_s": 5.827685914002359,
+    "large_in": 180.0,
+    "large_out": 84.0,
+    "large_s": 1.8878874089859892
+  },
+  "calls_samples": {
+    "small_in": 900.0,
+    "small_out": 605.0,
+    "small_s": 11.295619967015227
+  }
+}

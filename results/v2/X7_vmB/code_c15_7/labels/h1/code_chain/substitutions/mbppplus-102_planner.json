@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-102",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Split the input string by underscores to get individual words.\n2. Capitalize the first letter of each word except for the first one.\n3. Join all the words together without any separators to form the camel case string.\n4. Return the resulting camel case string.\n5. Test the function with the provided test case to ensure it works correctly.",
+  "reference_key": null,
+  "final_key_plus": "def snake_to_camel(snake_str):\n    # Split the snake case string into individual words\n    words = snake_str.split('_')\n    \n    # Capitalize the first letter of each word except the first one\n    camel_case_words = [word.capitalize() if i > 0 else word.lower() for i, word in enumerate(words)]\n    \n    # Join all the words together without any separators\n    camel_case_str = ''.join(camel_case_words)\n    \n    return camel_case_str",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123_numbers') == '123Numbers'\nassert snake_to_camel('no_underscores') == 'NoUnderscores'\n```",
+    "coder": "```python\ndef snake_to_camel(snake_str):\n    # Split the snake case string into individual words\n    words = snake_str.split('_')\n    \n    # Capitalize the first letter of each word except the first one\n    camel_case_words = [word.capitalize() if i > 0 else word.lower() for i, word in enumerate(words)]\n    \n    # Join all the words together without any separators\n    camel_case_str = ''.join(camel_case_words)\n    \n    return camel_case_str\n```",
+    "verifier": "PICK: B\n\n```python\ndef snake_to_camel(snake_str):\n    # Split the snake case string into individual words\n    words = snake_str.split('_')\n    \n    # Capitalize the first letter of each word except the first one\n    camel_case_words = [word.capitalize() if i > 0 else word.lower() for i, word in enumerate(words)]\n    \n    # Join all the words together without any separators\n    camel_case_str = ''.join(camel_case_words)\n    \n    return camel_case_str\n```",
+    "fixer": "```python\ndef snake_to_camel(snake_str):\n    # Split the snake case string into individual words\n    words = snake_str.split('_')\n    \n    # Capitalize the first letter of each word except the first one\n    camel_case_words = [word.capitalize() if i > 0 else word.lower() for i, word in enumerate(words)]\n    \n    # Join all the words together without any separators\n    camel_case_str = ''.join(camel_case_words)\n    \n    return camel_case_str\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('python_language') == 'PythonLanguage'\nassert snake_to_camel('programming_language') == 'ProgrammingLanguage'\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123_numbers') == '123Numbers'\nassert snake_to_camel('no_underscores') == 'NoUnderscores'\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize an empty list `result` to store the unique elements.\n2. Iterate through each element in the input list `input_list`.\n3. For each element, check if it is different from the last element in `result`.\n4. If they are different, append the current element to `result`.\n5. After iterating through all elements, return the `result` list.\n\nThis approach ensures that only unique elements are added to the result list, effectively removing consecutive duplicates.",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != input_list[i-1]:\n            result.append(input_list[i])\n    return ''.join(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('snake_case_string') == 'SnakeCaseString'\nassert snake_to_camel('this_is_a_test') == 'ThisIsATest'\nassert snake_to_camel('single_word') == 'SingleWord'\nassert snake_to_camel('') == ''\n```",
+        "coder": "```python\ndef snake_to_camel(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != input_list[i-1]:\n            result.append(input_list[i])\n    return ''.join(result)\n```",
+        "verifier": "PICK: A\n\n```python\ndef snake_to_camel(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != input_list[i-1]:\n            result.append(input_list[i])\n    return ''.join(result)\n```",
+        "fixer": "```python\ndef snake_to_camel(input_list):\n    result = []\n    for i in range(len(input_list)):\n        if i == 0 or input_list[i] != input_list[i-1]:\n            result.append(input_list[i])\n    return ''.join(result)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Split the input string by underscores to get individual words.\n2. Capitalize the first letter of each word except for the first one.\n3. Join the words together without any separators to form the camel case string.\n4. Return the resulting camel case string.\n5. Test the function with the provided test case to ensure it works correctly.\n\nREWRITTEN PLAN:\n1. Split the input string by underscores to get individual words.\n2. Capitalize the first letter of each word, except for the first one.\n3. Join the words together without any separators to form the camel case string.\n4. Return the resulting camel case string.\n5. Test the function with the provided test case to ensure it works correctly.",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    # Split the input string by underscores to get individual words\n    words = snake_str.split('_')\n    \n    # Capitalize the first letter of each word, except for the first one\n    camel_case_str = words[0].lower() + ''.join(word.capitalize() for word in words[1:])\n    \n    return camel_case_str",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('single_word') == 'SingleWord'\nassert snake_to_camel('') == ''\n```",
+        "coder": "```python\ndef snake_to_camel(snake_str):\n    # Split the input string by underscores to get individual words\n    words = snake_str.split('_')\n    \n    # Capitalize the first letter of each word, except for the first one\n    camel_case_str = words[0].lower() + ''.join(word.capitalize() for word in words[1:])\n    \n    return camel_case_str\n```",
+        "verifier": "PICK: B\n\n```python\ndef snake_to_camel(snake_str):\n    # Split the input string by underscores to get individual words\n    words = snake_str.split('_')\n    \n    # Capitalize the first letter of each word, except for the first one\n    camel_case_str = words[0].lower() + ''.join(word.capitalize() for word in words[1:])\n    \n    return camel_case_str\n```",
+        "fixer": "```python\ndef snake_to_camel(snake_str):\n    # Split the input string by underscores to get individual words\n    words = snake_str.split('_')\n    \n    # Capitalize the first letter of each word, except for the first one\n    camel_case_str = words[0].lower() + ''.join(word.capitalize() for word in words[1:])\n    \n    return camel_case_str\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('python_language') == 'PythonLanguage'\nassert snake_to_camel('programming_language') == 'ProgrammingLanguage'\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('single_word') == 'SingleWord'\nassert snake_to_camel('') == ''\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `last_Digit_Factorial` that takes one argument, `n`.\n3. Initialize a variable `result` to store the last digit of the factorial.\n4. Use a loop to calculate the factorial of `n`.\n5. In each iteration, multiply the current result by `n` and take the modulus of 10 to get the last digit.\n6. Return the final value of `result`.\n\nThis approach ensures that we efficiently compute the last digit of the factorial without needing to handle very large numbers directly.",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert snake_to_camel('snake_case_string') == 'SnakeCaseString'\nassert snake_to_camel('this_is_a_test') == 'ThisIsATest'\nassert snake_to_camel('single_word') == 'SingleWord'\nassert snake_to_camel('multiple_words_in_a_row') == 'MultipleWordsInARow'\nassert snake_to_camel('all_uppercase') == 'AllUppercase'\n```",
+        "coder": "```python\ndef last_digit_factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = (result * i) % 10\n    return result\n```",
+        "verifier": "PICK: B\n```python\ndef snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str\n```",
+        "fixer": "```python\ndef snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('python_language') == 'PythonLanguage'\nassert snake_to_camel('programming_language') == 'ProgrammingLanguage'\nassert snake_to_camel('snake_case_string') == 'SnakeCaseString'\nassert snake_to_camel('this_is_a_test') == 'ThisIsATest'\nassert snake_to_camel('single_word') == 'SingleWord'\nassert snake_to_camel('multiple_words_in_a_row') == 'MultipleWordsInARow'\nassert snake_to_camel('all_uppercase') == 'AllUppercase'\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+  "sample_keys": [
+    "def snake_to_camel(s):\n    return s.title().replace('_', '')",
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    segments = snake_str.split('_')\n    for segment in segments:\n        camel_str += segment.capitalize()\n    return camel_str\n\n# Test cases\nassert snake_to_camel('python_program') == 'PythonProgram'\nassert snake_to_camel('python_language') == ('PythonLanguage')\nassert snake_to_camel('programming_language') == ('ProgrammingLanguage')\nassert snake_to_camel('hello_world') == 'HelloWorld'\nassert snake_to_camel('this_is_a_test_string') == 'ThisIsATestString'\nassert snake_to_camel('snake_case') == 'SnakeCase'\nassert snake_to_camel('123abc') == '123Abc'\nassert snake_to_camel('') == ''",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1372.0,
+    "small_out": 386.0,
+    "small_s": 5.010803992016008
+  },
+  "calls_plus": {
+    "large_in": 105.0,
+    "large_out": 74.0,
+    "large_s": 2.4459016130131204,
+    "small_in": 1469.0,
+    "small_out": 542.0,
+    "small_s": 11.268207343964605
+  },
+  "calls_samples": {
+    "small_in": 3976.0,
+    "small_out": 1249.0,
+    "small_s": 26.188053450983716
+  }
+}

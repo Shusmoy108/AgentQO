@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-439",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert multiple_to_single([0, 0, 1]) == 1\nassert multiple_to_single([9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) == 9876543210\nassert multiple_to_single([123, 456, 789]) == 123456789\nassert multiple_to_single([-1, -2, -3]) == -123\nassert multiple_to_single([]) == 0\n```",
+  "reference_key": "assert multiple_to_single([0, 0, 1]) == 1\nassert multiple_to_single([9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) == 9876543210\nassert multiple_to_single([123, 456, 789]) == 123456789\nassert multiple_to_single([-1, -2, -3]) == -123\nassert multiple_to_single([]) == 0",
+  "final_key_plus": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        if not isinstance(num, int):\n            raise ValueError(\"Invalid input: all elements must be integers\")\n        result += str(num)\n    return int(result)",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        if not isinstance(num, int):\n            raise ValueError(\"Invalid input: all elements must be integers\")\n        result += str(num)\n    return int(result)\n```",
+    "fixer": "```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        if not isinstance(num, int):\n            raise ValueError(\"Invalid input: all elements must be integers\")\n        result += str(num)\n    return int(result)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert multiple_to_single([-79, -23, -48]) == -79-23-48\nassert multiple_to_single((-9282, -677, -84)) == -9282-677-84\nassert multiple_to_single((523, 68, 75)) == 523+68+75\nassert multiple_to_single([0, 0]) == 0+0\ntry:\n    multiple_to_single([])\nexcept ValueError as e:\n    assert str(e) == \"empty input\"",
+      "reference_key": "assert multiple_to_single([0, 0, 1]) == 1\nassert multiple_to_single([9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) == 9876543210\nassert multiple_to_single([123, 456, 789]) == 123456789\nassert multiple_to_single([-1, -2, -3]) == -123\nassert multiple_to_single([]) == 0",
+      "key_differs": true,
+      "text": "```python\nassert multiple_to_single([-79, -23, -48]) == -79-23-48\nassert multiple_to_single((-9282, -677, -84)) == -9282-677-84\nassert multiple_to_single((523, 68, 75)) == 523+68+75\nassert multiple_to_single([0, 0]) == 0+0\ntry:\n    multiple_to_single([])\nexcept ValueError as e:\n    assert str(e) == \"empty input\"\n```",
+      "quality": 1.0,
+      "final_key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```",
+        "fixer": "```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n\n# Test cases based on the given test case\nassert multiple_to_single([]) == 0\nassert multiple_to_single([2, 4]) == 24\nassert multiple_to_single([0, 12345]) == 12345\nassert multiple_to_single([-111111, -999999]) == -111111 - 999999\n# Testing with negative and positive numbers, floating-point numbers, and large numbers\nassert multiple_to_single([1, -2, -3, 4.5, 6]) == 1 - 2 - 3 + 4.5 + 6\nassert multiple_to_single([.math.inf, math.nan]) == float('inf') + float('nan')  # Edge case: mixed types",
+      "reference_key": "assert multiple_to_single([0, 0, 1]) == 1\nassert multiple_to_single([9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) == 9876543210\nassert multiple_to_single([123, 456, 789]) == 123456789\nassert multiple_to_single([-1, -2, -3]) == -123\nassert multiple_to_single([]) == 0",
+      "key_differs": true,
+      "text": "Certainly! Here are five more Python assert statements to verify the `multiple_to_single` function:\n\n```python\nimport math\n\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n\n# Test cases based on the given test case\nassert multiple_to_single([]) == 0\nassert multiple_to_single([2, 4]) == 24\nassert multiple_to_single([0, 12345]) == 12345\nassert multiple_to_single([-111111, -999999]) == -111111 - 999999\n# Testing with negative and positive numbers, floating-point numbers, and large numbers\nassert multiple_to_single([1, -2, -3, 4.5, 6]) == 1 - 2 - 3 + 4.5 + 6\nassert multiple_to_single([.math.inf, math.nan]) == float('inf') + float('nan')  # Edge case: mixed types\n```",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        if isinstance(num, (int, float)):\n            result += str(num)\n        elif isinstance(num, complex):\n            result += str(num.real) + \"+\" + str(num.imag) + \"j\"\n        else:\n            raise TypeError(\"Unsupported type in the list\")\n    return int(result)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        if isinstance(num, (int, float)):\n            result += str(num)\n        elif isinstance(num, complex):\n            result += str(num.real) + \"+\" + str(num.imag) + \"j\"\n        else:\n            raise TypeError(\"Unsupported type in the list\")\n    return int(result)\n```",
+        "fixer": "```python\nimport math\n\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        if isinstance(num, (int, float)):\n            result += str(num)\n        elif isinstance(num, complex):\n            result += str(num.real) + \"+\" + str(num.imag) + \"j\"\n        else:\n            raise TypeError(\"Unsupported type in the list\")\n    return int(result)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(1000, -1000) == (-1000, 1000)",
+      "reference_key": "assert multiple_to_single([0, 0, 1]) == 1\nassert multiple_to_single([9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) == 9876543210\nassert multiple_to_single([123, 456, 789]) == 123456789\nassert multiple_to_single([-1, -2, -3]) == -123\nassert multiple_to_single([]) == 0",
+      "key_differs": true,
+      "text": "```python\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(1000, -1000) == (-1000, 1000)\n```",
+      "quality": 1.0,
+      "final_key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n\n# Test cases\nassert multiple_to_single([11, 33, 50])==113350\nassert multiple_to_single([-1,2,3,4,5,6])==-123456\nassert multiple_to_single([10,15,20,25])==10152025\n\n# Fixing the swap_numbers function\ndef swap_numbers(a, b):\n    return b, a\n\n# Test cases after fixing swap_numbers\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(1000, -1000) == (-1000, 1000)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n\n# Test cases\nassert multiple_to_single([11, 33, 50])==113350\nassert multiple_to_single([-1,2,3,4,5,6])==-123456\nassert multiple_to_single([10,15,20,25])==10152025\n\n# Fixing the swap_numbers function\ndef swap_numbers(a, b):\n    return b, a\n\n# Test cases after fixing swap_numbers\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(1000, -1000) == (-1000, 1000)\n```",
+        "fixer": "```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n\n# Test cases\nassert multiple_to_single([11, 33, 50])==113350\nassert multiple_to_single([-1,2,3,4,5,6])==-123456\nassert multiple_to_single([10,15,20,25])==10152025\n\n# Fixing the swap_numbers function\ndef swap_numbers(a, b):\n    return b, a\n\n# Test cases after fixing swap_numbers\nassert swap_numbers(3, 7) == (7, 3)\nassert swap_numbers(-1, -1) == (-1, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(1000, -1000) == (-1000, 1000)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert multiple_to_single([])==0\nassert multiple_to_single([1])==1\nassert multiple_to_single([-1,-2,-3])==-6\nassert multiple_to_single([0,0,0])==0\nassert multiple_to_single([999,999,999])==2997",
+  "sample_keys": [
+    "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n\n# Test cases\nassert multiple_to_single([]) == 0  # Empty list\nassert multiple_to_single([9]) == 9\nassert multiple_to_single([-1, -2, -3]) == -123\nassert multiple_to_single([42, -68]) == -4268\nassert multiple_to_single([0, 10, 20]) == 01020",
+    "assert multiple_to_single([2, 4, 6]) == 246\nassert multiple_to_single([]) == 0\nassert multiple_to_single([99]) == 99\nassert multiple_to_single([-1, -2, -3]) == -1-2-3\nassert multiple_to_single([-1, 0, 1]) == -101\nassert multiple_to_single([100, 200, 300]) == 100200300",
+    "assert multiple_to_single([])==0\nassert multiple_to_single([2])==2\nassert multiple_to_single([-1])==-1\nassert multiple_to_single([9999])==9999\nassert multiple_to_single([1,1,1,1])==4",
+    "assert multiple_to_single([])==0\nassert multiple_to_single([-1,-2,-3])==-6\nassert multiple_to_single([1,-2,-3])==-6\nassert multiple_to_single([1,2,3])==6\nassert multiple_to_single([1,2,3,4])==1234",
+    "assert multiple_to_single([1, 2, 3]) == 123\nassert multiple_to_single([-10, 20]) == -1020\nassert multiple_to_single([]) == 0\nassert multiple_to_single([77, 88, 99]) == 778899\nassert multiple_to_single([100]) == 100"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1488.0,
+    "small_out": 340.0,
+    "small_s": 7.262389323965181
+  },
+  "calls_plus": {
+    "small_in": 1516.0,
+    "small_out": 308.0,
+    "small_s": 5.987454601970967,
+    "large_in": 161.0,
+    "large_out": 129.0,
+    "large_s": 2.7333587859757245
+  },
+  "calls_samples": {
+    "small_in": 805.0,
+    "small_out": 472.0,
+    "small_s": 8.9141478149686
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-109",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert odd_equivalent(\"111111\", 7) == 7\nassert odd_equivalent(\"000000\", 8) == 0\nassert odd_equivalent(\"101010\", 4) == 2\nassert odd_equivalent(\"110011\", 3) == 3\nassert odd_equivalent(\"010101\", 6) == 3\n```",
+  "reference_key": "assert odd_equivalent(\"111111\", 7) == 7\nassert odd_equivalent(\"000000\", 8) == 0\nassert odd_equivalent(\"101010\", 4) == 2\nassert odd_equivalent(\"110011\", 3) == 3\nassert odd_equivalent(\"010101\", 6) == 3",
+  "final_key_plus": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count\n```",
+    "fixer": "```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(bit) for bit in binary_string) % 2 != 0:\n            count += 1\n    return count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestOddEquivalence(unittest.TestCase):\n    def test_simple(self):\n        self.assertEqual(odd_equivalent(\"101\", 2), 2)\n\n    def test_same(self):\n        self.assertEqual(odd_equivalent(\"111\", 5), 0)\n\n    def test_rotate_left(self):\n        self.assertEqual(odd_equivalent(\"11010\", 4), 1)\n\n    def test_rotate_right(self):\n        self.assertEqual(odd_equivalent(\"10101\", 7), 2)\n\n    def test_rotation_count_zero(self):\n        self.assertEqual(odd_equivalent(\"00000\", 8), 0)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)",
+      "reference_key": "assert odd_equivalent(\"111111\", 7) == 7\nassert odd_equivalent(\"000000\", 8) == 0\nassert odd_equivalent(\"101010\", 4) == 2\nassert odd_equivalent(\"110011\", 3) == 3\nassert odd_equivalent(\"010101\", 6) == 3",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TestOddEquivalence(unittest.TestCase):\n    def test_simple(self):\n        self.assertEqual(odd_equivalent(\"101\", 2), 2)\n\n    def test_same(self):\n        self.assertEqual(odd_equivalent(\"111\", 5), 0)\n\n    def test_rotate_left(self):\n        self.assertEqual(odd_equivalent(\"11010\", 4), 1)\n\n    def test_rotate_right(self):\n        self.assertEqual(odd_equivalent(\"10101\", 7), 2)\n\n    def test_rotation_count_zero(self):\n        self.assertEqual(odd_equivalent(\"00000\", 8), 0)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)\n```",
+      "quality": 0.0,
+      "final_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if int(sum(binary_string)) % 2 != 0:\n            count += 1\n    return count\n\n# Test cases\nassert odd_equivalent(\"011001\",6) == 3\nassert odd_equivalent(\"11011\",5) == 4\nassert odd_equivalent(\"1010\",4) == 2",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if int(sum(binary_string)) % 2 != 0:\n            count += 1\n    return count\n\n# Test cases\nassert odd_equivalent(\"011001\",6) == 3\nassert odd_equivalent(\"11011\",5) == 4\nassert odd_equivalent(\"1010\",4) == 2\n```",
+        "fixer": "```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(binary_string) % 2 != 0:\n            count += 1\n    return count\n\n# Test cases\nassert odd_equivalent(\"011001\",6) == 3\nassert odd_equivalent(\"11011\",5) == 4\nassert odd_equivalent(\"1010\",4) == 2\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert odd_equivalent(\"0101\",2) == 2\nassert odd_equivalent(\"011001\",7) == 4\nassert odd_equivalent(\"101010\",4) == 2\nassert odd_equivalent(\"111111\",0) == 0\nassert odd_equivalent(\"0001\",8) == 1",
+      "reference_key": "assert odd_equivalent(\"111111\", 7) == 7\nassert odd_equivalent(\"000000\", 8) == 0\nassert odd_equivalent(\"101010\", 4) == 2\nassert odd_equivalent(\"110011\", 3) == 3\nassert odd_equivalent(\"010101\", 6) == 3",
+      "key_differs": true,
+      "text": "```python\nassert odd_equivalent(\"0101\",2) == 2\nassert odd_equivalent(\"011001\",7) == 4\nassert odd_equivalent(\"101010\",4) == 2\nassert odd_equivalent(\"111111\",0) == 0\nassert odd_equivalent(\"0001\",8) == 1\n```",
+      "quality": 0.0,
+      "final_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(digit) for digit in binary_string) % 2 != 0:\n            count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(digit) for digit in binary_string) % 2 != 0:\n            count += 1\n    return count\n```",
+        "fixer": "```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(int(digit) for digit in binary_string) % 2 != 0:\n            count += 1\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert catalan_number(0) == 1\nassert catalan_number(1) == 1\nassert catalan_number(2) == 2\nassert catalan_number(3) == 5\nassert catalan_number(4) == 14",
+      "reference_key": "assert odd_equivalent(\"111111\", 7) == 7\nassert odd_equivalent(\"000000\", 8) == 0\nassert odd_equivalent(\"101010\", 4) == 2\nassert odd_equivalent(\"110011\", 3) == 3\nassert odd_equivalent(\"010101\", 6) == 3",
+      "key_differs": true,
+      "text": "```python\nassert catalan_number(0) == 1\nassert catalan_number(1) == 1\nassert catalan_number(2) == 2\nassert catalan_number(3) == 5\nassert catalan_number(4) == 14\n```",
+      "quality": 0.0,
+      "final_key": "def odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if int(binary_string, 2) % 2 != 0:\n            count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if int(binary_string, 2) % 2 != 0:\n            count += 1\n    return count\n```",
+        "fixer": "```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(binary_string) % 2 != 0:\n            count += 1\n    return count\n\n# Test cases\nassert odd_equivalent(\"011001\",6) == 3\nassert odd_equivalent(\"11011\",5) == 4\nassert odd_equivalent(\"1010\",4) == 2\nassert catalan_number(0) == 1\nassert catalan_number(1) == 1\nassert catalan_number(2) == 2\nassert catalan_number(3) == 5\nassert catalan_number(4) == 14\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert odd_equivalent(\"011001\",6) == 3\nassert odd_equivalent(\"101010\",4) == 2\nassert odd_equivalent(\"000000\",7) == 0\nassert odd_equivalent(\"111111\",8) == 8\nassert odd_equivalent(\"010101\",9) == 4",
+  "sample_keys": [
+    "assert odd_equivalent(\"011001\",7) == 4\nassert odd_equivalent(\"101010\",8) == 0\nassert odd_equivalent(\"111111\",9) == 9\nassert odd_equivalent(\"000000\",10) == 0\nassert odd_equivalent(\"11011011\",11) == 6",
+    "assert odd_equivalent(\"0000\",1) == 0\nassert odd_equivalent(\"1111\",4) == 4\nassert odd_equivalent(\"1100\",3) == 2\nassert odd_equivalent(\"0001\",7) == 1\nassert odd_equivalent(\"1010101\",10) == 6",
+    "assert odd_equivalent(\"0000\",0) == 0\nassert odd_equivalent(\"0000\",4) == 0\nassert odd_equivalent(\"011001\",1) == 1\nassert odd_equivalent(\"101010\",2) == 1\nassert odd_equivalent(\"111111\",7) == 0",
+    "assert odd_equivalent(\"1111\",2) == 4\nassert odd_equivalent(\"0000\",3) == 0\nassert odd_equivalent(\"1010\",1) == 1\nassert odd_equivalent(\"0101\",4) == 4\nassert odd_equivalent(\"1011\",0) == 1",
+    "assert odd_equivalent(\"0000\",3) == 0\nassert odd_equivalent(\"1111\",1) == 4\nassert odd_equivalent(\"0101\",2) == 1\nassert odd_equivalent(\"10101\",4) == 2\nassert odd_equivalent(\"001011\",7) == 6"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1881.0,
+    "small_out": 501.0,
+    "small_s": 10.341892241005553
+  },
+  "calls_plus": {
+    "small_in": 1695.0,
+    "small_out": 406.0,
+    "small_s": 7.411939921992598,
+    "large_in": 201.0,
+    "large_out": 100.0,
+    "large_s": 2.191645928978687
+  },
+  "calls_samples": {
+    "small_in": 1005.0,
+    "small_out": 452.0,
+    "small_s": 8.103189881978324
+  }
+}

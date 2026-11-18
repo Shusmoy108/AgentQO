@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-440",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Import the `re` module for regular expression operations.\n2. Define the function `find_adverb_position(sentence)` that takes a string input.\n3. Use the `re.search()` function with the pattern `\\b\\w+ly\\b` to find the first occurrence of an adverb in the sentence.\n4. If an adverb is found, extract its starting position using `.start()`, ending position using `.end()`, and the adverb itself using `.group()`.\n5. Return a tuple containing the start position, end position, and the adverb as `(start, end, adverb)`.",
+  "reference_key": null,
+  "final_key_plus": "import re\n\ndef find_adverb_position(sentence):\n    match = re.search(r'\\b\\w+ly\\b', sentence)\n    if match:\n        start = match.start()\n        end = match.end()\n        adverb = match.group()\n        return (start, end, adverb)\n    else:\n        return None",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert find_adverb_position(\"quickly!\") == (4, 9, 'quickly')\nassert find_adverb_position(\"I am so happy\") == (12, 16, 'so')\nassert find_adverb_position(\"The cat is sleeping\") == (8, 13, 'sleeping')\nassert find_adverb_position(\"She runs very fast\") == (10, 15, 'very')\nassert find_adverb_position(\"It's raining heavily\") == (10, 16, 'heavily')\n```",
+    "coder": "```python\nimport re\n\ndef find_adverb_position(sentence):\n    match = re.search(r'\\b\\w+ly\\b', sentence)\n    if match:\n        start = match.start()\n        end = match.end()\n        adverb = match.group()\n        return (start, end, adverb)\n    else:\n        return None\n```",
+    "verifier": "PICK: A\n```python\nimport re\n\ndef find_adverb_position(sentence):\n    match = re.search(r'\\b\\w+ly\\b', sentence)\n    if match:\n        start = match.start()\n        end = match.end()\n        adverb = match.group()\n        return (start, end, adverb)\n    else:\n        return None\n```",
+    "fixer": "```python\nimport re\n\ndef find_adverb_position(sentence):\n    match = re.search(r'\\b\\w+ly\\b', sentence)\n    if match:\n        start = match.start()\n        end = match.end()\n        adverb = match.group()\n        return (start, end, adverb)\n    else:\n        return None\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `sort_numeric_strings` that takes a list of strings as input.\n3. Convert each string in the list to an integer using the `int()` function.\n4. Sort the list of integers using the built-in `sorted()` function.\n5. Convert the sorted list of integers back to strings using the `map()` function and join them into a single string using the `join()` method.\n6. Return the sorted list of strings.\n\nHere is the complete implementation:\n\n```python\ndef sort_numeric_strings(lst):\n    # Step 3: Convert each string in the list to an integer\n    int_lst = [int(num) for num in lst]\n    \n    # Step 4: Sort the list of integers\n    sorted_int_lst = sorted(int_lst)\n    \n    # Step 5: Convert the sorted list of integers back to strings\n    str_lst = map(str, sorted_int_lst)\n    \n    # Step 6: Join the sorted list of strings into a single string\n    result = ''.join(str_lst)\n    \n    return result\n\n# Test the function\nassert sort_numeric_strings(['4','12','45','7','0','100','200','-12','-500']) == [-500, -12, 0, 4, 7, 12, 45, 100, 200]\n```\n\nThis function will correctly sort the list of numeric strings as required.",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef find_adverb_position(sentence):\n    import re\n    adverbs = re.findall(r'\\b\\w+ly\\b', sentence)\n    positions = [(i, pos.start(), adverb) for i, pos in enumerate(re.finditer(adverbs[0], sentence)) if pos.start() == 0]\n    return positions",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_adverb_position(\"quickly! let's go\")==(1, 8, 'quickly')\nassert find_adverb_position(\"slowly... but still\")==(2, 9, 'slowly')\nassert find_adverb_position(\"very quickly!!!\")==(0, 6, 'very')\nassert find_adverb_position(\"justly\")==(0, 4, 'justly')\nassert find_adverb_position(\"\")==()\n```",
+        "coder": "```python\ndef find_adverb_position(sentence):\n    import re\n    adverbs = re.findall(r'\\b\\w+ly\\b', sentence)\n    positions = [(i, pos.start(), adverb) for i, pos in enumerate(re.finditer(adverbs[0], sentence)) if pos.start() == 0]\n    return positions\n```",
+        "verifier": "PICK: A\n```python\nimport re\n\ndef find_adverb_position(sentence):\n    import re\n    adverbs = re.findall(r'\\b\\w+ly\\b', sentence)\n    positions = [(i, pos.start(), adverb) for i, pos in enumerate(re.finditer(adverbs[0], sentence)) if pos.start() == 0]\n    return positions\n```",
+        "fixer": "```python\nimport re\n\ndef find_adverb_position(sentence):\n    import re\n    adverbs = re.findall(r'\\b\\w+ly\\b', sentence)\n    positions = [(i, pos.start(), adverb) for i, pos in enumerate(re.finditer(adverbs[0], sentence)) if pos.start() == 0]\n    return positions\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `tuple_to_dict` that takes one parameter: `tup`.\n2. Initialize an empty dictionary called `dict`.\n3. Iterate over the range of the length of the tuple minus one (since we need two adjacent elements for each key-value pair).\n4. For each iteration, extract the current element and the next element as a tuple.\n5. Use the first element of the tuple as the key and the second element as the value in the dictionary.\n6. Return the populated dictionary.\n\nHere's the complete implementation:\n\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n\n# Test the function\nassert tuple_to_dict((1, 5, 7, 10, 13, 5)) == {1: 5, 7: 10, 13: 5}\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that solves the problem described. The function is designed to be easily understandable and maintainable, adhering to the requirements of the task.",
+      "quality": 0.0,
+      "final_key": "def find_adverb_position(sentence):\n    if not sentence:\n        return (None, None, None)\n    \n    words = sentence.split()\n    adverbs = [word for word in words if word.endswith('ly')]\n    positions = [(i, word) for i, word in enumerate(words) if word in adverbs]\n    \n    if not positions:\n        return (None, None, None)\n    \n    return positions[0]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_adverb_position(\"clearly!! we can see the sky\")==(0, 7, 'clearly')\nassert find_adverb_position(\"quickly! but slowly.\")==(4, 9, 'quickly')\nassert find_adverb_position(\"very quickly!\")==(0, 8, 'very')\nassert find_adverb_position(\"slowly...\")==(6, 12, 'slowly')\nassert find_adverb_position(\"\")==(None, None, None)\n```",
+        "coder": "```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+        "verifier": "PICK: B\n\n```python\ndef find_adverb_position(sentence):\n    if not sentence:\n        return (None, None, None)\n    \n    words = sentence.split()\n    adverbs = [word for word in words if word.endswith('ly')]\n    positions = [(i, word) for i, word in enumerate(words) if word in adverbs]\n    \n    if not positions:\n        return (None, None, None)\n    \n    return positions[0]\n```",
+        "fixer": "```python\ndef find_adverb_position(sentence):\n    if not sentence:\n        return (None, None, None)\n    \n    words = sentence.split()\n    adverbs = [word for word in words if word.endswith('ly')]\n    positions = [(i, word) for i, word in enumerate(words) if word in adverbs]\n    \n    if not positions:\n        return (None, None, None)\n    \n    return positions[0]\n\n# Test cases\nassert find_adverb_position(\"clearly!! we can see the sky\") == (0, 7, 'clearly')\nassert find_adverb_position(\"seriously!! there are many roses\") == (0, 9, 'seriously')\nassert find_adverb_position(\"unfortunately!! sita is going to home\") == (0, 13, 'unfortunately')\nassert find_adverb_position(\"clearly!! we can see the sky\") == (0, 7, 'clearly')\nassert find_adverb_position(\"quickly! but slowly.\") == (4, 9, 'quickly')\nassert find_adverb_position(\"very quickly!\") == (0, 8, 'very')\nassert find_adverb_position(\"slowly...\") == (6, 12, 'slowly')\nassert find_adverb_position(\"\") == (None, None, None)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `replace_specialchar` that takes one parameter: `input_string`.\n3. Use the `str.replace()` method to replace spaces, commas, and dots with colons.\n4. Return the modified string.\n\nHere's the complete implementation:\n\n```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Test the function\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that solves the problem as described. The function is named differently from the given example (`replace_spaces_with_colon`) to ensure uniqueness while maintaining the core functionality.",
+      "quality": 0.0,
+      "final_key": "def find_adverb_position(sentence):\n    # Split the sentence into words\n    words = sentence.split()\n    \n    # Initialize variables to store the position of the first adverb and its value\n    first_adverb_position = None\n    first_adverb_value = None\n    \n    # Iterate through the words to find the first adverb\n    for i, word in enumerate(words):\n        if word.endswith('ly'):\n            if first_adverb_position is None:\n                first_adverb_position = i\n                first_adverb_value = word\n            else:\n                break\n    \n    return first_adverb_position, first_adverb_position + len(first_adverb_value), first_adverb_value\n\n# Test cases\nassert find_adverb_position(\"clearly!! we can see the sky\") == (0, 7, 'clearly')\nassert find_adverb_position(\"seriously!! there are many roses\") == (0, 9, 'seriously')\nassert find_adverb_position(\"unfortunately!! sita is going to home\") == (0, 13, 'unfortunately')\nassert find_adverb_position(\"clearly!! we can see the sky\") == (0, 7, 'clearly')\nassert find_adverb_position(\"quickly, but carefully\") == (4, 12, 'quickly')\nassert find_adverb_position(\"very quickly\") == (0, 8, 'very')\nassert find_adverb_position(\"slowly...\") == (6, 13, 'slowly')\nassert find_adverb_position(\"\") == (None, None, None)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_adverb_position(\"clearly!! we can see the sky\")==(0, 7, 'clearly')\nassert find_adverb_position(\"quickly, but carefully\")==(4, 12, 'quickly')\nassert find_adverb_position(\"very quickly\")==(0, 8, 'very')\nassert find_adverb_position(\"slowly...\")==(6, 13, 'slowly')\nassert find_adverb_position(\"\")==(None, None, None)\n```",
+        "coder": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n```",
+        "verifier": "PICK: B\n\n```python\ndef find_adverb_position(sentence):\n    # Split the sentence into words\n    words = sentence.split()\n    \n    # Initialize variables to store the position of the first adverb and its value\n    first_adverb_position = None\n    first_adverb_value = None\n    \n    # Iterate through the words to find the first adverb\n    for i, word in enumerate(words):\n        if word.endswith('ly'):\n            if first_adverb_position is None:\n                first_adverb_position = i\n                first_adverb_value = word\n            else:\n                break\n    \n    return first_adverb_position, first_adverb_position + len(first_adverb_value), first_adverb_value\n\n# Test cases\nassert find_adverb_position(\"clearly!! we can see the sky\") == (0, 7, 'clearly')\nassert find_adverb_position(\"seriously!! there are many roses\") == (0, 9, 'seriously')\nassert find_adverb_position(\"unfortunately!! sita is going to home\") == (0, 13, 'unfortunately')\nassert find_adverb_position(\"clearly!! we can see the sky\") == (0, 7, 'clearly')\nassert find_adverb_position(\"quickly, but carefully\") == (4, 12, 'quickly')\nassert find_adverb_position(\"very quickly\") == (0, 8, 'very')\nassert find_adverb_position(\"slowly...\") == (6, 13, 'slowly')\nassert find_adverb_position(\"\") == (None, None, None)\n```",
+        "fixer": "```python\ndef find_adverb_position(sentence):\n    # Split the sentence into words\n    words = sentence.split()\n    \n    # Initialize variables to store the position of the first adverb and its value\n    first_adverb_position = None\n    first_adverb_value = None\n    \n    # Iterate through the words to find the first adverb\n    for i, word in enumerate(words):\n        if word.endswith('ly'):\n            if first_adverb_position is None:\n                first_adverb_position = i\n                first_adverb_value = word\n            else:\n                break\n    \n    return first_adverb_position, first_adverb_position + len(first_adverb_value), first_adverb_value\n\n# Test cases\nassert find_adverb_position(\"clearly!! we can see the sky\") == (0, 7, 'clearly')\nassert find_adverb_position(\"seriously!! there are many roses\") == (0, 9, 'seriously')\nassert find_adverb_position(\"unfortunately!! sita is going to home\") == (0, 13, 'unfortunately')\nassert find_adverb_position(\"clearly!! we can see the sky\") == (0, 7, 'clearly')\nassert find_adverb_position(\"quickly, but carefully\") == (4, 12, 'quickly')\nassert find_adverb_position(\"very quickly\") == (0, 8, 'very')\nassert find_adverb_position(\"slowly...\") == (6, 13, 'slowly')\nassert find_adverb_position(\"\") == (None, None, None)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def find_adverb_position(sentence):\n    # Split the sentence into words\n    words = sentence.split()\n    \n    # Iterate through the list of words to find the first word that is an adverb\n    for i, word in enumerate(words):\n        if word.endswith('ly'):\n            return (i, len(word) - 2, word)\n    return None",
+  "sample_keys": [
+    "def find_adverb_position(sentence):\n    words = sentence.split()\n    for i, word in enumerate(words):\n        if word.endswith('ly'):\n            return (i, i + len(word), word)\n    return None",
+    "def find_adverb_position(sentence):\n    # Step 1: Identify Adverbs\n    adverbs = set(word for word in sentence.split() if len(word) > 2 and word[-2:] == 'ly')\n    \n    # Step 2: Find Positions\n    positions = [(i, word) for i, word in enumerate(sentence.split()) if word in adverbs]\n    \n    # Step 3: Return Results\n    if not positions:\n        return None\n    else:\n        return positions[0]",
+    "def find_adverb_position(sentence):\n    words = sentence.split()\n    adverbs = [(i, word) for i, word in enumerate(words) if word.endswith('ly')]\n    return tuple(adverbs)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1695.0,
+    "small_out": 435.0,
+    "small_s": 9.027220026036957
+  },
+  "calls_plus": {
+    "large_in": 120.0,
+    "large_out": 129.0,
+    "large_s": 2.852239167987136,
+    "small_in": 1601.0,
+    "small_out": 337.0,
+    "small_s": 5.635944128996925
+  },
+  "calls_samples": {
+    "small_in": 5349.0,
+    "small_out": 1547.0,
+    "small_s": 28.114766626036726
+  }
+}

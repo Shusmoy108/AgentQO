@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-390",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert add_string(['a', 'b', 'c'], 'item_{0}') == ['item_a', 'item_b', 'item_c']\nassert add_string([True, False], '{0}') == ['True', 'False']\nassert add_string([], 'empty_{0}') == []\nassert add_string([None, None], 'null_{0}') == ['null_None', 'null_None']\nassert add_string([0, -1, 100], 'num_{0}') == ['num_0', 'num_-1', 'num_100']\n```",
+  "reference_key": "assert add_string(['a', 'b', 'c'], 'item_{0}') == ['item_a', 'item_b', 'item_c']\nassert add_string([True, False], '{0}') == ['True', 'False']\nassert add_string([], 'empty_{0}') == []\nassert add_string([None, None], 'null_{0}') == ['null_None', 'null_None']\nassert add_string([0, -1, 100], 'num_{0}') == ['num_0', 'num_-1', 'num_100']",
+  "final_key_plus": "def add_string(elements, format_str):\n    return [format(element, format_str) for element in elements]",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef add_string(elements, format_str):\n    return [format(element, format_str) for element in elements]\n```",
+    "fixer": "```python\ndef add_string(elements, format_str):\n    return [format(element, format_str) for element in elements]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert add_string([], '{}') == []\nassert add_string(['hello'], '{world}!') == ['hello world!']\nassert add_string([True, False], '{}' + '{!s}') == ['{}', '!s']",
+      "reference_key": "assert add_string(['a', 'b', 'c'], 'item_{0}') == ['item_a', 'item_b', 'item_c']\nassert add_string([True, False], '{0}') == ['True', 'False']\nassert add_string([], 'empty_{0}') == []\nassert add_string([None, None], 'null_{0}') == ['null_None', 'null_None']\nassert add_string([0, -1, 100], 'num_{0}') == ['num_0', 'num_-1', 'num_100']",
+      "key_differs": true,
+      "text": "```python\nassert add_string([], '{}') == []\nassert add_string(['hello'], '{world}!') == ['hello world!']\nassert add_string([True, False], '{}' + '{!s}') == ['{}', '!s']\n```",
+      "quality": 0.0,
+      "final_key": "def add_string(elements, format_str):\n    if not format_str.startswith('python'):\n        raise ValueError(\"Invalid format specifier\")\n    return [format(element, format_str) for element in elements]",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef add_string(elements, format_str):\n    if not format_str.startswith('python'):\n        raise ValueError(\"Invalid format specifier\")\n    return [format(element, format_str) for element in elements]\n```",
+        "fixer": "```python\ndef add_string(elements, format_str):\n    if not format_str.startswith('python'):\n        raise ValueError(\"Invalid format specifier\")\n    return [format(element, format_str) for element in elements]\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert add_string(['hello','world'], '{}') == ['hello', 'world']\nassert add_string([], '{}') == []\nassert add_string(['a','b','c'], '{index}') == ['a@0', 'b@1', 'c@2']\nassert add_string(['apple','banana', 'cherry'], '{color} {name}') == ['red apple', 'yellow banana', 'purple cherry']\nassert add_string(['one', 'two', 'three', 'four', 'five'], '{number}{character}') == ['1o', '2u', '3r', '4i', '5v']",
+      "reference_key": "assert add_string(['a', 'b', 'c'], 'item_{0}') == ['item_a', 'item_b', 'item_c']\nassert add_string([True, False], '{0}') == ['True', 'False']\nassert add_string([], 'empty_{0}') == []\nassert add_string([None, None], 'null_{0}') == ['null_None', 'null_None']\nassert add_string([0, -1, 100], 'num_{0}') == ['num_0', 'num_-1', 'num_100']",
+      "key_differs": true,
+      "text": "```python\nassert add_string(['hello','world'], '{}') == ['hello', 'world']\nassert add_string([], '{}') == []\nassert add_string(['a','b','c'], '{index}') == ['a@0', 'b@1', 'c@2']\nassert add_string(['apple','banana', 'cherry'], '{color} {name}') == ['red apple', 'yellow banana', 'purple cherry']\nassert add_string(['one', 'two', 'three', 'four', 'five'], '{number}{character}') == ['1o', '2u', '3r', '4i', '5v']\n```",
+      "quality": 0.0,
+      "final_key": "def add_string(elements, format_str):\n    return [format(element, format_str) for element in elements]",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef add_string(elements, format_str):\n    return [format(element, format_str) for element in elements]\n```",
+        "fixer": "```python\ndef add_string(elements, format_str):\n    return [format(element, format_str) for element in elements]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert math.isclose(volume_cone(0, 10), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1000.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 20), 1256.6370614359172, rel_tol=0.001)\nassert math.isclose(volume_cone(10, -10), 0, rel_tol=0.001)",
+      "reference_key": "assert add_string(['a', 'b', 'c'], 'item_{0}') == ['item_a', 'item_b', 'item_c']\nassert add_string([True, False], '{0}') == ['True', 'False']\nassert add_string([], 'empty_{0}') == []\nassert add_string([None, None], 'null_{0}') == ['null_None', 'null_None']\nassert add_string([0, -1, 100], 'num_{0}') == ['num_0', 'num_-1', 'num_100']",
+      "key_differs": true,
+      "text": "```python\nassert math.isclose(volume_cone(0, 10), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1000.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 20), 1256.6370614359172, rel_tol=0.001)\nassert math.isclose(volume_cone(10, -10), 0, rel_tol=0.001)\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef add_string(elements, format_str):\n    return [format(element, format_str) for element in elements]\n\n# Test cases\nassert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']\nassert add_string(['a','b','c','d'], 'python{0}')==[ 'pythona', 'pythonb', 'pythonc', 'pythond']\nassert add_string([5,6,7,8],'string{0}')==['string5', 'string6', 'string7', 'string8']\nassert math.isclose(volume_cone(0, 10), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1000.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 20), 1256.6370614359172, rel_tol=0.001)\nassert math.isclose(volume_cone(10, -10), 0, rel_tol=0.001)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef add_string(elements, format_str):\n    return [format(element, format_str) for element in elements]\n\n# Test cases\nassert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']\nassert add_string(['a','b','c','d'], 'python{0}')==[ 'pythona', 'pythonb', 'pythonc', 'pythond']\nassert add_string([5,6,7,8],'string{0}')==['string5', 'string6', 'string7', 'string8']\nassert math.isclose(volume_cone(0, 10), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1000.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 20), 1256.6370614359172, rel_tol=0.001)\nassert math.isclose(volume_cone(10, -10), 0, rel_tol=0.001)\n```",
+        "fixer": "```python\nimport math\n\ndef add_string(elements, format_str):\n    return [format(element, format_str) for element in elements]\n\n# Test cases\nassert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']\nassert add_string(['a','b','c','d'], 'python{0}')==[ 'pythona', 'pythonb', 'pythonc', 'pythond']\nassert add_string([5,6,7,8],'string{0}')==['string5', 'string6', 'string7', 'string8']\nassert math.isclose(volume_cone(0, 10), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 1000.0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 20), 1256.6370614359172, rel_tol=0.001)\nassert math.isclose(volume_cone(10, -10), 0, rel_tol=0.001)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert add_string([], '{}') == []\nassert add_string(['hello'], '{0} world') == ['hello world']\nassert add_string(['a', 'b', 'c'], '{0}{1}{2}') == ['abc', 'acb', 'bac']\nassert add_string(['123', '456', '789'], '{0}-{1}-{2}') == ['123-456-789', '456-789-123', '789-123-456']\nassert add_string(['a', 'b', 'c', 'd'], '{0}{1}{2}{3}') == ['abcd', 'bcda', 'cdab', 'dabc']",
+  "sample_keys": [
+    "# Test with positive integers\nassert add_string([1,2,3,4],'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']\n\n# Test with negative integers\nassert add_string([-1,-2,-3,-4], 'temp{0}') == ['-temp1', '-temp2', '-temp3', '-temp4']\n\n# Test with positive and negative integers mixed together\nassert add_string([1,-2,3,-4], 'temp{0}') == ['temp1', '-temp2', 'temp3', '-temp4']\n\n# Test with empty list\nassert add_string([], 'temp{0}') == []\n\n# Test with non-integer values\nassert add_string(['hello','world'], 'temp{0}') == ['temphello', 'temphello']",
+    "assert add_string([], '{}') == []\nassert add_string(['hello'], '{1} world') == ['world']\nassert add_string(['foo', 'bar'], '{0}{1}') == ['foobar']\nassert add_string(['100', '200'], '{:,d}') == ['100', '200']\nassert add_string(['true', 'false'], '{!a}') == ['True', 'False']",
+    "assert add_string([], '{}') == []\nassert add_string(['hello'], '{s}') == ['hello']\nassert add_string([1, 2, 3], '{n}')\nassert add_string([\"a\", \"b\", \"c\"], \"{i}\")\nassert add_string([\"one\", 2, \"three\"], \"{f}\") == [\"one\", \"2\", \"three\"]",
+    "assert add_string(['Hello','World'], '{0} World!') == ['Hello World!', 'World World!']\nassert add_string([], '{}') == []\nassert add_string([\"1\", \"2\", \"3\"], \"{0}{0}\") == [\"11\", \"22\", \"33\"]\nassert add_string(['a', 'b', 'c'], \"{{{}}}\") == ['{{a}}{{b}}{{c}}']\nassert add_string(['abc', 'def'], '{{{0}}} {{{0}}}') == ['{{abc}}{{abc}}', '{{def}}{{def}}']",
+    "import unittest\n\nclass TestAddString(unittest.TestCase):\n    def test_add_string(self):\n        self.assertEqual(add_string([1,2,3,4], '{0}'), ['1', '2', '3', '4'])\n        self.assertEqual(add_string(['hello', 'world'], '{0}{0}'), [' hellllo', ' worlddd'])\n        self.assertEqual(add_string([], '{}'), [])\n        self.assertEqual(add_string([True, False], '{0} is True'), ['True is True', 'False is False'])\n        self.assertEqual(add_string([None], '{}'), [None])"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1914.0,
+    "small_out": 411.0,
+    "small_s": 8.8963382570073
+  },
+  "calls_plus": {
+    "small_in": 1643.0,
+    "small_out": 248.0,
+    "small_s": 5.348812936019385,
+    "large_in": 169.0,
+    "large_out": 123.0,
+    "large_s": 2.795216305006761
+  },
+  "calls_samples": {
+    "small_in": 845.0,
+    "small_out": 601.0,
+    "small_s": 10.68684619103442
+  }
+}

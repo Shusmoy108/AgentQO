@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-769",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert (Diff([1, 2, 3], [2, 3, 4])) == [1]\nassert (Diff(['a', 'b', 'c'], ['b'])) == ['a', 'c']\nassert (Diff([], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [])) == [1, 2, 3]\nassert (Diff([100, 200], [200, 100])) == []\n```",
+  "reference_key": "assert (Diff([1, 2, 3], [2, 3, 4])) == [1]\nassert (Diff(['a', 'b', 'c'], ['b'])) == ['a', 'c']\nassert (Diff([], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [])) == [1, 2, 3]\nassert (Diff([100, 200], [200, 100])) == []",
+  "final_key_plus": "def Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n```",
+    "fixer": "```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert (Diff([], [])) == []\nassert (Diff([1, 2, 3], [4, 5, 6])) == [1, 2, 3]\nassert (Diff([100, 200, 300], [])) == [100, 200, 300]\nassert (Diff(['apple', 'banana', 'cherry'], ['grape', 'kiwi', 'apple'])) == ['banana', 'cherry']\nassert (Diff([True, False, True], [False, True, True]))",
+      "reference_key": "assert (Diff([1, 2, 3], [2, 3, 4])) == [1]\nassert (Diff(['a', 'b', 'c'], ['b'])) == ['a', 'c']\nassert (Diff([], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [])) == [1, 2, 3]\nassert (Diff([100, 200], [200, 100])) == []",
+      "key_differs": true,
+      "text": "```python\nassert (Diff([], [])) == []\nassert (Diff([1, 2, 3], [4, 5, 6])) == [1, 2, 3]\nassert (Diff([100, 200, 300], [])) == [100, 200, 300]\nassert (Diff(['apple', 'banana', 'cherry'], ['grape', 'kiwi', 'apple'])) == ['banana', 'cherry']\nassert (Diff([True, False, True], [False, True, True]))\n```",
+      "quality": 0.0,
+      "final_key": "def Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n```",
+        "fixer": "```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert Diff([], []) == []\nassert Diff([1, 2, 3], [1, 2]) == [3]\nassert Diff(['a', 'b', 'c'], ['z']) == ['a', 'b', 'c']\nassert Diff([10, 15, 20, 25, 30, 35, 40], [25, 40, 35]) != [10, 20, 30, 15]  # Expected result is a list of unique differences\nassert Diff([], [10]) == []  # Expected result is an empty list (all items must be in both lists or one of them should be empty)",
+      "reference_key": "assert (Diff([1, 2, 3], [2, 3, 4])) == [1]\nassert (Diff(['a', 'b', 'c'], ['b'])) == ['a', 'c']\nassert (Diff([], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [])) == [1, 2, 3]\nassert (Diff([100, 200], [200, 100])) == []",
+      "key_differs": true,
+      "text": "```python\nassert Diff([], []) == []\nassert Diff([1, 2, 3], [1, 2]) == [3]\nassert Diff(['a', 'b', 'c'], ['z']) == ['a', 'b', 'c']\nassert Diff([10, 15, 20, 25, 30, 35, 40], [25, 40, 35]) != [10, 20, 30, 15]  # Expected result is a list of unique differences\nassert Diff([], [10]) == []  # Expected result is an empty list (all items must be in both lists or one of them should be empty)\n```",
+      "quality": 0.0,
+      "final_key": "def Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n```",
+        "fixer": "```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert surfacearea_cube(3) == 54\nassert surfacearea_cube(7) == 294\nassert surfacearea_cube(0) == 0\nassert surfacearea_cube(1) == 6\nassert surfacearea_cube(2) == 24",
+      "reference_key": "assert (Diff([1, 2, 3], [2, 3, 4])) == [1]\nassert (Diff(['a', 'b', 'c'], ['b'])) == ['a', 'c']\nassert (Diff([], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [])) == [1, 2, 3]\nassert (Diff([100, 200], [200, 100])) == []",
+      "key_differs": true,
+      "text": "```python\nassert surfacearea_cube(3) == 54\nassert surfacearea_cube(7) == 294\nassert surfacearea_cube(0) == 0\nassert surfacearea_cube(1) == 6\nassert surfacearea_cube(2) == 24\n```",
+      "quality": 0.0,
+      "final_key": "def Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n\n# Test cases\nassert (Diff([10, 15, 20, 25, 30, 35, 40], [25, 40, 35])) == [10, 20, 30, 15]\nassert (Diff([1,2,3,4,5], [6,7,1])) == [2,3,4,5,6,7]\nassert (Diff([1,2,3], [6,7,1])) == [2,3,6,7]\nassert surfacearea_cube(3) == 54\nassert surfacearea_cube(7) == 294\nassert surfacearea_cube(0) == 0\nassert surfacearea_cube(1) == 6\nassert surfacearea_cube(2) == 24",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n\n# Test cases\nassert (Diff([10, 15, 20, 25, 30, 35, 40], [25, 40, 35])) == [10, 20, 30, 15]\nassert (Diff([1,2,3,4,5], [6,7,1])) == [2,3,4,5,6,7]\nassert (Diff([1,2,3], [6,7,1])) == [2,3,6,7]\nassert surfacearea_cube(3) == 54\nassert surfacearea_cube(7) == 294\nassert surfacearea_cube(0) == 0\nassert surfacearea_cube(1) == 6\nassert surfacearea_cube(2) == 24\n```",
+        "fixer": "```python\ndef Diff(list1, list2):\n    result = []\n    for item in list1:\n        if item not in list2:\n            result.append(item)\n    return result\n\n# Test cases\nassert (Diff([10, 15, 20, 25, 30, 35, 40], [25, 40, 35])) == [10, 20, 30, 15]\nassert (Diff([1,2,3,4,5], [6,7,1])) == [2,3,4,5,6,7]\nassert (Diff([1,2,3], [6,7,1])) == [2,3,6,7]\nassert surfacearea_cube(3) == 54\nassert surfacearea_cube(7) == 294\nassert surfacearea_cube(0) == 0\nassert surfacearea_cube(1) == 6\nassert surfacearea_cube(2) == 24\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert (Diff([], [])) == []\nassert (Diff([1, 2, 3], [4, 5, 6])) == [1, 2, 3]\nassert (Diff([1, 2, 3], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [1, 2, 3, 4, 5])) == [4, 5]\nassert (Diff([1, 2, 3, 4, 5], [1, 2, 3])) == [4, 5]",
+  "sample_keys": [
+    "assert (Diff([10, 15, 20, 25, 30, 35, 40], [25, 40, 35])) == [10, 20, 30, 15]\nassert (Diff([], [1, 2, 3])) == [1, 2, 3]\nassert (Diff([1, 2, 3, 4], [])) == []\nassert (Diff([1, 2, 2, 3], [2, 3])) == [1]\nassert (Diff(['apple', 'banana', 'cherry'], ['banana', 'date'])) == ['apple', 'cherry']",
+    "assert (Diff([], [])) == []\nassert (Diff([1, 2, 3, 4], [1, 2, 3, 4, 5])) == [5]\nassert (Diff([10, 20, 30], [10, 30])) == [20]\nassert (Diff([1, 2, 3], [4, 5, 6])) == [1, 2, 3]\nassert (Diff([1, 2, 3, 4, 5], [1, 2])) == [3, 4, 5]",
+    "assert (Diff([], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [])) == [1, 2, 3]\nassert (Diff(['a', 'b'], ['c', 'd'])) == ['a', 'b']\nassert (Diff(['a', 'b', 'c', 'a', 'b'], ['a', 'b', 'c'])) == []\nassert (Diff([10, 10, 10, 10], [10])) == []",
+    "assert Diff([], []) == []\nassert Diff([1, 2, 3], []) == [1, 2, 3]\nassert Diff([1, 2, 3], [1]) == [2, 3]\nassert Diff([1, 2, 3], [3, 4, 5]) == [1, 2]\nassert Diff([10, 20, 30], [10, 10, 20]) == [30]",
+    "assert (Diff([], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [])) == [1, 2, 3]\nassert (Diff([1, 2, 3], [1, 2])) == [3]\nassert (Diff([1, 2, 3], [4, 5, 6])) == [1, 2, 3]\nassert (Diff([1, 2, 3, 4, 5, 6], [1, 2, 3])) == [4, 5, 6]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2032.0,
+    "small_out": 496.0,
+    "small_s": 10.853132146963617
+  },
+  "calls_plus": {
+    "small_in": 1762.0,
+    "small_out": 361.0,
+    "small_s": 7.698246727028163,
+    "large_in": 204.0,
+    "large_out": 116.0,
+    "large_s": 2.5378440099884756
+  },
+  "calls_samples": {
+    "small_in": 1020.0,
+    "small_out": 668.0,
+    "small_s": 12.166321198979858
+  }
+}

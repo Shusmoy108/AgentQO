@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-70",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n```",
+  "reference_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+  "final_key_plus": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.2,
+  "baseline_agrees": false,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nprint(get_equal([(11, 22, 33), (44, 55, 66)])) # PASS\nprint(get_equal([(1, 2, 3), (4, 5, 6, 7)])) # FAIL\nprint(get_equal([(1, 2), (3, 4)])) # PASS\nprint(get_equal([(11, 22, 33), (44, 55, 66)])) # PASS\nprint(get_equal([(11, 22, 33), (44, 55, 66, 77)])) # FAIL\nprint(get_equal([(), (1, 2), (3, 4, 5)])) # PASS\nprint(get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)])) # FAIL\nprint(get_equal([])) # PASS",
+      "reference_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "key_differs": true,
+      "text": "PICK: A\n\n```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nprint(get_equal([(11, 22, 33), (44, 55, 66)])) # PASS\nprint(get_equal([(1, 2, 3), (4, 5, 6, 7)])) # FAIL\nprint(get_equal([(1, 2), (3, 4)])) # PASS\nprint(get_equal([(11, 22, 33), (44, 55, 66)])) # PASS\nprint(get_equal([(11, 22, 33), (44, 55, 66, 77)])) # FAIL\nprint(get_equal([(), (1, 2), (3, 4, 5)])) # PASS\nprint(get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)])) # FAIL\nprint(get_equal([])) # PASS\n```",
+      "quality": 0.0,
+      "final_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nprint(get_equal([(11, 22, 33), (44, 55, 66)])) # PASS\nprint(get_equal([(1, 2, 3), (4, 5, 6, 7)])) # FAIL\nprint(get_equal([(1, 2), (3, 4)])) # PASS\nprint(get_equal([(11, 22, 33), (44, 55, 66)])) # PASS\nprint(get_equal([(11, 22, 33), (44, 55, 66, 77)])) # FAIL\nprint(get_equal([(), (1, 2), (3, 4, 5)])) # PASS\nprint(get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)])) # FAIL\nprint(get_equal([])) # PASS",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def get_equal(tuples_list):\n    try:\n        length = len(tuples_list[0])\n        for tup in tuples_list:\n            if len(tup) != length:\n                return False\n        return True\n    except IndexError as e:\n        print(e)\n        return False",
+      "reference_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "key_differs": true,
+      "text": "PICK: B  \n```python\ndef get_equal(tuples_list):\n    try:\n        length = len(tuples_list[0])\n        for tup in tuples_list:\n            if len(tup) != length:\n                return False\n        return True\n    except IndexError as e:\n        print(e)\n        return False\n```",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    try:\n        length = len(tuples_list[0])\n        for tup in tuples_list:\n            if len(tup) != length:\n                return False\n        return True\n    except IndexError as e:\n        print(e)\n        return False",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def sum_digits(num):\n    if num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum",
+      "reference_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\ndef sum_digits(num):\n    if num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum\n```",
+      "quality": 0.0,
+      "final_key": "def sum_digits(num):\n    if num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+  "sample_keys": [
+    "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+    "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+    "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+    "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True",
+    "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1720.0,
+    "small_out": 833.0,
+    "small_s": 15.85900613895501
+  },
+  "calls_plus": {
+    "small_in": 982.0,
+    "small_out": 571.0,
+    "small_s": 11.406416476966115,
+    "large_in": 738.0,
+    "large_out": 51.0,
+    "large_s": 1.1691730409802403
+  },
+  "calls_samples": {
+    "small_in": 3690.0,
+    "small_out": 466.0,
+    "small_s": 6.108412014989881
+  }
+}

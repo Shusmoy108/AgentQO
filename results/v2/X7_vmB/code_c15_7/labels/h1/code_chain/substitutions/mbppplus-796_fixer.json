@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-796",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```",
+  "reference_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+  "final_key_plus": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+      "key_differs": true,
+      "text": "```python\n```",
+      "quality": 1.0,
+      "final_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        if isinstance(value, dict):  # Check if the value is another dictionary\n            total += return_sum(value)  # Recursively call the function for nested dictionaries\n        else:\n            total += value  # Add the current value to the total\n    return total",
+      "reference_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+      "key_differs": true,
+      "text": "```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        if isinstance(value, dict):  # Check if the value is another dictionary\n            total += return_sum(value)  # Recursively call the function for nested dictionaries\n        else:\n            total += value  # Add the current value to the total\n    return total\n```",
+      "quality": 1.0,
+      "final_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        if isinstance(value, dict):  # Check if the value is another dictionary\n            total += return_sum(value)  # Recursively call the function for nested dictionaries\n        else:\n            total += value  # Add the current value to the total\n    return total",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        if isinstance(value, dict):  # Check if the value is another dictionary\n            total += return_sum(value)  # Recursively call the function for nested dictionaries\n        else:\n            total += value  # Add the current value to the total\n    return total\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words",
+      "reference_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+      "key_differs": true,
+      "text": "```python\ndef find_char_long(s):\n    words = s.split()\n    long_words = [word for word in words if len(word) >= 4]\n    return long_words\n```",
+      "quality": 1.0,
+      "final_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+  "sample_keys": [
+    "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+    "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+    "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+    "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n\nassert return_sum({'a': 100, 'b':200, 'c':300}) == 600\nassert return_sum({'a': 25, 'b':18, 'c':45}) == 88\nassert return_sum({'a': 36, 'b':39, 'c':49}) == 124\nassert return_sum({'a': 100, 'b':200, 'c':300}) == 600\nassert return_sum({}) == 0\nassert return_sum({'x': -10, 'y': 20, 'z': 30}) == 40\nassert return_sum({'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5}) == 15\nassert return_sum({'zero': 0}) == 0",
+    "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1561.0,
+    "small_out": 331.0,
+    "small_s": 6.747508579021087
+  },
+  "calls_plus": {
+    "small_in": 1159.0,
+    "small_out": 297.0,
+    "small_s": 6.039410822006175,
+    "large_in": 402.0,
+    "large_out": 34.0,
+    "large_s": 0.8368334360129666
+  },
+  "calls_samples": {
+    "small_in": 2010.0,
+    "small_out": 383.0,
+    "small_s": 6.095466094004223
+  }
+}

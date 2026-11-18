@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-283",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert validate(112233) == True\nassert validate(9876543210) == True\nassert validate(1234567890) == True\nassert validate(111222333) == True\nassert validate(1223334444) == False\n```",
+  "reference_key": "assert validate(112233) == True\nassert validate(9876543210) == True\nassert validate(1234567890) == True\nassert validate(111222333) == True\nassert validate(1223334444) == False",
+  "final_key_plus": "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(112233) == True\nassert validate(9876543210) == True\nassert validate(1234567890) == True\nassert validate(111222333) == True\nassert validate(1223334444) == False",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(112233) == True\nassert validate(9876543210) == True\nassert validate(1234567890) == True\nassert validate(111222333) == True\nassert validate(1223334444) == False\n```",
+    "fixer": "```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(112233) == True\nassert validate(9876543210) == True\nassert validate(1234567890) == True\nassert validate(111222333) == True\nassert validate(1223334444) == False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test with typical positive numbers\nassert validate(111) == True\nassert validate(222) == True\nassert validate(333) == True\nassert validate(444) == True\n\n# Test with typical negative numbers\nassert validate(-1) == True\nassert validate(-22) == True\nassert validate(-33) == True\nassert validate(-44) == True\n\n# Test with zero\nassert validate(0) == True\n\n# Test with single-digit number\nassert validate(5) == True\n\n# Test with two-digit number where all digits are the same (example: 55)\nassert validate(49) == True\n\n# Test with two-digit number where some digits are different (example 86)\nassert validate(76) == True\n\n# Edge case: test with large negative number\nassert validate(-7890123456) == True\n\n# Edge case: test with a string input which raises TypeError and does not run the rest of the tests\nassert validate('hello') == AssertionError\n\n# Edge case: test with an empty list which also raises TypeError and does not run the rest of the tests\nassert validate([]) == AssertionError\n\n# Edge case: test with None which raises TypeError and does not run the rest of the tests\nassert validate(None) == AssertionError",
+      "reference_key": "assert validate(112233) == True\nassert validate(9876543210) == True\nassert validate(1234567890) == True\nassert validate(111222333) == True\nassert validate(1223334444) == False",
+      "key_differs": true,
+      "text": "```python\n# Test with typical positive numbers\nassert validate(111) == True\nassert validate(222) == True\nassert validate(333) == True\nassert validate(444) == True\n\n# Test with typical negative numbers\nassert validate(-1) == True\nassert validate(-22) == True\nassert validate(-33) == True\nassert validate(-44) == True\n\n# Test with zero\nassert validate(0) == True\n\n# Test with single-digit number\nassert validate(5) == True\n\n# Test with two-digit number where all digits are the same (example: 55)\nassert validate(49) == True\n\n# Test with two-digit number where some digits are different (example 86)\nassert validate(76) == True\n\n# Edge case: test with large negative number\nassert validate(-7890123456) == True\n\n# Edge case: test with a string input which raises TypeError and does not run the rest of the tests\nassert validate('hello') == AssertionError\n\n# Edge case: test with an empty list which also raises TypeError and does not run the rest of the tests\nassert validate([]) == AssertionError\n\n# Edge case: test with None which raises TypeError and does not run the rest of the tests\nassert validate(None) == AssertionError\n```",
+      "quality": 0.0,
+      "final_key": "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(111) == True\nassert validate(222) == True\nassert validate(333) == True\nassert validate(444) == True\nassert validate(-1) == True\nassert validate(-22) == True\nassert validate(-33) == True\nassert validate(-44) == True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(111) == True\nassert validate(222) == True\nassert validate(333) == True\nassert validate(444) == True\nassert validate(-1) == True\nassert validate(-22) == True\nassert validate(-33) == True\nassert validate(-44) == True\n```",
+        "fixer": "```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(111) == True\nassert validate(222) == True\nassert validate(333) == True\nassert validate(444) == True\nassert validate(-1) == True\nassert validate(-22) == True\nassert validate(-33) == True\nassert validate(-44) == True\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Typical cases\nassert validate(1234) == True\nassert validate(0001) == True\n\n# Edge Cases\nassert validate(-1) == False\nassert validate(9) == True\nassert validate(999) == True\nassert validate(100000) == False",
+      "reference_key": "assert validate(112233) == True\nassert validate(9876543210) == True\nassert validate(1234567890) == True\nassert validate(111222333) == True\nassert validate(1223334444) == False",
+      "key_differs": true,
+      "text": "```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Typical cases\nassert validate(1234) == True\nassert validate(0001) == True\n\n# Edge Cases\nassert validate(-1) == False\nassert validate(9) == True\nassert validate(999) == True\nassert validate(100000) == False\n```",
+      "quality": 0.0,
+      "final_key": "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(0001) == False  # Fix: Leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers\nassert validate(-1) == False   # Fix: ValueError invalid literal for int() with base 10: '-'\nassert validate(9) == True\nassert validate(999) == True\nassert validate(100000) == False",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(0001) == False  # Fix: Leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers\nassert validate(-1) == False   # Fix: ValueError invalid literal for int() with base 10: '-'\nassert validate(9) == True\nassert validate(999) == True\nassert validate(100000) == False\n```",
+        "fixer": "```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert validate(1234) == True\nassert validate(0001) == False  # Fix: Leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers\nassert validate(-1) == False   # Fix: ValueError invalid literal for int() with base 10: '-'\nassert validate(9) == True\nassert validate(999) == True\nassert validate(100000) == False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert reverse_string_list([]) == []\nassert reverse_string_list(['a']) == ['a']\nassert reverse_string_list(['ab']) == ['ba']\nassert reverse_string_list(['abc']) == ['cba']\nassert reverse_string_list(['abcd']) == ['dcba']",
+      "reference_key": "assert validate(112233) == True\nassert validate(9876543210) == True\nassert validate(1234567890) == True\nassert validate(111222333) == True\nassert validate(1223334444) == False",
+      "key_differs": true,
+      "text": "```python\nassert reverse_string_list([]) == []\nassert reverse_string_list(['a']) == ['a']\nassert reverse_string_list(['ab']) == ['ba']\nassert reverse_string_list(['abc']) == ['cba']\nassert reverse_string_list(['abcd']) == ['dcba']\n```",
+      "quality": 1.0,
+      "final_key": "def validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n```",
+        "fixer": "```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for digit in num_str:\n        if digit in digit_freq:\n            digit_freq[digit] += 1\n        else:\n            digit_freq[digit] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n\n# Test cases\nassert validate(1234) == True\nassert validate(51241) == False\nassert validate(321) == True\nassert reverse_string_list([]) == []\nassert reverse_string_list(['a']) == ['a']\nassert reverse_string_list(['ab']) == ['ba']\nassert reverse_string_list(['abc']) == ['cba']\nassert reverse_string_list(['abcd']) == ['dcba']\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": null,
+  "sample_keys": [
+    "assert validate(1234) == True\nassert validate(98765) == True\nassert validate(11111) == True\nassert validate(10000) == False\nassert validate(0) == True",
+    "assert validate(987654321) == False\nassert validate(333333333) == True\nassert validate(0) == True\nassert validate(-1) == False\nassert validate(111111111) == True",
+    null,
+    "assert validate(1000) == False\nassert validate(987654321) == True\nassert validate(1111) == True\nassert validate(2222) == True\nassert validate(3333) == True",
+    "assert validate(1111) == True\nassert validate(80808) == True\nassert validate(0) == True\nassert validate(9) == True\nassert validate(10) == True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1796.0,
+    "small_out": 1138.0,
+    "small_s": 24.87148082695785
+  },
+  "calls_plus": {
+    "small_in": 1402.0,
+    "small_out": 687.0,
+    "small_s": 14.741239441995276,
+    "large_in": 216.0,
+    "large_out": 85.0,
+    "large_s": 2.2996261169901118
+  },
+  "calls_samples": {
+    "small_in": 1080.0,
+    "small_out": 767.0,
+    "small_s": 14.862361632985994
+  }
+}

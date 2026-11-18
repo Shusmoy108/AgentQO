@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-170",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert sum_range_list([1, 2, 3, 4, 5], 1, 3) == 9\nassert sum_range_list([-1, -2, -3, -4, -5], 0, 2) == -6\nassert sum_range_list([10, 20, 30, 40, 50], 2, 4) == 120\nassert sum_range_list([0, 0, 0, 0, 0], 0, 4) == 0\nassert sum_range_list([100], 0, 0) == 100\n```",
+  "reference_key": "assert sum_range_list([1, 2, 3, 4, 5], 1, 3) == 9\nassert sum_range_list([-1, -2, -3, -4, -5], 0, 2) == -6\nassert sum_range_list([10, 20, 30, 40, 50], 2, 4) == 120\nassert sum_range_list([0, 0, 0, 0, 0], 0, 4) == 0\nassert sum_range_list([100], 0, 0) == 100",
+  "final_key_plus": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+    "fixer": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test case 2\nassert sum_range_list([-7, -3, -6, -8, -11, -9, -10, -13, -60, -42], -6, -42) == 0\n\n# Test case 3\nassert sum_range_list([-49, -27, -23, -19, -13, -9, -5, -1, 0], -49, -1) == 7\n\n# Test case 4\nassert sum_range_list([-114, -88, -62, -34, -18, -12, -8, -4, 0], -88, -12) == -36\n\n# Test case 5\nassert sum_range_list([-99, -78, -57, -36, -15, -9, -5, -1, 0], -57, -1) == 13",
+      "reference_key": "assert sum_range_list([1, 2, 3, 4, 5], 1, 3) == 9\nassert sum_range_list([-1, -2, -3, -4, -5], 0, 2) == -6\nassert sum_range_list([10, 20, 30, 40, 50], 2, 4) == 120\nassert sum_range_list([0, 0, 0, 0, 0], 0, 4) == 0\nassert sum_range_list([100], 0, 0) == 100",
+      "key_differs": true,
+      "text": "```python\n# Test case 2\nassert sum_range_list([-7, -3, -6, -8, -11, -9, -10, -13, -60, -42], -6, -42) == 0\n\n# Test case 3\nassert sum_range_list([-49, -27, -23, -19, -13, -9, -5, -1, 0], -49, -1) == 7\n\n# Test case 4\nassert sum_range_list([-114, -88, -62, -34, -18, -12, -8, -4, 0], -88, -12) == -36\n\n# Test case 5\nassert sum_range_list([-99, -78, -57, -36, -15, -9, -5, -1, 0], -57, -1) == 13\n```",
+      "quality": 0.0,
+      "final_key": "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise IndexError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise IndexError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise IndexError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert sum_range_list([], 0, 0) == 0\nassert sum_range_list([3, 2, 6], -1, 2) == 7\nassert sum_range_list([-2, -6, -3], 2, 0) == 0\nassert sum_range_list([1, 2, 1], 0, -1) == 4\nassert sum_range_list([7, 7, 3], 1, 1) == 0",
+      "reference_key": "assert sum_range_list([1, 2, 3, 4, 5], 1, 3) == 9\nassert sum_range_list([-1, -2, -3, -4, -5], 0, 2) == -6\nassert sum_range_list([10, 20, 30, 40, 50], 2, 4) == 120\nassert sum_range_list([0, 0, 0, 0, 0], 0, 4) == 0\nassert sum_range_list([100], 0, 0) == 100",
+      "key_differs": true,
+      "text": "```python\nassert sum_range_list([], 0, 0) == 0\nassert sum_range_list([3, 2, 6], -1, 2) == 7\nassert sum_range_list([-2, -6, -3], 2, 0) == 0\nassert sum_range_list([1, 2, 1], 0, -1) == 4\nassert sum_range_list([7, 7, 3], 1, 1) == 0\n```",
+      "quality": 0.0,
+      "final_key": "def sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    if start_index < 0 or end_index >= len(numbers) or start_index > end_index:\n        raise ValueError(\"Invalid range\")\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert odd_equivalent(\"011001\",6) == 3\nassert odd_equivalent(\"101010\",4) == 2\nassert odd_equivalent(\"000000\",7) == 0\nassert odd_equivalent(\"111111\",8) == 8\nassert odd_equivalent(\"010101\",9) == 4",
+      "reference_key": "assert sum_range_list([1, 2, 3, 4, 5], 1, 3) == 9\nassert sum_range_list([-1, -2, -3, -4, -5], 0, 2) == -6\nassert sum_range_list([10, 20, 30, 40, 50], 2, 4) == 120\nassert sum_range_list([0, 0, 0, 0, 0], 0, 4) == 0\nassert sum_range_list([100], 0, 0) == 100",
+      "key_differs": true,
+      "text": "```python\nassert odd_equivalent(\"011001\",6) == 3\nassert odd_equivalent(\"101010\",4) == 2\nassert odd_equivalent(\"000000\",7) == 0\nassert odd_equivalent(\"111111\",8) == 8\nassert odd_equivalent(\"010101\",9) == 4\n```",
+      "quality": 1.0,
+      "final_key": "def sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n```",
+        "fixer": "```python\ndef sum_range_list(numbers, start_index, end_index):\n    total_sum = 0\n    for i in range(start_index, end_index + 1):\n        total_sum += numbers[i]\n    return total_sum\n\n# Test cases\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 10) == 29\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 5, 7) == 16\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 7, 10) == 38\nassert odd_equivalent(\"011001\",6) == 3\nassert odd_equivalent(\"101010\",4) == 2\nassert odd_equivalent(\"000000\",7) == 0\nassert odd_equivalent(\"111111\",8) == 8\nassert odd_equivalent(\"010101\",9) == 4\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert sum_range_list([], 0, 0) == 0\nassert sum_range_list([1, 2, 3, 4, 5], 1, 3) == 9\nassert sum_range_list([-1, -2, -3, -4, -5], 2, 4) == -9\nassert sum_range_list([10, 20, 30, 40, 50], 0, 4) == 150\nassert sum_range_list([100, 200, 300, 400, 500], 2, 4) == 700",
+  "sample_keys": [
+    "# Edge case 1: Empty list\nassert sum_range_list([], 0, 0) == 0\n\n# Edge case 2: Negative start index\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], -1, 5) == 37\n\n# Edge case 3: Start index greater than end index\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 10, 5) == 0\n\n# Edge case 4: Zero end index\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, 0) == 2\n\n# Edge case 5: Negative end index\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], 8, -10) == 0",
+    "assert sum_range_list([], 0, 1) == 0\nassert sum_range_list([1], 0, 0) == 1\nassert sum_range_list([-10, -5, 0, 5, 10], 2, 4) == 5\nassert sum_range_list([10, 20, 30, 40, 50], 1, 3) == 90\nassert sum_range_list([1, 2, 3, 4, 5], 0, 20) == 15",
+    "# Test cases with typical inputs\nassert sum_range_list([1,2,3,4,5], 0, 4) == 15\nassert sum_range_list([-1, -2, -3, -4, -5], 0, 2) == -6\nassert sum_range_list([10, 20, 30, 40, 50], 3, 4) == 70\n\n# Edge case tests\nassert sum_range_list([], 0, 2) == 0\nassert sum_range_list([100, 200, 300], -1, 2) == 600\nassert sum_range_list([1, 2, 3, 4, 5, 6, 7, 8, 9], 2, 5) == 18\nassert sum_range_list([1, 2, 3, 4, 5], 5, 7) == 0",
+    "assert sum_range_list([], 0, 1) == 0\nassert sum_range_list([3], 0, 0) == 3\nassert sum_range_list([-5, -1, -3, -7, -9, -11, -13, -15, -17, -19, -21], 3, 5) == -5\nassert sum_range_list([2, 1, 5, 6, 8, 3, 4, 9, 10, 11, 8, 12], 8, 8) == 8\nassert sum_range_list([10, 20, 30, 40, 50], 20, 40) == 60",
+    "# Check if the function handles negative indices correctly\nassert sum_range_list([2,1,5,6,8,3,4,9,10,11,8,12], -1, 2) == 15\n\n# Check if the function works with empty lists\nassert sum_range_list([], 0, 0) == 0\n\n# Check if the function works with single-element lists\nassert sum_range_list([42], 0, 0) == 42\n\n# Check if the function returns zero when the start index is greater than or equal to the end index\nassert sum_range_list([1, 2, 3], 3, 1) == 0\n\n# Check if the function raises an error when the end index is out of bounds\ntry:\n    sum_range_list([1, 2, 3], 5, 7)\nexcept ValueError as e:\n    assert str(e) == \"end_index must be less than len(numbers)\""
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2062.0,
+    "small_out": 524.0,
+    "small_s": 10.815307963028317
+  },
+  "calls_plus": {
+    "small_in": 1781.0,
+    "small_out": 313.0,
+    "small_s": 6.107726018031826,
+    "large_in": 205.0,
+    "large_out": 149.0,
+    "large_s": 3.333309112000279
+  },
+  "calls_samples": {
+    "small_in": 1025.0,
+    "small_out": 997.0,
+    "small_s": 17.840778201963985
+  }
+}

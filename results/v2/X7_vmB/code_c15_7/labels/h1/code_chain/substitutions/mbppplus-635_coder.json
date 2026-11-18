@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-635",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr\n```",
+  "reference_key": "def heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert heap_sort([]) == []\nassert heap_sort([1]) == [1]\nassert heap_sort([1, 2]) == [1, 2]\nassert heap_sort([2, 1]) == [1, 2]\nassert heap_sort([-1, -2, -3, -4, -5]) == [-5, -4, -3, -2, -1]\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\ndef heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import heapq\n\ndef heap_sort(arr):\n    return heapq.nlargest(len(arr), arr)",
+      "reference_key": "def heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr",
+      "key_differs": true,
+      "text": "```python\nimport heapq\n\ndef heap_sort(arr):\n    return heapq.nlargest(len(arr), arr)\n```",
+      "quality": 0.0,
+      "final_key": "import heapq\n\ndef heap_sort(arr):\n    return heapq.nlargest(len(arr), arr)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert heap_sort([]) == []\nassert heap_sort([1]) == [1]\nassert heap_sort([-1, -2, -3, -4, -5]) == [-1, -2, -3, -4, -5]\nassert heap_sort([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\nassert heap_sort([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n```",
+        "verifier": "PICK: A\n```python\nimport heapq\n\ndef heap_sort(arr):\n    return heapq.nlargest(len(arr), arr)\n```",
+        "fixer": "```python\nimport heapq\n\ndef heap_sort(arr):\n    return heapq.nlargest(len(arr), arr)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import heapq\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapq.heapify(arr, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapq.heapify(arr, i, 0)\n    \n    return arr",
+      "reference_key": "def heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr",
+      "key_differs": true,
+      "text": "```python\nimport heapq\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapq.heapify(arr, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapq.heapify(arr, i, 0)\n    \n    return arr\n```",
+      "quality": 0.0,
+      "final_key": "import heapq\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapq.heapify(arr, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapq.heapify(arr, i, 0)\n    \n    return arr",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert heap_sort([]) == []\nassert heap_sort([1]) == [1]\nassert heap_sort([1, 2]) == [1, 2]\nassert heap_sort([2, 1]) == [1, 2]\nassert heap_sort([-1, -2, -3, -4, -5]) == [-5, -4, -3, -2, -1]\n```",
+        "verifier": "PICK: A\n\n```python\nimport heapq\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapq.heapify(arr, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapq.heapify(arr, i, 0)\n    \n    return arr\n```",
+        "fixer": "```python\nimport heapq\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapq.heapify(arr, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapq.heapify(arr, i, 0)\n    \n    return arr\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes",
+      "reference_key": "def heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr",
+      "key_differs": true,
+      "text": "```python\ndef difference(n):\n    sum_n = n * (n + 1) // 2\n    sum_cubes = (n * (n + 1) * (2 * n + 1)) // 6\n    return sum_n - sum_cubes\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert difference(1)==0\nassert difference(2)==-1\nassert difference(3)==-3\nassert difference(4)==-6\nassert difference(5)==-10\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef heap_sort(arr):\n    def sift_down(start, end):\n        root = start\n        while True:\n            child = 2 * root + 1\n            if child > end:\n                break\n            if child + 1 <= end and arr[child + 1] < arr[child]:\n                child += 1\n            if arr[root] > arr[child]:\n                arr[root], arr[child] = arr[child], arr[root]\n                root = child\n            else:\n                break\n\n    n = len(arr)\n    for i in range(n // 2 - 1, -1, -1):\n        sift_down(i, n - 1)\n\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        sift_down(0, i - 1)\n\n    return arr\n\n# Test cases\nassert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\nassert heap_sort([25, 35, 22, 85, 14, 65, 75, 25, 58]) == [14, 22, 25, 25, 35, 58, 65, 75, 85]\nassert heap_sort([7, 1, 9, 5]) == [1, 5, 7, 9]\nassert difference(1) == 0\nassert difference(2) == -1\nassert difference(3) == -3\nassert difference(4) == -6\nassert difference(5) == -10\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr",
+  "sample_keys": [
+    "def heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr",
+    "from typing import List\n\ndef heapify(arr: List[int], n: int, i: int):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr: List[int]) -> List[int]:\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr",
+    "def heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr",
+    "def heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr",
+    "def heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2777.0,
+    "small_out": 861.0,
+    "small_s": 17.959904185001506
+  },
+  "calls_plus": {
+    "small_in": 2292.0,
+    "small_out": 647.0,
+    "small_s": 13.433844921994023,
+    "large_in": 485.0,
+    "large_out": 214.0,
+    "large_s": 4.538400517019909
+  },
+  "calls_samples": {
+    "small_in": 2425.0,
+    "small_out": 984.0,
+    "small_s": 16.952883521968033
+  }
+}

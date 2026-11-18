@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-312",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `volume_cone` that takes two parameters: `radius` and `height`.\n2. Calculate the slant height of the cone using the Pythagorean theorem: `slant_height = sqrt(radius**2 + height**2)`.\n3. Use the formula for the volume of a cone: `volume = (1/3) * pi * radius**2 * height`.\n4. Return the calculated volume.\n5. Ensure the function uses the `math.pi` constant for accuracy.",
+  "reference_key": null,
+  "final_key_plus": "import math\n\ndef volume_cone(radius, height):\n    slant_height = math.sqrt(radius**2 + height**2)\n    volume = (1/3) * math.pi * radius**2 * height\n    return volume",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert math.isclose(volume_cone(0, 10), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(5, 5), 141.3716694115407, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_cone(-5, 12), 0, rel_tol=0.001)\n```",
+    "coder": "```python\nimport math\n\ndef volume_cone(radius, height):\n    slant_height = math.sqrt(radius**2 + height**2)\n    volume = (1/3) * math.pi * radius**2 * height\n    return volume\n```",
+    "verifier": "PICK: A\n\n```python\nimport math\n\ndef volume_cone(radius, height):\n    slant_height = math.sqrt(radius**2 + height**2)\n    volume = (1/3) * math.pi * radius**2 * height\n    return volume\n```",
+    "fixer": "```python\nimport math\n\ndef volume_cone(radius, height):\n    slant_height = math.sqrt(radius**2 + height**2)\n    volume = (1/3) * math.pi * radius**2 * height\n    return volume\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `jacobsthal_num(n)` that takes an integer `n` as input.\n2. Initialize two variables `a` and `b` to 0 and 1 respectively.\n3. Use a loop to iterate from 2 to `n`.\n4. In each iteration, calculate the next Jacobsthal number using the formula `c = a + b`, where `a` is the current value of `b` and `b` is the previous value of `a`.\n5. Update `a` and `b` for the next iteration.\n6. Return the value of `b` after the loop completes.\n\nThis approach ensures that we correctly compute the nth Jacobsthal number by following the recursive definition provided on the given link.",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n\ndef volume_cone(radius, height):\n    return (1/3) * math.pi * radius**2 * height",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 2\nassert jacobsthal_num(4) == 4\n```",
+        "coder": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n\ndef volume_cone(radius, height):\n    return (1/3) * math.pi * radius**2 * height\n```",
+        "fixer": "```python\nimport math\n\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n\ndef volume_cone(radius, height):\n    return (1/3) * math.pi * radius**2 * height\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `volume_cone` that takes two parameters: `radius` and `height`.\n2. Calculate the slant height of the cone using the Pythagorean theorem: `slant_height = math.sqrt(radius**2 + height**2)`.\n3. Use the formula for the volume of a cone: `volume = (1/3) * math.pi * radius**2 * height`.\n4. Return the calculated volume.\n5. Ensure the function uses the `math.pi` constant for calculation accuracy.",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef volume_cone(radius, height):\n    slant_height = math.sqrt(radius**2 + height**2)\n    volume = (1/3) * math.pi * radius**2 * height\n    return volume",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert math.isclose(volume_cone(0, 10), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(5, 5), 141.3716694115407, rel_tol=0.001)\nassert math.isclose(volume_cone(10, 10), 4188.790204786391, rel_tol=0.001)\nassert math.isclose(volume_cone(-5, 12), 0, rel_tol=0.001)\n```",
+        "coder": "```python\nimport math\n\ndef volume_cone(radius, height):\n    slant_height = math.sqrt(radius**2 + height**2)\n    volume = (1/3) * math.pi * radius**2 * height\n    return volume\n```",
+        "verifier": "PICK: A\n\n```python\nimport math\n\ndef volume_cone(radius, height):\n    slant_height = math.sqrt(radius**2 + height**2)\n    volume = (1/3) * math.pi * radius**2 * height\n    return volume\n```",
+        "fixer": "```python\nimport math\n\ndef volume_cone(radius, height):\n    slant_height = math.sqrt(radius**2 + height**2)\n    volume = (1/3) * math.pi * radius**2 * height\n    return volume\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `heap_sort` that takes a list as input.\n3. Implement the heapify process to transform the list into a max-heap.\n4. Use the heapify process to sort the list by repeatedly extracting the maximum element from the heap and placing it at the end of the list.\n5. Return the sorted list.\n\n```python\ndef heapify(arr, n, i):\n    largest = i\n    left = 2 * i + 1\n    right = 2 * i + 2\n\n    if left < n and arr[left] > arr[largest]:\n        largest = left\n\n    if right < n and arr[right] > arr[largest]:\n        largest = right\n\n    if largest != i:\n        arr[i], arr[largest] = arr[largest], arr[i]\n        heapify(arr, n, largest)\n\ndef heap_sort(arr):\n    n = len(arr)\n    \n    # Build a max-heap\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(arr, n, i)\n    \n    # Extract elements one by one\n    for i in range(n - 1, 0, -1):\n        arr[i], arr[0] = arr[0], arr[i]\n        heapify(arr, i, 0)\n    \n    return arr\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that meets the requirements. The function `heap_sort` is designed to sort a list using the heap sort algorithm, which is efficient for large lists.",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef volume_cone(radius, height):\n    return (math.pi * radius ** 2 * height) / 3",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert math.isclose(volume_cone(0, 12), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(1, 0), 0, rel_tol=0.001)\nassert math.isclose(volume_cone(1, 1), 1/3 * math.pi, rel_tol=0.001)\nassert math.isclose(volume_cone(2, 3), 12 * math.pi, rel_tol=0.001)\nassert math.isclose(volume_cone(3, 4), 12 * math.pi * 4 / 3, rel_tol=0.001)\n```",
+        "coder": "```python\nimport math\n\ndef volume_cone(radius, height):\n    return (math.pi * radius ** 2 * height) / 3\n```",
+        "verifier": "PICK: A\n```python\nimport math\n\ndef volume_cone(radius, height):\n    return (math.pi * radius ** 2 * height) / 3\n```",
+        "fixer": "```python\nimport math\n\ndef volume_cone(radius, height):\n    return (math.pi * radius ** 2 * height) / 3\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import math\n\ndef volume_cone(r, h):\n    # Calculate the volume of a cone using the formula V = (1/3)\u03c0r\u00b2h\n    volume = (1/3) * math.pi * r**2 * h\n    return volume",
+  "sample_keys": [
+    "import math\n\ndef volume_cone(radius, height):\n    return (1/3) * math.pi * radius**2 * height",
+    "import math\n\ndef volume_cone(radius, height):\n    return (1/3) * math.pi * radius**2 * height",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1966.0,
+    "small_out": 448.0,
+    "small_s": 9.696497137018014
+  },
+  "calls_plus": {
+    "large_in": 131.0,
+    "large_out": 109.0,
+    "large_s": 2.516321204981068,
+    "small_in": 1832.0,
+    "small_out": 331.0,
+    "small_s": 6.547282858984545
+  },
+  "calls_samples": {
+    "small_in": 6489.0,
+    "small_out": 1913.0,
+    "small_s": 32.586298580048606
+  }
+}

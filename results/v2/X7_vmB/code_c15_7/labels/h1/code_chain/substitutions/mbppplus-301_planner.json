@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-301",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `dict_depth` that takes one parameter, `d`, which is expected to be a dictionary.\n2. Check if the input `d` is a dictionary using `isinstance(d, dict)`. If it's not a dictionary, return 0 as the depth.\n3. Initialize a variable `max_depth` to 0. This will keep track of the maximum depth found.\n4. Iterate over each key-value pair in the dictionary using a for loop.\n5. For each value, check if it is also a dictionary. If it is, recursively call `dict_depth` on this sub-dictionary and add 1 to the result to account for the current level of depth. Update `max_depth` if the new depth is greater than the current `max_depth`.\n6. After iterating through all items, return `max_depth + 1` to include the top-level dictionary itself.",
+  "reference_key": null,
+  "final_key_plus": "def dict_depth(d):\n    if not isinstance(d, dict):\n        return 0\n    max_depth = 0\n    for _, value in d.items():\n        if isinstance(value, dict):\n            depth = dict_depth(value)\n            if depth > max_depth:\n                max_depth = depth\n    return max_depth + 1",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert dict_depth({}) == 0\nassert dict_depth({'a':1}) == 1\nassert dict_depth({'a':1, 'b':2}) == 2\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}}) == 4\nassert dict_depth({'a':1, 'b': {'c': {'d': {'e': {'f': {}}}}}}) == 6\n```",
+    "coder": "```python\ndef dict_depth(d):\n    if not isinstance(d, dict):\n        return 0\n    max_depth = 0\n    for _, value in d.items():\n        if isinstance(value, dict):\n            depth = dict_depth(value)\n            if depth > max_depth:\n                max_depth = depth\n    return max_depth + 1\n```",
+    "verifier": "PICK: A\n```python\ndef dict_depth(d):\n    if not isinstance(d, dict):\n        return 0\n    max_depth = 0\n    for _, value in d.items():\n        if isinstance(value, dict):\n            depth = dict_depth(value)\n            if depth > max_depth:\n                max_depth = depth\n    return max_depth + 1\n```",
+    "fixer": "```python\ndef dict_depth(d):\n    if not isinstance(d, dict):\n        return 0\n    max_depth = 0\n    for _, value in d.items():\n        if isinstance(value, dict):\n            depth = dict_depth(value)\n            if depth > max_depth:\n                max_depth = depth\n    return max_depth + 1\n\n# Test cases\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4\nassert dict_depth({'a':1, 'b': {'c':'python'}})==2\nassert dict_depth({1: 'Sun', 2: {3: {4:'Mon'}}})==3\nassert dict_depth({}) == 0\nassert dict_depth({'a':1}) == 1\nassert dict_depth({'a':1, 'b':2}) == 2\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}}) == 4\nassert dict_depth({'a':1, 'b': {'c': {'d': {'e': {'f': {}}}}}}) == 6\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `check_Consecutive` that takes one parameter: `numbers`.\n2. Initialize a variable `is_consecutive` to `True`.\n3. Iterate through the list using a for loop starting from index 0.\n4. For each element, compare it with the next element in the list.\n5. If any two adjacent elements are not equal, set `is_consecutive` to `False` and break out of the loop.\n6. After the loop completes, return the value of `is_consecutive`.\n\nThis approach ensures that the function checks for consecutive numbers by comparing each element with its successor in the list.",
+      "quality": 0.0,
+      "final_key": "def dict_depth(d):\n    if isinstance(d, dict):\n        return 1 + max(dict_depth(v) for v in d.values())\n    else:\n        return 0\n\n# Test cases\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4\nassert dict_depth({'a':1, 'b': {'c':'python'}})==2\nassert dict_depth({1: 'Sun', 2: {3: {4:'Mon'}}})==3\nassert check_Consecutive([1,2,3,4,5])==True\nassert check_Consecutive([])==True\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10])==True\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10,11])==False\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10,11,12])==True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_Consecutive([1,2,3,4,5])==True\nassert check_Consecutive([])==True\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10])==True\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10,11])==False\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10,11,12])==True\n```",
+        "coder": "```python\ndef check_Consecutive(numbers):\n    is_consecutive = True\n    for i in range(len(numbers) - 1):\n        if numbers[i] != numbers[i + 1]:\n            is_consecutive = False\n            break\n    return is_consecutive\n```",
+        "verifier": "PICK: B\n\n```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return 1 + max(dict_depth(v) for v in d.values())\n    else:\n        return 0\n\n# Test cases\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4\nassert dict_depth({'a':1, 'b': {'c':'python'}})==2\nassert dict_depth({1: 'Sun', 2: {3: {4:'Mon'}}})==3\nassert check_Consecutive([1,2,3,4,5])==True\nassert check_Consecutive([])==True\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10])==True\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10,11])==False\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10,11,12])==True\n```",
+        "fixer": "```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return 1 + max(dict_depth(v) for v in d.values())\n    else:\n        return 0\n\n# Test cases\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4\nassert dict_depth({'a':1, 'b': {'c':'python'}})==2\nassert dict_depth({1: 'Sun', 2: {3: {4:'Mon'}}})==3\nassert check_Consecutive([1,2,3,4,5])==True\nassert check_Consecutive([])==True\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10])==True\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10,11])==False\nassert check_Consecutive([1,2,3,4,5,6,7,8,9,10,11,12])==True\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `dict_depth` that takes one parameter, `d`, which is expected to be a dictionary.\n2. Check if the input `d` is a dictionary using `isinstance(d, dict)`. If it's not a dictionary, return 0 as the depth.\n3. Initialize a variable `max_depth` to 1. This will keep track of the maximum depth found, including the top-level dictionary itself.\n4. Iterate over each key-value pair in the dictionary using a for loop.\n5. For each value, check if it is also a dictionary. If it is, recursively call `dict_depth` on this sub-dictionary and add 1 to the result to account for the current level of depth. Update `max_depth` if the new depth is greater than the current `max_depth`.\n6. After iterating through all items, return `max_depth`.",
+      "quality": 1.0,
+      "final_key": "def dict_depth(d):\n    if not isinstance(d, dict):\n        return 0\n    max_depth = 1\n    for _, value in d.items():\n        if isinstance(value, dict):\n            max_depth = max(max_depth, dict_depth(value) + 1)\n    return max_depth",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert dict_depth({}) == 0\nassert dict_depth({'a':1}) == 1\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}}) == 4\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}}) == 5\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {'g': {'h': {}}}}) == 6\n```",
+        "coder": "```python\ndef dict_depth(d):\n    if not isinstance(d, dict):\n        return 0\n    max_depth = 1\n    for _, value in d.items():\n        if isinstance(value, dict):\n            max_depth = max(max_depth, dict_depth(value) + 1)\n    return max_depth\n```",
+        "verifier": "PICK: A\n\n```python\ndef dict_depth(d):\n    if not isinstance(d, dict):\n        return 0\n    max_depth = 1\n    for _, value in d.items():\n        if isinstance(value, dict):\n            max_depth = max(max_depth, dict_depth(value) + 1)\n    return max_depth\n```",
+        "fixer": "```python\ndef dict_depth(d):\n    if not isinstance(d, dict):\n        return 0\n    max_depth = 1\n    for _, value in d.items():\n        if isinstance(value, dict):\n            max_depth = max(max_depth, dict_depth(value) + 1)\n    return max_depth\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `check_greater` that takes two parameters: `arr`, which is the list of numbers, and `num`, which is the number to compare against.\n2. Initialize a variable `result` to `True`.\n3. Iterate through each element in the list `arr` using a for loop.\n4. For each element, check if it is greater than the given number `num`.\n5. If any element is found to be greater than `num`, set `result` to `False` and break out of the loop.\n6. After the loop completes, return the value of `result`.\n\nThis approach ensures that the function correctly identifies whether the input number is greater than all elements in the array.",
+      "quality": 0.0,
+      "final_key": "def dict_depth(d):\n    if isinstance(d, dict):\n        return 1 + max(dict_depth(v) for v in d.values())\n    else:\n        return 0\n\n# Test cases\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4\nassert dict_depth({'a':1, 'b': {'c':'python'}})==2\nassert dict_depth({1: 'Sun', 2: {3: {4:'Mon'}}})==3\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}})==3\nassert dict_depth({})==0\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {}})==4\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {}})==4",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4\nassert dict_depth({})==0\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}})==3\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {}})==4\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {}})==4\n```",
+        "coder": "```python\ndef check_greater(arr, num):\n    result = True\n    for i in arr:\n        if i > num:\n            result = False\n            break\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return 1 + max(dict_depth(v) for v in d.values())\n    else:\n        return 0\n\n# Test cases\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4\nassert dict_depth({'a':1, 'b': {'c':'python'}})==2\nassert dict_depth({1: 'Sun', 2: {3: {4:'Mon'}}})==3\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}})==3\nassert dict_depth({})==0\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {}})==4\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {}})==4\n```",
+        "fixer": "```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return 1 + max(dict_depth(v) for v in d.values())\n    else:\n        return 0\n\n# Test cases\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4\nassert dict_depth({'a':1, 'b': {'c':'python'}})==2\nassert dict_depth({1: 'Sun', 2: {3: {4:'Mon'}}})==3\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}})==3\nassert dict_depth({})==0\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {}})==4\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {}})==4\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0",
+  "sample_keys": [
+    "def dict_depth(d):\n    if isinstance(d, dict):\n        return 1 + max(dict_depth(v) for v in d.values())\n    else:\n        return 0",
+    "def dict_depth(d):\n    if isinstance(d, str) or d is None:\n        return 0\n    max_depth = 0\n    for value in d.values():\n        current_depth = dict_depth(value)\n        if current_depth > max_depth:\n            max_depth = current_depth\n    return 1 + max_depth",
+    "def dict_depth(dictionary):\n    if isinstance(dictionary, dict):\n        return 1 + max(dict_depth(value) for value in dictionary.values())\n    else:\n        return 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1589.0,
+    "small_out": 339.0,
+    "small_s": 7.186076932004653
+  },
+  "calls_plus": {
+    "large_in": 112.0,
+    "large_out": 190.0,
+    "large_s": 5.4952220430132,
+    "small_in": 1553.0,
+    "small_out": 489.0,
+    "small_s": 10.034761822025757
+  },
+  "calls_samples": {
+    "small_in": 4824.0,
+    "small_out": 1080.0,
+    "small_s": 22.8598332159454
+  }
+}

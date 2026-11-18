@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-586",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert split_Arr([1, 2, 3, 4, 5], 2) == [3, 4, 5, 1, 2]\nassert split_Arr(['a', 'b', 'c', 'd'], 1) == ['b', 'c', 'd', 'a']\nassert split_Arr([True, False, True], 0) == [True, False, True]\nassert split_Arr([], 0) == []\nassert split_Arr([7], 0) == [7]\n```",
+  "reference_key": "assert split_Arr([1, 2, 3, 4, 5], 2) == [3, 4, 5, 1, 2]\nassert split_Arr(['a', 'b', 'c', 'd'], 1) == ['b', 'c', 'd', 'a']\nassert split_Arr([True, False, True], 0) == [True, False, True]\nassert split_Arr([], 0) == []\nassert split_Arr([7], 0) == [7]",
+  "final_key_plus": "def split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n```",
+    "fixer": "```python\ndef split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test with an array of integers\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\n\n# Test with an empty list\nassert split_Arr([],2) == []\n\n# Test with a list containing a single item\nassert split_Arr([5],2) == [5]\n\n# Test with a list with less than n elements\nassert split_Arr([2,4,8,32,50],5) == [2,4,8,32,50]\n\n# Test with a large list\nassert split_Arr(list(range(1, 1001)), 300) == list(range(701, 1001)) + list(range(1, 700))",
+      "reference_key": "assert split_Arr([1, 2, 3, 4, 5], 2) == [3, 4, 5, 1, 2]\nassert split_Arr(['a', 'b', 'c', 'd'], 1) == ['b', 'c', 'd', 'a']\nassert split_Arr([True, False, True], 0) == [True, False, True]\nassert split_Arr([], 0) == []\nassert split_Arr([7], 0) == [7]",
+      "key_differs": true,
+      "text": "```python\n# Test with an array of integers\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\n\n# Test with an empty list\nassert split_Arr([],2) == []\n\n# Test with a list containing a single item\nassert split_Arr([5],2) == [5]\n\n# Test with a list with less than n elements\nassert split_Arr([2,4,8,32,50],5) == [2,4,8,32,50]\n\n# Test with a large list\nassert split_Arr(list(range(1, 1001)), 300) == list(range(701, 1001)) + list(range(1, 700))\n```",
+      "quality": 0.0,
+      "final_key": "def split_Arr(arr, n):\n    if len(arr) < n:\n        raise ValueError(\"The length of the array must be greater than or equal to n.\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef split_Arr(arr, n):\n    if len(arr) < n:\n        raise ValueError(\"The length of the array must be greater than or equal to n.\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n```",
+        "fixer": "```python\ndef split_Arr(arr, n):\n    if len(arr) < n:\n        raise ValueError(\"The length of the array must be greater than or equal to n.\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert split_Arr([10,10,40],0) == [40]\nassert split_Arr([90,80,70],2) == [90,80,70]\nassert split_Arr([20,100,90],1) == [100,90,20]\nassert split_Arr([],6) == []\nassert split_Arr([-3,-4,-5,-6],-1) == [-6]",
+      "reference_key": "assert split_Arr([1, 2, 3, 4, 5], 2) == [3, 4, 5, 1, 2]\nassert split_Arr(['a', 'b', 'c', 'd'], 1) == ['b', 'c', 'd', 'a']\nassert split_Arr([True, False, True], 0) == [True, False, True]\nassert split_Arr([], 0) == []\nassert split_Arr([7], 0) == [7]",
+      "key_differs": true,
+      "text": "```python\nassert split_Arr([10,10,40],0) == [40]\nassert split_Arr([90,80,70],2) == [90,80,70]\nassert split_Arr([20,100,90],1) == [100,90,20]\nassert split_Arr([],6) == []\nassert split_Arr([-3,-4,-5,-6],-1) == [-6]\n```",
+      "quality": 0.0,
+      "final_key": "def split_Arr(arr, n):\n    if n < 0 or n >= len(arr):\n        raise ValueError(\"Index out of range\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef split_Arr(arr, n):\n    if n < 0 or n >= len(arr):\n        raise ValueError(\"Index out of range\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n```",
+        "fixer": "```python\ndef split_Arr(arr, n):\n    if n < 0 or n >= len(arr):\n        raise ValueError(\"Index out of range\")\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert number_ctr('1234567890') == 10\nassert number_ctr('abcde') == 0\nassert number_ctr('12345678901234567890') == 20\nassert number_ctr('0') == 1\nassert number_ctr('') == 0",
+      "reference_key": "assert split_Arr([1, 2, 3, 4, 5], 2) == [3, 4, 5, 1, 2]\nassert split_Arr(['a', 'b', 'c', 'd'], 1) == ['b', 'c', 'd', 'a']\nassert split_Arr([True, False, True], 0) == [True, False, True]\nassert split_Arr([], 0) == []\nassert split_Arr([7], 0) == [7]",
+      "key_differs": true,
+      "text": "```python\nassert number_ctr('1234567890') == 10\nassert number_ctr('abcde') == 0\nassert number_ctr('12345678901234567890') == 20\nassert number_ctr('0') == 1\nassert number_ctr('') == 0\n```",
+      "quality": 0.0,
+      "final_key": "def split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\nassert number_ctr('1234567890') == 10\nassert number_ctr('abcde') == 0\nassert number_ctr('12345678901234567890') == 20\nassert number_ctr('0') == 1\nassert number_ctr('') == 0",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\nassert number_ctr('1234567890') == 10\nassert number_ctr('abcde') == 0\nassert number_ctr('12345678901234567890') == 20\nassert number_ctr('0') == 1\nassert number_ctr('') == 0\n```",
+        "fixer": "```python\ndef split_Arr(arr, n):\n    first_part = arr[:n]\n    second_part = arr[n:]\n    result = first_part + second_part\n    return result\n\n# Test cases\nassert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([1,2,3,4],1) == [2,3,4,1]\nassert split_Arr([0,1,2,3,4,5,6,7],3) == [3,4,5,6,7,0,1,2]\nassert number_ctr('1234567890') == 10\nassert number_ctr('abcde') == 0\nassert number_ctr('12345678901234567890') == 20\nassert number_ctr('0') == 1\nassert number_ctr('') == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert split_Arr([12,10,5,6,52,36],2) == [5,6,52,36,12,10]\nassert split_Arr([],2) == []\nassert split_Arr([1],2) == [1]\nassert split_Arr([1,2,3,4,5],0) == [1,2,3,4,5]\nassert split_Arr([1,2,3,4,5],5) == [1,2,3,4,5]",
+  "sample_keys": [
+    "assert split_Arr([\"apple\",\"orange\",\"banana\"],1) == [\"orange\",\"banana\",\"apple\"]\nassert split_Arr([\"dog\",\"cat\",\"mouse\",\"lion\"],4) == [\"dog\",\"cat\",\"mouse\",\"lion\"]\nassert split_Arr([],1) == []\nassert split_Arr([1],0) == [1]\nassert split_Arr([1,2,3],-1) == [1,2,3]",
+    "assert split_Arr([], 3) == []\nassert split_Arr([7], 2) == [7]\nassert split_Arr([1, 2, 3], 4) == [1, 2, 3]\nassert split_Arr(['a', 'b', 'c'], 1) == ['b', 'c', 'a']\nassert split_Arr(['hello', 'world'], 0) == ['hello', 'world']",
+    "assert split_Arr([],2) == []\nassert split_Arr([1],2) == [1, 1]\nassert split_Arr([1,2,3,4],0) == []\nassert split_Arr([1,2,3,4],5) == [1, 2, 3, 4]\nassert split_Arr([1,2,3,4],7) == [1, 2, 3, 4, 1, 2, 3, 4]",
+    "assert split_Arr([], 1) == []\nassert split_Arr([1], 0) == [1]\nassert split_Arr([1,2], -1) == []\nassert split_Arr([1,2], 3) == [1,2]\nassert split_Arr([1,2,3], 0) == [2,3,1]",
+    "assert split_Arr([], 2) == []\nassert split_Arr([1], 1) == [1]\nassert split_Arr([1,2,3], 4) == [1,2,3]\nassert split_Arr(['apple', 'banana', 'cherry'], 1) == ['apple']\nassert split_Arr('hello world'.split(), 3) == ['h', 'e', 'llo world']"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1915.0,
+    "small_out": 486.0,
+    "small_s": 10.577228467998793
+  },
+  "calls_plus": {
+    "small_in": 1679.0,
+    "small_out": 322.0,
+    "small_s": 6.972501286043553,
+    "large_in": 196.0,
+    "large_out": 121.0,
+    "large_s": 2.751961123984074
+  },
+  "calls_samples": {
+    "small_in": 980.0,
+    "small_out": 491.0,
+    "small_s": 8.53443716999027
+  }
+}

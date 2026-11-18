@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-255",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert combinations_colors([\"Red\", \"Green\", \"Blue\"], 2) == [('Red', 0), ('Red', 1), ('Green', 0), ('Green', 1), ('Blue', 0), ('Blue', 1)]\nassert combinations_colors([\"Red\"], 3) == [('Red', 0), ('Red', 1), ('Red', 2)]\nassert combinations_colors([], 2) == []\nassert combinations_colors([\"Red\", \"Green\"], 0) == []\nassert combinations_colors([\"Red\", \"Green\", \"Blue\"], 4) == [('Red', 0), ('Red', 1), ('Red', 2), ('Red', 3), ('Green', 0), ('Green', 1), ('Green', 2), ('Green', 3), ('Blue', 0), ('Blue', 1), ('Blue', 2), ('Blue', 3)]\n```",
+  "reference_key": "assert combinations_colors([\"Red\", \"Green\", \"Blue\"], 2) == [('Red', 0), ('Red', 1), ('Green', 0), ('Green', 1), ('Blue', 0), ('Blue', 1)]\nassert combinations_colors([\"Red\"], 3) == [('Red', 0), ('Red', 1), ('Red', 2)]\nassert combinations_colors([], 2) == []\nassert combinations_colors([\"Red\", \"Green\"], 0) == []\nassert combinations_colors([\"Red\", \"Green\", \"Blue\"], 4) == [('Red', 0), ('Red', 1), ('Red', 2), ('Red', 3), ('Green', 0), ('Green', 1), ('Green', 2), ('Green', 3), ('Blue', 0), ('Blue', 1), ('Blue', 2), ('Blue', 3)]",
+  "final_key_plus": "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result\n```",
+    "fixer": "```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert combinations_colors([],2)==[]\nassert combinations_colors([\"Red\"],1)==[('Red',)]\nassert combinations_colors(\"abc\",1) == [('a',), ('b',), ('c',)]\nassert combinations_colors(\"hello\",2) == [('h', 'e'), ('h', 'l'), ('h', 'o'), ('e', 'l'), ('e', 'o'), ('l', 'o')]\nassert combinations_colors(\"test\",4) == [('t', 'e', 's', 't'), ('t', 'e', 's', 't'), ('t', 'e', 's', 't'), ('t', 'e', 's', 't'), ('t', 'e', 's', 't')]",
+      "reference_key": "assert combinations_colors([\"Red\", \"Green\", \"Blue\"], 2) == [('Red', 0), ('Red', 1), ('Green', 0), ('Green', 1), ('Blue', 0), ('Blue', 1)]\nassert combinations_colors([\"Red\"], 3) == [('Red', 0), ('Red', 1), ('Red', 2)]\nassert combinations_colors([], 2) == []\nassert combinations_colors([\"Red\", \"Green\"], 0) == []\nassert combinations_colors([\"Red\", \"Green\", \"Blue\"], 4) == [('Red', 0), ('Red', 1), ('Red', 2), ('Red', 3), ('Green', 0), ('Green', 1), ('Green', 2), ('Green', 3), ('Blue', 0), ('Blue', 1), ('Blue', 2), ('Blue', 3)]",
+      "key_differs": true,
+      "text": "```python\nassert combinations_colors([],2)==[]\nassert combinations_colors([\"Red\"],1)==[('Red',)]\nassert combinations_colors(\"abc\",1) == [('a',), ('b',), ('c',)]\nassert combinations_colors(\"hello\",2) == [('h', 'e'), ('h', 'l'), ('h', 'o'), ('e', 'l'), ('e', 'o'), ('l', 'o')]\nassert combinations_colors(\"test\",4) == [('t', 'e', 's', 't'), ('t', 'e', 's', 't'), ('t', 'e', 's', 't'), ('t', 'e', 's', 't'), ('t', 'e', 's', 't')]\n```",
+      "quality": 0.0,
+      "final_key": "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result\n```",
+        "fixer": "```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert combinations_colors([\"Orange\",\"Yellow\",\"Purple\"],3)==[('Orange',0,0), ('Orange',0,1), ('Orange',0,2),\n                                                  ('Orange',1,0), ('Orange',1,1), ('Orange',1,2), \n                                                  ('Orange',2,0), ('Orange',2,1), ('Orange',2,2),\n                                                  ('Yellow',0,0), ('Yellow',0,1), ('Yellow',0,2),\n                                                  ('Yellow',1,0), ('Yellow',1,1), ('Yellow',1,2), \n                                                  ('Yellow',2,0), ('Yellow',2,1), ('Yellow',2,2),\n                                                  ('Purple',0,0), ('Purple',0,1), ('Purple',0,2),\n                                                  ('Purple',1,0), ('Purple',1,1), ('Purple',1,2), \n                                                  ('Purple',2,0), ('Purple',2,1), ('Purple',2,2)\n] # Edge case with multiple repetitions\n\nassert combinations_colors([],2)==[] # Edge case with empty input list\n   \nassert combinations_colors(['a'],3)==[('a',0,0), ('a',0,1), ('a',0,2)] # Edge case with single element list\n\nassert combinations_colors([\"A\",\"B\",\"C\"],1)==[('A',), ('B',), ('C',)] # Example with no repetitions\n\nassert combinations_colors([\"X\",\"Y\",\"Z\"],0)==[] # Edge case with zero repetitions",
+      "reference_key": "assert combinations_colors([\"Red\", \"Green\", \"Blue\"], 2) == [('Red', 0), ('Red', 1), ('Green', 0), ('Green', 1), ('Blue', 0), ('Blue', 1)]\nassert combinations_colors([\"Red\"], 3) == [('Red', 0), ('Red', 1), ('Red', 2)]\nassert combinations_colors([], 2) == []\nassert combinations_colors([\"Red\", \"Green\"], 0) == []\nassert combinations_colors([\"Red\", \"Green\", \"Blue\"], 4) == [('Red', 0), ('Red', 1), ('Red', 2), ('Red', 3), ('Green', 0), ('Green', 1), ('Green', 2), ('Green', 3), ('Blue', 0), ('Blue', 1), ('Blue', 2), ('Blue', 3)]",
+      "key_differs": true,
+      "text": "```python\nassert combinations_colors([\"Orange\",\"Yellow\",\"Purple\"],3)==[('Orange',0,0), ('Orange',0,1), ('Orange',0,2),\n                                                  ('Orange',1,0), ('Orange',1,1), ('Orange',1,2), \n                                                  ('Orange',2,0), ('Orange',2,1), ('Orange',2,2),\n                                                  ('Yellow',0,0), ('Yellow',0,1), ('Yellow',0,2),\n                                                  ('Yellow',1,0), ('Yellow',1,1), ('Yellow',1,2), \n                                                  ('Yellow',2,0), ('Yellow',2,1), ('Yellow',2,2),\n                                                  ('Purple',0,0), ('Purple',0,1), ('Purple',0,2),\n                                                  ('Purple',1,0), ('Purple',1,1), ('Purple',1,2), \n                                                  ('Purple',2,0), ('Purple',2,1), ('Purple',2,2)\n] # Edge case with multiple repetitions\n\nassert combinations_colors([],2)==[] # Edge case with empty input list\n   \nassert combinations_colors(['a'],3)==[('a',0,0), ('a',0,1), ('a',0,2)] # Edge case with single element list\n\nassert combinations_colors([\"A\",\"B\",\"C\"],1)==[('A',), ('B',), ('C',)] # Example with no repetitions\n\nassert combinations_colors([\"X\",\"Y\",\"Z\"],0)==[] # Edge case with zero repetitions\n```",
+      "quality": 0.0,
+      "final_key": "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result\n```",
+        "fixer": "```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert find_sum([]) == 0\nassert find_sum([7]) == 7\nassert find_sum([1, 2, 3, 4, 5]) == 15\nassert find_sum([1, 1, 1, 1, 1]) == 0\nassert find_sum([-1, -2, -3, -4, -5]) == -15",
+      "reference_key": "assert combinations_colors([\"Red\", \"Green\", \"Blue\"], 2) == [('Red', 0), ('Red', 1), ('Green', 0), ('Green', 1), ('Blue', 0), ('Blue', 1)]\nassert combinations_colors([\"Red\"], 3) == [('Red', 0), ('Red', 1), ('Red', 2)]\nassert combinations_colors([], 2) == []\nassert combinations_colors([\"Red\", \"Green\"], 0) == []\nassert combinations_colors([\"Red\", \"Green\", \"Blue\"], 4) == [('Red', 0), ('Red', 1), ('Red', 2), ('Red', 3), ('Green', 0), ('Green', 1), ('Green', 2), ('Green', 3), ('Blue', 0), ('Blue', 1), ('Blue', 2), ('Blue', 3)]",
+      "key_differs": true,
+      "text": "```python\nassert find_sum([]) == 0\nassert find_sum([7]) == 7\nassert find_sum([1, 2, 3, 4, 5]) == 15\nassert find_sum([1, 1, 1, 1, 1]) == 0\nassert find_sum([-1, -2, -3, -4, -5]) == -15\n```",
+      "quality": 0.0,
+      "final_key": "def combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result\n```",
+        "fixer": "```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result\n\n# Test cases\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],1)==[('Red',), ('Green',), ('Blue',)]\nassert combinations_colors( [\"Red\",\"Green\",\"Blue\"],2)==[('Red', 'Red'), ('Red', 'Green'), ('Red', 'Blue'), ('Green', 'Green'), ('Green', 'Blue'), ('Blue', 'Blue')]\nassert combinations_colors( [\"Red\",\"Green\",\"Blue\"],3)==[('Red', 'Red', 'Red'), ('Red', 'Red', 'Green'), ('Red', 'Red', 'Blue'), ('Red', 'Green', 'Green'), ('Red', 'Green', 'Blue'), ('Red', 'Blue', 'Blue'), ('Green', 'Green', 'Green'), ('Green', 'Green', 'Blue'), ('Green', 'Blue', 'Blue'), ('Blue', 'Blue', 'Blue')]\nassert find_sum([]) == 0\nassert find_sum([7]) == 7\nassert find_sum([1, 2, 3, 4, 5]) == 15\nassert find_sum([1, 1, 1, 1, 1]) == 0\nassert find_sum([-1, -2, -3, -4, -5]) == -15\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert combinations_colors([\"Red\",\"Green\",\"Blue\"],2)==[('Red', 0), ('Red', 1), ('Red', 2), ('Green', 0), ('Green', 1), ('Green', 2), ('Blue', 0), ('Blue', 1), ('Blue', 2)]\nassert combinations_colors([],3)==[]\nassert combinations_colors([\"Yellow\"],4)==[('Yellow', 0), ('Yellow', 1), ('Yellow', 2), ('Yellow', 3)]\nassert combinations_colors([\"Purple\",\"Orange\"],1)==[('Purple',), ('Orange',)]\nassert combinations_colors([\"Black\",\"White\",\"Gray\"],0)==[()]",
+  "sample_keys": [
+    null,
+    "assert combinations_colors([\"Red\", \"Green\", \"Blue\"],2) == [('Red', 0), ('Red', 1), ('Red', 2), ('Green', 0), ('Green', 1), ('Green', 2), ('Blue', 0), ('Blue', 1), ('Blue', 2)]\nassert combinations_colors([\"Red\", \"Green\", \"Blue\"],3) == [('Red', 0), ('Red', 1), ('Red', 2), ('Green', 0), ('Green', 1), ('Green', 2), ('Blue', 0), ('Blue', 1), ('Blue', 2), ('Red', 0), ('Red', 1), ('Red', 2), ('Green', 0), ('Green', 1), ('Green', 2), ('Blue', 0), ('Blue', 1), ('Blue', 2)]\nassert combinations_colors([], 2) == []\nassert combinations_colors([\"A\", \"B\", \"C\"], 1) == [('A',), ('B',), ('C',)]\nassert combinations_colors([\"X\"], 3) == [('X', 0), ('X', 1), ('X', 2)]",
+    "assert combinations_colors([\"Red\", \"Green\", \"Blue\"], 2) == [('Red', 0), ('Red', 1), ('Red', 2),\n                                                             ('Green', 0), ('Green', 1), ('Green', 2),\n                                                             ('Blue', 0), ('Blue', 1), ('Blue', 2)]\nassert combinations_colors([], 3) == []\nassert combinations_colors([\"Red\"], 0) == []\nfor i in range(4):\n    assert combinations_colors([\"Purple\", \"Yellow\", \"Orange\"], i+1) == [(element,) for element in [\"Purple\", \"Yellow\", \"Orange\"]] * (i+1)\nassert combinations_colors([10], 10) == [tuple(range(10))]",
+    "assert combinations_colors([\"Red\",\"Green\",\"Blue\"],2)==[('Red',0), ('Red',1), ('Red',2), ('Green',0), ('Green',1), ('Green',2), ('Blue',0), ('Blue',1), ('Blue',2)]\nassert combinations_colors([],3)==[]\nassert combinations_colors(['A'],4)==[('A',0), ('A',1), ('A',2), ('A',3)]\nassert combinations_colors(['X','Y'],5)==[('X',0), ('X',1), ('X',2), ('X',3), ('X',4), ('Y',0), ('Y',1), ('Y',2), ('Y',3), ('Y',4)]\nassert combinations_colors(['W','Z','T'],1)==[('W',), ('Z',), ('T',)]",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2171.0,
+    "small_out": 466.0,
+    "small_s": 7.015460283000721
+  },
+  "calls_plus": {
+    "small_in": 2100.0,
+    "small_out": 321.0,
+    "small_s": 4.568757354980335,
+    "large_in": 197.0,
+    "large_out": 196.0,
+    "large_s": 5.672413916996447
+  },
+  "calls_samples": {
+    "small_in": 985.0,
+    "small_out": 1633.0,
+    "small_s": 32.18170292006107
+  }
+}

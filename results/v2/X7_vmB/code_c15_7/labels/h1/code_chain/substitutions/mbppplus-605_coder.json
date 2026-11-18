@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-605",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\nimport math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```",
+  "reference_key": "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+  "final_key_plus": "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.6,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(97) == True\nassert prime_num(100) == False\nassert prime_num(1) == False\n```",
+    "verifier": "PICK: A\n```python\nimport math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```",
+    "fixer": "```python\nimport math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+      "reference_key": "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+      "key_differs": true,
+      "text": "```python\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```",
+      "quality": 1.0,
+      "final_key": "def prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert prime_num(2)==True\nassert prime_num(4)==False\nassert prime_num(9)==False\nassert prime_num(17)==True\nassert prime_num(18)==False\n```",
+        "verifier": "PICK: A\n\n```python\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```",
+        "fixer": "```python\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\ndef prime_num(num):\n    # Check if num is less than\u6216 equal to 1\n    if num <= 1:\n        return False\n    \n    # Initialize variable is_prime to True\n    is_prime = True\n    \n    # Iterate from 2 to the square root of num\n    for i in range(2, int(math.sqrt(num)) + 1):\n        # Check if num is divisible by the current iterator\n        if num % i == 0:\n            is_prime = False\n            break\n    \n    # Return True if is_prime is still True, indicating num is prime\n    return is_prime",
+      "reference_key": "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+      "key_differs": true,
+      "text": "Certainly! Below is the complete Python function `prime_num` that takes an integer as input and returns `True` if it is a prime number, otherwise `False`.\n\n```python\nimport math\n\ndef prime_num(num):\n    # Check if num is less than\u6216 equal to 1\n    if num <= 1:\n        return False\n    \n    # Initialize variable is_prime to True\n    is_prime = True\n    \n    # Iterate from 2 to the square root of num\n    for i in range(2, int(math.sqrt(num)) + 1):\n        # Check if num is divisible by the current iterator\n        if num % i == 0:\n            is_prime = False\n            break\n    \n    # Return True if is_prime is still True, indicating num is prime\n    return is_prime\n```\n\n### Explanation:\n- **Step 1**: We first check if the number `num` is less than or equal to 1. If so, we immediately return `False` since numbers less than or equal to 1 are not primes.\n- **Step 2**: We initialize a variable `is_prime` to `True`, which will be used to determine whether `num` is prime.\n- **Step 3**:\n  - We iterate from 2 up to the square root of `num` (inclusive). This is efficient because a larger factor of a number must be a multiple of a smaller factor that has already been checked.\n  - For each number `i` in this range, we check if `num` is divisible by `i` using the condition `num % i == 0`.\n  - If `num` is divisible by `i`, we set `is_prime` to `False` and break out of the loop.\n- **Step 4**: After the loop, we return `is_prime`. If `is_prime` remains `True`, it means no factors were found beyond its square root, confirming that `num` is a prime number.\n\nThis function efficiently checks for prime numbers using a simple and effective approach.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(97) == True\nassert prime_num(100) == False\nassert prime_num(1) == False\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef prime_num(num):\n    # Check if num is less than or equal to 1\n    if num <= 1:\n        return False\n    \n    # Initialize variable is_prime to True\n    is_prime = True\n    \n    # Iterate from 2 to the square root of num\n    for i in range(2, int(math.sqrt(num)) + 1):\n        # Check if num is divisible by the current iterator\n        if num % i == 0:\n            is_prime = False\n            break\n    \n    # Return True if is_prime is still True, indicating num is prime\n    return is_prime\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]",
+      "reference_key": "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+      "key_differs": true,
+      "text": "```python\ndef kth_element(arr, k):\n    # Check if k is within the valid range\n    if not 1 <= k <= len(arr):\n        raise ValueError(\"Index out of range\")\n    \n    # Return the element at position k-1 (since list indices start from 0)\n    return arr[k-1]\n```",
+      "quality": 1.0,
+      "final_key": "def prime_num(n):\n    # Check if n is less than 2, which is not a prime number\n    if n < 2:\n        return False\n    \n    # Check for factors from 2 up to the square root of n\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    \n    # If no factors were found, n is a prime number\n    return True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(17) == True\nassert prime_num(18) == False\nassert prime_num(19) == True\n```",
+        "verifier": "PICK: B\n```python\ndef prime_num(n):\n    # Check if n is less than 2, which is not a prime number\n    if n < 2:\n        return False\n    \n    # Check for factors from 2 up to the square root of n\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    \n    # If no factors were found, n is a prime number\n    return True\n```",
+        "fixer": "```python\ndef prime_num(n):\n    # Check if n is less than 2, which is not a prime number\n    if n < 2:\n        return False\n    \n    # Check for factors from 2 up to the square root of n\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    \n    # If no factors were found, n is a prime number\n    return True\n\n# Test cases\nassert prime_num(13) == True\nassert prime_num(7) == True\nassert prime_num(-1010) == False\nassert prime_num(2) == True\nassert prime_num(4) == False\nassert prime_num(17) == True\nassert prime_num(18) == False\nassert prime_num(19) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+  "sample_keys": [
+    "def prime_num(num):\n    if num <= 1:\n        return False\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            return False\n    return True",
+    "def prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+    "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+    "def prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime",
+    "import math\n\ndef prime_num(num):\n    if num <= 1:\n        return False\n    is_prime = True\n    for i in range(2, int(math.sqrt(num)) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    return is_prime"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1249.0,
+    "small_out": 411.0,
+    "small_s": 9.404178711003624
+  },
+  "calls_plus": {
+    "small_in": 1010.0,
+    "small_out": 341.0,
+    "small_s": 7.870949022995774,
+    "large_in": 239.0,
+    "large_out": 70.0,
+    "large_s": 2.2038065119995736
+  },
+  "calls_samples": {
+    "small_in": 1195.0,
+    "small_out": 372.0,
+    "small_s": 7.620939972024644
+  }
+}

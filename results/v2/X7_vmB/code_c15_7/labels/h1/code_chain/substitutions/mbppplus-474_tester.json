@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-474",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert replace_char(\"hello world\", 'o', 'a') == \"hella warld\"\nassert replace_char(\"abcdefg\", 'z', 'x') == \"abcdefg\"\nassert replace_char(\"123456789\", '5', '0') == \"123406789\"\nassert replace_char(\"\", 'a', 'b') == \"\"\nassert replace_char(\"aaaaa\", 'a', 'b') == \"bbbbb\"\n```",
+  "reference_key": "assert replace_char(\"hello world\", 'o', 'a') == \"hella warld\"\nassert replace_char(\"abcdefg\", 'z', 'x') == \"abcdefg\"\nassert replace_char(\"123456789\", '5', '0') == \"123406789\"\nassert replace_char(\"\", 'a', 'b') == \"\"\nassert replace_char(\"aaaaa\", 'a', 'b') == \"bbbbb\"",
+  "final_key_plus": "def replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n```",
+    "fixer": "```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert replace_char(\"hello\", 'o', 'a') == \"hallo\"\nassert replace_char(\"\", 'z', 'x') == \"\"\nassert replace_char(\"abcde\", '', 'p') == \"abcde\"\nassert replace_char(\"abcdefg\", 'a', '') == \"bcdfgh\"\nassert replace_char(\"aaaaaaa\", 'a', 'z') == \"zzzzzzz\"\nassert replace_char(\"Python programming language\", 'r', 'w') == \"Pythwon programminlwanguage\"\nassert replace_char(\"1234567890\", '*', '=') == \"1=*3**4**5*6*7*8*9*0\"\nassert replace_char(' ', '#') == '#'",
+      "reference_key": "assert replace_char(\"hello world\", 'o', 'a') == \"hella warld\"\nassert replace_char(\"abcdefg\", 'z', 'x') == \"abcdefg\"\nassert replace_char(\"123456789\", '5', '0') == \"123406789\"\nassert replace_char(\"\", 'a', 'b') == \"\"\nassert replace_char(\"aaaaa\", 'a', 'b') == \"bbbbb\"",
+      "key_differs": true,
+      "text": "```python\nassert replace_char(\"hello\", 'o', 'a') == \"hallo\"\nassert replace_char(\"\", 'z', 'x') == \"\"\nassert replace_char(\"abcde\", '', 'p') == \"abcde\"\nassert replace_char(\"abcdefg\", 'a', '') == \"bcdfgh\"\nassert replace_char(\"aaaaaaa\", 'a', 'z') == \"zzzzzzz\"\nassert replace_char(\"Python programming language\", 'r', 'w') == \"Pythwon programminlwanguage\"\nassert replace_char(\"1234567890\", '*', '=') == \"1=*3**4**5*6*7*8*9*0\"\nassert replace_char(' ', '#') == '#'\n```",
+      "quality": 1.0,
+      "final_key": "def replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n```",
+        "fixer": "```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_char(\"polygon\",'y','l')==(\"pollgon\")\nassert replace_char(\"character\",'c','a')==(\"aharaater\")\nassert replace_char(\"python\",'l','a')==(\"python\")\nassert replace_char(\"hello\", 'o', 'a') == \"hallo\"\nassert replace_char(\"\", 'z', 'x') == \"\"\nassert replace_char(\"abcde\", '', 'p') == \"abcde\"\nassert replace_char(\"abcdefg\", 'a', '') == \"bcdfgh\"\nassert replace_char(\"aaaaaaa\", 'a', 'z') == \"zzzzzzz\"\nassert replace_char(\"Python programming language\", 'r', 'w') == \"Pythwon programminlwanguage\"\nassert replace_char(\"1234567890\", '*', '=') == \"1=*3**4**5*6*7*8*9*0\"\nassert replace_char(' ', '#') == \"#\"\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_char(\"polygon\", 'y', 'l') == \"pollgon\"\nassert replace_char(\"\", 'x', 'z') == \"\"  # Edge case: empty string\nassert replace_char(\"a\", 'b', 'c') == \"a\"  # Edge case: original character does not exist\nassert replace_char(\"apple\", 'p', '') == \"ale\"  # Edge case: replacement is an empty string\nassert replace_char(\"example\", 'e', 'E') == \"examplE\"  # Test case with uppercase",
+      "reference_key": "assert replace_char(\"hello world\", 'o', 'a') == \"hella warld\"\nassert replace_char(\"abcdefg\", 'z', 'x') == \"abcdefg\"\nassert replace_char(\"123456789\", '5', '0') == \"123406789\"\nassert replace_char(\"\", 'a', 'b') == \"\"\nassert replace_char(\"aaaaa\", 'a', 'b') == \"bbbbb\"",
+      "key_differs": true,
+      "text": "Certainly! Here's the function with five additional assertions:\n\n```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_char(\"polygon\", 'y', 'l') == \"pollgon\"\nassert replace_char(\"\", 'x', 'z') == \"\"  # Edge case: empty string\nassert replace_char(\"a\", 'b', 'c') == \"a\"  # Edge case: original character does not exist\nassert replace_char(\"apple\", 'p', '') == \"ale\"  # Edge case: replacement is an empty string\nassert replace_char(\"example\", 'e', 'E') == \"examplE\"  # Test case with uppercase\n```\n\nThese assertions cover typical use cases (`replace_char(\"polygon\", 'y', 'l')`), edge cases (empty string and characters not present), edge cases of replacing an entire word, and an edge case where the replacement string is empty.",
+      "quality": 1.0,
+      "final_key": "def replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n```",
+        "fixer": "```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_char(\"polygon\",'y','l')==(\"pollgon\")\nassert replace_char(\"character\",'c','a')==(\"aharaater\")\nassert replace_char(\"python\",'l','a')==(\"python\")\nassert replace_char(\"polygon\", 'y', 'l') == \"pollgon\"\nassert replace_char(\"\", 'x', 'z') == \"\"  # Edge case: empty string\nassert replace_char(\"a\", 'b', 'c') == \"a\"  # Edge case: original character does not exist\nassert replace_char(\"apple\", 'p', '') == \"ale\"  # Edge case: replacement is an empty string\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert find_remainder([ 100, 10, 5, 25, 35, 14 ],11) ==9\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],10) == 0\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],1) == 0\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],-1) == 0\nassert find_remainder([],11) == 1",
+      "reference_key": "assert replace_char(\"hello world\", 'o', 'a') == \"hella warld\"\nassert replace_char(\"abcdefg\", 'z', 'x') == \"abcdefg\"\nassert replace_char(\"123456789\", '5', '0') == \"123406789\"\nassert replace_char(\"\", 'a', 'b') == \"\"\nassert replace_char(\"aaaaa\", 'a', 'b') == \"bbbbb\"",
+      "key_differs": true,
+      "text": "```python\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],11) ==9\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],10) == 0\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],1) == 0\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],-1) == 0\nassert find_remainder([],11) == 1\n```",
+      "quality": 1.0,
+      "final_key": "def replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n```",
+        "fixer": "```python\ndef replace_char(input_string, old_char, new_char):\n    result = \"\"\n    for char in input_string:\n        if char == old_char:\n            result += new_char\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_char(\"polygon\",'y','l')==(\"pollgon\")\nassert replace_char(\"character\",'c','a')==(\"aharaater\")\nassert replace_char(\"python\",'l','a')==(\"python\")\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],11) ==9\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],10) == 0\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],1) == 0\nassert find_remainder([ 100, 10, 5, 25, 35, 14 ],-1) == 0\nassert find_remainder([],11) == 1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert replace_char(\"hello world\", 'o', 'a') == \"hallo warld\"\nassert replace_char(\"1234567890\", '5', '9') == \"1234967890\"\nassert replace_char(\"\", 'x', 'y') == \"\"\nassert replace_char(\"abcde\", 'z', 'x') == \"abcde\"\nassert replace_char(\"aaaaaaa\", 'a', 'b') == \"bbbbbbb\"",
+  "sample_keys": [
+    "assert replace_char(\"hello world\", \"o\", \"a\") == \"hella warld\"\nassert replace_char(\"1234567890\", \"5\", \"7\") == \"1234767890\"\nassert replace_char(\"abcdefg\", \"x\", \"z\") == \"abcdefgh\"\nassert replace_char(\"\", \"a\", \"b\") == \"\"\nassert replace_char(\"a\", \"a\", \"a\") == \"aaa\"\nassert replace_char(\"aaaa\", \"a\", \"\") == \"\"",
+    "# Test with a common case where the character is present in the string\nassert replace_char(\"hello world\", \"o\", \"a\") == \"hella world\"\n\n# Test with a common case where the character is not present in the string\nassert replace_char(\"programming\", \"x\", \"z\") == \"programming\"\n\n# Edge case: replacing the first character of a string\nassert replace_char(\"example\", \"a\", \"e\") == \"example\"\n\n# Edge case: replacing the last character of a string\nassert replace_char(\"test\", \"t\", \"b\") == \"tesb\"\n\n# Edge case: replacing the middle character of a string\nassert replace_char(\"python\", \"n\", \"k\") == \"pythok\"",
+    null,
+    "assert replace_char(\"\", 'a', 'b') == \"\"\nassert replace_char(\"hello\", 'o', 'u') == \"hellu\"\nassert replace_char(\"world!\", '!', 'x') == \"worxd!\"\nassert replace_char(\"Python3.8\", '3', '7') == \"Pytthon7.8\"\nassert replace_char(\"1234567890\", '#', '.') == \".#.#.#.#.#.\"",
+    "assert replace_char(\"polygon\",'y','l')==(\"pollgon\")\nassert replace_char(\"python\",\"t\",\"p\")==(\"python\")\nassert replace_char(\"hello world\",\" \",\"-\")==\"hello-world\"\nassert replace_char(\"12345\",\"6\",\"7\")==(\"12345\")\nassert replace_char(\"test\",\"e\",\"a\")==(\"tast\")"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1550.0,
+    "small_out": 814.0,
+    "small_s": 17.551536787999794
+  },
+  "calls_plus": {
+    "small_in": 1302.0,
+    "small_out": 393.0,
+    "small_s": 8.175744320993545,
+    "large_in": 168.0,
+    "large_out": 105.0,
+    "large_s": 2.466854043013882
+  },
+  "calls_samples": {
+    "small_in": 840.0,
+    "small_out": 553.0,
+    "small_s": 9.866153218026739
+  }
+}

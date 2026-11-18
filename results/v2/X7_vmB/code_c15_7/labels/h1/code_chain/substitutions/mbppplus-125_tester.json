@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-125",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert find_length(\"111111\") == 6\nassert find_length(\"000000\") == 6\nassert find_length(\"010101\") == 2\nassert find_length(\"101010\") == 2\nassert find_length(\"11001100\") == 4\n```",
+  "reference_key": "assert find_length(\"111111\") == 6\nassert find_length(\"000000\") == 6\nassert find_length(\"010101\") == 2\nassert find_length(\"101010\") == 2\nassert find_length(\"11001100\") == 4",
+  "final_key_plus": "def find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+    "fixer": "```python\ndef find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test with all ones\nassert find_length(\"1111111111\") == len(binary_string)\n\n# Test with all zeros\nassert find_length(\"0000000000\") == len(binary_string)\n\n# Test with mixed ones and zeros at both ends\nassert find_length(\"1010101010\") == max(len(\"1\"), len(\"0\"))\n\n# Test with mixed ones and zeros around the middle\nassert find_length(\"101010101110\") == max(len(\"101011\"), max_len(\"01\"))",
+      "reference_key": "assert find_length(\"111111\") == 6\nassert find_length(\"000000\") == 6\nassert find_length(\"010101\") == 2\nassert find_length(\"101010\") == 2\nassert find_length(\"11001100\") == 4",
+      "key_differs": true,
+      "text": "```python\n# Test with all ones\nassert find_length(\"1111111111\") == len(binary_string)\n\n# Test with all zeros\nassert find_length(\"0000000000\") == len(binary_string)\n\n# Test with mixed ones and zeros at both ends\nassert find_length(\"1010101010\") == max(len(\"1\"), len(\"0\"))\n\n# Test with mixed ones and zeros around the middle\nassert find_length(\"101010101110\") == max(len(\"101011\"), max_len(\"01\"))\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n\n# Test cases\nassert find_length(\"11000010001\") == 6\nassert find_length(\"10111\") == 1\nassert find_length(\"11011101100101\") == 2\nassert find_length(\"1111111111\") == len(binary_string)\nassert find_length(\"0000000000\") == len(binary_string)\nassert find_length(\"1010101010\") == max(len(\"1\"), len(\"0\"))\nassert find_length(\"101010101110\") == max(len(\"101011\"), max_len(\"01\"))  # This line will raise a NameError as max_len is not defined\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert find_length(\"11000010001\") == 6\nassert find_length(\"\") == 0\nassert find_length(\"0\") == 1\nassert find_length(\"1\") == 1\nassert find_length(\"11\") == 2\nassert find_length(\"00\") == 1",
+      "reference_key": "assert find_length(\"111111\") == 6\nassert find_length(\"000000\") == 6\nassert find_length(\"010101\") == 2\nassert find_length(\"101010\") == 2\nassert find_length(\"11001100\") == 4",
+      "key_differs": true,
+      "text": "```python\nassert find_length(\"11000010001\") == 6\nassert find_length(\"\") == 0\nassert find_length(\"0\") == 1\nassert find_length(\"1\") == 1\nassert find_length(\"11\") == 2\nassert find_length(\"00\") == 1\n```",
+      "quality": 0.0,
+      "final_key": "def find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```",
+        "fixer": "```python\ndef find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert find_dissimilar((1, 2, 3, 4), (5, 6, 7, 8)) == [1, 2, 3, 4]\nassert find_dissimilar(('a', 'b', 'c'), ('d', 'e', 'f')) == ['a', 'b', 'c']\nassert find_dissimilar((10, 20, 30), (10, 20, 30)) == []\nassert find_dissimilar((), ()) == []\nassert find_dissimilar((1, 2, 3), (1, 2, 3, 4, 5)) == [4, 5]",
+      "reference_key": "assert find_length(\"111111\") == 6\nassert find_length(\"000000\") == 6\nassert find_length(\"010101\") == 2\nassert find_length(\"101010\") == 2\nassert find_length(\"11001100\") == 4",
+      "key_differs": true,
+      "text": "```python\nassert find_dissimilar((1, 2, 3, 4), (5, 6, 7, 8)) == [1, 2, 3, 4]\nassert find_dissimilar(('a', 'b', 'c'), ('d', 'e', 'f')) == ['a', 'b', 'c']\nassert find_dissimilar((10, 20, 30), (10, 20, 30)) == []\nassert find_dissimilar((), ()) == []\nassert find_dissimilar((1, 2, 3), (1, 2, 3, 4, 5)) == [4, 5]\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef find_length(binary_string):\n    zero_count = one_count = max_diff = 0\n    \n    for char in binary_string:\n        if char == '0':\n            zero_count += 1\n        else:\n            one_count += 1\n        \n        current_diff = abs(zero_count - one_count)\n        max_diff = max(max_diff, current_diff)\n    \n    return max_diff\n\n# Test cases\nassert find_length(\"11000010001\") == 6\nassert find_length(\"10111\") == 1\nassert find_length(\"11011101100101\") == 2\nassert find_dissimilar((1, 2, 3, 4), (5, 6, 7, 8)) == [1, 2, 3, 4]\nassert find_dissimilar(('a', 'b', 'c'), ('d', 'e', 'f')) == ['a', 'b', 'c']\nassert find_dissimilar((10, 20, 30), (10, 20, 30)) == []\nassert find_dissimilar((), ()) == []\nassert find_dissimilar((1, 2, 3), (1, 2, 3, 4, 5)) == [4, 5]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "# Test case with all zeros\nassert find_length(\"000000000\") == 0\n\n# Test case with all ones\nassert find_length(\"111111111\") == 0\n\n# Test case with mixed characters\nassert find_length(\"1010101010\") == 2\n\n# Edge case with empty string\nassert find_length(\"\") == 0\n\n# Edge case with very long string\nassert find_length(\"111111111111\" * 10 + \"111111111111\") == 10",
+    "assert find_length(\"11000010001\") == 6\nassert find_length(\"0\") == 0\nassert find_length(\"111111\") == 0\nassert find_length(\"\") == 0\nassert find_length(\"00000000\") == 8\nassert find_length(\"11111000000\") == 8\nassert find_length(\"1010101010101010\") == 4\nassert find_length(\"10101010101010101010\") == 4",
+    "assert find_length(\"\") == 0\nassert find_length(\"111\") == 3\nassert find_length(\"000\") == 3\nassert find_length(\"101010\") == 2\nassert find_length(\"11001010101\") == 8",
+    "assert find_length(\"\") == 0\nassert find_length(\"00101010\") == 2\nassert find_length(\"11111111\") == 0\nassert find_length(\"11100000\") == 4\nassert find_length(\"00000000\") == 0",
+    "assert find_length(\"10010\") == 2\nassert find_length(\"11111\") == 0\nassert find_length(\"\") == 0\nassert find_length(\"10101010101\") == 4\nassert find_length(\"10000000000\") == 3"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3045.0,
+    "small_out": 940.0,
+    "small_s": 20.29497872295906
+  },
+  "calls_plus": {
+    "small_in": 1457.0,
+    "small_out": 428.0,
+    "small_s": 8.326687868975569,
+    "large_in": 226.0,
+    "large_out": 82.0,
+    "large_s": 1.7485075609874912
+  },
+  "calls_samples": {
+    "small_in": 1130.0,
+    "small_out": 528.0,
+    "small_s": 8.369880918005947
+  }
+}

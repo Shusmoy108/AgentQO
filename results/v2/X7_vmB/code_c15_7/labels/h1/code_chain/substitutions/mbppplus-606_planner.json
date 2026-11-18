@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-606",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `radian_degree` that takes one parameter, `degrees`.\n2. Inside the function, use the formula `radians = degrees * (pi / 180)` to convert the input from degrees to radians.\n3. Return the calculated value of `radians`.\n4. Ensure the function handles floating-point inputs accurately by using Python's built-in `math.pi` for the value of \u03c0.\n5. Test the function with the provided test case to verify its correctness.",
+  "reference_key": null,
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 1.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(-90) == -math.pi/2\nassert radian_degree(360) == 2*math.pi\nassert radian_degree(181) == math.pi + math.sin(math.radians(1))\n```",
+    "coder": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `cal_sum` that takes one parameter, `n`.\n2. Initialize two variables, `a` and `b`, to 3 and 0 respectively.\n3. Initialize a variable `sum_perrin` to 0.\n4. Use a loop to iterate from 0 to `n-1`.\n5. In each iteration, add the current value of `a` to `sum_perrin`.\n6. Update `a` to be the sum of `b` and `a`.\n7. Update `b` to be the previous value of `a`.\n8. Return the value of `sum_perrin`.\n\nThis approach ensures that we correctly compute the sum of the first `n` Perrin numbers by following the recursive definition of the Perrin sequence.",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef radian_degree(degrees):\n    return math.radians(degrees)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert radian_degree(0) == 0\nassert radian_degree(180) == 3.141592653589793\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(360) == 6.283185307179586\nassert radian_degree(181) == 2.6179938779914944\n```",
+        "coder": "```python\ndef cal_sum(n):\n    a = 3\n    b = 0\n    sum_perrin = 0\n    for i in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin\n```",
+        "verifier": "PICK: B\n```python\nimport math\n\ndef radian_degree(degrees):\n    return math.radians(degrees)\n```",
+        "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    return math.radians(degrees)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `radian_degree` that takes one parameter, `degrees`.\n2. Inside the function, use the formula `radians = degrees * (\u03c0 / 180)` to convert the input from degrees to radians.\n3. Return the calculated value of `radians`.\n4. Ensure the function handles floating-point inputs accurately by using Python's built-in `math.pi` for the value of \u03c0.\n5. Test the function with the provided test case to verify its correctness.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert radian_degree(0) == 0\nassert radian_degree(180) == math.pi\nassert radian_degree(-90) == -math.pi/2\nassert radian_degree(360) == 2*math.pi\nassert radian_degree(181) == math.pi + math.sin(math.radians(1))\n```",
+        "coder": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    radians = degrees * (math.pi / 180)\n    return radians\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `check_type` that takes one parameter, `tuple`.\n2. Use the built-in `type()` function to get the data type of the first element in the tuple.\n3. Iterate over each element in the tuple using a for loop.\n4. For each element, compare its data type to the data type obtained in step 2.\n5. If any element has a different data type from the first element, return `False`.\n6. If all elements have the same data type, return `True`.\n\nThis approach ensures that the function correctly checks the data types of all elements in the tuple.",
+      "quality": 1.0,
+      "final_key": "import math\n\ndef radian_degree(degrees):\n    return math.radians(degrees)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert radian_degree(0) == 0\nassert radian_degree(180) == 3.141592653589793\nassert radian_degree(-90) == -1.5707963267948966\nassert radian_degree(360) == 6.283185307179586\nassert radian_degree(181) == 5.235987755982989\n```",
+        "coder": "```python\ndef check_type(tuple):\n    first_type = type(tuple[0])\n    for item in tuple:\n        if type(item) != first_type:\n            return False\n    return True\n```",
+        "verifier": "PICK: B\n```python\nimport math\n\ndef radian_degree(degrees):\n    return math.radians(degrees)\n```",
+        "fixer": "```python\nimport math\n\ndef radian_degree(degrees):\n    return math.radians(degrees)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "import math\n\ndef radian_degree(degrees):\n    pi = math.pi\n    radians = degrees * pi\n    return radians",
+    "import decimal\n\ndef radian_degree(degrees):\n    pi = decimal.Decimal('3.14159265358979323846')\n    radians = degrees * (pi / 180)\n    return radians",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1353.0,
+    "small_out": 231.0,
+    "small_s": 4.788483611046104
+  },
+  "calls_plus": {
+    "large_in": 114.0,
+    "large_out": 106.0,
+    "large_s": 2.357642318995204,
+    "small_in": 1264.0,
+    "small_out": 150.0,
+    "small_s": 3.2213994250050746
+  },
+  "calls_samples": {
+    "small_in": 4895.0,
+    "small_out": 1151.0,
+    "small_s": 20.910979698965093
+  }
+}

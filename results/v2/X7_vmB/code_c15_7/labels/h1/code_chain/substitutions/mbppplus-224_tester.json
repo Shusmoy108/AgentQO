@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-224",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert count_Set_Bits(0) == 0\nassert count_Set_Bits(1) == 1\nassert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(15) == 4\n```",
+  "reference_key": "assert count_Set_Bits(0) == 0\nassert count_Set_Bits(1) == 1\nassert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(15) == 4",
+  "final_key_plus": "def count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n```",
+    "fixer": "```python\ndef count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert count_Set_Bits(5) == 2\nassert count_Set_Bits(7) == 3\nassert count_Set_Bits(10) == 2\nassert count_Set_Bits(0) == 0\nassert count_Set_Bits(-1) == (-1).bit_count()",
+      "reference_key": "assert count_Set_Bits(0) == 0\nassert count_Set_Bits(1) == 1\nassert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(15) == 4",
+      "key_differs": true,
+      "text": "```python\nassert count_Set_Bits(5) == 2\nassert count_Set_Bits(7) == 3\nassert count_Set_Bits(10) == 2\nassert count_Set_Bits(0) == 0\nassert count_Set_Bits(-1) == (-1).bit_count()\n```",
+      "quality": 1.0,
+      "final_key": "def count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n```",
+        "fixer": "```python\ndef count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def count_set_bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n\nassert count_Set_Bits(4) == 1  # Binary representation of 4 is '100', so there's 1 set bit.\nassert count_Set_Bits(7) == 3  # Binary representation of 7 is '111', so there are 3 set bits.\nassert count_Set_Bits(0) == 0  # Binary representation of 0 is '000', so there are no set bits.\nassert count_Set_Bits(-1) == 31   # Negative numbers are treated as their two's complement.\nassert count_Set_Bits(8191) == 16 # The binary representation of a single set bit is '1000000000000000' which has 16 set bits.",
+      "reference_key": "assert count_Set_Bits(0) == 0\nassert count_Set_Bits(1) == 1\nassert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(15) == 4",
+      "key_differs": true,
+      "text": "```python\ndef count_set_bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n\nassert count_Set_Bits(4) == 1  # Binary representation of 4 is '100', so there's 1 set bit.\nassert count_Set_Bits(7) == 3  # Binary representation of 7 is '111', so there are 3 set bits.\nassert count_Set_Bits(0) == 0  # Binary representation of 0 is '000', so there are no set bits.\nassert count_Set_Bits(-1) == 31   # Negative numbers are treated as their two's complement.\nassert count_Set_Bits(8191) == 16 # The binary representation of a single set bit is '1000000000000000' which has 16 set bits.\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n\n# Test cases\nassert count_Set_Bits(2) == 1\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(6) == 2\nassert count_Set_Bits(4) == 1  # Binary representation of 4 is '100', so there's 1 set bit.\nassert count_Set_Bits(7) == 3  # Binary representation of 7 is '111', so there are 3 set bits.\nassert count_Set_Bits(0) == 0  # Binary representation of 0 is '000', so there are no set bits.\nassert count_Set_Bits(-1) == 31   # Negative numbers are treated as their two's complement. -> AssertionError \nassert count_Set_Bits(8191) == 16 # The binary representation of a single set bit is '1000000000000000' which has 16 set bits. -> AssertionError\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert find_nth_nonagonal(1) == 1\nassert find_nth_nonagonal(2) == 8\nassert find_nth_nonagonal(3) == 21\nassert find_nth_nonagonal(4) == 49\nassert find_nth_nonagonal(5) == 84",
+      "reference_key": "assert count_Set_Bits(0) == 0\nassert count_Set_Bits(1) == 1\nassert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(15) == 4",
+      "key_differs": true,
+      "text": "```python\nassert find_nth_nonagonal(1) == 1\nassert find_nth_nonagonal(2) == 8\nassert find_nth_nonagonal(3) == 21\nassert find_nth_nonagonal(4) == 49\nassert find_nth_nonagonal(5) == 84\n```",
+      "quality": 1.0,
+      "final_key": "def count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n\n# Test cases\nassert count_Set_Bits(2) == 1\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(6) == 2",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n\n# Test cases\nassert count_Set_Bits(2) == 1\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(6) == 2\n```",
+        "fixer": "```python\ndef count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n\n# Test cases\nassert count_Set_Bits(2) == 1\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(6) == 2\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(7) == 3\nassert count_Set_Bits(8) == 1\nassert count_Set_Bits(9) == 2",
+  "sample_keys": [
+    "assert count_Set_Bits(34) == 3\nassert count_Set_Bits(8) == 1\nassert count_Set_Bits(9) == 2\nassert count_Set_Bits(7) == 3\nassert count_Set_Bits(0) == 0",
+    "assert count_Set_Bits(14) == 3\nassert count_Set_Bits(0b10101010101010101010101010101010) == 17\nassert count_Set_Bits(16) == 4\nassert count_Set_Bits(1) == 1\nassert count_Set_Bits(2**31 - 1) == 31",
+    "assert count_Set_Bits(7) == 3\nassert count_Set_Bits(1024) == 10\nassert count_Set_Bits(0) == 0\nassert count_Set_Bits(-1) == 32\nassert count_Set_Bits(4) == 1",
+    "assert count_Set_Bits(0) == 0\nassert count_Set_Bits(3) == 2\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(7) == 3\nassert count_Set_Bits(63) == 6",
+    "assert count_Set_Bits(31) == 5\nassert count_Set_Bits(0) == 0\nassert count_Set_Bits(1) == 1\nassert count_Set_Bits(4) == 1\nassert count_Set_Bits(-1) == 31"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1291.0,
+    "small_out": 367.0,
+    "small_s": 7.403166352043627
+  },
+  "calls_plus": {
+    "small_in": 1124.0,
+    "small_out": 302.0,
+    "small_s": 5.957271613035118,
+    "large_in": 170.0,
+    "large_out": 66.0,
+    "large_s": 1.5047833049902692
+  },
+  "calls_samples": {
+    "small_in": 850.0,
+    "small_out": 377.0,
+    "small_s": 5.9542684109765105
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-725",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert extract_quotation('\"Hello\" World \"This is a test\"') == ['Hello', 'This is a test']\nassert extract_quotation('NoQuotationMarksHere') == []\nassert extract_quotation('\"SingleQuotationMark\"') == ['SingleQuotationMark']\nassert extract_quotation('\"\"EmptyQuotes\"\"') == ['']\nassert extract_quotation('\"Nested \"\"Quotes\"\" Inside\"') == ['Nested \"Quotes\" Inside']\n```",
+  "reference_key": "assert extract_quotation('\"Hello\" World \"This is a test\"') == ['Hello', 'This is a test']\nassert extract_quotation('NoQuotationMarksHere') == []\nassert extract_quotation('\"SingleQuotationMark\"') == ['SingleQuotationMark']\nassert extract_quotation('\"\"EmptyQuotes\"\"') == ['']\nassert extract_quotation('\"Nested \"\"Quotes\"\" Inside\"') == ['Nested \"Quotes\" Inside']",
+  "final_key_plus": "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```",
+    "fixer": "```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert extract_quotation('\"hello world\"') == ['hello world']\nassert extract_quotation('\"a\" \"b\" \"c\"') == ['a', 'b', 'c']\nassert extract_quotation('\"one two three\"') == ['one two three']\nassert extract_quotation('\"\"') == []\nassert extract_quotation('\"single quote\" \"') == ['single quote']  # Test case with single quote inside quotes",
+      "reference_key": "assert extract_quotation('\"Hello\" World \"This is a test\"') == ['Hello', 'This is a test']\nassert extract_quotation('NoQuotationMarksHere') == []\nassert extract_quotation('\"SingleQuotationMark\"') == ['SingleQuotationMark']\nassert extract_quotation('\"\"EmptyQuotes\"\"') == ['']\nassert extract_quotation('\"Nested \"\"Quotes\"\" Inside\"') == ['Nested \"Quotes\" Inside']",
+      "key_differs": true,
+      "text": "```python\nassert extract_quotation('\"hello world\"') == ['hello world']\nassert extract_quotation('\"a\" \"b\" \"c\"') == ['a', 'b', 'c']\nassert extract_quotation('\"one two three\"') == ['one two three']\nassert extract_quotation('\"\"') == []\nassert extract_quotation('\"single quote\" \"') == ['single quote']  # Test case with single quote inside quotes\n```",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```",
+        "fixer": "```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert extract_quotation('\"The quick brown fox jumps over the lazy dog\"') == ['The quick brown fox jumps over the lazy dog']\nassert extract_quotation('\"Single quoted value\"') == ['Single quoted value']\nassert extract_quotation('\"Empty quote\"') == []\nassert extract_quotation('\"Trailing empty space after closing quote \"') == [\"Trailing empty space after closing quote\"]\nassert extract_quotation(\"\\\"Quoted with leading and trailing spaces \\t\") == ['Quoted with leading and trailing spaces']",
+      "reference_key": "assert extract_quotation('\"Hello\" World \"This is a test\"') == ['Hello', 'This is a test']\nassert extract_quotation('NoQuotationMarksHere') == []\nassert extract_quotation('\"SingleQuotationMark\"') == ['SingleQuotationMark']\nassert extract_quotation('\"\"EmptyQuotes\"\"') == ['']\nassert extract_quotation('\"Nested \"\"Quotes\"\" Inside\"') == ['Nested \"Quotes\" Inside']",
+      "key_differs": true,
+      "text": "```python\nassert extract_quotation('\"The quick brown fox jumps over the lazy dog\"') == ['The quick brown fox jumps over the lazy dog']\nassert extract_quotation('\"Single quoted value\"') == ['Single quoted value']\nassert extract_quotation('\"Empty quote\"') == []\nassert extract_quotation('\"Trailing empty space after closing quote \"') == [\"Trailing empty space after closing quote\"]\nassert extract_quotation(\"\\\"Quoted with leading and trailing spaces \\t\") == ['Quoted with leading and trailing spaces']\n```",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```",
+        "fixer": "```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert largest_subset([2, 4, 6, 8]) == 4\nassert largest_subset([1, 3, 5, 7]) == 1\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 5\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 6\nassert largest_subset([]) == 0",
+      "reference_key": "assert extract_quotation('\"Hello\" World \"This is a test\"') == ['Hello', 'This is a test']\nassert extract_quotation('NoQuotationMarksHere') == []\nassert extract_quotation('\"SingleQuotationMark\"') == ['SingleQuotationMark']\nassert extract_quotation('\"\"EmptyQuotes\"\"') == ['']\nassert extract_quotation('\"Nested \"\"Quotes\"\" Inside\"') == ['Nested \"Quotes\" Inside']",
+      "key_differs": true,
+      "text": "```python\nassert largest_subset([2, 4, 6, 8]) == 4\nassert largest_subset([1, 3, 5, 7]) == 1\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 5\nassert largest_subset([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 6\nassert largest_subset([]) == 0\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\nimport re\n\ndef extract_quotation(input_string):\n    # Regular expression to find text enclosed in double quotes\n    pattern = r'\"([^\"]*)\"'\n    # Find all matches using the pattern\n    matches = re.findall(pattern, input_string)\n    return matches\n\n# Test cases\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('Cast your \"favorite\" entertainment \"apps\"') == ['favorite', 'apps']\nassert extract_quotation('Watch content \"4k Ultra HD\" resolution with \"HDR 10\" Support') == ['4k Ultra HD', 'HDR 10']\nassert extract_quotation(\"Watch content '4k Ultra HD' resolution with 'HDR 10' Support\") == []\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Single\" quote example') == ['Single']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Start\" \"End\"') == ['Start', 'End']\nassert extract_quotation('\"With spaces\" \"and\" \"quotes\"') == ['With spaces', 'and', 'quotes']",
+  "sample_keys": [
+    "assert extract_quotation('\"Hello, world!\"') == ['Hello, world!']\nassert extract_quotation('\"Python is great!\"') == ['Python is great!']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Single quote \"test\"') == ['Single quote ', 'test']\nassert extract_quotation('\"This is a \"multi-line \"\"string\"\"') == ['This is a ', 'multi-line ', 'string']",
+    "assert extract_quotation(\"Data analysis is a \"complex\" field\") == [\"complex\"]\nassert extract_quotation(\"This \"is a \"\"test\"\" with multiple\"double\" quotes in it\") == [\"test\", \"multiple\"]\nassert extract_quotation('\"Single\" quote is also possible') == [\"Single\"]\nassert extract_quotation('No quotes here!') == []\nassert extract_quotation(\"Quotes in single quotes are valid too: 'single'\") == [\"single\"]",
+    "assert extract_quotation('This is a \"test\" sentence.') == ['test']\nassert extract_quotation('No quotes here!') == []\nassert extract_quotation('\"Single quote\"', '\"Double quote\"', '\"Triple quote\"') == ['Single quote', 'Double quote', 'Triple quote']\nassert extract_quotation('Multiple \"strings\" with \"quotes\" in them.') == ['strings', 'quotes']\nassert extract_quotation('\"With spaces inside \"quotes\"') == ['With spaces inside \"quotes\"']",
+    "assert extract_quotation('\"Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor'], 'Test case 1 failed'\nassert extract_quotation('\"Single \" quotation\" mark') == ['Single', 'quotation', 'mark'], 'Test case 2 failed'\nassert extract_quotation('No quotation marks here') == [], 'Test case 3 failed'\nassert extract_quotation('\"Empty \"\"\"\" quotes\"\"\"') == ['', '', ''], 'Test case 4 failed'\nassert extract_quotation(\"With 'single' quotes\") == ['single'], 'Test case 5 failed'",
+    "assert extract_quotation('Just a \"test\" sentence.') == ['test']\nassert extract_quotation('This is \"a quote\" and another \"quote\".') == ['a quote', 'another \"quote\"']\nassert extract_quotation('\"One\" \"two\" \"three\"') == ['One', 'two', 'three']\nassert extract_quotation('Empty \"\" is also considered valid.') == ['', 'is also considered valid.']\nassert extract_quotation('No quotes here!') == []"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1698.0,
+    "small_out": 356.0,
+    "small_s": 7.876229859975865
+  },
+  "calls_plus": {
+    "small_in": 1474.0,
+    "small_out": 248.0,
+    "small_s": 5.112286662973929,
+    "large_in": 200.0,
+    "large_out": 94.0,
+    "large_s": 2.0420644950063433
+  },
+  "calls_samples": {
+    "small_in": 1000.0,
+    "small_out": 550.0,
+    "small_s": 10.349462359998142
+  }
+}

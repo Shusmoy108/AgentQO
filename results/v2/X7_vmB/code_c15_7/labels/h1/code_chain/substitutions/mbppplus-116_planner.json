@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-116",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `tuple_to_int` that takes one parameter, `tup`, which is expected to be a tuple of positive integers.\n2. Convert each element of the tuple to a string using a list comprehension.\n3. Join all the string elements together into a single string without any separators.\n4. Convert the resulting string back into an integer using the `int()` function.\n5. Return the resulting integer.",
+  "reference_key": null,
+  "final_key_plus": "def tuple_to_int(tup):\n    # Convert each element of the tuple to a string\n    str_list = [str(i) for i in tup]\n    # Join all the string elements together into a single string\n    result_str = ''.join(str_list)\n    # Convert the resulting string back into an integer\n    result_int = int(result_str)\n    # Return the resulting integer\n    return result_int",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert tuple_to_int((0,)) == 0\nassert tuple_to_int((9,)) == 9\nassert tuple_to_int((10,)) == 10\nassert tuple_to_int((100,)) == 100\nassert tuple_to_int((1000,)) == 1000\n```",
+    "coder": "```python\ndef tuple_to_int(tup):\n    # Convert each element of the tuple to a string\n    str_list = [str(i) for i in tup]\n    # Join all the string elements together into a single string\n    result_str = ''.join(str_list)\n    # Convert the resulting string back into an integer\n    result_int = int(result_str)\n    # Return the resulting integer\n    return result_int\n```",
+    "verifier": "PICK: A\n\n```python\ndef tuple_to_int(tup):\n    # Convert each element of the tuple to a string\n    str_list = [str(i) for i in tup]\n    # Join all the string elements together into a single string\n    result_str = ''.join(str_list)\n    # Convert the resulting string back into an integer\n    result_int = int(result_str)\n    # Return the resulting integer\n    return result_int\n```",
+    "fixer": "```python\ndef tuple_to_int(tup):\n    # Convert each element of the tuple to a string\n    str_list = [str(i) for i in tup]\n    # Join all the string elements together into a single string\n    result_str = ''.join(str_list)\n    # Convert the resulting string back into an integer\n    result_int = int(result_str)\n    # Return the resulting integer\n    return result_int\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `divisible_by_digits` that takes two parameters: `startnum` and `endnum`.\n2. Initialize an empty list `result` to store the numbers that meet the criteria.\n3. Iterate over each number in the range from `startnum` to `endnum` (inclusive).\n4. For each number, convert it to a string to easily access its digits.\n5. Check if all digits in the number are non-zero and if the number itself is divisible by each of these digits.\n6. If both conditions are met, add the number to the `result` list.\n7. Return the `result` list after iterating through all numbers in the range.\n\nThis approach ensures that we efficiently check each number against the specified criteria without generating unnecessary intermediate results.",
+      "quality": 0.0,
+      "final_key": "def tuple_to_int(tup):\n    result = []\n    for num in tup:\n        str_num = str(num)\n        if '0' not in str_num and all(int(digit) != 0 and num % int(digit) == 0 for digit in str_num):\n            result.append(num)\n    return int(''.join(map(str, result)))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_int((1,2,3))==123\nassert tuple_to_int((10,20,30))==102030\nassert tuple_to_int((0,1,2))==(1,2)\nassert tuple_to_int((-1,-2,-3))==(1,2,3)\nassert tuple_to_int((100,200,300))==100200300\n```",
+        "coder": "```python\ndef divisible_by_digits(startnum, endnum):\n    result = []\n    for num in range(startnum, endnum + 1):\n        str_num = str(num)\n        if '0' not in str_num and all(int(digit) != 0 and num % int(digit) == 0 for digit in str_num):\n            result.append(num)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_int(tup):\n    result = []\n    for num in tup:\n        str_num = str(num)\n        if '0' not in str_num and all(int(digit) != 0 and num % int(digit) == 0 for digit in str_num):\n            result.append(num)\n    return int(''.join(map(str, result)))\n```",
+        "fixer": "```python\ndef tuple_to_int(tup):\n    result = []\n    for num in tup:\n        str_num = str(num)\n        if '0' not in str_num and all(int(digit) != 0 and num % int(digit) == 0 for digit in str_num):\n            result.append(num)\n    return int(''.join(map(str, result)))\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `all_characters_same` that takes one parameter, `input_string`.\n2. Initialize a variable `first_char` with the first character of the input string.\n3. Iterate over each character in the input string starting from the second character.\n4. For each character, compare it with `first_char`.\n5. If any character is different from `first_char`, return `False`.\n6. If the loop completes without finding any differences, return `True`.\n\nThis approach ensures that we efficiently check for uniformity across all characters in the string.",
+      "quality": 1.0,
+      "final_key": "def tuple_to_int(input_tuple):\n    return int(''.join(map(str, input_tuple)))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert all_characters_same(\"\")==True\nassert all_characters_same(\"a\")==True\nassert all_characters_same(\"aa\")==True\nassert all_characters_same(\"aaa\")==True\nassert all_characters_same(\"ab\")==False\n```",
+        "coder": "```python\ndef all_characters_same(input_string):\n    if len(input_string) == 0:\n        return True\n    first_char = input_string[0]\n    for char in input_string[1:]:\n        if char != first_char:\n            return False\n    return True\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_int(input_tuple):\n    return int(''.join(map(str, input_tuple)))\n```",
+        "fixer": "```python\ndef tuple_to_int(input_tuple):\n    return int(''.join(map(str, input_tuple)))\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `multiple_to_single` that takes one parameter: `numbers`, which is expected to be a list of integers.\n2. Initialize a variable `result` to store the final combined integer.\n3. Iterate over each number in the `numbers` list using a for loop.\n4. For each number, convert it to a string and concatenate it to the `result` string.\n5. After the loop completes, convert the concatenated string back to an integer using the `int()` function and assign it to the `result` variable.\n6. Return the `result` variable as the output of the function.\n\nThis approach ensures that all numbers in the input list are converted to strings, concatenated together, and then converted back to an integer, effectively joining them into a single integer.",
+      "quality": 1.0,
+      "final_key": "def tuple_to_int(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((0,1,2)) == 12\nassert tuple_to_int((-1,-2,-3)) == -123\nassert tuple_to_int((9,8,7)) == 987\nassert tuple_to_int((10,11,12,13)) == 10111213\n```",
+        "coder": "```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_int(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```",
+        "fixer": "```python\ndef tuple_to_int(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        if not isinstance(num, int) or num < 0:\n            raise ValueError(\"All elements in the tuple must be non-negative integers.\")\n        result += num * (10 ** i)\n    return result",
+  "sample_keys": [
+    "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        if not isinstance(num, int) or num < 0:\n            raise ValueError(\"All elements in the tuple must be non-negative integers.\")\n        result += num * (10 ** i)\n    return result",
+    "def tuple_to_int(tup):\n    result = ''\n    for num in tup:\n        if not isinstance(num, int) or num < 0:\n            raise ValueError(\"Invalid input: all elements must be non-negative integers\")\n        result += str(num)\n    return int(result)",
+    "def tuple_to_int(tup):\n    num_str = ''.join(str(i) for i in tup)\n    return int(num_str)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1435.0,
+    "small_out": 542.0,
+    "small_s": 11.387247775041033
+  },
+  "calls_plus": {
+    "large_in": 109.0,
+    "large_out": 90.0,
+    "large_s": 1.9839413479785435,
+    "small_in": 1330.0,
+    "small_out": 352.0,
+    "small_s": 6.780068260006374
+  },
+  "calls_samples": {
+    "small_in": 4123.0,
+    "small_out": 1309.0,
+    "small_s": 24.433433450991288
+  }
+}

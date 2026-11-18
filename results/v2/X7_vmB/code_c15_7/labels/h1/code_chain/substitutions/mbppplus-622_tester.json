@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-622",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert get_median([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 5) == 5.5\nassert get_median([10, 20, 30, 40, 50], [60, 70, 80, 90, 100], 5) == 55.0\nassert get_median([-5, 0, 5, 10, 15], [-10, -5, 0, 5, 10], 5) == 0.0\nassert get_median([1, 3, 5, 7, 9], [2, 4, 6, 8, 10], 5) == 5.5\nassert get_median([100], [200], 1) == 150.0\n```",
+  "reference_key": "assert get_median([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 5) == 5.5\nassert get_median([10, 20, 30, 40, 50], [60, 70, 80, 90, 100], 5) == 55.0\nassert get_median([-5, 0, 5, 10, 15], [-10, -5, 0, 5, 10], 5) == 0.0\nassert get_median([1, 3, 5, 7, 9], [2, 4, 6, 8, 10], 5) == 5.5\nassert get_median([100], [200], 1) == 150.0",
+  "final_key_plus": "def get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n```",
+    "fixer": "```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "assert get_median([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 5) == 5.5\nassert get_median([10, 20, 30, 40, 50], [60, 70, 80, 90, 100], 5) == 55.0\nassert get_median([-5, 0, 5, 10, 15], [-10, -5, 0, 5, 10], 5) == 0.0\nassert get_median([1, 3, 5, 7, 9], [2, 4, 6, 8, 10], 5) == 5.5\nassert get_median([100], [200], 1) == 150.0",
+      "key_differs": true,
+      "text": "```python\nassert get_median([], [], 5) == None  # Edge case: empty lists\nassert get_median([1], [1], 1) == 1.0  # Edge case: single-element list\nassert get_median([-1], [1], 1) == 0.0  # Edge case: negative and positive numbers in different lists\nassert get_median([1, 5, 9], [2, 6, 8], 3) == 5.0  # Typical case\nassert get_median([-5, -9, 1], [-10, 8, 13], 4) == -4.0  # Another typical case",
+      "quality": 0.0,
+      "final_key": "def get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n```",
+        "fixer": "```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert get_median([1], [2], 2) == 1.5\nassert get_median([], [], 0) == None\nassert get_median([1, 3, 5], [4, 6], 3) == 4.5\nassert get_median([-10, 4, 6, 10000] [-9, 7, 8, 101], 4) == 6\nassert get_median([-10, 4, 6], [5, 7, 8, 10], 4) == 6.5\nassert get_median([3], [1], 2) == 2.0\nassert get_median([-6], [7], 2) == 0.5",
+      "reference_key": "assert get_median([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 5) == 5.5\nassert get_median([10, 20, 30, 40, 50], [60, 70, 80, 90, 100], 5) == 55.0\nassert get_median([-5, 0, 5, 10, 15], [-10, -5, 0, 5, 10], 5) == 0.0\nassert get_median([1, 3, 5, 7, 9], [2, 4, 6, 8, 10], 5) == 5.5\nassert get_median([100], [200], 1) == 150.0",
+      "key_differs": true,
+      "text": "```python\nassert get_median([1], [2], 2) == 1.5\nassert get_median([], [], 0) == None\nassert get_median([1, 3, 5], [4, 6], 3) == 4.5\nassert get_median([-10, 4, 6, 10000] [-9, 7, 8, 101], 4) == 6\nassert get_median([-10, 4, 6], [5, 7, 8, 10], 4) == 6.5\nassert get_median([3], [1], 2) == 2.0\nassert get_median([-6], [7], 2) == 0.5\n```",
+      "quality": 0.0,
+      "final_key": "def get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n```",
+        "fixer": "```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "assert get_median([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 5) == 5.5\nassert get_median([10, 20, 30, 40, 50], [60, 70, 80, 90, 100], 5) == 55.0\nassert get_median([-5, 0, 5, 10, 15], [-10, -5, 0, 5, 10], 5) == 0.0\nassert get_median([1, 3, 5, 7, 9], [2, 4, 6, 8, 10], 5) == 5.5\nassert get_median([100], [200], 1) == 150.0",
+      "key_differs": true,
+      "text": "```python\nassert count_divisors(1) == True\nassert count_divisors(2) == True\nassert count_divisors(3) == False\nassert count_divisors(4) == True\nassert count_divisors(5) == True\nassert count_divisors(6) == True\nassert count_divisors(7) == False\nassert count_divisors(8) == True\nassert count_divisors(9) == True\nassert count_divisors(10) == True\nassert count_divisors(11) == False\nassert count_divisors(12) == True\nassert count_divisors(13) == False\nassert count_divisors(14) == True\nassert count_divisors(15) == True\nassert count_divisors(16) == True\nassert count_divisors(17) == False\nassert count_divisors(18) == True\nassert count_divisors(19) == False\nassert count_divisors(20) == True\nassert count_divisors(21) == False\nassert count_divisors(22) == True\nassert count_divisors(23) == False\nassert count_divisors(24) == True\nassert count_divisors(25) == True\nassert count_divisors(26) == False\nassert count_divisors(27) == True\nassert count_divisors(28) == True\nassert count_divisors(29) == False\nassert count_divisors(30) == True\nassert count_divisors(31) == False\nassert count_divisors(32) == True\nassert count_divisors(33) == False\nassert count_divisors(34) == True\nassert count_divisors(35) == True\nassert count_divisors(36) == True\nassert count_divisors(37) == False\nassert count_divisors(38) == True\nassert count_divisors(39) == True\nassert count_divisors(40) == True\nassert count_divisors(41) == False\nassert count_divisors(42) == True\nassert count_divisors(43) == False\nassert count_divisors(44) == True\nassert count_divisors(45) == True\nassert count_divisors(46) == False\nassert count_divisors(47) == True\nassert",
+      "quality": 0.0,
+      "final_key": "def get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n\n# Test cases\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\nassert get_median([2, 4, 8, 9], [7, 13, 19, 28], 4) == 8.5\nassert get_median([3, 6, 14, 23, 36, 42], [2, 18, 27, 39, 49, 55], 6) == 25.0\nassert count_divisors(1) == True\nassert count_divisors(2) == True\nassert count_divisors(3) == False\nassert count_divisors(4) == True\nassert count_divisors(5) == True\nassert count_divisors(6) == True\nassert count_divisors(7) == False\nassert count_divisors(8) == True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n\n# Test cases\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\nassert get_median([2, 4, 8, 9], [7, 13, 19, 28], 4) == 8.5\nassert get_median([3, 6, 14, 23, 36, 42], [2, 18, 27, 39, 49, 55], 6) == 25.0\nassert count_divisors(1) == True\nassert count_divisors(2) == True\nassert count_divisors(3) == False\nassert count_divisors(4) == True\nassert count_divisors(5) == True\nassert count_divisors(6) == True\nassert count_divisors(7) == False\nassert count_divisors(8) == True\n```",
+        "fixer": "```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n\n# Test cases\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\nassert get_median([2, 4, 8, 9], [7, 13, 19, 28], 4) == 8.5\nassert get_median([3, 6, 14, 23, 36, 42], [2, 18, 27, 39, 49, 55], 6) == 25.0\nassert count_divisors(1) == True\nassert count_divisors(2) == True\nassert count_divisors(3) == False\nassert count_divisors(4) == True\nassert count_divisors(5) == True\nassert count_divisors(6) == True\nassert count_divisors(7) == False\nassert count_divisors(8) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 6) == 19.0\nassert get_median([], [], 0) == 0.0\nassert get_median([1], [1], 1) == 1.0\nassert get_median([-1, -2, -3, -4, -5], [-6, -7, -8, -9, -10], 5) == -5.0",
+  "sample_keys": [
+    "# Test cases to verify the correctness of the get_median function\n\n# Typical case with even number of elements\nassert get_median([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 5) == 5.5\n\n# Edge case with identical lists\nassert get_median([1, 1, 1, 1, 1], [1, 1, 1, 1, 1], 5) == 1\n\n# Edge case with all elements being the same\nassert get_median([10, 10, 10, 10, 10], [10, 10, 10, 10, 10], 5) == 10\n\n# Edge case with empty lists\nassert get_median([], [], 0) == 0\n\n# Edge case with one element\nassert get_median([5], [5], 1) == 5",
+    "assert get_median([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], 5) == 5.5\nassert get_median([-1, 0, 3, 5, 9], [-8, -4, 2, 7, 10], 5) == 2.0\nassert get_median([10], [20], 2) == 15.0\nassert get_median([], [], 0) == None  # Edge case: empty lists\nassert get_median([1, 1], [2], 2) == 1.5  # Edge case: one-element lists",
+    "assert get_median([], [], 0) == 0\nassert get_median([1], [2], 2) == 1.5\nassert get_median([1, 2, 3, 4], [5, 6, 7, 8], 4) == 4.5\nassert get_median([-1, 0, 3, 5, 9, 12], [-11, -5, 2, 13, 20], 6) == 1\nassert get_median([1, 2], [3, 4], 0) == None  # Edge case for empty input",
+    "assert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0  # Typical case with even number elements\r\nassert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0  # Typical case with odd number elements\r\nassert get_median([-1, 0, 1, 2, 3, 4, 9], [-2, -3, -4, -5], 5) == -3.0  # Edge case with all negative numbers\r\nassert get_median([1, 2, 3, 4, 5], [5, 6, 7, 8, 9, 10], 6) == 5.5  # Edge case with equal length lists\r\nassert get_median([], [], 0)",
+    "assert get_median([4], [5], 1) == 4.5\nassert get_median([5], [4], 1) == 4.5\nassert get_median([], [], 0) == None\nassert get_median([1, 2], [3, 4], 2) == 2.5\nassert get_median([1, 2, 3], [4, 5, 6, 7], 4) == 4.0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2203.0,
+    "small_out": 483.0,
+    "small_s": 7.167847695032833
+  },
+  "calls_plus": {
+    "small_in": 2074.0,
+    "small_out": 301.0,
+    "small_s": 4.792341322026914,
+    "large_in": 219.0,
+    "large_out": 215.0,
+    "large_s": 6.128821024991339
+  },
+  "calls_samples": {
+    "small_in": 1095.0,
+    "small_out": 872.0,
+    "small_s": 18.015910683956463
+  }
+}

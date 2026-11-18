@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-791",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `remove_nested` that takes one parameter, `input_tuple`.\n2. Use a generator expression within the `tuple()` constructor to iterate over each element in `input_tuple`.\n3. For each element, check if it is an instance of `tuple`. If it is not, include it in the new tuple; otherwise, skip it.\n4. Return the resulting tuple after filtering out all nested tuples.\n5. Test the function with the provided test case to ensure it works as expected.",
+  "reference_key": null,
+  "final_key_plus": "def remove_nested(input_tuple):\n    return tuple(element for element in input_tuple if not isinstance(element, tuple))",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((1,), 2, (3,))) == (2,)\nassert remove_nested(((),)) == ()\nassert remove_nested((1, 2, 3, 4, 5)) == (1, 2, 3, 4, 5)\nassert remove_nested((1, (2, (3,)), 4)) == (1, 4)\n```",
+    "coder": "```python\ndef remove_nested(input_tuple):\n    return tuple(element for element in input_tuple if not isinstance(element, tuple))\n```",
+    "verifier": "PICK: A\n\n```python\ndef remove_nested(input_tuple):\n    return tuple(element for element in input_tuple if not isinstance(element, tuple))\n```",
+    "fixer": "```python\ndef remove_nested(input_tuple):\n    return tuple(element for element in input_tuple if not isinstance(element, tuple))\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `left_rotate` that takes two parameters: `num`, which is the number to be rotated, and `d`, which is the number of bits to rotate to the left.\n2. Convert the number to its binary representation using the built-in `bin()` function.\n3. Extract the first `d` bits from the binary string using slicing.\n4. Concatenate the remaining bits (which are the last `32 - d` bits) to the extracted bits.\n5. Convert the resulting binary string back to an integer using the built-in `int()` function with base 2.\n6. Return the resulting integer.\n\nHere's the complete implementation:\n\n```python\ndef left_rotate(num, d):\n    # Convert the number to binary and remove the '0b' prefix\n    binary_str = bin(num)[2:]\n    \n    # Extract the first d bits\n    first_d_bits = binary_str[:d]\n    \n    # Concatenate the remaining bits\n    remaining_bits = binary_str[d:]\n    \n    # Combine the bits\n    result_binary = remaining_bits + first_d_bits\n    \n    # Convert the binary string back to an integer\n    result_num = int(result_binary, 2)\n    \n    return result_num\n```\n\nThis function correctly rotates the bits of the input number to the left by the specified number of positions.",
+      "quality": 0.0,
+      "final_key": "def remove_nested(tup):\n    # Convert each element of the tuple to its binary representation\n    binary_list = [bin(x)[2:] for x in tup]\n    \n    # Rotate each binary string by the specified number of bits\n    rotated_list = [binary[(-d) % len(binary)] + binary[:-d] for binary, d in zip(binary_list, range(len(binary_list))) if isinstance(binary, str)]\n    \n    # Convert the rotated binary strings back to integers\n    result_tuple = tuple(int(bit_string, 2) for bit_string in rotated_list)\n    \n    return result_tuple",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested((1, 5, 7, (4, 6), 10, (11, 13))) == (1, 5, 7, 10, 11, 13)\nassert remove_nested((1, 5, 7, (4, 6), 10, (11, 13), (14, 15))) == (1, 5, 7, 10, 11, 13, 14, 15)\nassert remove_nested((1, 5, 7, (4, 6), 10, (11, 13), (14, 15), (16, 17))) == (1, 5, 7, 10, 11, 13, 14, 15, 16, 17)\nassert remove_nested((1, 5, 7, (4, 6), 10, (11, 13), (14, 15), (16, 17), (18, 19))) == (1, 5, 7, 10, 11, 13, 14, 15, 16, 17, 18, 19)\n```",
+        "coder": "```python\ndef left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n```",
+        "verifier": "PICK: B\n\n```python\ndef remove_nested(tup):\n    # Convert each element of the tuple to its binary representation\n    binary_list = [bin(x)[2:] for x in tup]\n    \n    # Rotate each binary string by the specified number of bits\n    rotated_list = [binary[(-d) % len(binary)] + binary[:-d] for binary, d in zip(binary_list, range(len(binary_list))) if isinstance(binary, str)]\n    \n    # Convert the rotated binary strings back to integers\n    result_tuple = tuple(int(bit_string, 2) for bit_string in rotated_list)\n    \n    return result_tuple\n```",
+        "fixer": "```python\ndef remove_nested(tup):\n    # Convert each element of the tuple to its binary representation\n    binary_list = [bin(x)[2:] for x in tup]\n    \n    # Rotate each binary string by the specified number of bits\n    rotated_list = [binary[(-d) % len(binary)] + binary[:-d] for binary, d in zip(binary_list, range(len(binary_list))) if isinstance(binary, str)]\n    \n    # Convert the rotated binary strings back to integers\n    result_tuple = tuple(int(bit_string, 2) for bit_string in rotated_list)\n    \n    return result_tuple\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `flatten_tuple` that takes one parameter, `input_tuple`.\n2. Use a generator expression within the `tuple()` constructor to iterate over each element in `input_tuple`.\n3. For each element, check if it is an instance of `tuple`. If it is not, include it in the new tuple; otherwise, recursively call `flatten_tuple` on the nested tuple and append the result to the new tuple.\n4. Return the resulting tuple after flattening all nested tuples.\n5. Test the function with the provided test case to ensure it works as expected.",
+      "quality": 0.0,
+      "final_key": "def flatten_tuple(input_tuple):\n    return tuple(item for item in input_tuple if isinstance(item, tuple) else item for item in input_tuple)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert flatten_tuple((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert flatten_tuple(((1,), 2, (3,))) == (1, 2, 3)\nassert flatten_tuple(((),)) == ()\nassert flatten_tuple((1, 2, 3, 4, 5)) == (1, 2, 3, 4, 5)\nassert flatten_tuple((1, (2, (3, (4, (5)))))) == (1, 2, 3, 4, 5)\n```",
+        "coder": "```python\ndef flatten_tuple(input_tuple):\n    return tuple(item for item in input_tuple if isinstance(item, tuple) else item for item in input_tuple)\n```",
+        "verifier": "PICK: A\n\n```python\ndef flatten_tuple(input_tuple):\n    return tuple(item for item in input_tuple if isinstance(item, tuple) else item for item in input_tuple)\n```",
+        "fixer": "```python\ndef flatten_tuple(input_tuple):\n    return tuple(item for item in input_tuple if isinstance(item, tuple) else item for item in input_tuple)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `get_median` that takes two sorted lists `list1` and `list2`, and their lengths `n`.\n2. Calculate the middle index `mid` of the combined list.\n3. If `n` is odd, return the element at index `mid`.\n4. If `n` is even, return the average of the elements at indices `mid-1` and `mid`.\n5. Merge the two lists into one sorted list.\n6. Return the median of the merged list.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((1,), (2,), (3,))) == (1, 2, 3)\nassert remove_nested(((),)) == ()\nassert remove_nested(((1, 2), (3, 4), (5, 6))) == (3,)\nassert remove_nested(((1, 2, 3), (4, 5, 6), (7, 8, 9))) == (5,)\n```",
+        "coder": "```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n\ndef remove_nested(tup):\n    # Flatten the tuple by converting it to a list\n    flat_list = [item for sublist in tup for item in sublist]\n    # Sort the flattened list\n    flat_list.sort()\n    # Get the median of the sorted list\n    median = get_median(flat_list, len(flat_list), len(flat_list))\n    # Convert the median back to a tuple\n    result_tuple = tuple([median])\n    return result_tuple\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef get_median(list1, list2, n):\n    mid = n // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid - 1] + list1[mid]) / 2\n\ndef remove_nested(tup):\n    # Flatten the tuple by converting it to a list\n    flat_list = [item for sublist in tup for item in sublist]\n    # Sort the flattened list\n    flat_list.sort()\n    # Get the median of the sorted list\n    median = get_median(flat_list, len(flat_list), len(flat_list))\n    # Convert the median back to a tuple\n    result_tuple = tuple([median])\n    return result_tuple\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def remove_nested(input_tuple):\n    result_list = []\n    for item in input_tuple:\n        if isinstance(item, tuple):\n            result_list.extend(remove_nested(item))\n        else:\n            result_list.append(item)\n    return tuple(result_list)",
+  "sample_keys": [
+    "def remove_nested(tup):\n    def is_tuple(x):\n        return isinstance(x, tuple)\n\n    result = [x for x in tup if not is_tuple(x)]\n    return tuple(result)",
+    "def remove_nested(tup):\n    result = []\n    while isinstance(tup, tuple):\n        result.append(tup[0])\n        tup = tup[1:]\n    result.extend(tup)\n    return tuple(result)",
+    "def remove_nested(tup):\n    non_tuple_list = []\n    for item in tup:\n        if isinstance(item, tuple):\n            nested_result = remove_nested(item)\n            non_tuple_list.append(nested_result)\n        else:\n            non_tuple_list.append(item)\n    return tuple(non_tuple_list)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2014.0,
+    "small_out": 449.0,
+    "small_s": 6.566948453983059
+  },
+  "calls_plus": {
+    "large_in": 125.0,
+    "large_out": 107.0,
+    "large_s": 3.461510928987991,
+    "small_in": 1615.0,
+    "small_out": 209.0,
+    "small_s": 4.597059096005978
+  },
+  "calls_samples": {
+    "small_in": 6307.0,
+    "small_out": 1436.0,
+    "small_s": 30.412904046097538
+  }
+}

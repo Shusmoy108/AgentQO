@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-581",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert surface_area(5, 10) == 175\nassert surface_area(6, 8) == 192\nassert surface_area(1, 1) == 5\nassert surface_area(0, 0) == 0\nassert surface_area(10, 0) == 100\n```",
+  "reference_key": "assert surface_area(5, 10) == 175\nassert surface_area(6, 8) == 192\nassert surface_area(1, 1) == 5\nassert surface_area(0, 0) == 0\nassert surface_area(10, 0) == 100",
+  "final_key_plus": "import math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n```python\nimport math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area\n```",
+    "fixer": "```python\nimport math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert surface_area(10, 6) == 270\nassert surface_area(5, 3) == 94\nassert surface_area(1, 10) == 23.58\nassert surface_area(0, 5) == 0\nassert surface_area(10, 0) == 100",
+      "reference_key": "assert surface_area(5, 10) == 175\nassert surface_area(6, 8) == 192\nassert surface_area(1, 1) == 5\nassert surface_area(0, 0) == 0\nassert surface_area(10, 0) == 100",
+      "key_differs": true,
+      "text": "```python\nassert surface_area(10, 6) == 270\nassert surface_area(5, 3) == 94\nassert surface_area(1, 10) == 23.58\nassert surface_area(0, 5) == 0\nassert surface_area(10, 0) == 100\n```\nThese assertions will verify the correctness of the `surface_area` function for various input values including positive numbers, edges close to zero, and edge at zero.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area\n```",
+        "fixer": "```python\nimport math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert surface_area(10, 5) == 175\nassert surface_area(6, 8) == 296\nassert surface_area(0, 0) == 0\nassert surface_area(7, -3) == 154\nassert surface_area(-2, 4) == 16",
+      "reference_key": "assert surface_area(5, 10) == 175\nassert surface_area(6, 8) == 192\nassert surface_area(1, 1) == 5\nassert surface_area(0, 0) == 0\nassert surface_area(10, 0) == 100",
+      "key_differs": true,
+      "text": "```python\nassert surface_area(10, 5) == 175\nassert surface_area(6, 8) == 296\nassert surface_area(0, 0) == 0\nassert surface_area(7, -3) == 154\nassert surface_area(-2, 4) == 16\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef surface_area(base_edge, height):\n    if base_edge <= 0 or height <= 0:\n        raise ValueError(\"Base edge and height must be positive numbers.\")\n    \n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n```python\nimport math\n\ndef surface_area(base_edge, height):\n    if base_edge <= 0 or height <= 0:\n        raise ValueError(\"Base edge and height must be positive numbers.\")\n    \n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area\n```",
+        "fixer": "```python\nimport math\n\ndef surface_area(base_edge, height):\n    if base_edge <= 0 or height <= 0:\n        raise ValueError(\"Base edge and height must be positive numbers.\")\n    \n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 6\nassert is_num_decagonal(3) == 27\nassert is_num_decagonal(4) == 70\nassert is_num_decagonal(5) == 165",
+      "reference_key": "assert surface_area(5, 10) == 175\nassert surface_area(6, 8) == 192\nassert surface_area(1, 1) == 5\nassert surface_area(0, 0) == 0\nassert surface_area(10, 0) == 100",
+      "key_differs": true,
+      "text": "```python\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 6\nassert is_num_decagonal(3) == 27\nassert is_num_decagonal(4) == 70\nassert is_num_decagonal(5) == 165\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n```python\nimport math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area\n```",
+        "fixer": "```python\nimport math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area\n\n# Test cases\nassert surface_area(3, 4) == 33\nassert surface_area(4, 5) == 56\nassert surface_area(1, 2) == 5\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 6\nassert is_num_decagonal(3) == 27\nassert is_num_decagonal(4) == 70\nassert is_num_decagonal(5) == 165\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert surface_area(10, 5) == 275\nassert surface_area(5, 8) == 160\nassert surface_area(0, 10) == 0\nassert surface_area(10, 0) == 0\nassert surface_area(-1, 5) == 0",
+  "sample_keys": [
+    "assert surface_area(4, 5) == 104\nassert surface_area(7, 8) == 196\nassert surface_area(9, 10) == 246\nassert surface_area(10, 11) == 330\nassert surface_area(2, 3) == 18",
+    "assert surface_area(3, 4) == 33\nassert surface_area(10, 6) == 380\nassert surface_area(5, 7) == 145\nassert surface_area(7, 9) == 161\nassert surface_area(2, 10) == 42",
+    "# Test case 1: Small base edge and height\nassert surface_area(2, 3) == 18\n\n# Test case 2: Large base edge and height\nassert surface_area(10, 20) == 600\n\n# Test case 3: Edge of 0\nassert surface_area(0, 5) == 0\n\n# Test case 4: Height of 0\nassert surface_area(5, 0) == 0\n\n# Test case 5: Edge of None\nassert surface_area(None, 10) == TypeError",
+    "assert surface_area(1,1) == 2\nassert surface_area(9,6) == 108\nassert surface_area(7,5) == 196\nassert surface_area(4,4) == 48\nassert surface_area(-1,-1) == -2",
+    "# Edge case 1: Base edge = 0, Height = 5\nassert surface_area(0, 5) == 0\n\n# Edge case 2: Base edge = -1, Height = 10\nassert surface_area(-1, 10) == 0\n\n# Edge case 3: Base edge = 6, Height = 0\nassert surface_area(6, 0) == 0\n\n# Edge case 4: Base edge = 8, Height = 12\nassert surface_area(8, 12) == 792\n\n# Edge case 5: Base edge = 10, Height = 15\nassert surface_area(10, 15) == 650"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1566.0,
+    "small_out": 443.0,
+    "small_s": 9.050457658013329
+  },
+  "calls_plus": {
+    "small_in": 1367.0,
+    "small_out": 366.0,
+    "small_s": 6.293420445988886,
+    "large_in": 202.0,
+    "large_out": 78.0,
+    "large_s": 1.7687333750072867
+  },
+  "calls_samples": {
+    "small_in": 1010.0,
+    "small_out": 529.0,
+    "small_s": 9.191169657016871
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-113",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"+789\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"\") == False\nassert check_integer(\"abc\") == False\nassert check_integer(\"12.34\") == False\nassert check_integer(\"--123\") == False\nassert check_integer(\"+12a\") == False\nassert check_integer(\"12 \") == False\n```",
+  "reference_key": "assert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"+789\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"\") == False\nassert check_integer(\"abc\") == False\nassert check_integer(\"12.34\") == False\nassert check_integer(\"--123\") == False\nassert check_integer(\"+12a\") == False\nassert check_integer(\"12 \") == False",
+  "final_key_plus": "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```",
+    "fixer": "```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"+789\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"9876\") == True\nassert check_integer(\"-12345\") == True\n\tassert check_integer(\"+67890\") == True\n    assert check_integer(\"ab\") == False\n    assert check_integer(\"abc\") == False\n    assert check_integer(\"1.23\") == False\n    assert check_integer(\"-1.23\") == False\n    assert check_integer(\".123\") == False\n    assert check_integer(\"\") == False\n    assert check_integer(\" \") == False\n    assert check_integer(\" 1\") == False\n    assert check_integer(\"1 \") == False\n    assert check_integer(None) == False\n    assert check_integer(123) == False\n    assert check_integer(-456L) == False\n    assert check_integer(\"+789F\") == False\n    assert check_integer(\"1e+3\") == False\n    assert check_integer(\"1e-3\") == False",
+      "reference_key": "assert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"+789\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"\") == False\nassert check_integer(\"abc\") == False\nassert check_integer(\"12.34\") == False\nassert check_integer(\"--123\") == False\nassert check_integer(\"+12a\") == False\nassert check_integer(\"12 \") == False",
+      "key_differs": true,
+      "text": "```python\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"+789\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"9876\") == True\nassert check_integer(\"-12345\") == True\n\tassert check_integer(\"+67890\") == True\n    assert check_integer(\"ab\") == False\n    assert check_integer(\"abc\") == False\n    assert check_integer(\"1.23\") == False\n    assert check_integer(\"-1.23\") == False\n    assert check_integer(\".123\") == False\n    assert check_integer(\"\") == False\n    assert check_integer(\" \") == False\n    assert check_integer(\" 1\") == False\n    assert check_integer(\"1 \") == False\n    assert check_integer(None) == False\n    assert check_integer(123) == False\n    assert check_integer(-456L) == False\n    assert check_integer(\"+789F\") == False\n    assert check_integer(\"1e+3\") == False\n    assert check_integer(\"1e-3\") == False\n```",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert check_integer(\"-7\") == True\nassert check_integer(\"+8\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"-\") == False\nassert check_integer(\"+\") == False\nassert check_integer(\"\") == False\nassert check_integer(\"hello\") == False\nassert check_integer(\"12345678901234567890\") == True\nassert check_integer(\"-98765432109876543210\") == True\nassert check_integer(\"0.123\") == False\nassert check_integer(\"abc\") == False",
+      "reference_key": "assert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"+789\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"\") == False\nassert check_integer(\"abc\") == False\nassert check_integer(\"12.34\") == False\nassert check_integer(\"--123\") == False\nassert check_integer(\"+12a\") == False\nassert check_integer(\"12 \") == False",
+      "key_differs": true,
+      "text": "```python\nassert check_integer(\"-7\") == True\nassert check_integer(\"+8\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"-\") == False\nassert check_integer(\"+\") == False\nassert check_integer(\"\") == False\nassert check_integer(\"hello\") == False\nassert check_integer(\"12345678901234567890\") == True\nassert check_integer(\"-98765432109876543210\") == True\nassert check_integer(\"0.123\") == False\nassert check_integer(\"abc\") == False\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "assert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"+789\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"\") == False\nassert check_integer(\"abc\") == False\nassert check_integer(\"12.34\") == False\nassert check_integer(\"--123\") == False\nassert check_integer(\"+12a\") == False\nassert check_integer(\"12 \") == False",
+      "key_differs": true,
+      "text": "```python\nassert unique_product([1, 2, 3, 4, 5]) == 120\nassert unique_product([-1, -2, -3, -4, -5]) == 120\nassert unique_product([]) == 1\nassert unique_product([0]) == 0\nassert unique_product([100, 200, 300, 400, 500]) == 1200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"+789\") == True",
+  "sample_keys": [
+    "assert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"-\") == False",
+    "assert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"7890\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"hello\") == False\nassert check_integer(\"\") == False",
+    null,
+    "assert check_integer(\"-123\") == True\nassert check_integer(\"+456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"-0\") == True\nassert check_integer(\"78901234567890\") == True\nassert check_integer(\"-78901234567890\") == True\nassert check_integer(\"abcde\") == False\nassert check_integer(\"123.\") == False\nassert check_integer(\".123\") == False\nassert check_integer(\"-.123\") == False\nassert check_integer(\"\") == False\nassert check_integer(\" \") == False",
+    "assert check_integer(\"-42\") == True  # Negative integer\nassert check_integer(\"+42\") == True   # Positive integer\nassert check_integer(\"0\")     == True    # Zero\nassert check_integer(\"-0\")    == False   # Leading minus sign without digits\nassert check_integer(\"\")      == False   # Empty string\nassert check_integer(\"123abc\") == False  # Non-digit characters\nassert check_integer(\"1e2\")    == False  # Scientific notation\nassert check_integer(\"abc\")     == False  # Alphabetic characters"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1196.0,
+    "small_out": 359.0,
+    "small_s": 8.27417073599645
+  },
+  "calls_plus": {
+    "small_in": 1123.0,
+    "small_out": 303.0,
+    "small_s": 6.728281429997878,
+    "large_in": 175.0,
+    "large_out": 108.0,
+    "large_s": 3.269353167997906
+  },
+  "calls_samples": {
+    "small_in": 875.0,
+    "small_out": 901.0,
+    "small_s": 18.625258063024376
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-247",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `lps` that takes a single parameter, `s`, which is the input string.\n2. Create a 2D list `dp` where `dp[i][j]` will store the length of the longest palindromic subsequence within the substring `s[i:j+1]`.\n3. Initialize the `dp` table such that for all `i`, `dp[i][i] = 1` because each character is a palindrome of length 1.\n4. Iterate over the string with two nested loops. The outer loop iterates over the starting index `i` of the substring, and the inner loop iterates over the ending index `j`. For each pair `(i, j)`, if `s[i] == s[j]`, then `dp[i][j] = dp[i+1][j-1] + 2`. Otherwise, `dp[i][j] = max(dp[i+1][j], dp[i][j-1])`.\n5. Return `dp[0][n-1]`, where `n` is the length of the string `s`, as this value represents the length of the longest palindromic subsequence in the entire string.",
+  "reference_key": null,
+  "final_key_plus": "def lps(s):\n    n = len(s)\n    dp = [[0]*n for _ in range(n)]\n    \n    for i in range(n):\n        dp[i][i] = 1\n    \n    for i in range(n-1, -1, -1):\n        for j in range(i+1, n):\n            if s[i] == s[j]:\n                dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n    \n    return dp[0][n-1]",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert lps(\"\") == 0\nassert lps(\"A\") == 1\nassert lps(\"AB\") == 1\nassert lps(\"ABC\") == 2\nassert lps(\"BBB\") == 3\n```",
+    "coder": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0]*n for _ in range(n)]\n    \n    for i in range(n):\n        dp[i][i] = 1\n    \n    for i in range(n-1, -1, -1):\n        for j in range(i+1, n):\n            if s[i] == s[j]:\n                dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n    \n    return dp[0][n-1]\n```",
+    "verifier": "PICK: B\n\n```python\ndef lps(s):\n    n = len(s)\n    dp = [[0]*n for _ in range(n)]\n    \n    for i in range(n):\n        dp[i][i] = 1\n    \n    for i in range(n-1, -1, -1):\n        for j in range(i+1, n):\n            if s[i] == s[j]:\n                dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n    \n    return dp[0][n-1]\n```",
+    "fixer": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0]*n for _ in range(n)]\n    \n    for i in range(n):\n        dp[i][i] = 1\n    \n    for i in range(n-1, -1, -1):\n        for j in range(i+1, n):\n            if s[i] == s[j]:\n                dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n    \n    return dp[0][n-1]\n\n# Test cases\nassert lps(\"TENS FOR TENS\") == 5\nassert lps(\"CARDIO FOR CARDS\") == 7\nassert lps(\"PART OF THE JOURNEY IS PART\") == 9\nassert lps(\"\") == 0\nassert lps(\"A\") == 1\nassert lps(\"AB\") == 1\nassert lps(\"ABC\") == 2\nassert lps(\"BBB\") == 3\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `next_power_of_2` that takes one parameter, `n`.\n2. Check if `n` is less than or equal to 0. If true, return 1 because the smallest power of 2 greater than or equal to 0 is 1.\n3. Initialize a variable `power` to 1.\n4. Use a while loop to calculate the next power of 2 by multiplying `power` by 2 until it is greater than or equal to `n`.\n5. Return the calculated `power`.\n\nThis approach ensures that we correctly identify the smallest power of 2 greater than or equal to any given number `n`.",
+      "quality": 1.0,
+      "final_key": "def lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for length in range(2, n + 1):\n        for start in range(n - length + 1):\n            end = start + length - 1\n            if s[start] == s[end]:\n                dp[start][end] = dp[start + 1][end - 1] + 2\n            else:\n                dp[start][end] = max(dp[start + 1][end], dp[start][end - 1])\n    \n    return dp[0][n - 1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert next_power_of_2(0) == 1\nassert next_power_of_2(1) == 1\nassert next_power_of_2(2) == 2\nassert next_power_of_2(3) == 4\nassert next_power_of_2(4) == 4\n```",
+        "coder": "```python\ndef next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power\n```",
+        "verifier": "PICK: B\n\n```python\ndef lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for length in range(2, n + 1):\n        for start in range(n - length + 1):\n            end = start + length - 1\n            if s[start] == s[end]:\n                dp[start][end] = dp[start + 1][end - 1] + 2\n            else:\n                dp[start][end] = max(dp[start + 1][end], dp[start][end - 1])\n    \n    return dp[0][n - 1]\n```",
+        "fixer": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for length in range(2, n + 1):\n        for start in range(n - length + 1):\n            end = start + length - 1\n            if s[start] == s[end]:\n                dp[start][end] = dp[start + 1][end - 1] + 2\n            else:\n                dp[start][end] = max(dp[start + 1][end], dp[start][end - 1])\n    \n    return dp[0][n - 1]\n\n# Test cases\nassert lps(\"TENS FOR TENS\") == 5\nassert lps(\"CARDIO FOR CARDS\") == 7\nassert lps(\"PART OF THE JOURNEY IS PART\") == 9\nassert next_power_of_2(0) == 1\nassert next_power_of_2(1) == 1\nassert next_power_of_2(2) == 2\nassert next_power_of_2(3) == 4\nassert next_power_of_2(4) == 4\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `lps` that takes a single parameter, `s`, which is the input string.\n2. Create a 2D list `dp` where `dp[i][j]` will store the length of the longest palindromic subsequence within the substring `s[i:j+1]`.\n3. Initialize the `dp` table such that for all `i`, `dp[i][i] = 1` because each character is a palindrome of length 1.\n4. Iterate over the string with two nested loops. The outer loop iterates over the starting index `i` of the substring, and the inner loop iterates over the ending index `j`. For each pair `(i, j)`, if `s[i] == s[j]`, then `dp[i][j] = dp[i+1][j-1] + 2`. However, instead of incrementing `dp[i][j]` by 2, we should check if the substrings `s[i:i+1]` and `s[j:j+1]` themselves are palindromes. If they are, then `dp[i][j] = dp[i+1][j-1] + 2`. Otherwise, `dp[i][j] = max(dp[i+1][j], dp[i][j-1])`.\n5. Return `dp[0][n-1]`, where `n` is the length of the string `s`, as this value represents the length of the longest palindromic subsequence in the entire string.",
+      "quality": 1.0,
+      "final_key": "def lps(s):\n    n = len(s)\n    dp = [[0]*n for _ in range(n)]\n    \n    for i in range(n):\n        dp[i][i] = 1\n    \n    for i in range(n-1, -1, -1):\n        for j in range(i+1, n):\n            if s[i] == s[j]:\n                if i+1 == j:\n                    dp[i][j] = 2\n                else:\n                    dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n    \n    return dp[0][n-1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert lps(\"\") == 0\nassert lps(\"A\") == 1\nassert lps(\"AB\") == 1\nassert lps(\"ABC\") == 2\nassert lps(\"BBB\") == 3\n```",
+        "coder": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0]*n for _ in range(n)]\n    \n    for i in range(n):\n        dp[i][i] = 1\n    \n    for i in range(n-1, -1, -1):\n        for j in range(i+1, n):\n            if s[i] == s[j]:\n                if i+1 == j:\n                    dp[i][j] = 2\n                else:\n                    dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n    \n    return dp[0][n-1]\n```",
+        "verifier": "PICK: B\n\n```python\ndef lps(s):\n    n = len(s)\n    dp = [[0]*n for _ in range(n)]\n    \n    for i in range(n):\n        dp[i][i] = 1\n    \n    for i in range(n-1, -1, -1):\n        for j in range(i+1, n):\n            if s[i] == s[j]:\n                if i+1 == j:\n                    dp[i][j] = 2\n                else:\n                    dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n    \n    return dp[0][n-1]\n```",
+        "fixer": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0]*n for _ in range(n)]\n    \n    for i in range(n):\n        dp[i][i] = 1\n    \n    for i in range(n-1, -1, -1):\n        for j in range(i+1, n):\n            if s[i] == s[j]:\n                if i+1 == j:\n                    dp[i][j] = 2\n                else:\n                    dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n    \n    return dp[0][n-1]\n\n# Test cases\nassert lps(\"TENS FOR TENS\") == 5\nassert lps(\"CARDIO FOR CARDS\") == 7\nassert lps(\"PART OF THE JOURNEY IS PART\") == 9\nassert lps(\"\") == 0\nassert lps(\"A\") == 1\nassert lps(\"AB\") == 1\nassert lps(\"ABC\") == 2\nassert lps(\"BBB\") == 3\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `index_multiplication` that takes two tuples as input parameters.\n2. Initialize an empty list called `result`.\n3. Iterate over the indices of both tuples simultaneously using a for loop.\n4. For each pair of corresponding elements from the two tuples, multiply them and append the result to the `result` list.\n5. Return the `result` list after completing the iteration.\n\nThis approach ensures that the function correctly performs index-wise multiplication on the given tuples.",
+      "quality": 0.0,
+      "final_key": "def lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for length in range(2, n + 1):\n        for start in range(n - length + 1):\n            end = start + length - 1\n            if s[start] == s[end]:\n                dp[start][end] = dp[start + 1][end - 1] + 2\n            else:\n                dp[start][end] = max(dp[start + 1][end], dp[start][end - 1])\n    \n    return dp[0][n - 1]\n\n# Test cases\nassert lps(\"TENS FOR TENS\") == 5\nassert lps(\"CARDIO FOR CARDS\") == 7\nassert lps(\"PART OF THE JOURNEY IS PART\") == 9\nassert index_multiplication((1, 2), (3, 4)) == [3, 8]\nassert index_multiplication((0, 0), (0, 0)) == [0, 0]\nassert index_multiplication((1, -1), (-1, 1)) == [-1, 1]\nassert index_multiplication((-1, -1), (-1, -1)) == [1, 1]\nassert index_multiplication((1, 2, 3), (4, 5, 6)) == [4, 10, 18]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert index_multiplication((1, 2), (3, 4)) == [3, 8]\nassert index_multiplication((0, 0), (0, 0)) == [0, 0]\nassert index_multiplication((1, -1), (-1, 1)) == [-1, 1]\nassert index_multiplication((-1, -1), (-1, -1)) == [1, 1]\nassert index_multiplication((1, 2, 3), (4, 5, 6)) == [4, 10, 18]\n```",
+        "coder": "```python\ndef index_multiplication(tuple1, tuple2):\n    result = []\n    for i, j in zip(tuple1, tuple2):\n        result.append(i * j)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for length in range(2, n + 1):\n        for start in range(n - length + 1):\n            end = start + length - 1\n            if s[start] == s[end]:\n                dp[start][end] = dp[start + 1][end - 1] + 2\n            else:\n                dp[start][end] = max(dp[start + 1][end], dp[start][end - 1])\n    \n    return dp[0][n - 1]\n\n# Test cases\nassert lps(\"TENS FOR TENS\") == 5\nassert lps(\"CARDIO FOR CARDS\") == 7\nassert lps(\"PART OF THE JOURNEY IS PART\") == 9\nassert index_multiplication((1, 2), (3, 4)) == [3, 8]\nassert index_multiplication((0, 0), (0, 0)) == [0, 0]\nassert index_multiplication((1, -1), (-1, 1)) == [-1, 1]\nassert index_multiplication((-1, -1), (-1, -1)) == [1, 1]\nassert index_multiplication((1, 2, 3), (4, 5, 6)) == [4, 10, 18]\n```",
+        "fixer": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for length in range(2, n + 1):\n        for start in range(n - length + 1):\n            end = start + length - 1\n            if s[start] == s[end]:\n                dp[start][end] = dp[start + 1][end - 1] + 2\n            else:\n                dp[start][end] = max(dp[start + 1][end], dp[start][end - 1])\n    \n    return dp[0][n - 1]\n\n# Test cases\nassert lps(\"TENS FOR TENS\") == 5\nassert lps(\"CARDIO FOR CARDS\") == 7\nassert lps(\"PART OF THE JOURNEY IS PART\") == 9\nassert index_multiplication((1, 2), (3, 4)) == [3, 8]\nassert index_multiplication((0, 0), (0, 0)) == [0, 0]\nassert index_multiplication((1, -1), (-1, 1)) == [-1, 1]\nassert index_multiplication((-1, -1), (-1, -1)) == [1, 1]\nassert index_multiplication((1, 2, 3), (4, 5, 6)) == [4, 10, 18]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "def lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for length in range(2, n + 1):\n        for start in range(n - length + 1):\n            end = start + length - 1\n            if s[start] == s[end]:\n                dp[start][end] = dp[start + 1][end - 1] + 2\n            else:\n                dp[start][end] = max(dp[start + 1][end], dp[start][end - 1])\n    \n    return dp[0][n - 1]",
+    "def lps(s):\n    n = len(s)\n    max_length = 0\n    start_index = 0\n    \n    for i in range(n):\n        # Check for odd-length palindromes centered at s[i]\n        left, right = i, i\n        while left >= 0 and right < n and s[left] == s[right]:\n            if right - left + 1 > max_length:\n                max_length = right - left + 1\n                start_index = left\n            left -= 1\n            right += 1\n        \n        # Check for even-length palindromes centered between s[i] and s[i+1]\n        left, right = i, i + 1\n        while left >= 0 and right < n and s[left] == s[right]:\n            if right - left + 1 > max_length:\n                max_length = right - left + 1\n                start_index = left\n            left -= 1\n            right += 1\n    \n    return max_length",
+    "def lps_recursive(s, i, j, memo):\n    if i > j:\n        return 0\n    if i == j:\n        return 1\n    if s[i] == s[j]:\n        memo[(i, j)] = 2 + lps_recursive(s, i+1, j-1, memo)\n    else:\n        memo[(i, j)] = max(lps_recursive(s, i+1, j, memo), lps_recursive(s, i, j-1, memo))\n    return memo[(i, j)]\n\ndef lps(s):\n    n = len(s)\n    memo = {}\n    return lps_recursive(s, 0, n-1, memo)\n\n# Test the function\nprint(lps(\"TENS FOR TENS\"))  # Output: 5\nassert lps(\"TENS FOR TENS\") == 5\nassert lps(\"CARDIO FOR CARDS\") == 7\nassert lps(\"PART OF THE JOURNEY IS PART\") == 9\nassert lps(\"\") == 0\nassert lps(\"A\") == 1\nassert lps(\"AB\") == 1\nassert lps(\"ABC\") == 2\nassert lps(\"BBB\") == 3"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2568.0,
+    "small_out": 1477.0,
+    "small_s": 32.05171212198911
+  },
+  "calls_plus": {
+    "large_in": 113.0,
+    "large_out": 257.0,
+    "large_s": 7.361253197974293,
+    "small_in": 1725.0,
+    "small_out": 571.0,
+    "small_s": 12.021906086971285
+  },
+  "calls_samples": {
+    "small_in": 5374.0,
+    "small_out": 2314.0,
+    "small_s": 47.08108006595285
+  }
+}

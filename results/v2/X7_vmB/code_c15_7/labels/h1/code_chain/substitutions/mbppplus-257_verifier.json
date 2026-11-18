@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-257",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+  "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "final_key_plus": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "key_differs": true,
+      "text": "PICK: A",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestSwapNumbers(unittest.TestCase):\n    def test_swap_numbers(self):\n        self.assertEqual(swap_numbers(10, 20), (20, 10))\n        self.assertEqual(swap_numbers(15, 17), (17, 15))\n        self.assertEqual(swap_numbers(100, 200), (200, 100))\n        self.assertEqual(swap_numbers(3, 7), (7, 3))\n        self.assertEqual(swap_numbers(-1, -1), (-1, -1))\n        self.assertEqual(swap_numbers(0, 0), (0, 0))\n        self.assertEqual(swap_numbers(100, 200), (200, 100))\n        self.assertEqual(swap_numbers(1000, -1000), (-1000, 1000))\n\nif __name__ == \"__main__\":\n    unittest.main()",
+      "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "key_differs": true,
+      "text": "PICK: B\n```python\nimport unittest\n\nclass TestSwapNumbers(unittest.TestCase):\n    def test_swap_numbers(self):\n        self.assertEqual(swap_numbers(10, 20), (20, 10))\n        self.assertEqual(swap_numbers(15, 17), (17, 15))\n        self.assertEqual(swap_numbers(100, 200), (200, 100))\n        self.assertEqual(swap_numbers(3, 7), (7, 3))\n        self.assertEqual(swap_numbers(-1, -1), (-1, -1))\n        self.assertEqual(swap_numbers(0, 0), (0, 0))\n        self.assertEqual(swap_numbers(100, 200), (200, 100))\n        self.assertEqual(swap_numbers(1000, -1000), (-1000, 1000))\n\nif __name__ == \"__main__\":\n    unittest.main()\n```",
+      "quality": 0.0,
+      "final_key": "import unittest\n\nclass TestSwapNumbers(unittest.TestCase):\n    def test_swap_numbers(self):\n        self.assertEqual(swap_numbers(10, 20), (20, 10))\n        self.assertEqual(swap_numbers(15, 17), (17, 15))\n        self.assertEqual(swap_numbers(100, 200), (200, 100))\n        self.assertEqual(swap_numbers(3, 7), (7, 3))\n        self.assertEqual(swap_numbers(-1, -1), (-1, -1))\n        self.assertEqual(swap_numbers(0, 0), (0, 0))\n        self.assertEqual(swap_numbers(100, 200), (200, 100))\n        self.assertEqual(swap_numbers(1000, -1000), (-1000, 1000))\n\nif __name__ == \"__main__\":\n    unittest.main()",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False",
+      "reference_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False\n```",
+      "quality": 0.0,
+      "final_key": "def is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n\n# Test cases\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True\nassert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 2]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 3]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 4]]) == False",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "sample_keys": [
+    null,
+    "def swap_numbers(num1, num2):\n    return (num2, num1)",
+    "def swap_numbers(num1, num2):\n    return (num2, num1)",
+    "def swap_numbers(num1, num2):\n    return (num2, num1)",
+    "def swap_numbers(num1, num2):\n    return (num2, num1)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1299.0,
+    "small_out": 243.0,
+    "small_s": 5.342892476008274
+  },
+  "calls_plus": {
+    "small_in": 780.0,
+    "small_out": 215.0,
+    "small_s": 4.665624278015457,
+    "large_in": 519.0,
+    "large_out": 28.0,
+    "large_s": 0.7045073730114382
+  },
+  "calls_samples": {
+    "small_in": 2595.0,
+    "small_out": 117.0,
+    "small_s": 2.1574363880208693
+  }
+}

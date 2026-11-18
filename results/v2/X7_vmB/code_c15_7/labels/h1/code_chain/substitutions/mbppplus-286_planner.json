@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-286",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `max_sub_array_sum_repeated` that takes three parameters: `arr`, `n`, and `k`.\n2. Calculate the maximum subarray sum for the original array using Kadane's algorithm and store it in a variable `max_original`.\n3. Calculate the total sum of the original array and store it in a variable `total_sum`.\n4. If `total_sum` is positive, multiply it by `(k-1)` and add `max_original` to get the result.\n5. Return the calculated result as the maximum sum of a contiguous array in the modified array.",
+  "reference_key": null,
+  "final_key_plus": "def max_sub_array_sum_repeated(arr, n, k):\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for i in range(1, len(arr)):\n            max_current = max(arr[i], max_current + arr[i])\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_original = kadane(arr)\n    total_sum = n * max_original\n    if total_sum > 0:\n        return (k-1) * total_sum + max_original\n    else:\n        return max_original",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30\nassert max_sub_array_sum_repeated([-1, -2, -3, -4], 2, 2) == -6\nassert max_sub_array_sum_repeated([1, 2, 3, 4], 1, 4) == 10\nassert max_sub_array_sum_repeated([0, -1, -2, -3], 3, 2) == 0\nassert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 5, 1) == 15\n```",
+    "coder": "```python\ndef max_sub_array_sum_repeated(arr, n, k):\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for i in range(1, len(arr)):\n            max_current = max(arr[i], max_current + arr[i])\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_original = kadane(arr)\n    total_sum = n * max_original\n    if total_sum > 0:\n        return (k-1) * total_sum + max_original\n    else:\n        return max_original\n```",
+    "verifier": "PICK: A\n\n```python\ndef max_sub_array_sum_repeated(arr, n, k):\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for i in range(1, len(arr)):\n            max_current = max(arr[i], max_current + arr[i])\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_original = kadane(arr)\n    total_sum = n * max_original\n    if total_sum > 0:\n        return (k-1) * total_sum + max_original\n    else:\n        return max_original\n```",
+    "fixer": "```python\ndef max_sub_array_sum_repeated(arr, n, k):\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for i in range(1, len(arr)):\n            max_current = max(arr[i], max_current + arr[i])\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_original = kadane(arr)\n    total_sum = n * max_original\n    if total_sum > 0:\n        return (k-1) * total_sum + max_original\n    else:\n        return max_original\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `surface_area` that takes two parameters: `base_edge` and `height`.\n2. Calculate the area of the square base using the formula `base_edge^2`.\n3. Calculate the slant height of the pyramid using the Pythagorean theorem: `slant_height = sqrt(height^2 + (base_edge/2)^2)`.\n4. Calculate the lateral surface area of the pyramid using the formula `lateral_surface_area = base_edge * slant_height`.\n5. Add the area of the base to the lateral surface area to get the total surface area.\n6. Return the total surface area.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef max_sub_array_sum_repeated(arr, k, n):\n    # Find the maximum subarray sum for the original array\n    max_subarr_sum = max_sub_array_sum(arr)\n    \n    # Multiply the maximum subarray sum by k to get the sum of repeated arrays\n    result = max_subarr_sum * k\n    \n    return result\n\n# Helper function to find the maximum subarray sum using Kadane's algorithm\ndef max_sub_array_sum(arr):\n    if not arr:\n        return 0\n    \n    current_max = arr[0]\n    global_max = arr[0]\n    \n    for num in arr[1:]:\n        current_max = max(num, current_max + num)\n        global_max = max(global_max, current_max)\n    \n    return global_max\n\n# Test cases\nassert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30\nassert max_sub_array_sum_repeated([-1, 10, 20], 3, 2) == 59\nassert max_sub_array_sum_repeated([-1, -2, -3], 3, 3) == -1\nassert surface_area(5, 7) == 180\nassert surface_area(6, 9) == 216\nassert surface_area(7, 11) == 294\nassert surface_area(8, 13) == 378\nassert surface_area(9, 15) == 462",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert surface_area(5, 7) == 180\nassert surface_area(6, 9) == 216\nassert surface_area(7, 11) == 294\nassert surface_area(8, 13) == 378\nassert surface_area(9, 15) == 462\n```",
+        "coder": "```python\nimport math\n\ndef surface_area(base_edge, height):\n    # Calculate the area of the square base\n    base_area = base_edge ** 2\n    \n    # Calculate the slant height of the pyramid\n    slant_height = math.sqrt(height**2 + (base_edge/2)**2)\n    \n    # Calculate the lateral surface area of the pyramid\n    lateral_surface_area = base_edge * slant_height\n    \n    # Add the area of the base to the lateral surface area to get the total surface area\n    total_surface_area = base_area + lateral_surface_area\n    \n    # Return the total surface area\n    return total_surface_area\n```",
+        "verifier": "PICK: B\n\n```python\nimport math\n\ndef max_sub_array_sum_repeated(arr, k, n):\n    # Find the maximum subarray sum for the original array\n    max_subarr_sum = max_sub_array_sum(arr)\n    \n    # Multiply the maximum subarray sum by k to get the sum of repeated arrays\n    result = max_subarr_sum * k\n    \n    return result\n\n# Helper function to find the maximum subarray sum using Kadane's algorithm\ndef max_sub_array_sum(arr):\n    if not arr:\n        return 0\n    \n    current_max = arr[0]\n    global_max = arr[0]\n    \n    for num in arr[1:]:\n        current_max = max(num, current_max + num)\n        global_max = max(global_max, current_max)\n    \n    return global_max\n\n# Test cases\nassert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30\nassert max_sub_array_sum_repeated([-1, 10, 20], 3, 2) == 59\nassert max_sub_array_sum_repeated([-1, -2, -3], 3, 3) == -1\nassert surface_area(5, 7) == 180\nassert surface_area(6, 9) == 216\nassert surface_area(7, 11) == 294\nassert surface_area(8, 13) == 378\nassert surface_area(9, 15) == 462\n```",
+        "fixer": "```python\nimport math\n\ndef max_sub_array_sum_repeated(arr, k, n):\n    # Find the maximum subarray sum for the original array\n    max_subarr_sum = max_sub_array_sum(arr)\n    \n    # Multiply the maximum subarray sum by k to get the sum of repeated arrays\n    result = max_subarr_sum * k\n    \n    return result\n\n# Helper function to find the maximum subarray sum using Kadane's algorithm\ndef max_sub_array_sum(arr):\n    if not arr:\n        return 0\n    \n    current_max = arr[0]\n    global_max = arr[0]\n    \n    for num in arr[1:]:\n        current_max = max(num, current_max + num)\n        global_max = max(global_max, current_max)\n    \n    return global_max\n\n# Test cases\nassert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30\nassert max_sub_array_sum_repeated([-1, 10, 20], 3, 2) == 59\nassert max_sub_array_sum_repeated([-1, -2, -3], 3, 3) == -1\nassert surface_area(5, 7) == 180\nassert surface_area(6, 9) == 216\nassert surface_area(7, 11) == 294\nassert surface_area(8, 13) == 378\nassert surface_area(9, 15) == 462\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `max_sub_array_sum_repeated` that takes three parameters: `arr`, `n`, and `k`.\n2. Calculate the maximum subarray sum for the original array using Kadane's algorithm and store it in a variable `max_original`.\n3. Calculate the total sum of the original array and store it in a variable `total_sum`.\n4. If `total_sum` is positive, multiply it by `k` and subtract `max_original` from the result to get the final result.\n5. Return the calculated result as the maximum sum of a contiguous array in the modified array.",
+      "quality": 0.0,
+      "final_key": "def max_sub_array_sum_repeated(arr, n, k):\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for i in range(1, len(arr)):\n            max_current = max(arr[i], max_current + arr[i])\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_original = kadane(arr)\n    total_sum = n * max_original\n    if total_sum > 0:\n        return total_sum * k - max_original\n    else:\n        return 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30\nassert max_sub_array_sum_repeated([-1, -2, -3, -4], 2, 3) == 0\nassert max_sub_array_sum_repeated([1, 2, 3, 4], 1, 4) == 10\nassert max_sub_array_sum_repeated([1, 2, 3, 4], 2, 1) == 10\nassert max_sub_array_sum_repeated([], 3, 2) == 0\n```",
+        "coder": "```python\ndef max_sub_array_sum_repeated(arr, n, k):\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for i in range(1, len(arr)):\n            max_current = max(arr[i], max_current + arr[i])\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_original = kadane(arr)\n    total_sum = n * max_original\n    if total_sum > 0:\n        return total_sum * k - max_original\n    else:\n        return 0\n```",
+        "verifier": "PICK: A\n```python\ndef max_sub_array_sum_repeated(arr, n, k):\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for i in range(1, len(arr)):\n            max_current = max(arr[i], max_current + arr[i])\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_original = kadane(arr)\n    total_sum = n * max_original\n    if total_sum > 0:\n        return total_sum * k - max_original\n    else:\n        return 0\n```",
+        "fixer": "```python\ndef max_sub_array_sum_repeated(arr, n, k):\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for i in range(1, len(arr)):\n            max_current = max(arr[i], max_current + arr[i])\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_original = kadane(arr)\n    total_sum = n * max_original\n    if total_sum > 0:\n        return total_sum * k - max_original\n    else:\n        return 0\n\n# Test cases\nassert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30\nassert max_sub_array_sum_repeated([-1, 10, 20], 3, 2) == 59\nassert max_sub_array_sum_repeated([-1, -2, -3], 3, 3) == -1\nassert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30\nassert max_sub_array_sum_repeated([-1, -2, -3, -4], 2, 3) == 0\nassert max_sub_array_sum_repeated([1, 2, 3, 4], 1, 4) == 10\nassert max_sub_array_sum_repeated([1, 2, 3, 4], 2, 1) == 10\nassert max_sub_array_sum_repeated([], 3, 2) == 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `string_to_list` that takes one parameter, `input_string`.\n2. Inside the function, use the `split()` method on the input string with a space as the separator.\n3. Return the resulting list of strings.\n\nHere's the complete implementation:\n\n```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```\n\nThis function will correctly split any given string into a list of words separated by spaces.",
+      "quality": 0.0,
+      "final_key": "def max_sub_array_sum_repeated(arr, k, n):\n    def max_sub_array(nums):\n        if not nums:\n            return 0\n        current_max = global_max = nums[0]\n        for num in nums[1:]:\n            current_max = max(num, current_max + num)\n            global_max = max(global_max, current_max)\n        return global_max\n    \n    repeated_arr = arr * k\n    return max_sub_array(repeated_arr[:n])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\n# Test case 1: Typical positive numbers\nassert max_sub_array_sum_repeated([1, 2, 3, 4], 2, 2) == 10\n\n# Test case 2: Negative numbers\nassert max_sub_array_sum_repeated([-1, -2, -3, -4], 3, 2) == -6\n\n# Test case 3: Single element repeated multiple times\nassert max_sub_array_sum_repeated([5], 5, 1) == 5\n\n# Test case 4: Edge case with zero elements\nassert max_sub_array_sum_repeated([], 1, 1) == 0\n\n# Test case 5: Edge case with negative repeated elements\nassert max_sub_array_sum_repeated([-1, -2, -3, -4], 1, 2) == -6\n```",
+        "coder": "```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_sub_array_sum_repeated(arr, k, n):\n    def max_sub_array(nums):\n        if not nums:\n            return 0\n        current_max = global_max = nums[0]\n        for num in nums[1:]:\n            current_max = max(num, current_max + num)\n            global_max = max(global_max, current_max)\n        return global_max\n    \n    repeated_arr = arr * k\n    return max_sub_array(repeated_arr[:n])\n```",
+        "fixer": "```python\ndef max_sub_array_sum_repeated(arr, k, n):\n    def max_sub_array(nums):\n        if not nums:\n            return 0\n        current_max = global_max = nums[0]\n        for num in nums[1:]:\n            current_max = max(num, current_max + num)\n            global_max = max(global_max, current_max)\n        return global_max\n    \n    repeated_arr = arr * k\n    return max_sub_array(repeated_arr[:n])\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def max_sub_array_sum_repeated(arr, k, n):\n    def max_sub_array_sum(nums):\n        max_current = nums[0]\n        max_global = nums[0]\n        \n        for num in nums[1:]:\n            max_current = max(num, max_current + num)\n            max_global = max(max_global, max_current)\n        \n        return max_global\n    \n    repeated_arr = arr * k\n    return max_sub_array_sum(repeated_arr) * k",
+  "sample_keys": [
+    "def max_sub_array_sum_repeated(arr, k, n):\n    max_sum = float('-inf')\n    current_sum = 0\n    repeated_arr = [arr] * k\n    \n    for num in repeated_arr:\n        for i in range(n):\n            current_sum += num[i]\n            if current_sum > max_sum:\n                max_sum = current_sum\n                \n    return max_sum",
+    "def max_sub_array_sum_repeated(arr, k, n):\n    max_sum = current_sum = local_max = 0\n    \n    for i in range(k * n):\n        current_sum += arr[i % n]\n        \n        if current_sum < 0:\n            current_sum = 0\n        \n        if current_sum > max_sum:\n            max_sum = current_sum\n    \n    return max_sum",
+    "def max_sub_array_sum_repeated(arr, n, k):\n    # Step 1: Calculate the length of the original array\n    len_arr = len(arr)\n    \n    # Step 2: Create a new array that represents the repeated array k times\n    repeated_arr = arr * k\n    \n    # Step 3: Find the largest subarray sum in the original array\n    max_sum = float('-inf')\n    current_sum = 0\n    for num in repeated_arr:\n        current_sum += num\n        if current_sum > max_sum:\n            max_sum = current_sum\n        if current_sum < 0:\n            current_sum = 0\n    \n    # Step 4: Multiply the largest subarray sum of the original array by k to get the result\n    result = max_sum * k\n    \n    # Step 5: Return the computed result\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1992.0,
+    "small_out": 552.0,
+    "small_s": 11.330955798039213
+  },
+  "calls_plus": {
+    "large_in": 138.0,
+    "large_out": 126.0,
+    "large_s": 2.8097669090202544,
+    "small_in": 2035.0,
+    "small_out": 545.0,
+    "small_s": 9.720599350024713
+  },
+  "calls_samples": {
+    "small_in": 6524.0,
+    "small_out": 2079.0,
+    "small_s": 38.250901631923625
+  }
+}

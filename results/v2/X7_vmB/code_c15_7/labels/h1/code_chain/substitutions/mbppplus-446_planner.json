@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-446",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `count_Occurrence` that takes two parameters: a tuple `tup` and a list `lst`.\n2. Initialize a variable `count` to zero to keep track of the total occurrences.\n3. Iterate over each element in the list `lst`.\n4. For each element, use the `count()` method of the tuple `tup` to find its occurrences and add this number to `count`.\n5. Return the value of `count`.",
+  "reference_key": null,
+  "final_key_plus": "def count_Occurrence(tup, lst):\n    count = 0\n    for item in lst:\n        count += tup.count(item)\n    return count",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a']) == 4\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a']) == 5\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a', 'a']) == 6\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a', 'a', 'a']) == 7\n```",
+    "coder": "```python\ndef count_Occurrence(tup, lst):\n    count = 0\n    for item in lst:\n        count += tup.count(item)\n    return count\n```",
+    "verifier": "PICK: A\n\n```python\ndef count_Occurrence(tup, lst):\n    count = 0\n    for item in lst:\n        count += tup.count(item)\n    return count\n```",
+    "fixer": "```python\ndef count_Occurrence(tup, lst):\n    count = 0\n    for item in lst:\n        count += tup.count(item)\n    return count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `add_pairwise` that takes a single argument, which is a tuple.\n2. Initialize an empty list called `result`.\n3. Iterate over the input tuple using a for loop.\n4. For each element, calculate its index by subtracting 1 from the current index.\n5. Check if the calculated index is within the bounds of the tuple.\n6. If it is, add the sum of the current element and the element at the calculated index to the `result` list.\n7. After iterating through all elements, return the `result` list.\n\nThis approach ensures that we correctly compute the pairwise addition of neighboring elements in the tuple.",
+      "quality": 0.0,
+      "final_key": "def count_Occurrence(tup, lst):\n    result = {}\n    for item in lst:\n        if item in tup:\n            result[item] = tup.count(item)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a']) == 2\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a']) == 3\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a']) == 4\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'c', 'b', 'd', 'e']) == 6\n```",
+        "coder": "```python\ndef add_pairwise(tup):\n    result = []\n    for i in range(len(tup)):\n        idx = i - 1\n        if idx >= 0 and idx < len(tup):\n            result.append(tup[i] + tup[idx])\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef count_Occurrence(tup, lst):\n    result = {}\n    for item in lst:\n        if item in tup:\n            result[item] = tup.count(item)\n    return result\n```",
+        "fixer": "```python\ndef count_Occurrence(tup, lst):\n    result = {}\n    for item in lst:\n        if item in tup:\n            result[item] = tup.count(item)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_Occurrences` that takes two parameters: a tuple `tup` and a list `lst`.\n2. Initialize a variable `count` to zero to keep track of the total occurrences.\n3. Iterate over each element in the list `lst`.\n4. For each element, use the `count()` method of the tuple `tup` to find its occurrences and add this number to `count`.\n5. Return the value of `count`.",
+      "quality": 0.0,
+      "final_key": "def count_Occurrences(tup, lst):\n    count = 0\n    for item in lst:\n        count += tup.count(item)\n    return count",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_Occurrences(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_Occurrences(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a']) == 4\nassert count_Occurrences(('a', 'a', 'c', 'b', 'd'), ['e', 'f']) == 0\nassert count_Occurrences(('a', 'a', 'c', 'b', 'd'), []) == 0\nassert count_Occurrences(('a', 'a', 'c', 'b', 'd'), [1, 2, 3]) == 0\n```",
+        "coder": "```python\ndef count_Occurrences(tup, lst):\n    count = 0\n    for item in lst:\n        count += tup.count(item)\n    return count\n```",
+        "verifier": "PICK: A\n\n```python\ndef count_Occurrences(tup, lst):\n    count = 0\n    for item in lst:\n        count += tup.count(item)\n    return count\n```",
+        "fixer": "```python\ndef count_Occurrences(tup, lst):\n    count = 0\n    for item in lst:\n        count += tup.count(item)\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `Find_Min` that takes one parameter: `sublists`.\n2. Initialize a variable `min_length` to store the minimum length found so far. Set it to the length of the first sublist in `sublists`.\n3. Iterate through each sublist in `sublists` using a for loop.\n4. For each sublist, calculate its length.\n5. If the current sublist's length is less than `min_length`, update `min_length` to be the current sublist's length.\n6. After iterating through all sublists, return the sublist with the minimum length.\n\nThis approach ensures that we efficiently find the sublist with the smallest length by comparing the lengths of each sublist as we iterate through them.",
+      "quality": 0.0,
+      "final_key": "def count_Occurrence(lst, target_list):\n    count_dict = {}\n    for item in lst:\n        if item in count_dict:\n            count_dict[item] += 1\n        else:\n            count_dict[item] = 1\n    result = {item: count_dict[item] for item in target_list}\n    return sum(result.values())",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'c']) == 2\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'e']) == 1\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), []) == 0\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a', 'a']) == 5\n```",
+        "coder": "```python\ndef Find_Min(sublists):\n    min_length = len(sublists[0])\n    for sublist in sublists:\n        if len(sublist) < min_length:\n            min_length = len(sublist)\n    return sublist\n```",
+        "verifier": "PICK: B\n\n```python\ndef count_Occurrence(lst, target_list):\n    count_dict = {}\n    for item in lst:\n        if item in count_dict:\n            count_dict[item] += 1\n        else:\n            count_dict[item] = 1\n    result = {item: count_dict[item] for item in target_list}\n    return sum(result.values())\n```",
+        "fixer": "```python\ndef count_Occurrence(lst, target_list):\n    count_dict = {}\n    for item in lst:\n        if item in count_dict:\n            count_dict[item] += 1\n        else:\n            count_dict[item] = 1\n    result = {item: count_dict[item] for item in target_list}\n    return sum(result.values())\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def count_Occurrence(input_list, target_elements):\n    count_dict = {}\n    for element in input_list:\n        if element in target_elements:\n            count_dict[element] = count_dict.get(element, 0) + 1\n    return count_dict",
+  "sample_keys": [
+    "def count_Occurrence(tuple_data, list_to_count):\n    frequency_dict = {}\n    \n    for item in tuple_data:\n        if item in frequency_dict:\n            frequency_dict[item] += 1\n        else:\n            frequency_dict[item] = 1\n    \n    total_occurrences = sum(frequency_dict[item] for item in list_to_count)\n    \n    return total_occurrences",
+    "def count_occurrences(elements, target_elements):\n    # Initialize counters for each target element\n    counts = {element: 0 for element in target_elements}\n    \n    # Count occurrences of each element in the elements list\n    for element in elements:\n        if element in counts:\n            counts[element] += 1\n    \n    # Return counts for the target elements\n    return {element: counts[element] for element in target_elements}\n\n# Test cases\nassert count_occurrences(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_occurrences((1, 2, 3, 1, 4, 6, 7, 1, 4), [1, 4, 7]) == 6\nassert count_occurrences((1,2,3,4,5,6), [1,2]) == 2\nassert count_occurrences(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_occurrences(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a', 'a']) == 5\nassert count_occurrences(('a', 'a', 'c', 'b', 'd'), ['e', 'f']) == 0\nassert count_occurrences([], ['a', 'b']) == {}\nassert count_occurrences(['a'], []) == {'a': 0}",
+    "def count_Occurrence(tup, lst):\n    count = 0\n    for item in lst:\n        if item in tup:\n            count += 1\n    return count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1892.0,
+    "small_out": 451.0,
+    "small_s": 9.647055052017095
+  },
+  "calls_plus": {
+    "large_in": 127.0,
+    "large_out": 102.0,
+    "large_s": 2.3051383690035436,
+    "small_in": 1728.0,
+    "small_out": 304.0,
+    "small_s": 5.68328123196261
+  },
+  "calls_samples": {
+    "small_in": 5986.0,
+    "small_out": 2077.0,
+    "small_s": 39.61135098792147
+  }
+}

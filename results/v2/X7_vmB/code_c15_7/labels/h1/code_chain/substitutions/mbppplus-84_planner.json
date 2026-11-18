@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-84",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Understand the Newman-Conway Sequence definition.\n2. Create a base case for the first two numbers in the sequence.\n3. Define a recursive function that calls itself based on the sequence's rules.\n4. Implement memoization to optimize the recursive calls.\n5. Test the function with the provided test case.",
+  "reference_key": null,
+  "final_key_plus": "def sequence(n):\n    # Base cases for the first two numbers in the sequence\n    if n == 1:\n        return 1\n    elif n == 2:\n        return 1\n    \n    # Memoization dictionary to store previously computed values\n    memo = {1: 1, 2: 1}\n    \n    def helper(num):\n        # Check if the value is already computed\n        if num in memo:\n            return memo[num]\n        \n        # Recursive call based on the Newman-Conway Sequence rules\n        result = helper(num - 1) + helper(num - 2)\n        # Store the result in the memo dictionary\n        memo[num] = result\n        return result\n    \n    # Call the helper function with the input number\n    return helper(n)",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert sequence(1) == 1\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert sequence(4) == 3\nassert sequence(5) == 5\n```",
+    "coder": "```python\ndef sequence(n):\n    # Base cases for the first two numbers in the sequence\n    if n == 1:\n        return 1\n    elif n == 2:\n        return 1\n    \n    # Memoization dictionary to store previously computed values\n    memo = {1: 1, 2: 1}\n    \n    def helper(num):\n        # Check if the value is already computed\n        if num in memo:\n            return memo[num]\n        \n        # Recursive call based on the Newman-Conway Sequence rules\n        result = helper(num - 1) + helper(num - 2)\n        # Store the result in the memo dictionary\n        memo[num] = result\n        return result\n    \n    # Call the helper function with the input number\n    return helper(n)\n```",
+    "verifier": "PICK: A\n\n```python\ndef sequence(n):\n    # Base cases for the first two numbers in the sequence\n    if n == 1:\n        return 1\n    elif n == 2:\n        return 1\n    \n    # Memoization dictionary to store previously computed values\n    memo = {1: 1, 2: 1}\n    \n    def helper(num):\n        # Check if the value is already computed\n        if num in memo:\n            return memo[num]\n        \n        # Recursive call based on the Newman-Conway Sequence rules\n        result = helper(num - 1) + helper(num - 2)\n        # Store the result in the memo dictionary\n        memo[num] = result\n        return result\n    \n    # Call the helper function with the input number\n    return helper(n)\n```",
+    "fixer": "```python\ndef sequence(n):\n    # Base cases for the first two numbers in the sequence\n    if n == 1:\n        return 1\n    elif n == 2:\n        return 1\n    \n    # Memoization dictionary to store previously computed values\n    memo = {1: 1, 2: 1}\n    \n    def helper(num):\n        # Check if the value is already computed\n        if num in memo:\n            return memo[num]\n        \n        # Recursive call based on the Newman-Conway Sequence rules\n        result = helper(num - 1) + helper(num - 2)\n        # Store the result in the memo dictionary\n        memo[num] = result\n        return result\n    \n    # Call the helper function with the input number\n    return helper(n)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `get_equal` that takes one parameter: `tuples_list`.\n2. Initialize a variable `length` to store the length of the first tuple in the list.\n3. Iterate through each tuple in the list using a for loop.\n4. For each tuple, check if its length is equal to the `length` variable.\n5. If any tuple has a different length from the initial `length`, return `False`.\n6. If all tuples have the same length, return `True`.\n\nThis approach ensures that we efficiently check the lengths of all tuples in the list without needing to compare them individually.",
+      "quality": 1.0,
+      "final_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for t in tuples_list:\n        if len(t) != length:\n            return False\n    return True\n\ndef sequence(n):\n    if n <= 0:\n        return None\n    elif n == 1 or n == 2:\n        return 1\n    else:\n        c = [0] * (n + 1)\n        c[1], c[2] = 1, 1\n        for i in range(3, n + 1):\n            c[i] = c[c[i - 1]] + c[i - c[i - 1]]\n        return c[n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,)]) == True\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,), (11,)]) == False\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,), (11,), (12,)]) == True\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,), (11,), (12,), (13,)]) == False\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,), (11,), (12,), (13,), (14,)]) == True\n```",
+        "coder": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for t in tuples_list:\n        if len(t) != length:\n            return False\n    return True\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for t in tuples_list:\n        if len(t) != length:\n            return False\n    return True\n\ndef sequence(n):\n    if n <= 0:\n        return None\n    elif n == 1 or n == 2:\n        return 1\n    else:\n        c = [0] * (n + 1)\n        c[1], c[2] = 1, 1\n        for i in range(3, n + 1):\n            c[i] = c[c[i - 1]] + c[i - c[i - 1]]\n        return c[n]\n```",
+        "fixer": "```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for t in tuples_list:\n        if len(t) != length:\n            return False\n    return True\n\ndef sequence(n):\n    if n <= 0:\n        return None\n    elif n == 1 or n == 2:\n        return 1\n    else:\n        c = [0] * (n + 1)\n        c[1], c[2] = 1, 1\n        for i in range(3, n + 1):\n            c[i] = c[c[i - 1]] + c[i - c[i - 1]]\n        return c[n]\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,)]) == True\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,), (11,)]) == False\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,), (11,), (12,)]) == True\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,), (11,), (12,), (13,)]) == False\nassert get_equal([(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,), (11,), (12,), (13,), (14,)]) == True\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Understand the Newman-Conway Sequence definition.\n2. Create a base case for the first two numbers in the sequence.\n3. Define a recursive function that calls itself based on the sequence's rules.\n4. Implement memoization to optimize the recursive calls.\n5. Test the function with the provided test case.\n\nRewritten Output:\nPLAN:\n1. Understand the Newman-Conway Sequence definition.\n2. Create a base case for the first two numbers in the sequence.\n3. Define a recursive function that calls itself based on the sequence's rules.\n4. Implement memoization to optimize the recursive calls.\n5. Test the function with the provided test case.",
+      "quality": 0.0,
+      "final_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    # Initialize memoization dictionary\n    memo = {0: 0, 1: 1}\n    \n    def helper(num):\n        # Check if the result is already computed\n        if num in memo:\n            return memo[num]\n        \n        # Recursive call based on the sequence's rules\n        result = helper(num - 1) + helper(num // 2)\n        memo[num] = result\n        return result\n    \n    # Call the helper function with the input number\n    return helper(n)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 2\nassert newman_conway(5) == 3\n```",
+        "coder": "```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    # Initialize memoization dictionary\n    memo = {0: 0, 1: 1}\n    \n    def helper(num):\n        # Check if the result is already computed\n        if num in memo:\n            return memo[num]\n        \n        # Recursive call based on the sequence's rules\n        result = helper(num - 1) + helper(num // 2)\n        memo[num] = result\n        return result\n    \n    # Call the helper function with the input number\n    return helper(n)\n```",
+        "verifier": "PICK: B\n\n```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    # Initialize memoization dictionary\n    memo = {0: 0, 1: 1}\n    \n    def helper(num):\n        # Check if the result is already computed\n        if num in memo:\n            return memo[num]\n        \n        # Recursive call based on the sequence's rules\n        result = helper(num - 1) + helper(num // 2)\n        memo[num] = result\n        return result\n    \n    # Call the helper function with the input number\n    return helper(n)\n```",
+        "fixer": "```python\ndef newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    \n    # Initialize memoization dictionary\n    memo = {0: 0, 1: 1}\n    \n    def helper(num):\n        # Check if the result is already computed\n        if num in memo:\n            return memo[num]\n        \n        # Recursive call based on the sequence's rules\n        result = helper(num - 1) + helper(num // 2)\n        memo[num] = result\n        return result\n    \n    # Call the helper function with the input number\n    return helper(n)\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 2\nassert newman_conway(5) == 3\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `two_unique_nums` that takes one parameter: `nums`, which is a list of integers.\n2. Initialize an empty list called `unique_nums`.\n3. Iterate over each number in the input list `nums`.\n4. For each number, check if it already exists in the `unique_nums` list using the `in` keyword.\n5. If the number does not exist in `unique_nums`, append it to the list.\n6. After iterating through all numbers, return the `unique_nums` list.\n\nThis approach ensures that only unique numbers are included in the final list, as duplicates are automatically removed during the iteration process.",
+      "quality": 0.0,
+      "final_key": "def sequence(n):\n    if n <= 1:\n        return n\n    else:\n        fib_sequence = [0, 1]\n        while len(fib_sequence) < n:\n            next_num = fib_sequence[-1] + fib_sequence[-2]\n            fib_sequence.append(next_num)\n        return fib_sequence[n-1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 1\nassert sequence(4) == 2\nassert sequence(5) == 2\n```",
+        "coder": "```python\ndef two_unique_nums(nums):\n    unique_nums = []\n    for num in nums:\n        if num not in unique_nums:\n            unique_nums.append(num)\n    return unique_nums\n```",
+        "verifier": "PICK: B\n\n```python\ndef sequence(n):\n    if n <= 1:\n        return n\n    else:\n        fib_sequence = [0, 1]\n        while len(fib_sequence) < n:\n            next_num = fib_sequence[-1] + fib_sequence[-2]\n            fib_sequence.append(next_num)\n        return fib_sequence[n-1]\n```",
+        "fixer": "```python\ndef sequence(n):\n    if n <= 1:\n        return n\n    else:\n        fib_sequence = [0, 1]\n        while len(fib_sequence) < n:\n            next_num = fib_sequence[-1] + fib_sequence[-2]\n            fib_sequence.append(next_num)\n        return fib_sequence[n-1]\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 1\nassert sequence(4) == 2\nassert sequence(5) == 2\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def newman_conway(n):\n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    \n    # Recursive case\n    return newman_conway(n-1) + newman_conway(n-2)\n\n# Test cases\nassert sequence(10) == 6\nassert sequence(2) == 1\nassert sequence(3) == 2\nassert newman_conway(10) == 6\nassert newman_conway(1) == 1\nassert newman_conway(2) == 1\nassert newman_conway(3) == 2\nassert newman_conway(4) == 2",
+  "sample_keys": [
+    null,
+    "def sequence(n):\n    # Base case for the first two terms\n    if n <= 1:\n        return n\n    # Recursive step to calculate subsequent terms\n    else:\n        return sequence(n-1) + sequence(n-2)",
+    "def sequence(n):\n    fib_seq = [0, 1]\n    newman_seq = [0, 1]\n    \n    for i in range(2, n+1):\n        fib_next = (fib_seq[i-1] + fib_seq[i-2]) % 1000000007\n        newman_next = (newman_seq[i-1] + newman_seq[i-2] - 1) % 1000000007\n        fib_seq.append(fib_next)\n        newman_seq.append(newman_next)\n    \n    return newman_seq[n]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1479.0,
+    "small_out": 670.0,
+    "small_s": 13.172570818976965
+  },
+  "calls_plus": {
+    "large_in": 104.0,
+    "large_out": 66.0,
+    "large_s": 1.50769455297268,
+    "small_in": 1464.0,
+    "small_out": 553.0,
+    "small_s": 9.327290528977755
+  },
+  "calls_samples": {
+    "small_in": 4284.0,
+    "small_out": 1506.0,
+    "small_s": 27.064606604049914
+  }
+}

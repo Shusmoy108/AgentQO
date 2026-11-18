@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-261",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert division_elements((8, 16, 32), (2, 4, 8)) == (4, 4, 4)\nassert division_elements((100, 50, 25), (10, 5, 5)) == (10, 10, 5)\nassert division_elements((7, 14, 21), (1, 2, 3)) == (7, 7, 7)\nassert division_elements((1, 1, 1), (1, 1, 1)) == (1, 1, 1)\nassert division_elements((0, 0, 0), (1, 1, 1)) == (0, 0, 0)\n```",
+  "reference_key": "assert division_elements((8, 16, 32), (2, 4, 8)) == (4, 4, 4)\nassert division_elements((100, 50, 25), (10, 5, 5)) == (10, 10, 5)\nassert division_elements((7, 14, 21), (1, 2, 3)) == (7, 7, 7)\nassert division_elements((1, 1, 1), (1, 1, 1)) == (1, 1, 1)\nassert division_elements((0, 0, 0), (1, 1, 1)) == (0, 0, 0)",
+  "final_key_plus": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n```",
+    "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Testing with negative numbers\nassert division_elements((-10, -7, 8), (-2, -4, -4)) == (5.0, 1.75, -2.0)\n\n# Testing with zero\nassert division_elements((4, 0, 2, 8), (2, 0, 1, 0)) == (2.0, 0.0, 2.0, float('inf'))\n\n# Testing with division by zero error\ntry:\n    division_elements((1, 2), (0, 1))\nexcept ZeroDivisionError as e:\n    print(\"Caught expected ZeroDivisionError:\", e)  # Expected message: \"division by zero\"\nelse:\n    print(\"ZeroDivisionError did not occur\")",
+      "reference_key": "assert division_elements((8, 16, 32), (2, 4, 8)) == (4, 4, 4)\nassert division_elements((100, 50, 25), (10, 5, 5)) == (10, 10, 5)\nassert division_elements((7, 14, 21), (1, 2, 3)) == (7, 7, 7)\nassert division_elements((1, 1, 1), (1, 1, 1)) == (1, 1, 1)\nassert division_elements((0, 0, 0), (1, 1, 1)) == (0, 0, 0)",
+      "key_differs": true,
+      "text": "Certainly! Below is one additional Python `assert` statement to test the function:\n\n```python\nassert division_elements((1, 2), (1, 1)) == (1, 2)\n```\n\nThis assertion tests the function with a simple case where both tuples contain identical elements.\n\nFor more assertions, you can add the following ones:\n\n```python\n# Testing with negative numbers\nassert division_elements((-10, -7, 8), (-2, -4, -4)) == (5.0, 1.75, -2.0)\n\n# Testing with zero\nassert division_elements((4, 0, 2, 8), (2, 0, 1, 0)) == (2.0, 0.0, 2.0, float('inf'))\n\n# Testing with division by zero error\ntry:\n    division_elements((1, 2), (0, 1))\nexcept ZeroDivisionError as e:\n    print(\"Caught expected ZeroDivisionError:\", e)  # Expected message: \"division by zero\"\nelse:\n    print(\"ZeroDivisionError did not occur\")\n```\n\nThese assertions cover various scenarios including positive numbers, negative numbers, zero, and division by zero, ensuring the function handles these cases correctly.",
+      "quality": 1.0,
+      "final_key": "def division_elements(tuple1, tuple2):\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError: Division by zero\"",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef division_elements(tuple1, tuple2):\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError: Division by zero\"\n```",
+        "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError: Division by zero\"\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Edge case (single element tuples)\nassert division_elements((-1, -4), (-1, -1)) == (1, 4)\n\n# Negative numbers\nassert division_elements((-4, -9, -5, -6), (2, 3, 7, 8)) == (-2.0, -3.0, -7/8, -6/8)\n\n# Edge case of zero divisor\ntry:\n    division_elements((5, 0, 2, 7), (2, 4, 0, 3))\nexcept DivisionByZeroError as e:\n    print(\"Exception caught:\", e)  # Expected message: \"Integer division or modulo by zero\"\n\n# Edge case with floating point division\nassert division_elements((3.5, 6.7, 1.8, 2.1), (1.5, 0.5, 1.3, 2.5)) == (2.3333333333333335, 13.4, 1.4285714285714285, 0.84)\n\n# Test with same denominator\nassert division_elements((5, 5, 5, 5), (5, 5, 5, 5)) == (1, 1, 1, 1)",
+      "reference_key": "assert division_elements((8, 16, 32), (2, 4, 8)) == (4, 4, 4)\nassert division_elements((100, 50, 25), (10, 5, 5)) == (10, 10, 5)\nassert division_elements((7, 14, 21), (1, 2, 3)) == (7, 7, 7)\nassert division_elements((1, 1, 1), (1, 1, 1)) == (1, 1, 1)\nassert division_elements((0, 0, 0), (1, 1, 1)) == (0, 0, 0)",
+      "key_differs": true,
+      "text": "```python\n# Edge case (single element tuples)\nassert division_elements((-1, -4), (-1, -1)) == (1, 4)\n\n# Negative numbers\nassert division_elements((-4, -9, -5, -6), (2, 3, 7, 8)) == (-2.0, -3.0, -7/8, -6/8)\n\n# Edge case of zero divisor\ntry:\n    division_elements((5, 0, 2, 7), (2, 4, 0, 3))\nexcept DivisionByZeroError as e:\n    print(\"Exception caught:\", e)  # Expected message: \"Integer division or modulo by zero\"\n\n# Edge case with floating point division\nassert division_elements((3.5, 6.7, 1.8, 2.1), (1.5, 0.5, 1.3, 2.5)) == (2.3333333333333335, 13.4, 1.4285714285714285, 0.84)\n\n# Test with same denominator\nassert division_elements((5, 5, 5, 5), (5, 5, 5, 5)) == (1, 1, 1, 1)\n```\n\nThis set provides comprehensive testing to ensure the `division_elements` function works correctly under various conditions, including edge cases and non-integer inputs.",
+      "quality": 1.0,
+      "final_key": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n```",
+        "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert find_lucas(4) == 3\nassert find_lucas(5) == 5\nassert find_lucas(6) == 8\nassert find_lucas(7) == 13\nassert find_lucas(8) == 21",
+      "reference_key": "assert division_elements((8, 16, 32), (2, 4, 8)) == (4, 4, 4)\nassert division_elements((100, 50, 25), (10, 5, 5)) == (10, 10, 5)\nassert division_elements((7, 14, 21), (1, 2, 3)) == (7, 7, 7)\nassert division_elements((1, 1, 1), (1, 1, 1)) == (1, 1, 1)\nassert division_elements((0, 0, 0), (1, 1, 1)) == (0, 0, 0)",
+      "key_differs": true,
+      "text": "```python\nassert find_lucas(4) == 3\nassert find_lucas(5) == 5\nassert find_lucas(6) == 8\nassert find_lucas(7) == 13\nassert find_lucas(8) == 21\n```",
+      "quality": 0.0,
+      "final_key": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n\n# Test cases to verify the correctness of the function\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\n\n# Additional tests to ensure the function works correctly with different inputs\ndef find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        a, b = 2, 1\n        for _ in range(2, n + 1):\n            a, b = b, a + b\n        return b\n\n# Test cases to verify the correctness of the find_lucas function\nassert find_lucas(4) == 3\nassert find_lucas(5) == 5\nassert find_lucas(6) == 8\nassert find_lucas(7) == 13\nassert find_lucas(8) == 21",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n\n# Test cases to verify the correctness of the function\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\n\n# Additional tests to ensure the function works correctly with different inputs\ndef find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        a, b = 2, 1\n        for _ in range(2, n + 1):\n            a, b = b, a + b\n        return b\n\n# Test cases to verify the correctness of the find_lucas function\nassert find_lucas(4) == 3\nassert find_lucas(5) == 5\nassert find_lucas(6) == 8\nassert find_lucas(7) == 13\nassert find_lucas(8) == 21\n```",
+        "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    return result\n\n# Test cases to verify the correctness of the function\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\n\n# Additional tests to ensure the function works correctly with different inputs\ndef find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        a, b = 2, 1\n        for _ in range(2, n + 1):\n            a, b = b, a + b\n        return b\n\n# Test cases to verify the correctness of the find_lucas function\nassert find_lucas(4) == 3\nassert find_lucas(5) == 5\nassert find_lucas(6) == 8\nassert find_lucas(7) == 13\nassert find_lucas(8) == 21\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == (0, 2, 2, 3)",
+  "sample_keys": [
+    "# Edge case with zero divisor\nassert division_elements((10, 4, 6, 9), (5, 2, 0, 3)) == ValueError(\"Cannot divide by zero\")\n\n# Edge case with negative numbers\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\n\n# Test with empty tuple\nassert division_elements((), ()) == ()\n\n# Test with tuples of same length\nassert division_elements((1, 2, 3), (4, 5, 6)) == (0.25, 0.4, 0.5)\n\n# Test with tuples of different lengths (last element is ignored)\nassert division_elements((1, 2), (3, 4, 5)) == (0.3333333333333333, 0.5)",
+    "# Check with empty tuples\nassert division_elements((), ()) == ()\n\n# Check with non-zero divisors\nassert division_elements((10, 4), (2, 2)) == (5.0, 2.0)\n\n# Check with same elements\nassert division_elements((10, 10), (2, 2)) == (5.0, 5.0)\n\n# Check with different lengths\nassert division_elements((10, 4, 6), (2, 2)) == (5.0, 2.0, 3.0)\n\n# Check with zero elements\nassert division_elements((0, 0), (2, 2)) == (0.0, 0.0)",
+    "assert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((0, 2, 3), (0, 2, 3)) == (0, 1, 1)\nassert division_elements((-10, -5, 0), (-5, 2, 2)) == (2, -2.5, 0)\nassert division_elements((5, 0), (5, 0)) == (1, 0)\nassert division_elements((10, 10, 10, 10), (1, 1, 1, 1)) == (10, 10, 10, 10)",
+    "assert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)  # Correct assertion passed\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)  # Another correct assertion passed\nassert division_elements((0, 0, 0, 0), (0, 0, 0, 0)) == (0, 0, 0, 0)  # Both tuples have zeros, so the result is also zero\nassert division_elements((-10, -4, -6, -9), (2, 0, 3, 0)) == (-5, 0, -2, 0)  # One of the tuples has zeros, resulting in division by zero which raises an exception, but here we ignore it and return zeros\nassert division_elements((10, 4, 6, 9), (0, 0, 0, 0)) == (None, None, None, None)  # One of the tuples has zeros, thus division by zero is undefined and we return None in place of the result",
+    "# Edge case 1: Zero denominator in one of the tuples\nassert division_elements((10, 0, 6, 9), (5, 2, 3, 3)) == (2.0, float('inf'), 2.0, 3)\n\n# Edge case 2: Empty tuple in one of the tuples\nassert division_elements((10,), (2, 3, 3)) == (5.0,)\n\n# Edge case 3: Negative numbers in both tuples\nassert division_elements((-10, -2, -4, -8), (-1, 1, 1, 1)) == (10.0, -2.0, -4.0, -8.0)\n\n# Edge case 4: One tuple is longer than the other\nassert division_elements((10, 4, 6, 9, 10), (5, 2)) == (2.0, 2.0, 2.0, 3.0)\n\n# Edge case 5: Both tuples are empty\nassert division_elements((), ()) == ()"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2249.0,
+    "small_out": 612.0,
+    "small_s": 13.281711839023046
+  },
+  "calls_plus": {
+    "small_in": 1860.0,
+    "small_out": 363.0,
+    "small_s": 7.628378555033123,
+    "large_in": 198.0,
+    "large_out": 171.0,
+    "large_s": 3.7650958859885577
+  },
+  "calls_samples": {
+    "small_in": 990.0,
+    "small_out": 1085.0,
+    "small_s": 17.96896850297344
+  }
+}

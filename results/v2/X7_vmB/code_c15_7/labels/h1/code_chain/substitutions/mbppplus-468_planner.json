@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-468",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `max_product` that takes a list of integers as input.\n2. Initialize a variable `n` to store the length of the input list.\n3. Create a list `dp` of the same length as the input list, where each element is initialized to 0. This list will store the maximum product ending at each index.\n4. Iterate through the input list using a for loop. For each element, iterate through all previous elements to find the longest increasing subsequence ending at the current element and calculate the product.\n5. Return the maximum value from the `dp` list as the result.",
+  "reference_key": null,
+  "final_key_plus": "def max_product(nums):\n    if not nums:\n        raise ValueError(\"max() arg is an empty sequence\")\n    \n    n = len(nums)\n    dp = [0] * n\n    for i in range(n):\n        for j in range(i):\n            if nums[i] > nums[j]:\n                dp[i] = max(dp[i], dp[j] * nums[i])\n    return max(dp)",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([-1, -2, -3, -4, -5]) == 120\nassert max_product([]) == 0\nassert max_product([0, 0, 0]) == 0\nassert max_product([10, 20, 30, 40, 50]) == 120000\n```",
+    "coder": "```python\ndef max_product(nums):\n    n = len(nums)\n    dp = [0] * n\n    for i in range(n):\n        for j in range(i):\n            if nums[i] > nums[j]:\n                dp[i] = max(dp[i], dp[j] * nums[i])\n    return max(dp)\n```",
+    "verifier": "PICK: B\n\n```python\ndef max_product(nums):\n    if not nums:\n        raise ValueError(\"max() arg is an empty sequence\")\n    \n    n = len(nums)\n    dp = [0] * n\n    for i in range(n):\n        for j in range(i):\n            if nums[i] > nums[j]:\n                dp[i] = max(dp[i], dp[j] * nums[i])\n    return max(dp)\n```",
+    "fixer": "```python\ndef max_product(nums):\n    if not nums:\n        raise ValueError(\"max() arg is an empty sequence\")\n    \n    n = len(nums)\n    dp = [0] * n\n    for i in range(n):\n        for j in range(i):\n            if nums[i] > nums[j]:\n                dp[i] = max(dp[i], dp[j] * nums[i])\n    return max(dp)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_integer` that takes one parameter: `lst`.\n2. Initialize a counter variable `count` to zero.\n3. Iterate over each element in the input list `lst`.\n4. For each element, check if it is an instance of the built-in `int` type using the `isinstance()` function.\n5. If the element is an integer, increment the `count` by one.\n6. After iterating through all elements, return the value of `count`.\n\nThis approach ensures that we correctly count only the integer elements in the list.",
+      "quality": 0.0,
+      "final_key": "def max_product(lst):\n    count = 0\n    for i in lst:\n        if isinstance(i, int):\n            count += 1\n    return count\n\n# Test cases\nassert max_product([3, 100, 4, 5, 150, 6]) == 3000\nassert max_product([4, 42, 55, 68, 80]) == 50265600\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2460\nassert count_integer([3, 100, 4, 5, 150, 6]) == 6\nassert count_integer([]) == 0\nassert count_integer([1, 2, 3, 4, 5]) == 5\nassert count_integer([-1, -2, -3, -4, -5]) == 5\nassert count_integer([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 10",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_integer([3, 100, 4, 5, 150, 6]) == 6\nassert count_integer([]) == 0\nassert count_integer([1, 2, 3, 4, 5]) == 5\nassert count_integer([-1, -2, -3, -4, -5]) == 5\nassert count_integer([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 10\n```",
+        "coder": "```python\ndef count_integer(lst):\n    count = 0\n    for i in lst:\n        if isinstance(i, int):\n            count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_product(lst):\n    count = 0\n    for i in lst:\n        if isinstance(i, int):\n            count += 1\n    return count\n\n# Test cases\nassert max_product([3, 100, 4, 5, 150, 6]) == 3000\nassert max_product([4, 42, 55, 68, 80]) == 50265600\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2460\nassert count_integer([3, 100, 4, 5, 150, 6]) == 6\nassert count_integer([]) == 0\nassert count_integer([1, 2, 3, 4, 5]) == 5\nassert count_integer([-1, -2, -3, -4, -5]) == 5\nassert count_integer([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 10\n```",
+        "fixer": "```python\ndef max_product(lst):\n    count = 0\n    for i in lst:\n        if isinstance(i, int):\n            count += 1\n    return count\n\n# Test cases\nassert max_product([3, 100, 4, 5, 150, 6]) == 3000\nassert max_product([4, 42, 55, 68, 80]) == 50265600\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2460\nassert count_integer([3, 100, 4, 5, 150, 6]) == 6\nassert count_integer([]) == 0\nassert count_integer([1, 2, 3, 4, 5]) == 5\nassert count_integer([-1, -2, -3, -4, -5]) == 5\nassert count_integer([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 10\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `max_product` that takes a list of integers as input.\n2. Initialize a variable `n` to store the length of the input list.\n3. Create a list `dp` of the same length as the input list, where each element is initialized to 0. This list will store the maximum product ending at each index.\n4. Iterate through the input list using a for loop. For each element, iterate through all previous elements to find the longest decreasing subsequence ending at the current element and calculate the product.\n5. Return the maximum value from the `dp` list as the result.",
+      "quality": 0.0,
+      "final_key": "def max_product(nums):\n    if not nums:\n        raise ValueError(\"max() arg is an empty sequence\")\n    \n    n = len(nums)\n    dp = [0] * n\n    for i in range(n):\n        for j in range(i):\n            if nums[j] < nums[i]:\n                dp[i] = max(dp[i], dp[j] * nums[i])\n    return max(dp)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([-1, -2, -3, -4, -5]) == 120\nassert max_product([]) == 0\nassert max_product([0, 0, 0]) == 0\nassert max_product([10, 20, 30, 40, 50]) == 120000\n```",
+        "coder": "```python\ndef max_product(nums):\n    n = len(nums)\n    dp = [0] * n\n    for i in range(n):\n        for j in range(i):\n            if nums[j] < nums[i]:\n                dp[i] = max(dp[i], dp[j] * nums[i])\n    return max(dp)\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_product(nums):\n    if not nums:\n        raise ValueError(\"max() arg is an empty sequence\")\n    \n    n = len(nums)\n    dp = [0] * n\n    for i in range(n):\n        for j in range(i):\n            if nums[j] < nums[i]:\n                dp[i] = max(dp[i], dp[j] * nums[i])\n    return max(dp)\n```",
+        "fixer": "```python\ndef max_product(nums):\n    if not nums:\n        raise ValueError(\"max() arg is an empty sequence\")\n    \n    n = len(nums)\n    dp = [0] * n\n    for i in range(n):\n        for j in range(i):\n            if nums[j] < nums[i]:\n                dp[i] = max(dp[i], dp[j] * nums[i])\n    return max(dp)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two pointers, `left` and `right`, to the start and end of the array respectively.\n2. While `left` is less than or equal to `right`, calculate the middle index `mid`.\n3. If the element at `mid` is equal to the target, update the result to `mid` and move the `left` pointer one step to the right.\n4. If the element at `mid` is greater than the target, move the `right` pointer one step to the left.\n5. If the loop exits without finding the target, return -1 as the element was not found.",
+      "quality": 0.0,
+      "final_key": "def max_product(nums):\n    if not nums:\n        return -1\n    \n    left, right = 0, len(nums) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if nums[mid] == mid:\n            result = mid\n            left += 1\n        elif nums[mid] > mid:\n            right = mid - 1\n        else:\n            left = mid + 1\n    \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_product([]) == -1\nassert max_product([1]) == 1\nassert max_product([-1, -2, -3]) == -1\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([5, 4, 3, 2, 1]) == 1\n```",
+        "coder": "```python\ndef max_product(nums):\n    if not nums:\n        return -1\n    \n    left, right = 0, len(nums) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if nums[mid] == mid:\n            result = mid\n            left += 1\n        elif nums[mid] > mid:\n            right = mid - 1\n        else:\n            left = mid + 1\n    \n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_product(nums):\n    if not nums:\n        return -1\n    \n    left, right = 0, len(nums) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if nums[mid] == mid:\n            result = mid\n            left += 1\n        elif nums[mid] > mid:\n            right = mid - 1\n        else:\n            left = mid + 1\n    \n    return result\n```",
+        "fixer": "```python\ndef max_product(nums):\n    if not nums:\n        return -1\n    \n    left, right = 0, len(nums) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if nums[mid] == mid:\n            result = mid\n            left += 1\n        elif nums[mid] > mid:\n            right = mid - 1\n        else:\n            left = mid + 1\n    \n    return result\n\n# Test cases\nassert max_product([3, 100, 4, 5, 150, 6]) == 3000\nassert max_product([4, 42, 55, 68, 80]) == 50265600\nassert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2460\nassert max_product([]) == -1\nassert max_product([1]) == 1\nassert max_product([-1, -2, -3]) == -1\nassert max_product([1, 2, 3, 4, 5]) == 120\nassert max_product([5, 4, 3, 2, 1]) == 1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far",
+  "sample_keys": [
+    "def max_product(arr):\n    def max_subseq_product(arr, i, dp):\n        if i == len(arr):  # Base case: no more elements to consider\n            return 1\n        \n        # If already computed, return memoized result\n        if dp[i] != -1:\n            return dp[i]\n        \n        # Max product including arr[i]\n        include = arr[i] * max_subseq_product(arr, i + 1, dp)\n        \n        # Max product excluding arr[i]\n        exclude = max_subseq_product(arr, i + 1, dp)\n        \n        # Store the result in memoization table\n        dp[i] = max(include, exclude)\n        return dp[i]\n\n    # Initialize DP table with -1 for memoization\n    n = len(arr)\n    dp = [-1] * n\n    \n    # Calculate the maximum product starting from each element\n    for i in range(n):\n        dp[i] = max_subseq_product(arr, i, dp)\n    \n    # The overall maximum product will be in the dp table\n    return dp[0]",
+    "def max_product(arr):\n    n = len(arr)\n    min_val = arr[0]\n    max_prod = arr[0]\n\n    for i in range(1, n):\n        if arr[i] < 0:\n            min_val, max_val = max_val, min_val\n\n        max_val = max(arr[i], max_val * arr[i])\n        min_val = min(arr[i], min_val * arr[i])\n\n        max_prod = max(max_prod, max_val)\n\n    return max_prod",
+    "def max_product(arr):\n    max_prod = cur_max = arr[0]\n    for i in range(1, len(arr)):\n        if arr[i] > cur_max:\n            cur_max = arr[i]\n        else:\n            cur_max = arr[i]\n        max_prod = max(max_prod, cur_max * sum(arr[:i+1]))\n    return max_prod"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2065.0,
+    "small_out": 645.0,
+    "small_s": 13.175019225018332
+  },
+  "calls_plus": {
+    "large_in": 131.0,
+    "large_out": 130.0,
+    "large_s": 2.8798829310107976,
+    "small_in": 1737.0,
+    "small_out": 358.0,
+    "small_s": 5.472597892017802
+  },
+  "calls_samples": {
+    "small_in": 6905.0,
+    "small_out": 2345.0,
+    "small_s": 41.40347203909187
+  }
+}

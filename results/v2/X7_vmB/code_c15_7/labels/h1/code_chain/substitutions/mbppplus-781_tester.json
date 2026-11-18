@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-781",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert count_divisors(6) == True\nassert count_divisors(8) == False\nassert count_divisors(13) == True\nassert count_divisors(1) == True\nassert count_divisors(0) == True\n```",
+  "reference_key": "assert count_divisors(6) == True\nassert count_divisors(8) == False\nassert count_divisors(13) == True\nassert count_divisors(1) == True\nassert count_divisors(0) == True",
+  "final_key_plus": "def count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\n# Test cases\nassert count_divisors(10) == True\nassert not count_divisors(100) == True\nassert count_divisors(125) == True\nassert count_divisors(6) == True\nassert count_divisors(8) == False\nassert count_divisors(13) == True\nassert count_divisors(1) == True\nassert count_divisors(0) == True",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\n# Test cases\nassert count_divisors(10) == True\nassert not count_divisors(100) == True\nassert count_divisors(125) == True\nassert count_divisors(6) == True\nassert count_divisors(8) == False\nassert count_divisors(13) == True\nassert count_divisors(1) == True\nassert count_divisors(0) == True\n```",
+    "fixer": "```python\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\n# Test cases\nassert count_divisors(10) == True\nassert not count_divisors(100) == True\nassert count_divisors(125) == True\nassert count_divisors(6) == True\nassert count_divisors(8) == False\nassert count_divisors(13) == True\nassert count_divisors(1) == True\nassert count_divisors(0) == True\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert count_divisors(1) == True  # Edge case: 1 has exactly one divisor 1, which is odd.\nassert count_divisors(8) == False  # Edge case: 8 has four divisors 1, 2, 4, 8 (even).\nassert count_divisors(26) == True  # Typical case: 26 has exactly two divisors 1, 26 (even).\nassert count_divisors(144) == False # Typical case: 144 has eight divisors (even).\nassert count_divisors(20) == True  # Typical case: 20 has four divisors 1, 2, 4, 10 (even).",
+      "reference_key": "assert count_divisors(6) == True\nassert count_divisors(8) == False\nassert count_divisors(13) == True\nassert count_divisors(1) == True\nassert count_divisors(0) == True",
+      "key_differs": true,
+      "text": "```python\nassert count_divisors(1) == True  # Edge case: 1 has exactly one divisor 1, which is odd.\nassert count_divisors(8) == False  # Edge case: 8 has four divisors 1, 2, 4, 8 (even).\nassert count_divisors(26) == True  # Typical case: 26 has exactly two divisors 1, 26 (even).\nassert count_divisors(144) == False # Typical case: 144 has eight divisors (even).\nassert count_divisors(20) == True  # Typical case: 20 has four divisors 1, 2, 4, 10 (even).\n```",
+      "quality": 0.0,
+      "final_key": "def count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\n# Test cases\nassert count_divisors(10) == True\nassert not count_divisors(100) == True\nassert count_divisors(125) == True\nassert count_divisors(1) == False  # Edge case: 1 has exactly one divisor 1, which is odd. -> AssertionError \nassert count_divisors(8) == False  # Edge case: 8 has four divisors 1, 2, 4, 8 (even). -> AssertionError \nassert count_divisors(26) == True  # Typical case: 26 has exactly two divisors 1, 26 (even).\nassert count_divisors(144) == False # Typical case: 144 has eight divisors (even).\nassert count_divisors(20) == True  # Typical case: 20 has four divisors 1, 2, 4, 10 (even).",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\n# Test cases\nassert count_divisors(10) == True\nassert not count_divisors(100) == True\nassert count_divisors(125) == True\nassert count_divisors(1) == False  # Edge case: 1 has exactly one divisor 1, which is odd. -> AssertionError \nassert count_divisors(8) == False  # Edge case: 8 has four divisors 1, 2, 4, 8 (even). -> AssertionError \nassert count_divisors(26) == True  # Typical case: 26 has exactly two divisors 1, 26 (even).\nassert count_divisors(144) == False # Typical case: 144 has eight divisors (even).\nassert count_divisors(20) == True  # Typical case: 20 has four divisors 1, 2, 4, 10 (even).\n```",
+        "fixer": "```python\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\n# Test cases\nassert count_divisors(10) == True\nassert not count_divisors(100) == True\nassert count_divisors(125) == True\nassert count_divisors(1) == False  # Edge case: 1 has exactly one divisor 1, which is odd. -> AssertionError \nassert count_divisors(8) == False  # Edge case: 8 has four divisors 1, 2, 4, 8 (even). -> AssertionError \nassert count_divisors(26) == True  # Typical case: 26 has exactly two divisors 1, 26 (even).\nassert count_divisors(144) == False # Typical case: 144 has eight divisors (even).\nassert count_divisors(20) == True  # Typical case: 20 has four divisors 1, 2, 4, 10 (even).\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass DivisorChecker(unittest.TestCase):\n    def test_edge_case(self):\n        self.assertTrue(count_divisors(1) == False)\n\n    def test_typical_cases(self):\n        self.assertTrue(count_divisors(2) == True)\n        self.assertTrue(count_divisors(3) == True)\n        self.assertTrue(count_divisors(4) == True)\n        self.assertFalse(count_divisors(5) == False)\n\n    def test_large_number(self):\n        self.assertTrue(count_divisors(100) == True)\n\n    def test_single_divisor(self):\n        self.assertTrue(count_divisors(1) == False)\n\nif __name__ == '__main__':\n    unittest.main()",
+      "reference_key": "assert count_divisors(6) == True\nassert count_divisors(8) == False\nassert count_divisors(13) == True\nassert count_divisors(1) == True\nassert count_divisors(0) == True",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass DivisorChecker(unittest.TestCase):\n    def test_edge_case(self):\n        self.assertTrue(count_divisors(1) == False)\n\n    def test_typical_cases(self):\n        self.assertTrue(count_divisors(2) == True)\n        self.assertTrue(count_divisors(3) == True)\n        self.assertTrue(count_divisors(4) == True)\n        self.assertFalse(count_divisors(5) == False)\n\n    def test_large_number(self):\n        self.assertTrue(count_divisors(100) == True)\n\n    def test_single_divisor(self):\n        self.assertTrue(count_divisors(1) == False)\n\nif __name__ == '__main__':\n    unittest.main()\n```",
+      "quality": 0.0,
+      "final_key": "def count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n```",
+        "fixer": "```python\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 2\nassert get_total_number_of_sequences(7, 6) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100",
+      "reference_key": "assert count_divisors(6) == True\nassert count_divisors(8) == False\nassert count_divisors(13) == True\nassert count_divisors(1) == True\nassert count_divisors(0) == True",
+      "key_differs": true,
+      "text": "```python\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 2\nassert get_total_number_of_sequences(7, 6) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100\n```",
+      "quality": 0.0,
+      "final_key": "def count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\n# Test cases\nassert count_divisors(10) == True\nassert not count_divisors(100) == False\nassert count_divisors(125) == True\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 2\nassert get_total_number_of_sequences(7, 6) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\n# Test cases\nassert count_divisors(10) == True\nassert not count_divisors(100) == False\nassert count_divisors(125) == True\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 2\nassert get_total_number_of_sequences(7, 6) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100\n```",
+        "fixer": "```python\ndef count_divisors(num):\n    divisor_count = 0\n    for i in range(1, num + 1):\n        if num % i == 0:\n            divisor_count += 1\n    return divisor_count % 2 == 0\n\n# Test cases\nassert count_divisors(10) == True\nassert not count_divisors(100) == False\nassert count_divisors(125) == True\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 2\nassert get_total_number_of_sequences(7, 6) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "assert count_divisors(2) == False\nassert count_divisors(3) == True\nassert count_divisors(4) == True\nassert count_divisors(5) == False\nassert count_divisors(6) == True",
+    "# Edge case: negative number\nassert count_divisors(-5) == False\n\n# Edge case: zero\nassert count_divisors(0) == True\n\n# Typical case: prime number\nassert count_divisors(7) == True\n\n# Typical case: composite number\nassert count_divisors(9) == False\n\n# Typical case: perfect square\nassert count_divisors(36) == False",
+    "assert count_divisors(4) == True\nassert count_divisors(9) == False\nassert count_divisors(12) == False\nassert count_divisors(17) == False\nassert count_divisors(18) == True",
+    "# Test case with typical number\nassert count_divisors(10) == True\n\n# Test case with prime number\nassert count_divisors(13) == False\n\n# Test case with perfect square\nassert count_divisors(16) == True\n\n# Test case with number with more than two distinct divisors\nassert count_divisors(21) == True\n\n# Test case with negative number\nassert count_divisors(-5) == False",
+    "assert count_divisors(6) == True  # 6 has 4 divisors (1, 2, 3, 6), which is even\nassert count_divisors(7) == False  # 7 has 2 divisors (1, 7), which is odd\nassert count_divisors(12) == True  # 12 has 6 divisors (1, 2, 3, 4, 6, 12), which is even\nassert count_divisors(1) == True   # 1 has 1 divisor (1), which is odd\nassert count_divisors(0) == True   # 0 has no divisors, according to the definition"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1464.0,
+    "small_out": 1063.0,
+    "small_s": 20.065649942989694
+  },
+  "calls_plus": {
+    "small_in": 1169.0,
+    "small_out": 493.0,
+    "small_s": 8.353673206001986,
+    "large_in": 194.0,
+    "large_out": 56.0,
+    "large_s": 1.6331750529934652
+  },
+  "calls_samples": {
+    "small_in": 970.0,
+    "small_out": 460.0,
+    "small_s": 9.735098339995602
+  }
+}

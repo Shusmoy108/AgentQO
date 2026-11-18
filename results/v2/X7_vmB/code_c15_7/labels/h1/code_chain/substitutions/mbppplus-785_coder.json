@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-785",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n```",
+  "reference_key": "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)",
+  "final_key_plus": "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.6,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert tuple_str_int(\"()\") == ()\nassert tuple_str_int(\"(10, 20, 30)\") == (10, 20, 30)\nassert tuple_str_int(\"(4, 5, 6, 7)\") == (4, 5, 6, 7)\nassert tuple_str_int(\"(8, 9, 10, 11, 12)\") == (8, 9, 10, 11, 12)\nassert tuple_str_int(\"(13, 14, 15, 16, 17, 18)\") == (13, 14, 15, 16, 17, 18)\n```",
+    "verifier": "PICK: A\n```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n```",
+    "fixer": "```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import re\n\ndef tuple_str_int(tuple_str):\n    numbers = re.findall(r'\\d+', tuple_str)\n    int_numbers = [int(num) for num in numbers]\n    return tuple(int_numbers)",
+      "reference_key": "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    numbers = re.findall(r'\\d+', tuple_str)\n    int_numbers = [int(num) for num in numbers]\n    return tuple(int_numbers)\n```",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef tuple_str_int(tuple_str):\n    numbers = re.findall(r'\\d+', tuple_str)\n    int_numbers = [int(num) for num in numbers]\n    return tuple(int_numbers)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_str_int(\"()\") == ()\nassert tuple_str_int(\"(10, 20, 30)\") == (10, 20, 30)\nassert tuple_str_int(\"(4, 5, 6, 7)\") == (4, 5, 6, 7)\nassert tuple_str_int(\"(8, 9, 10, 11, 12)\") == (8, 9, 10, 11, 12)\nassert tuple_str_int(\"(13, 14, 15, 16, 17, 18)\") == (13, 14, 15, 16, 17, 18)\n```",
+        "verifier": "PICK: A\n```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    numbers = re.findall(r'\\d+', tuple_str)\n    int_numbers = [int(num) for num in numbers]\n    return tuple(int_numbers)\n```",
+        "fixer": "```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    numbers = re.findall(r'\\d+', tuple_str)\n    int_numbers = [int(num) for num in numbers]\n    return tuple(int_numbers)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def is_num_decagonal(n):\n    # Calculate the nth decagonal number using the formula\n    decagonal_number = (5 * n**2 - 3 * n) // 2\n    # Return the calculated value\n    return decagonal_number",
+      "reference_key": "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)",
+      "key_differs": true,
+      "text": "```python\ndef is_num_decagonal(n):\n    # Calculate the nth decagonal number using the formula\n    decagonal_number = (5 * n**2 - 3 * n) // 2\n    # Return the calculated value\n    return decagonal_number\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_str_int(tuple_str):\n    # Convert the string representation of the tuple into a list of integers\n    int_list = [int(num) for num in tuple_str[1:-1].split(',')]\n    # Convert the list of integers back into a tuple\n    return tuple(int_list)\n\n# Test cases\nassert tuple_str_int(\"(7, 8, 9)\") == (7, 8, 9)\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6)\") == (4, 5, 6)\nassert tuple_str_int(\"(7, 81, 19)\") == (7, 81, 19)\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 6\nassert is_num_decagonal(3) == 15\nassert is_num_decagonal(4) == 28\nassert is_num_decagonal(5) == 45",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 6\nassert is_num_decagonal(3) == 15\nassert is_num_decagonal(4) == 28\nassert is_num_decagonal(5) == 45\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_str_int(tuple_str):\n    # Convert the string representation of the tuple into a list of integers\n    int_list = [int(num) for num in tuple_str[1:-1].split(',')]\n    # Convert the list of integers back into a tuple\n    return tuple(int_list)\n\n# Test cases\nassert tuple_str_int(\"(7, 8, 9)\") == (7, 8, 9)\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6)\") == (4, 5, 6)\nassert tuple_str_int(\"(7, 81, 19)\") == (7, 81, 19)\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 6\nassert is_num_decagonal(3) == 15\nassert is_num_decagonal(4) == 28\nassert is_num_decagonal(5) == 45\n```",
+        "fixer": "```python\ndef tuple_str_int(tuple_str):\n    # Convert the string representation of the tuple into a list of integers\n    int_list = [int(num) for num in tuple_str[1:-1].split(',')]\n    # Convert the list of integers back into a tuple\n    return tuple(int_list)\n\n# Test cases\nassert tuple_str_int(\"(7, 8, 9)\") == (7, 8, 9)\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6)\") == (4, 5, 6)\nassert tuple_str_int(\"(7, 81, 19)\") == (7, 81, 19)\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 6\nassert is_num_decagonal(3) == 15\nassert is_num_decagonal(4) == 28\nassert is_num_decagonal(5) == 45\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num",
+      "reference_key": "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)",
+      "key_differs": true,
+      "text": "```python\ndef armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = 0\n    for digit in num_str:\n        sum_of_cubes += int(digit) ** len(num_str)\n    return sum_of_cubes == num\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_str_int(tuple_str):\n    num_list = tuple(map(int, tuple_str[1:-1].split(',')))\n    return num_list\n\n# Test cases\nassert tuple_str_int(\"(7, 8, 9)\") == (7, 8, 9)\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6)\") == (4, 5, 6)\nassert tuple_str_int(\"(7, 81, 19)\") == (7, 81, 19)\nassert tuple_str_int(\"123\") == 1 + 2**2 + 3**3\nassert tuple_str_int(\"456\") == 4**3 + 5**3 + 6**3\nassert tuple_str_int(\"789\") == 7**3 + 8**3 + 9**3\nassert tuple_str_int(\"0\") == 0**3\nassert tuple_str_int(\"-1\") == -1**3",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_str_int(\"123\") == 1 + 2**2 + 3**3\nassert tuple_str_int(\"456\") == 4**3 + 5**3 + 6**3\nassert tuple_str_int(\"789\") == 7**3 + 8**3 + 9**3\nassert tuple_str_int(\"0\") == 0**3\nassert tuple_str_int(\"-1\") == -1**3\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_str_int(tuple_str):\n    num_list = tuple(map(int, tuple_str[1:-1].split(',')))\n    return num_list\n\n# Test cases\nassert tuple_str_int(\"(7, 8, 9)\") == (7, 8, 9)\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6)\") == (4, 5, 6)\nassert tuple_str_int(\"(7, 81, 19)\") == (7, 81, 19)\nassert tuple_str_int(\"123\") == 1 + 2**2 + 3**3\nassert tuple_str_int(\"456\") == 4**3 + 5**3 + 6**3\nassert tuple_str_int(\"789\") == 7**3 + 8**3 + 9**3\nassert tuple_str_int(\"0\") == 0**3\nassert tuple_str_int(\"-1\") == -1**3\n```",
+        "fixer": "```python\ndef tuple_str_int(tuple_str):\n    num_list = tuple(map(int, tuple_str[1:-1].split(',')))\n    return num_list\n\n# Test cases\nassert tuple_str_int(\"(7, 8, 9)\") == (7, 8, 9)\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6)\") == (4, 5, 6)\nassert tuple_str_int(\"(7, 81, 19)\") == (7, 81, 19)\nassert tuple_str_int(\"123\") == 1 + 2**2 + 3**3\nassert tuple_str_int(\"456\") == 4**3 + 5**3 + 6**3\nassert tuple_str_int(\"789\") == 7**3 + 8**3 + 9**3\nassert tuple_str_int(\"0\") == 0**3\nassert tuple_str_int(\"-1\") == -1**3\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)",
+  "sample_keys": [
+    "import re\n\ndef tuple_str_int(tuple_str):\n    numbers = re.findall(r'\\d+', tuple_str)\n    int_numbers = [int(num) for num in numbers]\n    return tuple(int_numbers)",
+    "import re\n\ndef tuple_str_int(tuple_str):\n    numbers = re.findall(r'\\d+', tuple_str)\n    int_numbers = [int(num) for num in numbers]\n    return tuple(int_numbers)",
+    "import re\nfrom typing import Tuple\n\ndef tuple_str_int(tuple_str: str) -> Tuple[int]:\n    \"\"\" Converts a string representation of a tuple into an actual tuple of integers.\n\n    Args:\n        tuple_str (str): A string representing a tuple of integers.\n\n    Returns:\n        Tuple[int]: A tuple containing the integers extracted from the input string.\n    \"\"\"\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple",
+    "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)",
+    "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1884.0,
+    "small_out": 558.0,
+    "small_s": 11.492166983982315
+  },
+  "calls_plus": {
+    "small_in": 1600.0,
+    "small_out": 488.0,
+    "small_s": 10.119166085962206,
+    "large_in": 284.0,
+    "large_out": 70.0,
+    "large_s": 1.5170315760187805
+  },
+  "calls_samples": {
+    "small_in": 1420.0,
+    "small_out": 360.0,
+    "small_s": 5.873886504006805
+  }
+}

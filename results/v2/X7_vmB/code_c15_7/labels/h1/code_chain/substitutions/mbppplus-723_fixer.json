@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-723",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef count_same_pair(list1, list2):\n    counter = 0\n    for i in range(min(len(list1), len(list2))):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n```",
+  "reference_key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(min(len(list1), len(list2))):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+  "final_key_plus": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(min(len(list1), len(list2))):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef count_same_pair(list1, list2):\n    counter = 0\n    for i in range(min(len(list1), len(list2))):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+      "reference_key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(min(len(list1), len(list2))):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+      "key_differs": true,
+      "text": "```python\ndef count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n```",
+      "quality": 1.0,
+      "final_key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n\n# Test assertions (including the failing case)\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[2, 2, 3, 1, 2, 6, 7, 9])==4\nassert count_same_pair([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8],[2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])==11\nassert count_same_pair([2, 4, -6, -9, 11, -12, 14, -5, 17],[2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])==1\nassert count_same_pair([0, 1, 1, 2],[0, 1, 2, 2])==3\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8, 9])==9\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([], [])==0\nassert count_same_pair([1], [1])==1",
+      "reference_key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(min(len(list1), len(list2))):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+      "key_differs": true,
+      "text": "Sure! Here is the modified code that passes all the tests:\n\n```python\ndef count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n\n# Test assertions (including the failing case)\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[2, 2, 3, 1, 2, 6, 7, 9])==4\nassert count_same_pair([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8],[2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])==11\nassert count_same_pair([2, 4, -6, -9, 11, -12, 14, -5, 17],[2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])==1\nassert count_same_pair([0, 1, 1, 2],[0, 1, 2, 2])==3\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8, 9])==9\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([], [])==0\nassert count_same_pair([1], [1])==1\n```",
+      "quality": 0.0,
+      "final_key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n\n# Test assertions (including the failing case)\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8, 9])==9\nassert count_same_pair([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8],[2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])==11\nassert count_same_pair([2, 4, -6, -9, 11, -12, 14, -5, 17],[2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])==1\nassert count_same_pair([0, 1, 1, 2],[0, 1, 2, 2])==3\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8, 9])==9\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([], [])==0\nassert count_same_pair([1], [1])==1",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n\n# Test assertions (including the failing case)\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8, 9])==9\nassert count_same_pair([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8],[2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])==11\nassert count_same_pair([2, 4, -6, -9, 11, -12, 14, -5, 17],[2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])==1\nassert count_same_pair([0, 1, 1, 2],[0, 1, 2, 2])==3\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8, 9])==9\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8],[1, 2, 3, 4, 5, 6, 7, 8])==8\nassert count_same_pair([], [])==0\nassert count_same_pair([1], [1])==1\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+      "reference_key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(min(len(list1), len(list2))):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+      "quality": 1.0,
+      "final_key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+  "sample_keys": [
+    "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+    "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter",
+    "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n\n# Test results\nprint(count_same_pair([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9])) == 4\nprint(count_same_pair([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8], [2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])) == 11\nprint(count_same_pair([2, 4, -6, -9, 11, -12, 14, -5, 17], [2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8])) == 1\nprint(count_same_pair([0, 1, 1, 2], [0, 1, 2, 2])) == 3\nprint(count_same_pair([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9])) == 4\nprint(count_same_pair([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9])) == 9\nprint(count_same_pair([], [])) == 0\nprint(count_same_pair([1], [1])) == 1",
+    "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter\n\n# Test results\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9]) == 4\nassert count_same_pair([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8], [2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8]) == 11\nassert count_same_pair([2, 4, -6, -9, 11, -12, 14, -5, 17], [2, 1, 2, -1, -5, 6, 4, -3, -2, 3, 4, 6, 8]) == 1\nassert count_same_pair([0, 1, 1, 2], [0, 1, 2, 2]) == 3\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9]) == 4\nassert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9]) == 8\nfail assert count_same_pair([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9]) == 9 -> AssertionError\nassert count_same_pair([], []) == 0\nassert count_same_pair([1], [1]) == 1",
+    "def count_same_pair(list1, list2):\n    counter = 0\n    for i in range(len(list1)):\n        if list1[i] == list2[i]:\n            counter += 1\n    return counter"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2488.0,
+    "small_out": 472.0,
+    "small_s": 9.656914452993078
+  },
+  "calls_plus": {
+    "small_in": 1819.0,
+    "small_out": 426.0,
+    "small_s": 8.418573618953815,
+    "large_in": 674.0,
+    "large_out": 56.0,
+    "large_s": 1.2204907140112482
+  },
+  "calls_samples": {
+    "small_in": 3370.0,
+    "small_out": 1110.0,
+    "small_s": 20.91059162199963
+  }
+}

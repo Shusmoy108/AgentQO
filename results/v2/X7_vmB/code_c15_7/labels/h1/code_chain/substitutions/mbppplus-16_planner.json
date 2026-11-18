@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-16",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `text_lowercase_underscore` that takes one parameter, `input_string`.\n2. Use a regular expression pattern to match strings that consist solely of lowercase letters joined by underscores.\n3. Compile the regular expression pattern for efficient reuse.\n4. Apply the compiled pattern to the `input_string` using the `match()` method to check if the entire string matches the pattern.\n5. Return `True` if there is a match, indicating the string follows the specified format; otherwise, return `False`.",
+  "reference_key": null,
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert text_lowercase_underscore(\"aab_cbbbc\")==(True)\nassert text_lowercase_underscore(\"aab_cbbbc_\")==(False)\nassert text_lowercase_underscore(\"_aab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_a\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_aa\")==(False)\n```",
+    "coder": "```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    # Regular expression pattern to match lowercase letters joined by underscores\n    pattern = r'^[a-z]+_[a-z]+$'\n    \n    # Compile the regular expression pattern\n    regex = re.compile(pattern)\n    \n    # Check if the entire string matches the pattern\n    if regex.match(input_string):\n        return True\n    else:\n        return False\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    # Regular expression pattern to match lowercase letters joined by underscores\n    pattern = r'^[a-z]+_[a-z]+$'\n    \n    # Compile the regular expression pattern\n    regex = re.compile(pattern)\n    \n    # Check if the entire string matches the pattern\n    if regex.match(input_string):\n        return True\n    else:\n        return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `wind_chill` that takes two parameters: `wind_velocity` (in km/h) and `temperature` (in Celsius).\n3. Calculate the wind chill index using the formula: `wci = 13.12 + 0.6215 * T - 11.37 * V^0.16 + 0.3965 * T * V^0.16`.\n4. Round the result to the nearest integer.\n5. Return the calculated wind chill index.",
+      "quality": 0.0,
+      "final_key": "def text_lowercase_underscore(input_string):\n    return '_' in input_string and input_string.islower()",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert text_lowercase_underscore(\"aab_cbbbc\")==(True)\nassert text_lowercase_underscore(\"Aaab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"_aab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_a\")==(False)\n```",
+        "coder": "```python\ndef text_lowercase_underscore(input_string):\n    return '_' in input_string and input_string.islower()\n```",
+        "verifier": "PICK: A\n\n```python\ndef text_lowercase_underscore(input_string):\n    return '_' in input_string and input_string.islower()\n```",
+        "fixer": "```python\ndef text_lowercase_underscore(input_string):\n    return '_' in input_string and input_string.islower()\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `text_lowercase_underscore` that takes one parameter, `input_string`.\n2. Use a regular expression pattern to match strings that consist solely of lowercase letters joined by underscores.\n3. Compile the regular expression pattern for efficient reuse.\n4. Apply the compiled pattern to the `input_string` using the `search()` method to find the first occurrence of the pattern within the string.\n5. If the result of `search()` is not `None`, it means the string contains a match, indicating the string follows the specified format; otherwise, return `False`.",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef text_lowercase_underscore(input_string):\n    # Regular expression pattern to match lowercase letters joined by underscores\n    pattern = r'^[a-z]+_[a-z]+$'\n    \n    # Compile the regular expression pattern\n    regex = re.compile(pattern)\n    \n    # Search for the pattern in the input string\n    match = regex.search(input_string)\n    \n    # Return True if a match is found, False otherwise\n    return bool(match)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert text_lowercase_underscore(\"aab_cbbbc\")==(True)\nassert text_lowercase_underscore(\"aab_cbbbc_\")==(False)\nassert text_lowercase_underscore(\"_aab_cbbbc\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_a\")==(False)\nassert text_lowercase_underscore(\"aab_cbbbc_aa\")==(False)\n```",
+        "coder": "```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    # Regular expression pattern to match lowercase letters joined by underscores\n    pattern = r'^[a-z]+_[a-z]+$'\n    \n    # Compile the regular expression pattern\n    regex = re.compile(pattern)\n    \n    # Search for the pattern in the input string\n    match = regex.search(input_string)\n    \n    # Return True if a match is found, False otherwise\n    return bool(match)\n```",
+        "verifier": "PICK: A\n```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    # Regular expression pattern to match lowercase letters joined by underscores\n    pattern = r'^[a-z]+_[a-z]+$'\n    \n    # Compile the regular expression pattern\n    regex = re.compile(pattern)\n    \n    # Search for the pattern in the input string\n    match = regex.search(input_string)\n    \n    # Return True if a match is found, False otherwise\n    return bool(match)\n```",
+        "fixer": "```python\nimport re\n\ndef text_lowercase_underscore(input_string):\n    # Regular expression pattern to match lowercase letters joined by underscores\n    pattern = r'^[a-z]+_[a-z]+$'\n    \n    # Compile the regular expression pattern\n    regex = re.compile(pattern)\n    \n    # Search for the pattern in the input string\n    match = regex.search(input_string)\n    \n    # Return True if a match is found, False otherwise\n    return bool(match)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `dog_age` that takes one parameter, `human_years`.\n2. Check if `human_years` is less than or equal to 0. If true, raise a ValueError with the message \"Age cannot be negative\".\n3. Initialize a variable `dog_years` to 0.\n4. If `human_years` is greater than or equal to 1, add 10 to `dog_years`.\n5. If `human_years` is greater than or equal to 2, add 7 to `dog_years`.\n6. Return the value of `dog_years`.",
+      "quality": 0.0,
+      "final_key": "def text_lowercase_underscore(input_string):\n    return '_' in input_string and all(char.islower() for char in input_string.split('_'))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert text_lowercase_underscore(\"aab_cbbbc\")==(True)\nassert text_lowercase_underscore(\"a_b_c\")==(True)\nassert text_lowercase_underscore(\"A_B_C\")==(False)\nassert text_lowercase_underscore(\"\")==(False)\nassert text_lowercase_underscore(\"_\")==(False)\n```",
+        "coder": "```python\ndef dog_age(human_years):\n    if human_years < 0:\n        raise ValueError(\"Age cannot be negative\")\n    dog_years = 0\n    if human_years >= 1:\n        dog_years += 10\n    if human_years >= 2:\n        dog_years += 7\n    return dog_years\n```",
+        "verifier": "PICK: B\n\n```python\ndef text_lowercase_underscore(input_string):\n    return '_' in input_string and all(char.islower() for char in input_string.split('_'))\n```",
+        "fixer": "```python\ndef text_lowercase_underscore(input_string):\n    return '_' in input_string and all(char.islower() for char in input_string.split('_'))\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "import re\n\ndef text_lowercase_underscore(input_string):\n    pattern = r'^[a-z]+_[a-z]+$'\n    if re.match(pattern, input_string):\n        return True\n    else:\n        return False",
+  "sample_keys": [
+    "def text_lowercase_underscore(text):\n    words = text.split('_')\n    for word in words:\n        if not word[0].islower():\n            return False\n    return True",
+    "def contains_lower_underscore(text):\n    underscore_list = []\n    for char in text:\n        if char.islower():\n            underscore_list.append(char)\n    if '_' in underscore_list:\n        return True\n    else:\n        return False\n\n# Test cases\nassert text_lowercase_underscore(\"aab_cbbbc\") == (True)\nassert text_lowercase_underscore(\"aab_Abbbc\") == (False)\nassert text_lowercase_underscore(\"Aaab_abbbc\") == (False)\nassert contains_lower_underscore(\"aab_cbbbc\") == (True)\nassert contains_lower_underscore(\"Aaab_cbbbc\") == (False)\nassert contains_lower_underscore(\"aab_Cbbbc\") == (False)\nassert contains_lower_underscore(\"aab_cbbBc\") == (False)\nassert contains_lower_underscore(\"aab_cbbbc_\") == (True)",
+    "import re\n\ndef text_lowercase_underscore(text):\n    # Compile a regex pattern that matches sequences of lowercase letters followed by an underscore\n    pattern = r'[a-z]+_[a-z]+'\n    \n    # Search for the compiled pattern in the input string\n    match = re.search(pattern, text)\n    \n    # Return True if the pattern is found, False otherwise\n    return bool(match)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1420.0,
+    "small_out": 435.0,
+    "small_s": 9.629121934034629
+  },
+  "calls_plus": {
+    "large_in": 116.0,
+    "large_out": 108.0,
+    "large_s": 2.3827595240145456,
+    "small_in": 1366.0,
+    "small_out": 261.0,
+    "small_s": 5.1630509609531146
+  },
+  "calls_samples": {
+    "small_in": 4586.0,
+    "small_out": 1609.0,
+    "small_s": 29.871814820013242
+  }
+}

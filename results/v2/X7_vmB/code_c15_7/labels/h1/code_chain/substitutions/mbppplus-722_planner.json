@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-722",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `filter_data` that takes three parameters: `students_dict`, `min_height`, and `min_weight`.\n2. Initialize an empty dictionary called `filtered_students`.\n3. Iterate over each key-value pair in the `students_dict`.\n4. For each student, check if their height and weight are both greater than or equal to `min_height` and `min_weight`, respectively.\n5. If the conditions are met, add the student to the `filtered_students` dictionary.\n6. Return the `filtered_students` dictionary after iterating through all students.",
+  "reference_key": null,
+  "final_key_plus": "def filter_data(students_dict, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students_dict.items():\n        if height >= min_height and weight >= min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.0,70)=={'Cierra Vega': (6.2, 70)}\nassert filter_data({},6.0,70)=={}\nassert filter_data({'John Doe': (1.75, 80), 'Jane Smith': (1.65, 70)},1.75,80)=={'John Doe': (1.75, 80)}\nassert filter_data({'Alice Johnson': (5.5, 45), 'Bob Brown': (5.3, 40)},5.4,45)=={'Alice Johnson': (5.5, 45)}\nassert filter_data({'Charlie Davis': (6.1, 75), 'David Lee': (5.7, 60)},6.0,70)=={'Charlie Davis': (6.1, 75)}\n```",
+    "coder": "```python\ndef filter_data(students_dict, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students_dict.items():\n        if height >= min_height and weight >= min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```",
+    "verifier": "PICK: A\n\n```python\ndef filter_data(students_dict, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students_dict.items():\n        if height >= min_height and weight >= min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```",
+    "fixer": "```python\ndef filter_data(students_dict, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students_dict.items():\n        if height >= min_height and weight >= min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `max_occurrences` that takes a list as input.\n3. Initialize variables to keep track of the maximum occurrence count and the corresponding element.\n4. Iterate through each element in the list:\n   - Use a dictionary to count occurrences of each element.\n   - Update the maximum occurrence count and the corresponding element if a higher count is found.\n5. Return the element with the maximum occurrence count.\n\n```python\ndef max_occurrences(lst):\n    # Step 2: Initialize variables\n    max_count = 0\n    max_element = None\n    \n    # Step 3: Count occurrences using a dictionary\n    occurrence_dict = {}\n    for element in lst:\n        if element in occurrence_dict:\n            occurrence_dict[element] += 1\n        else:\n            occurrence_dict[element] = 1\n    \n    # Step 4: Find the element with the maximum occurrence\n    for element, count in occurrence_dict.items():\n        if count > max_count:\n            max_count = count\n            max_element = element\n    \n    # Step 5: Return the element with the maximum occurrence\n    return max_element\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that solves the problem described. It includes all necessary imports, defines the function with a descriptive docstring, and uses a dictionary to efficiently count occurrences. The provided test case verifies the correctness of the implemented function.",
+      "quality": 0.0,
+      "final_key": "def filter_data(student_data, min_height, min_weight):\n    filtered_students = {name: data for name, data in student_data.items() if data[0] > min_height and data[1] > min_weight}\n    return filtered_students",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.0,70)=={'Cierra Vega': (6.2, 70)}\nassert filter_data({},6.0,70)=={}\nassert filter_data({'John Doe': (5.5, 63), 'Jane Smith': (5.4, 62)},5.5,63)=={'John Doe': (5.5, 63)}\nassert filter_data({'Alice Johnson': (6.1, 72), 'Bob Brown': (5.6, 61)},6.0,70)=={'Alice Johnson': (6.1, 72)}\nassert filter_data({'Charlie Davis': (5.7, 64), 'David Wilson': (5.8, 65)},6.0,70)=={'Charlie Davis': (5.7, 64)}\n```",
+        "coder": "```python\ndef filter_data(student_data, min_height, min_weight):\n    filtered_students = {name: data for name, data in student_data.items() if data[0] > min_height and data[1] > min_weight}\n    return filtered_students\n```",
+        "verifier": "PICK: A\n\n```python\ndef filter_data(student_data, min_height, min_weight):\n    filtered_students = {name: data for name, data in student_data.items() if data[0] > min_height and data[1] > min_weight}\n    return filtered_students\n```",
+        "fixer": "```python\ndef filter_data(student_data, min_height, min_weight):\n    filtered_students = {name: data for name, data in student_data.items() if data[0] > min_height and data[1] > min_weight}\n    return filtered_students\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `filter_data` that takes three parameters: `students_dict`, `min_height`, and `min_weight`.\n2. Initialize an empty dictionary called `filtered_students`.\n3. Iterate over each key-value pair in the `students_dict`.\n4. For each student, check if their height and weight are both greater than or equal to `min_height` and `min_weight`, respectively.\n5. If the conditions are met, add the student to the `filtered_students` dictionary.\n6. After iterating through all students, return the `filtered_students` dictionary.",
+      "quality": 1.0,
+      "final_key": "def filter_data(students_dict, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students_dict.items():\n        if height >= min_height and weight >= min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.0,70)=={'Cierra Vega': (6.2, 70)}\nassert filter_data({},6.0,70)=={}\nassert filter_data({'John Doe': (1.75, 80), 'Jane Smith': (1.65, 70)},1.75,80)=={'John Doe': (1.75, 80)}\nassert filter_data({'Alice Johnson': (5.5, 45), 'Bob Brown': (5.3, 40)},5.4,45)=={'Alice Johnson': (5.5, 45)}\nassert filter_data({'Charlie Davis': (6.1, 75), 'David Lee': (5.7, 60)},6.0,70)=={'Charlie Davis': (6.1, 75)}\n```",
+        "coder": "```python\ndef filter_data(students_dict, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students_dict.items():\n        if height >= min_height and weight >= min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```",
+        "verifier": "PICK: A\n\n```python\ndef filter_data(students_dict, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students_dict.items():\n        if height >= min_height and weight >= min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```",
+        "fixer": "```python\ndef filter_data(students_dict, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students_dict.items():\n        if height >= min_height and weight >= min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `similar_elements` that takes two arguments, `list1` and `list2`.\n2. Use the `set.intersection()` method to find the common elements between `list1` and `list2`.\n3. Return the result as a set.\n\nHere's the complete code:\n\n```python\ndef similar_elements(list1, list2):\n    # Find the intersection of the two lists\n    result = set.intersection(list1, list2)\n    # Return the result as a set\n    return result\n```\n\nThis function will correctly identify and return the shared elements from the provided lists.",
+      "quality": 0.0,
+      "final_key": "def filter_data(student_dict, min_height, min_weight):\n    # Filter students based on height and weight conditions\n    filtered_students = {name: data for name, data in student_dict.items() if data[0] > min_height and data[1] > min_weight}\n    # Return the filtered dictionary\n    return filtered_students",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert filter_data({'Cierra Vega': (6.2, 70), 'Alden Cantrell': (5.9, 65), 'Kierra Gentry': (6.0, 68), 'Pierre Cox': (5.8, 66)},6.0,70)=={'Cierra Vega': (6.2, 70)}\nassert filter_data({},6.0,70)=={}\nassert filter_data({'John Doe': (5.5, 63), 'Jane Smith': (6.1, 72)},5.4,64)=={'John Doe': (5.5, 63)}\nassert filter_data({'Alice Johnson': (6.3, 71), 'Bob Brown': (5.6, 66)},5.7,65)=={'Alice Johnson': (6.3, 71)}\nassert filter_data({'Charlie Davis': (6.2, 70), 'David Lee': (5.8, 66)},5.9,67)=={'Charlie Davis': (6.2, 70)}\n```",
+        "coder": "```python\ndef filter_data(student_dict, min_height, min_weight):\n    # Filter students based on height and weight conditions\n    filtered_students = {name: data for name, data in student_dict.items() if data[0] > min_height and data[1] > min_weight}\n    # Return the filtered dictionary\n    return filtered_students\n```",
+        "verifier": "PICK: A\n\n```python\ndef filter_data(student_dict, min_height, min_weight):\n    # Filter students based on height and weight conditions\n    filtered_students = {name: data for name, data in student_dict.items() if data[0] > min_height and data[1] > min_weight}\n    # Return the filtered dictionary\n    return filtered_students\n```",
+        "fixer": "```python\ndef filter_data(student_dict, min_height, min_weight):\n    # Filter students based on height and weight conditions\n    filtered_students = {name: data for name, data in student_dict.items() if data[0] > min_height and data[1] > min_weight}\n    # Return the filtered dictionary\n    return filtered_students\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students",
+  "sample_keys": [
+    "def filter_data(students_dict, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students_dict.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students",
+    "def filter_data(students_info, min_height, min_weight):\n    filtered_students = {}\n    for key, (height, weight) in students_info.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[key] = (height, weight)\n    return filtered_students",
+    "def filter_data(students, min_height, min_weight):\n    filtered_students = {}\n    for student, (height, weight) in students.items():\n        if height > min_height and weight > min_weight:\n            filtered_students[student] = (height, weight)\n    return filtered_students"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3279.0,
+    "small_out": 598.0,
+    "small_s": 13.239311450975947
+  },
+  "calls_plus": {
+    "large_in": 215.0,
+    "large_out": 120.0,
+    "large_s": 3.7684143179794773,
+    "small_in": 2990.0,
+    "small_out": 454.0,
+    "small_s": 9.132236387988087
+  },
+  "calls_samples": {
+    "small_in": 10073.0,
+    "small_out": 2027.0,
+    "small_s": 40.913895691919606
+  }
+}

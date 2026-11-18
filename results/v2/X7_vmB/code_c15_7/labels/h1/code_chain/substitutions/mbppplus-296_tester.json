@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-296",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert get_Inv_Count([1, 3, 5, 7, 9]) == 0\nassert get_Inv_Count([9, 7, 5, 3, 1]) == 10\nassert get_Inv_Count([1, 2, 3, 4, 5, 6]) == 0\nassert get_Inv_Count([6, 5, 4, 3, 2, 1]) == 15\nassert get_Inv_Count([10, 20, 30, 40, 50]) == 0\n```",
+  "reference_key": "assert get_Inv_Count([1, 3, 5, 7, 9]) == 0\nassert get_Inv_Count([9, 7, 5, 3, 1]) == 10\nassert get_Inv_Count([1, 2, 3, 4, 5, 6]) == 0\nassert get_Inv_Count([6, 5, 4, 3, 2, 1]) == 15\nassert get_Inv_Count([10, 20, 30, 40, 50]) == 0",
+  "final_key_plus": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```",
+    "fixer": "```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert get_Inv_Count([9,8,7,6,5]) == 10\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([3,2,1]) == 3\nassert get_Inv_Count([-5,-3,-6]) == 7\nassert get_Inv_Count([-2,-4,-6,-3,-1]) == 6",
+      "reference_key": "assert get_Inv_Count([1, 3, 5, 7, 9]) == 0\nassert get_Inv_Count([9, 7, 5, 3, 1]) == 10\nassert get_Inv_Count([1, 2, 3, 4, 5, 6]) == 0\nassert get_Inv_Count([6, 5, 4, 3, 2, 1]) == 15\nassert get_Inv_Count([10, 20, 30, 40, 50]) == 0",
+      "key_differs": true,
+      "text": "```python\nassert get_Inv_Count([9,8,7,6,5]) == 10\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([3,2,1]) == 3\nassert get_Inv_Count([-5,-3,-6]) == 7\nassert get_Inv_Count([-2,-4,-6,-3,-1]) == 6\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n\n# Test cases\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([1,2,1]) == 1\nassert get_Inv_Count([1,2,5,6,1]) == 3\nassert get_Inv_Count([9,8,7,6,5]) == 10\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([3,2,1]) == 3\nassert get_Inv_Count([-5,-3,-6]) == 7\nassert get_Inv_Count([-2,-4,-6,-3,-1]) == 6\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert get_Inv_Count([3, 1, 2, 4]) == 3  # Three inversions: (2, 1), (3, 1), (4, 1)\nassert get_Inv_Count([10, 20, 30, 40]) == 0  # No inversions\nassert get_Inv_Count([-1, -2, -3, -4, -5]) == 10   # Five inversions: (-1, -3), (-2, -3), (-1, -5), (-2, -5), (-3, -5)\nassert get_Inv_Count([1, 1, 1, 1]) == 0     # No inversions in a single element array\nassert get_Inv_Count([]) == 0           # Edge case with empty list",
+      "reference_key": "assert get_Inv_Count([1, 3, 5, 7, 9]) == 0\nassert get_Inv_Count([9, 7, 5, 3, 1]) == 10\nassert get_Inv_Count([1, 2, 3, 4, 5, 6]) == 0\nassert get_Inv_Count([6, 5, 4, 3, 2, 1]) == 15\nassert get_Inv_Count([10, 20, 30, 40, 50]) == 0",
+      "key_differs": true,
+      "text": "```python\nassert get_Inv_Count([3, 1, 2, 4]) == 3  # Three inversions: (2, 1), (3, 1), (4, 1)\nassert get_Inv_Count([10, 20, 30, 40]) == 0  # No inversions\nassert get_Inv_Count([-1, -2, -3, -4, -5]) == 10   # Five inversions: (-1, -3), (-2, -3), (-1, -5), (-2, -5), (-3, -5)\nassert get_Inv_Count([1, 1, 1, 1]) == 0     # No inversions in a single element array\nassert get_Inv_Count([]) == 0           # Edge case with empty list\n```",
+      "quality": 0.0,
+      "final_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n\n# Test cases\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([1,2,1]) == 1\nassert get_Inv_Count([1,2,5,6,1]) == 3\nassert get_Inv_Count([3, 1, 2, 4]) == 3  # Three inversions: (2, 1), (3, 1), (4, 1) -> AssertionError \nassert get_Inv_Count([10, 20, 30, 40]) == 0  # No inversions\nassert get_Inv_Count([-1, -2, -3, -4, -5]) == 10   # Five inversions: (-1, -3), (-2, -3), (-1, -5), (-2, -5), (-3, -5)\nassert get_Inv_Count([1, 1, 1, 1]) == 0     # No inversions in a single element array\nassert get_Inv_Count([]) == 0           # Edge case with empty list",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n\n# Test cases\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([1,2,1]) == 1\nassert get_Inv_Count([1,2,5,6,1]) == 3\nassert get_Inv_Count([3, 1, 2, 4]) == 3  # Three inversions: (2, 1), (3, 1), (4, 1) -> AssertionError \nassert get_Inv_Count([10, 20, 30, 40]) == 0  # No inversions\nassert get_Inv_Count([-1, -2, -3, -4, -5]) == 10   # Five inversions: (-1, -3), (-2, -3), (-1, -5), (-2, -5), (-3, -5)\nassert get_Inv_Count([1, 1, 1, 1]) == 0     # No inversions in a single element array\nassert get_Inv_Count([]) == 0           # Edge case with empty list\n```",
+        "fixer": "```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n\n# Test cases\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([1,2,1]) == 1\nassert get_Inv_Count([1,2,5,6,1]) == 3\nassert get_Inv_Count([3, 1, 2, 4]) == 3  # Three inversions: (2, 1), (3, 1), (4, 1) -> AssertionError \nassert get_Inv_Count([10, 20, 30, 40]) == 0  # No inversions\nassert get_Inv_Count([-1, -2, -3, -4, -5]) == 10   # Five inversions: (-1, -3), (-2, -3), (-1, -5), (-2, -5), (-3, -5)\nassert get_Inv_Count([1, 1, 1, 1]) == 0     # No inversions in a single element array\nassert get_Inv_Count([]) == 0           # Edge case with empty list\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert (Diff([], [])) == []\nassert (Diff([1, 2, 3], [4, 5, 6])) == [1, 2, 3]\nassert (Diff([1, 2, 3], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [1, 2, 3, 4, 5])) == [4, 5]\nassert (Diff([1, 2, 3, 4, 5], [1, 2, 3])) == [4, 5]",
+      "reference_key": "assert get_Inv_Count([1, 3, 5, 7, 9]) == 0\nassert get_Inv_Count([9, 7, 5, 3, 1]) == 10\nassert get_Inv_Count([1, 2, 3, 4, 5, 6]) == 0\nassert get_Inv_Count([6, 5, 4, 3, 2, 1]) == 15\nassert get_Inv_Count([10, 20, 30, 40, 50]) == 0",
+      "key_differs": true,
+      "text": "```python\nassert (Diff([], [])) == []\nassert (Diff([1, 2, 3], [4, 5, 6])) == [1, 2, 3]\nassert (Diff([1, 2, 3], [1, 2, 3])) == []\nassert (Diff([1, 2, 3], [1, 2, 3, 4, 5])) == [4, 5]\nassert (Diff([1, 2, 3, 4, 5], [1, 2, 3])) == [4, 5]\n```",
+      "quality": 1.0,
+      "final_key": "def get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n```",
+        "fixer": "```python\ndef get_Inv_Count(arr):\n    inv_count = 0\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if arr[i] > arr[j]:\n                inv_count += 1\n    return inv_count\n\n# Test cases\nassert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([1,2,1]) == 1\nassert get_Inv_Count([1,2,5,6,1]) == 3\nassert get_Inv_Count([1,2,3,4,5]) == 4\nassert get_Inv_Count([1,2,3,4,5,6]) == 7\nassert get_Inv_Count([1,2,3,4,5,6,7]) == 15\nassert get_Inv_Count([1,2,3,4,5,6,7,8]) == 28\nassert get_Inv_Count([1,2,3,4,5,6,7,8,9]) == 56\nassert get_Inv_Count([1,2,3,4,5,6,7,8,9,10]) == 120\nassert get_Inv_Count([1,2,3,4,5,6,7,8,9,10,11]) == 252\nassert get_Inv_Count([1,2,3,4,5,6,7,8,9,10,11,12]) == 504\nassert get_Inv_Count([1,2,3,4,5,6,7,8,9,10,11,12,13]) == 1024\nassert get_Inv_Count([1,2,3,4,5,6,7,8,9,10,11,12,13,14]) == 2048\nassert get_Inv_Count([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]) == 4096\nassert get_Inv_Count([1,2,3,4,5,6,7"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([3,2,1]) == 3\nassert get_Inv_Count([1,2,3]) == 0\nassert get_Inv_Count([1,2,3,4,5]) == 0",
+  "sample_keys": [
+    "assert get_Inv_Count([]) == 0\nassert get_Inv_Count([3]) == 0\nassert get_Inv_Count([3,2]) == 1\nassert get_Inv_Count([3,1,2]) == 2\nassert get_Inv_Count([10,9,8,7,6,5,4,3,2,1]) == 45",
+    "assert get_Inv_Count([1, 20, 6, 4, 5]) == 5\nassert get_Inv_Count([1, 2, 3, 4, 5]) == 0\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([5, 4, 3, 2, 1]) == 10\nassert get_Inv_Count([10]) == 0",
+    "assert get_Inv_Count([1,20,6,4,5]) == 5\nassert get_Inv_Count([5,4,3,2,1]) == 10\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([1,2,3]) == 0\nassert get_Inv_Count([1,2,2]) == 1",
+    "assert get_Inv_Count([1, 20, 6, 4, 5]) == 5\nassert get_Inv_Count([]) == 0\nassert get_Inv_Count([5]) == 0\nassert get_Inv_Count([3, 2, 1]) == 3\nassert get_Inv_Count([1, 3, 2]) == 2",
+    "# Test 1: Typical case with few inversions\nassert get_Inv_Count([1,20,6,4,5]) == 5\n\n# Test 2: Edge case with all inversions (sorted in reverse order)\nassert get_Inv_Count([5,4,3,2,1]) == 10\n\n# Test 3: Edge case with all elements equal\nassert get_Inv_Count([7,7,7,7]) == 0\n\n# Test 4: Edge case with empty array\nassert get_Inv_Count([]) == 0\n\n# Test 5: Edge case with single element\nassert get_Inv_Count([1]) == 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1433.0,
+    "small_out": 391.0,
+    "small_s": 8.622342366026714
+  },
+  "calls_plus": {
+    "small_in": 1391.0,
+    "small_out": 302.0,
+    "small_s": 6.202474787976826,
+    "large_in": 189.0,
+    "large_out": 138.0,
+    "large_s": 2.963534960988909
+  },
+  "calls_samples": {
+    "small_in": 945.0,
+    "small_out": 523.0,
+    "small_s": 9.450484289001906
+  }
+}

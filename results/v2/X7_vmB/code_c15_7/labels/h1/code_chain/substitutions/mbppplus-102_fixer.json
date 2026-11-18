@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-102",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str\n```",
+  "reference_key": "def snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str",
+  "final_key_plus": "def snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def snake_to_camel(snake_str):\n    camel_str = ''.join(word.capitalize() for word in snake_str.split('_'))\n    return camel_str",
+      "reference_key": "def snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str",
+      "key_differs": true,
+      "text": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''.join(word.capitalize() for word in snake_str.split('_'))\n    return camel_str\n```\n\nThe solution first splits the snake-case string into words, capitalizes each word individually using list comprehensions, and then joins these capitalized words back together with underscores removed by joining them without separator characters. This effectively converts the snake case string to camel case string.",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    camel_str = ''.join(word.capitalize() for word in snake_str.split('_'))\n    return camel_str",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''.join(word.capitalize() for word in snake_str.split('_'))\n    return camel_str\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        elif char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n\n# Test cases\ntest_cases = {\n    'python_program': 'PythonProgram',\n    'python_language': 'PythonLanguage',\n    'programming_language': 'ProgrammingLanguage',\n    'hello_world': 'HelloWorld',\n    'this_is_a_test_string': 'ThisIsATestString',\n    'snake_case': 'SnakeCase',\n    '123abcABC': '123AbcABC',\n    ''\n}\nfor snake_str, expected in test_cases.items():\n    assert snake_to_camel(snake_str) == expected, f\"Failed for {snake_str}\"",
+      "reference_key": "def snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str",
+      "key_differs": true,
+      "text": "```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        elif char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n\n# Test cases\ntest_cases = {\n    'python_program': 'PythonProgram',\n    'python_language': 'PythonLanguage',\n    'programming_language': 'ProgrammingLanguage',\n    'hello_world': 'HelloWorld',\n    'this_is_a_test_string': 'ThisIsATestString',\n    'snake_case': 'SnakeCase',\n    '123abcABC': '123AbcABC',\n    ''\n}\nfor snake_str, expected in test_cases.items():\n    assert snake_to_camel(snake_str) == expected, f\"Failed for {snake_str}\"\n```",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        elif char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n\n# Test cases\ntest_cases = {\n    'python_program': 'PythonProgram',\n    'python_language': 'PythonLanguage',\n    'programming_language': 'ProgrammingLanguage',\n    'hello_world': 'HelloWorld',\n    'this_is_a_test_string': 'ThisIsATestString',\n    'snake_case': 'SnakeCase',\n    '123abcABC': '123AbcABC',\n    ''\n}\nfor snake_str, expected in test_cases.items():\n    assert snake_to_camel(snake_str) == expected, f\"Failed for {snake_str}\"",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        elif char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n\n# Test cases\ntest_cases = {\n    'python_program': 'PythonProgram',\n    'python_language': 'PythonLanguage',\n    'programming_language': 'ProgrammingLanguage',\n    'hello_world': 'HelloWorld',\n    'this_is_a_test_string': 'ThisIsATestString',\n    'snake_case': 'SnakeCase',\n    '123abcABC': '123AbcABC',\n    ''\n}\nfor snake_str, expected in test_cases.items():\n    assert snake_to_camel(snake_str) == expected, f\"Failed for {snake_str}\"\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def last_Digit_Factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result = (result * i) % 10\n    return result",
+      "reference_key": "def snake_to_camel(snake_str):\n    words = snake_str.split('_')\n    camel_str = ''.join(word.capitalize() for word in words)\n    return camel_str",
+      "key_differs": true,
+      "text": "```python\ndef last_Digit_Factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result = (result * i) % 10\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+  "sample_keys": [
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for i, char in enumerate(snake_str):\n        if i > 0 and char.isupper():\n            camel_str += '_' + char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+    "def snake_to_camel(snake_str):\n    # Check if the string is empty\n    if not snake_str:\n        return ''\n    \n    # Initialize the result with the first character converted to uppercase\n    camel_str = snake_str[0].upper()\n    \n    # Iterate through the rest of the string\n    for i in range(1, len(snake_str)):\n        if snake_str[i] == '_' or snake_str[i-1].isupper():\n            # Capitalize the next character\n            camel_str += snake_str[i].upper()\n        else:\n            # Append the lowercase character\n            camel_str += snake_str[i]\n    \n    return camel_str\n\n# Test cases\nprint(snake_to_camel('python_program'))  # Should be 'PythonProgram'\nprint(snake_to_camel('python_language'))  # Should be 'PythonLanguage'\nprint(snake_to_camel('programming_language'))  # Should be 'ProgrammingLanguage'\nprint(snake_to_camel('hello_world'))  # Should be 'HelloWorld'\nprint(snake_to_camel('this_is_a_test_string'))  # Should be 'ThisIsATestString'\nprint(snake_to_camel('snake_case'))  # Should be 'SnakeCase'\nprint(snake_to_camel('123abcABC'))  # Should be '123AbcABC'\nprint(snake_to_camel(''))  # Should be ''",
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for index, char in enumerate(snake_str):\n        if char.isupper() and index != 0:\n            camel_str += '_'\n        camel_str += char.lower()\n    return camel_str\n\n# Test results\nprint(snake_to_camel('python_program')) # Expected: 'PythonProgram'\nprint(snake_to_camel('python_language')) # Expected: ('PythonLanguage')\nprint(snake_to_camel('programming_language')) # Expected: ('ProgrammingLanguage')\nprint(snake_to_camel('hello_world')) # Expected: 'HelloWorld'\nprint(snake_to_camel('this_is_a_test_string')) # Expected: 'ThisIsATestString'\nprint(snake_to_camel('snake_case')) # Expected: 'SnakeCase'\nprint(snake_to_camel('123abcABC')) # Expected: '123AbcABC'\nprint(snake_to_camel('')) # Expected: ''",
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str",
+    "def snake_to_camel(snake_str):\n    camel_str = ''\n    for char in snake_str:\n        if char.isupper():\n            camel_str += char.lower()\n        else:\n            camel_str += char\n    return camel_str"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1372.0,
+    "small_out": 386.0,
+    "small_s": 5.010803992016008
+  },
+  "calls_plus": {
+    "small_in": 996.0,
+    "small_out": 299.0,
+    "small_s": 4.097180153010413,
+    "large_in": 335.0,
+    "large_out": 41.0,
+    "large_s": 1.2292268669989426
+  },
+  "calls_samples": {
+    "small_in": 1675.0,
+    "small_out": 872.0,
+    "small_s": 18.008472668996546
+  }
+}

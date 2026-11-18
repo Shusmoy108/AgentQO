@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-165",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `count_char_position` that takes a single parameter, `input_string`.\n2. Initialize a counter variable to zero to keep track of matching positions.\n3. Convert the input string to lowercase to make the comparison case insensitive.\n4. Iterate over the indices of the string using a for loop.\n5. For each index, check if the character at that index matches the character at the same index in the alphabet ('a' + index).\n6. If there is a match, increment the counter.\n7. After the loop, return the counter value as the result.",
+  "reference_key": null,
+  "final_key_plus": "def count_char_position(input_string):\n    counter = 0\n    input_string = input_string.lower()\n    for i in range(len(input_string)):\n        if input_string[i] == chr(ord('a') + i):\n            counter += 1\n    return counter",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert count_char_position(\"xyz\") == 3\nassert count_char_position(\"XyZ\") == 3\nassert count_char_position(\"abcde\") == 5\nassert count_char_position(\"AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\") == 26\nassert count_char_position(\"\") == 0\n```",
+    "coder": "```python\ndef count_char_position(input_string):\n    counter = 0\n    input_string = input_string.lower()\n    for i in range(len(input_string)):\n        if input_string[i] == chr(ord('a') + i):\n            counter += 1\n    return counter\n```",
+    "verifier": "PICK: A\n\n```python\ndef count_char_position(input_string):\n    counter = 0\n    input_string = input_string.lower()\n    for i in range(len(input_string)):\n        if input_string[i] == chr(ord('a') + i):\n            counter += 1\n    return counter\n```",
+    "fixer": "```python\ndef count_char_position(input_string):\n    counter = 0\n    input_string = input_string.lower()\n    for i in range(len(input_string)):\n        if input_string[i] == chr(ord('a') + i):\n            counter += 1\n    return counter\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `remove_kth_element` that accepts two parameters: `input_list` (the original list) and `k` (the index of the element to be removed).\n2. Check if the value of `k` is within the valid range of indices for the input list. If `k` is out of bounds, raise an IndexError.\n3. Create a new list called `result_list` by iterating over each element in the `input_list`.\n4. Use a conditional statement to check if the current index `i` is equal to `k`. If it is, skip adding the element to `result_list`.\n5. If the current index `i` is not equal to `k`, add the element to `result_list`.\n6. Return the `result_list`.\n\nThis approach ensures that the function handles edge cases such as invalid indices gracefully and efficiently.",
+      "quality": 1.0,
+      "final_key": "def count_char_position(input_string):\n    count = 0\n    for i in range(len(input_string)):\n        if input_string[i].lower() == chr(ord('a') + i):\n            count += 1\n    \n    return count",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_char_position(\"aabbcc\") == 3\nassert count_char_position(\"xyz\") == 1\nassert count_char_position(\"\") == 0\nassert count_char_position(\"AaBbCc\") == 6\nassert count_char_position(\"12345\") == 0\n```",
+        "coder": "```python\ndef remove_kth_element(input_list, k):\n    if k < 0 or k >= len(input_list):\n        raise IndexError(\"Index out of range\")\n    \n    result_list = []\n    for i in range(len(input_list)):\n        if i != k:\n            result_list.append(input_list[i])\n    \n    return result_list\n```",
+        "verifier": "PICK: B\n```python\ndef count_char_position(input_string):\n    count = 0\n    for i in range(len(input_string)):\n        if input_string[i].lower() == chr(ord('a') + i):\n            count += 1\n    \n    return count\n```",
+        "fixer": "```python\ndef count_char_position(input_string):\n    count = 0\n    for i in range(len(input_string)):\n        if input_string[i].lower() == chr(ord('a') + i):\n            count += 1\n    \n    return count\n\n# Test cases\nassert count_char_position(\"xbcefg\") == 2\nassert count_char_position(\"ABcED\") == 3\nassert count_char_position(\"AbgdeF\") == 5\nassert count_char_position(\"aabbcc\") == 3\nassert count_char_position(\"xyz\") == 1\nassert count_char_position(\"\") == 0\nassert count_char_position(\"AaBbCc\") == 6\nassert count_char_position(\"12345\") == 0\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define the function `count_char_position` that takes a single parameter, `input_string`.\n2. Initialize a counter variable to zero to keep track of matching positions.\n3. Convert the input string to lowercase to make the comparison case insensitive.\n4. Iterate over the indices of the string using a for loop.\n5. For each index, check if the character at that index matches the character at the same index in the alphabet ('a' + index).\n6. If there is a match, increment the counter by 1 instead of zero.\n7. After the loop, return the counter value as the result.",
+      "quality": 1.0,
+      "final_key": "def count_char_position(input_string):\n    counter = 0\n    input_string = input_string.lower()\n    for i in range(len(input_string)):\n        if input_string[i] == chr(ord('a') + i):\n            counter += 1\n    return counter",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert count_char_position(\"xyz\") == 3\nassert count_char_position(\"XyZ\") == 3\nassert count_char_position(\"abcde\") == 5\nassert count_char_position(\"AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\") == 26\nassert count_char_position(\"\") == 0\n```",
+        "coder": "```python\ndef count_char_position(input_string):\n    counter = 0\n    input_string = input_string.lower()\n    for i in range(len(input_string)):\n        if input_string[i] == chr(ord('a') + i):\n            counter += 1\n    return counter\n```",
+        "verifier": "PICK: A\n\n```python\ndef count_char_position(input_string):\n    counter = 0\n    input_string = input_string.lower()\n    for i in range(len(input_string)):\n        if input_string[i] == chr(ord('a') + i):\n            counter += 1\n    return counter\n```",
+        "fixer": "```python\ndef count_char_position(input_string):\n    counter = 0\n    input_string = input_string.lower()\n    for i in range(len(input_string)):\n        if input_string[i] == chr(ord('a') + i):\n            counter += 1\n    return counter\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize an empty list `result` to store the unique elements.\n2. Iterate through each element in the input list `input_list`.\n3. For each element, check if it is different from the last element in `result`.\n4. If they are different, append the current element to `result`.\n5. After iterating through all elements, return the `result` list.\n\nThis approach ensures that only unique elements are added to the result list, effectively removing consecutive duplicates.",
+      "quality": 0.0,
+      "final_key": "def count_char_position(input_list):\n    result = []\n    for i in range(1, len(input_list)):\n        if input_list[i].lower() != input_list[i-1].lower():\n            result.append(input_list[i])\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_char_position(\"aabbcc\") == ['b', 'c']\nassert count_char_position(\"xyz\") == ['x', 'y', 'z']\nassert count_char_position(\"AaBbCc\") == ['a', 'b', 'c']\nassert count_char_position(\"\") == []\nassert count_char_position(\"1234567890\") == ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']\n```",
+        "coder": "```python\ndef count_char_position(input_list):\n    result = []\n    for i in range(1, len(input_list)):\n        if input_list[i] != input_list[i-1]:\n            result.append(input_list[i])\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef count_char_position(input_list):\n    result = []\n    for i in range(1, len(input_list)):\n        if input_list[i].lower() != input_list[i-1].lower():\n            result.append(input_list[i])\n    return result\n```",
+        "fixer": "```python\ndef count_char_position(input_list):\n    result = []\n    for i in range(1, len(input_list)):\n        if input_list[i].lower() != input_list[i-1].lower():\n            result.append(input_list[i])\n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def count_char_position(input_string):\n    counter = 0\n    for char in input_string.lower():\n        if ord(char) - 97 == input_string.index(char):\n            counter += 1\n    return counter",
+  "sample_keys": [
+    "def count_char_position(s):\n    count = 0\n    s = s.lower()\n    alphabet = \"abcdefghijklmnopqrstuvwxyz\"\n    for i, char in enumerate(s):\n        if i == ord(char) - ord('a'):\n            count += 1\n    return count",
+    "def count_char_position(s):\n    s = s.lower()\n    count = 0\n    for i, char in enumerate(s):\n        if char == chr(ord('a') + i):\n            count += 1\n    return count",
+    "def count_char_position(s):\n    count = 0\n    for i, char in enumerate(s.lower()):\n        if ord(char) - ord('a') == i:\n            count += 1\n    return count"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1539.0,
+    "small_out": 812.0,
+    "small_s": 14.454267531982623
+  },
+  "calls_plus": {
+    "large_in": 121.0,
+    "large_out": 122.0,
+    "large_s": 3.8845416339754593,
+    "small_in": 1398.0,
+    "small_out": 297.0,
+    "small_s": 6.452581069024745
+  },
+  "calls_samples": {
+    "small_in": 4236.0,
+    "small_out": 1155.0,
+    "small_s": 24.539284317899728
+  }
+}

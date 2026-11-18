@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-4",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert heap_queue_largest([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 5) == [10, 9, 8, 7, 6]\nassert heap_queue_largest([-5, -1, -6, -2, -3, -4], 3) == [-1, -2, -3]\nassert heap_queue_largest([100], 1) == [100]\nassert heap_queue_largest([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0) == []\nassert heap_queue_largest([], 3) == []\n```",
+  "reference_key": "assert heap_queue_largest([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 5) == [10, 9, 8, 7, 6]\nassert heap_queue_largest([-5, -1, -6, -2, -3, -4], 3) == [-1, -2, -3]\nassert heap_queue_largest([100], 1) == [100]\nassert heap_queue_largest([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0) == []\nassert heap_queue_largest([], 3) == []",
+  "final_key_plus": "from heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n```python\nfrom heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers\n```",
+    "fixer": "```python\nfrom heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert heap_queue_largest([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], 1) == [100]\nassert heap_queue_largest([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10], 7) == [-1, -2, -3, -4, -5, -6, -7]\nassert heap_queue_largest([4, 4, 2, 1, 3, 4, 1, 1, 0, 0], 5) == [5, 4, 4, 4, 3]\nassert heap_queue_largest([1], 5) == [1]\nassert heap_queue_largest([], 5) == []",
+      "reference_key": "assert heap_queue_largest([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 5) == [10, 9, 8, 7, 6]\nassert heap_queue_largest([-5, -1, -6, -2, -3, -4], 3) == [-1, -2, -3]\nassert heap_queue_largest([100], 1) == [100]\nassert heap_queue_largest([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0) == []\nassert heap_queue_largest([], 3) == []",
+      "key_differs": true,
+      "text": "```python\nassert heap_queue_largest([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], 1) == [100]\nassert heap_queue_largest([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10], 7) == [-1, -2, -3, -4, -5, -6, -7]\nassert heap_queue_largest([4, 4, 2, 1, 3, 4, 1, 1, 0, 0], 5) == [5, 4, 4, 4, 3]\nassert heap_queue_largest([1], 5) == [1]\nassert heap_queue_largest([], 5) == []\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\nfrom heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Typical case\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],3)==[85, 75, 65]\n\n# Edge case with duplicate values and fewer items than requested\nassert heap_queue_largest([20, 20, 15, 20, 25],2) == [25, 20]\n\n# Edge case with negative numbers\nassert heap_queue_largest([-4, -2, -3, -8, -6, -9],3) == [-4, -3, -2]\n\n# Edge case with single element input\nassert heap_queue_largest([10],1) == [10]\n\n# Edge case with empty array input\nassert heap_queue_largest([],3) == []",
+      "reference_key": "assert heap_queue_largest([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 5) == [10, 9, 8, 7, 6]\nassert heap_queue_largest([-5, -1, -6, -2, -3, -4], 3) == [-1, -2, -3]\nassert heap_queue_largest([100], 1) == [100]\nassert heap_queue_largest([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0) == []\nassert heap_queue_largest([], 3) == []",
+      "key_differs": true,
+      "text": "```python\n# Typical case\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58],3)==[85, 75, 65]\n\n# Edge case with duplicate values and fewer items than requested\nassert heap_queue_largest([20, 20, 15, 20, 25],2) == [25, 20]\n\n# Edge case with negative numbers\nassert heap_queue_largest([-4, -2, -3, -8, -6, -9],3) == [-4, -3, -2]\n\n# Edge case with single element input\nassert heap_queue_largest([10],1) == [10]\n\n# Edge case with empty array input\nassert heap_queue_largest([],3) == []\n```",
+      "quality": 1.0,
+      "final_key": "from heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nfrom heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers\n```",
+        "fixer": "```python\nfrom heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert opposite_signs(-3, 4) == True\nassert opposite_signs(0, -1) == True\nassert opposite_signs(1, 1) == False\nassert opposite_signs(-1, -1) == False\nassert opposite_signs(0, 0) == False",
+      "reference_key": "assert heap_queue_largest([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 5) == [10, 9, 8, 7, 6]\nassert heap_queue_largest([-5, -1, -6, -2, -3, -4], 3) == [-1, -2, -3]\nassert heap_queue_largest([100], 1) == [100]\nassert heap_queue_largest([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0) == []\nassert heap_queue_largest([], 3) == []",
+      "key_differs": true,
+      "text": "```python\nassert opposite_signs(-3, 4) == True\nassert opposite_signs(0, -1) == True\nassert opposite_signs(1, 1) == False\nassert opposite_signs(-1, -1) == False\nassert opposite_signs(0, 0) == False\n```",
+      "quality": 1.0,
+      "final_key": "from heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nfrom heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers\n```",
+        "fixer": "```python\nfrom heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert heap_queue_largest([10, 20, 30, 40, 50], 2) == [50, 40]\nassert heap_queue_largest([-1, -2, -3, -4, -5], 3) == [-1, -2, -3]\nassert heap_queue_largest([], 1) == []\nassert heap_queue_largest([100], 1) == [100]\nassert heap_queue_largest([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5) == [10, 9, 8, 7, 6]",
+  "sample_keys": [
+    "from heapq import nlargest\n\ndef heap_queue_largest(numbers, n):\n    # Find the n largest integers using nlargest from heapq\n    largest_numbers = nlargest(n, numbers)\n    # Return the result as a list\n    return largest_numbers\n\n# Test case 1: Standard positive integers\nassert heap_queue_largest([25, 35, 22, 85, 14, 65, 75, 22, 58], 3) == [85, 75, 65]\n\n# Test case 2: Negative numbers\nassert heap_queue_largest([-10, -20, -30, -40, -50], 2) == [-10, -20]\n\n# Test case 3: Duplicate numbers\nassert heap_queue_largest([10, 10, 10, 10, 10], 3) == [10, 10, 10]\n\n# Test case 4: Single element list\nassert heap_queue_largest([5], 1) == [5]\n\n# Test case 5: Edge case: empty list\nassert heap_queue_largest([], 1) == []",
+    "assert heap_queue_largest([5, -2, 10, 1, 9],2) == [10, 9]\nassert heap_queue_largest([-1, -2, -3, -4, -5],5) == [-1, -2, -3, -4, -5]\nassert heap_queue_largest([],3) == []\nassert heap_queue_largest([1],1) == [1]\nassert heap_queue_largest([100, 200, 300, 400, 500], 5) == [500, 400, 300, 200, 100]",
+    "# Check with all positive numbers\nassert heap_queue_largest([10, 20, 30, 40, 50], 3) == [50, 40, 30]\n\n# Check with all negative numbers\nassert heap_queue_largest([-5, -10, -15, -20, -25], 5) == [-5, -10, -15, -20, -25]\n\n# Check with all identical numbers\nassert heap_queue_largest([9, 9, 9, 9, 9], 2) == [9, 9]\n\n# Check with empty list\nassert heap_queue_largest([], 3) == []\n\n# Check with large number of elements\nassert heap_queue_largest([10000, 20000, 30000, 40000, 50000], 2) == [50000, 40000]",
+    "# Test with a list of positive integers\nassert heap_queue_largest([10, 20, 30, 40, 50], 2) == [50, 40]\n\n# Test with a list of negative integers\nassert heap_queue_largest([-10, -20, -30, -40, -50], 3) == [-10, -20, -30]\n\n# Test with a list where all elements are the same\nassert heap_queue_largest([7, 7, 7, 7, 7], 2) == [7, 7]\n\n# Test with a list of empty list\nassert heap_queue_largest([], 3) == []\n\n# Test with a list containing only one element\nassert heap_queue_largest([9], 1) == [9]\n\n# Additional test case to verify the function's behavior for a large input\nlarge_input = list(range(1001)) + [1002] * 100\nassert heap_queue_largest(large_input, 100) == list(range(1002, 2003))",
+    "assert heap_queue_largest([10, -5, 9, 6, -3], 2) == [-3, -5]\nassert heap_queue_largest([2, 2, 2], 3) == [2, 2, 2]\nassert heap_queue_largest([], 4) == []\nassert heap_queue_largest([7], 0) == []\nassert heap_queue_largest([-1, -2, -3], 1) == [-1]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2181.0,
+    "small_out": 438.0,
+    "small_s": 9.559393584990175
+  },
+  "calls_plus": {
+    "small_in": 1977.0,
+    "small_out": 277.0,
+    "small_s": 5.6824069150025025,
+    "large_in": 225.0,
+    "large_out": 168.0,
+    "large_s": 3.6115623300138395
+  },
+  "calls_samples": {
+    "small_in": 1125.0,
+    "small_out": 1048.0,
+    "small_s": 19.758028233947698
+  }
+}

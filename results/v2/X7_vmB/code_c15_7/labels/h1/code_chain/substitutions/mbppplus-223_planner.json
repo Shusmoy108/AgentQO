@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-223",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `is_majority` that accepts three parameters: `arr`, `n`, and `x`.\n2. Use binary search to find the first occurrence of `x` in `arr`. If `x` is not found, return `False`.\n3. Calculate the index of the middle element after finding the first occurrence.\n4. Check if the element at the position `mid + n//2` is also `x`. If it is, return `True`; otherwise, return `False`.\n5. Ensure the function handles edge cases such as empty arrays or when `n` is less than 2.",
+  "reference_key": null,
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert is_majority([], 0, 3) == False\nassert is_majority([1, 2, 3, 4, 5], 5, 6) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 10) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 1) == False\n```",
+    "coder": "```python\ndef is_majority(arr, n, x):\n    # Edge case: if the array is empty or n is less than 2\n    if n < 2 or arr == []:\n        return False\n    \n    # Binary search to find the first occurrence of x\n    left, right = 0, n - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] == x:\n            right = mid - 1\n        elif arr[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    \n    # If x is not found, return False\n    if left >= n or arr[left] != x:\n        return False\n    \n    # Calculate the index of the middle element after finding the first occurrence\n    mid = (left + right) // 2\n    \n    # Check if the element at the position mid + n//2 is also x\n    return arr[mid + n // 2] == x\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\ndef is_majority(arr, n, x):\n    # Edge case: if the array is empty or n is less than 2\n    if n < 2 or arr == []:\n        return False\n    \n    # Binary search to find the first occurrence of x\n    left, right = 0, n - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] == x:\n            right = mid - 1\n        elif arr[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    \n    # If x is not found, return False\n    if left >= n or arr[left] != x:\n        return False\n    \n    # Calculate the index of the middle element after finding the first occurrence\n    mid = (left + right) // 2\n    \n    # Check if the element at the position mid + n//2 is also x\n    return arr[mid + n // 2] == x\n\n# Test cases\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False\nassert is_majority([1, 1, 1, 2, 2], 5, 1) == True\nassert is_majority([], 0, 3) == False\nassert is_majority([1, 2, 3, 4, 5], 5, 6) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 10) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 1) == False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `expensive_items` that takes two parameters: `data`, which is a list of dictionaries, and `n`, which is an integer representing the number of most expensive items to find.\n2. Initialize an empty list called `most_expensive`.\n3. Iterate over each dictionary in the `data` list using a for loop.\n4. For each dictionary, check if its price is greater than or equal to the price of the first item in the `most_expensive` list (if it exists).\n5. If the condition is true, append the current dictionary to the `most_expensive` list.\n6. After iterating through all dictionaries, sort the `most_expensive` list in descending order based on the price of each item.\n7. Return the first `n` items from the sorted `most_expensive` list.\n\nThis approach ensures that the function correctly identifies the n most expensive items in the dataset.",
+      "quality": 1.0,
+      "final_key": "def is_majority(data, n, element):\n    count = 0\n    for item in data:\n        if item == element:\n            count += 1\n    return count > n // 2",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_majority([], 0, 1) == False\nassert is_majority([1, 2, 3, 4, 5], 5, 6) == False\nassert is_majority([1, 1, 1, 1, 1, 1, 1], 7, 1) == True\nassert is_majority([1, 2, 3, 4, 5, 6, 7], 7, 8) == False\nassert is_majority([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, 11) == False\n```",
+        "coder": "```python\ndef expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_majority(data, n, element):\n    count = 0\n    for item in data:\n        if item == element:\n            count += 1\n    return count > n // 2\n```",
+        "fixer": "```python\ndef is_majority(data, n, element):\n    count = 0\n    for item in data:\n        if item == element:\n            count += 1\n    return count > n // 2\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_majority` that accepts three parameters: `arr`, `n`, and `x`.\n2. Use binary search to find the first occurrence of `x` in `arr`. If `x` is not found, return `False`.\n3. Calculate the index of the middle element after finding the first occurrence.\n4. Check if the element at the position `mid + n//2` is also `x`. If it is, return `True`; otherwise, return `False`.\n5. Handle edge cases such as empty arrays or when `n` is less than 2.",
+      "quality": 0.0,
+      "final_key": "def is_majority(arr, n, x):\n    # Edge case: empty array\n    if n == 0:\n        return False\n    \n    # Binary search to find the first occurrence of x\n    left, right = 0, n - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] < x:\n            left = mid + 1\n        elif arr[mid] > x:\n            right = mid - 1\n        else:\n            break\n    \n    # If x is not found, return False\n    if left > right:\n        return False\n    \n    # Calculate the index of the middle element after finding the first occurrence\n    mid = (left + right) // 2\n    \n    # Check if the element at the position mid + n//2 is also x\n    return arr[mid + n // 2] == x\n\n# Test cases\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False\nassert is_majority([1, 1, 1, 2, 2], 5, 1) == True\nassert is_majority([1, 1, 2, 2], 5, 1) == False\nassert is_majority([], 0, 3) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 4) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 1) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 10) == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_majority([], 0, 3) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 4) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 1) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 10) == False\n```",
+        "coder": "```python\ndef is_majority(arr, n, x):\n    # Edge case: empty array\n    if n == 0:\n        return False\n    \n    # Binary search to find the first occurrence of x\n    left, right = 0, n - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] < x:\n            left = mid + 1\n        elif arr[mid] > x:\n            right = mid - 1\n        else:\n            break\n    \n    # If x is not found, return False\n    if left > right:\n        return False\n    \n    # Calculate the index of the middle element after finding the first occurrence\n    mid = (left + right) // 2\n    \n    # Check if the element at the position mid + n//2 is also x\n    return arr[mid + n // 2] == x\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_majority(arr, n, x):\n    # Edge case: empty array\n    if n == 0:\n        return False\n    \n    # Binary search to find the first occurrence of x\n    left, right = 0, n - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] < x:\n            left = mid + 1\n        elif arr[mid] > x:\n            right = mid - 1\n        else:\n            break\n    \n    # If x is not found, return False\n    if left > right:\n        return False\n    \n    # Calculate the index of the middle element after finding the first occurrence\n    mid = (left + right) // 2\n    \n    # Check if the element at the position mid + n//2 is also x\n    return arr[mid + n // 2] == x\n\n# Test cases\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False\nassert is_majority([1, 1, 1, 2, 2], 5, 1) == True\nassert is_majority([1, 1, 2, 2], 5, 1) == False\nassert is_majority([], 0, 3) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 4) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 1) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 10) == False\n```",
+        "fixer": "```python\ndef is_majority(arr, n, x):\n    # Edge case: empty array\n    if n == 0:\n        return False\n    \n    # Binary search to find the first occurrence of x\n    left, right = 0, n - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] < x:\n            left = mid + 1\n        elif arr[mid] > x:\n            right = mid - 1\n        else:\n            break\n    \n    # If x is not found, return False\n    if left > right:\n        return False\n    \n    # Calculate the index of the middle element after finding the first occurrence\n    mid = (left + right) // 2\n    \n    # Check if the element at the position mid + n//2 is also x\n    return arr[mid + n // 2] == x\n\n# Test cases\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False\nassert is_majority([1, 1, 1, 2, 2], 5, 1) == True\nassert is_majority([1, 1, 2, 2], 5, 1) == False\nassert is_majority([], 0, 3) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 4) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 1) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 10) == False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a counter for odd pairs.\n2. Iterate through each pair of elements in the list.\n3. For each pair, calculate their XOR value.\n4. If the XOR value is odd, increment the counter.\n5. Return the total count of odd pairs.\n\nHere's the corresponding Python function:\n\n```python\ndef find_Odd_Pair(arr, n):\n    odd_pairs_count = 0\n    for i in range(n):\n        for j in range(i+1, n):\n            if (arr[i] ^ arr[j]) % 2 != 0:\n                odd_pairs_count += 1\n    return odd_pairs_count\n```\n\nThis function iterates through all possible pairs of elements in the array and checks if their XOR value is odd using the condition `(arr[i] ^ arr[j]) % 2 != 0`. If the condition is true, it increments the `odd_pairs_count`. Finally, it returns the total count of odd pairs found.",
+      "quality": 0.0,
+      "final_key": "def is_majority(arr, n, element):\n    count = 0\n    for num in arr:\n        if num == element:\n            count += 1\n    return count > n // 2\n\n# Test cases\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False\nassert is_majority([1, 1, 1, 2, 2], 5, 1) == True\nassert is_majority([1, 1, 2, 2], 5, 1) == False\nassert find_Odd_Pair([1, 2, 3, 3, 3, 3, 10], 7) == 4\nassert is_majority([1, 1, 1, 1, 1, 1, 1], 7) == 7\nassert is_majority([2, 2, 2, 2, 2, 2, 2], 7) == 0\nassert find_Odd_Pair([1, 2, 3, 4, 5, 6, 7], 7) == 0\nassert find_Odd_Pair([1, 2, 3, 4, 5, 6, 7, 8], 7) == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_Odd_Pair([1, 2, 3, 3, 3, 3, 10], 7) == 4\nassert find_Odd_Pair([1, 1, 1, 1, 1, 1, 1], 7) == 7\nassert find_Odd_Pair([2, 2, 2, 2, 2, 2, 2], 7) == 0\nassert find_Odd_Pair([1, 2, 3, 4, 5, 6, 7], 7) == 0\nassert find_Odd_Pair([1, 2, 3, 4, 5, 6, 7, 8], 7) == 0\n```",
+        "coder": "```python\ndef find_Odd_Pair(arr, n):\n    odd_pairs_count = 0\n    for i in range(n):\n        for j in range(i+1, n):\n            if (arr[i] ^ arr[j]) % 2 != 0:\n                odd_pairs_count += 1\n    return odd_pairs_count\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_majority(arr, n, element):\n    count = 0\n    for num in arr:\n        if num == element:\n            count += 1\n    return count > n // 2\n\n# Test cases\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False\nassert is_majority([1, 1, 1, 2, 2], 5, 1) == True\nassert is_majority([1, 1, 2, 2], 5, 1) == False\nassert find_Odd_Pair([1, 2, 3, 3, 3, 3, 10], 7) == 4\nassert is_majority([1, 1, 1, 1, 1, 1, 1], 7) == 7\nassert is_majority([2, 2, 2, 2, 2, 2, 2], 7) == 0\nassert find_Odd_Pair([1, 2, 3, 4, 5, 6, 7], 7) == 0\nassert find_Odd_Pair([1, 2, 3, 4, 5, 6, 7, 8], 7) == 0\n```",
+        "fixer": "```python\ndef is_majority(arr, n, element):\n    count = 0\n    for num in arr:\n        if num == element:\n            count += 1\n    return count > n // 2\n\n# Test cases\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False\nassert is_majority([1, 1, 1, 2, 2], 5, 1) == True\nassert is_majority([1, 1, 2, 2], 5, 1) == False\nassert find_Odd_Pair([1, 2, 3, 3, 3, 3, 10], 7) == 4\nassert find_Odd_Pair([1, 1, 1, 1, 1, 1, 1], 7) == 7\nassert find_Odd_Pair([2, 2, 2, 2, 2, 2, 2], 7) == 0\nassert find_Odd_Pair([1, 2, 3, 4, 5, 6, 7], 7) == 0\nassert find_Odd_Pair([1, 2, 3, 4, 5, 6, 7, 8], 7) == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def is_majority(arr, n, target):\n    count = 0\n    for i in range(n):\n        if arr[i] == target:\n            count += 1\n            if count > n // 2:\n                return True\n    return False",
+  "sample_keys": [
+    "def is_majority(arr, n, target):\n    count = 0\n    majority = None\n    \n    for i in range(n):\n        if arr[i] == target:\n            count += 1\n            if count > n // 2:\n                majority = target\n                break\n                \n    return majority is not None and count > n // 2",
+    "def is_majority(arr, n, target):\n    count = 0\n    for i in range(n):\n        if arr[i] == target:\n            count += 1\n            if count > n // 2:\n                return True\n    return False",
+    "def is_majority(arr, n, x):\n    count = 1\n    majority = arr[0]\n    \n    for i in range(1, n):\n        if arr[i] == majority:\n            count += 1\n        else:\n            count -= 1\n        \n        if count >= n // 2:\n            return True\n    \n    return False\n\n# Test cases\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False\nassert is_majority([1, 1, 1, 2, 2], 5, 1) == True\nassert is_majority([1, 1, 2, 2], 5, 1) == False\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 4) == False\nassert is_majority([], 0, 1) == False\nassert is_majority([1, 1, 1, 1, 1, 1, 1], 7, 1) == True\nassert is_majority([1, 2, 3, 4, 5, 6, 7], 7, 8) == False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2052.0,
+    "small_out": 407.0,
+    "small_s": 8.965477276040474
+  },
+  "calls_plus": {
+    "large_in": 162.0,
+    "large_out": 131.0,
+    "large_s": 2.903210829012096,
+    "small_in": 2661.0,
+    "small_out": 846.0,
+    "small_s": 14.834100377978757
+  },
+  "calls_samples": {
+    "small_in": 6596.0,
+    "small_out": 2105.0,
+    "small_s": 38.67752936499892
+  }
+}

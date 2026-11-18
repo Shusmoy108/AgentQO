@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-299",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Initialize an empty dictionary to store the sum of values for each key (name).\n2. Iterate through each tuple in the input list.\n3. For each tuple, add its value to the corresponding key's total in the dictionary.\n4. Find the key with the highest total value in the dictionary.\n5. Return the key-value pair with the highest total as a tuple.",
+  "reference_key": null,
+  "final_key_plus": "def max_aggregate(tuples_list):\n    name_totals = {}\n    for name, score in tuples_list:\n        if name in name_totals:\n            name_totals[name] += score\n        else:\n            name_totals[name] = score\n    max_name = max(name_totals, key=name_totals.get)\n    return (max_name, name_totals[max_name])",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)\nassert max_aggregate([('John Doe', 100), ('Jane Smith', 95), ('Alice Johnson', 105)]) == ('John Doe', 100)\nassert max_aggregate([('Bob Brown', 80), ('Charlie Davis', 80), ('David Eves', 80)]) == ('David Eves', 80)\nassert max_aggregate([('Eve Frank', 90), ('Frank Gage', 90), ('Gage Henry', 90)]) == ('Frank Gage', 90)\nassert max_aggregate([('Hannah Ivey', 110), ('Ivy Jones', 110), ('Jones Kate', 110)]) == ('Ivy Jones', 110)\n```",
+    "coder": "```python\ndef max_aggregate(tuples_list):\n    name_totals = {}\n    for name, score in tuples_list:\n        if name in name_totals:\n            name_totals[name] += score\n        else:\n            name_totals[name] = score\n    max_name = max(name_totals, key=name_totals.get)\n    return (max_name, name_totals[max_name])\n```",
+    "verifier": "PICK: A\n\n```python\ndef max_aggregate(tuples_list):\n    name_totals = {}\n    for name, score in tuples_list:\n        if name in name_totals:\n            name_totals[name] += score\n        else:\n            name_totals[name] = score\n    max_name = max(name_totals, key=name_totals.get)\n    return (max_name, name_totals[max_name])\n```",
+    "fixer": "```python\ndef max_aggregate(tuples_list):\n    name_totals = {}\n    for name, score in tuples_list:\n        if name in name_totals:\n            name_totals[name] += score\n        else:\n            name_totals[name] = score\n    max_name = max(name_totals, key=name_totals.get)\n    return (max_name, name_totals[max_name])\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `min_k` that takes two parameters: a list of tuples (`lst`) and an integer `k`.\n2. Initialize an empty list called `result` to store the minimum `k` records.\n3. Iterate over each tuple in the input list using a for loop.\n4. For each tuple, check if its second element (the score) is less than or equal to the current length of the `result` list.\n5. If it is, append the tuple to the `result` list.\n6. After iterating through all tuples, return the `result` list.\n7. Test the function with the provided test case to ensure it works as expected.",
+      "quality": 0.0,
+      "final_key": "def max_aggregate(lst):\n    result = []\n    for item in lst:\n        if item[1] <= len(result):\n            result.append(item)\n    return result[-1]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',123)])==('Juan Whelan', 245)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',123),('Juan Whelan',124)])==('Juan Whelan', 268)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',123),('Juan Whelan',124),('Juan Whelan',125)])==('Juan Whelan', 293)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',123),('Juan Whelan',124),('Juan Whelan',125),('Juan Whelan',126)])==('Juan Whelan', 320)\n```",
+        "coder": "```python\ndef min_k(lst, k):\n    result = []\n    for item in lst:\n        if item[1] <= len(result):\n            result.append(item)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_aggregate(lst):\n    result = []\n    for item in lst:\n        if item[1] <= len(result):\n            result.append(item)\n    return result[-1]\n```",
+        "fixer": "```python\ndef max_aggregate(lst):\n    result = []\n    for item in lst:\n        if item[1] <= len(result):\n            result.append(item)\n    return result[-1]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize an empty dictionary to store the sum of values for each key (name).\n2. Iterate through each tuple in the input list.\n3. For each tuple, add its value to the corresponding key's total in the dictionary.\n4. Find the key with the highest total value in the dictionary.\n5. Return the key-value pair with the highest total as a string.",
+      "quality": 0.0,
+      "final_key": "def max_aggregate(tuples_list):\n    name_totals = {}\n    for name, score in tuples_list:\n        if name in name_totals:\n            name_totals[name] += score\n        else:\n            name_totals[name] = score\n    max_name = max(name_totals, key=name_totals.get)\n    return f\"{max_name}, {name_totals[max_name]}\"",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)\nassert max_aggregate([('John Doe', 100), ('Jane Smith', 95), ('Alice Johnson', 105)]) == ('John Doe', 100)\nassert max_aggregate([('Bob Brown', 80), ('Charlie Davis', 80), ('David Evans', 80)]) == ('David Evans', 80)\nassert max_aggregate([('Eve Green', 90), ('Frank White', 90), ('Grace Black', 90)]) == ('Grace Black', 90)\nassert max_aggregate([('Hannah Red', 110), ('Ivy Blue', 110), ('Jack Yellow', 110)]) == ('Hannah Red', 110)\n```",
+        "coder": "```python\ndef max_aggregate(tuples_list):\n    name_totals = {}\n    for name, score in tuples_list:\n        if name in name_totals:\n            name_totals[name] += score\n        else:\n            name_totals[name] = score\n    max_name = max(name_totals, key=name_totals.get)\n    return f\"{max_name}, {name_totals[max_name]}\"\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_aggregate(tuples_list):\n    name_totals = {}\n    for name, score in tuples_list:\n        if name in name_totals:\n            name_totals[name] += score\n        else:\n            name_totals[name] = score\n    max_name = max(name_totals, key=name_totals.get)\n    return f\"{max_name}, {name_totals[max_name]}\"\n```",
+        "fixer": "```python\ndef max_aggregate(tuples_list):\n    name_totals = {}\n    for name, score in tuples_list:\n        if name in name_totals:\n            name_totals[name] += score\n        else:\n            name_totals[name] = score\n    max_name = max(name_totals, key=name_totals.get)\n    return f\"{max_name}, {name_totals[max_name]}\"\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `combinations_colors` that accepts two parameters: `colors_list`, which is a list of colors, and `n`, which is the desired length of each combination.\n2. Initialize an empty list called `result`.\n3. Use a nested loop structure to generate all possible combinations of the given list with the specified length `n`. The outer loop iterates over each element in the `colors_list`, while the inner loop iterates from 0 to `n-1`.\n4. For each iteration of the inner loop, create a tuple containing the current element from the outer loop and the current index from the inner loop.\n5. Append the created tuple to the `result` list.\n6. After both loops have completed, return the `result` list.\n\nThis approach ensures that all combinations of the elements in the list are generated with repetition, as required by the problem statement.",
+      "quality": 0.0,
+      "final_key": "def max_aggregate(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return max(result, key=lambda x: x[1])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',123)])==('Juan Whelan', 245)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',123),('Juan Whelan',124)])==('Juan Whelan', 268)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',123),('Juan Whelan',124),('Juan Whelan',125)])==('Juan Whelan', 291)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',123),('Juan Whelan',124),('Juan Whelan',125),('Juan Whelan',126)])==('Juan Whelan', 314)\n```",
+        "coder": "```python\ndef combinations_colors(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_aggregate(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return max(result, key=lambda x: x[1])\n```",
+        "fixer": "```python\ndef max_aggregate(colors_list, n):\n    result = []\n    for color in colors_list:\n        for i in range(n):\n            result.append((color, i))\n    return max(result, key=lambda x: x[1])\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple",
+  "sample_keys": [
+    "def max_aggregate(scores):\n    max_score = float('-inf')\n    max_name = ''\n    for name, score in scores:\n        if score > max_score:\n            max_score = score\n            max_name = name\n    return (max_name, max_score)",
+    "def max_aggregate(tuples_list):\n    max_name = None\n    max_score = float('-inf')\n    \n    for name, score in tuples_list:\n        if score > max_score:\n            max_score = score\n            max_name = name\n    \n    return (max_name, max_score)",
+    "def max_aggregate(tuples_list):\n    max_sum = float('-inf')\n    max_name = None\n    for name, score in tuples_list:\n        total_score = score + (name == 'Juan Whelan' or name == 'Sabah Colley')\n        if total_score > max_sum:\n            max_sum = total_score\n            max_name = name\n    return (max_name, max_sum)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2385.0,
+    "small_out": 563.0,
+    "small_s": 9.017574065015651
+  },
+  "calls_plus": {
+    "large_in": 148.0,
+    "large_out": 80.0,
+    "large_s": 2.455357289989479,
+    "small_in": 2273.0,
+    "small_out": 462.0,
+    "small_s": 9.230557183007477
+  },
+  "calls_samples": {
+    "small_in": 8443.0,
+    "small_out": 2181.0,
+    "small_s": 45.48270451804274
+  }
+}

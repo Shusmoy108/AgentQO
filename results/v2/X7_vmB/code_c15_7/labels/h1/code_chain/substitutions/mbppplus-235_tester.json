@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-235",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(1) == 0\nassert even_bit_set_number(2) == 2\nassert even_bit_set_number(3) == 2\nassert even_bit_set_number(255) == 0\n```",
+  "reference_key": "assert even_bit_set_number(0) == 0\nassert even_bit_set_number(1) == 0\nassert even_bit_set_number(2) == 2\nassert even_bit_set_number(3) == 2\nassert even_bit_set_number(255) == 0",
+  "final_key_plus": "def even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```",
+    "fixer": "```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def even_bit_set_number(num):\r\n    result = 0\r\n    for i in range(32):  # Assuming a 32-bit integer\r\n        if num & (1 << i) > 0:  # Check if the ith bit is set\r\n            result |= (1 << i)  # Set the ith bit in the result\r\n    return result\r\n\r\n# Testing the function on typical cases\r\nassert even_bit_set_number(0b10101010) == 0b10101010  # Input has all odd bits, returns the same number\r\n\r\n# Testing the function with specific conditions where odd bits should be set\r\nassert even_bit_set_number(0b01010101) == 0b00010101  # Only second position (starting from 0th index) is set\r\nassert even_bit_set_number(0xFFFFFFFF) == 0xAAAAAAAA  # All bits except for the last (31st) are set\r\nassert even_bit_set_number(1) == 1  # Only the first bit is set\r\nassert even_bit_set_number(-1) == -1  # No bits are set as negative numbers do not have a fixed bit pattern like positive integers\r\n\r\n# Additional test cases to cover edge cases\r\nassert even_bit_set_number(0x80000000) == 0x80000000  # All 32 bits are set because it's a power of two\r\nassert even_bit_set_number(-1) == -1  # If the input is max negative int, still returns -1",
+      "reference_key": "assert even_bit_set_number(0) == 0\nassert even_bit_set_number(1) == 0\nassert even_bit_set_number(2) == 2\nassert even_bit_set_number(3) == 2\nassert even_bit_set_number(255) == 0",
+      "key_differs": true,
+      "text": "```python\ndef even_bit_set_number(num):\r\n    result = 0\r\n    for i in range(32):  # Assuming a 32-bit integer\r\n        if num & (1 << i) > 0:  # Check if the ith bit is set\r\n            result |= (1 << i)  # Set the ith bit in the result\r\n    return result\r\n\r\n# Testing the function on typical cases\r\nassert even_bit_set_number(0b10101010) == 0b10101010  # Input has all odd bits, returns the same number\r\n\r\n# Testing the function with specific conditions where odd bits should be set\r\nassert even_bit_set_number(0b01010101) == 0b00010101  # Only second position (starting from 0th index) is set\r\nassert even_bit_set_number(0xFFFFFFFF) == 0xAAAAAAAA  # All bits except for the last (31st) are set\r\nassert even_bit_set_number(1) == 1  # Only the first bit is set\r\nassert even_bit_set_number(-1) == -1  # No bits are set as negative numbers do not have a fixed bit pattern like positive integers\r\n\r\n# Additional test cases to cover edge cases\r\nassert even_bit_set_number(0x80000000) == 0x80000000  # All 32 bits are set because it's a power of two\r\nassert even_bit_set_number(-1) == -1  # If the input is max negative int, still returns -1\r\n```",
+      "quality": 0.0,
+      "final_key": "def even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```",
+        "fixer": "```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Check with typical cases\nassert even_bit_set_number(10) == 10  # Only even bits are set\nassert even_bit_set_number(7) == 4  # The first two bits are set\nassert even_bit_set_number(8) == 8  # No even bits are set, since all bits are set\n\n# Edge case: Checking if setting the last bit makes no difference\nassert even_bit_set_number(1) == 1  # Just the last bit should be set\nassert even_bit_set_number(64) == 64  # All bits are already set\n\n# Edge case: Checking if setting the very first bit works correctly\nassert even_bit_set_number(1) == 1  # All bits are set",
+      "reference_key": "assert even_bit_set_number(0) == 0\nassert even_bit_set_number(1) == 0\nassert even_bit_set_number(2) == 2\nassert even_bit_set_number(3) == 2\nassert even_bit_set_number(255) == 0",
+      "key_differs": true,
+      "text": "```python\n# Check with typical cases\nassert even_bit_set_number(10) == 10  # Only even bits are set\nassert even_bit_set_number(7) == 4  # The first two bits are set\nassert even_bit_set_number(8) == 8  # No even bits are set, since all bits are set\n\n# Edge case: Checking if setting the last bit makes no difference\nassert even_bit_set_number(1) == 1  # Just the last bit should be set\nassert even_bit_set_number(64) == 64  # All bits are already set\n\n# Edge case: Checking if setting the very first bit works correctly\nassert even_bit_set_number(1) == 1  # All bits are set\n```",
+      "quality": 0.0,
+      "final_key": "def even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```",
+        "fixer": "```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert median_trapezium(10, 20, 30) == 20\nassert median_trapezium(5, 15, 25) == 15\nassert median_trapezium(7, 8, 9) == 8\nassert median_trapezium(1, 2, 3) == 2\nassert median_trapezium(4, 6, 8) == 6",
+      "reference_key": "assert even_bit_set_number(0) == 0\nassert even_bit_set_number(1) == 0\nassert even_bit_set_number(2) == 2\nassert even_bit_set_number(3) == 2\nassert even_bit_set_number(255) == 0",
+      "key_differs": true,
+      "text": "```python\nassert median_trapezium(10, 20, 30) == 20\nassert median_trapezium(5, 15, 25) == 15\nassert median_trapezium(7, 8, 9) == 8\nassert median_trapezium(1, 2, 3) == 2\nassert median_trapezium(4, 6, 8) == 6\n```",
+      "quality": 0.0,
+      "final_key": "def even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n```",
+        "fixer": "```python\ndef even_bit_set_number(num):\n    result = 0\n    for i in range(32):  # Assuming a 32-bit integer\n        if num & (1 << i) > 0:  # Check if the ith bit is set\n            result |= (1 << i)  # Set the ith bit in the result\n    return result\n\n# Test cases\nassert even_bit_set_number(10) == 10\nassert even_bit_set_number(20) == 30\nassert even_bit_set_number(30) == 30\nassert median_trapezium(10, 20, 30) == 20\nassert median_trapezium(5, 15, 25) == 15\nassert median_trapezium(7, 8, 9) == 8\nassert median_trapezium(1, 2, 3) == 2\nassert median_trapezium(4, 6, 8) == 6\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert even_bit_set_number(10) == 10\nassert even_bit_set_number(1) == 1\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(2**31 - 1) == 2**31 - 1\nassert even_bit_set_number(-1) == -1",
+  "sample_keys": [
+    "assert even_bit_set_number(49) == 48  # Even bits are set starting from the rightmost position\nassert even_bit_set_number(65) == 64  # The rightmost even bit is set\nassert even_bit_set_number(20) == 20  # Already has even bits set\nassert even_bit_set_number(1) == 1  # Only the least significant bit is set\nassert even_bit_set_number(2**31 - 1) == (2**31 - 1)  # All bits except the leftmost are set",
+    "# Test with a positive integer\nassert even_bit_set_number(10) == 10\n\n# Test with a negative integer\nassert even_bit_set_number(-10) == -10\n\n# Test with zero\nassert even_bit_set_number(0) == 0\n\n# Test with a very large positive integer\nassert even_bit_set_number(4294967295) == 4294967295\n\n# Test with a very large negative integer\nassert even_bit_set_number(-4294967295) == -4294967295",
+    "assert even_bit_set_number(9) == 18\nassert even_bit_set_number(64) == 64\nassert even_bit_set_number(7) == 8\nassert even_bit_set_number(1) == 2\nassert even_bit_set_number(2**32 - 1) == 2**32 - 1",
+    "assert even_bit_set_number(10) == 10\nassert even_bit_set_number(0) == 0\nassert even_bit_set_number(1) == 2\nassert even_bit_set_number(-1) == -2\nassert even_bit_set_number(31) == 32",
+    "# Edge case: negative number\nassert even_bit_set_number(-1) == -1\n\n# Edge case: zero\nassert even_bit_set_number(0) == 0\n\n# Typical positive numbers\nassert even_bit_set_number(49) == 84\nassert even_bit_set_number(256) == 256\nassert even_bit_set_number(7) == 8"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1537.0,
+    "small_out": 556.0,
+    "small_s": 11.865822576975916
+  },
+  "calls_plus": {
+    "small_in": 1312.0,
+    "small_out": 477.0,
+    "small_s": 9.773004190967185,
+    "large_in": 201.0,
+    "large_out": 67.0,
+    "large_s": 1.4501313080254477
+  },
+  "calls_samples": {
+    "small_in": 1005.0,
+    "small_out": 511.0,
+    "small_s": 9.848288670997135
+  }
+}

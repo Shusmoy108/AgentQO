@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-116",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```",
+  "reference_key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+  "final_key_plus": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        if not isinstance(num, int) or num < 0:\n            raise ValueError(\"All elements in the tuple must be non-negative integers.\")\n        result += num * (10 ** i)\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((7,8,9,0)) == 7890\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((10,20,30)) == 102030\nassert tuple_to_int((-1,-2,-3)) == -123\n```",
+    "verifier": "PICK: B\n```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        if not isinstance(num, int) or num < 0:\n            raise ValueError(\"All elements in the tuple must be non-negative integers.\")\n        result += num * (10 ** i)\n    return result\n```",
+    "fixer": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        if not isinstance(num, int) or num < 0:\n            raise ValueError(\"All elements in the tuple must be non-negative integers.\")\n        result += num * (10 ** i)\n    return result\n\n# Test cases\nassert tuple_to_int((1,2,3))==123\nassert tuple_to_int((4,5,6))==456\nassert tuple_to_int((5,6,7))==567\nassert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((7,8,9,0)) == 7890\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((10,20,30)) == 102030\nassert tuple_to_int((-1,-2,-3)) == -123\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def tuple_to_int(tup):\n    result = 0\n    for i in range(len(tup)):\n        result += tup[i] * (10 ** i)\n    return result",
+      "reference_key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i in range(len(tup)):\n        result += tup[i] * (10 ** i)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_int(tup):\n    result = 0\n    for i in range(len(tup)):\n        result += tup[i] * (10 ** i)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((7,8,9,0)) == 7890\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((10,20,30)) == 102030\nassert tuple_to_int((-1,-2,-3)) == -123\n```",
+        "verifier": "PICK: A\n\n```python\ndef tuple_to_int(tup):\n    result = 0\n    for i in range(len(tup)):\n        result += tup[i] * (10 ** i)\n    return result\n```",
+        "fixer": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i in range(len(tup)):\n        result += tup[i] * (10 ** i)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+      "key_differs": true,
+      "text": "``` Python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_int((9,8,7)) == 987\nassert tuple_to_int((0,0,0)) == 0\nassert tuple_to_int((10,20,30)) == 102030\nassert tuple_to_int((-1,-2,-3)) == -123\nassert tuple_to_int((100,200,300)) == 100200300\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```",
+        "fixer": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+      "reference_key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```",
+      "quality": 1.0,
+      "final_key": "def tuple_to_int(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_to_int((4,5,6)) == 456\nassert tuple_to_int((0,1,2)) == 12\nassert tuple_to_int((-1,-2,-3)) == -123\nassert tuple_to_int((9,8,7)) == 987\nassert tuple_to_int((10,11,12,13)) == 10111213\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_to_int(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```",
+        "fixer": "```python\ndef tuple_to_int(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+  "sample_keys": [
+    "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+    "def tuple_to_int(tup):\n    result = 0\n    for index, num in enumerate(tup):\n        result += num * (10 ** index)\n    return result",
+    "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+    "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+    "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1435.0,
+    "small_out": 542.0,
+    "small_s": 11.387247775041033
+  },
+  "calls_plus": {
+    "small_in": 1219.0,
+    "small_out": 499.0,
+    "small_s": 10.406896042026347,
+    "large_in": 216.0,
+    "large_out": 43.0,
+    "large_s": 0.9750838030013256
+  },
+  "calls_samples": {
+    "small_in": 1080.0,
+    "small_out": 215.0,
+    "small_s": 3.5779561540402938
+  }
+}

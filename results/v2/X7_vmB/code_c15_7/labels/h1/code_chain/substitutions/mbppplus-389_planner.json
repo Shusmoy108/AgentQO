@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-389",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Understand that Lucas numbers are similar to Fibonacci numbers but start with 2 and 1 instead of 0 and 1.\n2. Define a function `find_lucas` that takes an integer `n` as its argument.\n3. Use recursion or iteration to calculate the n'th Lucas number, considering the base cases for the first two Lucas numbers (L(0) = 2, L(1) = 1).\n4. Return the calculated n'th Lucas number from the function.\n5. Test the function with the provided test case to ensure it works correctly.",
+  "reference_key": null,
+  "final_key_plus": "def find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        return find_lucas(n-1) + find_lucas(n-2)\n\n# Test cases\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377\n```",
+    "coder": "```python\ndef find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        return find_lucas(n-1) + find_lucas(n-2)\n```",
+    "verifier": "PICK: B\n\n```python\ndef find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        return find_lucas(n-1) + find_lucas(n-2)\n\n# Test cases\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377\n```",
+    "fixer": "```python\ndef find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        return find_lucas(n-1) + find_lucas(n-2)\n\n# Test cases\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a helper function `is_valid_parent` that checks if a parent node is valid in a binary heap.\n2. Iterate through the array starting from the second element (index 1).\n3. For each element, call `is_valid_parent` to ensure it satisfies the heap property.\n4. If any element fails the validation, return False.\n5. If all elements pass the validation, return True.\n\nHere's the implementation:\n\n```python\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```\n\nThis function will correctly identify whether the given array represents a min heap or not based on the heap property.",
+      "quality": 0.0,
+      "final_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n\ndef find_lucas(n):\n    if n <= 1:\n        return n\n    \n    lucas_numbers = [2, 1]\n    \n    for i in range(2, n + 1):\n        next_lucas_number = lucas_numbers[-1] + lucas_numbers[-2]\n        lucas_numbers.append(next_lucas_number)\n    \n    return lucas_numbers[n - 1]\n\n# Test cases\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(0) == 2\nassert find_lucas(1) == 1\nassert find_lucas(2) == 3\nassert find_lucas(3) == 4\nassert find_lucas(4) == 7\nassert find_lucas(5) == 11\nassert find_lucas(6) == 18\nassert find_lucas(7) == 29",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_lucas(0) == 2\nassert find_lucas(1) == 1\nassert find_lucas(2) == 3\nassert find_lucas(3) == 4\nassert find_lucas(4) == 7\nassert find_lucas(5) == 11\nassert find_lucas(6) == 18\nassert find_lucas(7) == 29\nassert find_lucas(8) == 47\nassert find_lucas(9) == 76\n```",
+        "coder": "```python\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n\ndef find_lucas(n):\n    if n <= 1:\n        return n\n    \n    lucas_numbers = [2, 1]\n    \n    for i in range(2, n + 1):\n        next_lucas_number = lucas_numbers[-1] + lucas_numbers[-2]\n        lucas_numbers.append(next_lucas_number)\n    \n    return lucas_numbers[n - 1]\n\n# Test cases\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(0) == 2\nassert find_lucas(1) == 1\nassert find_lucas(2) == 3\nassert find_lucas(3) == 4\nassert find_lucas(4) == 7\nassert find_lucas(5) == 11\nassert find_lucas(6) == 18\nassert find_lucas(7) == 29\n```",
+        "fixer": "```python\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n\ndef find_lucas(n):\n    if n <= 1:\n        return n\n    \n    lucas_numbers = [2, 1]\n    \n    for i in range(2, n + 1):\n        next_lucas_number = lucas_numbers[-1] + lucas_numbers[-2]\n        lucas_numbers.append(next_lucas_number)\n    \n    return lucas_numbers[n - 1]\n\n# Test cases\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(0) == 2\nassert find_lucas(1) == 1\nassert find_lucas(2) == 3\nassert find_lucas(3) == 4\nassert find_lucas(4) == 7\nassert find_lucas(5) == 11\nassert find_lucas(6) == 18\nassert find_lucas(7) == 29\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Understand that Lucas numbers are similar to Fibonacci numbers but start with 2 and 1 instead of 0 and 1.\n2. Define a function `find_lucas` that takes an integer `n` as its argument.\n3. Use recursion to calculate the n'th Lucas number, considering the base cases for the first two Lucas numbers (L(0) = 2, L(1) = 1).\n4. Return the calculated n'th Lucas number from the function.\n5. Test the function with the provided test case to ensure it works correctly.",
+      "quality": 0.0,
+      "final_key": "def find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        return find_lucas(n-1) + find_lucas(n-2)\n\n# Test cases\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377\n```",
+        "coder": "```python\ndef find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        return find_lucas(n-1) + find_lucas(n-2)\n```",
+        "verifier": "PICK: B\n\n```python\ndef find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        return find_lucas(n-1) + find_lucas(n-2)\n\n# Test cases\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377\n```",
+        "fixer": "```python\ndef find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        return find_lucas(n-1) + find_lucas(n-2)\n\n# Test cases\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a counter for inversions to zero.\n2. Iterate through the array from left to right.\n3. For each element, compare it with all elements that come after it.\n4. If an element is found that is smaller than the current element, increment the inversion counter.\n5. Return the total number of inversions.\n\nThis approach ensures that we correctly count all pairs of elements where one is greater than the other, which are considered inversions in the context of sorting algorithms.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377\n```",
+        "coder": "```python\ndef find_lucas(n):\n    # Base cases for the first two Lucas numbers\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    \n    # Initialize the first two Lucas numbers\n    lucas_0 = 2\n    lucas_1 = 1\n    \n    # Calculate the nth Lucas number iteratively\n    for i in range(2, n + 1):\n        next_lucas = lucas_0 + lucas_1\n        lucas_0 = lucas_1\n        lucas_1 = next_lucas\n    \n    return lucas_1\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef find_lucas(n):\n    # Base cases for the first two Lucas numbers\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    \n    # Initialize the first two Lucas numbers\n    lucas_0 = 2\n    lucas_1 = 1\n    \n    # Calculate the nth Lucas number iteratively\n    for i in range(2, n + 1):\n        next_lucas = lucas_0 + lucas_1\n        lucas_0 = lucas_1\n        lucas_1 = next_lucas\n    \n    return lucas_1\n\n# Test results\nassert find_lucas(9) == 76\nassert find_lucas(4) == 7\nassert find_lucas(3) == 4\nassert find_lucas(4) == 3\nassert find_lucas(8) == 29\nassert find_lucas(10) == 123\nassert find_lucas(12) == 233\nassert find_lucas(14) == 377\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def find_lucas(n):\n    if n <= 0:\n        return None\n    elif n == 1:\n        return 2\n    elif n == 2:\n        return 1\n    \n    a, b = 2, 1\n    for _ in range(2, n):\n        a, b = b, a + b\n    \n    return b",
+  "sample_keys": [
+    null,
+    "def find_lucas(n):\n    if n == 0:\n        return 2\n    elif n == 1:\n        return 1\n    else:\n        a, b = 2, 1\n        for _ in range(2, n + 1):\n            a, b = b, a + b\n        return b",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1398.0,
+    "small_out": 454.0,
+    "small_s": 9.90909839697997
+  },
+  "calls_plus": {
+    "large_in": 103.0,
+    "large_out": 123.0,
+    "large_s": 3.29462111601606,
+    "small_in": 1202.0,
+    "small_out": 446.0,
+    "small_s": 8.74684009703924
+  },
+  "calls_samples": {
+    "small_in": 4415.0,
+    "small_out": 1488.0,
+    "small_s": 28.738458457082743
+  }
+}

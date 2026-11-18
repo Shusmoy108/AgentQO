@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-261",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `division_elements` that accepts two parameters, both expected to be tuples.\n2. Use a generator expression within the `tuple()` constructor to iterate over pairs of elements from both tuples simultaneously using the `zip()` function.\n3. For each pair of elements, perform integer division (`//`) to ensure the result is an integer.\n4. Return the resulting tuple containing the quotient values.\n5. Include a docstring for clarity on what the function does and its parameters.",
+  "reference_key": null,
+  "final_key_plus": "def division_elements(tuple1, tuple2):\n    \"\"\"\n    Perform element-wise division of two tuples.\n\n    Parameters:\n    - tuple1: A tuple of numbers.\n    - tuple2: A tuple of numbers.\n\n    Returns:\n    - A tuple containing the results of dividing corresponding elements of tuple1 by tuple2.\n    \"\"\"\n    try:\n        return tuple(a / b for a, b in zip(tuple1, tuple2))\n    except ZeroDivisionError as e:\n        if \"integer division\" in str(e):\n            raise ValueError(\"Division by zero is not allowed.\")\n        else:\n            raise e\n\n# Test cases\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\nassert division_elements((10, 4, 6, 9), (5, 0, 0, 0)) == (2, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 2, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == ValueError(\"Division by zero is not allowed.\")",
+  "q_plus": 0.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": -0.6666666666666666,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 2, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == ValueError(\"Division by zero is not allowed.\")\n```",
+    "coder": "```python\ndef division_elements(tuple1, tuple2):\n    \"\"\"\n    Perform element-wise division of two tuples.\n\n    Parameters:\n    - tuple1: A tuple of numbers.\n    - tuple2: A tuple of numbers.\n\n    Returns:\n    - A tuple containing the results of dividing corresponding elements of tuple1 by tuple2.\n    \"\"\"\n    return tuple(a // b for a, b in zip(tuple1, tuple2))\n```",
+    "verifier": "PICK: B\n\n```python\ndef division_elements(tuple1, tuple2):\n    \"\"\"\n    Perform element-wise division of two tuples.\n\n    Parameters:\n    - tuple1: A tuple of numbers.\n    - tuple2: A tuple of numbers.\n\n    Returns:\n    - A tuple containing the results of dividing corresponding elements of tuple1 by tuple2.\n    \"\"\"\n    try:\n        return tuple(a / b for a, b in zip(tuple1, tuple2))\n    except ZeroDivisionError as e:\n        if \"integer division\" in str(e):\n            raise ValueError(\"Division by zero is not allowed.\")\n        else:\n            raise e\n\n# Test cases\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\nassert division_elements((10, 4, 6, 9), (5, 0, 0, 0)) == (2, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 2, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == ValueError(\"Division by zero is not allowed.\")\n```",
+    "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    \"\"\"\n    Perform element-wise division of two tuples.\n\n    Parameters:\n    - tuple1: A tuple of numbers.\n    - tuple2: A tuple of numbers.\n\n    Returns:\n    - A tuple containing the results of dividing corresponding elements of tuple1 by tuple2.\n    \"\"\"\n    try:\n        return tuple(a / b for a, b in zip(tuple1, tuple2))\n    except ZeroDivisionError as e:\n        if \"integer division\" in str(e):\n            raise ValueError(\"Division by zero is not allowed.\")\n        else:\n            raise e\n\n# Test cases\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\nassert division_elements((10, 4, 6, 9), (5, 0, 0, 0)) == (2, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (0, 2, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == ValueError(\"Division by zero is not allowed.\")\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `square_Sum` that accepts one parameter, `n`.\n2. Initialize a variable `sum_of_squares` to zero.\n3. Use a for loop to iterate from 1 to `n`.\n4. For each iteration, check if the current number is even using the modulus operator (`%`).\n5. If the number is even, add its square to `sum_of_squares`.\n6. After the loop completes, return the value of `sum_of_squares`.\n\nThis approach ensures that we correctly calculate the sum of squares of the first `n` even natural numbers.",
+      "quality": 1.0,
+      "final_key": "def division_elements(tuple1, tuple2):\n    result = []\n    for num1, num2 in zip(tuple1, tuple2):\n        if num2 != 0:\n            result.append(num1 / num2)\n        else:\n            result.append(\"undefined\")\n    return tuple(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9),(-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0),(0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((1, 1, 1, 1),(1, 1, 1, 1)) == (1, 1, 1, 1)\nassert division_elements((-1, -1, -1, -1),(1, 1, 1, 1)) == (-1, -1, -1, -1)\n```",
+        "coder": "```python\ndef square_sum(n):\n    sum_of_squares = 0\n    for i in range(1, n + 1):\n        if i % 2 == 0:\n            sum_of_squares += i ** 2\n    return sum_of_squares\n```",
+        "verifier": "PICK: B\n\n```python\ndef division_elements(tuple1, tuple2):\n    result = []\n    for num1, num2 in zip(tuple1, tuple2):\n        if num2 != 0:\n            result.append(num1 / num2)\n        else:\n            result.append(\"undefined\")\n    return tuple(result)\n```",
+        "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    result = []\n    for num1, num2 in zip(tuple1, tuple2):\n        if num2 != 0:\n            result.append(num1 / num2)\n        else:\n            result.append(\"undefined\")\n    return tuple(result)\n\n# Test cases\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9),(-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0),(0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((1, 1, 1, 1),(1, 1, 1, 1)) == (1, 1, 1, 1)\nassert division_elements((-1, -1, -1, -1),(1, 1, 1, 1)) == (-1, -1, -1, -1)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `division_elements` that accepts two parameters, both expected to be tuples.\n2. Utilize a generator expression within the `tuple()` constructor to iterate over pairs of elements from both tuples simultaneously using the `zip()` function.\n3. For each pair of elements, apply integer division (`//`) to obtain the quotient value.\n4. Return the resulting tuple containing the quotient values.\n5. Provide a comprehensive docstring that explains the purpose of the function, its parameters, its return type, and any exceptions it may throw.\n6. Ensure there are no typos or grammatical errors in the docstring.",
+      "quality": 0.0,
+      "final_key": "def division_elements(tuple1, tuple2):\n    \"\"\"\n    Perform element-wise division of two tuples.\n\n    Parameters:\n    - tuple1: A tuple of numbers.\n    - tuple2: A tuple of numbers.\n\n    Returns:\n    - A tuple containing the results of element-wise division of the input tuples.\n\n    Raises:\n    - ValueError: If either input tuple is empty or if the tuples have different lengths.\n    \"\"\"\n    if not tuple1 or not tuple2 or len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must be non-empty and of equal length.\")\n    \n    result = tuple(a // b for a, b in zip(tuple1, tuple2))\n    return result\n\n# Test cases\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 2, 3, 3)) == (0, 0, 0, 0)\ntry:\n    division_elements((10, 0, 6, 0), (5, 0, 3, 0))\nexcept ValueError as e:\n    print(e)  # Output: Both tuples must be non-empty and of equal length.\ntry:\n    division_elements((10, 4, 6, 9), (0, 2, 3, 3))\nexcept ValueError as e:\n    print(e)  # Output: Both tuples must be non-empty and of equal length.",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 2, 3, 3)) == (0, 0, 0, 0)\nassert division_elements((10, 0, 6, 0), (5, 0, 3, 0)) == (2, 0, 2, 0)\nassert division_elements((10, 4, 6, 9), (0, 2, 3, 3)) == ValueError(\"Both tuples must be non-empty and of equal length.\")\n```",
+        "coder": "```python\ndef division_elements(tuple1, tuple2):\n    \"\"\"\n    Perform element-wise division of two tuples.\n\n    Parameters:\n    - tuple1: A tuple of numbers.\n    - tuple2: A tuple of numbers.\n\n    Returns:\n    - A tuple containing the results of element-wise division of the input tuples.\n\n    Raises:\n    - ValueError: If either input tuple is empty or if the tuples have different lengths.\n    \"\"\"\n    if not tuple1 or not tuple2 or len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must be non-empty and of equal length.\")\n    \n    result = tuple(a // b for a, b in zip(tuple1, tuple2))\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef division_elements(tuple1, tuple2):\n    \"\"\"\n    Perform element-wise division of two tuples.\n\n    Parameters:\n    - tuple1: A tuple of numbers.\n    - tuple2: A tuple of numbers.\n\n    Returns:\n    - A tuple containing the results of element-wise division of the input tuples.\n\n    Raises:\n    - ValueError: If either input tuple is empty or if the tuples have different lengths.\n    \"\"\"\n    if not tuple1 or not tuple2 or len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must be non-empty and of equal length.\")\n    \n    result = tuple(a // b for a, b in zip(tuple1, tuple2))\n    return result\n\n# Test cases\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 2, 3, 3)) == (0, 0, 0, 0)\ntry:\n    division_elements((10, 0, 6, 0), (5, 0, 3, 0))\nexcept ValueError as e:\n    print(e)  # Output: Both tuples must be non-empty and of equal length.\ntry:\n    division_elements((10, 4, 6, 9), (0, 2, 3, 3))\nexcept ValueError as e:\n    print(e)  # Output: Both tuples must be non-empty and of equal length.\n```",
+        "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    \"\"\"\n    Perform element-wise division of two tuples.\n\n    Parameters:\n    - tuple1: A tuple of numbers.\n    - tuple2: A tuple of numbers.\n\n    Returns:\n    - A tuple containing the results of element-wise division of the input tuples.\n\n    Raises:\n    - ValueError: If either input tuple is empty or if the tuples have different lengths.\n    \"\"\"\n    if not tuple1 or not tuple2 or len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must be non-empty and of equal length.\")\n    \n    result = tuple(a // b for a, b in zip(tuple1, tuple2))\n    return result\n\n# Test cases\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((12, 6, 8, 16),(6, 3, 4, 4)) == (2, 2, 2, 4)\nassert division_elements((20, 14, 36, 18),(5, 7, 6, 9)) == (4, 2, 6, 2)\nassert division_elements((10, 4, 6, 9), (5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9), (-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0), (5, 2, 3, 3)) == (0, 0, 0, 0)\ntry:\n    division_elements((10, 0, 6, 0), (5, 0, 3, 0))\nexcept ValueError as e:\n    print(e)  # Output: Both tuples must be non-empty and of equal length.\ntry:\n    division_elements((10, 4, 6, 9), (0, 2, 3, 3))\nexcept ValueError as e:\n    print(e)  # Output: Both tuples must be non-empty and of equal length.\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `find_lucas` that takes one parameter, `n`.\n2. Initialize two variables, `a` and `b`, to 2 and 1 respectively, which are the first two Lucas numbers.\n3. Use a loop to iterate from 2 to `n-1`.\n4. In each iteration, calculate the next Lucas number by adding `a` and `b`.\n5. Update `a` and `b` for the next iteration.\n6. After the loop completes, return the value of `b`, which will be the nth Lucas number.\n\nThis approach ensures that we efficiently compute the nth Lucas number using a simple iterative method.",
+      "quality": 1.0,
+      "final_key": "def division_elements(tuple1, tuple2):\n    # Check if both tuples have the same length\n    if len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must have the same length\")\n    \n    # Perform element-wise division\n    result = tuple(a / b for a, b in zip(tuple1, tuple2))\n    \n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert division_elements((10, 4, 6, 9),(5, 2, 3, 3)) == (2, 2, 2, 3)\nassert division_elements((-10, -4, -6, -9),(-5, -2, -3, -3)) == (2, 2, 2, 3)\nassert division_elements((0, 0, 0, 0),(0, 0, 0, 0)) == (0, 0, 0, 0)\nassert division_elements((1, 1, 1, 1),(1, 1, 1, 1)) == (1, 1, 1, 1)\nassert division_elements((100, 200, 300, 400),(1, 2, 3, 4))\n```",
+        "coder": "```python\ndef find_lucas(n):\n    if n <= 1:\n        return n\n    a, b = 2, 1\n    for _ in range(2, n):\n        a, b = b, a + b\n    return b\n```",
+        "verifier": "PICK: B\n\n```python\ndef division_elements(tuple1, tuple2):\n    # Check if both tuples have the same length\n    if len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must have the same length\")\n    \n    # Perform element-wise division\n    result = tuple(a / b for a, b in zip(tuple1, tuple2))\n    \n    return result\n```",
+        "fixer": "```python\ndef division_elements(tuple1, tuple2):\n    # Check if both tuples have the same length\n    if len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must have the same length\")\n    \n    # Perform element-wise division\n    result = tuple(a / b for a, b in zip(tuple1, tuple2))\n    \n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def division_elements(tuple1, tuple2):\n    # Using list comprehension for element-wise division\n    try:\n        result = tuple(x / y for x, y in zip(tuple1, tuple2))\n        return result\n    except ZeroDivisionError:\n        return \"ZeroDivisionError: Division by zero\"",
+  "sample_keys": [
+    "def division_elements(tuple1, tuple2):\n    # Check if both tuples have the same length\n    if len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must have the same length\")\n    \n    # Initialize an empty list to store the division results\n    result = []\n    \n    # Iterate over the indices of the tuples\n    for i in range(len(tuple1)):\n        # Calculate the division result\n        try:\n            division_result = tuple1[i] / tuple2[i]\n        except ZeroDivisionError:\n            division_result = None\n        \n        # Append the calculated division result to the result list\n        result.append(division_result)\n    \n    # Return the result list\n    return result",
+    "def division_elements(tuple1, tuple2):\n    if len(tuple1) != len(tuple2):\n        raise ValueError(\"Both tuples must have the same length\")\n    \n    result = tuple(x / y for x, y in zip(tuple1, tuple2))\n    \n    return result",
+    "def division_elements(tuple1, tuple2):\n    # Initialize an empty list to store the results\n    result = []\n    \n    # Iterate over the elements of both tuples simultaneously\n    for num1, num2 in zip(tuple1, tuple2):\n        # Perform integer division and append the result to the list\n        if num2 != 0:\n            result.append(num1 // num2)\n        else:\n            raise ZeroDivisionError(\"integer division or modulo by zero\")\n    \n    # Return the list containing the results\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2249.0,
+    "small_out": 612.0,
+    "small_s": 13.281711839023046
+  },
+  "calls_plus": {
+    "large_in": 138.0,
+    "large_out": 103.0,
+    "large_s": 2.926579983002739,
+    "small_in": 2271.0,
+    "small_out": 1052.0,
+    "small_s": 20.71885430702241
+  },
+  "calls_samples": {
+    "small_in": 7237.0,
+    "small_out": 2027.0,
+    "small_s": 38.698799302015686
+  }
+}

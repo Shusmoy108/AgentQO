@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-421",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert concatenate_tuple((\"Hello\", \"World\")) == 'Hello-World'\nassert concatenate_tuple((123, 456)) == '123-456'\nassert concatenate_tuple((\"a\", \"b\", \"c\", \"d\", \"e\")) == 'a-b-c-d-e'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple((True, False)) == 'True-False'\n```",
+  "reference_key": "assert concatenate_tuple((\"Hello\", \"World\")) == 'Hello-World'\nassert concatenate_tuple((123, 456)) == '123-456'\nassert concatenate_tuple((\"a\", \"b\", \"c\", \"d\", \"e\")) == 'a-b-c-d-e'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple((True, False)) == 'True-False'",
+  "final_key_plus": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```",
+    "fixer": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Edge cases\nassert concatenate_tuple((1, 2)) == '1-2'\nassert concatenate_tuple(('x', 0, 3, '', 7)) == 'x-0-3--7'\n\n# Typical scenarios\nassert concatenate_tuple((\"abc\", 6.78, 'xyz')) == 'abc-6.78-xyz'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(('test')) == 'test'\nassert concatenate_tuple(()) == ''",
+      "reference_key": "assert concatenate_tuple((\"Hello\", \"World\")) == 'Hello-World'\nassert concatenate_tuple((123, 456)) == '123-456'\nassert concatenate_tuple((\"a\", \"b\", \"c\", \"d\", \"e\")) == 'a-b-c-d-e'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple((True, False)) == 'True-False'",
+      "key_differs": true,
+      "text": "```python\n# Edge cases\nassert concatenate_tuple((1, 2)) == '1-2'\nassert concatenate_tuple(('x', 0, 3, '', 7)) == 'x-0-3--7'\n\n# Typical scenarios\nassert concatenate_tuple((\"abc\", 6.78, 'xyz')) == 'abc-6.78-xyz'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(('test')) == 'test'\nassert concatenate_tuple(()) == ''\n```",
+      "quality": 1.0,
+      "final_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```",
+        "fixer": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert concatenate_tuple(('hello', 'world')) == 'hello-world'\nassert concatenate_tuple((0.2, 'a', 'b', 9)) == '0.2-a-b-9'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('1', '2', '3', '4', '5')) == '1-2-3-4-5'\nassert concatenate_tuple(('', '', '')) == ''",
+      "reference_key": "assert concatenate_tuple((\"Hello\", \"World\")) == 'Hello-World'\nassert concatenate_tuple((123, 456)) == '123-456'\nassert concatenate_tuple((\"a\", \"b\", \"c\", \"d\", \"e\")) == 'a-b-c-d-e'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple((True, False)) == 'True-False'",
+      "key_differs": true,
+      "text": "```python\nassert concatenate_tuple(('hello', 'world')) == 'hello-world'\nassert concatenate_tuple((0.2, 'a', 'b', 9)) == '0.2-a-b-9'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('1', '2', '3', '4', '5')) == '1-2-3-4-5'\nassert concatenate_tuple(('', '', '')) == ''\n```",
+      "quality": 1.0,
+      "final_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```",
+        "fixer": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'c']) == 2\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'e']) == 1\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), []) == 0\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a', 'a']) == 5",
+      "reference_key": "assert concatenate_tuple((\"Hello\", \"World\")) == 'Hello-World'\nassert concatenate_tuple((123, 456)) == '123-456'\nassert concatenate_tuple((\"a\", \"b\", \"c\", \"d\", \"e\")) == 'a-b-c-d-e'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple((True, False)) == 'True-False'",
+      "key_differs": true,
+      "text": "```python\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'c']) == 2\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'e']) == 1\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), []) == 0\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a', 'a']) == 5\n```",
+      "quality": 0.0,
+      "final_key": "def concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n\n# Test cases\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"QWE\", \"is\", 4, \"RTY\")) == 'QWE-is-4-RTY'\nassert concatenate_tuple((\"ZEN\", \"is\", 4, \"OP\")) == 'ZEN-is-4-OP'\n\n# Additional tests\ndef count_Occurrence(lst, target):\n    return lst.count(target)\n\n# Test cases for count_Occurrence\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'c']) == 2\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'e']) == 1\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), []) == 0\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a', 'a']) == 5",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n\n# Test cases\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"QWE\", \"is\", 4, \"RTY\")) == 'QWE-is-4-RTY'\nassert concatenate_tuple((\"ZEN\", \"is\", 4, \"OP\")) == 'ZEN-is-4-OP'\n\n# Additional tests\ndef count_Occurrence(lst, target):\n    return lst.count(target)\n\n# Test cases for count_Occurrence\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'c']) == 2\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'e']) == 1\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), []) == 0\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a', 'a']) == 5\n```",
+        "fixer": "```python\ndef concatenate_tuple(tup):\n    result = \"\"\n    for item in tup:\n        item_str = str(item)\n        result += item_str + \"-\"\n    return result[:-1]\n\n# Test cases\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"QWE\", \"is\", 4, \"RTY\")) == 'QWE-is-4-RTY'\nassert concatenate_tuple((\"ZEN\", \"is\", 4, \"OP\")) == 'ZEN-is-4-OP'\n\n# Additional tests\ndef count_Occurrence(lst, target):\n    return lst.count(target)\n\n# Test cases for count_Occurrence\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'c']) == 2\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'e']) == 1\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), []) == 0\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'a', 'a', 'a', 'a']) == 5\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"apple\", \"banana\", \"cherry\")) == 'apple-banana-cherry'\nassert concatenate_tuple((True, False)) == 'True-False'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('single')) == 'single'",
+  "sample_keys": [
+    "assert concatenate_tuple((\"Hello\", 2023)) == 'Hello-2023'\nassert concatenate_tuple((True, False, True)) == 'True-False-True'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(\"Python\") == 'Python'\nassert concatenate_tuple([\"a\", \"b\", \"c\"]) == 'a-b-c'",
+    "assert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\nassert concatenate_tuple((\"abc\", 123)) == 'abc-123'\nassert concatenate_tuple((\"\", \"\")) == ''\nassert concatenate_tuple((\"hello\",)) == 'hello'\nassert concatenate_tuple((1, 2, 3)) == '1-2-3'",
+    "assert concatenate_tuple((\"name\", \"age\")) == 'name-age'\nassert concatenate_tuple((20,)) == '20'\nassert concatenate_tuple((\"Hello\",)) == 'Hello'\nassert concatenate_tuple(('a', 'b', 'c')) == 'a-b-c'\nassert concatenate_tuple(()) == ''",
+    "assert concatenate_tuple((\"ID\", \"is\", 4, 8)) == 'ID-is-4-8'\nassert concatenate_tuple((\"Hello\", \" world\")) == 'Hello-world'\nassert concatenate_tuple((\"123\", \"abc\")) == '123-abc'\nassert concatenate_tuple(()) == ''\nassert concatenate_tuple(('a', 'b', 'c')) == 'a-b-c'",
+    "# Test case 1: Normal tuple with integers, strings, and a float\nassert concatenate_tuple((\"ID\", \"is\", 4, \"UTS\")) == 'ID-is-4-UTS'\n\n# Test case 2: Empty tuple\nassert concatenate_tuple(()) == ''\n\n# Test case 3: Tuple with single element\nassert concatenate_tuple(('only_element')) == 'only_element'\n\n# Test case 4: Tuple with string elements containing spaces\nassert concatenate_tuple((\"Hello\", \"world\")) == 'Hello-world'\n\n# Test case 5: Tuple with mixed data types (including non-string)\nassert concatenate_tuple((True, False, 0, 1)) == 'TrueFalse01'"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1575.0,
+    "small_out": 574.0,
+    "small_s": 12.165428792010061
+  },
+  "calls_plus": {
+    "small_in": 1378.0,
+    "small_out": 327.0,
+    "small_s": 6.8258149180037435,
+    "large_in": 172.0,
+    "large_out": 90.0,
+    "large_s": 2.014395507023437
+  },
+  "calls_samples": {
+    "small_in": 860.0,
+    "small_out": 475.0,
+    "small_s": 8.962941131030675
+  }
+}

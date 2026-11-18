@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-788",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `new_tuple` that takes two parameters: a list and a string.\n2. Convert the list into a tuple using the `tuple()` constructor.\n3. Concatenate the resulting tuple with the string, converting the string into a single-element tuple using parentheses.\n4. Return the concatenated result as a new tuple.\n5. Ensure the function handles the provided test case correctly by returning `('WEB', 'is', 'best')`.",
+  "reference_key": null,
+  "final_key_plus": "def new_tuple(lst, str):\n    # Convert the list to a tuple\n    lst_tuple = tuple(lst)\n    # Convert the string to a single-element tuple\n    str_tuple = (str,)\n    # Concatenate the tuples\n    result = lst_tuple + str_tuple\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert new_tuple([], \"\") == ()\nassert new_tuple([\"hello\"], \"world\") == ('hello', 'world')\nassert new_tuple([\"a\", \"b\", \"c\"], \"d\") == ('a', 'b', 'c', 'd')\nassert new_tuple([1, 2, 3], \"4\") == (1, 2, 3, \"4\")\nassert new_tuple([\"one\", \"two\", \"three\"], \"four five six\") == ('one', 'two', 'three', 'four five six')\n```",
+    "coder": "```python\ndef new_tuple(lst, str):\n    # Convert the list to a tuple\n    lst_tuple = tuple(lst)\n    # Convert the string to a single-element tuple\n    str_tuple = (str,)\n    # Concatenate the tuples\n    result = lst_tuple + str_tuple\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef new_tuple(lst, str):\n    # Convert the list to a tuple\n    lst_tuple = tuple(lst)\n    # Convert the string to a single-element tuple\n    str_tuple = (str,)\n    # Concatenate the tuples\n    result = lst_tuple + str_tuple\n    return result\n```",
+    "fixer": "```python\ndef new_tuple(lst, str):\n    # Convert the list to a tuple\n    lst_tuple = tuple(lst)\n    # Convert the string to a single-element tuple\n    str_tuple = (str,)\n    # Concatenate the tuples\n    result = lst_tuple + str_tuple\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_magic_square` that takes a 2D list (matrix) as input.\n2. Calculate the sum of each row, column, and diagonal.\n3. Check if all sums are equal.\n4. Return True if they are equal, False otherwise.\n\n```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n```\n\nThis function checks if the given matrix is a magic square by comparing the sums of its rows, columns, and diagonals. If all sums are equal, it returns True; otherwise, it returns False.",
+      "quality": 1.0,
+      "final_key": "def new_tuple(strings, value):\n    return tuple(strings + [value])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 10]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```",
+        "coder": "```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n```",
+        "verifier": "PICK: B\n\n```python\ndef new_tuple(strings, value):\n    return tuple(strings + [value])\n```",
+        "fixer": "```python\ndef new_tuple(strings, value):\n    return tuple(strings + [value])\n\n# Test cases\nassert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')\nassert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')\nassert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 10]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "REWRITTEN OUTPUT:\nPLAN:\n1. Define a function named `new_tuple` that takes two parameters: a list and a string.\n2. Convert the list into a tuple using the `tuple()` constructor.\n3. Concatenate the resulting tuple with the string, converting the string into a single-element tuple using parentheses.\n4. Return the concatenated result as a new tuple.\n5. Ensure the function handles the provided test case correctly by returning `('WEB', 'is', 'best')`.",
+      "quality": 1.0,
+      "final_key": "def new_tuple(lst, str):\n    # Convert the list to a tuple\n    lst_tuple = tuple(lst)\n    # Convert the string to a single-element tuple\n    str_tuple = (str,)\n    # Concatenate the tuples\n    result = lst_tuple + str_tuple\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert new_tuple([], \"\") == ()\nassert new_tuple([\"hello\"], \"world\") == ('hello', 'world')\nassert new_tuple([\"a\", \"b\", \"c\"], \"d\") == ('a', 'b', 'c', 'd')\nassert new_tuple([1, 2, 3], \"4\") == (1, 2, 3, \"4\")\nassert new_tuple([\"one\", \"two\", \"three\"], \"four five six\") == ('one', 'two', 'three', 'four five six')\n```",
+        "coder": "```python\ndef new_tuple(lst, str):\n    # Convert the list to a tuple\n    lst_tuple = tuple(lst)\n    # Convert the string to a single-element tuple\n    str_tuple = (str,)\n    # Concatenate the tuples\n    result = lst_tuple + str_tuple\n    return result\n```",
+        "verifier": "PICK: A\n\n```python\ndef new_tuple(lst, str):\n    # Convert the list to a tuple\n    lst_tuple = tuple(lst)\n    # Convert the string to a single-element tuple\n    str_tuple = (str,)\n    # Concatenate the tuples\n    result = lst_tuple + str_tuple\n    return result\n```",
+        "fixer": "```python\ndef new_tuple(lst, str):\n    # Convert the list to a tuple\n    lst_tuple = tuple(lst)\n    # Convert the string to a single-element tuple\n    str_tuple = (str,)\n    # Concatenate the tuples\n    result = lst_tuple + str_tuple\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `filter_odd_numbers` that takes a list as input.\n2. Initialize an empty list called `odd_numbers`.\n3. Iterate through each number in the input list using a for loop.\n4. Check if the current number is odd by using the modulus operator (`%`). If the remainder when divided by 2 is not equal to 0, the number is odd.\n5. Append the odd number to the `odd_numbers` list.\n6. Return the `odd_numbers` list.\n\nThis approach ensures that all odd numbers from the input list are collected into a new list, which is then returned as the result.",
+      "quality": 1.0,
+      "final_key": "def new_tuple(strings, value):\n    return tuple(strings + [value])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert filter_odd_numbers([1, 2, 3, 4, 5]) == [1, 3, 5]\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2, 4, 6]) == []\nassert filter_odd_numbers([1, 3, 5, 7, 9]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([-1, -2, -3, -4, -5]) == [-1, -3, -5]\n```",
+        "coder": "```python\ndef filter_odd_numbers(numbers):\n    odd_numbers = []\n    for num in numbers:\n        if num % 2 != 0:\n            odd_numbers.append(num)\n    return odd_numbers\n```",
+        "verifier": "PICK: B\n\n```python\ndef new_tuple(strings, value):\n    return tuple(strings + [value])\n```",
+        "fixer": "```python\ndef new_tuple(strings, value):\n    return tuple(strings + [value])\n\n# Test cases\nassert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')\nassert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')\nassert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')\nassert filter_odd_numbers([1, 2, 3, 4, 5]) == [1, 3, 5]\nassert filter_odd_numbers([]) == []\nassert filter_odd_numbers([2, 4, 6]) == []\nassert filter_odd_numbers([1, 3, 5, 7, 9]) == [1, 3, 5, 7, 9]\nassert filter_odd_numbers([-1, -2, -3, -4, -5]) == [-1, -3, -5]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple",
+  "sample_keys": [
+    "def new_tuple(string_list, additional_string):\n    return tuple(string_list + [additional_string])",
+    "def new_tuple(lst, s):\n    result = lst + [s]\n    return tuple(result)",
+    "def new_tuple(string_list, value):\n    return string_list + (value,)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1479.0,
+    "small_out": 389.0,
+    "small_s": 7.970011577999685
+  },
+  "calls_plus": {
+    "large_in": 115.0,
+    "large_out": 96.0,
+    "large_s": 2.101713332987856,
+    "small_in": 1459.0,
+    "small_out": 319.0,
+    "small_s": 5.047022774000652
+  },
+  "calls_samples": {
+    "small_in": 4637.0,
+    "small_out": 854.0,
+    "small_s": 15.379789316939423
+  }
+}

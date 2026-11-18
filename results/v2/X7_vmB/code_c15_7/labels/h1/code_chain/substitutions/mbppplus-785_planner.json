@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-785",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `tuple_str_int` that takes a single argument, `str_tuple`, which is expected to be a string representation of a tuple.\n2. Use the `eval()` function to safely evaluate the string as a Python expression, converting it into a tuple of integers.\n3. Return the resulting tuple of integers.\n4. Include a docstring within the function to describe its purpose and parameters.\n5. Test the function with the provided test case to ensure it works correctly.",
+  "reference_key": null,
+  "final_key_plus": "def tuple_str_int(str_tuple):\n    \"\"\"\n    Convert a string representation of a tuple into an actual tuple of integers.\n\n    Parameters:\n    str_tuple (str): A string representing a tuple of integers.\n\n    Returns:\n    tuple: An actual tuple of integers.\n    \"\"\"\n    return eval(str_tuple)",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert tuple_str_int(\"()\") == ()\nassert tuple_str_int(\"(10, -20, 30)\") == (10, -20, 30)\nassert tuple_str_int(\"(4, 5, 6, 7, 8)\") == (4, 5, 6, 7, 8)\nassert tuple_str_int(\"(-1, -2, -3, -4, -5)\") == (-1, -2, -3, -4, -5)\nassert tuple_str_int(\"(0, 0, 0, 0, 0)\") == (0, 0, 0, 0, 0)\n```",
+    "coder": "```python\ndef tuple_str_int(str_tuple):\n    \"\"\"\n    Convert a string representation of a tuple into an actual tuple of integers.\n\n    Parameters:\n    str_tuple (str): A string representing a tuple of integers.\n\n    Returns:\n    tuple: An actual tuple of integers.\n    \"\"\"\n    return eval(str_tuple)\n```",
+    "verifier": "PICK: A\n\n```python\ndef tuple_str_int(str_tuple):\n    \"\"\"\n    Convert a string representation of a tuple into an actual tuple of integers.\n\n    Parameters:\n    str_tuple (str): A string representing a tuple of integers.\n\n    Returns:\n    tuple: An actual tuple of integers.\n    \"\"\"\n    return eval(str_tuple)\n```",
+    "fixer": "```python\ndef tuple_str_int(str_tuple):\n    \"\"\"\n    Convert a string representation of a tuple into an actual tuple of integers.\n\n    Parameters:\n    str_tuple (str): A string representing a tuple of integers.\n\n    Returns:\n    tuple: An actual tuple of integers.\n    \"\"\"\n    return eval(str_tuple)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `string_to_list` that takes one parameter, `input_string`.\n2. Inside the function, use the `split()` method on the input string with a space as the separator.\n3. Return the resulting list of strings.\n\nHere's the complete implementation:\n\n```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```\n\nThis function will correctly split any given string into a list of words separated by spaces.",
+      "quality": 0.0,
+      "final_key": "def string_to_tuple(input_string):\n    # Remove parentheses from the input string\n    input_string = input_string.strip('()')\n    # Split the input string into a list based on commas\n    result = input_string.split(',')\n    # Convert each element in the list to an integer\n    result = [int(x) for x in result]\n    # Return the list of integers as a tuple\n    return tuple(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_str_int(\"()\") == ()\nassert tuple_str_int(\"(10, 20, 30)\") == (10, 20, 30)\nassert tuple_str_int(\"(4, 5, 6, 7)\") == (4, 5, 6, 7)\nassert tuple_str_int(\"(8, 9, 10, 11, 12)\") == (8, 9, 10, 11, 12)\nassert tuple_str_int(\"(13, 14, 15, 16, 17, 18)\") == (13, 14, 15, 16, 17, 18)\n```",
+        "coder": "```python\ndef string_to_list(input_string):\n    # Split the input string into a list based on spaces\n    result = input_string.split()\n    # Return the list of strings\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef string_to_tuple(input_string):\n    # Remove parentheses from the input string\n    input_string = input_string.strip('()')\n    # Split the input string into a list based on commas\n    result = input_string.split(',')\n    # Convert each element in the list to an integer\n    result = [int(x) for x in result]\n    # Return the list of integers as a tuple\n    return tuple(result)\n```",
+        "fixer": "```python\ndef string_to_tuple(input_string):\n    # Remove parentheses from the input string\n    input_string = input_string.strip('()')\n    # Split the input string into a list based on commas\n    result = input_string.split(',')\n    # Convert each element in the list to an integer\n    result = [int(x) for x in result]\n    # Return the list of integers as a tuple\n    return tuple(result)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `tuple_str_int` that takes a single argument, `str_tuple`, which is expected to be a string representation of a tuple.\n2. Use the `ast.literal_eval()` function instead of `eval()` for safe evaluation of strings as Python expressions.\n3. Convert the evaluated object to a tuple of integers using slicing.\n4. Return the resulting tuple of integers.\n5. Include a docstring within the function to describe its purpose and parameters.\n6. Test the function with the provided test case to ensure it works correctly.",
+      "quality": 0.0,
+      "final_key": "import ast\n\ndef tuple_str_int(str_tuple):\n    \"\"\"\n    Converts a string representation of a tuple into an actual tuple of integers.\n\n    Parameters:\n    str_tuple (str): A string representing a tuple of integers.\n\n    Returns:\n    tuple: An actual tuple of integers.\n    \"\"\"\n    # Safely evaluate the string as a Python expression\n    eval_obj = ast.literal_eval(str_tuple)\n    \n    # Convert the evaluated object to a tuple of integers\n    int_tuple = tuple(eval_obj)\n    \n    return int_tuple",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_str_int(\"()\") == ()\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6, 7)\") == (4, 5, 6, 7)\nassert tuple_str_int(\"(8, 9, 10, 11, 12)\") == (8, 9, 10, 11, 12)\nassert tuple_str_int(\"(13, 14, 15, 16, 17, 18)\") == (13, 14, 15, 16, 17, 18)\n```",
+        "coder": "```python\nimport ast\n\ndef tuple_str_int(str_tuple):\n    \"\"\"\n    Converts a string representation of a tuple into an actual tuple of integers.\n\n    Parameters:\n    str_tuple (str): A string representing a tuple of integers.\n\n    Returns:\n    tuple: An actual tuple of integers.\n    \"\"\"\n    # Safely evaluate the string as a Python expression\n    eval_obj = ast.literal_eval(str_tuple)\n    \n    # Convert the evaluated object to a tuple of integers\n    int_tuple = tuple(eval_obj)\n    \n    return int_tuple\n```",
+        "verifier": "PICK: A\n```python\nimport ast\n\ndef tuple_str_int(str_tuple):\n    \"\"\"\n    Converts a string representation of a tuple into an actual tuple of integers.\n\n    Parameters:\n    str_tuple (str): A string representing a tuple of integers.\n\n    Returns:\n    tuple: An actual tuple of integers.\n    \"\"\"\n    # Safely evaluate the string as a Python expression\n    eval_obj = ast.literal_eval(str_tuple)\n    \n    # Convert the evaluated object to a tuple of integers\n    int_tuple = tuple(eval_obj)\n    \n    return int_tuple\n```",
+        "fixer": "```python\nimport ast\n\ndef tuple_str_int(str_tuple):\n    \"\"\"\n    Converts a string representation of a tuple into an actual tuple of integers.\n\n    Parameters:\n    str_tuple (str): A string representing a tuple of integers.\n\n    Returns:\n    tuple: An actual tuple of integers.\n    \"\"\"\n    # Safely evaluate the string as a Python expression\n    eval_obj = ast.literal_eval(str_tuple)\n    \n    # Convert the evaluated object to a tuple of integers\n    int_tuple = tuple(eval_obj)\n    \n    return int_tuple\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `armstrong_number` that takes one parameter, `num`.\n2. Convert the input number `num` to a string to easily iterate over its digits.\n3. Initialize a variable `sum_of_cubes` to zero.\n4. Iterate over each digit in the string representation of `num`.\n5. For each digit, convert it back to an integer and raise it to the power of the length of the string (i.e., the number of digits).\n6. Add the result to `sum_of_cubes`.\n7. After iterating through all digits, compare `sum_of_cubes` with the original number `num`.\n8. If they are equal, return `True`, indicating that `num` is an Armstrong number; otherwise, return `False`.",
+      "quality": 0.0,
+      "final_key": "def tuple_str_int(tuple_str):\n    try:\n        # Convert the string representation of the tuple into a list of integers\n        int_list = [int(item) for item in tuple_str[1:-1].split(',')]\n        # Convert the list back into a tuple\n        result_tuple = tuple(int_list)\n        return result_tuple\n    except ValueError:\n        # Handle cases where the input string does not represent a valid tuple\n        return None\n\n# Test cases\nassert tuple_str_int(\"(7, 8, 9)\") == (7, 8, 9)\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6)\") == (4, 5, 6)\nassert tuple_str_int(\"(7, 81, 19)\") == (7, 81, 19)\nassert tuple_str_int(\"123\") == (1, 2, 3)\nassert tuple_str_int(\"456\") == (4, 5, 6)\nassert tuple_str_int(\"789\") == (7, 8, 9)\nassert tuple_str_int(\"0\") == (0,)\nassert tuple_str_int(\"-1\") == (-1,)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert tuple_str_int(\"123\") == (1, 2, 3)\nassert tuple_str_int(\"456\") == (4, 5, 6)\nassert tuple_str_int(\"789\") == (7, 8, 9)\nassert tuple_str_int(\"0\") == (0,)\nassert tuple_str_int(\"-1\") == (-1,)",
+        "coder": "```python\ndef armstrong_number(num):\n    num_str = str(num)\n    sum_of_cubes = sum(int(digit) ** len(num_str) for digit in num_str)\n    return sum_of_cubes == num\n```",
+        "verifier": "PICK: B\n\n```python\ndef tuple_str_int(tuple_str):\n    try:\n        # Convert the string representation of the tuple into a list of integers\n        int_list = [int(item) for item in tuple_str[1:-1].split(',')]\n        # Convert the list back into a tuple\n        result_tuple = tuple(int_list)\n        return result_tuple\n    except ValueError:\n        # Handle cases where the input string does not represent a valid tuple\n        return None\n\n# Test cases\nassert tuple_str_int(\"(7, 8, 9)\") == (7, 8, 9)\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6)\") == (4, 5, 6)\nassert tuple_str_int(\"(7, 81, 19)\") == (7, 81, 19)\nassert tuple_str_int(\"123\") == (1, 2, 3)\nassert tuple_str_int(\"456\") == (4, 5, 6)\nassert tuple_str_int(\"789\") == (7, 8, 9)\nassert tuple_str_int(\"0\") == (0,)\nassert tuple_str_int(\"-1\") == (-1,)\n```",
+        "fixer": "```python\ndef tuple_str_int(tuple_str):\n    try:\n        # Convert the string representation of the tuple into a list of integers\n        int_list = [int(item) for item in tuple_str[1:-1].split(',')]\n        # Convert the list back into a tuple\n        result_tuple = tuple(int_list)\n        return result_tuple\n    except ValueError:\n        # Handle cases where the input string does not represent a valid tuple\n        return None\n\n# Test cases\nassert tuple_str_int(\"(7, 8, 9)\") == (7, 8, 9)\nassert tuple_str_int(\"(1, 2, 3)\") == (1, 2, 3)\nassert tuple_str_int(\"(4, 5, 6)\") == (4, 5, 6)\nassert tuple_str_int(\"(7, 81, 19)\") == (7, 81, 19)\nassert tuple_str_int(\"123\") == (1, 2, 3)\nassert tuple_str_int(\"456\") == (4, 5, 6)\nassert tuple_str_int(\"789\") == (7, 8, 9)\nassert tuple_str_int(\"0\") == (0,)\nassert tuple_str_int(\"-1\") == (-1,)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)",
+  "sample_keys": [
+    "def tuple_str_int(tuple_str):\n    # Convert the string to a Python object using eval\n    result = eval(tuple_str)\n    \n    # Check if the result is indeed a tuple\n    assert isinstance(result, tuple), f\"Expected a tuple, but got {type(result)}\"\n    \n    # Return the tuple\n    return result",
+    "def tuple_str_int(tuple_str):\n    try:\n        # Evaluate the string as a Python expression\n        result = eval(tuple_str)\n        # Convert the result to a tuple\n        return tuple(result)\n    except (SyntaxError, TypeError) as e:\n        raise ValueError(f\"Invalid input: {e}\")",
+    "def tuple_str_int(tuple_str):\n    # Remove parentheses from the string\n    tuple_str = tuple_str[1:-1]\n    # Split the string by comma to get individual elements\n    elements = tuple_str.split(',')\n    # Convert each element to an integer\n    int_elements = tuple(int(element) for element in elements)\n    # Return the resulting integer tuple\n    return int_elements"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1884.0,
+    "small_out": 558.0,
+    "small_s": 11.492166983982315
+  },
+  "calls_plus": {
+    "large_in": 112.0,
+    "large_out": 103.0,
+    "large_s": 2.1993572159844916,
+    "small_in": 1631.0,
+    "small_out": 352.0,
+    "small_s": 5.486989016004372
+  },
+  "calls_samples": {
+    "small_in": 5213.0,
+    "small_out": 1380.0,
+    "small_s": 26.351622862915974
+  }
+}

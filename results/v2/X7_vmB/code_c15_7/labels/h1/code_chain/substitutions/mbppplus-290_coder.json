@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-290",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```",
+  "reference_key": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+  "final_key_plus": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7], [8, 9, 10, 11, 12, 13]]) == (6, [8, 9, 10, 11, 12, 13])\nassert max_length([[1, 2, 3], [4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15, 16, 17]]) == (6, [11, 12, 13, 14, 15, 16, 17])\nassert max_length([[1], [2], [3], [4], [5]]) == (1, [1])\nassert max_length([]) == (0, [])\nassert max_length([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]]) == (18, [18])\n```",
+    "verifier": "PICK: A\n\n```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```",
+    "fixer": "```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def max_length(lists):\n    if not lists:\n        return (0, [])\n    \n    max_length = 0\n    result = []\n    for sublist in lists:\n        current_length = len(sublist)\n        if current_length > max_length:\n            max_length = current_length\n            result = sublist\n            \n    return (max_length, result)",
+      "reference_key": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+      "key_differs": true,
+      "text": "```python\ndef max_length(lists):\n    if not lists:\n        return (0, [])\n    \n    max_length = 0\n    result = []\n    for sublist in lists:\n        current_length = len(sublist)\n        if current_length > max_length:\n            max_length = current_length\n            result = sublist\n            \n    return (max_length, result)\n```",
+      "quality": 1.0,
+      "final_key": "def max_length(lists):\n    if not lists:\n        return (0, [])\n    \n    max_length = 0\n    result = []\n    for sublist in lists:\n        current_length = len(sublist)\n        if current_length > max_length:\n            max_length = current_length\n            result = sublist\n            \n    return (max_length, result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_length([]) == (0, [])\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7]]) == (4, [4, 5, 6, 7])\nassert max_length([[1, 2, 3], [4, 5], [6, 7, 8, 9, 10]]) == (5, [6, 7, 8, 9, 10])\nassert max_length([[1], [2, 3, 4, 5, 6, 7, 8, 9, 10]]) == (10, [1])\nassert max_length([[1, 2, 3], [], [4, 5, 6, 7, 8, 9, 10]]) == (10, [4, 5, 6, 7, 8, 9, 10])\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_length(lists):\n    if not lists:\n        return (0, [])\n    \n    max_length = 0\n    result = []\n    for sublist in lists:\n        current_length = len(sublist)\n        if current_length > max_length:\n            max_length = current_length\n            result = sublist\n            \n    return (max_length, result)\n```",
+        "fixer": "```python\ndef max_length(lists):\n    if not lists:\n        return (0, [])\n    \n    max_length = 0\n    result = []\n    for sublist in lists:\n        current_length = len(sublist)\n        if current_length > max_length:\n            max_length = current_length\n            result = sublist\n            \n    return (max_length, result)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def max_length(lists):\n    if not lists: # Check for the edge case where there are no sublists\n        return (0, [])\n    max_length = 0\n    result = []\n    for sublist in lists:\n        length = len(sublist)\n        if length > max_length:\n            max_length = length\n            result = sublist\n    return (max_length, result)",
+      "reference_key": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+      "key_differs": true,
+      "text": "```python\ndef max_length(lists):\n    if not lists: # Check for the edge case where there are no sublists\n        return (0, [])\n    max_length = 0\n    result = []\n    for sublist in lists:\n        length = len(sublist)\n        if length > max_length:\n            max_length = length\n            result = sublist\n    return (max_length, result) \n```",
+      "quality": 1.0,
+      "final_key": "def max_length(lists):\n    if not lists: # Check for the edge case where there are no sublists\n        return (0, [])\n    max_length = 0\n    result = []\n    for sublist in lists:\n        length = len(sublist)\n        if length > max_length:\n            max_length = length\n            result = sublist\n    return (max_length, result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_length([]) == (0, [])\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7]]) == (4, [4, 5, 6, 7])\nassert max_length([[1, 2, 3], [4, 5], [6, 7, 8, 9, 10]]) == (5, [6, 7, 8, 9, 10])\nassert max_length([[1], [2, 3, 4, 5, 6, 7, 8, 9, 10]]) == (10, [1])\nassert max_length([[1, 2, 3], [], [4, 5, 6, 7, 8, 9, 10]]) == (5, [4, 5, 6, 7, 8, 9, 10])\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_length(lists):\n    if not lists: # Check for the edge case where there are no sublists\n        return (0, [])\n    max_length = 0\n    result = []\n    for sublist in lists:\n        length = len(sublist)\n        if length > max_length:\n            max_length = length\n            result = sublist\n    return (max_length, result)\n```",
+        "fixer": "```python\ndef max_length(lists):\n    if not lists: # Check for the edge case where there are no sublists\n        return (0, [])\n    max_length = 0\n    result = []\n    for sublist in lists:\n        length = len(sublist)\n        if length > max_length:\n            max_length = length\n            result = sublist\n    return (max_length, result)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total",
+      "reference_key": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+      "key_differs": true,
+      "text": "```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```",
+      "quality": 0.0,
+      "final_key": "def max_length(list_of_lists):\n    if not list_of_lists:\n        return (0, [])\n    \n    max_len = len(max(list_of_lists, key=len))\n    max_list = [sublist for sublist in list_of_lists if len(sublist) == max_len]\n    \n    return (max_len, max_list)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_length([[0], [1, 3], [5, 7], [9, 11], [13, 15, 17]])==(3, [13, 15, 17])\nassert max_length([[], [1], [2, 3], [4, 5, 6, 7], [8, 9]])==(4, [8, 9])\nassert max_length([[1, 2, 3], [], [4, 5], [6, 7, 8, 9, 10]])==(5, [6, 7, 8, 9, 10])\nassert max_length([[1], [2], [3], [4], [5]])==(5, [1, 2, 3, 4, 5])\nassert max_length([])==(0, [])\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_length(list_of_lists):\n    if not list_of_lists:\n        return (0, [])\n    \n    max_len = len(max(list_of_lists, key=len))\n    max_list = [sublist for sublist in list_of_lists if len(sublist) == max_len]\n    \n    return (max_len, max_list)\n```",
+        "fixer": "```python\ndef max_length(list_of_lists):\n    if not list_of_lists:\n        return (0, [])\n    \n    max_len = len(max(list_of_lists, key=len))\n    max_list = [sublist for sublist in list_of_lists if len(sublist) == max_len]\n    \n    return (max_len, max_list)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+  "sample_keys": [
+    "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+    "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+    "def max_length(lists):\n    max_length = 0\n    result = []\n    for lst in lists:\n        if len(lst) > max_length:\n            max_length = len(lst)\n            result = lst\n    return (max_length, result)",
+    "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+    "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2437.0,
+    "small_out": 613.0,
+    "small_s": 12.154905128001701
+  },
+  "calls_plus": {
+    "small_in": 2148.0,
+    "small_out": 554.0,
+    "small_s": 10.970076222991338,
+    "large_in": 289.0,
+    "large_out": 59.0,
+    "large_s": 1.2805712769913953
+  },
+  "calls_samples": {
+    "small_in": 1445.0,
+    "small_out": 345.0,
+    "small_s": 5.393802768987371
+  }
+}

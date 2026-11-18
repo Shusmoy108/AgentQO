@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-301",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert dict_depth({}) == 1\nassert dict_depth({'a': 2}) == 2\nassert dict_depth({'a': {'b': 3}}) == 3\nassert dict_depth({'a': {'b': {'c': 4}}}) == 4\nassert dict_depth({'a': 1, 'b': {'c': {'d': {}, 'e': 5}}}) == 4\n```",
+  "reference_key": "assert dict_depth({}) == 1\nassert dict_depth({'a': 2}) == 2\nassert dict_depth({'a': {'b': 3}}) == 3\nassert dict_depth({'a': {'b': {'c': 4}}}) == 4\nassert dict_depth({'a': 1, 'b': {'c': {'d': {}, 'e': 5}}}) == 4",
+  "final_key_plus": "def dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0\n```",
+    "fixer": "```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Typical case: simple nesting deep nested\nassert dict_depth({'x': {'y': 42, 'z': {'w': {'v': {'u': 'a'}}}}) == 6\n\n# Typical case with no sub-dictionary (single level)\nassert dict_depth({'singleLevel': 1}) == 1\n\n# Typical case with empty dictionary\nassert dict_depth({}) == 0\n\n# Edge case with negative value in dictionary\n assert dict_depth({'negativeKey': -999}) == 1\n\n# Edge case with float in dictionary\nassert dict_depth({'floatKey': 3.14}) == 1",
+      "reference_key": "assert dict_depth({}) == 1\nassert dict_depth({'a': 2}) == 2\nassert dict_depth({'a': {'b': 3}}) == 3\nassert dict_depth({'a': {'b': {'c': 4}}}) == 4\nassert dict_depth({'a': 1, 'b': {'c': {'d': {}, 'e': 5}}}) == 4",
+      "key_differs": true,
+      "text": "Here are five additional assert statements to check the function `dict_depth`:\n\n```python\n# Typical case: simple nesting deep nested\nassert dict_depth({'x': {'y': 42, 'z': {'w': {'v': {'u': 'a'}}}}) == 6\n\n# Typical case with no sub-dictionary (single level)\nassert dict_depth({'singleLevel': 1}) == 1\n\n# Typical case with empty dictionary\nassert dict_depth({}) == 0\n\n# Edge case with negative value in dictionary\n assert dict_depth({'negativeKey': -999}) == 1\n\n# Edge case with float in dictionary\nassert dict_depth({'floatKey': 3.14}) == 1\n```",
+      "quality": 0.0,
+      "final_key": "def dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0\n```",
+        "fixer": "```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Edge case: empty dictionary\nassert dict_depth({})==0\n\n# Edge case: single item dictionary\nassert dict_depth({'a':1})==1\n\n# Edge case: dictionary with no nested items\nassert dict_depth({'a':1, 'b':2, 'c':3})==3\n\n# Edge case: multi-level nested dictionary\nassert dict_depth({'a':1, 'b': {'c': {'d': {'e':1}}}})==4\n\n# Edge case: dictionary with deeply nested items\nassert dict_depth({'a':1, 'b': {'c': {'d': {'e':{}}}}})==5\n\n# Edge case: dictionary with keys being lists of items\nassert dict_depth({'a':[1,2,3], 'b':{'c':[4,5]}})==2",
+      "reference_key": "assert dict_depth({}) == 1\nassert dict_depth({'a': 2}) == 2\nassert dict_depth({'a': {'b': 3}}) == 3\nassert dict_depth({'a': {'b': {'c': 4}}}) == 4\nassert dict_depth({'a': 1, 'b': {'c': {'d': {}, 'e': 5}}}) == 4",
+      "key_differs": true,
+      "text": "```python\n# Edge case: empty dictionary\nassert dict_depth({})==0\n\n# Edge case: single item dictionary\nassert dict_depth({'a':1})==1\n\n# Edge case: dictionary with no nested items\nassert dict_depth({'a':1, 'b':2, 'c':3})==3\n\n# Edge case: multi-level nested dictionary\nassert dict_depth({'a':1, 'b': {'c': {'d': {'e':1}}}})==4\n\n# Edge case: dictionary with deeply nested items\nassert dict_depth({'a':1, 'b': {'c': {'d': {'e':{}}}}})==5\n\n# Edge case: dictionary with keys being lists of items\nassert dict_depth({'a':[1,2,3], 'b':{'c':[4,5]}})==2 \n\n```",
+      "quality": 0.0,
+      "final_key": "def dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0\n```",
+        "fixer": "```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert check_greater([10, 20, 30, 40, 50], 35) == True\nassert check_greater([-1, -2, -3, -4, -5], -6) == True\nassert check_greater([], 1) == True\nassert check_greater([100], 99) == False\nassert check_greater([100, 100, 100, 100, 100], 100) == True",
+      "reference_key": "assert dict_depth({}) == 1\nassert dict_depth({'a': 2}) == 2\nassert dict_depth({'a': {'b': 3}}) == 3\nassert dict_depth({'a': {'b': {'c': 4}}}) == 4\nassert dict_depth({'a': 1, 'b': {'c': {'d': {}, 'e': 5}}}) == 4",
+      "key_differs": true,
+      "text": "```python\nassert check_greater([10, 20, 30, 40, 50], 35) == True\nassert check_greater([-1, -2, -3, -4, -5], -6) == True\nassert check_greater([], 1) == True\nassert check_greater([100], 99) == False\nassert check_greater([100, 100, 100, 100, 100], 100) == True\n```",
+      "quality": 0.0,
+      "final_key": "def dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0\n```",
+        "fixer": "```python\ndef dict_depth(d):\n    if isinstance(d, dict):\n        return max(dict_depth(v) for v in d.values()) + 1\n    else:\n        return 0\n\n# Test cases\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4\nassert dict_depth({'a':1, 'b': {'c':'python'}})==2\nassert dict_depth({1: 'Sun', 2: {3: {4:'Mon'}}})==3\nassert check_greater([10, 20, 30, 40, 50], 35) == True\nassert check_greater([-1, -2, -3, -4, -5], -6) == True\nassert check_greater([], 1) == True\nassert check_greater([100], 99) == False\nassert check_greater([100, 100, 100, 100, 100], 100) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert dict_depth({}) == 0\nassert dict_depth({'a':1}) == 1\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}}) == 4\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}}) == 5\nassert dict_depth({'a':1, 'b': {'c': {'d': {}, 'e': {}}}, 'f': {'g': {'h': {}}}}) == 6",
+  "sample_keys": [
+    "assert dict_depth({'x':123}) == 1\nassert dict_depth({'y':'abc'}) == 1\nassert dict_depth({}) == 0\nassert dict_depth({'z':[1,2,3]}) == 2\nassert dict_depth({'w':{'a':'b','c':'d'}}) == 2",
+    "assert dict_depth('hello') == 1\nassert dict_depth([]) == 1\nassert dict_depth([[], []]) == 2\nassert dict_depth({}) == 1\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}})==4",
+    "assert dict_depth({}) == 0\nassert dict_depth({'a':1}) == 1\nassert dict_depth({'a':1, 'b':2}) == 2\nassert dict_depth({'a':1, 'b': {'c': {'d': {}}}}) == 4\nassert dict_depth({'a':1, 'b': {'c': {'d': {'e': {'f': {'g': {'h': {'i': {'j': {'k': {'l': {'m': {'n': {'o': {'p': {'q': {}}}}}}}}}}}}}}}}) == 13",
+    "import unittest\n\nclass TestDictDepth(unittest.TestCase):\n    def test_single_element(self):\n        self.assertEqual(dict_depth({}), 1)\n\n    def test_nested_dict(self):\n        self.assertEqual(dict_depth({'a':1, 'b': {'c': {'d': {}}}}), 4)\n\n    def test_empty_list(self):\n        self.assertEqual(dict_depth([]), 0)\n\n    def test_single_list(self):\n        self.assertEqual(dict_depth([1]), 1)\n\n    def test_list_with_nested_dicts(self):\n        self.assertEqual(dict_depth([[{'e':1}, {'f':2}], [{'g':3}]]), 4)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)",
+    "assert dict_depth({}) == 0\nassert dict_depth({'a':1}) == 1\nassert dict_depth({'a':2,'b':{'c':3,'d':{'e':4}}}) == 3\nassert dict_depth({'x':['y','z']}) == 1\nassert dict_depth([{'a':1},{'b':2}]) == 2"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1589.0,
+    "small_out": 339.0,
+    "small_s": 7.186076932004653
+  },
+  "calls_plus": {
+    "small_in": 1305.0,
+    "small_out": 218.0,
+    "small_s": 4.33599664902431,
+    "large_in": 167.0,
+    "large_out": 94.0,
+    "large_s": 2.8449841029942036
+  },
+  "calls_samples": {
+    "small_in": 835.0,
+    "small_out": 518.0,
+    "small_s": 10.903815761004807
+  }
+}

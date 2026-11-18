@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-432",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert median_trapezium(10, 20, 30) == 20\nassert median_trapezium(5, 5, 10) == 7.5\nassert median_trapezium(8, 14, 22) == 16.0\nassert median_trapezium(1, 1, 1) == 1\nassert median_trapezium(99, 101, 200) == 149.5\n```",
+  "reference_key": "assert median_trapezium(10, 20, 30) == 20\nassert median_trapezium(5, 5, 10) == 7.5\nassert median_trapezium(8, 14, 22) == 16.0\nassert median_trapezium(1, 1, 1) == 1\nassert median_trapezium(99, 101, 200) == 149.5",
+  "final_key_plus": "def median_trapezium(a, b, c):\n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef median_trapezium(a, b, c):\n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length\n```",
+    "fixer": "```python\ndef median_trapezium(a, b, c):\n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test the function with a regular trapezium\nassert median_trapezium(10, 20, 30) == 20\n\n# Test the function with a very wide trapezium\nassert median_trapezium(30, 40, 60) == 50.0\n\n# Test the function with a tall trapezium\nassert median_trapezium(15, 25, 55) == 35\n\n# Test Edge case: a line segment is considered special case of trapezium\nassert median_trapezium(25, 25, 50) == 25\n\n# Additional checks for invalid inputs\nassert median_trapezium(-10, 20, 30) is None  # Negative values\nassert median_trapezium(10, -20, 30) is None  # Negative values\nassert median_trapezium(10, 20, -30) is None  # Negative values\nassert median_trapezium(-10, -20, -30) is None  # All negative values",
+      "reference_key": "assert median_trapezium(10, 20, 30) == 20\nassert median_trapezium(5, 5, 10) == 7.5\nassert median_trapezium(8, 14, 22) == 16.0\nassert median_trapezium(1, 1, 1) == 1\nassert median_trapezium(99, 101, 200) == 149.5",
+      "key_differs": true,
+      "text": "```python\n# Test the function with a regular trapezium\nassert median_trapezium(10, 20, 30) == 20\n\n# Test the function with a very wide trapezium\nassert median_trapezium(30, 40, 60) == 50.0\n\n# Test the function with a tall trapezium\nassert median_trapezium(15, 25, 55) == 35\n\n# Test Edge case: a line segment is considered special case of trapezium\nassert median_trapezium(25, 25, 50) == 25\n\n# Additional checks for invalid inputs\nassert median_trapezium(-10, 20, 30) is None  # Negative values\nassert median_trapezium(10, -20, 30) is None  # Negative values\nassert median_trapezium(10, 20, -30) is None  # Negative values\nassert median_trapezium(-10, -20, -30) is None  # All negative values\n```",
+      "quality": 0.0,
+      "final_key": "def median_trapezium(a, b, c):\n    # Check if all inputs are positive numbers\n    if a <= 0 or b <= 0 or c <= 0:\n        return None\n    \n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef median_trapezium(a, b, c):\n    # Check if all inputs are positive numbers\n    if a <= 0 or b <= 0 or c <= 0:\n        return None\n    \n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length\n```",
+        "fixer": "```python\ndef median_trapezium(a, b, c):\n    # Check if all inputs are positive numbers\n    if a <= 0 or b <= 0 or c <= 0:\n        return None\n    \n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import math\n\n# Check boundary conditions for sides\nassert median_trapezium(5, 10, 0) == 7.5  # Edge case with zero side\nassert median_trapezium(-1, -2, -3) == 0   # Edge case with negative sides\nassert median_trapezium(8, 9, 16) == 12     # Typical case 1\nassert median_trapezium(123, 456, 789) == 418     # Typical case 2\nassert median_trapezium(1e6, 2e6, 3e6) == 2e6     # Boundary condition near infinity",
+      "reference_key": "assert median_trapezium(10, 20, 30) == 20\nassert median_trapezium(5, 5, 10) == 7.5\nassert median_trapezium(8, 14, 22) == 16.0\nassert median_trapezium(1, 1, 1) == 1\nassert median_trapezium(99, 101, 200) == 149.5",
+      "key_differs": true,
+      "text": "```python\nimport math\n\n# Check boundary conditions for sides\nassert median_trapezium(5, 10, 0) == 7.5  # Edge case with zero side\nassert median_trapezium(-1, -2, -3) == 0   # Edge case with negative sides\nassert median_trapezium(8, 9, 16) == 12     # Typical case 1\nassert median_trapezium(123, 456, 789) == 418     # Typical case 2\nassert median_trapezium(1e6, 2e6, 3e6) == 2e6     # Boundary condition near infinity\n```",
+      "quality": 0.0,
+      "final_key": "def median_trapezium(a, b, c):\n    # Ensure all sides are positive\n    if a <= 0 or b <= 0 or c <= 0:\n        raise ValueError(\"All sides must be positive.\")\n    \n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef median_trapezium(a, b, c):\n    # Ensure all sides are positive\n    if a <= 0 or b <= 0 or c <= 0:\n        raise ValueError(\"All sides must be positive.\")\n    \n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length\n```",
+        "fixer": "```python\ndef median_trapezium(a, b, c):\n    # Ensure all sides are positive\n    if a <= 0 or b <= 0 or c <= 0:\n        raise ValueError(\"All sides must be positive.\")\n    \n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-4, -8, -12, -16)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ()",
+      "reference_key": "assert median_trapezium(10, 20, 30) == 20\nassert median_trapezium(5, 5, 10) == 7.5\nassert median_trapezium(8, 14, 22) == 16.0\nassert median_trapezium(1, 1, 1) == 1\nassert median_trapezium(99, 101, 200) == 149.5",
+      "key_differs": true,
+      "text": "```python\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-4, -8, -12, -16)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ()\n```",
+      "quality": 0.0,
+      "final_key": "def median_trapezium(a, b, c):\n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef median_trapezium(a, b, c):\n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length\n```",
+        "fixer": "```python\ndef median_trapezium(a, b, c):\n    # Calculate the average of the two shorter sides\n    avg_shorter_sides = (a + b) / 2\n    # Add the longer side to the average\n    total_length = avg_shorter_sides + c\n    # Divide the sum by 2 to get the median length\n    median_length = total_length / 2\n    # Return the calculated median length\n    return median_length\n\n# Test cases\nassert median_trapezium(15, 25, 35) == 20\nassert median_trapezium(10, 20, 30) == 15\nassert median_trapezium(6, 9, 4) == 7.5\nassert add_pairwise((1, 5, 7, 8, 10)) == (6, 12, 15, 18)\nassert add_pairwise((-1, -3, -5, -7, -9)) == (-4, -8, -12, -16)\nassert add_pairwise((0, 0, 0, 0, 0)) == (0, 0, 0, 0)\nassert add_pairwise((10,)) == ()\nassert add_pairwise(() == ())\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert median_trapezium(10, 20, 30) == 20\nassert median_trapezium(5, 15, 25) == 15\nassert median_trapezium(7, 8, 9) == 8\nassert median_trapezium(1, 2, 3) == 2\nassert median_trapezium(4, 6, 8) == 6",
+  "sample_keys": [
+    "assert median_trapezium(10, 10, 20) == 15  # Edge case where both bases are equal\nassert median_trapezium(5, 7, 9) == 8  # Typical case with all sides different\nassert median_trapezium(6, 6, 6) == 6  # Edge case where all sides are equal\nassert median_trapezium(4, 2, 8) == 6  # Edge case where one base is twice the other\nassert median_trapezium(100, 200, 300) == 200  # Large values",
+    "# Test with typical values\nassert median_trapezium(10, 12, 14) == 13\nassert median_trapezium(8, 9, 6) == 7.5\n\n# Test with larger values\nassert median_trapezium(50, 60, 70) == 65\n\n# Test with extremely large values\nassert median_trapezium(1e6, 2e6, 3e6) == 2.5e6\n\n# Test with very small values\nassert median_trapezium(1e-6, 2e-6, 3e-6) == 2e-6",
+    "# Check with different lengths\nassert median_trapezium(12, 18, 24) == 22\nassert median_trapezium(5, 10, 15) == 10\nassert median_trapezium(7, 13, 21) == 16\nassert median_trapezium(9, 18, 27) == 21\nassert median_trapezium(19, 29, 49) == 34",
+    "assert median_trapezium(4,3,6)==4.5\nassert median_trapezium(2,8,9)==5.5\nassert median_trapezium(1,1,1)==1\nassert median_trapezium(7,7,7)==7\nassert median_trapezium(0,10,20)==10",
+    "assert median_trapezium(0, 1, 2) == 0.5\nassert median_trapezium(4, 8, 20) == 7.0\nassert median_trapezium(10, 15, 35) == 20\nassert median_trapezium(6, 12, 18) == 12\nassert median_trapezium(-5, -10, 5) == 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1690.0,
+    "small_out": 527.0,
+    "small_s": 11.212215259991353
+  },
+  "calls_plus": {
+    "small_in": 1492.0,
+    "small_out": 420.0,
+    "small_s": 8.322776372020599,
+    "large_in": 228.0,
+    "large_out": 121.0,
+    "large_s": 2.726308060984593
+  },
+  "calls_samples": {
+    "small_in": 1140.0,
+    "small_out": 634.0,
+    "small_s": 11.072084247978637
+  }
+}

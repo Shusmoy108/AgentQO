@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-141",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```",
+  "reference_key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+  "final_key_plus": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.4,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n\n# Test cases\nassert pancake_sort([15, 79, 25, 38, 69]) == [15, 25, 38, 69, 79]\ntest_cases = [\n    ([98, 12, 54, 36, 85], [12, 36, 54, 85, 98]),\n    ([41, 42, 32, 12, 23], [12, 23, 32, 41, 42]),\n    (list(range(1, 11)), list(range(1, 11))),  # Sorted list to test edge case\n    ([], []),\n    ([1], [1]),\n    ([1, 2], [1, 2]),\n    ([2, 1], [1, 2])\n]\n\nfor idx, (input_list, expected_output) in enumerate(test_cases):\n    assert pancake_sort(input_list) == expected_output, f\"Test {idx + 1} failed\"\n    print(f\"Test {idx + 1} passed\")\n\nprint(\"All tests passed!\")",
+      "reference_key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+      "key_differs": true,
+      "text": "Below is the completed Python code that sorts a list of elements using the pancake sort algorithm and includes additional unit tests to ensure the correctness of the function.\n\n```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n\n# Test cases\nassert pancake_sort([15, 79, 25, 38, 69]) == [15, 25, 38, 69, 79]\ntest_cases = [\n    ([98, 12, 54, 36, 85], [12, 36, 54, 85, 98]),\n    ([41, 42, 32, 12, 23], [12, 23, 32, 41, 42]),\n    (list(range(1, 11)), list(range(1, 11))),  # Sorted list to test edge case\n    ([], []),\n    ([1], [1]),\n    ([1, 2], [1, 2]),\n    ([2, 1], [1, 2])\n]\n\nfor idx, (input_list, expected_output) in enumerate(test_cases):\n    assert pancake_sort(input_list) == expected_output, f\"Test {idx + 1} failed\"\n    print(f\"Test {idx + 1} passed\")\n\nprint(\"All tests passed!\")\n```\n\nThis script first defines the `pancake_sort` function as implemented earlier. It then includes several test cases in the list `test_cases` to ensure the function works correctly across various scenarios, including a sorted input, an empty list, and a mixed input. The script uses assertions to verify the correctness of each test case and prints \"All tests passed!\" upon successful execution of all tests.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+      "key_differs": true,
+      "text": "```python\nimport itertools\n\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n\n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n\n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n\ndef check_function():\n    # Test cases with both successful and failing inputs\n    test_cases = [\n        ([15, 79, 25, 38, 69], [15, 25, 38, 69, 79]),\n        ([98, 12, 54, 36, 85], [12, 36, 54, 85, 98]),\n        ([41, 42, 32, 12, 23], [12, 23, 32, 41, 42]),\n        ([], []),\n        ([1], [1]),\n        ([1, 2], [1, 2]),\n        ([2, 1], [1, 2]),\n        ([3, 4, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7]),  # Failing case, should be AssertionError\n        ([7, 6, 5, 4, 3], [1, 2, 3, 4, 5, 6, 7]),  # Failing case, should be AssertionError\n        ([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),\n        ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], [1, 2, 3,",
+      "quality": 0.0,
+      "final_key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def centered_hexagonal_number(n):\n    return (3 * n**2 - 3 * n + 1) // 2",
+      "reference_key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+      "key_differs": true,
+      "text": "```python\ndef centered_hexagonal_number(n):\n    return (3 * n**2 - 3 * n + 1) // 2\n```",
+      "quality": 1.0,
+      "final_key": "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+    "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+    null,
+    "def pancake_sort(arr):\n    n = len(arr)\n    while n > 1:\n        # Find the maximum element and its index\n        max_index = arr.index(max(arr[:n]))\n        \n        # Reverse the sublist from the start to the index of the maximum element\n        arr[:max_index+1] = arr[:max_index+1][::-1]\n        \n        # Reverse the entire list to move the maximum element to its correct position\n        arr[:n] = arr[:n][::-1]\n        \n        # Decrease the size of the unsorted part\n        n -= 1\n    return arr",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2624.0,
+    "small_out": 1271.0,
+    "small_s": 24.42883441603044
+  },
+  "calls_plus": {
+    "small_in": 1938.0,
+    "small_out": 893.0,
+    "small_s": 16.025498155970126,
+    "large_in": 727.0,
+    "large_out": 134.0,
+    "large_s": 4.272004282014677
+  },
+  "calls_samples": {
+    "small_in": 3635.0,
+    "small_out": 1426.0,
+    "small_s": 29.43048562700278
+  }
+}

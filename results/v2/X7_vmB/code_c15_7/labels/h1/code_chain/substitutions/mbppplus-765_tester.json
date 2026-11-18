@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-765",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert is_polite(1) == 3\nassert is_polite(2) == 4\nassert is_polite(3) == 6\nassert is_polite(4) == 8\nassert is_polite(5) == 9\n```",
+  "reference_key": "assert is_polite(1) == 3\nassert is_polite(2) == 4\nassert is_polite(3) == 6\nassert is_polite(4) == 8\nassert is_polite(5) == 9",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A",
+    "fixer": "```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert is_polite(8) == 14\nassert is_polite(9) == 17\nassert is_polite(10) == 16\nassert is_polite(11) == 0\nassert is_polite(3) == 9",
+      "reference_key": "assert is_polite(1) == 3\nassert is_polite(2) == 4\nassert is_polite(3) == 6\nassert is_polite(4) == 8\nassert is_polite(5) == 9",
+      "key_differs": true,
+      "text": "```python\nassert is_polite(8) == 14\nassert is_polite(9) == 17\nassert is_polite(10) == 16\nassert is_polite(11) == 0\nassert is_polite(3) == 9\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import pytest\nfrom typing import *\nfrom collections import *\n\n# Test Suite for the is_polite(n) function\nclass TestIsPolite:\n    def test_empty(self):\n        with pytest.raises(ValueError):\n            is_polite(0)\n\n    def test_single_digit_even(self):\n        assert is_polite(2) == 2\n\n    def test_single_digit_odd(self):\n        assert is_polite(1) == 2\n\n    def test_two_digits_even(self):\n        assert is_polite(4) == 8\n\n    def test_two_digits_odd(self):\n        assert is_polite(3) == 3\n    \n    # Test Case - Edge Cases\n    def test_negative_input(self):\n        with pytest.raises(ValueError):\n            is_polite(-1)\n    \n    def test_zero_input(self):\n        with pytest.raises(ValueError):\n            is_polite(0)\n    \n    def test_large_input(self):\n        assert is_polite(100) == 256",
+      "reference_key": "assert is_polite(1) == 3\nassert is_polite(2) == 4\nassert is_polite(3) == 6\nassert is_polite(4) == 8\nassert is_polite(5) == 9",
+      "key_differs": true,
+      "text": "```python\nimport pytest\nfrom typing import *\nfrom collections import *\n\n# Test Suite for the is_polite(n) function\nclass TestIsPolite:\n    def test_empty(self):\n        with pytest.raises(ValueError):\n            is_polite(0)\n\n    def test_single_digit_even(self):\n        assert is_polite(2) == 2\n\n    def test_single_digit_odd(self):\n        assert is_polite(1) == 2\n\n    def test_two_digits_even(self):\n        assert is_polite(4) == 8\n\n    def test_two_digits_odd(self):\n        assert is_polite(3) == 3\n    \n    # Test Case - Edge Cases\n    def test_negative_input(self):\n        with pytest.raises(ValueError):\n            is_polite(-1)\n    \n    def test_zero_input(self):\n        with pytest.raises(ValueError):\n            is_polite(0)\n    \n    def test_large_input(self):\n        assert is_polite(100) == 256\n```",
+      "quality": 0.0,
+      "final_key": "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n```",
+        "fixer": "```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((1,), 2, (3,))) == (1, 2, 3)\nassert remove_nested(((),)) == ()\nassert remove_nested((1, 2, 3, 4, 5)) == (1, 2, 3, 4, 5)\nassert remove_nested((1, 2, 3, 4, 5, (6, 7, 8))) == (1, 2, 3, 4, 5, 6, 7, 8)",
+      "reference_key": "assert is_polite(1) == 3\nassert is_polite(2) == 4\nassert is_polite(3) == 6\nassert is_polite(4) == 8\nassert is_polite(5) == 9",
+      "key_differs": true,
+      "text": "```python\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((1,), 2, (3,))) == (1, 2, 3)\nassert remove_nested(((),)) == ()\nassert remove_nested((1, 2, 3, 4, 5)) == (1, 2, 3, 4, 5)\nassert remove_nested((1, 2, 3, 4, 5, (6, 7, 8))) == (1, 2, 3, 4, 5, 6, 7, 8)\n```",
+      "quality": 0.0,
+      "final_key": "def is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n\n# Test cases\nassert is_polite(7) == 11\nassert is_polite(4) == 7\nassert is_polite(9) == 13\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((1,), 2, (3,))) == (1, 2, 3)\nassert remove_nested(((),)) == ()\nassert remove_nested((1, 2, 3, 4, 5)) == (1, 2, 3, 4, 5)\nassert remove_nested((1, 2, 3, 4, 5, (6, 7, 8))) == (1, 2, 3, 4, 5, 6, 7, 8)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n\n# Test cases\nassert is_polite(7) == 11\nassert is_polite(4) == 7\nassert is_polite(9) == 13\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((1,), 2, (3,))) == (1, 2, 3)\nassert remove_nested(((),)) == ()\nassert remove_nested((1, 2, 3, 4, 5)) == (1, 2, 3, 4, 5)\nassert remove_nested((1, 2, 3, 4, 5, (6, 7, 8))) == (1, 2, 3, 4, 5, 6, 7, 8)\n```",
+        "fixer": "```python\ndef is_polite(n):\n    polite_number = 0\n    for number in range(1, n + 1):\n        if is_polite_helper(number):\n            polite_number += 1\n            if polite_number == n:\n                return number\n\ndef is_polite_helper(number):\n    count = 0\n    while number > 0:\n        digit = number % 10\n        if digit == 0 or digit == 5:\n            count += 1\n        number //= 10\n    return count % 2 == 0\n\n# Test cases\nassert is_polite(7) == 11\nassert is_polite(4) == 7\nassert is_polite(9) == 13\nassert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)\nassert remove_nested(((1,), 2, (3,))) == (1, 2, 3)\nassert remove_nested(((),)) == ()\nassert remove_nested((1, 2, 3, 4, 5)) == (1, 2, 3, 4, 5)\nassert remove_nested((1, 2, 3, 4, 5, (6, 7, 8))) == (1, 2, 3, 4, 5, 6, 7, 8)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert is_polite(1) == 1\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 6\nassert is_polite(5) == 8",
+  "sample_keys": [
+    "assert is_polite(1) == 1\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(4) == 6\nassert is_polite(5) == 8",
+    "assert is_polite(1) == 1\nassert is_polite(2) == 3\nassert is_polite(3) == 4\nassert is_polite(6) == 9\nassert is_polite(8) == 10",
+    null,
+    "assert is_polite(1) == 1\nassert is_polite(2) == 3\nassert is_polite(3) == 5\nassert is_polite(4) == 7\nassert is_polite(5) == 9\nassert is_polite(6) == 11\nassert is_polite(7) == 13\nassert is_polite(8) == 15\nassert is_polite(9) == 17\nassert is_polite(10) == 19\nassert is_polite(11) == 21\nassert is_polite(12) == 23\nassert is_polite(13) == 25\nassert is_polite(14) == 27\nassert is_polite(15) == 29\nassert is_polite(16) == 31\nassert is_polite(17) == 33\nassert is_polite(18) == 35\nassert is_polite(19) == 37\nassert is_polite(20) == 39",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1725.0,
+    "small_out": 593.0,
+    "small_s": 9.6197627770307
+  },
+  "calls_plus": {
+    "small_in": 1487.0,
+    "small_out": 533.0,
+    "small_s": 7.840857058035908,
+    "large_in": 244.0,
+    "large_out": 60.0,
+    "large_s": 1.9184108339832164
+  },
+  "calls_samples": {
+    "small_in": 1220.0,
+    "small_out": 944.0,
+    "small_s": 19.41716948398971
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-251",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert insert_element([], 'a') == ['a']\nassert insert_element(['apple'], 'banana') == ['banana', 'apple']\nassert insert_element(['x', 'y', 'z'], '') == ['', 'x', '', 'y', '', 'z']\nassert insert_element(['1', '2', '3'], '0') == ['0', '1', '0', '2', '0', '3']\nassert insert_element(['True', 'False'], None) == [None, 'True', None, 'False']\n```",
+  "reference_key": "assert insert_element([], 'a') == ['a']\nassert insert_element(['apple'], 'banana') == ['banana', 'apple']\nassert insert_element(['x', 'y', 'z'], '') == ['', 'x', '', 'y', '', 'z']\nassert insert_element(['1', '2', '3'], '0') == ['0', '1', '0', '2', '0', '3']\nassert insert_element(['True', 'False'], None) == [None, 'True', None, 'False']",
+  "final_key_plus": "def insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result\n```",
+    "fixer": "```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert insert_element([], 'a') == []\nassert insert_element(['b'], 'a') == ['a', 'b']\nassert insert_element(['c', 'd'], 'x') == ['x', 'c', 'x', 'd']\nassert insert_element(['x', 'y'], []) == ['x', 'y']\nassert insert_element(['z'], ['a']) == ['z', ['a']]",
+      "reference_key": "assert insert_element([], 'a') == ['a']\nassert insert_element(['apple'], 'banana') == ['banana', 'apple']\nassert insert_element(['x', 'y', 'z'], '') == ['', 'x', '', 'y', '', 'z']\nassert insert_element(['1', '2', '3'], '0') == ['0', '1', '0', '2', '0', '3']\nassert insert_element(['True', 'False'], None) == [None, 'True', None, 'False']",
+      "key_differs": true,
+      "text": "```python\nassert insert_element([], 'a') == []\nassert insert_element(['b'], 'a') == ['a', 'b']\nassert insert_element(['c', 'd'], 'x') == ['x', 'c', 'x', 'd']\nassert insert_element(['x', 'y'], []) == ['x', 'y']\nassert insert_element(['z'], ['a']) == ['z', ['a']]\n```",
+      "quality": 1.0,
+      "final_key": "def insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result\n\n# Test cases\nassert insert_element(['Red', 'Green', 'Black'] ,'c')==['c', 'Red', 'c', 'Green', 'c', 'Black']\nassert insert_element(['python', 'java'] ,'program')==['program', 'python', 'program', 'java']\nassert insert_element(['happy', 'sad'] ,'laugh')==['laugh', 'happy', 'laugh', 'sad']\nassert insert_element([], 'a') == []\nassert insert_element(['b'], 'a') == ['a', 'b']\nassert insert_element(['c', 'd'], 'x') == ['x', 'c', 'x', 'd']\n\n# Failing test cases\ntry:\n    assert insert_element(['x', 'y'], [])\nexcept AssertionError as e:\n    print(e)  # Output: The second argument must be a non-empty list.\n\ntry:\n    assert insert_element(['z'], ['a'])\nexcept AssertionError as e:\n    print(e)  # Output: The second argument must be a non-empty list.",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result\n\n# Test cases\nassert insert_element(['Red', 'Green', 'Black'] ,'c')==['c', 'Red', 'c', 'Green', 'c', 'Black']\nassert insert_element(['python', 'java'] ,'program')==['program', 'python', 'program', 'java']\nassert insert_element(['happy', 'sad'] ,'laugh')==['laugh', 'happy', 'laugh', 'sad']\nassert insert_element([], 'a') == []\nassert insert_element(['b'], 'a') == ['a', 'b']\nassert insert_element(['c', 'd'], 'x') == ['x', 'c', 'x', 'd']\n\n# Failing test cases\ntry:\n    assert insert_element(['x', 'y'], [])\nexcept AssertionError as e:\n    print(e)  # Output: The second argument must be a non-empty list.\n\ntry:\n    assert insert_element(['z'], ['a'])\nexcept AssertionError as e:\n    print(e)  # Output: The second argument must be a non-empty list.\n```",
+        "fixer": "```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result\n\n# Test cases\nassert insert_element(['Red', 'Green', 'Black'] ,'c')==['c', 'Red', 'c', 'Green', 'c', 'Black']\nassert insert_element(['python', 'java'] ,'program')==['program', 'python', 'program', 'java']\nassert insert_element(['happy', 'sad'] ,'laugh')==['laugh', 'happy', 'laugh', 'sad']\nassert insert_element([], 'a') == []\nassert insert_element(['b'], 'a') == ['a', 'b']\nassert insert_element(['c', 'd'], 'x') == ['x', 'c', 'x', 'd']\n\n# Failing test cases\ntry:\n    assert insert_element(['x', 'y'], [])\nexcept AssertionError as e:\n    print(e)  # Output: The second argument must be a non-empty list.\n\ntry:\n    assert insert_element(['z'], ['a'])\nexcept AssertionError as e:\n    print(e)  # Output: The second argument must be a non-empty list.\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert insert_element([], 'x') == []\nassert insert_element(['a'], 'b') == ['b', 'a']\nassert insert_element(['123', '456', '789'], '|') == ['|', '123', '|', '456', '|', '789']\nassert insert_element(['Python', 'Java', 'C++', 'JavaScript'], '.') == ['.', 'Python.', 'Java.', 'C++.', 'JavaScript.']",
+      "reference_key": "assert insert_element([], 'a') == ['a']\nassert insert_element(['apple'], 'banana') == ['banana', 'apple']\nassert insert_element(['x', 'y', 'z'], '') == ['', 'x', '', 'y', '', 'z']\nassert insert_element(['1', '2', '3'], '0') == ['0', '1', '0', '2', '0', '3']\nassert insert_element(['True', 'False'], None) == [None, 'True', None, 'False']",
+      "key_differs": true,
+      "text": "```python\nassert insert_element([], 'x') == []\nassert insert_element(['a'], 'b') == ['b', 'a']\nassert insert_element(['123', '456', '789'], '|') == ['|', '123', '|', '456', '|', '789']\nassert insert_element(['Python', 'Java', 'C++', 'JavaScript'], '.') == ['.', 'Python.', 'Java.', 'C++.', 'JavaScript.']\n```",
+      "quality": 1.0,
+      "final_key": "def insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result\n```",
+        "fixer": "```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Single\" quote example') == ['Single']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Start\" \"End\"') == ['Start', 'End']\nassert extract_quotation('\"With spaces\" \"and\" \"quotes\"') == ['With spaces', 'and', 'quotes']",
+      "reference_key": "assert insert_element([], 'a') == ['a']\nassert insert_element(['apple'], 'banana') == ['banana', 'apple']\nassert insert_element(['x', 'y', 'z'], '') == ['', 'x', '', 'y', '', 'z']\nassert insert_element(['1', '2', '3'], '0') == ['0', '1', '0', '2', '0', '3']\nassert insert_element(['True', 'False'], None) == [None, 'True', None, 'False']",
+      "key_differs": true,
+      "text": "```python\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Single\" quote example') == ['Single']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Start\" \"End\"') == ['Start', 'End']\nassert extract_quotation('\"With spaces\" \"and\" \"quotes\"') == ['With spaces', 'and', 'quotes']\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result\n\n# Test cases\nassert insert_element(['Red', 'Green', 'Black'], 'c') == ['c', 'Red', 'c', 'Green', 'c', 'Black']\nassert insert_element(['python', 'java'], 'program') == ['program', 'python', 'program', 'java']\nassert insert_element(['happy', 'sad'], 'laugh') == ['laugh', 'happy', 'laugh', 'sad']\nassert extract_quotation('Cortex \"A53\" Based \"multi\" tasking \"Processor\"') == ['A53', 'multi', 'Processor']\nassert extract_quotation('\"Single\" quote example') == ['Single']\nassert extract_quotation('No quotes here') == []\nassert extract_quotation('\"Start\" \"End\"') == ['Start', 'End']\nassert extract_quotation('\"With spaces\" \"and\" \"quotes\"') == ['With spaces', 'and', 'quotes']\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert insert_element([], 'a') == []\nassert insert_element(['a'], 'b') == ['b', 'a']\nassert insert_element(['a', 'b'], 'c') == ['c', 'a', 'c', 'b']\nassert insert_element(['a', 'b', 'c'], 'd') == ['d', 'a', 'd', 'b', 'd', 'c']\nassert insert_element(['a', 'b', 'c', 'd'], 'e') == ['e', 'a', 'e', 'b', 'e', 'c', 'e', 'd']",
+  "sample_keys": [
+    "assert insert_element(['Red', 'Green', 'Blue'], 'a') == ['a', 'Red', 'a', 'Green', 'a', 'Blue']\nassert insert_element([], 'e') == ['e']\nassert insert_element(['x', 'y'], '') == ['', 'x', '', 'y']\nassert insert_element(['1', '2', '3'], '0') == ['0', '1', '0', '2', '0', '3']\nassert insert_element(['A', 'B', 'C'], None) == [None, 'A', None, 'B', None, 'C']",
+    "assert insert_element([], 'a') == [], \"Expected empty list after inserting element before all elements.\"\nassert insert_element(['b'], 'a') == ['a', 'b'], \"Expected a single-element list with the element inserted at the beginning.\"\nassert insert_element(['a', 'b'], 'c') == ['c', 'a', 'b'], \"Expected a list with elements inserted between each original element.\"\nassert insert_element(['x', 'y', 'z'], 0) == [0, 'x', 0, 'y', 0, 'z'], \"Expected elements inserted before and after each original element.\"\nassert insert_element(['one', 'two'], None) == [None, 'one', None, 'two'], \"Expected elements inserted before and after each original element.\"",
+    "assert insert_element([], 'a') == []\nassert insert_element(['x'], 'y') == ['y', 'x']\nassert insert_element(['apple', 'banana', 'cherry'], 'orange') == ['orange', 'apple', 'orange', 'banana', 'orange', 'cherry']\nassert insert_element(['one', 'two', 'three'], '') == ['', 'one', '', 'two', '', 'three']\nassert insert_element([], 'null') == []",
+    "assert insert_element([], 'a') == []\nassert insert_element([1], 'b') == [b, 1]\nassert insert_element(['x', 'y'], 'z') == ['z', 'x', 'z', 'y']\nassert insert_element(['hello', 'world'], ' ') == [' ', 'hello', ' ', 'world']\nassert insert_element([True, False], True) == [True, True, False]",
+    "# Typical case with multiple elements\nassert insert_element(['Red', 'Green', 'Black'], 'c') == ['c', 'Red', 'c', 'Green', 'c', 'Black']\n\n# Edge case with an empty list\nassert insert_element([], 'a') == []\n\n# Edge case with a single element\nassert insert_element(['Orange'], 'z') == ['z', 'Orange']\n\n# Edge case with multiple occurrences of the same element\nassert insert_element(['Yellow', 'Yellow', 'Blue'], 'u') == ['u', 'Yellow', 'u', 'Yellow', 'u', 'Blue']\n\n# Edge case with None as the element to be inserted\nassert insert_element(['Purple'], None) == [None, 'Purple']"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1677.0,
+    "small_out": 359.0,
+    "small_s": 7.93141617695801
+  },
+  "calls_plus": {
+    "small_in": 1449.0,
+    "small_out": 227.0,
+    "small_s": 4.82727646199055,
+    "large_in": 186.0,
+    "large_out": 115.0,
+    "large_s": 2.566904186998727
+  },
+  "calls_samples": {
+    "small_in": 930.0,
+    "small_out": 657.0,
+    "small_s": 11.175434237986337
+  }
+}

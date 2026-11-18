@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-415",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Initialize two variables, `max_product` and `pair`, to store the maximum product found so far and the corresponding pair of numbers, respectively.\n2. Iterate through each number in the array using nested loops to compare every possible pair of numbers.\n3. For each pair, calculate their product and check if it is greater than the current `max_product`.\n4. If the product is greater, update `max_product` with the new product and set `pair` to the current pair of numbers.\n5. After iterating through all pairs, return the `pair` with the highest product.",
+  "reference_key": null,
+  "final_key_plus": "def max_Product(arr):\n    max_product = float('-inf')\n    pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i + 1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                pair = (arr[i], arr[j])\n    \n    return pair",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_Product([-1, -2, -3, -4, -5]) == (-1, -2)\nassert max_Product([0, 1, 2, 3, 4]) == (4, 3)\nassert max_Product([1, 2, 3, 4, 5, 6]) == (6, 5)\nassert max_Product([1, 2, 3, 4, 5, 6, 7]) == (7, 6)\nassert max_Product([1, 2, 3, 4, 5, 6, 7, 8]) == (8, 7)\n```",
+    "coder": "```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i + 1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                pair = (arr[i], arr[j])\n    \n    return pair\n```",
+    "verifier": "PICK: A\n\n```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i + 1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                pair = (arr[i], arr[j])\n    \n    return pair\n```",
+    "fixer": "```python\ndef max_Product(arr):\n    max_product = float('-inf')\n    pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i + 1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                pair = (arr[i], arr[j])\n    \n    return pair\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize a variable `sum` to store the result.\n2. Iterate through the list using a for loop.\n3. Check if the index is even (i.e., `index % 2 == 0`) and if the element at that index is even (i.e., `element % 2 == 0`).\n4. If both conditions are met, add the element to the `sum`.\n5. After iterating through all elements, return the `sum`.",
+      "quality": 0.0,
+      "final_key": "def max_Product(arr):\n    sum = 0\n    for i, element in enumerate(arr):\n        if i % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_Product([1,2,3,4,7,0,8,4]) == (7,8)\nassert max_Product([-1,-2,-3,-4,-7,-0,-8,-4]) == (-1,-8)\nassert max_Product([1,2,3,4,7,0,8,4,9]) == (7,9)\nassert max_Product([1,2,3,4,7,0,8,4,9,10]) == (7,10)\nassert max_Product([]) == (0,0)\n```",
+        "coder": "```python\ndef max_Product(arr):\n    sum = 0\n    for i, element in enumerate(arr):\n        if i % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_Product(arr):\n    sum = 0\n    for i, element in enumerate(arr):\n        if i % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum\n```",
+        "fixer": "```python\ndef max_Product(arr):\n    sum = 0\n    for i, element in enumerate(arr):\n        if i % 2 == 0 and element % 2 == 0:\n            sum += element\n    return sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `start_withp` that takes a list of strings as input.\n2. Initialize an empty tuple to store the result.\n3. Iterate through each word in the input list using a for loop.\n4. Check if the first character of the current word is 'p' using the condition `word[0] == 'p'`.\n5. If the condition is true, add the word to the result tuple.\n6. After iterating through all words, return the result tuple.\n\nThis approach ensures that we correctly identify and return the first two words from the list that start with the letter 'p'.",
+      "quality": 0.0,
+      "final_key": "def max_Product(nums):\n    if len(nums) < 2:\n        return ()\n    \n    max_product = nums[0] * nums[1]\n    min_product = nums[0] * nums[1]\n    max_num = nums[0]\n    min_num = nums[0]\n    \n    for num in nums[2:]:\n        if num > max_num:\n            max_num, max_product = num, num * max_product\n        elif num > max_product / 2:\n            max_product = num * max_product / 2\n        \n        if num < min_num:\n            min_num, min_product = num, num * min_product\n        elif num < min_product / 2:\n            min_product = num * min_product / 2\n    \n    return (max_num, min_num)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_Product([1,2,3,4,7,0,8,4]) == (7,8)\nassert max_Product([-1,-2,-3,-4,-5]) == (-1,-2)\nassert max_Product([]) == ()\nassert max_Product([0,0,0,0]) == (0,0)\nassert max_Product([100, -100, 100, -100]) == (100, 100)\n```",
+        "coder": "```python\ndef start_withp(words):\n    result = ()\n    for word in words:\n        if word[0] == 'p':\n            result += (word,)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_Product(nums):\n    if len(nums) < 2:\n        return ()\n    \n    max_product = nums[0] * nums[1]\n    min_product = nums[0] * nums[1]\n    max_num = nums[0]\n    min_num = nums[0]\n    \n    for num in nums[2:]:\n        if num > max_num:\n            max_num, max_product = num, num * max_product\n        elif num > max_product / 2:\n            max_product = num * max_product / 2\n        \n        if num < min_num:\n            min_num, min_product = num, num * min_product\n        elif num < min_product / 2:\n            min_product = num * min_product / 2\n    \n    return (max_num, min_num)\n```",
+        "fixer": "```python\ndef max_Product(nums):\n    if len(nums) < 2:\n        return ()\n    \n    max_product = nums[0] * nums[1]\n    min_product = nums[0] * nums[1]\n    max_num = nums[0]\n    min_num = nums[0]\n    \n    for num in nums[2:]:\n        if num > max_num:\n            max_num, max_product = num, num * max_product\n        elif num > max_product / 2:\n            max_product = num * max_product / 2\n        \n        if num < min_num:\n            min_num, min_product = num, num * min_product\n        elif num < min_product / 2:\n            min_product = num * min_product / 2\n    \n    return (max_num, min_num)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to keep track of the current maximum product and the maximum product found so far.\n2. Iterate through the array starting from the second element.\n3. For each element, check if it can be added to the current subsequence (i.e., if it is greater than the last element in the subsequence).\n4. If it can be added, update the current subsequence with the new element.\n5. Calculate the product of the current subsequence.\n6. Update the maximum product found so far if the current product is greater.\n7. Continue until all elements have been processed.\n8. Return the maximum product found.",
+      "quality": 0.0,
+      "final_key": "def max_Product(arr):\n    if len(arr) < 2:\n        return None\n    \n    max_product = arr[0] * arr[1]\n    current_subseq = [arr[0], arr[1]]\n    \n    for i in range(2, len(arr)):\n        if arr[i] > current_subseq[-1]:\n            current_subseq = [current_subseq[-1], arr[i]]\n        else:\n            current_subseq.append(arr[i])\n        \n        current_product = current_subseq[0] * current_subseq[-1]\n        if current_product > max_product:\n            max_product = current_product\n    \n    return max_product",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_Product([-1, -2, -3, -4, -5]) == (-1, -2)\nassert max_Product([1, 2, 3, 4, 5]) == (5, 4)\nassert max_Product([0, 0, 0, 0]) == (0, 0)\nassert max_Product([]) == None\nassert max_Product([1]) == None\n```",
+        "coder": "```python\ndef max_Product(arr):\n    if len(arr) < 2:\n        return None\n    \n    max_product = arr[0] * arr[1]\n    current_subseq = [arr[0], arr[1]]\n    \n    for i in range(2, len(arr)):\n        if arr[i] > current_subseq[-1]:\n            current_subseq = [current_subseq[-1], arr[i]]\n        else:\n            current_subseq.append(arr[i])\n        \n        current_product = current_subseq[0] * current_subseq[-1]\n        if current_product > max_product:\n            max_product = current_product\n    \n    return max_product\n```",
+        "verifier": "PICK: B\n\n```python\ndef max_Product(arr):\n    if len(arr) < 2:\n        return None\n    \n    max_product = arr[0] * arr[1]\n    current_subseq = [arr[0], arr[1]]\n    \n    for i in range(2, len(arr)):\n        if arr[i] > current_subseq[-1]:\n            current_subseq = [current_subseq[-1], arr[i]]\n        else:\n            current_subseq.append(arr[i])\n        \n        current_product = current_subseq[0] * current_subseq[-1]\n        if current_product > max_product:\n            max_product = current_product\n    \n    return max_product\n```",
+        "fixer": "```python\ndef max_Product(arr):\n    if len(arr) < 2:\n        return None\n    \n    max_product = arr[0] * arr[1]\n    current_subseq = [arr[0], arr[1]]\n    \n    for i in range(2, len(arr)):\n        if arr[i] > current_subseq[-1]:\n            current_subseq = [current_subseq[-1], arr[i]]\n        else:\n            current_subseq.append(arr[i])\n        \n        current_product = current_subseq[0] * current_subseq[-1]\n        if current_product > max_product:\n            max_product = current_product\n    \n    return max_product\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+  "sample_keys": [
+    "def max_Product(arr):\n    if not arr:\n        return (-float('inf'), -float('inf'))\n    \n    max_product = float('-inf')\n    current_max = float('-inf')\n    \n    for num in arr:\n        current_max = max(num, current_max * num)\n        max_product = max(max_product, current_max)\n    \n    return (max_product, current_max)",
+    "def max_Product(nums):\n    if not nums:  # Check for empty list\n        return None, None\n    nums.sort()  # Step 1\n    return nums[-1], nums[-2]  # Step 2",
+    "def max_Product(arr):\n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(len(arr)):\n        current_product = 1\n        for j in range(len(arr)):\n            if i != j:\n                current_product *= arr[j]\n        if current_product > max_product:\n            max_product = current_product\n            max_pair = (arr[i], arr[j])\n    \n    return max_pair"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1725.0,
+    "small_out": 474.0,
+    "small_s": 9.961173038027482
+  },
+  "calls_plus": {
+    "large_in": 122.0,
+    "large_out": 123.0,
+    "large_s": 2.696984826994594,
+    "small_in": 1704.0,
+    "small_out": 399.0,
+    "small_s": 7.273337916005403
+  },
+  "calls_samples": {
+    "small_in": 5264.0,
+    "small_out": 1425.0,
+    "small_s": 26.08667989904643
+  }
+}

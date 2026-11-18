@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-415",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef max_Product(arr):\n    n = len(arr)\n    if n < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```",
+  "reference_key": "def max_Product(arr):\n    n = len(arr)\n    if n < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+  "final_key_plus": "def max_Product(arr):\n    n = len(arr)\n    if n < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert max_Product([-1, -2, -3, -4, -5, -6]) == (-1, -6)\nassert max_Product([0, 0, 0, 0]) == (0, 0)\nassert max_Product([1, 2, 3, 4, 5]) == (5, 4)\nassert max_Product([10, 20, 30, 40, 50]) == (50, 40)\nassert max_Product([-10, -20, -30, -40, -50]) == (-10, -50)\n```",
+    "verifier": "PICK: A\n\n```python\ndef max_Product(arr):\n    n = len(arr)\n    if n < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```",
+    "fixer": "```python\ndef max_Product(arr):\n    n = len(arr)\n    if n < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def max_Product(nums):\n    max_product = float('-inf')\n    max_pair = None\n    n = len(nums)\n    \n    for i in range(n - 1):\n        for j in range(i + 1, n):\n            product = nums[i] * nums[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (nums[i], nums[j])\n                \n    return max_pair",
+      "reference_key": "def max_Product(arr):\n    n = len(arr)\n    if n < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+      "key_differs": true,
+      "text": "```python\ndef max_Product(nums):\n    max_product = float('-inf')\n    max_pair = None\n    n = len(nums)\n    \n    for i in range(n - 1):\n        for j in range(i + 1, n):\n            product = nums[i] * nums[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (nums[i], nums[j])\n                \n    return max_pair\n```",
+      "quality": 0.0,
+      "final_key": "def max_Product(nums):\n    max_product = float('-inf')\n    max_pair = None\n    n = len(nums)\n    \n    for i in range(n - 1):\n        for j in range(i + 1, n):\n            product = nums[i] * nums[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (nums[i], nums[j])\n                \n    return max_pair",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_Product([-1, -2, -3, -4, -5, -6, -7, -8]) == (-1, -8)\nassert max_Product([1, 2, 3, 4, 5, 6, 7, 8]) == (8, 8)\nassert max_Product([0, 0, 0, 0]) == (0, 0)\nassert max_Product([]) == (None, None)\nassert max_Product([10]) == (10, 10)\n```",
+        "verifier": "PICK: A\n```python\ndef max_Product(nums):\n    max_product = float('-inf')\n    max_pair = None\n    n = len(nums)\n    \n    for i in range(n - 1):\n        for j in range(i + 1, n):\n            product = nums[i] * nums[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (nums[i], nums[j])\n                \n    return max_pair\n```",
+        "fixer": "```python\ndef max_Product(nums):\n    max_product = float('-inf')\n    max_pair = None\n    n = len(nums)\n    \n    for i in range(n - 1):\n        for j in range(i + 1, n):\n            product = nums[i] * nums[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (nums[i], nums[j])\n                \n    return max_pair\n\n# Test cases\nassert max_Product([1,2,3,4,7,0,8,4]) == (7,8)\nassert max_Product([0,-1,-2,-4,5,0,-6]) == (-4,-6)\nassert max_Product([1,2,3]) == (2,3)\nassert max_Product([-1, -2, -3, -4, -5, -6, -7, -8]) == (-1, -8)\nassert max_Product([1, 2, 3, 4, 5, 6, 7, 8]) == (8, 8)\nassert max_Product([0, 0, 0, 0]) == (0, 0)\nassert max_Product([]) == (None, None)\nassert max_Product([10]) == (10, 10)\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def max_Product(arr):\n    if len(arr) < 2:\n        return \"Array must contain at least two elements.\"\n    \n    max_product = -float('inf')\n    pair = (None, None)\n\n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            current_product = arr[i] * arr[j]\n            if current_product > max_product:\n                max_product = current_product\n                pair = (arr[i], arr[j])\n\n    return pair",
+      "reference_key": "def max_Product(arr):\n    n = len(arr)\n    if n < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+      "key_differs": true,
+      "text": "```python\n\ndef max_Product(arr):\n    if len(arr) < 2:\n        return \"Array must contain at least two elements.\"\n    \n    max_product = -float('inf')\n    pair = (None, None)\n\n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            current_product = arr[i] * arr[j]\n            if current_product > max_product:\n                max_product = current_product\n                pair = (arr[i], arr[j])\n\n    return pair\n```",
+      "quality": 0.0,
+      "final_key": "def max_Product(arr):\n    if len(arr) < 2:\n        return \"Array must contain at least two elements.\"\n    \n    max_product = -float('inf')\n    pair = (None, None)\n\n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            current_product = arr[i] * arr[j]\n            if current_product > max_product:\n                max_product = current_product\n                pair = (arr[i], arr[j])\n\n    return pair",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_Product([-1, -2, -3, -4, -5, -6, -7, -8]) == (-1, -8)\nassert max_Product([1, 2, 3, 4, 5, 6, 7, 8]) == (8, 7)\nassert max_Product([0, 0, 0, 0]) == (0, 0)\nassert max_Product([]) == \"Array must contain at least two elements.\"\nassert max_Product([1]) == \"Array must contain at least two elements.\"\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_Product(arr):\n    if len(arr) < 2:\n        return \"Array must contain at least two elements.\"\n    \n    max_product = -float('inf')\n    pair = (None, None)\n\n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            current_product = arr[i] * arr[j]\n            if current_product > max_product:\n                max_product = current_product\n                pair = (arr[i], arr[j])\n\n    return pair\n```",
+        "fixer": "```python\ndef max_Product(arr):\n    if len(arr) < 2:\n        return \"Array must contain at least two elements.\"\n\n    max_product = -float('inf')\n    pair = (None, None)\n\n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            current_product = arr[i] * arr[j]\n            if current_product > max_product:\n                max_product = current_product\n                pair = (arr[i], arr[j])\n\n    return pair\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far",
+      "reference_key": "def max_Product(arr):\n    n = len(arr)\n    if n < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_product = float('-inf')\n    max_pair = ()\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+      "key_differs": true,
+      "text": "```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n```",
+      "quality": 0.0,
+      "final_key": "def max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_product([-1, -2, -3, -4]) == (-1, -2)\nassert max_product([0, 1, 2, 3, 4]) == (4, 4)\nassert max_product([1, 2, 3, 4, 5, 6]) == (6, 6)\nassert max_product([-1, -2, -3, -4, -5, -6]) == (-1, -2)\nassert max_product([]) == None\n```",
+        "verifier": "PICK: A\n\n```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n```",
+        "fixer": "```python\ndef max_product(arr):\n    if len(arr) < 2:\n        return arr[0]\n    \n    max_subseq = [arr[0]]\n    max_product_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        if arr[i] > max_subseq[-1]:\n            max_subseq.append(arr[i])\n        else:\n            max_subseq = [arr[i]]\n        \n        current_product = 1\n        for num in max_subseq:\n            current_product *= num\n        \n        max_product_so_far = max(max_product_so_far, current_product)\n    \n    return max_product_so_far\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n    \n    return max_pair",
+  "sample_keys": [
+    "def max_Product(arr):\n    max_product = float('-inf')\n    max_pair = None\n    n = len(arr)\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n                \n    return max_pair",
+    "def max_Product(arr):\n    if len(arr) < 2:\n        return None\n    \n    max_product = arr[0] * arr[1]\n    max_pair = (arr[0], arr[1])\n    \n    for i in range(len(arr)):\n        for j in range(i + 1, len(arr)):\n            current_product = arr[i] * arr[j]\n            if current_product > max_product:\n                max_product = current_product\n                max_pair = (arr[i], arr[j])\n                \n    return max_pair",
+    "def max_Product(arr):\n    if len(arr) < 2:\n        raise ValueError(\"Array must contain at least two elements\")\n    \n    max_product = arr[0] * arr[1]\n    max_pair = (arr[0], arr[1])\n    \n    for i in range(len(arr)):\n        for j in range(i + 1, len(arr)):\n            product = arr[i] * arr[j]\n            if product > max_product:\n                max_product = product\n                max_pair = (arr[i], arr[j])\n                \n    return max_pair",
+    "def max_Product(arr):\n    max_product = float('-inf')\n    best_pair = None\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            if arr[i] * arr[j] > max_product:\n                max_product = arr[i] * arr[j]\n                best_pair = (arr[i], arr[j])\n    \n    return best_pair",
+    "def max_Product(arr):\n    max_product = float('-inf')\n    pair = ()\n    \n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            current_product = arr[i] * arr[j]\n            if current_product > max_product:\n                max_product = current_product\n                pair = (arr[i], arr[j])\n    \n    return pair"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1725.0,
+    "small_out": 474.0,
+    "small_s": 9.961173038027482
+  },
+  "calls_plus": {
+    "small_in": 1673.0,
+    "small_out": 459.0,
+    "small_s": 8.644933485978981,
+    "large_in": 209.0,
+    "large_out": 109.0,
+    "large_s": 2.4072921210026834
+  },
+  "calls_samples": {
+    "small_in": 1045.0,
+    "small_out": 493.0,
+    "small_s": 9.33159876303398
+  }
+}

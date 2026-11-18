@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-740",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n```",
+  "reference_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "final_key_plus": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n\n\nprint(tuple_to_dict((1, 5, 7, 10, 13, 5)))\n# expected output: {1: 5, 7: 10, 13: 5}\n\nprint(tuple_to_dict(('a', 'b', 'c')))\n# expected output: {'a': 'b', 'b': 'c'}\n\nprint(tuple_to_dict(('x')))\n# expected output: {}\n\nprint(tuple_to_dict(()))\n# expected output: {}\n\nprint(tuple_to_dict((1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))\n# expected output: {1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10}",
+      "reference_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "key_differs": true,
+      "text": "PICK: A\ncode block starts here\n\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n\n\nprint(tuple_to_dict((1, 5, 7, 10, 13, 5)))\n# expected output: {1: 5, 7: 10, 13: 5}\n\nprint(tuple_to_dict(('a', 'b', 'c')))\n# expected output: {'a': 'b', 'b': 'c'}\n\nprint(tuple_to_dict(('x')))\n# expected output: {}\n\nprint(tuple_to_dict(()))\n# expected output: {}\n\nprint(tuple_to_dict((1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))\n# expected output: {1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10}\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict\n\n\nprint(tuple_to_dict((1, 5, 7, 10, 13, 5)))\n# expected output: {1: 5, 7: 10, 13: 5}\n\nprint(tuple_to_dict(('a', 'b', 'c')))\n# expected output: {'a': 'b', 'b': 'c'}\n\nprint(tuple_to_dict(('x')))\n# expected output: {}\n\nprint(tuple_to_dict(()))\n# expected output: {}\n\nprint(tuple_to_dict((1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))\n# expected output: {1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10}",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        if key != len(dict): # check if key exists in the dictionary\n            dict[key] = value\n    return dict",
+      "reference_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "key_differs": true,
+      "text": "PICK: C\n\n```python\ndef tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        if key != len(dict): # check if key exists in the dictionary\n            dict[key] = value\n    return dict\n```",
+      "quality": 0.0,
+      "final_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        if key != len(dict): # check if key exists in the dictionary\n            dict[key] = value\n    return dict",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+      "reference_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\ndef get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True\n```",
+      "quality": 0.0,
+      "final_key": "def get_equal(tuples_list):\n    length = len(tuples_list[0])\n    for tup in tuples_list:\n        if len(tup) != length:\n            return False\n    return True\n\n# Test cases\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7)]) == False\nassert get_equal([(1, 2), (3, 4)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66)]) == True\nassert get_equal([(11, 22, 33), (44, 55, 66, 77)]) == False\nassert get_equal([(), (1, 2), (3, 4, 5)]) == True\nassert get_equal([(1, 2, 3), (4, 5, 6, 7), (8, 9, 10)]) == False\nassert get_equal([]) == True",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+  "sample_keys": [
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict",
+    "def tuple_to_dict(tup):\n    dict = {}\n    for i in range(len(tup) - 1):\n        key, value = tup[i], tup[i + 1]\n        dict[key] = value\n    return dict"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2350.0,
+    "small_out": 610.0,
+    "small_s": 12.412047993042506
+  },
+  "calls_plus": {
+    "small_in": 1386.0,
+    "small_out": 551.0,
+    "small_s": 11.258618709020084,
+    "large_in": 964.0,
+    "large_out": 59.0,
+    "large_s": 1.3348339810036123
+  },
+  "calls_samples": {
+    "small_in": 4820.0,
+    "small_out": 295.0,
+    "small_s": 4.7704532320203725
+  }
+}

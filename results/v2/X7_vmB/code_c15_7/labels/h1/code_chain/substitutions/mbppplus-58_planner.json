@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-58",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `opposite_Signs` that takes two integer parameters, `x` and `y`.\n2. Use the bitwise XOR operator (`^`) on `x` and `y`. This operation will result in a negative number if `x` and `y` have opposite signs because one of them is positive and the other is negative.\n3. Check if the result of the XOR operation is less than zero using an if statement.\n4. If the result is less than zero, return `True`, indicating that `x` and `y` have opposite signs.\n5. Otherwise, return `False`, indicating that `x` and `y` have the same sign.",
+  "reference_key": null,
+  "final_key_plus": "def opposite_Signs(x, y):\n    return (x ^ y) < 0",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert opposite_Signs(-3, 4) == False\nassert opposite_Signs(0, -1) == True\nassert opposite_Signs(1, 1) == False\nassert opposite_Signs(-1, -1) == False\nassert opposite_Signs(0, 0) == False\n```",
+    "coder": "```python\ndef opposite_Signs(x, y):\n    return (x ^ y) < 0\n```",
+    "verifier": "PICK: A\n\n```python\ndef opposite_Signs(x, y):\n    return (x ^ y) < 0\n```",
+    "fixer": "```python\ndef opposite_Signs(x, y):\n    return (x ^ y) < 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables to keep track of the maximum subset size found and the current subset size.\n2. Iterate through each number in the list.\n3. For each number, check if it can be added to the current subset without violating the condition (i.e., both numbers must be divisible).\n4. If the number can be added, update the current subset size.\n5. After checking all numbers, return the maximum subset size found.\n\nThis approach ensures that we efficiently find the largest subset where every pair is divisible by checking each number against the existing subset.",
+      "quality": 0.0,
+      "final_key": "def opposite_Signs(a, b):\n    # Initialize variables to keep track of the maximum subset size found and the current subset size\n    max_subset_size = 0\n    current_subset_size = 0\n    \n    # Iterate through each number in the list\n    for num in [a, b]:\n        # Check if the number can be added to the current subset without violating the condition\n        if num % current_subset_size == 0:\n            current_subset_size += 1\n            max_subset_size = max(max_subset_size, current_subset_size)\n    \n    return max_subset_size > 1",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert opposite_Signs(-3, -4) == False\nassert opposite_Signs(0, 0) == False\nassert opposite_Signs(1, 1) == False\nassert opposite_Signs(-1, 1) == True\nassert opposite_Signs(2, -2) == True\n```",
+        "coder": "```python\ndef opposite_Signs(a, b):\n    # Initialize variables to keep track of the maximum subset size found and the current subset size\n    max_subset_size = 0\n    current_subset_size = 0\n    \n    # Iterate through each number in the list\n    for num in [a, b]:\n        # Check if the number can be added to the current subset without violating the condition\n        if num % current_subset_size == 0:\n            current_subset_size += 1\n            max_subset_size = max(max_subset_size, current_subset_size)\n    \n    return max_subset_size > 1\n```",
+        "verifier": "PICK: A\n\n```python\ndef opposite_Signs(a, b):\n    # Initialize variables to keep track of the maximum subset size found and the current subset size\n    max_subset_size = 0\n    current_subset_size = 0\n    \n    # Iterate through each number in the list\n    for num in [a, b]:\n        # Check if the number can be added to the current subset without violating the condition\n        if num % current_subset_size == 0:\n            current_subset_size += 1\n            max_subset_size = max(max_subset_size, current_subset_size)\n    \n    return max_subset_size > 1\n```",
+        "fixer": "```python\ndef opposite_Signs(a, b):\n    # Initialize variables to keep track of the maximum subset size found and the current subset size\n    max_subset_size = 0\n    current_subset_size = 0\n    \n    # Iterate through each number in the list\n    for num in [a, b]:\n        # Check if the number can be added to the current subset without violating the condition\n        if num % current_subset_size == 0:\n            current_subset_size += 1\n            max_subset_size = max(max_subset_size, current_subset_size)\n    \n    return max_subset_size > 1\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `opposite_Signs` that takes two integer parameters, `x` and `y`.\n2. Use the bitwise XOR operator (`^`) on `x` and `y`. This operation will result in a negative number if `x` and `y` have opposite signs because one of them is positive and the other is negative.\n3. Check if the result of the XOR operation is greater than or equal to zero using an if statement.\n4. If the result is greater than or equal to zero, return `True`, indicating that `x` and `y` have opposite signs.\n5. Otherwise, return `False`, indicating that `x` and `y` have the same sign.",
+      "quality": 0.0,
+      "final_key": "def opposite_Signs(x, y):\n    return (x ^ y) >= 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert opposite_Signs(-3, 4) == False\nassert opposite_Signs(0, -1) == True\nassert opposite_Signs(1, 1) == False\nassert opposite_Signs(-1, -1) == False\nassert opposite_Signs(0, 0) == False\n```",
+        "coder": "```python\ndef opposite_Signs(x, y):\n    return (x ^ y) >= 0\n```",
+        "verifier": "PICK: A\n\n```python\ndef opposite_Signs(x, y):\n    return (x ^ y) >= 0\n```",
+        "fixer": "```python\ndef opposite_Signs(x, y):\n    return (x ^ y) >= 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `add_string` that takes two parameters: `elements`, which is a list of strings, and `format_str`, which is a string representing the format to be applied to each element.\n2. Use a list comprehension to iterate over each element in the `elements` list.\n3. For each element, use the `format()` method to apply the `format_str` to it.\n4. Return the new list containing the formatted elements.\n\nHere's the complete implementation:\n\n```python\ndef add_string(elements, format_str):\n    # Apply the format string to each element using list comprehension\n    return [format(element, format_str) for element in elements]\n```\n\nThis function will correctly format each element in the input list according to the specified format string.",
+      "quality": 1.0,
+      "final_key": "def opposite_Signs(a, b):\n    # Check if the signs of a and b are different\n    return (a > 0) != (b > 0)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert opposite_Signs(-3, 4) == False\nassert opposite_Signs(0, -1) == True\nassert opposite_Signs(1, 1) == False\nassert opposite_Signs(-2, -2) == False\nassert opposite_Signs(0, 0) == False\n```",
+        "coder": "```python\ndef opposite_Signs(a, b):\n    # Check if the signs of a and b are different\n    return (a > 0) != (b > 0)\n```",
+        "verifier": "PICK: A\n\n```python\ndef opposite_Signs(a, b):\n    # Check if the signs of a and b are different\n    return (a > 0) != (b > 0)\n```",
+        "fixer": "```python\ndef opposite_Signs(a, b):\n    # Check if the signs of a and b are different\n    return (a > 0) != (b > 0)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def opposite_signs(a, b):\n    if a != b:\n        return True\n    else:\n        return False",
+  "sample_keys": [
+    "def opposite_signs(a, b):\n    return (a * b) < 0",
+    "def opposite_Signs(a, b):\n    # Compare the signs of a and b using bitwise XOR\n    if (a ^ b) < 0:\n        return True\n    else:\n        return False",
+    "def opposite_Signs(a, b):\n    return (a > 0) != (b > 0)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1428.0,
+    "small_out": 312.0,
+    "small_s": 6.9341640950297005
+  },
+  "calls_plus": {
+    "large_in": 108.0,
+    "large_out": 146.0,
+    "large_s": 3.15759078701376,
+    "small_in": 1152.0,
+    "small_out": 155.0,
+    "small_s": 2.7897838609933387
+  },
+  "calls_samples": {
+    "small_in": 4185.0,
+    "small_out": 1111.0,
+    "small_s": 19.687313545116922
+  }
+}

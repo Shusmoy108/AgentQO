@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-631",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('Data Science & Analytics') == 'Data_Science__Analytics'\nassert replace_spaces('12345 67890') == '12345_67890'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'\nassert replace_spaces(' ') == '_'\n```",
+  "reference_key": "assert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('Data Science & Analytics') == 'Data_Science__Analytics'\nassert replace_spaces('12345 67890') == '12345_67890'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'\nassert replace_spaces(' ') == '_'",
+  "final_key_plus": "def replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n```",
+    "fixer": "```python\ndef replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert replace_spaces('Hello World') == 'Hello_World', \"Test case 1 failed.\"\nassert replace_spaces('Programming Language') == 'Programmin_g_Language', \"Test case 2 failed.\"\nassert replace_spaces('Data _ Science') == 'Data__Science', \"Test case 3 failed.\"\nassert replace_spaces('_Python_Code') == '__Python_code', \"Test case 4 failed.\"\nassert replace_spaces('No Spaces here') == 'No_Spaces_here', \"Test case 5 failed.\"",
+      "reference_key": "assert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('Data Science & Analytics') == 'Data_Science__Analytics'\nassert replace_spaces('12345 67890') == '12345_67890'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'\nassert replace_spaces(' ') == '_'",
+      "key_differs": true,
+      "text": "```python\nassert replace_spaces('Hello World') == 'Hello_World', \"Test case 1 failed.\"\nassert replace_spaces('Programming Language') == 'Programmin_g_Language', \"Test case 2 failed.\"\nassert replace_spaces('Data _ Science') == 'Data__Science', \"Test case 3 failed.\"\nassert replace_spaces('_Python_Code') == '__Python_code', \"Test case 4 failed.\"\nassert replace_spaces('No Spaces here') == 'No_Spaces_here', \"Test case 5 failed.\"\n```",
+      "quality": 0.0,
+      "final_key": "def replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n```",
+        "fixer": "```python\ndef replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestReplaceSpaces(unittest.TestCase):\n    def test_normal_case(self):\n        self.assertEqual(replace_spaces('Jumanji The Jungle'), 'Jumanji_The_Jungle')\n    \n    def test_edge_case_1(self):\n        self.assertEqual(replace_spaces('123'), '123')\n        \n    def test_edge_case_2(self):\n        self.assertEqual(replace_spaces('_'), '__')\n        \n    def test_edge_case_3(self):\n        self.assertEqual(replace_spaces('Hello World!'), 'Hello_World!')\n        \n    def test_edge_case_4(self):\n        self.assertEqual(replace_spaces(''), '')\n\nif __name__ == \"__main__\":\n    unittest.main()",
+      "reference_key": "assert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('Data Science & Analytics') == 'Data_Science__Analytics'\nassert replace_spaces('12345 67890') == '12345_67890'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'\nassert replace_spaces(' ') == '_'",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TestReplaceSpaces(unittest.TestCase):\n    def test_normal_case(self):\n        self.assertEqual(replace_spaces('Jumanji The Jungle'), 'Jumanji_The_Jungle')\n    \n    def test_edge_case_1(self):\n        self.assertEqual(replace_spaces('123'), '123')\n        \n    def test_edge_case_2(self):\n        self.assertEqual(replace_spaces('_'), '__')\n        \n    def test_edge_case_3(self):\n        self.assertEqual(replace_spaces('Hello World!'), 'Hello_World!')\n        \n    def test_edge_case_4(self):\n        self.assertEqual(replace_spaces(''), '')\n\nif __name__ == \"__main__\":\n    unittest.main()\n```\n\nExplanation of the test setup: \n- `test_normal_case`: Replaces spaces in a normal sentence with underscores.\n- `test_edge_case_1`: Replaces a single digit with itself because it has no effect on the space replacement rule.\n- `test_edge_case_2`: Replaces an underscore with two underscores since spaces are replaced by underscores in this scenario.\n- `test_edge_case_3`: Replaces a phrase separated by non-space characters without affecting the replacement pattern as spaces should be replaced by underscores.\n- `test_edge_case_4`: Tests replacing an empty string with itself since replace_spaces does not modify empty strings.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_spaces('Jumanji The Jungle') == 'Jumanji_The_Jungle'\nassert replace_spaces('The_Avengers') == 'The_Avengers'\nassert replace_spaces('Fast and Furious') == 'Fast_and_Furious'\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert issort_list([]) == True\nassert issort_list([1]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 18]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20]) == True",
+      "reference_key": "assert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('Data Science & Analytics') == 'Data_Science__Analytics'\nassert replace_spaces('12345 67890') == '12345_67890'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'\nassert replace_spaces(' ') == '_'",
+      "key_differs": true,
+      "text": "```python\nassert issort_list([]) == True\nassert issort_list([1]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 18]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20]) == True\n```",
+      "quality": 0.0,
+      "final_key": "def replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_spaces('Jumanji The Jungle') == 'Jumanji_The_Jungle'\nassert replace_spaces('The_Avengers') == 'The_Avengers'\nassert replace_spaces('Fast and Furious') == 'Fast_and_Furious'\nassert issort_list([]) == True\nassert issort_list([1]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 18]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20]) == True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n```python\ndef replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_spaces('Jumanji The Jungle') == 'Jumanji_The_Jungle'\nassert replace_spaces('The_Avengers') == 'The_Avengers'\nassert replace_spaces('Fast and Furious') == 'Fast_and_Furious'\nassert issort_list([]) == True\nassert issort_list([1]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 18]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20]) == True\n```",
+        "fixer": "```python\ndef replace_spaces(input_string):\n    result = \"\"\n    for char in input_string:\n        if char == \" \":\n            result += \"_\"\n        else:\n            result += char\n    return result\n\n# Test cases\nassert replace_spaces('Jumanji The Jungle') == 'Jumanji_The_Jungle'\nassert replace_spaces('The_Avengers') == 'The_Avengers'\nassert replace_spaces('Fast and Furious') == 'Fast_and_Furious'\nassert issort_list([]) == True\nassert issort_list([1]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == True\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 18]) == False\nassert issort_list([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20]) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert replace_spaces('Hello World') == 'Hello_World'\nassert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('1234567890') == '1234567890'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'\nassert replace_spaces('   Leading Spaces   ') == '_Leading_Spaces_'",
+  "sample_keys": [
+    "import pytest\n\n@pytest.mark.parametrize(\"input_str, expected_output\", [\n    (\"Jumanji The Jungle\", \"Jumanji_The_Jungle\"),\n    (\"Python Programming Language\", \"Python_Programming_Language\"),\n    (\"   Leading and trailing spaces   \", \"__Leading_and_trailing_spaces__\"),\n    (\"NoSpacesHere\", \"NoSpacesHere\"),\n    (\"Special Characters!@#$%^&*()\", \"!@#$%^&*()_\")\n])\ndef test_replace_spaces(input_str, expected_output):\n    assert replace_spaces(input_str) == expected_output",
+    "# Edge case 1: Input string is empty\nassert replace_spaces(\"\") == \"\"\n\n# Edge case 2: Input string has no spaces\nassert replace_spaces(\"HelloWorld\") == \"HelloWorld\"\n\n# Edge case 3: Input string contains multiple consecutive spaces\nassert replace_spaces(\"   LeadingSpaces\") == \"__LeadingSpaces__\"\n\n# Edge case 4: Input string has leading and trailing spaces\nassert replace_spaces(\"   TrailingSpaces \") == \"__TrailingSpaces__\"\n\n# Edge case 5: Input string has special characters and spaces\nassert replace_spaces(\"Special!@#$%^&*()\") == \"Special!@#$%^&*()\"",
+    "assert replace_spaces('Hello World') == 'Hello_World'\nassert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('1234567890') == '1234567890'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'\nassert replace_spaces(' Leading Spaces ') == '_Leading_Spaces_'\nassert replace_spaces('Trailing spaces   ') == 'Trailing_spaces___'",
+    "assert replace_spaces('') == ''\nassert replace_spaces('Hello World') == 'Hello_World'\nassert replace_spaces('Python Programming Language') == 'Python_Progamming_Language'\nassert replace_spaces('   Leading Trailing Spaces   ') == '__Leading_Trailing_Spaces__'\nassert replace_spaces('NoSpacesHere') == 'NoSpacesHere'",
+    "assert replace_spaces('Hello World') == 'Hello_World'\nassert replace_spaces('Python Programming') == 'Python_Programming'\nassert replace_spaces('1234567890') == '1234567890'\nassert replace_spaces('No Spaces Here') == 'No_Spaces_Here'\nassert replace_spaces(' MixedCaseHere') == 'Mixed_Case_Here'"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1439.0,
+    "small_out": 449.0,
+    "small_s": 9.91562960401643
+  },
+  "calls_plus": {
+    "small_in": 1221.0,
+    "small_out": 265.0,
+    "small_s": 5.511839938000776,
+    "large_in": 175.0,
+    "large_out": 89.0,
+    "large_s": 2.316804314003093
+  },
+  "calls_samples": {
+    "small_in": 875.0,
+    "small_out": 533.0,
+    "small_s": 9.835255094978493
+  }
+}

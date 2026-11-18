@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-750",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```",
+  "reference_key": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+  "final_key_plus": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert add_tuple([], (1, 2)) == [1, 2]\nassert add_tuple([3, 4, 5], ()) == [3, 4, 5]\nassert add_tuple(['a', 'b'], ('c', 'd')) == ['a', 'b', 'c', 'd']\nassert add_tuple([True, False], (True, True)) == [True, False, True, True]\nassert add_tuple([None], (None, None)) == [None, None, None]\n```",
+    "verifier": "PICK: A\n\n```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```",
+    "fixer": "```python\ndef add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": "def get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]",
+      "reference_key": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+      "key_differs": true,
+      "text": "```python\ndef get_total_number_of_sequences(m, n):\n    # Helper function to check if a sequence is valid\n    def is_valid_sequence(seq):\n        for i in range(1, len(seq)):\n            if seq[i] < 2 * seq[i - 1] or seq[i] > m:\n                return False\n        return True\n\n    # Initialize the DP table\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    \n    # Base case: There's one way to have a sequence of length 1 ending with any number\n    for j in range(1, m + 1):\n        dp[1][j] = 1\n    \n    # Fill the DP table\n    for i in range(2, n + 1):\n        for j in range(2, m + 1):\n            for k in range(j // 2, j + 1):\n                dp[i][j] += dp[i - 1][k]\n    \n    # The total number of valid sequences of length n\n    return dp[n][m]\n```",
+      "quality": 0.0,
+      "final_key": "def add_tuple(lst, tup):\n    lst.append(tup)\n    return lst\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\nassert get_total_number_of_sequences(3, 4) == 8\nassert get_total_number_of_sequences(5, 6) == 16\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(2, 2) == 2\nassert get_total_number_of_sequences(3, 3) == 4",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_total_number_of_sequences(3, 4) == 8\nassert get_total_number_of_sequences(5, 6) == 16\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(2, 2) == 2\nassert get_total_number_of_sequences(3, 3) == 4\n```",
+        "verifier": "PICK: B\n\n```python\ndef add_tuple(lst, tup):\n    lst.append(tup)\n    return lst\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\nassert get_total_number_of_sequences(3, 4) == 8\nassert get_total_number_of_sequences(5, 6) == 16\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(2, 2) == 2\nassert get_total_number_of_sequences(3, 3) == 4\n```",
+        "fixer": "```python\ndef add_tuple(lst, tup):\n    lst.append(tup)\n    return lst\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\nassert get_total_number_of_sequences(3, 4) == 8\nassert get_total_number_of_sequences(5, 6) == 16\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(2, 2) == 2\nassert get_total_number_of_sequences(3, 3) == 4\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count",
+      "reference_key": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+      "key_differs": true,
+      "text": "```python\ndef count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n```",
+      "quality": 0.0,
+      "final_key": "def add_tuple(lst, tup):\n    lst.append(tup)\n    return lst\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\nassert count_charac(\"hello\") == 5\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"ab\") == 2\nassert count_charac(\"abc\") == 3",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_charac(\"hello\") == 5\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"ab\") == 2\nassert count_charac(\"abc\") == 3\n```",
+        "verifier": "PICK: B\n```python\ndef add_tuple(lst, tup):\n    lst.append(tup)\n    return lst\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\nassert count_charac(\"hello\") == 5\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"ab\") == 2\nassert count_charac(\"abc\") == 3\n```",
+        "fixer": "```python\ndef add_tuple(lst, tup):\n    lst.append(tup)\n    return lst\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\nassert count_charac(\"hello\") == 5\nassert count_charac(\"\") == 0\nassert count_charac(\"a\") == 1\nassert count_charac(\"ab\") == 2\nassert count_charac(\"abc\") == 3\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple",
+      "reference_key": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+      "key_differs": true,
+      "text": "```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple\n```",
+      "quality": 0.0,
+      "final_key": "def add_tuple(tuples_list, new_tuple):\n    tuples_list.append(new_tuple)\n    return tuples_list\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\nassert max_aggregate([(1, 2), (3, 4), (5, 6)]) == (5, 15)\nassert max_aggregate([]) == ()\nassert max_aggregate([('a', 10), ('b', -5), ('c', 8)]) == ('c', 18)\nassert max_aggregate([('x', 100), ('y', 200), ('z', 300)]) == ('z', 600)\nassert max_aggregate([('w', 0), ('v', 0), ('u', 0)]) == ('u', 0)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert max_aggregate([(1, 2), (3, 4), (5, 6)]) == (5, 15)\nassert max_aggregate([]) == ()\nassert max_aggregate([('a', 10), ('b', -5), ('c', 8)]) == ('c', 18)\nassert max_aggregate([('x', 100), ('y', 200), ('z', 300)]) == ('z', 600)\nassert max_aggregate([('w', 0), ('v', 0), ('u', 0)]) == ('u', 0)\n```",
+        "verifier": "PICK: B\n```python\ndef add_tuple(tuples_list, new_tuple):\n    tuples_list.append(new_tuple)\n    return tuples_list\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\nassert max_aggregate([(1, 2), (3, 4), (5, 6)]) == (5, 15)\nassert max_aggregate([]) == ()\nassert max_aggregate([('a', 10), ('b', -5), ('c', 8)]) == ('c', 18)\nassert max_aggregate([('x', 100), ('y', 200), ('z', 300)]) == ('z', 600)\nassert max_aggregate([('w', 0), ('v', 0), ('u', 0)]) == ('u', 0)\n```",
+        "fixer": "```python\ndef add_tuple(tuples_list, new_tuple):\n    tuples_list.append(new_tuple)\n    return tuples_list\n\n# Test cases\nassert add_tuple([5, 6, 7], (9, 10)) == [5, 6, 7, 9, 10]\nassert add_tuple([6, 7, 8], (10, 11)) == [6, 7, 8, 10, 11]\nassert add_tuple([7, 8, 9], (11, 12)) == [7, 8, 9, 11, 12]\nassert max_aggregate([(1, 2), (3, 4), (5, 6)]) == (5, 15)\nassert max_aggregate([]) == ()\nassert max_aggregate([('a', 10), ('b', -5), ('c', 8)]) == ('c', 18)\nassert max_aggregate([('x', 100), ('y', 200), ('z', 300)]) == ('z', 600)\nassert max_aggregate([('w', 0), ('v', 0), ('u', 0)]) == ('u', 0)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+  "sample_keys": [
+    "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+    null,
+    "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+    "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst",
+    "def add_tuple(lst, tup):\n    lst.extend(tup)\n    return lst"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": null,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1598.0,
+    "small_out": 302.0,
+    "small_s": 3.850801103981212
+  },
+  "calls_plus": {
+    "small_in": 1360.0,
+    "small_out": 280.0,
+    "small_s": 3.5663310310046654,
+    "large_in": 238.0,
+    "large_out": 22.0,
+    "large_s": 0.6596947799844202
+  },
+  "calls_samples": {
+    "small_in": 1190.0,
+    "small_out": 106.0,
+    "small_s": 2.2075964839896187
+  }
+}

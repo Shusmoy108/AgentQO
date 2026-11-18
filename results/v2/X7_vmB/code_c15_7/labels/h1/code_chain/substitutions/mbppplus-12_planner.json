@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-12",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `sort_matrix` that takes a matrix (list of lists) as input.\n2. Calculate the sum of each row in the matrix.\n3. Pair each row with its corresponding sum.\n4. Sort these pairs based on the sums in ascending order.\n5. Extract the sorted rows from the pairs and return them as the result.",
+  "reference_key": null,
+  "final_key_plus": "def sort_matrix(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Pair each row with its corresponding sum\n    paired_rows = list(zip(matrix, row_sums))\n    \n    # Step 3: Sort these pairs based on the sums in ascending order\n    sorted_pairs = sorted(paired_rows, key=lambda x: x[1])\n    \n    # Step 4: Extract the sorted rows from the pairs and return them\n    sorted_matrix = [row for row, _ in sorted_pairs]\n    \n    return sorted_matrix",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nassert sort_matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]]\n```",
+    "coder": "```python\ndef sort_matrix(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Pair each row with its corresponding sum\n    paired_rows = list(zip(matrix, row_sums))\n    \n    # Step 3: Sort these pairs based on the sums in ascending order\n    sorted_pairs = sorted(paired_rows, key=lambda x: x[1])\n    \n    # Step 4: Extract the sorted rows from the pairs and return them\n    sorted_matrix = [row for row, _ in sorted_pairs]\n    \n    return sorted_matrix\n```",
+    "verifier": "PICK: A\n\n```python\ndef sort_matrix(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Pair each row with its corresponding sum\n    paired_rows = list(zip(matrix, row_sums))\n    \n    # Step 3: Sort these pairs based on the sums in ascending order\n    sorted_pairs = sorted(paired_rows, key=lambda x: x[1])\n    \n    # Step 4: Extract the sorted rows from the pairs and return them\n    sorted_matrix = [row for row, _ in sorted_pairs]\n    \n    return sorted_matrix\n```",
+    "fixer": "```python\ndef sort_matrix(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Pair each row with its corresponding sum\n    paired_rows = list(zip(matrix, row_sums))\n    \n    # Step 3: Sort these pairs based on the sums in ascending order\n    sorted_pairs = sorted(paired_rows, key=lambda x: x[1])\n    \n    # Step 4: Extract the sorted rows from the pairs and return them\n    sorted_matrix = [row for row, _ in sorted_pairs]\n    \n    return sorted_matrix\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `swap_numbers` that accepts two parameters, `num1` and `num2`.\n2. Inside the function, create a tuple containing `num2` and `num1`.\n3. Return the created tuple.\n\nThis solution meets all the requirements specified in the task.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 2, 3], [2, 4, 5], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1]]\n```",
+        "coder": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+        "verifier": "PICK: B\n\n```python\ndef sort_matrix(matrix):\n    # Sort the matrix based on the sum of each row\n    sorted_matrix = sorted(matrix, key=lambda x: sum(x))\n    return sorted_matrix\n\n# Test cases\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [-2, 4, -5], [1, -1, 1]]) == [[-2, 4, -5], [1, -1, 1], [1, 2, 3]]\nassert sort_matrix([[5,8,9],[6,4,3],[2,1,4]]) == [[2, 1, 4], [6, 4, 3], [5, 8, 9]]\nassert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 2, 3], [2, 4, 5], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[",
+        "fixer": "```python\ndef sort_matrix(matrix):\n    # Sort the matrix based on the sum of each row\n    sorted_matrix = sorted(matrix, key=lambda x: sum(x))\n    return sorted_matrix\n\n# Test cases\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [-2, 4, -5], [1, -1, 1]]) == [[-2, 4, -5], [1, -1, 1], [1, 2, 3]]\nassert sort_matrix([[5,8,9],[6,4,3],[2,1,4]]) == [[2, 1, 4], [6, 4, 3], [5, 8, 9]]\nassert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 2, 3], [2, 4, 5], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1,"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sort_matrix` that takes a matrix (list of lists) as input.\n2. Calculate the sum of each row in the matrix.\n3. Pair each row with its corresponding sum.\n4. Sort these pairs based on the sums in descending order.\n5. Extract the sorted rows from the pairs and return them as the result.",
+      "quality": 0.0,
+      "final_key": "def sort_matrix(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Pair each row with its corresponding sum\n    paired_rows = list(zip(matrix, row_sums))\n    \n    # Step 3: Sort these pairs based on the sums in descending order\n    sorted_pairs = sorted(paired_rows, key=lambda x: x[1], reverse=True)\n    \n    # Step 4: Extract the sorted rows from the pairs and return them\n    sorted_matrix = [row for row, _ in sorted_pairs]\n    \n    return sorted_matrix",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sort_matrix([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == [[10, 20, 30], [40, 50, 60], [70, 80, 90]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nassert sort_matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 1, 1]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]\nassert sort_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]]\n```",
+        "coder": "```python\ndef sort_matrix(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Pair each row with its corresponding sum\n    paired_rows = list(zip(matrix, row_sums))\n    \n    # Step 3: Sort these pairs based on the sums in descending order\n    sorted_pairs = sorted(paired_rows, key=lambda x: x[1], reverse=True)\n    \n    # Step 4: Extract the sorted rows from the pairs and return them\n    sorted_matrix = [row for row, _ in sorted_pairs]\n    \n    return sorted_matrix\n```",
+        "verifier": "PICK: A\n\n```python\ndef sort_matrix(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Pair each row with its corresponding sum\n    paired_rows = list(zip(matrix, row_sums))\n    \n    # Step 3: Sort these pairs based on the sums in descending order\n    sorted_pairs = sorted(paired_rows, key=lambda x: x[1], reverse=True)\n    \n    # Step 4: Extract the sorted rows from the pairs and return them\n    sorted_matrix = [row for row, _ in sorted_pairs]\n    \n    return sorted_matrix\n```",
+        "fixer": "```python\ndef sort_matrix(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Pair each row with its corresponding sum\n    paired_rows = list(zip(matrix, row_sums))\n    \n    # Step 3: Sort these pairs based on the sums in descending order\n    sorted_pairs = sorted(paired_rows, key=lambda x: x[1], reverse=True)\n    \n    # Step 4: Extract the sorted rows from the pairs and return them\n    sorted_matrix = [row for row, _ in sorted_pairs]\n    \n    return sorted_matrix\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `new_tuple` that takes two parameters: `string_list` and `additional_string`.\n2. Inside the function, use the `tuple()` constructor to convert the `string_list` into a tuple.\n3. Append the `additional_string` to the end of the tuple using the `+` operator.\n4. Return the resulting tuple.\n\nHere's the complete implementation:\n\n```python\ndef new_tuple(string_list, additional_string):\n    # Convert the string list into a tuple\n    result_tuple = tuple(string_list)\n    # Append the additional string to the tuple\n    final_tuple = result_tuple + (additional_string,)\n    # Return the final tuple\n    return final_tuple\n```\n\nThis function will correctly create a new tuple from the provided string and list, as demonstrated by the assertion.",
+      "quality": 0.0,
+      "final_key": "def sort_matrix(matrix):\n    # Calculate the sum of each row\n    sums = [sum(row) for row in matrix]\n    \n    # Sort the indices based on the sum of their corresponding rows\n    sorted_indices = sorted(range(len(sums)), key=lambda i: sums[i])\n    \n    # Sort the matrix using the sorted indices\n    sorted_matrix = [matrix[i] for i in sorted_indices]\n    \n    return sorted_matrix\n\n# Test cases\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [-2, 4, -5], [1, -1, 1]]) == [[-2, 4, -5], [1, -1, 1], [1, 2, 3]]\nassert sort_matrix([[5,8,9],[6,4,3],[2,1,4]])==[[2, 1, 4], [6, 4, 3], [5, 8, 9]]\nassert new_tuple(['a', 'b'], 'c') == ('a', 'b', 'c')\nassert new_tuple([], 'x') == ('x',)\nassert new_tuple(['hello'], '') == ('hello',)  # This test case fails as expected\nassert new_tuple(['world'], ' ') == ('world ', '')  # This test case fails as expected\nassert new_tuple(['Python'], '!') == ('Python!', '!')  # This test case fails as expected",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert new_tuple(['a', 'b'], 'c') == ('a', 'b', 'c')\nassert new_tuple([], 'x') == ('x',)\nassert new_tuple(['hello'], '') == ('hello',)\nassert new_tuple(['world'], ' ') == ('world ', '')\nassert new_tuple(['Python'], '!') == ('Python!', '!')\n```",
+        "coder": "```python\ndef new_tuple(string_list, additional_string):\n    result_tuple = tuple(string_list)\n    final_tuple = result_tuple + (additional_string,)\n    return final_tuple\n```",
+        "verifier": "PICK: B\n\n```python\ndef sort_matrix(matrix):\n    # Calculate the sum of each row\n    sums = [sum(row) for row in matrix]\n    \n    # Sort the indices based on the sum of their corresponding rows\n    sorted_indices = sorted(range(len(sums)), key=lambda i: sums[i])\n    \n    # Sort the matrix using the sorted indices\n    sorted_matrix = [matrix[i] for i in sorted_indices]\n    \n    return sorted_matrix\n\n# Test cases\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [-2, 4, -5], [1, -1, 1]]) == [[-2, 4, -5], [1, -1, 1], [1, 2, 3]]\nassert sort_matrix([[5,8,9],[6,4,3],[2,1,4]])==[[2, 1, 4], [6, 4, 3], [5, 8, 9]]\nassert new_tuple(['a', 'b'], 'c') == ('a', 'b', 'c')\nassert new_tuple([], 'x') == ('x',)\nassert new_tuple(['hello'], '') == ('hello',)  # This test case fails as expected\nassert new_tuple(['world'], ' ') == ('world ', '')  # This test case fails as expected\nassert new_tuple(['Python'], '!') == ('Python!', '!')  # This test case fails as expected\n```",
+        "fixer": "```python\ndef sort_matrix(matrix):\n    # Calculate the sum of each row\n    sums = [sum(row) for row in matrix]\n    \n    # Sort the indices based on the sum of their corresponding rows\n    sorted_indices = sorted(range(len(sums)), key=lambda i: sums[i])\n    \n    # Sort the matrix using the sorted indices\n    sorted_matrix = [matrix[i] for i in sorted_indices]\n    \n    return sorted_matrix\n\n# Test cases\nassert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1]]) == [[1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [-2, 4, -5], [1, -1, 1]]) == [[-2, 4, -5], [1, -1, 1], [1, 2, 3]]\nassert sort_matrix([[5,8,9],[6,4,3],[2,1,4]])==[[2, 1, 4], [6, 4, 3], [5, 8, 9]]\nassert new_tuple(['a', 'b'], 'c') == ('a', 'b', 'c')\nassert new_tuple([], 'x') == ('x',)\nassert new_tuple(['hello'], '') == ('hello',)  # This test case fails as expected\nassert new_tuple(['world'], ' ') == ('world ', '')  # This test case fails as expected\nassert new_tuple(['Python'], '!') == ('Python!', '!')  # This test case fails as expected\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def sort_matrix(matrix):\n    sorted_matrix = []\n    for row in matrix:\n        sorted_row = sorted(row)\n        sorted_matrix.append(sorted_row)\n    return sorted_matrix",
+  "sample_keys": [
+    "def sort_matrix(matrix):\n    # Step 2: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 3: Sort the matrix based on the sums\n    sorted_indices = sorted(range(len(matrix)), key=lambda i: row_sums[i])\n    sorted_matrix = [matrix[i] for i in sorted_indices]\n    \n    # Step 4: Return the sorted matrix\n    return sorted_matrix",
+    "def sort_matrix(matrix):\n    min_sum = float('inf')\n    min_matrix = []\n    \n    for row in matrix:\n        sum_value = sum(row)\n        \n        if sum_value < min_sum:\n            min_sum = sum_value\n            min_matrix = row\n    \n    return [min_matrix]",
+    "def sort_matrix(matrix):\n    # Step 2: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 3: Sort the rows based on their sums\n    sorted_rows = sorted(matrix, key=lambda x: row_sums[matrix.index(x)])\n    \n    # Step 4: Return the sorted matrix\n    return sorted_rows"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2671.0,
+    "small_out": 572.0,
+    "small_s": 11.786826905998169
+  },
+  "calls_plus": {
+    "large_in": 155.0,
+    "large_out": 76.0,
+    "large_s": 1.6140936510055326,
+    "small_in": 2978.0,
+    "small_out": 801.0,
+    "small_s": 14.197619824029971
+  },
+  "calls_samples": {
+    "small_in": 9106.0,
+    "small_out": 2501.0,
+    "small_s": 46.42445853599929
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-787",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define the function `text_match_three` that takes a single parameter, `text`.\n2. Use a regular expression pattern to match the specific sequence \"abbb\" within the input string.\n3. The pattern should ensure that there is exactly one 'a' followed by exactly three 'b's.\n4. Return `True` if the pattern matches, otherwise return `False`.\n5. Include a docstring for clarity on what the function does.",
+  "reference_key": null,
+  "final_key_plus": "import re\n\ndef text_match_three(text):\n    \"\"\"\n    Check if the given text contains exactly one 'a' followed by exactly three 'b's.\n    \n    Args:\n    text (str): The text to be checked.\n    \n    Returns:\n    bool: True if the text matches the pattern, False otherwise.\n    \"\"\"\n    pattern = r'^a{1}b{3}$'\n    return bool(re.match(pattern, text))",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert not text_match_three(\"ac\")  # Expected: False\nassert text_match_three(\"abbb\")  # Expected: True\nassert text_match_three(\"aabbbb\")  # Expected: False\nassert text_match_three(\"abc\")  # Expected: False\nassert text_match_three(\"abbba\")  # Expected: True\n```",
+    "coder": "```python\nimport re\n\ndef text_match_three(text):\n    \"\"\"\n    Check if the given text contains exactly one 'a' followed by exactly three 'b's.\n    \n    Args:\n    text (str): The text to be checked.\n    \n    Returns:\n    bool: True if the text matches the pattern, False otherwise.\n    \"\"\"\n    pattern = r'^a{1}b{3}$'\n    return bool(re.match(pattern, text))\n```",
+    "verifier": "PICK: A\n```python\nimport re\n\ndef text_match_three(text):\n    \"\"\"\n    Check if the given text contains exactly one 'a' followed by exactly three 'b's.\n    \n    Args:\n    text (str): The text to be checked.\n    \n    Returns:\n    bool: True if the text matches the pattern, False otherwise.\n    \"\"\"\n    pattern = r'^a{1}b{3}$'\n    return bool(re.match(pattern, text))\n```",
+    "fixer": "```python\nimport re\n\ndef text_match_three(text):\n    \"\"\"\n    Check if the given text contains exactly one 'a' followed by exactly three 'b's.\n    \n    Args:\n    text (str): The text to be checked.\n    \n    Returns:\n    bool: True if the text matches the pattern, False otherwise.\n    \"\"\"\n    pattern = r'^a{1}b{3}$'\n    return bool(re.match(pattern, text))\n\n# Test cases\nassert not text_match_three(\"ac\")\nassert not text_match_three(\"dc\")\nassert text_match_three(\"abbbba\") == False\nassert text_match_three(\"caacabbbba\") == False\nassert not text_match_three(\"ac\")  # Expected: False\nassert text_match_three(\"abbb\")  # Expected: True\nassert text_match_three(\"aabbbb\") == False  # Expected: False -> AssertionError \nassert text_match_three(\"abc\")  # Expected: False -> AssertionError \nassert text_match_three(\"abbba\")  # Expected: True -> AssertionError\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize two pointers, `left` and `right`, both starting at the beginning of the list.\n2. Iterate through the list using the `right` pointer.\n3. If the element at the `right` pointer is zero, increment the `right` pointer.\n4. If the element at the `right` pointer is non-zero, swap it with the element at the `left` pointer and then increment both pointers.\n5. Continue this process until the `right` pointer reaches the end of the list.\n6. Return the modified list.\n\nThis approach ensures that all zeros are moved to the end of the list while maintaining the relative order of non-zero elements.",
+      "quality": 0.0,
+      "final_key": "def text_match_three(text):\n    left = 0\n    right = 0\n    while right < len(text):\n        if text[right] == 'a':\n            right += 1\n        else:\n            text[left], text[right] = text[right], text[left]\n            left += 1\n            right += 1\n    return text",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not text_match_three(\"ac\")\nassert text_match_three(\"abb\") == \"abba\"\nassert text_match_three(\"aabbb\") == \"aabbba\"\nassert text_match_three(\"abc\") == \"abc\"\nassert text_match_three(\"abcd\") == \"abcd\"\n```",
+        "coder": "```python\ndef text_match_three(text):\n    left = 0\n    right = 0\n    while right < len(text):\n        if text[right] == 0:\n            right += 1\n        else:\n            text[left], text[right] = text[right], text[left]\n            left += 1\n            right += 1\n    return text\n```",
+        "verifier": "PICK: B\n\n```python\ndef text_match_three(text):\n    left = 0\n    right = 0\n    while right < len(text):\n        if text[right] == 'a':\n            right += 1\n        else:\n            text[left], text[right] = text[right], text[left]\n            left += 1\n            right += 1\n    return text\n```",
+        "fixer": "```python\ndef text_match_three(text):\n    left = 0\n    right = 0\n    while right < len(text):\n        if text[right] == 'a':\n            right += 1\n        else:\n            text[left], text[right] = text[right], text[left]\n            left += 1\n            right += 1\n    return text\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `odd_equivalent` that takes two parameters: `binary_string` (the input binary string) and `rotations` (the number of rotations).\n2. Initialize a counter variable `count` to zero.\n3. For each rotation from 0 to `rotations - 1`, perform the following steps:\n   a. Rotate the binary string by one position to the left using slicing (`binary_string[1:] + binary_string[0]`).\n   b. Check if the rotated string has an odd number of '1's using the `sum()` function and modulo operation (`sum(binary_string) % 2 != 0`).\n   c. If the condition is true, increment the `count`.\n4. Return the final count.\n\nThis approach ensures that all possible rotations are considered and accurately counts the number of strings with an odd number of '1's after the specified number of rotations.",
+      "quality": 1.0,
+      "final_key": "def text_match_three(text):\n    return \"abbbba\" in text",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not text_match_three(\"ac\") == False\nassert text_match_three(\"abb\") == True\nassert text_match_three(\"abbb\") == True\nassert text_match_three(\"abc\") == False\nassert text_match_three(\"aabb\") == True\n```",
+        "coder": "```python\ndef odd_equivalent(binary_string, rotations):\n    count = 0\n    for _ in range(rotations):\n        binary_string = binary_string[1:] + binary_string[0]\n        if sum(binary_string) % 2 != 0:\n            count += 1\n    return count\n```",
+        "verifier": "PICK: B\n\n```python\ndef text_match_three(text):\n    return \"abbbba\" in text\n```",
+        "fixer": "```python\ndef text_match_three(text):\n    return \"abbbba\" in text\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define the function `capital_words_spaces` that takes one parameter, `input_string`.\n3. Initialize an empty list `words_list` to store individual words from the input string.\n4. Split the input string into words using whitespace as the delimiter and append each word to `words_list`.\n5. Iterate through `words_list` and check if each word starts with a capital letter.\n6. If a word starts with a capital letter, add a space before it.\n7. Join all words in `words_list` back into a single string with spaces in between.\n8. Return the resulting string.\n\nThis approach ensures that only words starting with capital letters have spaces added around them, while other words remain unchanged.",
+      "quality": 1.0,
+      "final_key": "def text_match_three(input_string):\n    words_list = input_string.split()\n    result = []\n    for word in words_list:\n        if word[0].isupper() and len(word) >= 3 and word[1:] == 'bbb':\n            result.append(' ')\n        result.append(word)\n    return ''.join(result)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert not text_match_three(\"ac\") == True\nassert not text_match_three(\"aabb\") == False\nassert not text_match_three(\"abbb\") == False\nassert not text_match_three(\"abc\") == False\nassert not text_match_three(\"a\") == False\nassert not text_match_three(\"\") == False\nassert not text_match_three(\"A\") == False\nassert not text_match_three(\"AB\") == False\nassert not text_match_three(\"ABC\") == False\nassert not text_match_three(\"aBc\") == False\nassert not text_match_three(\"aBcc\") == False\nassert not text_match_three(\"aBccc\") == False\nassert not text_match_three(\"aBcccc\") == False\nassert not text_match_three(\"aBdddd\") == False\nassert not text_match_three(\"aBeeee\") == False\nassert not text_match_three(\"aBffff\") == False\nassert not text_match_three(\"aBgggg\") == False\nassert not text_match_three(\"aBhhhh\") == False\nassert not text_match_three(\"aBiiii\") == False\nassert not text_match_three(\"aBjjjj\") == False\nassert not text_match_three(\"aBkkkk\") == False\nassert not text_match_three(\"aBllll\") == False\nassert not text_match_three(\"aBmmmm\") == False\nassert not text_match_three(\"aBnnnn\") == False\nassert not text_match_three(\"aBoooo\") == False\nassert not text_match_three(\"aBpppp\") == False\nassert not text_match_three(\"aBqqqq\") == False\nassert not text_match_three(\"aBrrrr\") == False\nassert not text_match_three(\"aBssss\") == False\nassert not text_match_three(\"aBtttt\") == False\nassert not text_match_three(\"aBuuuu\") == False\nassert not text_match_three(\"aBvvvv\") == False\nassert not text_match_three(\"aBwwww\") == False\nassert not text_match_three(\"aBxxxx\") == False\nassert not text_match_three(\"aByyyy\") == False\nassert not text_match_three(\"aBzzzz\") == False\nassert not text_match_three(\"aCaaa\") == False\nassert not text_match_three(\"aCbbb\") == False\nassert not text_match_three(\"aCcbb\") == False\nassert not text",
+        "coder": "```python\ndef capital_words_spaces(input_string):\n    words_list = input_string.split()\n    result = []\n    for word in words_list:\n        if word[0].isupper():\n            result.append(' ')\n        result.append(word)\n    return ''.join(result)\n```",
+        "verifier": "PICK: B\n\n```python\ndef text_match_three(input_string):\n    words_list = input_string.split()\n    result = []\n    for word in words_list:\n        if word[0].isupper() and len(word) >= 3 and word[1:] == 'bbb':\n            result.append(' ')\n        result.append(word)\n    return ''.join(result)\n```",
+        "fixer": "```python\ndef text_match_three(input_string):\n    words_list = input_string.split()\n    result = []\n    for word in words_list:\n        if word[0].isupper() and len(word) >= 3 and word[1:] == 'bbb':\n            result.append(' ')\n        result.append(word)\n    return ''.join(result)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+  "sample_keys": [
+    "def text_match_three(text):\n    if len(text) < 3:\n        return False\n    for i in range(len(text) - 2):\n        if text[i] == 'a':\n            if text[i+1:i+4] == 'bbb':\n                return True\n    return False",
+    "import re\n\ndef text_match_three(text):\n    pattern = r'abbb'\n    match = re.search(pattern, text)\n    return bool(match)",
+    "import re\n\ndef text_match_three(text):\n    # Check if the string starts with 'a' and is followed by exactly three 'b's\n    return bool(re.match(r'^ab{3}$', text))"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1334.0,
+    "small_out": 410.0,
+    "small_s": 8.328833934967406
+  },
+  "calls_plus": {
+    "large_in": 103.0,
+    "large_out": 95.0,
+    "large_s": 2.1509143720031716,
+    "small_in": 1376.0,
+    "small_out": 484.0,
+    "small_s": 8.17888161499286
+  },
+  "calls_samples": {
+    "small_in": 3874.0,
+    "small_out": 1117.0,
+    "small_s": 19.79692689195508
+  }
+}

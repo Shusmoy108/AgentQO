@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-168",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert frequency([1, 2, 3, 4, 5, 4, 4], 4) == 3\nassert frequency([], 1) == 0\nassert frequency([7, 7, 7, 7], 7) == 4\nassert frequency([10, 20, 30, 40], 25) == 0\nassert frequency([1, 1, 1, 1, 1, 1, 1], 1) == 7\n```",
+  "reference_key": "assert frequency([1, 2, 3, 4, 5, 4, 4], 4) == 3\nassert frequency([], 1) == 0\nassert frequency([7, 7, 7, 7], 7) == 4\nassert frequency([10, 20, 30, 40], 25) == 0\nassert frequency([1, 1, 1, 1, 1, 1, 1], 1) == 7",
+  "final_key_plus": "def frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n```",
+    "fixer": "```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Testing with no occurrences\nassert frequency([], 1) == 0\n\n# Testing with a single element\nassert frequency([4], 4) == 1\n\n# Testing with multiple identical elements\nassert frequency([1, 2, 2, 3, 3, 3], 3) == 3\n\n# Testing with repeated elements but different types\nassert frequency(['apple', 'banana', 'apple'], 'apple') == 2\n\n# Testing with empty list and target present\nassert frequency([None], None) == 1",
+      "reference_key": "assert frequency([1, 2, 3, 4, 5, 4, 4], 4) == 3\nassert frequency([], 1) == 0\nassert frequency([7, 7, 7, 7], 7) == 4\nassert frequency([10, 20, 30, 40], 25) == 0\nassert frequency([1, 1, 1, 1, 1, 1, 1], 1) == 7",
+      "key_differs": true,
+      "text": "```python\n# Testing with no occurrences\nassert frequency([], 1) == 0\n\n# Testing with a single element\nassert frequency([4], 4) == 1\n\n# Testing with multiple identical elements\nassert frequency([1, 2, 2, 3, 3, 3], 3) == 3\n\n# Testing with repeated elements but different types\nassert frequency(['apple', 'banana', 'apple'], 'apple') == 2\n\n# Testing with empty list and target present\nassert frequency([None], None) == 1\n```",
+      "quality": 1.0,
+      "final_key": "def frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n```",
+        "fixer": "```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert frequency([], 3) == 0\nassert frequency([47, 60, 9, 37, 99], 9) == 2\nassert frequency([55, \"hi\", 27, None, True], \"hi\") == 1\nassert frequency(['apple', 'banana', 'apple', 'orange'], 'banana') == 2\nassert_frequency([1, 2, 2, 3, 3, 3], 2) == 3",
+      "reference_key": "assert frequency([1, 2, 3, 4, 5, 4, 4], 4) == 3\nassert frequency([], 1) == 0\nassert frequency([7, 7, 7, 7], 7) == 4\nassert frequency([10, 20, 30, 40], 25) == 0\nassert frequency([1, 1, 1, 1, 1, 1, 1], 1) == 7",
+      "key_differs": true,
+      "text": "```python\nassert frequency([], 3) == 0\nassert frequency([47, 60, 9, 37, 99], 9) == 2\nassert frequency([55, \"hi\", 27, None, True], \"hi\") == 1\nassert frequency(['apple', 'banana', 'apple', 'orange'], 'banana') == 2\nassert_frequency([1, 2, 2, 3, 3, 3], 2) == 3\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n\n# Test cases\nassert frequency([1,2,3], 4) == 0\nassert frequency([1,2,2,3,3,3,4], 3) == 3\nassert frequency([0,1,2,3,1,2], 1) == 2\nassert frequency([], 3) == 0\nassert frequency([47, 60, 9, 37, 99], 9) == 2\nassert frequency([55, \"hi\", 27, None, True], \"hi\") == 1\nassert frequency(['apple', 'banana', 'apple', 'orange'], 'banana') == 2\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "assert frequency([1, 2, 3, 4, 5, 4, 4], 4) == 3\nassert frequency([], 1) == 0\nassert frequency([7, 7, 7, 7], 7) == 4\nassert frequency([10, 20, 30, 40], 25) == 0\nassert frequency([1, 1, 1, 1, 1, 1, 1], 1) == 7",
+      "key_differs": true,
+      "text": "```python\nassert find_length(\"11000010001\") == 6\nassert find_length(\"00000000000\") == 0\nassert find_length(\"11111111111\") == 0\nassert find_length(\"\") == 0\nassert find_length(\"10101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101",
+      "quality": 1.0,
+      "final_key": "def frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n```",
+        "fixer": "```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n\n# Test cases\nassert frequency([1,2,3], 4) == 0\nassert frequency([1,2,2,3,3,3,4], 3) == 3\nassert frequency([0,1,2,3,1,2], 1) == 2\nassert find_length(\"11000010001\") == 6\nassert find_length(\"00000000000\") == 0\nassert find_length(\"11111111111\") == 0\nassert find_length(\"\") == 0\nassert find_length(\"101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert frequency([], 1) == 0\nassert frequency([1, 1, 1, 1], 1) == 4\nassert frequency([1, 2, 3, 4, 5], 6) == 0\nassert frequency([1, 2, 3, 4, 5], 1) == 5\nassert frequency([1, 2, 3, 4, 5], 5) == 1",
+  "sample_keys": [
+    "assert frequency([-7, -8, -9, 1, 2, 3], -8) == 1\nassert frequency([], 1) == 0\nassert frequency([10, 20, 30, 10, 20], 10) == 2\nassert frequency([True, False, True], True) == 2\nassert frequency([None, None, None], None) == 3",
+    "assert frequency([], 7) == 0\nassert frequency([10], 10) == 1\nassert frequency([1, 2, 3, 4, 5], 1) == 1\nassert frequency([1, 2, 3, 4, 5], -1) == 0\nassert frequency([-1, -2, -3, -4, -5], -1) == 5",
+    "assert frequency([1,2,3], 1) == 1\nassert frequency([1,2,3], -1) == 0\nassert frequency([], 1) == 0\nassert frequency([-1,-1,-1], -1) == 3\nassert frequency([0,1,0], 0) == 2",
+    "assert frequency([], 5) == 0\nassert frequency([5,5,6,7,8,9,5], 5) == 3\nassert frequency([10,9,8,7,6,5,4,3,2,1,0], 0) == 1\nassert frequency([1,1,1,1,1,1,1], 1) == 7\n# Additional edge case: checking negative numbers\nassert frequency([-1, -2, -3, -4, -5], -2) == 1",
+    "assert frequency([], 1) == 0\nassert frequency([1, 2, 3, 1, 4, 1], 1) == 4\nassert frequency([-1, -2, -3, -1, -4, -1], -1) == 6\nassert frequency([10, 20, 30, 30, 40], 30) == 2\nassert frequency(['apple', 'banana', 'cherry'], 'apple') == 1"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1479.0,
+    "small_out": 400.0,
+    "small_s": 8.713572975975694
+  },
+  "calls_plus": {
+    "small_in": 1348.0,
+    "small_out": 292.0,
+    "small_s": 6.138947917992482,
+    "large_in": 167.0,
+    "large_out": 122.0,
+    "large_s": 3.574968417000491
+  },
+  "calls_samples": {
+    "small_in": 835.0,
+    "small_out": 529.0,
+    "small_s": 10.17273193001165
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-804",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `is_product_even` that takes a list of integers as its parameter.\n2. Initialize a variable `product` to 1. This will be used to store the cumulative product of the numbers in the list.\n3. Iterate through each number in the list using a for loop.\n4. Multiply the current number with the `product` variable.\n5. After the loop, check if the `product` is divisible by 2 (i.e., if it's even). Return `True` if it is, otherwise return `False`.",
+  "reference_key": null,
+  "final_key_plus": "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert is_product_even([1,2,3]) == True\nassert is_product_even([2,4,6]) == True\nassert is_product_even([1,3,5]) == False\nassert is_product_even([]) == False\nassert is_product_even([-2, -4, -6]) == True\n```",
+    "coder": "```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```",
+    "verifier": "PICK: A\n\n```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```",
+    "fixer": "```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `prime_num` that takes one parameter, `num`.\n2. Check if `num` is less than or equal to 1. If true, return `False` because numbers less than or equal to 1 are not prime.\n3. Initialize a variable `is_prime` to `True`.\n4. Iterate from 2 to the square root of `num`. For each iteration, check if `num` is divisible by the current iterator. If it is, set `is_prime` to `False` and break out of the loop.\n5. Return `is_prime`.\n\nThis plan ensures that the function correctly identifies prime numbers based on the mathematical definition.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_product_even([1,2,3]) == False\nassert is_product_even([2,4,6]) == True\nassert is_product_even([1,3,5]) == False\nassert is_product_even([0,2,4]) == True\nassert is_product_even([-1,-2,-3]) == False\n```",
+        "coder": "```python\nimport math\n\ndef is_product_even(numbers):\n    def prime_num(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(math.sqrt(num)) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    product = 1\n    for num in numbers:\n        if not prime_num(num):\n            return False\n        product *= num\n    \n    return product % 2 == 0\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef is_product_even(numbers):\n    def prime_num(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(math.sqrt(num)) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    product = 1\n    for num in numbers:\n        if not prime_num(num):\n            return False\n        product *= num\n    \n    return product % 2 == 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `large_product` that takes two lists as input parameters.\n2. Initialize an empty list called `result` to store the largest products.\n3. Iterate over the first list using a for loop.\n4. For each element in the first list, iterate over the second list using another for loop.\n5. Calculate the product of the current elements from both lists.\n6. Append the calculated product to the `result` list.\n7. After both loops complete, sort the `result` list in descending order.\n8. Return the first three elements of the sorted `result` list.\n\nThis approach ensures that we efficiently find the largest products by iterating through the lists only once and sorting the results afterward.",
+      "quality": 1.0,
+      "final_key": "def is_product_even(numbers):\n    if len(numbers) == 0:\n        return False\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_product_even([1,2,3]) == [6], \"Test case 1 failed\"\nassert is_product_even([4,5,6]) == [120], \"Test case 2 failed\"\nassert is_product_even([-1, -2, -3]) == [-6], \"Test case 3 failed\"\nassert is_product_even([]) == [], \"Test case 4 failed\"\nassert is_product_even([0, 0, 0]) == [0], \"Test case 5 failed\"\n```",
+        "coder": "```python\ndef large_product(list1, list2):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:3]\n```",
+        "verifier": "PICK: B\n```python\ndef is_product_even(numbers):\n    if len(numbers) == 0:\n        return False\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```",
+        "fixer": "```python\ndef is_product_even(numbers):\n    if len(numbers) == 0:\n        return False\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n\n# Test cases\nassert is_product_even([1,2,3]) == True, \"Test case 1 failed\"\nassert is_product_even([1,2,1,4]) == True, \"Test case 2 failed\"\nassert not is_product_even([1,1]) == True, \"Test case 3 failed\"\nassert is_product_even([1,2,3]) == True, \"Test case 4 failed\"\nassert is_product_even([4,5,6]) == True, \"Test case 5 failed\"\nassert is_product_even([-1, -2, -3]) == True, \"Test case 6 failed\"\nassert is_product_even([]) == False, \"Test case 7 failed\"\nassert is_product_even([0, 0, 0]) == True, \"Test case 8 failed\"\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `neg_nos` that takes one parameter, `numbers`.\n2. Initialize an empty list called `negative_numbers`.\n3. Iterate over each number in the input list `numbers`.\n4. Check if the current number is less than zero using the condition `if num < 0`.\n5. If the condition is true, append the number to the `negative_numbers` list.\n6. After iterating through all numbers, return the `negative_numbers` list.\n\nThis approach ensures that all negative numbers from the input list are collected into a new list, which is then returned as the result.",
+      "quality": 1.0,
+      "final_key": "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert is_product_even([1,2,3]) == False\nassert is_product_even([-1,-2,-3]) == True\nassert is_product_even([0,1,2]) == True\nassert is_product_even([]) == False\nassert is_product_even([10,20,30]) == True\n```",
+        "coder": "```python\ndef neg_nos(numbers):\n    negative_numbers = []\n    for num in numbers:\n        if num < 0:\n            negative_numbers.append(num)\n    return negative_numbers\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```",
+        "fixer": "```python\ndef is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+  "sample_keys": [
+    "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+    "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0",
+    "def is_product_even(numbers):\n    product = 1\n    for num in numbers:\n        product *= num\n    return product % 2 == 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1193.0,
+    "small_out": 301.0,
+    "small_s": 6.998585121007636
+  },
+  "calls_plus": {
+    "large_in": 107.0,
+    "large_out": 118.0,
+    "large_s": 3.3105836680042557,
+    "small_in": 1094.0,
+    "small_out": 191.0,
+    "small_s": 4.394743701006519
+  },
+  "calls_samples": {
+    "small_in": 3557.0,
+    "small_out": 881.0,
+    "small_s": 19.528233460063348
+  }
+}

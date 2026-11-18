@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-8",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums\n```",
+  "reference_key": "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+  "final_key_plus": "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert square_nums([]) == []\nassert square_nums([-1, -2, -3]) == [1, 4, 9]\nassert square_nums([0, 1, 2, 3, 4]) == [0, 1, 4, 9, 16]\nassert square_nums([10, 20, 30, 40, 50]) == [100, 400, 900, 1600, 2500]\nassert square_nums([1.5, 2.5, 3.5]) == [2.25, 6.25, 12.25]\n```",
+    "verifier": "PICK: A\n\n```python\ndef square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums\n```",
+    "fixer": "```python\ndef square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def square_nums(nums):\n    squared_nums = [num**2 for num in nums]\n    return squared_nums",
+      "reference_key": "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+      "key_differs": true,
+      "text": "```python\ndef square_nums(nums):\n    squared_nums = [num**2 for num in nums]\n    return squared_nums\n```",
+      "quality": 1.0,
+      "final_key": "def square_nums(nums):\n    squared_nums = [num**2 for num in nums]\n    return squared_nums",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert square_nums([]) == []\nassert square_nums([-1, -2, -3]) == [1, 4, 9]\nassert square_nums([0, 1, 2, 3, 4]) == [0, 1, 4, 9, 16]\nassert square_nums([10, 20, 30, 40, 50]) == [100, 400, 900, 1600, 2500]\nassert square_nums([1.5, 2.5, 3.5]) == [2.25, 6.25, 12.25]\n```",
+        "verifier": "PICK: A\n\n```python\ndef square_nums(nums):\n    squared_nums = [num**2 for num in nums]\n    return squared_nums\n```",
+        "fixer": "```python\ndef square_nums(nums):\n    squared_nums = [num**2 for num in nums]\n    return squared_nums\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def square_nums(nums):\n    squared_nums = [num ** 2 for num in nums]\n    return squared_nums",
+      "reference_key": "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+      "key_differs": true,
+      "text": "```python\n\ndef square_nums(nums):\n    squared_nums = [num ** 2 for num in nums]\n    return squared_nums\n```",
+      "quality": 1.0,
+      "final_key": "def square_nums(nums):\n    squared_nums = [num ** 2 for num in nums]\n    return squared_nums",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert square_nums([]) == []\nassert square_nums([-1, -2, -3]) == [1, 4, 9]\nassert square_nums([0, 1, 2, 3, 4]) == [0, 1, 4, 9, 16]\nassert square_nums([10, 20, 30, 40, 50]) == [100, 400, 900, 1600, 2500]\nassert square_nums([1.5, 2.5, 3.5]) == [2.25, 6.25, 12.25]\n```",
+        "verifier": "PICK: A\n\n```python\ndef square_nums(nums):\n    squared_nums = [num ** 2 for num in nums]\n    return squared_nums\n```",
+        "fixer": "```python\ndef square_nums(nums):\n    squared_nums = [num ** 2 for num in nums]\n    return squared_nums\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power",
+      "reference_key": "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+      "key_differs": true,
+      "text": "```python\ndef next_power_of_2(n):\n    if n <= 0:\n        return 1\n    power = 1\n    while power < n:\n        power *= 2\n    return power\n```",
+      "quality": 1.0,
+      "final_key": "def square_nums(nums):\n    return [num ** 2 for num in nums]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert square_nums([]) == []\nassert square_nums([1]) == [1]\nassert square_nums([-1]) == [1]\nassert square_nums([0]) == [0]\nassert square_nums([10]) == [100]\n```",
+        "verifier": "PICK: B\n\n```python\ndef square_nums(nums):\n    return [num ** 2 for num in nums]\n```",
+        "fixer": "```python\ndef square_nums(nums):\n    return [num ** 2 for num in nums]\n\n# Test cases\nassert square_nums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\nassert square_nums([10, 20, 30]) == [100, 400, 900]\nassert square_nums([12, 15]) == [144, 225]\nassert square_nums([]) == []\nassert square_nums([1]) == [1]\nassert square_nums([-1]) == [1]\nassert square_nums([0]) == [0]\nassert square_nums([10]) == [100]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+  "sample_keys": [
+    "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+    "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+    "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+    "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums",
+    "def square_nums(nums):\n    squared_nums = []\n    for num in nums:\n        squared_nums.append(num ** 2)\n    return squared_nums"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2000.0,
+    "small_out": 410.0,
+    "small_s": 9.306788997986587
+  },
+  "calls_plus": {
+    "small_in": 1700.0,
+    "small_out": 375.0,
+    "small_s": 8.446378823980922,
+    "large_in": 300.0,
+    "large_out": 35.0,
+    "large_s": 1.1343394169816747
+  },
+  "calls_samples": {
+    "small_in": 1500.0,
+    "small_out": 175.0,
+    "small_s": 3.548209687025519
+  }
+}

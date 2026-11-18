@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-751",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```",
+  "reference_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+  "final_key_plus": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.6,
+  "baseline_agrees": false,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import *\nclass Solution:\n    def isValidParent(self, root: int, level: int):\n        n = pow(2, level)\n        \n        if root >= n:\n            return False\n        \n        lchild = 2 * root + 1\n        rchild = 2 * root + 2\n        \n        return self.isValidParent(lchild, level - 1) if lchild < n else True\n        \n    def isCompleteTree(self, root: Optional[TreeNode]) -> bool:\n        \n        if not root:\n            return True\n        \n        queue = [(root, 0)]\n        \n        while queue:\n            parent, parent_level = queue.pop(0)\n            \n            if parent.left:\n                \n                if parent_level == len(queue):\n                    queue.append((parent.left, parent_level+1))\n                elif parent_level != len(queue) and parent_level <= len(queue)-1:\n                    if (not self.isValidParent(parent.left, parent_level)):\n                        return False\n                    else:\n                        queue.append((parent.left, parent_level+1))    \n                \n            if parent.right:\n                \n                if parent_level == len(queue):\n                    queue.append((parent.right, parent_level+1))\n                elif parent_level != len(queue) and parent_level <= len(queue)-1:\n                    if (not self.isValidParent(parent.right, parent_level)):\n                        return False\n                    else:\n                        queue.append((parent.right, parent_level+1))\n        \n        return True",
+      "reference_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\nfrom typing import *\nclass Solution:\n    def isValidParent(self, root: int, level: int):\n        n = pow(2, level)\n        \n        if root >= n:\n            return False\n        \n        lchild = 2 * root + 1\n        rchild = 2 * root + 2\n        \n        return self.isValidParent(lchild, level - 1) if lchild < n else True\n        \n    def isCompleteTree(self, root: Optional[TreeNode]) -> bool:\n        \n        if not root:\n            return True\n        \n        queue = [(root, 0)]\n        \n        while queue:\n            parent, parent_level = queue.pop(0)\n            \n            if parent.left:\n                \n                if parent_level == len(queue):\n                    queue.append((parent.left, parent_level+1))\n                elif parent_level != len(queue) and parent_level <= len(queue)-1:\n                    if (not self.isValidParent(parent.left, parent_level)):\n                        return False\n                    else:\n                        queue.append((parent.left, parent_level+1))    \n                \n            if parent.right:\n                \n                if parent_level == len(queue):\n                    queue.append((parent.right, parent_level+1))\n                elif parent_level != len(queue) and parent_level <= len(queue)-1:\n                    if (not self.isValidParent(parent.right, parent_level)):\n                        return False\n                    else:\n                        queue.append((parent.right, parent_level+1))\n        \n        return True\n```",
+      "quality": 0.0,
+      "final_key": "from typing import *\nclass Solution:\n    def isValidParent(self, root: int, level: int):\n        n = pow(2, level)\n        \n        if root >= n:\n            return False\n        \n        lchild = 2 * root + 1\n        rchild = 2 * root + 2\n        \n        return self.isValidParent(lchild, level - 1) if lchild < n else True\n        \n    def isCompleteTree(self, root: Optional[TreeNode]) -> bool:\n        \n        if not root:\n            return True\n        \n        queue = [(root, 0)]\n        \n        while queue:\n            parent, parent_level = queue.pop(0)\n            \n            if parent.left:\n                \n                if parent_level == len(queue):\n                    queue.append((parent.left, parent_level+1))\n                elif parent_level != len(queue) and parent_level <= len(queue)-1:\n                    if (not self.isValidParent(parent.left, parent_level)):\n                        return False\n                    else:\n                        queue.append((parent.left, parent_level+1))    \n                \n            if parent.right:\n                \n                if parent_level == len(queue):\n                    queue.append((parent.right, parent_level+1))\n                elif parent_level != len(queue) and parent_level <= len(queue)-1:\n                    if (not self.isValidParent(parent.right, parent_level)):\n                        return False\n                    else:\n                        queue.append((parent.right, parent_level+1))\n        \n        return True",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def check_min_heap(arr):\n    if len(arr) <= 1:\n        return True\n    \n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "reference_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "key_differs": true,
+      "text": "PICK: B\n\n```python\ndef check_min_heap(arr):\n    if len(arr) <= 1:\n        return True\n    \n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True\n```",
+      "quality": 0.0,
+      "final_key": "def check_min_heap(arr):\n    if len(arr) <= 1:\n        return True\n    \n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+      "reference_key": "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+      "key_differs": true,
+      "text": "PICK: A\n\n```python\ndef diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd\n```",
+      "quality": 0.0,
+      "final_key": "def diff_even_odd(lst):\n    first_even = None\n    first_odd = None\n    \n    for num in lst:\n        if num % 2 == 0:\n            if first_even is None:\n                first_even = num\n        else:\n            if first_odd is None:\n                first_odd = num\n    \n    if first_even is None or first_odd is None:\n        return \"No even or odd numbers found\"\n    \n    return first_even - first_odd",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True",
+    null,
+    null,
+    null,
+    "def is_valid_parent(arr, i):\n    # Check if the left child exists and is greater than the current node\n    left_child = 2 * i + 1\n    if left_child < len(arr) and arr[i] > arr[left_child]:\n        return False\n    \n    # Check if the right child exists and is greater than the current node\n    right_child = 2 * i + 2\n    if right_child < len(arr) and arr[i] > arr[right_child]:\n        return False\n    \n    return True\n\ndef check_min_heap(arr):\n    for i in range(1, len(arr)):\n        if not is_valid_parent(arr, i):\n            return False\n    \n    return True"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2563.0,
+    "small_out": 1080.0,
+    "small_s": 23.261016257980373
+  },
+  "calls_plus": {
+    "small_in": 1477.0,
+    "small_out": 1075.0,
+    "small_s": 23.07979595498182,
+    "large_in": 1086.0,
+    "large_out": 155.0,
+    "large_s": 3.496730965009192
+  },
+  "calls_samples": {
+    "small_in": 5430.0,
+    "small_out": 325.0,
+    "small_s": 6.4610442759876605
+  }
+}

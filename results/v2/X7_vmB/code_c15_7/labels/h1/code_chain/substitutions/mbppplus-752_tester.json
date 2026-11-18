@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-752",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(6) == 11\nassert jacobsthal_num(7) == 21\nassert jacobsthal_num(8) == 43\nassert jacobsthal_num(9) == 85\nassert jacobsthal_num(10) == 171\n```",
+  "reference_key": "assert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(6) == 11\nassert jacobsthal_num(7) == 21\nassert jacobsthal_num(8) == 43\nassert jacobsthal_num(9) == 85\nassert jacobsthal_num(10) == 171",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B",
+    "fixer": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(6) == 11\nassert jacobsthal_num(7) == 21\nassert jacobsthal_num(8) == 43\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert jacobsthal_num(13) == 850\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(7) == 144\nassert jacobsthal_num(-1) == 'Error: Input must be a non-negative integer'\nassert jacobsthal_num(9) == 504",
+      "reference_key": "assert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(6) == 11\nassert jacobsthal_num(7) == 21\nassert jacobsthal_num(8) == 43\nassert jacobsthal_num(9) == 85\nassert jacobsthal_num(10) == 171",
+      "key_differs": true,
+      "text": "```python\nassert jacobsthal_num(13) == 850\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(7) == 144\nassert jacobsthal_num(-1) == 'Error: Input must be a non-negative integer'\nassert jacobsthal_num(9) == 504\n```",
+      "quality": 0.0,
+      "final_key": "def jacobsthal_num(n):\n    if not isinstance(n, int) or n < 0:\n        raise ValueError('Input must be a non-negative integer')\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef jacobsthal_num(n):\n    if not isinstance(n, int) or n < 0:\n        raise ValueError('Input must be a non-negative integer')\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n```",
+        "fixer": "```python\ndef jacobsthal_num(n):\n    if not isinstance(n, int) or n < 0:\n        raise ValueError('Input must be a non-negative integer')\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert jacobsthal_num(3) == 3\nassert jacobsthal_num(7) == 55\nassert jacobsthal_num(15) == 7011\nassert jacobsthal_num(99) == 19122353\nassert jacobsthal_num(2018) == 9879496821\nassert jacobsthal_num(-8) == -1  # Edge case\nassert jacobsthal_num(500) == 38937509274529942582  # Large input, expected output is not calculated here",
+      "reference_key": "assert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(6) == 11\nassert jacobsthal_num(7) == 21\nassert jacobsthal_num(8) == 43\nassert jacobsthal_num(9) == 85\nassert jacobsthal_num(10) == 171",
+      "key_differs": true,
+      "text": "```python\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(7) == 55\nassert jacobsthal_num(15) == 7011\nassert jacobsthal_num(99) == 19122353\nassert jacobsthal_num(2018) == 9879496821\nassert jacobsthal_num(-8) == -1  # Edge case\nassert jacobsthal_num(500) == 38937509274529942582  # Large input, expected output is not calculated here\n```",
+      "quality": 0.0,
+      "final_key": "def jacobsthal_num(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef jacobsthal_num(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n```",
+        "fixer": "```python\ndef jacobsthal_num(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"ab\") == (('a',), ('b',))\nassert string_to_tuple(\"abc\") == (('a',), ('b',), ('c',))\nassert string_to_tuple(\"123\") == (('1',), ('2',), ('3',))",
+      "reference_key": "assert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(6) == 11\nassert jacobsthal_num(7) == 21\nassert jacobsthal_num(8) == 43\nassert jacobsthal_num(9) == 85\nassert jacobsthal_num(10) == 171",
+      "key_differs": true,
+      "text": "```python\nassert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"ab\") == (('a',), ('b',))\nassert string_to_tuple(\"abc\") == (('a',), ('b',), ('c',))\nassert string_to_tuple(\"123\") == (('1',), ('2',), ('3',))\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef jacobsthal_num(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, n + 1):\n            c = a + b\n            a, b = b, c\n        return b\n\n# Test cases\nassert jacobsthal_num(5) == 11\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(4) == 5\nassert jacobsthal_num(13) == 2731\nassert string_to_tuple(\"\") == ()\nassert string_to_tuple(\"a\") == ('a',)\nassert string_to_tuple(\"ab\") == (('a',), ('b',))\nassert string_to_tuple(\"abc\") == (('a',), ('b',), ('c',))\nassert string_to_tuple(\"123\") == (('1',), ('2',), ('3',))\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5",
+  "sample_keys": [
+    "assert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5",
+    "assert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(4) == 5",
+    "assert jacobsthal_num(9) == 255\nassert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 3\nassert jacobsthal_num(3) == 5",
+    null,
+    "assert jacobsthal_num(0) == 0\nassert jacobsthal_num(1) == 1\nassert jacobsthal_num(2) == 1\nassert jacobsthal_num(3) == 3\nassert jacobsthal_num(6) == 13"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1918.0,
+    "small_out": 487.0,
+    "small_s": 10.560626969003351
+  },
+  "calls_plus": {
+    "small_in": 1812.0,
+    "small_out": 501.0,
+    "small_s": 10.046780779026449,
+    "large_in": 283.0,
+    "large_out": 142.0,
+    "large_s": 3.1138685309852008
+  },
+  "calls_samples": {
+    "small_in": 1415.0,
+    "small_out": 355.0,
+    "small_s": 6.2265723700402305
+  }
+}

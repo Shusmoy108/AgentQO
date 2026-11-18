@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-805",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist\n```",
+  "reference_key": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+  "final_key_plus": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "from typing import List\n\ndef max_sum_list(list_of_lists: List[List[int]]) -> List[int]:\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+      "reference_key": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+      "key_differs": true,
+      "text": "```python\nfrom typing import List\n\ndef max_sum_list(list_of_lists: List[List[int]]) -> List[int]:\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist\n```",
+      "quality": 1.0,
+      "final_key": "from typing import List\n\ndef max_sum_list(list_of_lists: List[List[int]]) -> List[int]:\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nfrom typing import List\n\ndef max_sum_list(list_of_lists: List[List[int]]) -> List[int]:\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def findMax(arr, size):\n    if size == 1:\n        return arr[0]\n    \n    # Recursive call to get the maximum sum of subarray ending at current position\n    maxEndingHere = max(findMax(arr, size - 1), 0) + arr[size - 1]\n    \n    # Return the maximum between including the current element as part of the subarray or starting a new subarray\n    return max(maxEndingHere, findMax(arr, size - 1))\n\ndef maxSumSubArray(arr, n):\n    if not arr:\n        return 0\n    \n    # Call the helper function to find the maximum sum subarray\n    maxSum = findMax(arr, n)\n    return maxSum",
+      "reference_key": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+      "key_differs": true,
+      "text": "```markdown\n\n**Created Question**:\nHow can Python implement recursion to find the maximum sum subarray within a given list?\n\n**Created Answer**:\nTo solve the problem of finding the maximum sum subarray using recursion in Python, we need to define two functions:\n1. `findMax(arr, size):` This function recursively finds the maximum sum of a subarray starting from the beginning of the array up to index 'size-1'.\n2. `maxSumSubArray(arr, n):` This function uses the first function to calculate the maximum of all possible starting points.\n\nWe will use the following recursive approach:\n1. **Base Case**: When there is only one element in the array, its sum is simply the element itself.\n2. **Recursive Step**: For each element, we consider two scenarios:\n   - Include it in the current subarray.\n   - Start a new subarray with just this element.\n3. We return the maximum sum among these two subarrays.\n\nHere's the implementation of the solution:\n\n```python\ndef findMax(arr, size):\n    if size == 1:\n        return arr[0]\n    \n    # Recursive call to get the maximum sum of subarray ending at current position\n    maxEndingHere = max(findMax(arr, size - 1), 0) + arr[size - 1]\n    \n    # Return the maximum between including the current element as part of the subarray or starting a new subarray\n    return max(maxEndingHere, findMax(arr, size - 1))\n\ndef maxSumSubArray(arr, n):\n    if not arr:\n        return 0\n    \n    # Call the helper function to find the maximum sum subarray\n    maxSum = findMax(arr, n)\n    return maxSum\n```\n\nThis solution ensures that the maximum sum subarray is found efficiently using recursion, making it suitable for large inputs.",
+      "quality": 1.0,
+      "final_key": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def find_Rotations(s):\n    rotations = 0\n    while s != s[1:] + s[0]:\n        s = s[1:] + s[0]\n        rotations += 1\n    return rotations",
+      "reference_key": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+      "key_differs": true,
+      "text": "```python\ndef find_Rotations(s):\n    rotations = 0\n    while s != s[1:] + s[0]:\n        s = s[1:] + s[0]\n        rotations += 1\n    return rotations\n```",
+      "quality": 1.0,
+      "final_key": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+  "sample_keys": [
+    "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+    "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+    "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+    "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist",
+    "def max_sum_list(list_of_lists):\n    max_sum = float('-inf')\n    max_sublist = []\n    for sublist in list_of_lists:\n        current_sum = sum(sublist)\n        if current_sum > max_sum:\n            max_sum = current_sum\n            max_sublist = sublist\n    return max_sublist\n\n# Test results\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]]) == [10, 11, 12]\nassert max_sum_list([[3,2,1], [6,5,4], [12,11,10]]) == [12, 11, 10]\nassert max_sum_list([[2,3,1]]) == [2, 3, 1]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]]) == [10, 11, 12]\nassert max_sum_list([[-1,-2,-3], [-4,-5,-6], [-10,-11,-12], [-7,-8,-9]]) == [-10, -11, -12]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300]]) == [100, 200, 300]\nassert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9], [100,200,300], [1000,2000,3000]]) == [1000, 2000, 3000]\nassert max_sum_list([]) == []"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2274.0,
+    "small_out": 559.0,
+    "small_s": 11.530479278968414
+  },
+  "calls_plus": {
+    "small_in": 1657.0,
+    "small_out": 488.0,
+    "small_s": 10.01044710696442,
+    "large_in": 617.0,
+    "large_out": 71.0,
+    "large_s": 1.576858168002218
+  },
+  "calls_samples": {
+    "small_in": 3085.0,
+    "small_out": 794.0,
+    "small_s": 15.243452337948838
+  }
+}

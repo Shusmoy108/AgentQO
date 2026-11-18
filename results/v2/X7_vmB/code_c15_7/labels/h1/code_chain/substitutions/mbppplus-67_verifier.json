@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-67",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: B\n\n```python\nfrom math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n```",
+  "reference_key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+  "final_key_plus": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 0.8,
+  "baseline_agrees": true,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+      "key_differs": true,
+      "text": "B_PICK: A",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef comb(n, k):  # Function to compute binomial coefficient\n    if k > n:\n        return 0\n    elif k == 0 or k == n:\n        return 1\n    else:\n        return comb(n-1, k-1) + comb(n-1, k)\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+      "reference_key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+      "key_differs": true,
+      "text": "PICK: A\n\nThe candidate A uses memoization and recursive calls within a nested function to calculate the Bell number, which can lead to stack overflow errors for large values of \\( n \\), like the values tested in the test cases.\n\nHere's the complete code for candidate A:\n\n```python\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef comb(n, k):  # Function to compute binomial coefficient\n    if k > n:\n        return 0\n    elif k == 0 or k == n:\n        return 1\n    else:\n        return comb(n-1, k-1) + comb(n-1, k)\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)\n```",
+      "quality": 0.0,
+      "final_key": "from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef comb(n, k):  # Function to compute binomial coefficient\n    if k > n:\n        return 0\n    elif k == 0 or k == n:\n        return 1\n    else:\n        return comb(n-1, k-1) + comb(n-1, k)\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+      "key_differs": true,
+      "text": "PICK: A",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+  "sample_keys": [
+    "def bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+    "from math import comb\n\ndef bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+    null,
+    "def bell_number(n):\n    # Initialize a dictionary to store computed Bell numbers\n    bell_numbers = {0: 1, 1: 1}\n    \n    def helper(n):\n        if n in bell_numbers:\n            return bell_numbers[n]\n        \n        # Calculate Bell number using recursion and memoization\n        bell_numbers[n] = sum(helper(k) * comb(n-1, k) for k in range(n+1))\n        return bell_numbers[n]\n    \n    # Call the helper function with the given input\n    return helper(n)",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1803.0,
+    "small_out": 522.0,
+    "small_s": 10.7523315299768
+  },
+  "calls_plus": {
+    "small_in": 1009.0,
+    "small_out": 395.0,
+    "small_s": 8.262022630951833,
+    "large_in": 794.0,
+    "large_out": 127.0,
+    "large_s": 2.833566822024295
+  },
+  "calls_samples": {
+    "small_in": 3970.0,
+    "small_out": 381.0,
+    "small_s": 6.919502267002827
+  }
+}

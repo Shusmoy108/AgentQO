@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-479",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `first_Digit` that takes one parameter, `num`.\n2. Convert the integer `num` to a string to easily access individual digits.\n3. Extract the first character of the string representation of `num`, which represents the first digit.\n4. Convert the extracted character back to an integer before returning it.\n5. Ensure the function handles cases where `num` is negative by converting it to positive using the absolute value function `abs()`.",
+  "reference_key": null,
+  "final_key_plus": "def first_Digit(num):\n    num = abs(num)\n    return int(str(num)[0])",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert first_Digit(-456) == 4\nassert first_Digit(7890) == 7\nassert first_Digit(0) == 0\nassert first_Digit(10000) == 1\nassert first_Digit(-123456789) == 1\n```",
+    "coder": "```python\ndef first_Digit(num):\n    num = abs(num)\n    return int(str(num)[0])\n```",
+    "verifier": "PICK: A\n\n```python\ndef first_Digit(num):\n    num = abs(num)\n    return int(str(num)[0])\n```",
+    "fixer": "```python\ndef first_Digit(num):\n    num = abs(num)\n    return int(str(num)[0])\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `validate` that accepts one parameter, `num`.\n2. Convert the input number into a string to easily iterate over each digit.\n3. Initialize an empty dictionary to keep track of the frequency of each digit.\n4. Iterate over each character in the string representation of the number:\n   - If the character is already a key in the dictionary, increment its value by 1.\n   - Otherwise, add the character as a new key with a value of 1.\n5. Iterate over the items in the dictionary:\n   - For each item (digit, frequency), check if the frequency is greater than the digit itself.\n   - If any digit's frequency exceeds its value, return `False`.\n6. If all digits' frequencies are within the acceptable range, return `True`.\n\nThis approach ensures that we correctly count the frequency of each digit and compare it against the digit itself, adhering to the problem statement.",
+      "quality": 1.0,
+      "final_key": "def first_Digit(num):\n    num_str = str(abs(num))\n    return int(num_str[0])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert first_Digit(987654321) == 9\nassert first_Digit(0) == 0\nassert first_Digit(-12345) == 1\nassert first_Digit(1000000000) == 1\nassert first_Digit(9999999999) == 9\n```",
+        "coder": "```python\ndef validate(num):\n    num_str = str(num)\n    digit_freq = {}\n    \n    for char in num_str:\n        if char in digit_freq:\n            digit_freq[char] += 1\n        else:\n            digit_freq[char] = 1\n    \n    for digit, freq in digit_freq.items():\n        if freq > int(digit):\n            return False\n    \n    return True\n```",
+        "verifier": "PICK: B\n\n```python\ndef first_Digit(num):\n    num_str = str(abs(num))\n    return int(num_str[0])\n```",
+        "fixer": "```python\ndef first_Digit(num):\n    num_str = str(abs(num))\n    return int(num_str[0])\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `first_digit` that takes one parameter, `num`.\n2. Convert the integer `num` to a string to easily access individual digits.\n3. Extract the first character of the string representation of `num`, which represents the first digit.\n4. Convert the extracted character back to an integer before returning it.\n5. Ensure the function handles cases where `num` is negative by converting it to positive using the built-in modulo operator `%` with 10.",
+      "quality": 0.0,
+      "final_key": "def first_digit(num):\n    num = abs(num)\n    return int(str(num)[0])",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert first_digit(-456) == 4\nassert first_digit(7890) == 7\nassert first_digit(0) == 0\nassert first_digit(10000) == 1\nassert first_digit(-12345) == 1\n```",
+        "coder": "```python\ndef first_digit(num):\n    num = abs(num)\n    return int(str(num)[0])\n```",
+        "verifier": "PICK: A\n\n```python\ndef first_digit(num):\n    num = abs(num)\n    return int(str(num)[0])\n```",
+        "fixer": "```python\ndef first_digit(num):\n    num = abs(num)\n    return int(str(num)[0])\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries (if any).\n2. Define a helper function to check if a number is prime.\n3. Initialize variables for the current number and the count of primes found.\n4. Loop until the count of primes reaches n.\n5. In each iteration, increment the current number and check if it's prime using the helper function.\n6. If the number is prime, increment the count of primes.\n7. Return the current number when the count equals n.\n\nThis plan ensures that we efficiently find the nth Newman-Shanks-Williams prime by leveraging a helper function to check primality and iterating through numbers until we reach the desired count.",
+      "quality": 0.0,
+      "final_key": "def first_Digit(n):\n    def is_prime(num):\n        \"\"\"Check if a number is prime.\"\"\"\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    count = 0\n    current_num = 1\n    while count < n:\n        current_num += 1\n        if is_prime(current_num):\n            count += 1\n    return current_num",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert first_Digit(987654321) == 9\nassert first_Digit(1) == 1\nassert first_Digit(0) == 0\nassert first_Digit(-12345) == -1\nassert first_Digit(1000000000) == 1\n```",
+        "coder": "```python\ndef first_Digit(n):\n    def is_prime(num):\n        \"\"\"Check if a number is prime.\"\"\"\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    count = 0\n    current_num = 1\n    while count < n:\n        current_num += 1\n        if is_prime(current_num):\n            count += 1\n    return current_num\n```",
+        "verifier": "PICK: A\n\n```python\ndef first_Digit(n):\n    def is_prime(num):\n        \"\"\"Check if a number is prime.\"\"\"\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    count = 0\n    current_num = 1\n    while count < n:\n        current_num += 1\n        if is_prime(current_num):\n            count += 1\n    return current_num\n```",
+        "fixer": "```python\ndef first_Digit(n):\n    def is_prime(num):\n        \"\"\"Check if a number is prime.\"\"\"\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    count = 0\n    current_num = 1\n    while count < n:\n        current_num += 1\n        if is_prime(current_num):\n            count += 1\n    return current_num\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def first_Digit(num):\n    if isinstance(num, int):\n        num_str = str(num)\n        first_char = num_str[0]\n        first_digit = int(first_char)\n        return first_digit\n    else:\n        raise ValueError(\"Invalid input. Please provide an integer.\")",
+  "sample_keys": [
+    "def first_Digit(num):\n    if num < 0:\n        raise ValueError(\"invalid literal for int() with base 10: '-'\")\n    return int(str(num)[0])",
+    "def first_Digit(n):\n    # Check if the input is a positive integer\n    if not isinstance(n, int) or n <= 0:\n        raise ValueError(\"Input must be a positive integer\")\n    \n    # Convert the number to a string and extract the first character\n    first_char = str(n)[0]\n    \n    # Convert the first character back to an integer\n    first_digit = int(first_char)\n    \n    return first_digit",
+    "def first_digit(number):\n    num_str = str(number)\n    for char in num_str:\n        if char.isdigit():\n            return int(char)\n    return -1"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1451.0,
+    "small_out": 457.0,
+    "small_s": 10.387548434955534
+  },
+  "calls_plus": {
+    "large_in": 105.0,
+    "large_out": 100.0,
+    "large_s": 2.87918051800807,
+    "small_in": 1043.0,
+    "small_out": 157.0,
+    "small_s": 3.3091145009966567
+  },
+  "calls_samples": {
+    "small_in": 4104.0,
+    "small_out": 1067.0,
+    "small_s": 21.635309094999684
+  }
+}

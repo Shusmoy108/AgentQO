@@ -1,0 +1,85 @@
+{
+  "task_id": "mbppplus-721",
+  "node_id": "verifier",
+  "role": "verifier",
+  "reference": "PICK: A\n\n```python\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n```",
+  "reference_key": "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+  "final_key_plus": "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+  "q_plus": 1.0,
+  "q_minus": 0.0,
+  "consequence": 1.0,
+  "p_err": 0.2,
+  "baseline_agrees": true,
+  "descendants_plus": {},
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+      "key_differs": true,
+      "text": "PICK: B\n```python\ndef maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg\n\n# Test cases\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2\nassert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2\nassert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2\nassert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10]]) == 6.0\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13]]) == 7.0\nassert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 1",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# PICK: A\nclass MaxAveragePathFinder:\n    def __init__(self, matrix):\n        self.matrix = matrix\n        self.max_path_sum = float(\"-inf\")\n        self.max_num_steps = len(self.matrix) * len(self.matrix[0])\n    \n    def calculate_max_average_path(self):\n        rows, cols = len(self.matrix), len(self.matrix[0])\n        \n        def dfs(x, y, num_steps, path_sum):\n            if (num_steps == self.max_num_steps) and (\n                (\n                    (x == rows - 1) and (y == cols - 1)\n                ) \n                or \n                ((x == rows - 1) and (y != cols - 1))\n                or \n                ((x != rows - 1) and (y == cols - 1))\n            ):\n                if path_sum > self.max_path_sum:\n                    self.max_path_sum = path_sum\n                \n            # Move down\n            if (x + 1 < rows):\n                dfs(x + 1, y, num_steps + 1, path_sum + self.matrix[x + 1][y])\n            \n            # Move right\n            if (y + 1 < cols):\n                dfs(x, y + 1, num_steps + 1, path_sum + self.matrix[x][y + 1])\n\n        \n        dfs(0, 0, 0, 0)\n        return self.max_path_sum\n\n# Test case for Candidate A\nmatrix_A = [\n    [1, 2, 3],\n    [6, 5, 4],\n    [7, 3, 9]\n]\nresult_A = MaxAveragePathFinder(matrix_A).calculate_max_average_path()\nprint(result_A)  # Output: 5.2",
+      "reference_key": "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+      "key_differs": true,
+      "text": "```python\n# PICK: A\nclass MaxAveragePathFinder:\n    def __init__(self, matrix):\n        self.matrix = matrix\n        self.max_path_sum = float(\"-inf\")\n        self.max_num_steps = len(self.matrix) * len(self.matrix[0])\n    \n    def calculate_max_average_path(self):\n        rows, cols = len(self.matrix), len(self.matrix[0])\n        \n        def dfs(x, y, num_steps, path_sum):\n            if (num_steps == self.max_num_steps) and (\n                (\n                    (x == rows - 1) and (y == cols - 1)\n                ) \n                or \n                ((x == rows - 1) and (y != cols - 1))\n                or \n                ((x != rows - 1) and (y == cols - 1))\n            ):\n                if path_sum > self.max_path_sum:\n                    self.max_path_sum = path_sum\n                \n            # Move down\n            if (x + 1 < rows):\n                dfs(x + 1, y, num_steps + 1, path_sum + self.matrix[x + 1][y])\n            \n            # Move right\n            if (y + 1 < cols):\n                dfs(x, y + 1, num_steps + 1, path_sum + self.matrix[x][y + 1])\n\n        \n        dfs(0, 0, 0, 0)\n        return self.max_path_sum\n\n# Test case for Candidate A\nmatrix_A = [\n    [1, 2, 3],\n    [6, 5, 4],\n    [7, 3, 9]\n]\nresult_A = MaxAveragePathFinder(matrix_A).calculate_max_average_path()\nprint(result_A)  # Output: 5.2\n```",
+      "quality": 0.0,
+      "final_key": "# PICK: A\nclass MaxAveragePathFinder:\n    def __init__(self, matrix):\n        self.matrix = matrix\n        self.max_path_sum = float(\"-inf\")\n        self.max_num_steps = len(self.matrix) * len(self.matrix[0])\n    \n    def calculate_max_average_path(self):\n        rows, cols = len(self.matrix), len(self.matrix[0])\n        \n        def dfs(x, y, num_steps, path_sum):\n            if (num_steps == self.max_num_steps) and (\n                (\n                    (x == rows - 1) and (y == cols - 1)\n                ) \n                or \n                ((x == rows - 1) and (y != cols - 1))\n                or \n                ((x != rows - 1) and (y == cols - 1))\n            ):\n                if path_sum > self.max_path_sum:\n                    self.max_path_sum = path_sum\n                \n            # Move down\n            if (x + 1 < rows):\n                dfs(x + 1, y, num_steps + 1, path_sum + self.matrix[x + 1][y])\n            \n            # Move right\n            if (y + 1 < cols):\n                dfs(x, y + 1, num_steps + 1, path_sum + self.matrix[x][y + 1])\n\n        \n        dfs(0, 0, 0, 0)\n        return self.max_path_sum\n\n# Test case for Candidate A\nmatrix_A = [\n    [1, 2, 3],\n    [6, 5, 4],\n    [7, 3, 9]\n]\nresult_A = MaxAveragePathFinder(matrix_A).calculate_max_average_path()\nprint(result_A)  # Output: 5.2",
+      "final_differs": true,
+      "descendants": {}
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3",
+      "reference_key": "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+      "key_differs": true,
+      "text": "PICK: A\n```python\nimport math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef volume_sphere(radius):\n    return (4/3) * math.pi * radius**3",
+      "final_differs": true,
+      "descendants": {}
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+  "sample_keys": [
+    "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+    null,
+    "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+    "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg",
+    "def maxAverageOfPath(matrix):\n    def dfs(x, y, path_sum, path_length):\n        nonlocal max_avg\n        if x == len(matrix) - 1 and y == len(matrix[0]) - 1:\n            path_sum += matrix[x][y]\n            path_length += 1\n            avg = path_sum / path_length\n            if avg > max_avg:\n                max_avg = avg\n            return\n        if x < len(matrix) - 1:\n            dfs(x + 1, y, path_sum + matrix[x][y], path_length + 1)\n        if y < len(matrix[0]) - 1:\n            dfs(x, y + 1, path_sum + matrix[x][y], path_length + 1)\n\n    max_avg = float('-inf')\n    dfs(0, 0, 0, 0)\n    return max_avg"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": false,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3214.0,
+    "small_out": 1299.0,
+    "small_s": 13.202394616964739
+  },
+  "calls_plus": {
+    "small_in": 1795.0,
+    "small_out": 1103.0,
+    "small_s": 10.719786106958054,
+    "large_in": 1419.0,
+    "large_out": 196.0,
+    "large_s": 5.645314446010161
+  },
+  "calls_samples": {
+    "small_in": 7095.0,
+    "small_out": 789.0,
+    "small_s": 14.957287661993178
+  }
+}

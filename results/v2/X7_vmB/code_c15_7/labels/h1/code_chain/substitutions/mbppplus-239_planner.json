@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-239",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function `get_total_number_of_sequences(m, n)` that calculates the total number of valid sequences.\n2. Use dynamic programming to solve the problem efficiently. Create a 2D list `dp` where `dp[i][j]` represents the number of sequences of length `j` ending with the integer `i`.\n3. Initialize the base case: for any integer `i`, there is exactly one sequence of length 1 that ends with `i`, so set `dp[i][1] = 1` for all `i` from 1 to `m`.\n4. Fill in the rest of the `dp` table using the recurrence relation: `dp[i][j] = sum(dp[k][j-1])` for all `k` such that `2*k <= i <= m`. This ensures that each element in the sequence is at least twice the previous element.\n5. The result will be the sum of `dp[i][n]` for all `i` from 1 to `m`, which gives the total number of sequences of length `n`.",
+  "reference_key": null,
+  "final_key_plus": "def get_total_number_of_sequences(m, n):\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    # Base case: There's one sequence of length 1 ending with each number from 1 to m\n    for i in range(1, m + 1):\n        dp[i][1] = 1\n    \n    # Fill the dp table\n    for i in range(2, m + 1):\n        for j in range(2, n + 1):\n            for k in range(i // 2, i + 1):\n                dp[i][j] += dp[k][j - 1]\n    \n    # The result is the sum of dp[i][n] for all i from 1 to m\n    return sum(dp[i][n] for i in range(1, m + 1))",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 6\nassert get_total_number_of_sequences(7, 2) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100\n```",
+    "coder": "```python\ndef get_total_number_of_sequences(m, n):\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    # Base case: There's one sequence of length 1 ending with each number from 1 to m\n    for i in range(1, m + 1):\n        dp[i][1] = 1\n    \n    # Fill the dp table\n    for i in range(2, m + 1):\n        for j in range(2, n + 1):\n            for k in range(i // 2, i + 1):\n                dp[i][j] += dp[k][j - 1]\n    \n    # The result is the sum of dp[i][n] for all i from 1 to m\n    return sum(dp[i][n] for i in range(1, m + 1))\n```",
+    "verifier": "PICK: A\n\n```python\ndef get_total_number_of_sequences(m, n):\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    # Base case: There's one sequence of length 1 ending with each number from 1 to m\n    for i in range(1, m + 1):\n        dp[i][1] = 1\n    \n    # Fill the dp table\n    for i in range(2, m + 1):\n        for j in range(2, n + 1):\n            for k in range(i // 2, i + 1):\n                dp[i][j] += dp[k][j - 1]\n    \n    # The result is the sum of dp[i][n] for all i from 1 to m\n    return sum(dp[i][n] for i in range(1, m + 1))\n```",
+    "fixer": "```python\ndef get_total_number_of_sequences(m, n):\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    # Base case: There's one sequence of length 1 ending with each number from 1 to m\n    for i in range(1, m + 1):\n        dp[i][1] = 1\n    \n    # Fill the dp table\n    for i in range(2, m + 1):\n        for j in range(2, n + 1):\n            for k in range(i // 2, i + 1):\n                dp[i][j] += dp[k][j - 1]\n    \n    # The result is the sum of dp[i][n] for all i from 1 to m\n    return sum(dp[i][n] for i in range(1, m + 1))\n\n# Test cases\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 2) == 6\nassert get_total_number_of_sequences(16, 3) == 84\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 3) == 6\nassert get_total_number_of_sequences(7, 2) == 8\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(10, 10) == 100\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_charac` that takes one parameter, `s`, which is the input string.\n2. Initialize a variable `char_count` to zero.\n3. Iterate over each character in the string `s`.\n4. For each character, increment the `char_count` by one.\n5. After iterating through all characters, return the value of `char_count`.\n\nThis approach ensures that we correctly count the total number of characters in the given string.",
+      "quality": 1.0,
+      "final_key": "def get_total_number_of_sequences(m, n):\n    if m < 2 or n < 1:\n        return 0\n    \n    # Initialize the dp array with zeros\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    # Base case: There's one way to form a sequence of length 0 with any number of elements\n    for i in range(m + 1):\n        dp[i][0] = 1\n    \n    # Fill the dp array\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            dp[i][j] = dp[i - 1][j] + dp[i // 2][j - 1]\n    \n    return dp[m][n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert count_charac(\"hello\") == 5\nassert count_charac(\"\") == 0\nassert count_charac(\"aabbcc\") == 6\nassert count_charac(\"abcde\") == 5\nassert count_charac(\"aaaaaaa\") == 7\n```",
+        "coder": "```python\ndef count_charac(s):\n    char_count = 0\n    for char in s:\n        char_count += 1\n    return char_count\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_total_number_of_sequences(m, n):\n    if m < 2 or n < 1:\n        return 0\n    \n    # Initialize the dp array with zeros\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    # Base case: There's one way to form a sequence of length 0 with any number of elements\n    for i in range(m + 1):\n        dp[i][0] = 1\n    \n    # Fill the dp array\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            dp[i][j] = dp[i - 1][j] + dp[i // 2][j - 1]\n    \n    return dp[m][n]\n```",
+        "fixer": "```python\ndef get_total_number_of_sequences(m, n):\n    if m < 2 or n < 1:\n        return 0\n    \n    # Initialize the dp array with zeros\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    # Base case: There's one way to form a sequence of length 0 with any number of elements\n    for i in range(m + 1):\n        dp[i][0] = 1\n    \n    # Fill the dp array\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            dp[i][j] = dp[i - 1][j] + dp[i // 2][j - 1]\n    \n    return dp[m][n]\n\n# Test cases\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 2) == 6\nassert get_total_number_of_sequences(16, 3) == 84\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `max_aggregate` that takes a single argument, which is a list of tuples.\n2. Initialize a variable `max_tuple` to store the tuple with the highest aggregate score.\n3. Iterate through each tuple in the input list using a for loop.\n4. For each tuple, extract the second element (the score) and add it to a running total.\n5. If the current total is greater than the value stored in `max_tuple`, update `max_tuple` to be the current tuple.\n6. After iterating through all tuples, return the `max_tuple`.\n\nThis approach ensures that we correctly identify the tuple with the highest aggregate score by maintaining a running total and updating the `max_tuple` whenever a higher score is found.",
+      "quality": 0.0,
+      "final_key": "def get_total_number_of_sequences(m, n):\n    def count_sequences(current, remaining):\n        if remaining == 0:\n            return 1\n        if current * 2 > m:\n            return 0\n        return count_sequences(current + 1, remaining - 1) + count_sequences(current, remaining - 1)\n    \n    return count_sequences(1, n)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_total_number_of_sequences(2, 3) == 1\nassert get_total_number_of_sequences(5, 6) == 1\nassert get_total_number_of_sequences(7, 8) == 1\nassert get_total_number_of_sequences(9, 10) == 1\nassert get_total_number_of_sequences(11, 12) == 1\n```",
+        "coder": "```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    \n    for tup in tuples_list:\n        score = tup[1]\n        total_score += score\n        \n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = tup\n            \n    return max_tuple\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_total_number_of_sequences(m, n):\n    def count_sequences(current, remaining):\n        if remaining == 0:\n            return 1\n        if current * 2 > m:\n            return 0\n        return count_sequences(current + 1, remaining - 1) + count_sequences(current, remaining - 1)\n    \n    return count_sequences(1, n)\n```",
+        "fixer": "```python\ndef get_total_number_of_sequences(m, n):\n    def count_sequences(current, remaining):\n        if remaining == 0:\n            return 1\n        if current * 2 > m:\n            return 0\n        return count_sequences(current + 1, remaining - 1) + count_sequences(current, remaining - 1)\n    \n    return count_sequences(1, n)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `min_k` that takes two parameters: a list of tuples (`lst`) and an integer `k`.\n2. Initialize an empty list called `result` to store the minimum `k` records.\n3. Iterate over each tuple in the input list using a for loop.\n4. For each tuple, check if its second element (the score) is less than or equal to the current length of the `result` list.\n5. If it is, append the tuple to the `result` list.\n6. After iterating through all tuples, return the `result` list.\n7. Test the function with the provided test case to ensure it works as expected.",
+      "quality": 0.0,
+      "final_key": "from itertools import product\n\ndef get_total_number_of_sequences(m, n):\n    # Generate all possible sequences of length n with elements from 1 to m\n    sequences = list(product(range(1, m + 1), repeat=n))\n    \n    # Filter sequences where each element is greater than or equal to twice the previous element\n    valid_sequences = [seq for seq in sequences if all(seq[i] >= 2 * seq[i - 1] for i in range(1, len(seq)))]\n    \n    # Return the count of valid sequences\n    return len(valid_sequences)\n\n# Test cases\nassert get_total_number_of_sequences(5, 1) == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(2, 3) == 0\nassert get_total_number_of_sequences(5, 1) == 0\nassert get_total_number_of_sequences(7, 6) == 1\nassert get_total_number_of_sequences(8, 8) == 1\n```",
+        "coder": "```python\ndef min_k(lst, k):\n    result = []\n    for tup in lst:\n        if tup[1] <= len(result):\n            result.append(tup)\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\nfrom itertools import product\n\ndef get_total_number_of_sequences(m, n):\n    # Generate all possible sequences of length n with elements from 1 to m\n    sequences = list(product(range(1, m + 1), repeat=n))\n    \n    # Filter sequences where each element is greater than or equal to twice the previous element\n    valid_sequences = [seq for seq in sequences if all(seq[i] >= 2 * seq[i - 1] for i in range(1, len(seq)))]\n    \n    # Return the count of valid sequences\n    return len(valid_sequences)\n\n# Test cases\nassert get_total_number_of_sequences(5, 1) == 0\n```",
+        "fixer": "```python\nfrom itertools import product\n\ndef get_total_number_of_sequences(m, n):\n    # Generate all possible sequences of length n with elements from 1 to m\n    sequences = list(product(range(1, m + 1), repeat=n))\n    \n    # Filter sequences where each element is greater than or equal to twice the previous element\n    valid_sequences = [seq for seq in sequences if all(seq[i] >= 2 * seq[i - 1] for i in range(1, len(seq)))]\n    \n    # Return the count of valid sequences\n    return len(valid_sequences)\n\n# Test cases\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 2) == 6\nassert get_total_number_of_sequences(16, 3) == 84\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(2, 3) == 0\nassert get_total_number_of_sequences(5, 1) == 0\nassert get_total_number_of_sequences(7, 6) == 1\nassert get_total_number_of_sequences(8, 8) == 1\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": null,
+  "sample_keys": [
+    "def get_total_number_of_sequences(m, n):\n    def count_sequences(start, remaining_length):\n        if remaining_length == 0:\n            return 1\n        count = 0\n        for i in range(start, min(m // 2 + 1, m - remaining_length + 1)):\n            count += count_sequences(i, remaining_length - 1)\n        return count\n\n    return count_sequences(1, n)\n\n# Test cases\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(5, 2) == 6\nassert get_total_number_of_sequences(16, 3) == 84\nassert get_total_number_of_sequences(10, 4) == 4\nassert get_total_number_of_sequences(1, 1) == 1\nassert get_total_number_of_sequences(3, 2) == 2\nassert get_total_number_of_sequences(7, 3) == 6\nassert get_total_number_of_sequences(8, 4) == 10",
+    "def count_sequences(length, upper_bound):\n    if length == 1:\n        return upper_bound - 1\n    else:\n        return (upper_bound - length + 1) * count_sequences(length - 1, upper_bound)\n\ndef get_total_number_of_sequences(m, n):\n    return count_sequences(n, m)",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2365.0,
+    "small_out": 836.0,
+    "small_s": 15.109712236997439
+  },
+  "calls_plus": {
+    "large_in": 144.0,
+    "large_out": 228.0,
+    "large_s": 6.965784956002608,
+    "small_in": 2140.0,
+    "small_out": 805.0,
+    "small_s": 17.132535510027083
+  },
+  "calls_samples": {
+    "small_in": 5716.0,
+    "small_out": 1953.0,
+    "small_s": 40.447284313937416
+  }
+}

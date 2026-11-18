@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-585",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `expensive_items` that takes two parameters: `data`, which is a list of dictionaries representing items, and `n`, which is the number of most expensive items to return.\n2. Use the `sorted()` function to sort the list of items based on the 'price' key in descending order.\n3. Slice the sorted list to get the first `n` items using list slicing.\n4. Return the sliced list as the result.\n5. Ensure the function handles cases where `n` is greater than the length of the data by returning all items if necessary.",
+  "reference_key": null,
+  "final_key_plus": "def expensive_items(data, n):\n    # Sort the data by price in descending order\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    \n    # If n is greater than the length of the data, return all items\n    if n > len(sorted_data):\n        return sorted_data\n    \n    # Return the first n items from the sorted data\n    return sorted_data[:n]",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert expensive_items([], 3) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}], 1) == [{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}], 4) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}, {'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}, {'name': 'Item-5', 'price': 321.78}], 5) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}, {'name': 'Item-5', 'price': 321.78}, {'name': 'Item-1', 'price': 101.1}]",
+    "coder": "```python\ndef expensive_items(data, n):\n    # Sort the data by price in descending order\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    \n    # If n is greater than the length of the data, return all items\n    if n > len(sorted_data):\n        return sorted_data\n    \n    # Return the first n items from the sorted data\n    return sorted_data[:n]\n```",
+    "verifier": "PICK: A\n\n```python\ndef expensive_items(data, n):\n    # Sort the data by price in descending order\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    \n    # If n is greater than the length of the data, return all items\n    if n > len(sorted_data):\n        return sorted_data\n    \n    # Return the first n items from the sorted data\n    return sorted_data[:n]\n```",
+    "fixer": "```python\ndef expensive_items(data, n):\n    # Sort the data by price in descending order\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    \n    # If n is greater than the length of the data, return all items\n    if n > len(sorted_data):\n        return sorted_data\n    \n    # Return the first n items from the sorted data\n    return sorted_data[:n]\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `is_Diff` that takes one parameter, `num`.\n2. Check if the absolute difference between the sum of digits at odd positions and the sum of digits at even positions is divisible by 11.\n3. If the condition is true, return `True`; otherwise, return `False`.\n\n```python\ndef is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0\n```\n\nThis function correctly implements the logic described in the problem statement and passes the provided test case.",
+      "quality": 1.0,
+      "final_key": "def expensive_items(data, n):\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    return sorted_data[:n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}],1) == [{'name': 'Item-2', 'price': 555.22}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 444.33}],2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 444.33}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 444.33}, {'name': 'Item-4', 'price': 666.77}],3) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 444.33}, {'name': 'Item-4', 'price': 666.77}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 444.33}, {'name': 'Item-4', 'price': 666.77}, {'name': 'Item-5', 'price': 777.88}],4) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 444.33}, {'name': 'Item-4', 'price': 666.77}, {'name': 'Item-5', 'price': 777.88}]\nassert expensive_items([],1) == []\n```",
+        "coder": "```python\ndef is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0\n```",
+        "verifier": "PICK: B\n\n```python\ndef expensive_items(data, n):\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    return sorted_data[:n]\n```",
+        "fixer": "```python\ndef expensive_items(data, n):\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    return sorted_data[:n]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `expensive_items` that takes two parameters: `data`, which is a list of dictionaries representing items, and `n`, which is the number of most expensive items to return.\n2. Use the `sorted()` function to sort the list of items based on the 'price' key in descending order.\n3. Slice the sorted list to get the first `n` items using list slicing.\n4. If `n` is greater than the length of the data, return all items in the list.\n5. Return the sliced list as the result.",
+      "quality": 1.0,
+      "final_key": "def expensive_items(data, n):\n    # Sort the data by price in descending order\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    \n    # If n is greater than the length of the data, return all items\n    if n > len(sorted_data):\n        return sorted_data\n    \n    # Return the first n items\n    return sorted_data[:n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert expensive_items([], 3) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}], 1) == [{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}], 3) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}, {'name': 'Item-5', 'price': 123.45}], 5) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}, {'name': 'Item-5', 'price': 123.45}, {'name': 'Item-1', 'price': 101.1}]\n```",
+        "coder": "```python\ndef expensive_items(data, n):\n    # Sort the data by price in descending order\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    \n    # If n is greater than the length of the data, return all items\n    if n > len(sorted_data):\n        return sorted_data\n    \n    # Return the first n items\n    return sorted_data[:n]\n```",
+        "verifier": "PICK: A\n\n```python\ndef expensive_items(data, n):\n    # Sort the data by price in descending order\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    \n    # If n is greater than the length of the data, return all items\n    if n > len(sorted_data):\n        return sorted_data\n    \n    # Return the first n items\n    return sorted_data[:n]\n```",
+        "fixer": "```python\ndef expensive_items(data, n):\n    # Sort the data by price in descending order\n    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)\n    \n    # If n is greater than the length of the data, return all items\n    if n > len(sorted_data):\n        return sorted_data\n    \n    # Return the first n items\n    return sorted_data[:n]\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `perfect_squares` that takes two parameters, `start` and `end`.\n2. Initialize an empty list called `squares`.\n3. Iterate through all integers from `start` to `end` (inclusive).\n4. For each integer, check if it is a perfect square by taking its square root and checking if it is an integer.\n5. If the integer is a perfect square, append it to the `squares` list.\n6. Return the `squares` list.\n\nThis approach ensures that we efficiently generate all perfect squares within the specified range.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef expensive_items(data, n):\n    squares = []\n    for price in data:\n        if math.isqrt(price) ** 2 == price:\n            squares.append({'name': price['name'], 'price': price['price']})\n    return squares[:n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert expensive_items([], 1) == []\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}], 1) == [{'name': 'Item-1', 'price': 101.1}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}], 3) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}]\nassert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}, {'name': 'Item-5', 'price': 1234.56}], 5) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 789.45}, {'name': 'Item-4', 'price': 987.65}, {'name': 'Item-5', 'price': 1234.56}]\n```",
+        "coder": "```python\nimport math\n\ndef expensive_items(data, n):\n    squares = []\n    for price in data:\n        if math.isqrt(price) ** 2 == price:\n            squares.append({'name': price['name'], 'price': price['price']})\n    return squares[:n]\n```",
+        "verifier": "PICK: A\n\n```python\nimport math\n\ndef expensive_items(data, n):\n    squares = []\n    for price in data:\n        if math.isqrt(price) ** 2 == price:\n            squares.append({'name': price['name'], 'price': price['price']})\n    return squares[:n]\n```",
+        "fixer": "```python\nimport math\n\ndef expensive_items(data, n):\n    squares = []\n    for price in data:\n        if math.isqrt(price) ** 2 == price:\n            squares.append({'name': price['name'], 'price': price['price']})\n    return squares[:n]\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def expensive_items(data, n):\n    most_expensive = []\n    for item in data:\n        if len(most_expensive) == 0 or item['price'] >= most_expensive[0]['price']:\n            most_expensive.append(item)\n    most_expensive.sort(key=lambda x: x['price'], reverse=True)\n    return most_expensive[:n]",
+  "sample_keys": [
+    "def expensive_items(items, n):\n    # Sort the items by price in descending order\n    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)\n    # Return the first n items\n    return sorted_items[:n]",
+    "def expensive_items(items, n):\n    # Step 2: Calculate the total number of items\n    num_items = len(items)\n    \n    # Step 3: Determine the index of the last element (most expensive item)\n    last_index = num_items - 1\n    \n    # Step 4: Extract the last element from the list to get the most expensive item\n    most_expensive_item = items[last_index]\n    \n    # Step 5: Return the most expensive item as a list\n    return [most_expensive_item]",
+    "def expensive_items(items_list, n):\n    # Step 2: Sort the list by price in descending order\n    sorted_items = sorted(items_list, key=lambda x: x['price'], reverse=True)\n    \n    # Step 3: Select the top n items\n    top_items = sorted_items[:n]\n    \n    # Step 4: Return the selected items\n    return top_items"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3419.0,
+    "small_out": 858.0,
+    "small_s": 18.42893981799716
+  },
+  "calls_plus": {
+    "large_in": 156.0,
+    "large_out": 125.0,
+    "large_s": 2.7923371659999248,
+    "small_in": 3543.0,
+    "small_out": 790.0,
+    "small_s": 14.958183045993792
+  },
+  "calls_samples": {
+    "small_in": 10303.0,
+    "small_out": 2449.0,
+    "small_s": 44.918131873972015
+  }
+}

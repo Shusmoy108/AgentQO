@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-793",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert last([1,2,3,4,5,6,7,8,9,10], 10) == 9\nassert last([1,1,1,1,1,1,1,1,1,1], 1) == 9\nassert last([2,4,6,8,10,12,14,16,18,20], 15) == -1\nassert last([], 5) == -1\nassert last([5], 5) == 0\n```",
+  "reference_key": "assert last([1,2,3,4,5,6,7,8,9,10], 10) == 9\nassert last([1,1,1,1,1,1,1,1,1,1], 1) == 9\nassert last([2,4,6,8,10,12,14,16,18,20], 15) == -1\nassert last([], 5) == -1\nassert last([5], 5) == 0",
+  "final_key_plus": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```",
+    "fixer": "```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert last([], 1) == -1, \"Edge case: Empty array\"\nassert last([1], 1) == 0, \"Edge case: Single-element array\"\nassert last([2,3,4,5,6], 6) == 4, \"Test case: Largest number\"\nassert last([2,3,4,5,6], 7) == -1, \"Test case: Missing number\"\nassert last([-1,-1,-1,-1,-1], -2) == -1, \"Edge case: All elements are different\"",
+      "reference_key": "assert last([1,2,3,4,5,6,7,8,9,10], 10) == 9\nassert last([1,1,1,1,1,1,1,1,1,1], 1) == 9\nassert last([2,4,6,8,10,12,14,16,18,20], 15) == -1\nassert last([], 5) == -1\nassert last([5], 5) == 0",
+      "key_differs": true,
+      "text": "```python\nassert last([], 1) == -1, \"Edge case: Empty array\"\nassert last([1], 1) == 0, \"Edge case: Single-element array\"\nassert last([2,3,4,5,6], 6) == 4, \"Test case: Largest number\"\nassert last([2,3,4,5,6], 7) == -1, \"Test case: Missing number\"\nassert last([-1,-1,-1,-1,-1], -2) == -1, \"Edge case: All elements are different\"\r\n```",
+      "quality": 1.0,
+      "final_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```",
+        "fixer": "```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert last([8,7,6,5,4,3,2,1],5) == 4\nassert last([1,1,1,1,1,1,1],1) == 6\nassert last([],1) == -1\nassert last([1,2,3,4,5,6,7,9,14,15,16],11) == -1\nassert last([3],1) == -1",
+      "reference_key": "assert last([1,2,3,4,5,6,7,8,9,10], 10) == 9\nassert last([1,1,1,1,1,1,1,1,1,1], 1) == 9\nassert last([2,4,6,8,10,12,14,16,18,20], 15) == -1\nassert last([], 5) == -1\nassert last([5], 5) == 0",
+      "key_differs": true,
+      "text": "```python\nassert last([8,7,6,5,4,3,2,1],5) == 4\nassert last([1,1,1,1,1,1,1],1) == 6\nassert last([],1) == -1\nassert last([1,2,3,4,5,6,7,9,14,15,16],11) == -1\nassert last([3],1) == -1\n```",
+      "quality": 1.0,
+      "final_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```",
+        "fixer": "```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert sort_numeric_strings(['4','12','45','7','0','100','200','-12','-500']) == [-500, -12, 0, 4, 7, 12, 45, 100, 200]\nassert sort_numeric_strings([]) == []\nassert sort_numeric_strings(['a', 'b', 'c']) == ['a', 'b', 'c']\nassert sort_numeric_strings(['1', '2', '3', '4', '5']) == ['1', '2', '3', '4', '5']\nassert sort_numeric_strings(['-1', '-2', '-3', '-4', '-5']) == ['-5', '-4', '-3', '-2', '-1']",
+      "reference_key": "assert last([1,2,3,4,5,6,7,8,9,10], 10) == 9\nassert last([1,1,1,1,1,1,1,1,1,1], 1) == 9\nassert last([2,4,6,8,10,12,14,16,18,20], 15) == -1\nassert last([], 5) == -1\nassert last([5], 5) == 0",
+      "key_differs": true,
+      "text": "```python\nassert sort_numeric_strings(['4','12','45','7','0','100','200','-12','-500']) == [-500, -12, 0, 4, 7, 12, 45, 100, 200]\nassert sort_numeric_strings([]) == []\nassert sort_numeric_strings(['a', 'b', 'c']) == ['a', 'b', 'c']\nassert sort_numeric_strings(['1', '2', '3', '4', '5']) == ['1', '2', '3', '4', '5']\nassert sort_numeric_strings(['-1', '-2', '-3', '-4', '-5']) == ['-5', '-4', '-3', '-2', '-1']\n```",
+      "quality": 1.0,
+      "final_key": "def last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n```",
+        "fixer": "```python\ndef last(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if arr[mid] == target:\n            result = mid\n            left += 1\n        elif arr[mid] > target:\n            right = mid - 1\n        else:\n            left = mid + 1\n            \n    return result\n\n# Test cases\nassert last([1,2,3],1) == 0\nassert last([1,1,1,2,3,4],1) == 2\nassert last([2,3,2,3,6,8,9],3) == 3\nassert sort_numeric_strings(['4','12','45','7','0','100','200','-12','-500']) == [-500, -12, 0, 4, 7, 12, 45, 100, 200]\nassert sort_numeric_strings([]) == []\nassert sort_numeric_strings(['a', 'b', 'c']) == ['a', 'b', 'c']\nassert sort_numeric_strings(['1', '2', '3', '4', '5']) == ['1', '2', '3', '4', '5']\nassert sort_numeric_strings(['-1', '-2', '-3', '-4', '-5']) == ['-5', '-4', '-3', '-2', '-1']\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert last([1,2,3],4) == -1\nassert last([],1) == -1\nassert last([1,1,1,1,1],1) == 4\nassert last([1,2,3,4,5],3) == 3\nassert last([1,2,3,4,5],6) == -1",
+  "sample_keys": [
+    "assert last([], 2) == -1\nassert last([3], 4) == -1\nassert last([3,4], 4) == 1\nassert last([3,4,5], 3) == 0\nassert last([3,4,5], 6) == -1",
+    "assert last([], 1) == -1\nassert last([1, 2, 3], 4) == -1\nassert last([1, 2, 2, 3, 4, 4, 4, 5], 4) == 6\nassert last([1, 2, 2, 3, 4, 4, 4, 5], 7) == -1\nassert last([1, 1, 1, 1, 1], 1) == 4",
+    "assert last([1,2,3],4) == -1\nassert last([1,2,3,4],2) == 1\nassert last([],2) == -1\nassert last([2,2,2,2,2],2) == 4\nassert last([1,2,2,2,3],2) == 3",
+    "# Test cases to cover typical and edge cases\nassert last([], 1) == -1\nassert last([1], 1) == 0\nassert last([1, 2], 2) == 1\nassert last([1, 2, 3], 3) == 2\nassert last([1, 2, 2, 3], 2) == 2",
+    "assert last([4,5,6,7,8,9,10],4) == 0\nassert last([4,5,6,7,8,9,10],5) == 1\nassert last([4,5,6,7,8,9,10],6) == 2\nassert last([4,5,6,7,8,9,10],7) == 3\nassert last([4,5,6,7,8,9,10],8) == 4\nassert last([4,5,6,7,8,9,10],9) == 5\nassert last([4,5,6,7,8,9,10],10) == 6\nassert last([1,2,3,4,5],1) == 0\nassert last([1,2,3,4,5],2) == 1\nassert last([1,2,3,4,5],3) == 2\nassert last([1,2,3,4,5],4) == 3\nassert last([1,2,3,4,5],5) == 4\nassert last([],1) == -1\nassert last([],2) == -1\nassert last([],3) == -1\nassert last([],4) == -1\nassert last([],5) == -1"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1647.0,
+    "small_out": 566.0,
+    "small_s": 11.68364339802065
+  },
+  "calls_plus": {
+    "small_in": 1491.0,
+    "small_out": 436.0,
+    "small_s": 8.110137235024013,
+    "large_in": 223.0,
+    "large_out": 126.0,
+    "large_s": 2.6778260149876587
+  },
+  "calls_samples": {
+    "small_in": 1115.0,
+    "small_out": 685.0,
+    "small_s": 11.400510991981719
+  }
+}

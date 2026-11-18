@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-439",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `multiple_to_single` that takes a list of integers as its parameter.\n2. Convert each integer in the list to a string using a list comprehension.\n3. Join all the string representations of the integers together into a single string.\n4. Convert the resulting string back to an integer.\n5. Return the final single integer.",
+  "reference_key": null,
+  "final_key_plus": "def multiple_to_single(numbers):\n    # Convert each number to a string and join them together\n    combined_str = ''.join(str(num) for num in numbers)\n    # Convert the combined string back to an integer\n    result = int(combined_str)\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert multiple_to_single([])==0\nassert multiple_to_single([1])==1\nassert multiple_to_single([-1,-2,-3])==-6\nassert multiple_to_single([0,0,0])==0\nassert multiple_to_single([999,999,999])==2997000\n```",
+    "coder": "```python\ndef multiple_to_single(numbers):\n    # Convert each number to a string and join them together\n    combined_str = ''.join(str(num) for num in numbers)\n    # Convert the combined string back to an integer\n    result = int(combined_str)\n    return result\n```",
+    "verifier": "PICK: A\n\n```python\ndef multiple_to_single(numbers):\n    # Convert each number to a string and join them together\n    combined_str = ''.join(str(num) for num in numbers)\n    # Convert the combined string back to an integer\n    result = int(combined_str)\n    return result\n```",
+    "fixer": "```python\ndef multiple_to_single(numbers):\n    # Convert each number to a string and join them together\n    combined_str = ''.join(str(num) for num in numbers)\n    # Convert the combined string back to an integer\n    result = int(combined_str)\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a recursive function to calculate Bell numbers.\n2. Base case for the recursion: B(0) = 1, B(1) = 1.\n3. Recursive case: For n > 1, B(n) = sum(B(k) * C(n-1, k)) where C(n-1, k) is the binomial coefficient.\n4. Use memoization to store previously calculated values to avoid redundant calculations.\n5. Return the result for the given input n.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert multiple_to_single([])==0\nassert multiple_to_single([1])==1\nassert multiple_to_single([1,2])==12\nassert multiple_to_single([1,2,3])==123\nassert multiple_to_single([1,2,3,4])==1234\n```",
+        "coder": "```python\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef bell_number(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_number(k) * comb(n - 1, k) for k in range(n))\n\ndef multiple_to_single(numbers):\n    return int(''.join(map(str, numbers)))\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nfrom functools import lru_cache\nfrom math import comb\n\n@lru_cache(maxsize=None)\ndef bell_number(n):\n    if n == 0:\n        return 1\n    elif n == 1:\n        return 1\n    else:\n        return sum(bell_number(k) * comb(n - 1, k) for k in range(n))\n\ndef multiple_to_single(numbers):\n    return int(''.join(map(str, numbers)))\n\n# Test cases\nassert multiple_to_single([11, 33, 50])==113350\nassert multiple_to_single([-1,2,3,4,5,6])==-123456\nassert multiple_to_single([10,15,20,25])==10152025\nassert multiple_to_single([])==0\nassert multiple_to_single([1])==1\nassert multiple_to_single([1,2])==12\nassert multiple_to_single([1,2,3])==123\nassert multiple_to_single([1,2,3,4])==1234\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `multiple_to_single` that takes a list of integers as its parameter.\n2. Convert each integer in the list to a string using a list comprehension.\n3. Join all the string representations of the integers together into a single string.\n4. Convert the resulting string back to an integer.\n5. Return the final single integer, but note that the conversion from string to integer will result in the first non-digit character encountered as the sign of the number. For example, the input `['0', '1', '-2']` will be interpreted as `-2`, not `1`.",
+      "quality": 1.0,
+      "final_key": "def multiple_to_single(numbers):\n    # Convert each integer to a string and join them together\n    combined_str = ''.join(str(num) for num in numbers)\n    # Convert the combined string back to an integer\n    return int(combined_str)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert multiple_to_single([])==0\nassert multiple_to_single([1])==1\nassert multiple_to_single([-1,-2,-3])==-6\nassert multiple_to_single([100,200,300])==600\nassert multiple_to_single([0,0,0])==0\n```",
+        "coder": "```python\ndef multiple_to_single(numbers):\n    # Convert each integer to a string and join them together\n    combined_str = ''.join(str(num) for num in numbers)\n    # Convert the combined string back to an integer\n    return int(combined_str)\n```",
+        "verifier": "PICK: A\n\n```python\ndef multiple_to_single(numbers):\n    # Convert each integer to a string and join them together\n    combined_str = ''.join(str(num) for num in numbers)\n    # Convert the combined string back to an integer\n    return int(combined_str)\n```",
+        "fixer": "```python\ndef multiple_to_single(numbers):\n    # Convert each integer to a string and join them together\n    combined_str = ''.join(str(num) for num in numbers)\n    # Convert the combined string back to an integer\n    return int(combined_str)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `swap_numbers` that accepts two parameters, `num1` and `num2`.\n2. Inside the function, create a tuple containing `num2` and `num1`.\n3. Return the created tuple.\n\nThis solution meets all the requirements specified in the task.",
+      "quality": 0.0,
+      "final_key": "def multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = numbers[0]\n    for number in numbers[1:]:\n        result *= number\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert multiple_to_single([11, 33, 50]) == 113350\nassert multiple_to_single([]) == 0\nassert multiple_to_single([1]) == 1\nassert multiple_to_single([-1, -2, -3]) == -1-2-3\nassert multiple_to_single([0, 0, 0]) == 0\n```",
+        "coder": "```python\ndef swap_numbers(num1, num2):\n    return (num2, num1)\n```",
+        "verifier": "PICK: B\n\n```python\ndef multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = numbers[0]\n    for number in numbers[1:]:\n        result *= number\n    return result\n```",
+        "fixer": "```python\ndef multiple_to_single(numbers):\n    if not numbers:\n        return 0\n    result = numbers[0]\n    for number in numbers[1:]:\n        result *= number\n    return result\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)",
+  "sample_keys": [
+    "def multiple_to_single(numbers):\n    result = 0\n    for num in numbers:\n        result = int(str(result) + str(num))\n    return result",
+    "def multiple_to_single(nums):\n    output = \"\"\n    for num in nums:\n        output += str(num)\n    return int(output)",
+    "def multiple_to_single(numbers):\n    result = \"\"\n    for num in numbers:\n        result += str(num)\n    return int(result)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1488.0,
+    "small_out": 340.0,
+    "small_s": 7.262389323965181
+  },
+  "calls_plus": {
+    "large_in": 116.0,
+    "large_out": 75.0,
+    "large_s": 1.6234349380247295,
+    "small_in": 1407.0,
+    "small_out": 265.0,
+    "small_s": 5.39150825701654
+  },
+  "calls_samples": {
+    "small_in": 4393.0,
+    "small_out": 931.0,
+    "small_s": 17.422394107008586
+  }
+}

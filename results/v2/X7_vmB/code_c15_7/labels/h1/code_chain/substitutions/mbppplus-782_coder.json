@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-782",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum\n```",
+  "reference_key": "def odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum",
+  "final_key_plus": "def odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\n```",
+    "verifier": "PICK: A\n\n```python\ndef odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum\n```",
+    "fixer": "```python\ndef odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):  # Starting index\n        current_sum = 0\n        for j in range(i, n):  # Ending index\n            if (j - i + 1) % 2 != 0:  # Odd length subarray condition\n                current_sum += arr[j]\n        \n        total_sum += current_sum\n    \n    return total_sum",
+      "reference_key": "def odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum",
+      "key_differs": true,
+      "text": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):  # Starting index\n        current_sum = 0\n        for j in range(i, n):  # Ending index\n            if (j - i + 1) % 2 != 0:  # Odd length subarray condition\n                current_sum += arr[j]\n        \n        total_sum += current_sum\n    \n    return total_sum\n```",
+      "quality": 0.0,
+      "final_key": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):  # Starting index\n        current_sum = 0\n        for j in range(i, n):  # Ending index\n            if (j - i + 1) % 2 != 0:  # Odd length subarray condition\n                current_sum += arr[j]\n        \n        total_sum += current_sum\n    \n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\n```",
+        "verifier": "PICK: A\n\n```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):  # Starting index\n        current_sum = 0\n        for j in range(i, n):  # Ending index\n            if (j - i + 1) % 2 != 0:  # Odd length subarray condition\n                current_sum += arr[j]\n        \n        total_sum += current_sum\n    \n    return total_sum\n```",
+        "fixer": "```python\ndef odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):  # Starting index\n        current_sum = 0\n        for j in range(i, n):  # Ending index\n            if (j - i + 1) % 2 != 0:  # Odd length subarray condition\n                current_sum += arr[j]\n        \n        total_sum += current_sum\n    \n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def odd_length_sum(arr):\n    from itertools import combinations\n    \n    n = len(arr)\n    total_sum = 0\n    # Generate all possible combinations of sublists of odd lengths\n    for i in range(n):\n        for size in range(1, n + 1, 2): # Iterate over odd sizes\n            for combo in combinations(arr[i:], size):\n                current_sum += sum(combo)\n    return total_sum",
+      "reference_key": "def odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum",
+      "key_differs": true,
+      "text": "```python\ndef odd_length_sum(arr):\n    from itertools import combinations\n    \n    n = len(arr)\n    total_sum = 0\n    # Generate all possible combinations of sublists of odd lengths\n    for i in range(n):\n        for size in range(1, n + 1, 2): # Iterate over odd sizes\n            for combo in combinations(arr[i:], size):\n                current_sum += sum(combo)\n    return total_sum\n```\n\nWhen you run `odd_length_sum([1,2,4])`, it will correctly return 14.",
+      "quality": 0.0,
+      "final_key": "from itertools import combinations\n\ndef odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    # Generate all possible combinations of sublists of odd lengths\n    for i in range(n):\n        for size in range(1, n + 1, 2): # Iterate over odd sizes\n            for combo in combinations(arr[i:], size):\n                current_sum = sum(combo)\n                total_sum += current_sum\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1,3,5,7]) == 60\nassert odd_length_sum([1,2,3,4,5,6,7,8,9]) == 220\nassert odd_length_sum([-1,-2,-3,-4,-5]) == -15\n```",
+        "verifier": "PICK: B\n\n```python\nfrom itertools import combinations\n\ndef odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    # Generate all possible combinations of sublists of odd lengths\n    for i in range(n):\n        for size in range(1, n + 1, 2): # Iterate over odd sizes\n            for combo in combinations(arr[i:], size):\n                current_sum = sum(combo)\n                total_sum += current_sum\n    return total_sum\n```",
+        "fixer": "```python\nfrom itertools import combinations\n\ndef odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    # Generate all possible combinations of sublists of odd lengths\n    for i in range(n):\n        for size in range(1, n + 1, 2): # Iterate over odd sizes\n            for combo in combinations(arr[i:], size):\n                current_sum = sum(combo)\n                total_sum += current_sum\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict",
+      "reference_key": "def odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum",
+      "key_differs": true,
+      "text": "```python\ndef freq_count(lst):\n    frequency_dict = {}\n    for element in lst:\n        if element in frequency_dict:\n            frequency_dict[element] += 1\n        else:\n            frequency_dict[element] = 1\n    return frequency_dict\n```",
+      "quality": 1.0,
+      "final_key": "def odd_length_sum(lst):\n    total_sum = 0\n    n = len(lst)\n    for i in range(n):\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                total_sum += sum(lst[i:j+1])\n    return total_sum",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\n```",
+        "verifier": "PICK: B\n```python\ndef odd_length_sum(lst):\n    total_sum = 0\n    n = len(lst)\n    for i in range(n):\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                total_sum += sum(lst[i:j+1])\n    return total_sum\n```",
+        "fixer": "```python\ndef odd_length_sum(lst):\n    total_sum = 0\n    n = len(lst)\n    for i in range(n):\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                total_sum += sum(lst[i:j+1])\n    return total_sum\n\n# Test cases\nassert odd_length_sum([1,2,4]) == 14\nassert odd_length_sum([1,2,1,2]) == 15\nassert odd_length_sum([1,7]) == 8\nassert odd_length_sum([1,2,3,4,5]) == 60\nassert odd_length_sum([]) == 0\nassert odd_length_sum([1]) == 1\nassert odd_length_sum([1,2,3,4,5,6]) == 90\nassert odd_length_sum([1,2,3,4,5,6,7]) == 180\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    return total_sum",
+  "sample_keys": [
+    null,
+    "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum",
+    "def odd_length_sum(arr):\n    total_sum = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n            total_sum += current_sum\n    return total_sum",
+    "def odd_length_sum(nums):\n    total_sum = 0\n    n = len(nums)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += nums[j]\n        total_sum += current_sum\n    return total_sum",
+    "def odd_length_sum(arr):\n    n = len(arr)\n    total_sum = 0\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            if (j - i + 1) % 2 != 0:\n                current_sum += arr[j]\n        total_sum += current_sum\n    \n    return total_sum"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1683.0,
+    "small_out": 535.0,
+    "small_s": 11.771298501989804
+  },
+  "calls_plus": {
+    "small_in": 1373.0,
+    "small_out": 452.0,
+    "small_s": 8.190580055961618,
+    "large_in": 310.0,
+    "large_out": 83.0,
+    "large_s": 1.8362880779895931
+  },
+  "calls_samples": {
+    "small_in": 1550.0,
+    "small_out": 413.0,
+    "small_s": 8.133496239053784
+  }
+}

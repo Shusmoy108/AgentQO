@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-630",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `get_coordinates` that takes a single argument, a coordinate tuple `(x, y)`.\n2. Initialize an empty list called `adjacent_coords` to store the results.\n3. Use nested loops to iterate over the range from `(x-1)` to `(x+2)` for the x-coordinate and from `(y-1)` to `(y+2)` for the y-coordinate.\n4. For each pair of `(i, j)` within these ranges, append `[i, j]` to the `adjacent_coords` list if it is not equal to the original coordinate `(x, y)`.\n5. Return the `adjacent_coords` list after the loops complete.",
+  "reference_key": null,
+  "final_key_plus": "def get_coordinates(coord):\n    x, y = coord\n    adjacent_coords = []\n    for i in range(x-1, x+2):\n        for j in range(y-1, y+2):\n            if (i, j) != (x, y):\n                adjacent_coords.append([i, j])\n    return adjacent_coords",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-2, 1], [-1, -2], [-1, -1], [-1, 0], [-1, 1], [0, -2], [0, -1], [0, 0], [0, 1], [1, -2], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((0, 5)) == [[-1, 4], [-1, 5], [-1, 6], [0, 4], [0, 5], [0, 6], [1, 4], [1, 5], [1, 6]]\nassert get_coordinates((5, 0)) == [[4, -1], [4, 0], [4, 1], [5, -1], [5, 1], [6, -1], [6, 0], [6, 1]]\n```",
+    "coder": "```python\ndef get_coordinates(coord):\n    x, y = coord\n    adjacent_coords = []\n    for i in range(x-1, x+2):\n        for j in range(y-1, y+2):\n            if (i, j) != (x, y):\n                adjacent_coords.append([i, j])\n    return adjacent_coords\n```",
+    "verifier": "PICK: A\n\n```python\ndef get_coordinates(coord):\n    x, y = coord\n    adjacent_coords = []\n    for i in range(x-1, x+2):\n        for j in range(y-1, y+2):\n            if (i, j) != (x, y):\n                adjacent_coords.append([i, j])\n    return adjacent_coords\n```",
+    "fixer": "```python\ndef get_coordinates(coord):\n    x, y = coord\n    adjacent_coords = []\n    for i in range(x-1, x+2):\n        for j in range(y-1, y+2):\n            if (i, j) != (x, y):\n                adjacent_coords.append([i, j])\n    return adjacent_coords\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `add_string` that takes two parameters: `elements`, which is a list of strings, and `format_str`, which is a string representing the format to be applied to each element.\n2. Use a list comprehension to iterate over each element in the `elements` list.\n3. For each element, use the `format()` method to apply the `format_str` to it.\n4. Return the new list containing the formatted elements.\n\nHere's the complete implementation:\n\n```python\ndef add_string(elements, format_str):\n    # Apply the format string to each element using list comprehension\n    return [format(element, format_str) for element in elements]\n```\n\nThis function will correctly format each element in the input list according to the specified format string.",
+      "quality": 0.0,
+      "final_key": "def get_coordinates(coord_tuple):\n    x, y = coord_tuple\n    return [\n        [x-1, y-1], [x-1, y], [x-1, y+1],\n        [x, y-1], [x, y], [x, y+1],\n        [x+1, y-1], [x+1, y], [x+1, y+1]\n    ]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1], [0, 0]]\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((5, 5)) == [[4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6], [6, 4], [6, 5], [6, 6]]\nassert get_coordinates((-5, -5)) == [[-6, -6], [-6, -5], [-6, -4], [-5, -6], [-5, -5], [-5, -4], [-4, -6], [-4, -5], [-4, -4]]\n```",
+        "coder": "```python\ndef add_string(elements, format_str):\n    # Apply the format string to each element using list comprehension\n    return [format(element, format_str) for element in elements]\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_coordinates(coord_tuple):\n    x, y = coord_tuple\n    return [\n        [x-1, y-1], [x-1, y], [x-1, y+1],\n        [x, y-1], [x, y], [x, y+1],\n        [x+1, y-1], [x+1, y], [x+1, y+1]\n    ]\n```",
+        "fixer": "```python\ndef get_coordinates(coord_tuple):\n    x, y = coord_tuple\n    return [\n        [x-1, y-1], [x-1, y], [x-1, y+1],\n        [x, y-1], [x, y], [x, y+1],\n        [x+1, y-1], [x+1, y], [x+1, y+1]\n    ]\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `get_coordinates` that takes a single argument, a coordinate tuple `(x, y)`.\n2. Initialize an empty list called `adjacent_coords` to store the results.\n3. Use nested loops to iterate over the range from `(x-1)` to `(x+3)` for the x-coordinate and from `(y-1)` to `(y+3)` for the y-coordinate (note: I've increased the range by 1 to ensure all surrounding coordinates are checked).\n4. For each pair of `(i, j)` within these ranges, append `[i, j]` to the `adjacent_coords` list if it is not equal to the original coordinate `(x, y)`.\n5. Return the `adjacent_coords` list after the loops complete.",
+      "quality": 0.0,
+      "final_key": "def get_coordinates(coord):\n    x, y = coord\n    adjacent_coords = []\n    for i in range(x-1, x+4):\n        for j in range(y-1, y+4):\n            if (i, j) != (x, y):\n                adjacent_coords.append([i, j])\n    return adjacent_coords",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]\nassert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 2], [2, 0], [2, 1], [2, 2]]\nassert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, -1], [-1, 0], [0, -2], [0, -1]]\nassert get_coordinates((0, 2)) == [[-1, 1], [-1, 2], [-1, 3], [0, 1], [0, 2], [0, 3], [1, 1], [1, 2], [1, 3]]\nassert get_coordinates((2, 0)) == [[1, -1], [1, 0], [1, 1], [2, -1], [2, 0], [2, 1], [3, -1], [3, 0], [3, 1]]\n```",
+        "coder": "```python\ndef get_coordinates(coord):\n    x, y = coord\n    adjacent_coords = []\n    for i in range(x-1, x+4):\n        for j in range(y-1, y+4):\n            if (i, j) != (x, y):\n                adjacent_coords.append([i, j])\n    return adjacent_coords\n```",
+        "verifier": "PICK: A\n\n```python\ndef get_coordinates(coord):\n    x, y = coord\n    adjacent_coords = []\n    for i in range(x-1, x+4):\n        for j in range(y-1, y+4):\n            if (i, j) != (x, y):\n                adjacent_coords.append([i, j])\n    return adjacent_coords\n```",
+        "fixer": "```python\ndef get_coordinates(coord):\n    x, y = coord\n    adjacent_coords = []\n    for i in range(x-1, x+4):\n        for j in range(y-1, y+4):\n            if (i, j) != (x, y):\n                adjacent_coords.append([i, j])\n    return adjacent_coords\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `remove_odd` that takes one parameter, `input_str`.\n2. Initialize an empty string called `result`.\n3. Iterate over each character in `input_str`.\n4. Check if the index of the current character is even (i.e., divisible by 2).\n5. If the index is even, append the character to `result`.\n6. Return the `result` string.\n\nHere's the complete implementation:\n\n```python\ndef remove_odd(input_str):\n    result = \"\"\n    for i in range(len(input_str)):\n        if i % 2 == 0:\n            result += input_str[i]\n    return result\n```\n\nThis function iterates through the input string, checks if the index is even, and appends the character to the result string if it is. The final result is returned as the output.",
+      "quality": 0.0,
+      "final_key": "def get_coordinates(coord_tuple):\n    x, y = coord_tuple\n    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]\n\n# Test cases\nassert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]\nassert get_coordinates((4, 5)) == [[3, 4], [3, 5], [3, 6], [4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6]]\nassert get_coordinates((5, 6)) == [[4, 5], [4, 6], [4, 7], [5, 5], [5, 6], [5, 7], [6, 5], [6, 6], [6, 7]]\nassert remove_odd(\"abcdef\") == \"ace\"\nassert remove_odd(\"1234567890\") == \"2468\"\nassert remove_odd(\"\") == \"\"\nassert remove_odd(\"a\") == \"a\"\nassert remove_odd(\"ab\") == \"b\"",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert remove_odd(\"abcdef\") == \"ace\"\nassert remove_odd(\"1234567890\") == \"2468\"\nassert remove_odd(\"\") == \"\"\nassert remove_odd(\"a\") == \"a\"\nassert remove_odd(\"ab\") == \"b\"\n```",
+        "coder": "```python\ndef remove_odd(input_str):\n    result = \"\"\n    for i in range(len(input_str)):\n        if i % 2 == 0:\n            result += input_str[i]\n    return result\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_coordinates(coord_tuple):\n    x, y = coord_tuple\n    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]\n\n# Test cases\nassert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]\nassert get_coordinates((4, 5)) == [[3, 4], [3, 5], [3, 6], [4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6]]\nassert get_coordinates((5, 6)) == [[4, 5], [4, 6], [4, 7], [5, 5], [5, 6], [5, 7], [6, 5], [6, 6], [6, 7]]\nassert remove_odd(\"abcdef\") == \"ace\"\nassert remove_odd(\"1234567890\") == \"2468\"\nassert remove_odd(\"\") == \"\"\nassert remove_odd(\"a\") == \"a\"\nassert remove_odd(\"ab\") == \"b\"\n```",
+        "fixer": "```python\ndef get_coordinates(coord_tuple):\n    x, y = coord_tuple\n    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]\n\n# Test cases\nassert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]\nassert get_coordinates((4, 5)) == [[3, 4], [3, 5], [3, 6], [4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6]]\nassert get_coordinates((5, 6)) == [[4, 5], [4, 6], [4, 7], [5, 5], [5, 6], [5, 7], [6, 5], [6, 6], [6, 7]]\nassert remove_odd(\"abcdef\") == \"ace\"\nassert remove_odd(\"1234567890\") == \"2468\"\nassert remove_odd(\"\") == \"\"\nassert remove_odd(\"a\") == \"a\"\nassert remove_odd(\"ab\") == \"b\"\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def get_coordinates(coordinate):\n    rows = len(grid)\n    cols = len(grid[0])\n    adjacent_coords = []\n    \n    for x in range(-1, 2):\n        for y in range(-1, 2):\n            if 0 <= x + coordinate[0] < rows and 0 <= y + coordinate[1] < cols:\n                adjacent_coords.append([x + coordinate[0], y + coordinate[1]])\n                \n    return adjacent_coords",
+  "sample_keys": [
+    "def get_coordinates(coordinate):\n    x, y = coordinate\n    left_coords = []\n    right_coords = []\n\n    for i in range(x - 1, x + 2):\n        if 0 <= i < 10:  # Assuming the grid is 10x10\n            left_coords.append([i, y])\n\n    for j in range(y - 1, y + 2):\n        if 0 <= j < 10:  # Assuming the grid is 10x10\n            right_coords.append([x, j])\n\n    return left_coords + right_coords",
+    "def get_coordinates(coords):\n    x, y = coords\n    x_coords = [(x - 1, y), (x + 1, y)]\n    y_coords = [(x, y - 1), (x, y + 1)]\n    return x_coords + y_coords",
+    "def get_coordinates(coordinate):\n    # Step 2: Generate ranges for x and y coordinates\n    x_range = range(coordinate[0] - 1, coordinate[0] + 3)\n    y_range = range(coordinate[1] - 1, coordinate[1] + 3)\n    \n    # Step 4: Generate all adjacent coordinates using nested loops\n    adjacent_coordinates = [(x, y) for x in x_range for y in y_range if (x, y) != coordinate]\n    \n    return adjacent_coordinates"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 3283.0,
+    "small_out": 807.0,
+    "small_s": 17.077192561031552
+  },
+  "calls_plus": {
+    "large_in": 157.0,
+    "large_out": 149.0,
+    "large_s": 3.3694546560000163,
+    "small_in": 2832.0,
+    "small_out": 582.0,
+    "small_s": 9.066429936996428
+  },
+  "calls_samples": {
+    "small_in": 9227.0,
+    "small_out": 2651.0,
+    "small_s": 47.29560860100901
+  }
+}

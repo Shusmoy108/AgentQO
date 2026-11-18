@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-799",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `left_rotate` that takes two parameters: `num` (the number to be rotated) and `d` (the number of bits to rotate).\n2. Ensure that both `num` and `d` are treated as 32-bit integers using bitwise operations.\n3. Calculate the result of rotating `num` left by `d` bits using the formula `(num << d) | (num >> (32 - d))`.\n4. Return the result of the rotation.\n5. Test the function with the provided test case `assert left_rotate(16, 2) == 64`.",
+  "reference_key": null,
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert left_rotate(16,2) == 64\nassert left_rotate(17,2) == 38\nassert left_rotate(18,2) == 26\nassert left_rotate(19,2) == 14\nassert left_rotate(20,2) == 2\nassert left_rotate(21,2) == 1\nassert left_rotate(22,2) == 0\nassert left_rotate(23,2) == 1\nassert left_rotate(24,2) == 2\nassert left_rotate(25,2) == 4\nassert left_rotate(26,2) == 8\nassert left_rotate(27,2) == 16\nassert left_rotate(28,2) == 32\nassert left_rotate(29,2) == 64\nassert left_rotate(30,2) == 128\nassert left_rotate(31,2) == 256\nassert left_rotate(32,2) == 512\nassert left_rotate(33,2) == 1024\nassert left_rotate(34,2) == 2048\nassert left_rotate(35,2) == 4096\nassert left_rotate(36,2) == 8192\nassert left_rotate(37,2) == 16384\nassert left_rotate(38,2) == 32768\nassert left_rotate(39,2) == 65536\nassert left_rotate(40,2) == 131072\nassert left_rotate(41,2) == 262144\nassert left_rotate(42,2) == 524288\nassert left_rotate(43,2) == 1048576\nassert left_rotate(44,2) == 2097152\nassert left_rotate(45,2) == 4194304\nassert left_rotate(46,2) == 8388608\nassert left_rotate(47,2) == 16777216\nassert left_rotate(48,2) ==",
+    "coder": "```python\ndef left_rotate(num, d):\n    num = num & 0xFFFFFFFF  # Ensure num is treated as a 32-bit integer\n    d = d & 31            # Ensure d is treated as a 32-bit integer\n    return ((num << d) | (num >> (32 - d))) & 0xFFFFFFFF  # Perform the rotation and ensure the result is within 32 bits\n```",
+    "verifier": "PICK: A",
+    "fixer": "```python\ndef left_rotate(num, d):\n    num = num & 0xFFFFFFFF  # Ensure num is treated as a 32-bit integer\n    d = d & 31            # Ensure d is treated as a 32-bit integer\n    return ((num << d) | (num >> (32 - d))) & 0xFFFFFFFF  # Perform the rotation and ensure the result is within 32 bits\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert left_rotate(16,2) == 64\nassert left_rotate(17,2) == 38\nassert left_rotate(18,2) == 26\nassert left_rotate(19,2) == 14\nassert left_rotate(20,2) == 2\nassert left_rotate(21,2) == 1\nassert left_rotate(22,2) == 0\nassert left_rotate(23,2) == 1\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `centered_hexagonal_number` that takes one parameter, `n`.\n2. Calculate the formula for the nth centered hexagonal number using the formula `(3n^2 - 3n + 1) / 2`.\n3. Return the calculated value.\n\nHere is the complete function:\n\n```python\ndef centered_hexagonal_number(n):\n    # Calculate the nth centered hexagonal number using the formula\n    return (3 * n**2 - 3 * n + 1) // 2\n```\n\nThis function will correctly compute the nth centered hexagonal number based on the given formula.",
+      "quality": 0.0,
+      "final_key": "def left_rotate(n, d):\n    # Ensure the number is within the 32-bit range\n    if n < 0 or n > 2**31 - 1:\n        raise ValueError(\"Number must be between 0 and 2^31-1\")\n    \n    # Perform the rotation\n    rotated = ((n << d) | (n >> (32 - d))) & 0xFFFFFFFF\n    \n    return rotated\n\n# Test cases\nassert left_rotate(16, 2) == 64\nassert left_rotate(10, 2) == 40\nassert left_rotate(99, 3) == 792\nassert left_rotate(99, 3) == 792\nassert left_rotate(0b0001, 3) == 0b1000\nassert left_rotate(0b0101, 3) == 0b101000\nassert left_rotate(0b11101, 3) == 0b11101000\nassert left_rotate(16, 2) == 64\nassert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(2, 1) == 4\nassert left_rotate(3, 1) == 8",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert left_rotate(16,2) == 64\nassert left_rotate(0,1) == 0\nassert left_rotate(1,1) == 2\nassert left_rotate(2,1) == 4\nassert left_rotate(3,1) == 8\n```",
+        "coder": "```python\ndef centered_hexagonal_number(n):\n    # Calculate the nth centered hexagonal number using the formula\n    return (3 * n**2 - 3 * n + 1) // 2\n```",
+        "verifier": "PICK: B\n\n```python\ndef left_rotate(n, d):\n    # Ensure the number is within the 32-bit range\n    if n < 0 or n > 2**31 - 1:\n        raise ValueError(\"Number must be between 0 and 2^31-1\")\n    \n    # Perform the rotation\n    rotated = ((n << d) | (n >> (32 - d))) & 0xFFFFFFFF\n    \n    return rotated\n\n# Test cases\nassert left_rotate(16, 2) == 64\nassert left_rotate(10, 2) == 40\nassert left_rotate(99, 3) == 792\nassert left_rotate(99, 3) == 792\nassert left_rotate(0b0001, 3) == 0b1000\nassert left_rotate(0b0101, 3) == 0b101000\nassert left_rotate(0b11101, 3) == 0b11101000\nassert left_rotate(16, 2) == 64\nassert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(2, 1) == 4\nassert left_rotate(3, 1) == 8\n```",
+        "fixer": "```python\ndef left_rotate(n, d):\n    # Ensure the number is within the 32-bit range\n    if n < 0 or n > 2**31 - 1:\n        raise ValueError(\"Number must be between 0 and 2^31-1\")\n    \n    # Perform the rotation\n    rotated = ((n << d) | (n >> (32 - d))) & 0xFFFFFFFF\n    \n    return rotated\n\n# Test cases\nassert left_rotate(16, 2) == 64\nassert left_rotate(10, 2) == 40\nassert left_rotate(99, 3) == 792\nassert left_rotate(99, 3) == 792\nassert left_rotate(0b0001, 3) == 0b1000\nassert left_rotate(0b0101, 3) == 0b101000\nassert left_rotate(0b11101, 3) == 0b11101000\nassert left_rotate(16, 2) == 64\nassert left_rotate(0, 1) == 0\nassert left_rotate(1, 1) == 2\nassert left_rotate(2, 1) == 4\nassert left_rotate(3, 1) == 8\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `get_median` that takes two sorted lists `list1` and `list2`, and their lengths `n`.\n2. Calculate the middle index `mid` of the combined list.\n3. If `n` is odd, return the element at index `mid`.\n4. If `n` is even, return the average of the elements at indices `mid-1` and `mid`.\n5. Merge the two lists into one sorted list.\n6. Return the median of the merged list.",
+      "quality": 0.0,
+      "final_key": "def get_median(list1, list2, n):\n    mid = (n - 1) // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid] + list2[mid]) / 2\n\ndef left_rotate(num, d):\n    num_str = bin(num)[2:].zfill(32)\n    rotated_str = num_str[d:] + num_str[:d]\n    return int(rotated_str, 2)\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert left_rotate(16,2) == 64\nassert left_rotate(17,2) == 38\nassert left_rotate(18,2) == 56\nassert left_rotate(19,2) == 74\nassert left_rotate(20,2) == 92",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert left_rotate(16,2) == 64\nassert left_rotate(17,2) == 38\nassert left_rotate(18,2) == 56\nassert left_rotate(19,2) == 74\nassert left_rotate(20,2) == 92\n```",
+        "coder": "```python\ndef get_median(list1, list2, n):\n    mid = (n - 1) // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid] + list2[mid]) / 2\n\ndef left_rotate(num, d):\n    num_str = bin(num)[2:].zfill(32)\n    rotated_str = num_str[d:] + num_str[:d]\n    return int(rotated_str, 2)\n```",
+        "verifier": "PICK: B\n\n```python\ndef get_median(list1, list2, n):\n    mid = (n - 1) // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid] + list2[mid]) / 2\n\ndef left_rotate(num, d):\n    num_str = bin(num)[2:].zfill(32)\n    rotated_str = num_str[d:] + num_str[:d]\n    return int(rotated_str, 2)\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert left_rotate(16,2) == 64\nassert left_rotate(17,2) == 38\nassert left_rotate(18,2) == 56\nassert left_rotate(19,2) == 74\nassert left_rotate(20,2) == 92\n```",
+        "fixer": "```python\ndef get_median(list1, list2, n):\n    mid = (n - 1) // 2\n    if n % 2 != 0:\n        return list1[mid]\n    else:\n        return (list1[mid] + list2[mid]) / 2\n\ndef left_rotate(num, d):\n    num_str = bin(num)[2:].zfill(32)\n    rotated_str = num_str[d:] + num_str[:d]\n    return int(rotated_str, 2)\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert left_rotate(16,2) == 64\nassert left_rotate(17,2) == 38\nassert left_rotate(18,2) == 56\nassert left_rotate(19,2) == 74\nassert left_rotate(20,2) == 92\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Initialize variables `even_product` and `odd_product` to 1 (since multiplying by 1 has no effect).\n2. Iterate through each number in the input list.\n3. Check if the number is even or odd:\n   - If even, multiply it to `even_product`.\n   - If odd, multiply it to `odd_product`.\n4. After iterating through all numbers, return the product of `even_product` and `odd_product`.\n\nThis approach ensures that we correctly identify the first even and odd numbers and calculate their product without modifying the original list.",
+      "quality": 0.0,
+      "final_key": "def left_rotate(num, d):\n    even_product = 1\n    odd_product = 1\n    for i in range(num):\n        if i % 2 == 0:\n            even_product *= i\n        else:\n            odd_product *= i\n    return even_product * odd_product",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert left_rotate(16,2) == 64\nassert left_rotate(17,2) == 34\nassert left_rotate(18,2) == 66\nassert left_rotate(19,2) == 38\nassert left_rotate(20,2) == 70\n```",
+        "coder": "```python\ndef left_rotate(num, d):\n    even_product = 1\n    odd_product = 1\n    for i in range(num):\n        if i % 2 == 0:\n            even_product *= i\n        else:\n            odd_product *= i\n    return even_product * odd_product\n```",
+        "verifier": "PICK: A\n\n```python\ndef left_rotate(num, d):\n    even_product = 1\n    odd_product = 1\n    for i in range(num):\n        if i % 2 == 0:\n            even_product *= i\n        else:\n            odd_product *= i\n    return even_product * odd_product\n```",
+        "fixer": "```python\ndef left_rotate(num, d):\n    even_product = 1\n    odd_product = 1\n    for i in range(num):\n        if i % 2 == 0:\n            even_product *= i\n        else:\n            odd_product *= i\n    return even_product * odd_product\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "def left_rotate(num, d):\n    binary_str = bin(num)[2:]\n    first_d_bits = binary_str[:d]\n    remaining_bits = binary_str[d:]\n    result_binary = remaining_bits + first_d_bits\n    result_num = int(result_binary, 2)\n    return result_num\n\n# Test cases\nassert left_rotate(16,2) == 64\nassert left_rotate(10,2) == 40\nassert left_rotate(99,3) == 792\nassert left_rotate(99,3) == 792\nassert left_rotate(0b0001,3) == 0b1000\nassert left_rotate(0b0101,3) == 0b101000\nassert left_rotate(0b11101,3) == 0b11101000\nassert left_rotate(16,2) == 64\nassert left_rotate(0,1) == 1\nassert left_rotate(1,31) == 1\nassert left_rotate(1,32) == 1\nassert left_rotate(1,33) == 2",
+  "sample_keys": [
+    "def left_rotate(number, d):\n    high_bits = number >> (32 - d)\n    left_shifted_bits = number << d\n    result = high_bits | left_shifted_bits\n    return result",
+    "def left_rotate(num, d):\n    # Ensure d does not exceed 31\n    d %= 32\n    \n    # Clear all bits right of the position where we want to start rotating\n    num &= ((1 << (32 - d)) - 1)\n    \n    # Shift the bits to the left by d positions\n    num <<= d\n    \n    return num",
+    "def left_rotate(number, d):\n    if number < 0 or number >= 2**32:\n        raise ValueError(\"Number must be between 0 and 2^31-1\")\n    \n    result = 0\n    for i in range(d):\n        result <<= 1\n        result |= (number & 1)\n        number >>= 1\n    \n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": -1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1906.0,
+    "small_out": 952.0,
+    "small_s": 17.625105477985926
+  },
+  "calls_plus": {
+    "large_in": 118.0,
+    "large_out": 134.0,
+    "large_s": 4.248187224002322,
+    "small_in": 1874.0,
+    "small_out": 946.0,
+    "small_s": 20.21431587197003
+  },
+  "calls_samples": {
+    "small_in": 5767.0,
+    "small_out": 2117.0,
+    "small_s": 43.42535054599284
+  }
+}

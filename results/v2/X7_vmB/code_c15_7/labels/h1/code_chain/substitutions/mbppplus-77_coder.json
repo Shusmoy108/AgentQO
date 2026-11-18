@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-77",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0\n```",
+  "reference_key": "def is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0",
+  "final_key_plus": "def is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert is_Diff(123456789) == True\nassert is_Diff(-123456789) == True\nassert is_Diff(1234567890) == True\nassert is_Diff(-1234567890) == True\nassert is_Diff(12345678901) == False\n```",
+    "verifier": "PICK: A\n\n```python\ndef is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0\n```",
+    "fixer": "```python\ndef is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0",
+      "key_differs": true,
+      "text": "```python def is_Diff(num):\n    num_str = str(abs(num))\n    \n    odds_sum = sum(int(ch) for ch in num_str[::2])\n    evens_sum = sum(int(ch) for ch in num_str[1::2])\n    \n    return (odds_sum - evens_sum) % 11 == 0\n```",
+      "quality": 1.0,
+      "final_key": "def is_Diff(num):\n    num_str = str(abs(num))\n    \n    odds_sum = sum(int(ch) for ch in num_str[::2])\n    evens_sum = sum(int(ch) for ch in num_str[1::2])\n    \n    return (odds_sum - evens_sum) % 11 == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_Diff(123456789) == True\nassert is_Diff(-123456789) == True\nassert is_Diff(1234567890) == True\nassert is_Diff(12345678901) == True\nassert is_Diff(123456789012) == True\n```",
+        "verifier": "PICK: B\n\n```python\ndef is_Diff(num):\n    num_str = str(abs(num))\n    \n    odds_sum = sum(int(ch) for ch in num_str[::2])\n    evens_sum = sum(int(ch) for ch in num_str[1::2])\n    \n    return (odds_sum - evens_sum) % 11 == 0\n```",
+        "fixer": "```python\ndef is_Diff(num):\n    num_str = str(abs(num))\n    \n    odds_sum = sum(int(ch) for ch in num_str[::2])\n    evens_sum = sum(int(ch) for ch in num_str[1::2])\n    \n    return (odds_sum - evens_sum) % 11 == 0\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    \n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    diff = abs(odd_sum - even_sum)\n    \n    return diff % 11 == 0",
+      "reference_key": "def is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0",
+      "key_differs": true,
+      "text": "```python\ndef is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    \n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    diff = abs(odd_sum - even_sum)\n    \n    return diff % 11 == 0\n```",
+      "quality": 1.0,
+      "final_key": "def is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    \n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    diff = abs(odd_sum - even_sum)\n    \n    return diff % 11 == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_Diff(-12345) == True\nassert is_Diff(12346) == False\nassert is_Diff(0) == True\nassert is_Diff(11111) == True\nassert is_Diff(11112) == False\n```",
+        "verifier": "PICK: A\n\n```python\ndef is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    \n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    diff = abs(odd_sum - even_sum)\n    \n    return diff % 11 == 0\n```",
+        "fixer": "```python\ndef is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    \n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    diff = abs(odd_sum - even_sum)\n    \n    return diff % 11 == 0\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result",
+      "reference_key": "def is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0",
+      "key_differs": true,
+      "text": "```python\ndef insert_element(lst, element):\n    result = []\n    for item in lst:\n        result.extend([element, item])\n    return result\n```",
+      "quality": 0.0,
+      "final_key": "def is_Diff(n):\n    if n < 0:\n        n = -n\n    sum_of_digits = sum(int(digit) for digit in str(n))\n    return sum_of_digits % 11 != 0\n\n# Test cases\nassert is_Diff(12345) == False\nassert is_Diff(1212112) == True\nassert is_Diff(1212) == False\nassert is_Diff(12345) == False\nassert is_Diff(0) == True\nassert is_Diff(-1) == True\nassert is_Diff(11) == True\nassert is_Diff(121) == True",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_Diff(12345) == False\nassert is_Diff(0) == True\nassert is_Diff(-1) == True\nassert is_Diff(11) == True\nassert is_Diff(121) == True\n```",
+        "verifier": "PICK: B\n```python\ndef is_Diff(n):\n    if n < 0:\n        n = -n\n    sum_of_digits = sum(int(digit) for digit in str(n))\n    return sum_of_digits % 11 != 0\n\n# Test cases\nassert is_Diff(12345) == False\nassert is_Diff(1212112) == True\nassert is_Diff(1212) == False\nassert is_Diff(12345) == False\nassert is_Diff(0) == True\nassert is_Diff(-1) == True\nassert is_Diff(11) == True\nassert is_Diff(121) == True\n```",
+        "fixer": "```python\ndef is_Diff(n):\n    if n < 0:\n        n = -n\n    sum_of_digits = sum(int(digit) for digit in str(n))\n    return sum_of_digits % 11 != 0\n\n# Test cases\nassert is_Diff(12345) == False\nassert is_Diff(1212112) == True\nassert is_Diff(1212) == False\nassert is_Diff(12345) == False\nassert is_Diff(0) == True\nassert is_Diff(-1) == True\nassert is_Diff(11) == True\nassert is_Diff(121) == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0",
+  "sample_keys": [
+    "def is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0",
+    "def is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0",
+    "def is_Diff(num):\n    # Convert the number to string to easily access individual digits\n    num_str = str(abs(num))\n    \n    # Initialize sums for odd and even positions\n    odd_sum = 0\n    even_sum = 0\n    \n    # Iterate over the string, starting from index 0 (odd position)\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    \n    # Iterate over the string, starting from index 1 (even position)\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    \n    # Calculate the difference between the two sums\n    diff = abs(odd_sum - even_sum)\n    \n    # Check if the difference is divisible by 11\n    return diff % 11 == 0",
+    "def is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0",
+    "def is_Diff(num):\n    num_str = str(abs(num))\n    odd_sum = 0\n    even_sum = 0\n    for i in range(0, len(num_str), 2):\n        odd_sum += int(num_str[i])\n    for i in range(1, len(num_str), 2):\n        even_sum += int(num_str[i])\n    diff = abs(odd_sum - even_sum)\n    return diff % 11 == 0"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1663.0,
+    "small_out": 658.0,
+    "small_s": 14.187649775005411
+  },
+  "calls_plus": {
+    "small_in": 1705.0,
+    "small_out": 747.0,
+    "small_s": 14.679116779007018,
+    "large_in": 376.0,
+    "large_out": 185.0,
+    "large_s": 3.9799635839881375
+  },
+  "calls_samples": {
+    "small_in": 1880.0,
+    "small_out": 597.0,
+    "small_s": 10.110857210005634
+  }
+}

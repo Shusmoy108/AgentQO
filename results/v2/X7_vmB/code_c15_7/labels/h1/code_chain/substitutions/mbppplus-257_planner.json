@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-257",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `swap_numbers` that accepts two parameters.\n2. Inside the function, create a temporary variable to hold the value of the first parameter.\n3. Assign the value of the second parameter to the first parameter.\n4. Assign the value stored in the temporary variable (original first parameter) to the second parameter.\n5. Return a tuple containing the swapped values.",
+  "reference_key": null,
+  "final_key_plus": "def swap_numbers(a, b):\n    temp = a\n    a = b\n    b = temp\n    return (b, a)",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert swap_numbers(3,4) == (4, 3)\nassert swap_numbers(-1, -2) == (-2, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(float('inf'), float('-inf')) == (-float('inf'), float('inf'))\n```",
+    "coder": "```python\ndef swap_numbers(a, b):\n    temp = a\n    a = b\n    b = temp\n    return (b, a)\n```",
+    "verifier": "PICK: A\n\n```python\ndef swap_numbers(a, b):\n    temp = a\n    a = b\n    b = temp\n    return (b, a)\n```",
+    "fixer": "```python\ndef swap_numbers(a, b):\n    temp = a\n    a = b\n    b = temp\n    return (b, a)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a helper function `is_amicable` that checks if two numbers are amicable.\n2. Iterate through all numbers from 1 to the specified limit.\n3. For each number, check if it is amicable by calling `is_amicable`.\n4. If a number is amicable, add it to a running total.\n5. Return the total sum of all amicable numbers.\n\n```python\ndef is_amicable(n):\n    # Calculate the sum of proper divisors of n\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    # Check if n is amicable\n    return sum_of_divisors(n) == n\n\n# Function to calculate the sum of all amicable numbers up to a given limit\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that solves the problem as described. The helper function `is_amicable` is used to determine if a number is amicable, which is then summed up in the main function `amicable_numbers_sum`.",
+      "quality": 1.0,
+      "final_key": "def swap_numbers(a, b):\n    return (b, a)",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert amicable_numbers_sum(100) == 496\nassert amicable_numbers_sum(1000) == 3328\nassert amicable_numbers_sum(10000) == 49600\nassert amicable_numbers_sum(100000) == 332800\nassert amicable_numbers_sum(1000000) == 4960000\n```",
+        "coder": "```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```",
+        "verifier": "PICK: B\n\n```python\ndef swap_numbers(a, b):\n    return (b, a)\n```",
+        "fixer": "```python\ndef swap_numbers(a, b):\n    return (b, a)\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `swap_numbers` that accepts two parameters.\n2. Inside the function, create a temporary variable to hold the value of the first parameter.\n3. Assign the value of the second parameter to the first parameter.\n4. Assign the value of the original first parameter (stored in the temporary variable) to the second parameter.\n5. Return a tuple containing the swapped values.",
+      "quality": 0.0,
+      "final_key": "def swap_numbers(a, b):\n    temp = a\n    a = b\n    b = temp\n    return (b, a)",
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert swap_numbers(3,4) == (4, 3)\nassert swap_numbers(-1, -2) == (-2, -1)\nassert swap_numbers(0, 0) == (0, 0)\nassert swap_numbers(100, 200) == (200, 100)\nassert swap_numbers(float('inf'), float('-inf')) == (-float('inf'), float('inf'))\n```",
+        "coder": "```python\ndef swap_numbers(a, b):\n    temp = a\n    a = b\n    b = temp\n    return (b, a)\n```",
+        "verifier": "PICK: A\n\n```python\ndef swap_numbers(a, b):\n    temp = a\n    a = b\n    b = temp\n    return (b, a)\n```",
+        "fixer": "```python\ndef swap_numbers(a, b):\n    temp = a\n    a = b\n    b = temp\n    return (b, a)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `is_magic_square` that takes a 2D list (matrix) as input.\n2. Calculate the sum of each row, column, and diagonal.\n3. Check if all sums are equal.\n4. Return True if they are equal, False otherwise.\n\n```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n```\n\nThis function checks if the given matrix is a magic square by comparing the sums of its rows, columns, and diagonals. If all sums are equal, it returns True; otherwise, it returns False.",
+      "quality": 0.0,
+      "final_key": "def swap_numbers(a, b):\n    return (b, a)\n\n# Test cases\nassert swap_numbers(10, 20) == (20, 10)\nassert swap_numbers(15, 17) == (17, 15)\nassert swap_numbers(100, 200) == (200, 100)\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```",
+        "coder": "```python\ndef is_magic_square(matrix):\n    # Step 1: Calculate the sum of each row\n    row_sums = [sum(row) for row in matrix]\n    \n    # Step 2: Calculate the sum of each column\n    col_sums = [sum(col) for col in zip(*matrix)]\n    \n    # Step 3: Calculate the sum of the main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(len(matrix)))\n    \n    # Step 4: Calculate the sum of the secondary diagonal\n    sec_diag_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix)))\n    \n    # Step 5: Check if all sums are equal\n    return all(sum == main_diag_sum for sum in row_sums + col_sums)\n```",
+        "verifier": "PICK: B\n\n```python\ndef swap_numbers(a, b):\n    return (b, a)\n\n# Test cases\nassert swap_numbers(10, 20) == (20, 10)\nassert swap_numbers(15, 17) == (17, 15)\nassert swap_numbers(100, 200) == (200, 100)\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```",
+        "fixer": "```python\ndef swap_numbers(a, b):\n    return (b, a)\n\n# Test cases\nassert swap_numbers(10, 20) == (20, 10)\nassert swap_numbers(15, 17) == (17, 15)\nassert swap_numbers(100, 200) == (200, 100)\nassert is_magic_square([[8, 1, 6], [3, 5, 7], [4, 9, 2]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 1]]) == True\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\nassert is_magic_square([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def swap_numbers(num1, num2):\n    return (num2, num1)",
+  "sample_keys": [
+    "def swap_numbers(num1, num2):\n    return (num2, num1)",
+    "def swap_numbers(num1, num2):\n    temp = num2\n    num2 = num1\n    return (num2, num1)",
+    "def swap_numbers(x, y):\n    return (y, x)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1299.0,
+    "small_out": 243.0,
+    "small_s": 5.342892476008274
+  },
+  "calls_plus": {
+    "large_in": 117.0,
+    "large_out": 81.0,
+    "large_s": 1.8391460320272017,
+    "small_in": 1282.0,
+    "small_out": 204.0,
+    "small_s": 3.9774954709864687
+  },
+  "calls_samples": {
+    "small_in": 3985.0,
+    "small_out": 793.0,
+    "small_s": 14.868653452052968
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-123",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert amicable_numbers_sum(300) == 504\nassert amicable_numbers_sum(1000) == 504\nassert amicable_numbers_sum(5000) == 31626\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(1) == 0\n```",
+  "reference_key": "assert amicable_numbers_sum(300) == 504\nassert amicable_numbers_sum(1000) == 504\nassert amicable_numbers_sum(5000) == 31626\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(1) == 0",
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A",
+    "fixer": "```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert amicable_numbers_sum(284) == 220  # Test case\nassert amicable_numbers_sum(500) == 7650  # Test case\nassert amicable_numbers_sum(1000) == 30876  # Test case\nassert amicable_numbers_sum(69277) == 28428  # Test case\nassert amicable_numbers_sum(9) == 0  # Edge case: not amicable numbers below 4 or above itself",
+      "reference_key": "assert amicable_numbers_sum(300) == 504\nassert amicable_numbers_sum(1000) == 504\nassert amicable_numbers_sum(5000) == 31626\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(1) == 0",
+      "key_differs": true,
+      "text": "```python\nassert amicable_numbers_sum(284) == 220  # Test case\nassert amicable_numbers_sum(500) == 7650  # Test case\nassert amicable_numbers_sum(1000) == 30876  # Test case\nassert amicable_numbers_sum(69277) == 28428  # Test case\nassert amicable_numbers_sum(9) == 0  # Edge case: not amicable numbers below 4 or above itself\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert amicable_numbers_sum(284)==220\nassert amicable_numbers_sum(220)==612\nassert amicable_numbers_sum(332) == 172\nassert amicable_numbers_sum(69771) == 249150\nassert amicable_numbers_sum(83767) == 50456",
+      "reference_key": "assert amicable_numbers_sum(300) == 504\nassert amicable_numbers_sum(1000) == 504\nassert amicable_numbers_sum(5000) == 31626\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(1) == 0",
+      "key_differs": true,
+      "text": "```python\nassert amicable_numbers_sum(284)==220\nassert amicable_numbers_sum(220)==612\nassert amicable_numbers_sum(332) == 172\nassert amicable_numbers_sum(69771) == 249150\nassert amicable_numbers_sum(83767) == 50456\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert check_element([], 'red') == True\nassert check_element(['red', 'red', 'red'], 'red') == True\nassert check_element(['red', 'red', 'blue'], 'red') == False\nassert check_element(['red', 'red', 'red', 'red'], 'red') == True\nassert check_element(['red', 'red', 'red', 'red', 'red'], 'red') == True",
+      "reference_key": "assert amicable_numbers_sum(300) == 504\nassert amicable_numbers_sum(1000) == 504\nassert amicable_numbers_sum(5000) == 31626\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(1) == 0",
+      "key_differs": true,
+      "text": "```python\nassert check_element([], 'red') == True\nassert check_element(['red', 'red', 'red'], 'red') == True\nassert check_element(['red', 'red', 'blue'], 'red') == False\nassert check_element(['red', 'red', 'red', 'red'], 'red') == True\nassert check_element(['red', 'red', 'red', 'red', 'red'], 'red') == True\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A",
+        "fixer": "```python\ndef is_amicable(n):\n    def sum_of_divisors(num):\n        divisors = [1]\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                divisors.append(i)\n                if i != num // i:\n                    divisors.append(num // i)\n        return sum(divisors)\n\n    return sum_of_divisors(n) == n\n\ndef amicable_numbers_sum(limit):\n    total_sum = 0\n    for num in range(1, limit + 1):\n        if is_amicable(num):\n            total_sum += num\n    return total_sum\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert amicable_numbers_sum(1000) == 3162\nassert amicable_numbers_sum(10000) == 31626\nassert amicable_numbers_sum(100000) == 316267\nassert amicable_numbers_sum(1000000) == 3162678\nassert amicable_numbers_sum(10000000) == 31626789",
+  "sample_keys": [
+    "assert amicable_numbers_sum(1000) == 3162\nassert amicable_numbers_sum(1751) == 8440\nassert amicable_numbers_sum(3000) == 4965\nassert amicable_numbers_sum(5000) == 8712\nassert amicable_numbers_sum(10000) == 61824",
+    "assert amicable_numbers_sum(168)==672\nassert amicable_numbers_sum(333)==0\nassert amicable_numbers_sum(1000)==417\nassert amicable_numbers_sum(1000000)==50555575\nassert amicable_numbers_sum(100000000)==0",
+    "assert amicable_numbers_sum(1) == 1\nassert amicable_numbers_sum(6) == 22\nassert amicable_numbers_sum(28) == 28\nassert amicable_numbers_sum(496) == 496\nassert amicable_numbers_sum(1000) == 3162",
+    "assert amicable_numbers_sum(1000) == 8128\nassert amicable_numbers_sum(5000) == 36453\nassert amicable_numbers_sum(10000) == 41472\nassert amicable_numbers_sum(1) == 0\nassert amicable_numbers_sum(2) == 0",
+    "assert amicable_numbers_sum(7) == 28\nassert amicable_numbers_sum(8) == 16\nassert amicable_numbers_sum(10) == 37\nassert amicable_numbers_sum(100) == 374\nassert amicable_numbers_sum(999) == 504"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1539.0,
+    "small_out": 720.0,
+    "small_s": 14.62673587500467
+  },
+  "calls_plus": {
+    "small_in": 1682.0,
+    "small_out": 605.0,
+    "small_s": 11.581360422977014,
+    "large_in": 262.0,
+    "large_out": 89.0,
+    "large_s": 1.9070583790016826
+  },
+  "calls_samples": {
+    "small_in": 1310.0,
+    "small_out": 425.0,
+    "small_s": 6.324534195038723
+  }
+}

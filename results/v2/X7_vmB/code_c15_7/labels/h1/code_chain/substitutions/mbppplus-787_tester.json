@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-787",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert not text_match_three(\"abc\")\nassert not text_match_three(\"aabbb\")\nassert text_match_three(\"abb\")\nassert not text_match_three(\"a\")\nassert not text_match_three(\"bbb\")\n```",
+  "reference_key": "assert not text_match_three(\"abc\")\nassert not text_match_three(\"aabbb\")\nassert text_match_three(\"abb\")\nassert not text_match_three(\"a\")\nassert not text_match_three(\"bbb\")",
+  "final_key_plus": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+    "fixer": "```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert text_match_three(\"abb\") == False\nassert text_match_three(\"aabbb\") == True\nassert text_match_three(\"a\") == False\nassert text_match_three(\"\") == False\nassert text_match_three(\"acb\") == False",
+      "reference_key": "assert not text_match_three(\"abc\")\nassert not text_match_three(\"aabbb\")\nassert text_match_three(\"abb\")\nassert not text_match_three(\"a\")\nassert not text_match_three(\"bbb\")",
+      "key_differs": true,
+      "text": "```python\nassert text_match_three(\"abb\") == False\nassert text_match_three(\"aabbb\") == True\nassert text_match_three(\"a\") == False\nassert text_match_three(\"\") == False\nassert text_match_three(\"acb\") == False\n```",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert not text_match_three(\"a\") is False\nassert text_match_three(\"abb\") is True\nassert not text_match_three(\"abc\") is False\nassert text_match THREE(\"aba\") is False\nassert not text_match_three(\"aabbbbabbbb\") is True\nassert text_match_three(\"xyz\") is False",
+      "reference_key": "assert not text_match_three(\"abc\")\nassert not text_match_three(\"aabbb\")\nassert text_match_three(\"abb\")\nassert not text_match_three(\"a\")\nassert not text_match_three(\"bbb\")",
+      "key_differs": true,
+      "text": "```python\nassert not text_match_three(\"a\") is False\nassert text_match_three(\"abb\") is True\nassert not text_match_three(\"abc\") is False\nassert text_match THREE(\"aba\") is False\nassert not text_match_three(\"aabbbbabbbb\") is True\nassert text_match_three(\"xyz\") is False\n```\n\nNote: The given code snippet does not include an empty space (` `) between \"b\" in the regex pattern, which could be considered a typo for `3` as per the instruction (which states to match \"a\" followed by \"3 b's\"). A correct regex pattern would be `'^ab{3}$'`. Additionally, the function checks the existence of a match in the text, not specifically if it starts with \"a\" followed by exactly \"3 b's\". Since the regex pattern matches any string of at least 3 'b', this function may also incorrectly identify strings like \"aabbb babbbb\" as valid. This correction would require a slight adjustment to ensure checking the exact substring \"ab{3}\".",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "assert not text_match_three(\"abc\")\nassert not text_match_three(\"aabbb\")\nassert text_match_three(\"abb\")\nassert not text_match_three(\"a\")\nassert not text_match_three(\"bbb\")",
+      "key_differs": true,
+      "text": "```python\nassert capital_words_spaces(\"HelloWorld\") == 'Hello World'\nassert capital_words_spaces(\"ThisIsAString\") == 'This Is A String'\nassert capital_words_spaces(\"12345\") == '12345'\nassert capital_words_spaces(\"\") == ''\nassert capital_words_spaces(\"CAPITAL\") == 'CAPITAL'",
+      "quality": 1.0,
+      "final_key": "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\nimport re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert not text_match_three(\"ac\")  # Expected: True\nassert text_match_three(\"abb\")  # Expected: True\nassert text_match_three(\"abbb\")  # Expected: True\nassert text_match_three(\"aabb\")  # Expected: False\nassert text_match_three(\"abc\")   # Expected: False",
+  "sample_keys": [
+    null,
+    "assert not text_match_three(\"ac\")  # Expected outcome: True\nassert text_match_three(\"abb\")  # Expected outcome: False\nassert text_match_three(\"abbb\")  # Expected outcome: False\nassert text_match_three(\"abc\")  # Expected outcome: True\nassert text_match_three(\"abcd\")  # Expected outcome: False",
+    "assert text_match_three(\"abc\") == False\nassert text_match_three(\"aabbb\") == True\nassert text_match_three(\"aaccc\") == True\nassert text_match_three(\"abcde\") == False\nassert text_match_three(\"aabbcc\") == False",
+    "assert not text_match_three(\"ac\")\nassert not text_match_three(\"abbba\")\nassert text_match_three(\"aabbb\")\nassert text_match_three(\"babbb\")\nassert text_match_three(\"abcba\")\nassert text_match_three(\"aaccc\")\nassert text_match_three(\"abbbb\")\nassert text_match_three(\"aaaaa\")\nassert not text_match_three(\"ab\")\nassert not text_match_three(\"abb\")\nassert not text_match_three(\"abc\")\nassert not text_match_three(\"abcd\")\nassert not text_match_three(\"abcde\")\nassert text_match_three(\"abcdef\")",
+    "import re\n\ndef text_match_three(text):\n    pattern = r'^ab{3}$'\n    if re.match(pattern, text):\n        return True\n    else:\n        return False\n\nassert not text_match_three(\"ac\")  # Should return False\nassert text_match_three(\"abb\")   # Should return True\nassert text_match_three(\"abba\")  # Should return True\nassert text_match_three(\"abbba\")  # Should return True\nassert text_match_three(\"abbbb\")  # Should return False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1334.0,
+    "small_out": 410.0,
+    "small_s": 8.328833934967406
+  },
+  "calls_plus": {
+    "small_in": 1082.0,
+    "small_out": 337.0,
+    "small_s": 5.864804370008642,
+    "large_in": 159.0,
+    "large_out": 45.0,
+    "large_s": 1.0023379139893223
+  },
+  "calls_samples": {
+    "small_in": 795.0,
+    "small_out": 410.0,
+    "small_s": 7.36949917502352
+  }
+}

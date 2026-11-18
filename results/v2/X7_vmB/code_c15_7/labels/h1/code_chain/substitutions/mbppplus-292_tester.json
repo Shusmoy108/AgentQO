@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-292",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert find(20, 4) == 5\nassert find(7, 2) == 3\nassert find(9, 8) == 1\nassert find(5, 5) == 1\nassert find(0, 1) == 0\n```",
+  "reference_key": "assert find(20, 4) == 5\nassert find(7, 2) == 3\nassert find(9, 8) == 1\nassert find(5, 5) == 1\nassert find(0, 1) == 0",
+  "final_key_plus": "def find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient\n```",
+    "fixer": "```python\ndef find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert find(-30, -7) == 4  # Quotient of -30/-7 rounded down to nearest integer\nassert find(30, 7) == 4  # Quotient of 30/7 rounded down to nearest integer\nassert find(30, -7) == -4  # Quotient of 30/-7 rounded down to nearest integer, but as negative\nassert find(-30, -7) == 4  # Quotient of -30/-7 rounded down to nearest integer, but as positive again\nassert find(0, 7) == 0   # Quotient of 0/7 is 0",
+      "reference_key": "assert find(20, 4) == 5\nassert find(7, 2) == 3\nassert find(9, 8) == 1\nassert find(5, 5) == 1\nassert find(0, 1) == 0",
+      "key_differs": true,
+      "text": "```python\nassert find(-30, -7) == 4  # Quotient of -30/-7 rounded down to nearest integer\nassert find(30, 7) == 4  # Quotient of 30/7 rounded down to nearest integer\nassert find(30, -7) == -4  # Quotient of 30/-7 rounded down to nearest integer, but as negative\nassert find(-30, -7) == 4  # Quotient of -30/-7 rounded down to nearest integer, but as positive again\nassert find(0, 7) == 0   # Quotient of 0/7 is 0\n```",
+      "quality": 1.0,
+      "final_key": "def find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient\n```",
+        "fixer": "```python\ndef find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert find(29,3) == 9  # Quotient of 29 divided by 3, rounded down, is 9\nassert find(-4,2) == -2   # Quotient of -4 divided by 2, rounded down, is -2\nassert find(10,10) == 1   # Quotient of 10 divided by 10, rounded down, is 1\nassert find(-10,-2) == 5  # Quotient of -10 divided by -2, rounded down, is 5\nassert find(5.5,2) == 2.5   # Quotient of 5.5 divided by 2, rounded down, should be as per rounding rules",
+      "reference_key": "assert find(20, 4) == 5\nassert find(7, 2) == 3\nassert find(9, 8) == 1\nassert find(5, 5) == 1\nassert find(0, 1) == 0",
+      "key_differs": true,
+      "text": "```python\nassert find(29,3) == 9  # Quotient of 29 divided by 3, rounded down, is 9\nassert find(-4,2) == -2   # Quotient of -4 divided by 2, rounded down, is -2\nassert find(10,10) == 1   # Quotient of 10 divided by 10, rounded down, is 1\nassert find(-10,-2) == 5  # Quotient of -10 divided by -2, rounded down, is 5\nassert find(5.5,2) == 2.5   # Quotient of 5.5 divided by 2, rounded down, should be as per rounding rules\n```",
+      "quality": 1.0,
+      "final_key": "def find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient\n```",
+        "fixer": "```python\ndef find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "assert find(20, 4) == 5\nassert find(7, 2) == 3\nassert find(9, 8) == 1\nassert find(5, 5) == 1\nassert find(0, 1) == 0",
+      "key_differs": true,
+      "text": "```python\nassert lps(\"\") == 0\nassert lps(\"A\") == 1\nassert lps(\"AB\") == 1\nassert lps(\"BB\") == 2\nassert lps(\"ABC\") == 1\nassert lps(\"BBA\") == 2\nassert lps(\"ABBC\") == 3\nassert lps(\"ABCCBA\") == 6\nassert lps(\"TENSTFORTENS\") == 5\nassert lps(\"DEED\") == 4\nassert lps(\"EDEED\") == 4\nassert lps(\"EDED\") == 3\nassert lps(\"EDE\") == 2\nassert lps(\"E\") == 1\nassert lps(\" \") == 0\nassert lps(\"a\") == 1\nassert lps(\"aa\") == 2\nassert lps(\"aaa\") == 3\nassert lps(\"aaaa\") == 4\nassert lps(\"aaaaa\") == 5\nassert lps(\"aaaaab\") == 6\nassert lps(\"aaaaabc\") == 7\nassert lps(\"aaaaabcd\") == 8\nassert lps(\"aaaaabcde\") == 9\nassert lps(\"aaaaabcdefg\") == 10\nassert lps(\"aaaaabcdefghi\") == 11\nassert lps(\"aaaaabcdefghij\") == 12\nassert lps(\"aaaaabcdefghijk\") == 13\nassert lps(\"aaaaabcdefghijklm\") == 14\nassert lps(\"aaaaabcdefghijklmn\") == 15\nassert lps(\"aaaaabcdefghijklmnopqrst\") == 16\nassert lps(\"aaaaabcdefghijklmnopqrstu\") == 17\nassert lps(\"aaaaabcdefghijklmnopqrstuv\") == 18\nassert lps(\"aaaaabcdefghijklmnopqrstuvw\") == 19\nassert lps(\"aaaaabcdefghijklmnopqrstuvwx\") == 20\nassert lps(\"aaaaabcdefghijklmnopqrstuvwxy\") == 21\nassert lps(\"aaaaabcdefghijklmnopqrstuvwxyz\") == 22\nassert lps(\"aaaaabcdefghijklmnopqrstuvwxyz!\") == 23\nassert lps(\"aaaaabcdefghijklmnopqrstuvwxyz?\") == 24\nassert lps(\"aaaaabcdefghijklmnopqrstuvwxyz.\") == 25\nassert lps(\"aaaaabcdefghijklmnopqrstuvwxyz,\") == 26\nassert lps(\"aaaaabcdefghijklmnopqrstuvwxyz;\") == 27\nassert lps(\"aaaaabcdefghijklmnopqrstuvwxyz:\") == 28\nassert l",
+      "quality": 1.0,
+      "final_key": "def find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient\n```",
+        "fixer": "```python\ndef find(numerator, denominator):\n    # Calculate the quotient using integer division\n    quotient = numerator // denominator\n    # Return the result\n    return quotient\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert find(20,4) == 5\nassert find(-20,-4) == 5\nassert find(20,0) == 0\nassert find(0,20) == 0\nassert find(20,20) == 1",
+  "sample_keys": [
+    "assert find(2,4) == 0\nassert find(5,7) == 0\nassert find(9,3) == 3\nassert find(10,5) == 2\nassert find(8,6) == 1",
+    "assert find(20,4) == 5\nassert find(-5, 2) == -3\nassert find(7, 2) == 3\nassert find(8, 0) == None\nassert find(0, 0) == None",
+    "assert find(20,4) == 5\nassert find(0,3) == 0\nassert find(-5,-3) == 1\nassert find(-6,2) == -3\nassert find(7,0) == None",
+    "assert find(20,4) == 5\nassert find(15,3) == 5\nassert find(8,2) == 4\nassert find(7,3) == 2\nassert find(0,5) == 0\nassert find(-10,-2) == 5\nassert find(10,-2) == -5\nassert find(10,0) == 0\nassert find(0,-5) == 0",
+    "assert find(7,2) == 3\nassert find(8,4) == 2\nassert find(-10,3) == -3\nassert find(0,5) == 0\nassert find(10,-2) == -5"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1223.0,
+    "small_out": 305.0,
+    "small_s": 6.95783078900422
+  },
+  "calls_plus": {
+    "small_in": 1034.0,
+    "small_out": 239.0,
+    "small_s": 5.250476143002743,
+    "large_in": 159.0,
+    "large_out": 66.0,
+    "large_s": 1.9800293580046855
+  },
+  "calls_samples": {
+    "small_in": 795.0,
+    "small_out": 355.0,
+    "small_s": 7.219652055006009
+  }
+}

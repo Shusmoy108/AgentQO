@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-299",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert max_aggregate([('Alice', 100), ('Bob', 200), ('Charlie', 300)]) == ('Charlie', 300)\nassert max_aggregate([('John', 50), ('John', 50), ('John', 50)]) == ('John', 150)\nassert max_aggregate([('A', 1), ('B', 2), ('C', 3), ('D', 4), ('E', 5)]) == ('E', 15)\nassert max_aggregate([(-1, -1), (-2, -2), (-3, -3)]) == ((-1, -1))\nassert max_aggregate([]) == (None, 0)\n```",
+  "reference_key": "assert max_aggregate([('Alice', 100), ('Bob', 200), ('Charlie', 300)]) == ('Charlie', 300)\nassert max_aggregate([('John', 50), ('John', 50), ('John', 50)]) == ('John', 150)\nassert max_aggregate([('A', 1), ('B', 2), ('C', 3), ('D', 4), ('E', 5)]) == ('E', 15)\nassert max_aggregate([(-1, -1), (-2, -2), (-3, -3)]) == ((-1, -1))\nassert max_aggregate([]) == (None, 0)",
+  "final_key_plus": "def max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple\n```",
+    "fixer": "```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert max_aggregate([]) == ()\nassert max_aggregate([('', -1)]) == ('', -1)\nassert max_aggregate([('Alice', 50), ('Bob', -30)]) == ('Alice', 50)\nassert max_aggregate([(None, 42), (None, -50), (None, 100)]) == ('None', 100)\nassert max_aggregate([('Eva', 3), ('Fernando', 7), ('Georges', 6)]) == ('Fernando', 7)",
+      "reference_key": "assert max_aggregate([('Alice', 100), ('Bob', 200), ('Charlie', 300)]) == ('Charlie', 300)\nassert max_aggregate([('John', 50), ('John', 50), ('John', 50)]) == ('John', 150)\nassert max_aggregate([('A', 1), ('B', 2), ('C', 3), ('D', 4), ('E', 5)]) == ('E', 15)\nassert max_aggregate([(-1, -1), (-2, -2), (-3, -3)]) == ((-1, -1))\nassert max_aggregate([]) == (None, 0)",
+      "key_differs": true,
+      "text": "```python\nassert max_aggregate([]) == ()\nassert max_aggregate([('', -1)]) == ('', -1)\nassert max_aggregate([('Alice', 50), ('Bob', -30)]) == ('Alice', 50)\nassert max_aggregate([(None, 42), (None, -50), (None, 100)]) == ('None', 100)\nassert max_aggregate([('Eva', 3), ('Fernando', 7), ('Georges', 6)]) == ('Fernando', 7)\n```",
+      "quality": 0.0,
+      "final_key": "def max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple\n```",
+        "fixer": "```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "# Edge case 1: Empty list of tuples\nassert max_aggregate([]) == None\n\n# Edge case 2: Single tuple with a negative score\nassert max_aggregate([(John Doe', -50)]) == ('John Doe', -50)\n\n# Edge case 3: List of tuples with duplicate names\nassert max_aggregate([('John Doe', 20), ('John Doe', 25)]) == ('John Doe', 25)\n\n# Edge case 4: List of tuples with multiple high scores\nassert max_aggregate([('Alice', 100), ('Bob', 200), ('Charlie', 300)]) == ('Bob', 200)\n\n# Edge case 5: List of tuples with multiple low scores\nassert max_aggregate([('Eve', -120), ('Fiona', -80), ('George', -60)]) == ('Eve', -120)",
+      "reference_key": "assert max_aggregate([('Alice', 100), ('Bob', 200), ('Charlie', 300)]) == ('Charlie', 300)\nassert max_aggregate([('John', 50), ('John', 50), ('John', 50)]) == ('John', 150)\nassert max_aggregate([('A', 1), ('B', 2), ('C', 3), ('D', 4), ('E', 5)]) == ('E', 15)\nassert max_aggregate([(-1, -1), (-2, -2), (-3, -3)]) == ((-1, -1))\nassert max_aggregate([]) == (None, 0)",
+      "key_differs": true,
+      "text": "```python\n# Edge case 1: Empty list of tuples\nassert max_aggregate([]) == None\n\n# Edge case 2: Single tuple with a negative score\nassert max_aggregate([(John Doe', -50)]) == ('John Doe', -50)\n\n# Edge case 3: List of tuples with duplicate names\nassert max_aggregate([('John Doe', 20), ('John Doe', 25)]) == ('John Doe', 25)\n\n# Edge case 4: List of tuples with multiple high scores\nassert max_aggregate([('Alice', 100), ('Bob', 200), ('Charlie', 300)]) == ('Bob', 200)\n\n# Edge case 5: List of tuples with multiple low scores\nassert max_aggregate([('Eve', -120), ('Fiona', -80), ('George', -60)]) == ('Eve', -120)\n```",
+      "quality": 0.0,
+      "final_key": "def max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple\n```",
+        "fixer": "```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert combinations_colors([\"Red\",\"Green\",\"Blue\"],2)==[('Red', 0), ('Red', 1), ('Red', 2), ('Green', 0), ('Green', 1), ('Green', 2), ('Blue', 0), ('Blue', 1), ('Blue', 2)]\nassert combinations_colors([],3)==[]\nassert combinations_colors([\"Yellow\"],4)==[('Yellow', 0), ('Yellow', 1), ('Yellow', 2), ('Yellow', 3)]\nassert combinations_colors([\"Purple\",\"Orange\"],1)==[('Purple',), ('Orange',)]\nassert combinations_colors([\"Black\",\"White\",\"Gray\"],0)==[()]",
+      "reference_key": "assert max_aggregate([('Alice', 100), ('Bob', 200), ('Charlie', 300)]) == ('Charlie', 300)\nassert max_aggregate([('John', 50), ('John', 50), ('John', 50)]) == ('John', 150)\nassert max_aggregate([('A', 1), ('B', 2), ('C', 3), ('D', 4), ('E', 5)]) == ('E', 15)\nassert max_aggregate([(-1, -1), (-2, -2), (-3, -3)]) == ((-1, -1))\nassert max_aggregate([]) == (None, 0)",
+      "key_differs": true,
+      "text": "```python\nassert combinations_colors([\"Red\",\"Green\",\"Blue\"],2)==[('Red', 0), ('Red', 1), ('Red', 2), ('Green', 0), ('Green', 1), ('Green', 2), ('Blue', 0), ('Blue', 1), ('Blue', 2)]\nassert combinations_colors([],3)==[]\nassert combinations_colors([\"Yellow\"],4)==[('Yellow', 0), ('Yellow', 1), ('Yellow', 2), ('Yellow', 3)]\nassert combinations_colors([\"Purple\",\"Orange\"],1)==[('Purple',), ('Orange',)]\nassert combinations_colors([\"Black\",\"White\",\"Gray\"],0)==[()]\n```",
+      "quality": 0.0,
+      "final_key": "def max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple\n```",
+        "fixer": "```python\ndef max_aggregate(tuples_list):\n    max_tuple = None\n    total_score = 0\n    for name, score in tuples_list:\n        total_score += score\n        if max_tuple is None or total_score > max_tuple[1]:\n            max_tuple = (name, total_score)\n    return max_tuple\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)\nassert max_aggregate([('John Doe', 100), ('Jane Smith', 95), ('Alice Johnson', 105)]) == ('Alice Johnson', 200)\nassert max_aggregate([('Bob Brown', 80), ('Charlie Davis', 75), ('David Evans', 85)]) == ('David Evans', 160)\nassert max_aggregate([('Eve Green', 90), ('Frank White', 85), ('Grace Black', 95)]) == ('Grace Black', 180)\nassert max_aggregate([]) == None",
+  "sample_keys": [
+    "assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)\nassert max_aggregate([]) == ()\nassert max_aggregate([('John Doe', 85)]) == ('John Doe', 85)\nassert max_aggregate([('Jane Smith', 60), ('Bob Johnson', 75), ('Alice Brown', 55)]) == ('Bob Johnson', 130)\nassert max_aggregate([('Alice Brown', -30), ('Charlie Green', 150), ('David White', -20)]) == ('David White', 150)",
+    "assert max_aggregate([('Juan Whelan',62),('Sabah Colley',84),('Peter Nichols',36),('Juan Whelan',78),('Sabah Colley',72)]) == ('Juan Whelan', 140)\nassert max_aggregate([('John Doe',100),('Jane Smith',65),('Alice Johnson',91),('Bob Brown',83)]) == ('Alice Johnson', 174)\nassert max_aggregate([('Samuel Wilson',110),('Alexandra Taylor',93),('Olivia Lee',108)]) == ('Olivia Lee', 201)\nassert max_aggregate([('Mike White',78),('Sarah Brown',86),('David Green',79),('Emily Black',81)]) == ('David Green', 168)\nassert max_aggregate([('Terry Nelson',65),('Grace Miller',90),('Hannah Robinson',77),('Jack Smith',82)]) == ('Grace Miller', 157)",
+    "assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan', 130)]) == ('Juan Whelan', 262)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan', 130),('Juan Whelan', 212)]) == ('Juan Whelan', 262)\nassert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan', 130),('Juan Whelan', 212),('Juan Whelan', 122)]) == ('Juan Whelan', 262)\nassert max_aggregate([]) == None",
+    "assert max_aggregate([('John Doe', 56), ('Jane Smith', 78), ('Alice Johnson', 45), ('Bob Brown', 67)]) == ('John Doe', 133)\nassert max_aggregate([('Mike Johnson', 123), ('Sara White', 98)]) == ('Mike Johnson', 221)\nassert max_aggregate([('Charlie Miller', 34), ('David Wilson', 54)]) == ('David Wilson', 88)\nassert max_aggregate([('Eve Anderson', 23), ('Frank Taylor', 34), ('Grace Thompson', 34)]) == ('Grace Thompson', 67)\nassert max_aggregate([()]) == (None, 0)  # Edge case: empty list input",
+    "assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)\nassert max_aggregate([]) == None\nassert max_aggregate([(None, 100)]) == (None, 100)\nassert max_aggregate([(\"Alice\", -5), (\"Bob\", 0), (\"Charlie\", 5)]) == ('Charlie', 10)\nassert max_aggregate([(\"Dave\", 30), (\"Eve\", 20), (\"Frank\", 10), (\"Grace\", 25), (\"Hank\", 15)]) == ('Grace', 45)"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2385.0,
+    "small_out": 563.0,
+    "small_s": 9.017574065015651
+  },
+  "calls_plus": {
+    "small_in": 2060.0,
+    "small_out": 376.0,
+    "small_s": 5.750950182002271,
+    "large_in": 232.0,
+    "large_out": 162.0,
+    "large_s": 4.851904474024195
+  },
+  "calls_samples": {
+    "small_in": 1160.0,
+    "small_out": 1042.0,
+    "small_s": 21.261965699028224
+  }
+}

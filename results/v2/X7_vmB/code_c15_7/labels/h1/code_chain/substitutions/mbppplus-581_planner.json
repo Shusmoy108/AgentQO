@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-581",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `surface_Area` that takes two parameters: `base_edge` and `height`.\n2. Calculate the slant height of the pyramid using the Pythagorean theorem: `slant_height = sqrt((base_edge / 2)^2 + height^2)`.\n3. Compute the area of the base: `base_area = base_edge^2`.\n4. Calculate the area of one triangular face: `triangular_face_area = (base_edge * slant_height) / 2`.\n5. Since there are four triangular faces, multiply the triangular face area by 4 to get the total lateral surface area. Add the base area to get the total surface area: `total_surface_area = base_area + 4 * triangular_face_area`.\n6. Return the calculated `total_surface_area`.",
+  "reference_key": null,
+  "final_key_plus": "import math\n\ndef surface_Area(base_edge, height):\n    slant_height = math.sqrt((base_edge / 2)**2 + height**2)\n    base_area = base_edge**2\n    triangular_face_area = (base_edge * slant_height) / 2\n    total_surface_area = base_area + 4 * triangular_face_area\n    return total_surface_area",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert surface_Area(10, 5) == 275\nassert surface_Area(5, 8) == 160\nassert surface_Area(7, 9) == 204\nassert surface_Area(0, 10) == 0\nassert surface_Area(10, 0) == 0\n```",
+    "coder": "```python\nimport math\n\ndef surface_Area(base_edge, height):\n    slant_height = math.sqrt((base_edge / 2)**2 + height**2)\n    base_area = base_edge**2\n    triangular_face_area = (base_edge * slant_height) / 2\n    total_surface_area = base_area + 4 * triangular_face_area\n    return total_surface_area\n```",
+    "verifier": "PICK: A\n```python\nimport math\n\ndef surface_Area(base_edge, height):\n    slant_height = math.sqrt((base_edge / 2)**2 + height**2)\n    base_area = base_edge**2\n    triangular_face_area = (base_edge * slant_height) / 2\n    total_surface_area = base_area + 4 * triangular_face_area\n    return total_surface_area\n```",
+    "fixer": "```python\nimport math\n\ndef surface_Area(base_edge, height):\n    slant_height = math.sqrt((base_edge / 2)**2 + height**2)\n    base_area = base_edge**2\n    triangular_face_area = (base_edge * slant_height) / 2\n    total_surface_area = base_area + 4 * triangular_face_area\n    return total_surface_area\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries.\n2. Define the function `tuple_str_int`.\n3. Use regular expression to extract numbers from the input string.\n4. Convert each extracted number to an integer.\n5. Return the resulting integer tuple.\n\n```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n```\n\nThis solution follows the guidelines by providing a clear, self-contained code snippet that meets the requirements. It includes all necessary imports, defines the function with a descriptive docstring, and uses a regular expression to handle the conversion process. The provided test case verifies the correctness of the implemented function.",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n\ndef surface_Area(base_edge, height):\n    # Calculate the slant height using Pythagorean theorem\n    slant_height = (base_edge**2 + height**2)**0.5\n    # Calculate the lateral surface area\n    lateral_surface_area = 2 * base_edge * slant_height\n    # Calculate the total surface area\n    total_surface_area = lateral_surface_area + base_edge**2\n    return total_surface_area\n\n# Test cases\nassert surface_Area(3, 4) == 33\nassert surface_Area(4, 5) == 56\nassert surface_Area(1, 2) == 5\nassert surface_Area(10, 2) == 200\nassert surface_Area(7, 8) == 296\nassert surface_Area(5, 5) == 125\nassert surface_Area(0, 0) == 0\nassert surface_Area(-1, -1) == 0",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert surface_Area(10, 2) == 200\nassert surface_Area(7, 8) == 296\nassert surface_Area(5, 5) == 125\nassert surface_Area(0, 0) == 0\nassert surface_Area(-1, -1) == 0\n```",
+        "coder": "```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n```",
+        "verifier": "PICK: B\n```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n\ndef surface_Area(base_edge, height):\n    # Calculate the slant height using Pythagorean theorem\n    slant_height = (base_edge**2 + height**2)**0.5\n    # Calculate the lateral surface area\n    lateral_surface_area = 2 * base_edge * slant_height\n    # Calculate the total surface area\n    total_surface_area = lateral_surface_area + base_edge**2\n    return total_surface_area\n\n# Test cases\nassert surface_Area(3, 4) == 33\nassert surface_Area(4, 5) == 56\nassert surface_Area(1, 2) == 5\nassert surface_Area(10, 2) == 200\nassert surface_Area(7, 8) == 296\nassert surface_Area(5, 5) == 125\nassert surface_Area(0, 0) == 0\nassert surface_Area(-1, -1) == 0\n```",
+        "fixer": "```python\nimport re\n\ndef tuple_str_int(tuple_str):\n    # Extract numbers using regex\n    numbers = re.findall(r'\\d+', tuple_str)\n    # Convert each number to an integer\n    int_numbers = [int(num) for num in numbers]\n    # Return the resulting integer tuple\n    return tuple(int_numbers)\n\ndef surface_Area(base_edge, height):\n    # Calculate the slant height using Pythagorean theorem\n    slant_height = (base_edge**2 + height**2)**0.5\n    # Calculate the lateral surface area\n    lateral_surface_area = 2 * base_edge * slant_height\n    # Calculate the total surface area\n    total_surface_area = lateral_surface_area + base_edge**2\n    return total_surface_area\n\n# Test cases\nassert surface_Area(3, 4) == 33\nassert surface_Area(4, 5) == 56\nassert surface_Area(1, 2) == 5\nassert surface_Area(10, 2) == 200\nassert surface_Area(7, 8) == 296\nassert surface_Area(5, 5) == 125\nassert surface_Area(0, 0) == 0\nassert surface_Area(-1, -1) == 0\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `surface_area` that takes two parameters: `base_edge` and `height`.\n2. Calculate the slant height of the pyramid using the Pythagorean theorem: `slant_height = sqrt((base_edge / 2)^2 + height^2)`.\n3. Compute the area of the base: `base_area = base_edge^2`.\n4. Calculate the area of one triangular face: `triangular_face_area = (base_edge * slant_height) / 2`.\n5. Since there are three triangular faces, multiply the triangular face area by 3 to get the total lateral surface area. Add the base area to get the total surface area: `total_surface_area = base_area + 3 * triangular_face_area`.\n6. Return the calculated `total_surface_area`.",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef surface_area(base_edge, height):\n    slant_height = math.sqrt((base_edge / 2)**2 + height**2)\n    base_area = base_edge**2\n    triangular_face_area = (base_edge * slant_height) / 2\n    total_surface_area = base_area + 3 * triangular_face_area\n    return total_surface_area",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert surface_area(10, 5) == 275\nassert surface_area(5, 8) == 160\nassert surface_area(7, 9) == 204\nassert surface_area(2, 3) == 18\nassert surface_area(0, 0) == 0\n```",
+        "coder": "```python\nimport math\n\ndef surface_area(base_edge, height):\n    slant_height = math.sqrt((base_edge / 2)**2 + height**2)\n    base_area = base_edge**2\n    triangular_face_area = (base_edge * slant_height) / 2\n    total_surface_area = base_area + 3 * triangular_face_area\n    return total_surface_area\n```",
+        "verifier": "PICK: B\n```python\nimport math\n\ndef surface_area(base_edge, height):\n    slant_height = math.sqrt((base_edge / 2)**2 + height**2)\n    base_area = base_edge**2\n    triangular_face_area = (base_edge * slant_height) / 2\n    total_surface_area = base_area + 3 * triangular_face_area\n    return total_surface_area\n```",
+        "fixer": "```python\nimport math\n\ndef surface_area(base_edge, height):\n    slant_height = math.sqrt((base_edge / 2)**2 + height**2)\n    base_area = base_edge**2\n    triangular_face_area = (base_edge * slant_height) / 2\n    total_surface_area = base_area + 3 * triangular_face_area\n    return total_surface_area\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `is_num_decagonal` that takes one parameter, `n`.\n2. Calculate the formula for the nth decagonal number using the formula: \\( \\frac{5n^2 - 3n}{2} \\).\n3. Return the calculated value from step 2.\n\nHere's the complete function:\n\n```python\ndef is_num_decagonal(n):\n    # Calculate the nth decagonal number using the formula\n    decagonal_number = (5 * n**2 - 3 * n) // 2\n    # Return the calculated value\n    return decagonal_number\n```\n\nThis function will correctly compute the nth decagonal number based on the provided formula.",
+      "quality": 0.0,
+      "final_key": "def surface_Area(base_edge, height):\n    # Calculate the slant height of the pyramid using the Pythagorean theorem\n    slant_height = (base_edge**2 + height**2)**0.5\n    # Calculate the lateral surface area of the pyramid using the formula\n    lateral_surface_area = 2 * base_edge * slant_height\n    # Calculate the total surface area of the pyramid by adding the base area\n    total_surface_area = base_edge**2 + lateral_surface_area\n    # Return the calculated value\n    return total_surface_area\n\n# Test cases\nassert surface_Area(3,4) == 33\nassert surface_Area(4,5) == 56\nassert surface_Area(1,2) == 5\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 7\nassert is_num_decagonal(3) == 19\nassert is_num_decagonal(4) == 37\nassert is_num_decagonal(5) == 61",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 7\nassert is_num_decagonal(3) == 19\nassert is_num_decagonal(4) == 37\nassert is_num_decagonal(5) == 61\n```",
+        "coder": "```python\ndef is_num_decagonal(n):\n    # Calculate the nth decagonal number using the formula\n    decagonal_number = (5 * n**2 - 3 * n) // 2\n    # Return the calculated value\n    return decagonal_number\n```",
+        "verifier": "PICK: B\n```python\ndef surface_Area(base_edge, height):\n    # Calculate the slant height of the pyramid using the Pythagorean theorem\n    slant_height = (base_edge**2 + height**2)**0.5\n    # Calculate the lateral surface area of the pyramid using the formula\n    lateral_surface_area = 2 * base_edge * slant_height\n    # Calculate the total surface area of the pyramid by adding the base area\n    total_surface_area = base_edge**2 + lateral_surface_area\n    # Return the calculated value\n    return total_surface_area\n\n# Test cases\nassert surface_Area(3,4) == 33\nassert surface_Area(4,5) == 56\nassert surface_Area(1,2) == 5\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 7\nassert is_num_decagonal(3) == 19\nassert is_num_decagonal(4) == 37\nassert is_num_decagonal(5) == 61\n```",
+        "fixer": "```python\ndef surface_Area(base_edge, height):\n    # Calculate the slant height of the pyramid using the Pythagorean theorem\n    slant_height = (base_edge**2 + height**2)**0.5\n    # Calculate the lateral surface area of the pyramid using the formula\n    lateral_surface_area = 2 * base_edge * slant_height\n    # Calculate the total surface area of the pyramid by adding the base area\n    total_surface_area = base_edge**2 + lateral_surface_area\n    # Return the calculated value\n    return total_surface_area\n\n# Test cases\nassert surface_Area(3,4) == 33\nassert surface_Area(4,5) == 56\nassert surface_Area(1,2) == 5\nassert is_num_decagonal(1) == 1\nassert is_num_decagonal(2) == 7\nassert is_num_decagonal(3) == 19\nassert is_num_decagonal(4) == 37\nassert is_num_decagonal(5) == 61\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "import math\n\ndef surface_area(base_edge, height):\n    base_area = base_edge ** 2\n    slant_height = math.sqrt(height**2 + (base_edge / 2)**2)\n    lateral_surface_area = base_edge * slant_height\n    total_surface_area = base_area + lateral_surface_area\n    return total_surface_area",
+  "sample_keys": [
+    "import math\n\ndef surface_Area(base_edge, height):\n    def calculate_slant_height(base):\n        return math.sqrt((base / 2)**2 + height**2)\n\n    slant_height = calculate_slant_height(base_edge)\n\n    lateral_surface_area = slant_height * (base_edge * 4)\n\n    base_area = base_edge ** 2\n\n    total_surface_area = base_area + lateral_surface_area\n\n    return total_surface_area",
+    "def surface_Area(base_edge, height):\n    # Calculate the area of one triangular face\n    triangular_face_area = (base_edge * height) / 2\n    \n    # Calculate the total surface area of the pyramid\n    total_surface_area = triangular_face_area * 4\n    \n    # Return the calculated surface area\n    return total_surface_area",
+    "import math\n\ndef surface_area(base_edge, height):\n    # Calculate the slant height using the Pythagorean theorem\n    slant_height = math.sqrt((base_edge ** 2) + (height ** 2))\n    \n    # Compute the lateral surface area (LSA)\n    lsa = base_edge * slant_height\n    \n    # Add the area of the top base to the LSA to get the total surface area\n    total_surface_area = lsa + (base_edge ** 2)\n    \n    # Return the total surface area\n    return total_surface_area"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1566.0,
+    "small_out": 443.0,
+    "small_s": 9.050457658013329
+  },
+  "calls_plus": {
+    "large_in": 113.0,
+    "large_out": 171.0,
+    "large_s": 3.6737328349845484,
+    "small_in": 1454.0,
+    "small_out": 341.0,
+    "small_s": 5.903700333001325
+  },
+  "calls_samples": {
+    "small_in": 4970.0,
+    "small_out": 1716.0,
+    "small_s": 32.5231574390491
+  }
+}

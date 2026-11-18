@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-18",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n```",
+  "reference_key": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+  "final_key_plus": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert remove_dirty_chars(\"hello world\", \"lo\") == 'he wrd'\nassert remove_dirty_chars(\"abcdefg\", \"\") == 'abcdefg'\nassert remove_dirty_chars(\"\", \"abc\") == ''\nassert remove_dirty_chars(\"1234567890\", \"13579\") == '24680'\nassert remove_dirty_chars(\"python programming\", \"p\") == 'ython rogramming'\n```",
+    "verifier": "PICK: A\n\n```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n```",
+    "fixer": "```python\ndef remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+      "key_differs": true,
+      "text": "```python\r\ndef remove_dirty_chars(dirty_string, clean_string):\r\n    result = \"\"\r\n    for char in dirty_string:\r\n        if char not in clean_string:\r\n            result += char\r\n    return result\n```",
+      "quality": 1.0,
+      "final_key": "def remove_dirty_chars(dirty_string, clean_string):\r\n    result = \"\"\r\n    for char in dirty_string:\r\n        if char not in clean_string:\r\n            result += char\r\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert remove_dirty_chars(\"\", \"\") == \"\"\nassert remove_dirty_chars(\"hello\", \"world\") == \"ello\"\nassert remove_dirty_chars(\"abcdefg\", \"bdf\") == \"aceg\"\nassert remove_dirty_chars(\"1234567890\", \"13579\") == \"24680\"\nassert remove_dirty_chars(\"abcde\", \"xyz\") == \"abcde\"\n```",
+        "verifier": "PICK: B\n\n```python\ndef remove_dirty_chars(dirty_string, clean_string):\r\n    result = \"\"\r\n    for char in dirty_string:\r\n        if char not in clean_string:\r\n            result += char\r\n    return result\n```",
+        "fixer": "```python\ndef remove_dirty_chars(dirty_string, clean_string):\r\n    result = \"\"\r\n    for char in dirty_string:\r\n        if char not in clean_string:\r\n            result += char\r\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result",
+      "reference_key": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef tuple_to_int(tup):\n    result = 0\n    for i, num in enumerate(tup):\n        result += num * (10 ** i)\n    return result\n```",
+      "quality": 1.0,
+      "final_key": "def remove_dirty_chars(str1, str2):\n    dirty_chars = set(str2)\n    clean_str = ''.join(char for char in str1 if char not in dirty_chars)\n    return clean_str",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert remove_dirty_chars(\"hello world\", \"world\") == \"helo\"\nassert remove_dirty_chars(\"abcdefg\", \"bdf\") == \"aceg\"\nassert remove_dirty_chars(\"1234567890\", \"13579\") == \"24680\"\nassert remove_dirty_chars(\"\", \"abc\") == \"\"\nassert remove_dirty_chars(\"a\", \"\") == \"a\"\n```",
+        "verifier": "PICK: B\n\n```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = set(str2)\n    clean_str = ''.join(char for char in str1 if char not in dirty_chars)\n    return clean_str\n```",
+        "fixer": "```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = set(str2)\n    clean_str = ''.join(char for char in str1 if char not in dirty_chars)\n    return clean_str\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def divisible_by_digits(startnum, endnum):\n    result = []\n    for num in range(startnum, endnum + 1):\n        str_num = str(num)\n        if '0' in str_num:\n            continue\n        divisible = True\n        for digit in str_num:\n            if int(digit) == 0 or num % int(digit) != 0:\n                divisible = False\n                break\n        if divisible:\n            result.append(num)\n    return result",
+      "reference_key": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+      "key_differs": true,
+      "text": "```python\ndef divisible_by_digits(startnum, endnum):\n    result = []\n    for num in range(startnum, endnum + 1):\n        str_num = str(num)\n        if '0' in str_num:\n            continue\n        divisible = True\n        for digit in str_num:\n            if int(digit) == 0 or num % int(digit) != 0:\n                divisible = False\n                break\n        if divisible:\n            result.append(num)\n    return result\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert divisible_by_digits(1, 20) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18]\nassert divisible_by_digits(10, 20) == [10, 12, 15, 18]\nassert divisible_by_digits(1, 100) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18, 20, 21, 24, 25, 27, 30, 32, 35, 36, 38, 40, 42, 45, 48, 50, 54, 55, 57, 60, 62, 65, 66, 68, 70, 72, 75, 78, 80, 84, 85, 87, 90, 92, 95, 96, 98, 100]\nassert divisible_by_digits(100, 200) == [100, 102, 105, 108, 110, 114, 115, 117, 120, 122, 125, 128, 130, 134, 135, 137, 140, 142, 145, 148, 150, 154, 155, 157, 160, 162, 165, 168, 170, 172, 175, 178, 180, 184, 185, 187, 190, 192, 195, 196, 198,",
+        "verifier": "PICK: B\n\n```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = set(str2)\n    clean_str = ''.join(char for char in str1 if char not in dirty_chars)\n    return clean_str\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert divisible_by_digits(1, 20) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18]\nassert divisible_by_digits(10, 20) == [10, 12, 15, 18]\nassert divisible_by_digits(1, 100) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18, 20, 21, 24, 25, 27, 30, 32, 35, 36, 38, 40, 42, 45, 48, 50, 54, 55, 57, 60, 62, 65, 66, 68, 70, 72, 75, 78, 80, 84, 85, 87, 90, 92, 95, 96, 98, 100]\nassert divisible_by_digits(100, 200) == [100, 102, 105, 108, 110, 114, 115, 117, 120, 122, 125, 128, 130, 134, 135, 137, 140, 142, 145, 14",
+        "fixer": "```python\ndef remove_dirty_chars(str1, str2):\n    dirty_chars = set(str2)\n    clean_str = ''.join(char for char in str1 if char not in dirty_chars)\n    return clean_str\n\n# Test cases\nassert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'\nassert divisible_by_digits(1, 20) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18]\nassert divisible_by_digits(10, 20) == [10, 12, 15, 18]\nassert divisible_by_digits(1, 100) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18, 20, 21, 24, 25, 27, 30, 32, 35, 36, 38, 40, 42, 45, 48, 50, 54, 55, 57, 60, 62, 65, 66, 68, 70, 72, 75, 78, 80, 84, 85, 87, 90, 92, 95, 96, 98, 100]\nassert divisible_by_digits(100, 200) == [100, 102, 105, 108, 110, 114, 115, 117, 120, 122, 125, 128, 130, 134, 135, 137, 140, 142, 145, 148, 15"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+  "sample_keys": [
+    "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+    "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+    "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+    "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result",
+    "def remove_dirty_chars(dirty_string, clean_string):\n    result = \"\"\n    for char in dirty_string:\n        if char not in clean_string:\n            result += char\n    return result"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1496.0,
+    "small_out": 451.0,
+    "small_s": 9.581778405001387
+  },
+  "calls_plus": {
+    "small_in": 1168.0,
+    "small_out": 407.0,
+    "small_s": 8.580472419998841,
+    "large_in": 328.0,
+    "large_out": 44.0,
+    "large_s": 1.0124721599859186
+  },
+  "calls_samples": {
+    "small_in": 1640.0,
+    "small_out": 234.0,
+    "small_s": 3.919475064991275
+  }
+}

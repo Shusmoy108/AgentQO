@@ -1,0 +1,103 @@
+{
+  "task_id": "mbppplus-583",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Understand that the Catalan number is defined by the formula C(n) = (2n)! / ((n+1)! * n!).\n2. Create a function named `catalan_number` that takes an integer `n` as its parameter.\n3. Inside the function, calculate the factorial of `2n`, `n+1`, and `n`.\n4. Use these factorials to compute the Catalan number using the formula.\n5. Return the computed Catalan number.",
+  "reference_key": null,
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert catalan_number(0)==1\nassert catalan_number(1)==1\nassert catalan_number(2)==2\nassert catalan_number(3)==5\nassert catalan_number(4)==14\n```",
+    "coder": "```python\ndef catalan_number(n):\n    def factorial(x):\n        if x == 0 or x == 1:\n            return 1\n        else:\n            return x * factorial(x - 1)\n    \n    numerator = factorial(2 * n)\n    denominator = factorial(n + 1) * factorial(n)\n    return numerator // denominator\n```",
+    "verifier": "PICK: B",
+    "fixer": "```python\ndef catalan_number(n):\n    def factorial(x):\n        if x == 0 or x == 1:\n            return 1\n        else:\n            return x * factorial(x - 1)\n    \n    numerator = factorial(2 * n)\n    denominator = factorial(n + 1) * factorial(n)\n    return numerator // denominator\n\n# Test cases\nassert catalan_number(10)==16796\nassert catalan_number(9)==4862\nassert catalan_number(7)==429\nassert catalan_number(0)==1\nassert catalan_number(1)==1\nassert catalan_number(2)==2\nassert catalan_number(3)==5\nassert catalan_number(4)==14\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Import necessary libraries.\n2. Define the function `find_combinations` that takes a tuple list as input.\n3. Initialize an empty list to store the results.\n4. Iterate over each tuple in the input list.\n5. For each tuple, iterate over all possible combinations of its elements.\n6. Calculate the sum of each combination.\n7. Check if the sum is already in the result list. If not, add it.\n8. Return the result list.\n\n```python\nfrom itertools import combinations\n\ndef find_combinations(tup_list):\n    result = []\n    for tup in tup_list:\n        for combo in combinations(tup, len(tup)):\n            total = sum(combo)\n            if total not in result:\n                result.append(total)\n    return result\n```\n\nThis solution uses the `combinations` function from the `itertools` module to generate all possible combinations of the elements in each tuple. It then calculates the sum of each combination and checks if it's already in the result list before adding it. This ensures that each unique sum is included only once in the final list.",
+      "quality": 1.0,
+      "final_key": "from itertools import combinations\n\ndef catalan_number(n):\n    if n <= 1:\n        return 1\n    catalan = [0] * (n + 1)\n    catalan[0], catalan[1] = 1, 1\n    for i in range(2, n + 1):\n        catalan[i] = sum(catalan[j - 1] * catalan[i - j] for j in range(1, i + 1))\n    return catalan[n]",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert catalan_number(0) == 1\nassert catalan_number(1) == 1\nassert catalan_number(2) == 2\nassert catalan_number(3) == 5\nassert catalan_number(4) == 14\n```",
+        "coder": "```python\nfrom itertools import combinations\n\ndef find_combinations(tup_list):\n    result = []\n    for tup in tup_list:\n        for combo in combinations(tup, len(tup)):\n            total = sum(combo)\n            if total not in result:\n                result.append(total)\n    return result\n```",
+        "verifier": "PICK: B\n```python\nfrom itertools import combinations\n\ndef catalan_number(n):\n    if n <= 1:\n        return 1\n    catalan = [0] * (n + 1)\n    catalan[0], catalan[1] = 1, 1\n    for i in range(2, n + 1):\n        catalan[i] = sum(catalan[j - 1] * catalan[i - j] for j in range(1, i + 1))\n    return catalan[n]\n```",
+        "fixer": "```python\nfrom itertools import combinations\n\ndef catalan_number(n):\n    if n <= 1:\n        return 1\n    catalan = [0] * (n + 1)\n    catalan[0], catalan[1] = 1, 1\n    for i in range(2, n + 1):\n        catalan[i] = sum(catalan[j - 1] * catalan[i - j] for j in range(1, i + 1))\n    return catalan[n]\n\n# Test cases\nassert catalan_number(10) == 16796\nassert catalan_number(9) == 4862\nassert catalan_number(7) == 429\nassert catalan_number(0) == 1\nassert catalan_number(1) == 1\nassert catalan_number(2) == 2\nassert catalan_number(3) == 5\nassert catalan_number(4) == 14\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `radian_degree` that takes one parameter, `degrees`.\n2. Inside the function, use the formula `radians = degrees * (pi / 180)` to convert degrees to radians.\n3. Return the calculated value of `radians`.\n\nThis solution directly follows the problem description and uses the standard mathematical conversion factor between degrees and radians.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert catalan_number(0)==1\nassert catalan_number(1)==1\nassert catalan_number(2)==2\nassert catalan_number(3)==5\nassert catalan_number(4)==14\n```",
+        "coder": "```python\nimport math\n\ndef catalan_number(n):\n    return math.comb(2*n, n) // (n+1)\n```",
+        "verifier": "PICK: A",
+        "fixer": "```python\nimport math\n\ndef catalan_number(n):\n    return math.comb(2*n, n) // (n+1)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function `cal_sum` that takes one parameter, `n`.\n2. Initialize two variables, `a` and `b`, to 3 and 0 respectively.\n3. Initialize a variable `sum_perrin` to 0.\n4. Use a loop to iterate from 0 to `n-1`.\n5. In each iteration, add the current value of `a` to `sum_perrin`.\n6. Update `a` to be the sum of `b` and `a`.\n7. Update `b` to be the previous value of `a`.\n8. Return the value of `sum_perrin`.\n\nThis approach ensures that we correctly compute the sum of the first `n` Perrin numbers by following the recursive definition of the Perrin sequence.",
+      "quality": 0.0,
+      "final_key": "def catalan_number(n):\n    a = 3\n    b = 0\n    sum_perrin = 0\n    for i in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert catalan_number(2) == 2\nassert catalan_number(4) == 14\nassert catalan_number(8) == 4862\nassert catalan_number(12) == 14300\nassert catalan_number(16) == 61882\n```",
+        "coder": "```python\ndef catalan_number(n):\n    a = 3\n    b = 0\n    sum_perrin = 0\n    for i in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin\n```",
+        "verifier": "PICK: B\n\n```python\ndef catalan_number(n):\n    a = 3\n    b = 0\n    sum_perrin = 0\n    for i in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin\n```",
+        "fixer": "```python\ndef catalan_number(n):\n    a = 3\n    b = 0\n    sum_perrin = 0\n    for i in range(n):\n        sum_perrin += a\n        a, b = b + a, a\n    return sum_perrin\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "import math\n\ndef catalan_number(n):\n    # Calculate the factorial of 2n\n    fact_2n = math.factorial(2 * n)\n    # Calculate the factorial of (n+1)\n    fact_n_plus_1 = math.factorial(n + 1)\n    # Calculate the factorial of n\n    fact_n = math.factorial(n)\n    # Calculate the nth Catalan number using the formula\n    catalan = fact_2n // (fact_n_plus_1 * fact_n)\n    return catalan",
+  "sample_keys": [
+    null,
+    null,
+    "def catalan_number(n):\n    # Base cases\n    if n == 0 or n == 1:\n        return 1\n    \n    # Initialize the first two Catalan numbers\n    catalan = [0] * (n + 1)\n    catalan[0], catalan[1] = 1, 1\n    \n    # Calculate the Catalan numbers iteratively\n    for i in range(2, n + 1):\n        catalan[i] = 0\n        for j in range(i):\n            catalan[i] += catalan[j] * catalan[i - j - 1]\n    \n    return catalan[n]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.3333333333333333
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1633.0,
+    "small_out": 547.0,
+    "small_s": 11.236391570972046
+  },
+  "calls_plus": {
+    "large_in": 102.0,
+    "large_out": 102.0,
+    "large_s": 2.286514860985335,
+    "small_in": 1239.0,
+    "small_out": 293.0,
+    "small_s": 4.639005783974426
+  },
+  "calls_samples": {
+    "small_in": 4194.0,
+    "small_out": 1275.0,
+    "small_s": 23.07223656802671
+  }
+}

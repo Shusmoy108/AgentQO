@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-732",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n```",
+  "reference_key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+  "final_key_plus": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "tester": "```python\nassert replace_specialchar('Hello world!') == 'Hello:world!'\nassert replace_specialchar('This is a test.') == 'This:is:a:test.'\nassert replace_specialchar('No special characters here.') == 'No:special:characters:here.'\nassert replace_specialchar('1234567890') == '1234567890'\nassert replace_specialchar('') == ''\n```",
+    "verifier": "PICK: A\n```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n```",
+    "fixer": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Test cases\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\nassert replace_specialchar('a b c,d e f') == ('a:b:c:d:e:f')\nassert replace_specialchar('ram reshma,ram rahim') == ('ram:reshma:ram:rahim')\nassert replace_specialchar('Hello world!') == 'Hello:world!'\nassert replace_specialchar('This is a test.') == 'This:is:a:test.'\nassert replace_specialchar('No special characters here.') == 'No:special:characters:here.'\nassert replace_specialchar('1234567890') == '1234567890'\nassert replace_specialchar('') == ''\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import string\n\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    for char in string.whitespace:  # Includes ' ', ',', '.'\n        input_string = input_string.replace(char, \":\")\n    return input_string",
+      "reference_key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+      "key_differs": true,
+      "text": "```python\nimport string\n\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    for char in string.whitespace:  # Includes ' ', ',', '.'\n        input_string = input_string.replace(char, \":\")\n    return input_string\n```",
+      "quality": 0.0,
+      "final_key": "import string\n\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    for char in string.whitespace:  # Includes ' ', ',', '.'\n        input_string = input_string.replace(char, \":\")\n    return input_string",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert replace_specialchar('Hello world!') == ('Hello:world!')\nassert replace_specialchar('This is a test.') == ('This::is:a:test.')\nassert replace_specialchar('No special characters here.') == ('No:special:characters:here.')\nassert replace_specialchar('1234567890') == ('1234567890')\nassert replace_specialchar('') == ''\n```",
+        "verifier": "PICK: A\n```python\nimport string\n\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    for char in string.whitespace:  # Includes ' ', ',', '.'\n        input_string = input_string.replace(char, \":\")\n    return input_string\n```",
+        "fixer": "```python\nimport string\n\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    for char in string.whitespace:  # Includes ' ', ',', '.'\n        input_string = input_string.replace(char, \":\")\n    return input_string\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+      "key_differs": true,
+      "text": "```python def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Example usage\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\n```",
+      "quality": 1.0,
+      "final_key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Example usage\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert replace_specialchar('Hello world!') == 'Hello:world!'\nassert replace_specialchar('No special characters here.') == 'No:special:characters:here.'\nassert replace_specialchar('1234567890') == '1234567890'\nassert replace_specialchar('') == ''\nassert replace_specialchar('AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz') == 'A:aB:bC:cD:dE:eF:fG:gH:hI:iJ:jK:kL:lM:mN:nO:oP:pQ:qR:rS:sT:tU:uV:vW:wX:xY:yZ:z'\n```",
+        "verifier": "PICK: B\n```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Example usage\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\n```",
+        "fixer": "```python\ndef replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string\n\n# Example usage\nassert replace_specialchar('Python language, Programming language.') == ('Python:language::Programming:language:')\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)",
+      "reference_key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+      "key_differs": true,
+      "text": "```python\ndef max_length(lists):\n    max_length = 0\n    result = []\n    for sublist in lists:\n        if len(sublist) > max_length:\n            max_length = len(sublist)\n            result = sublist\n    return (max_length, result)\n```",
+      "quality": 1.0,
+      "final_key": "def replace_specialchar(text):\n    return text.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert replace_specialchar('Hello world!') == ('Hello:world!')\nassert replace_specialchar('This is a test.') == ('This:is:a:test.')\nassert replace_specialchar('No special characters here.') == ('No:special:characters:here.')\nassert replace_specialchar('1234567890') == ('1234567890')\nassert replace_specialchar('') == ('')\n```",
+        "verifier": "PICK: B\n\n```python\ndef replace_specialchar(text):\n    return text.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n```",
+        "fixer": "```python\ndef replace_specialchar(text):\n    return text.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+  "sample_keys": [
+    "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+    "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+    "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+    "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string",
+    "def replace_specialchar(input_string):\n    # Replace spaces, commas, and dots with colons\n    modified_string = input_string.replace(\" \", \":\").replace(\",\", \":\").replace(\".\", \":\")\n    return modified_string"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.5,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1587.0,
+    "small_out": 594.0,
+    "small_s": 11.904328320000786
+  },
+  "calls_plus": {
+    "small_in": 1289.0,
+    "small_out": 545.0,
+    "small_s": 10.909526870993432,
+    "large_in": 298.0,
+    "large_out": 49.0,
+    "large_s": 1.1712311029841658
+  },
+  "calls_samples": {
+    "small_in": 1490.0,
+    "small_out": 245.0,
+    "small_s": 4.145171168027446
+  }
+}

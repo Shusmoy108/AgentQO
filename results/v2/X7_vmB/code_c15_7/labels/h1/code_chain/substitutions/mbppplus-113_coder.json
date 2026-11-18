@@ -1,0 +1,101 @@
+{
+  "task_id": "mbppplus-113",
+  "node_id": "coder",
+  "role": "researcher",
+  "reference": "```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```",
+  "reference_key": "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+  "final_key_plus": "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"+789\") == True\n```",
+    "verifier": "PICK: A\n```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```",
+    "fixer": "```python\nimport re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import re\n\ndef check_integer(s):\n   pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))",
+      "reference_key": "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef check_integer(s):\n   pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))\n```",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef check_integer(s):\n   pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"\") == False\n```",
+        "verifier": "PICK: A\n```python\nimport re\n\ndef check_integer(s):\n   pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))\n```",
+        "fixer": "```python\nimport re\n\ndef check_integer(s):\n   pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import re\n\ndef check_integer(s):\n    pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))",
+      "reference_key": "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+      "key_differs": true,
+      "text": "```python\nimport re\n\ndef check_integer(s):\n    pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))\n```",
+      "quality": 0.0,
+      "final_key": "import re\n\ndef check_integer(s):\n    pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"\") == False\n```",
+        "verifier": "PICK: B\n\n```python\nimport re\n\ndef check_integer(s):\n    pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))\n```",
+        "fixer": "```python\nimport re\n\ndef check_integer(s):\n    pattern = r'^\\d+$'\n    return bool(re.match(pattern, s))\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "import math\n\ndef unique_product(numbers):\n    # Remove duplicates by converting the list to a set\n    unique_numbers = set(numbers)\n    \n    # Calculate the product of the unique numbers\n    product = math.prod(unique_numbers)\n    \n    # Return the result\n    return product",
+      "reference_key": "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+      "key_differs": true,
+      "text": "```python\nimport math\n\ndef unique_product(numbers):\n    # Remove duplicates by converting the list to a set\n    unique_numbers = set(numbers)\n    \n    # Calculate the product of the unique numbers\n    product = math.prod(unique_numbers)\n    \n    # Return the result\n    return product\n```",
+      "quality": 0.0,
+      "final_key": "import math\n\ndef check_integer(s):\n    try:\n        int(s)\n        return True\n    except ValueError:\n        return False\n\n# Test cases\nassert check_integer(\"python\") == False\nassert check_integer(\"1\") == True\nassert check_integer(\"12345\") == True\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"\") == False",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"\") == False\n```",
+        "verifier": "PICK: B\n```python\nimport math\n\ndef check_integer(s):\n    try:\n        int(s)\n        return True\n    except ValueError:\n        return False\n\n# Test cases\nassert check_integer(\"python\") == False\nassert check_integer(\"1\") == True\nassert check_integer(\"12345\") == True\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"\") == False\n```",
+        "fixer": "```python\nimport math\n\ndef check_integer(s):\n    try:\n        int(s)\n        return True\n    except ValueError:\n        return False\n\n# Test cases\nassert check_integer(\"python\") == False\nassert check_integer(\"1\") == True\nassert check_integer(\"12345\") == True\nassert check_integer(\"123\") == True\nassert check_integer(\"-456\") == True\nassert check_integer(\"0\") == True\nassert check_integer(\"abc\") == False\nassert check_integer(\"\") == False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 0.0,
+  "base_key": "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+  "sample_keys": [
+    "import re\n\ndef check_integer(s):\n    # Regular expression for matching integers\n    integer_pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the integer pattern\n    if re.match(integer_pattern, s):\n        return True\n    else:\n        return False",
+    "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching integers\n    pattern = r'^[+-]?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+    "import re\n\ndef check_integer(s):\n    pattern = r'^-?\\d+$'\n    return bool(re.match(pattern, s))",
+    "import re\n\ndef check_integer(s):\n    # Regular expression pattern for matching an integer\n    pattern = r'^-?\\d+$'\n    \n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False",
+    "import re\n\ndef check_integer(s):\n    # Regular expression matching an integer\n    pattern = r'^-?\\d+$'\n    # Check if the input string matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1196.0,
+    "small_out": 359.0,
+    "small_s": 8.27417073599645
+  },
+  "calls_plus": {
+    "small_in": 993.0,
+    "small_out": 299.0,
+    "small_s": 6.366446121013723,
+    "large_in": 207.0,
+    "large_out": 63.0,
+    "large_s": 2.104453821986681
+  },
+  "calls_samples": {
+    "small_in": 1035.0,
+    "small_out": 350.0,
+    "small_s": 7.051489865989424
+  }
+}

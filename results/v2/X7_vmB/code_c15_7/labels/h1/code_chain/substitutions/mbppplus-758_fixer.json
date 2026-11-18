@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-758",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```",
+  "reference_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+  "final_key_plus": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+      "key_differs": true,
+      "text": "```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n\n# Test cases\nprint(unique_sublists([[1, 3], [5, 7], [1, 3], [13, 15, 17], [5, 7], [9, 11]]))  # Should print={(1, 3): 2, (5, 7): 2, (13, 15, 17): 1, (9, 11): 1}\nprint(unique_sublists([['green', 'orange'], ['black'], ['green', 'orange'], ['white']]))  # Should print={('green', 'orange'): 2, ('black',): 1, ('white',): 1}\nprint(unique_sublists([[10, 20, 30, 40], [60, 70, 50, 50], [90, 100, 200]]))  # Should print={(10, 20, 30, 40): 1, (60, 70, 50, 50): 1, (90, 100, 200): 1}\nprint(unique_sublists([['john']]))  # Should print:{('john',): 1}\nprint(unique_sublists([]))  # Should print {}\nprint(unique_sublists([[], [], []]))  # Should print:{(): 3}\nprint(unique_sublists([[1, 2], [2, 3], [1, 2]]))  # Should print={(1, 2): 2, (2, 3): 1}\nprint(unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3]]))  # Should print={(1, 2, 3): 2, (4, 5, 6): 1}\nprint(unique_sublists([[1, 2, 3], [4, 5, 6], [1",
+      "quality": 1.0,
+      "final_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": null,
+      "reference_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+      "key_differs": true,
+      "text": "```python\nfrom collections import defaultdict\n\ndef unique_sublists(lst):\n    counts = defaultdict(int)\n    \n    for sublist in lst:\n        # Convert sublist to a tuple and update the counter\n        key = tuple(sublist)\n        counts[key] += 1\n            \n    # Convert the defaultdict to a regular dictionary before returning\n    \n    return dict(counts)\n\n# Running the provided tests to ensure the solution works as expected\nassert unique_sublists([[1, 3], [5, 7], [1, 3], [13, 15, 17], [5, 7], [9, 11]] )=={(1, 3): 2, (5, 7): 2, (13, 15, 17): 1, (9, 11): 1}\nassert unique_sublists([['green', 'orange'], ['black'], ['green', 'orange'], ['white']])=={('green', 'orange'): 2, ('black',): 1, ('white',): 1}\nassert unique_sublists([[10, 20, 30, 40], [60, 70, 50, 50], [90, 100, 200]])=={(10, 20, 30, 40): 1, (60, 70, 50, 50): 1, (90, 100, 200): 1}\nassert unique_sublists([['john']])=={('john',): 1}\nassert unique_sublists([]) == {}\nassert unique_sublists([[], [], []]) == {(): 3}\nassert unique_sublists([[1, 2], [2, 3], [1, 2]]) == {(1, 2): 2, (2, 3): 1}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3]]) == {(1, 2, 3): 2, (4, 5, 6): 1}\nassert unique_sublists([[1, 2, 3], [4, 5, 6], [1, 2, 3], [1, 2, 3]]) == {(1,",
+      "quality": 1.0,
+      "final_key": "from collections import defaultdict\n\ndef unique_sublists(lst):\n    counts = defaultdict(int)\n    \n    for sublist in lst:\n        # Convert sublist to a tuple and update the counter\n        key = tuple(sublist)\n        counts[key] += 1\n            \n    # Convert the defaultdict to a regular dictionary before returning\n    \n    return dict(counts)",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: A\n```python\nfrom collections import defaultdict\n\ndef unique_sublists(lst):\n    counts = defaultdict(int)\n    \n    for sublist in lst:\n        # Convert sublist to a tuple and update the counter\n        key = tuple(sublist)\n        counts[key] += 1\n            \n    # Convert the defaultdict to a regular dictionary before returning\n    \n    return dict(counts)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count",
+      "reference_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+      "key_differs": true,
+      "text": "```python\ndef frequency(numbers_list, target_number):\n    count = 0\n    for num in numbers_list:\n        if num == target_number:\n            count += 1\n    return count\n```",
+      "quality": 1.0,
+      "final_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+  "sample_keys": [
+    null,
+    "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+    "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+    "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts",
+    "def unique_sublists(lst):\n    counts = {}\n    for sublist in lst:\n        # Convert sublist to a tuple and check if it's already in the dictionary\n        key = tuple(sublist)\n        if key in counts:\n            counts[key] += 1\n        else:\n            counts[key] = 1\n    return counts"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2910.0,
+    "small_out": 521.0,
+    "small_s": 11.544353786011925
+  },
+  "calls_plus": {
+    "small_in": 2134.0,
+    "small_out": 447.0,
+    "small_s": 9.897774589015171,
+    "large_in": 776.0,
+    "large_out": 74.0,
+    "large_s": 1.6840316260058898
+  },
+  "calls_samples": {
+    "small_in": 3880.0,
+    "small_out": 791.0,
+    "small_s": 14.15501636499539
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-767",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert get_pairs_count([1, 2, 3, 4, 5], 9) == 2\nassert get_pairs_count([-1, -2, -3, -4, -5], -6) == 2\nassert get_pairs_count([0, 0, 0, 0], 0) == 6\nassert get_pairs_count([1, 2, 3, 4, 5], 10) == 1\nassert get_pairs_count([], 5) == 0\n```",
+  "reference_key": "assert get_pairs_count([1, 2, 3, 4, 5], 9) == 2\nassert get_pairs_count([-1, -2, -3, -4, -5], -6) == 2\nassert get_pairs_count([0, 0, 0, 0], 0) == 6\nassert get_pairs_count([1, 2, 3, 4, 5], 10) == 1\nassert get_pairs_count([], 5) == 0",
+  "final_key_plus": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([1, 2, 3, 4, 5], 9) == 2\nassert get_pairs_count([-1, -2, -3, -4, -5], -6) == 2\nassert get_pairs_count([0, 0, 0, 0], 0) == 6\nassert get_pairs_count([1, 2, 3, 4, 5], 10) == 1\nassert get_pairs_count([], 5) == 0",
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([1, 2, 3, 4, 5], 9) == 2\nassert get_pairs_count([-1, -2, -3, -4, -5], -6) == 2\nassert get_pairs_count([0, 0, 0, 0], 0) == 6\nassert get_pairs_count([1, 2, 3, 4, 5], 10) == 1\nassert get_pairs_count([], 5) == 0\n```",
+    "fixer": "```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([1, 2, 3, 4, 5], 9) == 2\nassert get_pairs_count([-1, -2, -3, -4, -5], -6) == 2\nassert get_pairs_count([0, 0, 0, 0], 0) == 6\nassert get_pairs_count([1, 2, 3, 4, 5], 10) == 1\nassert get_pairs_count([], 5) == 0\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases to verify the function works as expected\n\n# Typical case where there are 6 pairs with sum 2\nassert get_pairs_count([1, 3, -1, 4, -3, 4, 5], 2) == 6\n\n# Edge case where all numbers are the same\nassert get_pairs_count([5, 5, 5, 5, 5], 5) == 10\n\n# Edge case where no pairs sum up to the target\nassert get_pairs_count([-1, -1, 1, 1, 1], 0) == 6\n\n# Edge case where some numbers are negative\nassert get_pairs_count([-5, -5, 0, 4, -2, 1], 4) == 6\n\n# Edge case where one number is very large and the target is close to zero\nassert get_pairs_count([1e7, 0, 2, 3, -3e7], -3e7) == 3",
+      "reference_key": "assert get_pairs_count([1, 2, 3, 4, 5], 9) == 2\nassert get_pairs_count([-1, -2, -3, -4, -5], -6) == 2\nassert get_pairs_count([0, 0, 0, 0], 0) == 6\nassert get_pairs_count([1, 2, 3, 4, 5], 10) == 1\nassert get_pairs_count([], 5) == 0",
+      "key_differs": true,
+      "text": "Certainly! Below is your modified code along with five additional assertion statements to check it on typical and edge cases.\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases to verify the function works as expected\n\n# Typical case where there are 6 pairs with sum 2\nassert get_pairs_count([1, 3, -1, 4, -3, 4, 5], 2) == 6\n\n# Edge case where all numbers are the same\nassert get_pairs_count([5, 5, 5, 5, 5], 5) == 10\n\n# Edge case where no pairs sum up to the target\nassert get_pairs_count([-1, -1, 1, 1, 1], 0) == 6\n\n# Edge case where some numbers are negative\nassert get_pairs_count([-5, -5, 0, 4, -2, 1], 4) == 6\n\n# Edge case where one number is very large and the target is close to zero\nassert get_pairs_count([1e7, 0, 2, 3, -3e7], -3e7) == 3\n```\n\nEach of these assertions checks different scenarios, including common use cases, edge cases like identical numbers or numbers with extreme values, ensuring the function behaves correctly across various inputs.",
+      "quality": 0.0,
+      "final_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([1, 3, -1, 4, -3, 4, 5], 2) == 6\nassert get_pairs_count([5, 5, 5, 5, 5], 5) == 10\nassert get_pairs_count([-1, -1, 1, 1, 1], 0) == 6\nassert get_pairs_count([-5, -5, 0, 4, -2, 1], 4) == 6\nassert get_pairs_count([1e7, 0, 2, 3, -3e7], -3e7) == 3",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([1, 3, -1, 4, -3, 4, 5], 2) == 6\nassert get_pairs_count([5, 5, 5, 5, 5], 5) == 10\nassert get_pairs_count([-1, -1, 1, 1, 1], 0) == 6\nassert get_pairs_count([-5, -5, 0, 4, -2, 1], 4) == 6\nassert get_pairs_count([1e7, 0, 2, 3, -3e7], -3e7) == 3\n```",
+        "fixer": "```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([1, 3, -1, 4, -3, 4, 5], 2) == 6\nassert get_pairs_count([5, 5, 5, 5, 5], 5) == 10\nassert get_pairs_count([-1, -1, 1, 1, 1], 0) == 6\nassert get_pairs_count([-5, -5, 0, 4, -2, 1], 4) == 6\nassert get_pairs_count([1e7, 0, 2, 3, -3e7], -3e7) == 3\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert get_pairs_count([], 2) == 0\nassert get_pairs_count([2], 2) == 0\nassert get_pairs_count([1, 2, 4, -3, 2, -5, -3], 5) == 8\nassert get_pairs_count([-6, -5, -4, -3, -2, -7, 8, 9], 0) == 15\nassert get_pairs_count([1, 2, 2], 4) == 3",
+      "reference_key": "assert get_pairs_count([1, 2, 3, 4, 5], 9) == 2\nassert get_pairs_count([-1, -2, -3, -4, -5], -6) == 2\nassert get_pairs_count([0, 0, 0, 0], 0) == 6\nassert get_pairs_count([1, 2, 3, 4, 5], 10) == 1\nassert get_pairs_count([], 5) == 0",
+      "key_differs": true,
+      "text": "```python\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([2], 2) == 0\nassert get_pairs_count([1, 2, 4, -3, 2, -5, -3], 5) == 8\nassert get_pairs_count([-6, -5, -4, -3, -2, -7, 8, 9], 0) == 15\nassert get_pairs_count([1, 2, 2], 4) == 3\n```",
+      "quality": 0.0,
+      "final_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([2], 2) == 0\nassert get_pairs_count([1, 2, 4, -3, 2, -5, -3], 5) == 8\nassert get_pairs_count([-6, -5, -4, -3, -2, -7, 8, 9], 0) == 15\nassert get_pairs_count([1, 2, 2], 4) == 3",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([2], 2) == 0\nassert get_pairs_count([1, 2, 4, -3, 2, -5, -3], 5) == 8\nassert get_pairs_count([-6, -5, -4, -3, -2, -7, 8, 9], 0) == 15\nassert get_pairs_count([1, 2, 2], 4) == 3\n```",
+        "fixer": "```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([], 2) == 0\nassert get_pairs_count([2], 2) == 0\nassert get_pairs_count([1, 2, 4, -3, 2, -5, -3], 5) == 8\nassert get_pairs_count([-6, -5, -4, -3, -2, -7, 8, 9], 0) == 15\nassert get_pairs_count([1, 2, 2], 4) == 3\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert otherside_rightangle(5, 12) == 13.0\nassert otherside_rightangle(10, 6) == 8.0\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(-1, -1) == 1.4142135623730951",
+      "reference_key": "assert get_pairs_count([1, 2, 3, 4, 5], 9) == 2\nassert get_pairs_count([-1, -2, -3, -4, -5], -6) == 2\nassert get_pairs_count([0, 0, 0, 0], 0) == 6\nassert get_pairs_count([1, 2, 3, 4, 5], 10) == 1\nassert get_pairs_count([], 5) == 0",
+      "key_differs": true,
+      "text": "```python\nassert otherside_rightangle(5, 12) == 13.0\nassert otherside_rightangle(10, 6) == 8.0\nassert otherside_rightangle(9, 12) == 15.0\nassert otherside_rightangle(0, 0) == 0.0\nassert otherside_rightangle(-1, -1) == 1.4142135623730951\n```",
+      "quality": 1.0,
+      "final_key": "def get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n```",
+        "fixer": "```python\ndef get_pairs_count(numbers, sum):\n    count = 0\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == sum:\n                count += 1\n    return count\n\n# Test cases\nassert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([1,5,7,-1,5],6) == 3\nassert get_pairs_count([1,-2,3],1) == 1\nassert get_pairs_count([-1,-2,3],-3) == 1\nassert get_pairs_count([0,0],0) == 0\nassert get_pairs_count([-1,-1],1)\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert get_pairs_count([], 2) == 0\nassert get_pairs_count([1], 2) == 0\nassert get_pairs_count([1, 2], 3) == 1\nassert get_pairs_count([1, 2, 3], 4) == 3\nassert get_pairs_count([1, 2, 3, 4], 5) == 4",
+  "sample_keys": [
+    "assert get_pairs_count([1,1,1,1],2) == 6\nassert get_pairs_count([],3) == 0\nassert get_pairs_count([-1, -2, -3, 0, 1], 0) == 3\nassert get_pairs_count([4, 7, 9, -2], 8) == 2\nassert get_pairs_count([1, 2, 3, 4], 10) == 0",
+    "assert get_pairs_count([],2) == 0\nassert get_pairs_count([3,4,5],7) == 1\nassert get_pairs_count([-3,-2,-1,0,1,2,3],0) == 6\nassert get_pairs_count([-1,-1,-1,-1],-2) == 4\nassert get_pairs_count([-1,0,1,2,3,4,5,-3,-2,-1],1) == 8",
+    "assert get_pairs_count([],3) == 0\nassert get_pairs_count([1,2,3,4,5],7) == 7\nassert get_pairs_count([2, -2, -2], 0) == 3\nassert get_pairs_count([-1, -1, -1, 1, 1, 1], 0) == 6\nassert get_pairs_count([10], 20) == 0",
+    "assert get_pairs_count([], 1) == 0\nassert get_pairs_count([1, 3, 5, 7, 9], 8) == 5\nassert get_pairs_count([-1, -2, -3, -4, -5, 2, 4], 1) == 3\nassert get_pairs_count([0], 0) == 0\nassert get_pairs_count([2, 4, 6, 8, 10], 1) == 0",
+    "# Test with positive sum\nassert get_pairs_count([1, 2, 3, 4, 5], 7) == 3\n\n# Test with zero sum\nassert get_pairs_count([1, -1, 0, 2, 3], 0) == 2\n\n# Test with negative sum\nassert get_pairs_count([-1, -2, -3, -4, -5], -8) == 1\n\n# Test with single element\nassert get_pairs_count([4], 8) == 0\n\n# Test with duplicate elements\nassert get_pairs_count([1, 2, 2, 3, 3], 5) == 4"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1717.0,
+    "small_out": 800.0,
+    "small_s": 14.598636370967142
+  },
+  "calls_plus": {
+    "small_in": 1603.0,
+    "small_out": 765.0,
+    "small_s": 11.205929107964039,
+    "large_in": 204.0,
+    "large_out": 119.0,
+    "large_s": 2.6550579339964315
+  },
+  "calls_samples": {
+    "small_in": 1020.0,
+    "small_out": 588.0,
+    "small_s": 8.15391514901421
+  }
+}

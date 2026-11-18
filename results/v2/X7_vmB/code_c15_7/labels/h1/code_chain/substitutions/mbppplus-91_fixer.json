@@ -1,0 +1,93 @@
+{
+  "task_id": "mbppplus-91",
+  "node_id": "fixer",
+  "role": "researcher",
+  "reference": "```python\ndef find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False\n```",
+  "reference_key": "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False",
+  "final_key_plus": "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False",
+  "q_plus": 1.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": 0.6666666666666667,
+  "p_err": 0.4,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestSubstringFinder(unittest.TestCase):\n    def test_find_substring(self):\n        self.assertTrue(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\"))\n        self.assertFalse(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"abc\"))\n        self.assertTrue(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ange\"))\n        self.assertTrue(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True)\n        self.assertFalse(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\"))\n        self.assertFalse(find_substring([], \"abc\"))\n        self.assertTrue(find_substring([\"a\", \"b\", \"c\"], \"\"))\n        self.assertTrue(find_substring([\"hello\", \"world\", \"python\"], \"o\"))\n\nif __name__ == \"__main__\":\n    unittest.main()",
+      "reference_key": "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TestSubstringFinder(unittest.TestCase):\n    def test_find_substring(self):\n        self.assertTrue(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\"))\n        self.assertFalse(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"abc\"))\n        self.assertTrue(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ange\"))\n        self.assertTrue(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True)\n        self.assertFalse(find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\"))\n        self.assertFalse(find_substring([], \"abc\"))\n        self.assertTrue(find_substring([\"a\", \"b\", \"c\"], \"\"))\n        self.assertTrue(find_substring([\"hello\", \"world\", \"python\"], \"o\"))\n\nif __name__ == \"__main__\":\n    unittest.main()\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False\n\n# Test cases\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"abc\") == False\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ANGE\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\") == False\nassert find_substring([], \"abc\") == False\nassert find_substring([\"a\", \"b\", \"c\"], \"\") == True\nassert find_substring([\"hello\", \"world\", \"python\"], \"o\")",
+      "reference_key": "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False",
+      "key_differs": true,
+      "text": "```python\ndef find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False\n\n# Test cases\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"abc\") == False\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ANGE\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\") == False\nassert find_substring([], \"abc\") == False\nassert find_substring([\"a\", \"b\", \"c\"], \"\") == True\nassert find_substring([\"hello\", \"world\", \"python\"], \"o\")\n```",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "def large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]",
+      "reference_key": "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False",
+      "key_differs": true,
+      "text": "```python\ndef large_product(list1, list2, n):\n    result = []\n    for i in list1:\n        for j in list2:\n            result.append(i * j)\n    result.sort(reverse=True)\n    return result[:n]\n```",
+      "quality": 1.0,
+      "final_key": "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": true,
+  "q_base": 1.0,
+  "base_key": "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False",
+  "sample_keys": [
+    "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False\n\n# Test cases\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"],\"ack\")==True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"],\"abc\")==False\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"],\"ange\")==True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\") == False\nassert find_substring([], \"abc\") == False\nassert find_substring([\"a\", \"b\", \"c\"], \"\") == True\nassert find_substring([\"hello\", \"world\", \"python\"], \"o\")",
+    "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False",
+    "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False\n\n# Test cases to verify the correctness of the function\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"abc\") == False\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ange\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"ack\") == True\nassert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"], \"xyz\") == False\nassert find_substring([], \"abc\") == False\nassert find_substring([\"a\", \"b\", \"c\"], \"\") == True\nassert find_substring([\"hello\", \"world\", \"python\"], \"o\")",
+    "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False",
+    "def find_substring(string_list, substring):\n    for item in string_list:\n        if substring in item:\n            return True\n    return False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1471.0,
+    "small_out": 348.0,
+    "small_s": 7.91388553098659
+  },
+  "calls_plus": {
+    "small_in": 1112.0,
+    "small_out": 313.0,
+    "small_s": 7.060333094996167,
+    "large_in": 359.0,
+    "large_out": 35.0,
+    "large_s": 1.0614186480233911
+  },
+  "calls_samples": {
+    "small_in": 1795.0,
+    "small_out": 522.0,
+    "small_s": 10.979592320974916
+  }
+}

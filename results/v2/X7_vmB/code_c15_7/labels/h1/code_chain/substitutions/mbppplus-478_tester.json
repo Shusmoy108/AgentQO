@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-478",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert remove_lowercase(\"HelloWorld\") == \"HW\"\nassert remove_lowercase(\"PYTHON\") == \"PYTHON\"\nassert remove_lowercase(\"python\") == \"\"\nassert remove_lowercase(\"123abcABC\") == \"123ABC\"\nassert remove_lowercase(\"\") == \"\"\n```",
+  "reference_key": "assert remove_lowercase(\"HelloWorld\") == \"HW\"\nassert remove_lowercase(\"PYTHON\") == \"PYTHON\"\nassert remove_lowercase(\"python\") == \"\"\nassert remove_lowercase(\"123abcABC\") == \"123ABC\"\nassert remove_lowercase(\"\") == \"\"",
+  "final_key_plus": "def remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n```",
+    "fixer": "```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "# Test cases to cover typical and edge cases\nassert remove_lowercase(\"123abc\") == '123'\nassert remove_lowercase(\"\") == ''\nassert remove_lowercase(\"aBcDeFgHiJ\") == 'BCDEFGHIJ'\nassert remove_lowercase(\"PYTHON3\") == 'PYTHON3'\nassert remove_lowercase(\"HelloWorld\") == 'HELLOWORLD'",
+      "reference_key": "assert remove_lowercase(\"HelloWorld\") == \"HW\"\nassert remove_lowercase(\"PYTHON\") == \"PYTHON\"\nassert remove_lowercase(\"python\") == \"\"\nassert remove_lowercase(\"123abcABC\") == \"123ABC\"\nassert remove_lowercase(\"\") == \"\"",
+      "key_differs": true,
+      "text": "```python\n# Test cases to cover typical and edge cases\nassert remove_lowercase(\"123abc\") == '123'\nassert remove_lowercase(\"\") == ''\nassert remove_lowercase(\"aBcDeFgHiJ\") == 'BCDEFGHIJ'\nassert remove_lowercase(\"PYTHON3\") == 'PYTHON3'\nassert remove_lowercase(\"HelloWorld\") == 'HELLOWORLD'\n```",
+      "quality": 1.0,
+      "final_key": "def remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n```",
+        "fixer": "```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n\n# Test cases\nassert remove_lowercase(\"PYTHon\") == ('PYTH')\nassert remove_lowercase(\"FInD\") == ('FID')\nassert remove_lowercase(\"STRinG\") == ('STRG')\nassert remove_lowercase(\"123abc\") == '123'\nassert remove_lowercase(\"\") == ''\nassert remove_lowercase(\"aBcDeFgHiJ\") == 'BCDEFGHIJ'\nassert remove_lowercase(\"PYTHON3\") == 'PYTHON3'\nassert remove_lowercase(\"HelloWorld\") == 'HELLOWORLD'\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "assert remove_lowercase(\"PYTHON\") == ('PYTH','python')\r\nassert remove_lowercase(\"123abcABC\") == (\"123ABC\",'123abcdefABC',\"123\")\r\nassert remove_lowercase(\"!@#$%^&*(){}|_+=-[]\\\\;':<>,.?/\") == \"!@#$%^&*(){}|_+=-[]\\\\\\\\';:\\\\,<>,.?/\",\"!@#$%^&*(){}|_+=-[]\\\\\\\\';:\\\\,<>,.?/\",\"!@#$%^&*(){}|_+=-[]\\\\\\\\';:\\\\,<>,.?/\")\r\nassert remove_lowercase(\"\") == (,\"\")\r\nassert remove_lowercase(\"ALLLOWERCASE\") == (\"\",'alllowercase')",
+      "reference_key": "assert remove_lowercase(\"HelloWorld\") == \"HW\"\nassert remove_lowercase(\"PYTHON\") == \"PYTHON\"\nassert remove_lowercase(\"python\") == \"\"\nassert remove_lowercase(\"123abcABC\") == \"123ABC\"\nassert remove_lowercase(\"\") == \"\"",
+      "key_differs": true,
+      "text": "```python\nassert remove_lowercase(\"PYTHON\") == ('PYTH','python')\r\nassert remove_lowercase(\"123abcABC\") == (\"123ABC\",'123abcdefABC',\"123\")\r\nassert remove_lowercase(\"!@#$%^&*(){}|_+=-[]\\\\;':<>,.?/\") == \"!@#$%^&*(){}|_+=-[]\\\\\\\\';:\\\\,<>,.?/\",\"!@#$%^&*(){}|_+=-[]\\\\\\\\';:\\\\,<>,.?/\",\"!@#$%^&*(){}|_+=-[]\\\\\\\\';:\\\\,<>,.?/\")\r\nassert remove_lowercase(\"\") == (,\"\")\r\nassert remove_lowercase(\"ALLLOWERCASE\") == (\"\",'alllowercase')\r\n```",
+      "quality": 1.0,
+      "final_key": "def remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n```",
+        "fixer": "```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 7776\nassert even_Power_Sum(5) == 12150\nassert even_Power_Sum(6) == 19683\nassert even_Power_Sum(7) == 31104",
+      "reference_key": "assert remove_lowercase(\"HelloWorld\") == \"HW\"\nassert remove_lowercase(\"PYTHON\") == \"PYTHON\"\nassert remove_lowercase(\"python\") == \"\"\nassert remove_lowercase(\"123abcABC\") == \"123ABC\"\nassert remove_lowercase(\"\") == \"\"",
+      "key_differs": true,
+      "text": "```python\nassert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 7776\nassert even_Power_Sum(5) == 12150\nassert even_Power_Sum(6) == 19683\nassert even_Power_Sum(7) == 31104\n```",
+      "quality": 0.0,
+      "final_key": "def remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n\n# Test cases\nassert remove_lowercase(\"PYTHon\") == ('PYTH')\nassert remove_lowercase(\"FInD\") == ('FID')\nassert remove_lowercase(\"STRinG\") == ('STRG')\n\n# Additional tests\ndef even_Power_Sum(n):\n    return n ** 2\n\n# Test cases for even_Power_Sum\nassert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 7776\nassert even_Power_Sum(5) == 12150\nassert even_Power_Sum(6) == 19683\nassert even_Power_Sum(7) == 31104",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n\n# Test cases\nassert remove_lowercase(\"PYTHon\") == ('PYTH')\nassert remove_lowercase(\"FInD\") == ('FID')\nassert remove_lowercase(\"STRinG\") == ('STRG')\n\n# Additional tests\ndef even_Power_Sum(n):\n    return n ** 2\n\n# Test cases for even_Power_Sum\nassert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 7776\nassert even_Power_Sum(5) == 12150\nassert even_Power_Sum(6) == 19683\nassert even_Power_Sum(7) == 31104\n```",
+        "fixer": "```python\ndef remove_lowercase(input_string):\n    result_list = []\n    for char in input_string:\n        if char.isupper():\n            result_list.append(char)\n    return ''.join(result_list)\n\n# Test cases\nassert remove_lowercase(\"PYTHon\") == ('PYTH')\nassert remove_lowercase(\"FInD\") == ('FID')\nassert remove_lowercase(\"STRinG\") == ('STRG')\n\n# Additional tests\ndef even_Power_Sum(n):\n    return n ** 2\n\n# Test cases for even_Power_Sum\nassert even_Power_Sum(3) == 4896\nassert even_Power_Sum(4) == 7776\nassert even_Power_Sum(5) == 12150\nassert even_Power_Sum(6) == 19683\nassert even_Power_Sum(7) == 31104\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert remove_lowercase(\"\") == ''\nassert remove_lowercase(\"123\") == '123'\nassert remove_lowercase(\"abcABC\") == 'ABC'\nassert remove_lowercase(\"aBcDeFgHiJkLmNoPqRstUvWxYz\") == 'BCDEFGHIJKLMNPQRSTUVWXYZ'\nassert remove_lowercase(\"Python3.8\") == 'PYTHON3.8'",
+  "sample_keys": [
+    "assert remove_lowercase(\"hello world\") == 'HLL WRLD'\nassert remove_lowercase(\"1234\") == '1234'\nassert remove_lowercase(\"\") == ''\nassert remove_lowercase(\"PYTHON programming!\") == 'PHT HGRMPG!'\nassert remove_lowercase(\"ALL CAPS\") == 'LPLS'",
+    "assert remove_lowercase(\"Hello World\") == 'HLL Wrld'\nassert remove_lowercase(\"\") == ''\nassert remove_lowercase(\"1234567890\") == '1234567890'\nassert remove_lowercase(\"PYTHON\") == 'PYTH'\nassert remove_lowercase(\"Python3\") == 'Pyth3'",
+    "assert remove_lowercase(\"\") == ''\nassert remove_lowercase(\"123abcABC\") == \"123AB\"\nassert remove_lowercase(\"helloWorld\") == \"HWOORLD\"\nassert remove_lowercase(\"Python3Programming\") == \"PYTHON3PROGRAMMING\"\nassert remove_lowercase(\"Lowercase\") == \"\"",
+    "assert remove_lowercase(\"\") == \"\"\nassert remove_lowercase(\"a\") == \"\"\nassert remove_lowercase(\"A\") == \"A\"\nassert remove_lowercase(\"AbCdEfGhIjKlMnOpQrStUvWxYz\") == \"ABCD_EFGHIJKLMNOPSQRSTUVWXYZ\"\nassert remove_lowercase(\"Python Programming is fun!\") == \"PYTHON PROGRAMMING IS FUN!\"",
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1296.0,
+    "small_out": 355.0,
+    "small_s": 4.667954592936439
+  },
+  "calls_plus": {
+    "small_in": 1024.0,
+    "small_out": 264.0,
+    "small_s": 3.946516289957799,
+    "large_in": 158.0,
+    "large_out": 57.0,
+    "large_s": 1.7843781209958252
+  },
+  "calls_samples": {
+    "small_in": 790.0,
+    "small_out": 361.0,
+    "small_s": 7.69486174499616
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-780",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert find_combinations([(1, 2), (3, 4), (5, 6)]) == [(3, 6), (4, 5), (5, 8), (6, 9), (7, 10), (8, 11)]\nassert find_combinations([(0, 0), (0, 0), (0, 0)]) == [(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]\nassert find_combinations([(-1, -2), (-3, -4), (-5, -6)]) == [(-4, -6), (-5, -5), (-6, -8), (-7, -9), (-8, -10), (-9, -11)]\nassert find_combinations([(10, 20), (30, 40), (50, 60)]) == [(40, 60), (50, 70), (60, 80), (70, 90), (80, 100), (90, 110)]\nassert find_combinations([]) == []\n```",
+  "reference_key": "assert find_combinations([(1, 2), (3, 4), (5, 6)]) == [(3, 6), (4, 5), (5, 8), (6, 9), (7, 10), (8, 11)]\nassert find_combinations([(0, 0), (0, 0), (0, 0)]) == [(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]\nassert find_combinations([(-1, -2), (-3, -4), (-5, -6)]) == [(-4, -6), (-5, -5), (-6, -8), (-7, -9), (-8, -10), (-9, -11)]\nassert find_combinations([(10, 20), (30, 40), (50, 60)]) == [(40, 60), (50, 70), (60, 80), (70, 90), (80, 100), (90, 110)]\nassert find_combinations([]) == []",
+  "final_key_plus": "from itertools import combinations\n\ndef find_combinations(tuples_list):\n    result = []\n    for r in range(1, len(tuples_list) + 1):\n        for combo in combinations(tuples_list, r):\n            result.append(sum(combo))\n    return result",
+  "q_plus": 0.0,
+  "q_minus": 0.0,
+  "consequence": 0.0,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: B\n\n```python\nfrom itertools import combinations\n\ndef find_combinations(tuples_list):\n    result = []\n    for r in range(1, len(tuples_list) + 1):\n        for combo in combinations(tuples_list, r):\n            result.append(sum(combo))\n    return result\n```",
+    "fixer": "```python\nfrom itertools import combinations\n\ndef find_combinations(tuples_list):\n    result = []\n    for r in range(1, len(tuples_list) + 1):\n        for combo in combinations(tuples_list, r):\n            result.append(sum(combo))\n    return result\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "from itertools import combinations\n\ndef find_combinations(lst):\n    combinations_list = []\n    for r in range(1, len(lst) + 1):\n        for combo in combinations(lst, r):\n            combinations_list.append(combo)\n    return combinations_list\n\n# Test cases\nassert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\nassert find_combinations([]) == []\nassert find_combinations([3]) == [(3,)]\nassert find_combinations([(1, 2), (4, 5), (6, 7, 8)]) == [(7, 15), (12, 20)]\nassert find_combinations([10, 5, 2]) == [(12, 7), (7, 2), (10, 12), (7, 5), (10, 2), (5, 10)]",
+      "reference_key": "assert find_combinations([(1, 2), (3, 4), (5, 6)]) == [(3, 6), (4, 5), (5, 8), (6, 9), (7, 10), (8, 11)]\nassert find_combinations([(0, 0), (0, 0), (0, 0)]) == [(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]\nassert find_combinations([(-1, -2), (-3, -4), (-5, -6)]) == [(-4, -6), (-5, -5), (-6, -8), (-7, -9), (-8, -10), (-9, -11)]\nassert find_combinations([(10, 20), (30, 40), (50, 60)]) == [(40, 60), (50, 70), (60, 80), (70, 90), (80, 100), (90, 110)]\nassert find_combinations([]) == []",
+      "key_differs": true,
+      "text": "```python\nfrom itertools import combinations\n\ndef find_combinations(lst):\n    combinations_list = []\n    for r in range(1, len(lst) + 1):\n        for combo in combinations(lst, r):\n            combinations_list.append(combo)\n    return combinations_list\n\n# Test cases\nassert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\nassert find_combinations([]) == []\nassert find_combinations([3]) == [(3,)]\nassert find_combinations([(1, 2), (4, 5), (6, 7, 8)]) == [(7, 15), (12, 20)]\nassert find_combinations([10, 5, 2]) == [(12, 7), (7, 2), (10, 12), (7, 5), (10, 2), (5, 10)]\n```",
+      "quality": 0.0,
+      "final_key": "from itertools import combinations\n\ndef find_combinations(tuples_list):\n    result = []\n    for combo in combinations(tuples_list, 2):\n        result.append(sum(combo))\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nfrom itertools import combinations\n\ndef find_combinations(tuples_list):\n    result = []\n    for combo in combinations(tuples_list, 2):\n        result.append(sum(combo))\n    return result\n```",
+        "fixer": "```python\nfrom itertools import combinations\n\ndef find_combinations(tuples_list):\n    result = []\n    for combo in combinations(tuples_list, 2):\n        result.append(sum(combo))\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import itertools\n\ndef find_combinations(tuples_list):\n    combinations_of_sums = []\n    for r in range(2, len(tuples_list) + 1):\n        for combo in combinations(tuples_list, r):\n            combinations_of_sums.append(sum(combo))\n    \n    return combinations_of_sums\n\n# Example usage\nassert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\n\n# Edge case tests\nassert find_combinations([]) == []\nassert find_combinations([(-5, -3), (-2, 2), (3, -1)]) == [-4, -7, 2, -2]\nassert find_combinations([(0, 3, 6), (1, 4, 7), (2, 5, 8)]) == [3, 5, 9, 8, 8, 10]\nassert find_combinations([(100, 200), (-100, -200)]) == [0, 0]\nassert find_combinations([(9, 9)]*2) == [18, 18]",
+      "reference_key": "assert find_combinations([(1, 2), (3, 4), (5, 6)]) == [(3, 6), (4, 5), (5, 8), (6, 9), (7, 10), (8, 11)]\nassert find_combinations([(0, 0), (0, 0), (0, 0)]) == [(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]\nassert find_combinations([(-1, -2), (-3, -4), (-5, -6)]) == [(-4, -6), (-5, -5), (-6, -8), (-7, -9), (-8, -10), (-9, -11)]\nassert find_combinations([(10, 20), (30, 40), (50, 60)]) == [(40, 60), (50, 70), (60, 80), (70, 90), (80, 100), (90, 110)]\nassert find_combinations([]) == []",
+      "key_differs": true,
+      "text": "```python\nimport itertools\n\ndef find_combinations(tuples_list):\n    combinations_of_sums = []\n    for r in range(2, len(tuples_list) + 1):\n        for combo in combinations(tuples_list, r):\n            combinations_of_sums.append(sum(combo))\n    \n    return combinations_of_sums\n\n# Example usage\nassert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\n\n# Edge case tests\nassert find_combinations([]) == []\nassert find_combinations([(-5, -3), (-2, 2), (3, -1)]) == [-4, -7, 2, -2]\nassert find_combinations([(0, 3, 6), (1, 4, 7), (2, 5, 8)]) == [3, 5, 9, 8, 8, 10]\nassert find_combinations([(100, 200), (-100, -200)]) == [0, 0]\nassert find_combinations([(9, 9)]*2) == [18, 18]\n```",
+      "quality": 0.0,
+      "final_key": "from itertools import combinations\n\ndef find_combinations(tuples_list):\n    result = []\n    for combo in combinations(tuples_list, 2):\n        result.append(sum(combo))\n    return result",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nfrom itertools import combinations\n\ndef find_combinations(tuples_list):\n    result = []\n    for combo in combinations(tuples_list, 2):\n        result.append(sum(combo))\n    return result\n```",
+        "fixer": "```python\nfrom itertools import combinations\n\ndef find_combinations(tuples_list):\n    result = []\n    for combo in combinations(tuples_list, 2):\n        result.append(sum(combo))\n    return result\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": "assert find_combinations([(1, 2), (3, 4), (5, 6)]) == [(3, 6), (4, 5), (5, 8), (6, 9), (7, 10), (8, 11)]\nassert find_combinations([(0, 0), (0, 0), (0, 0)]) == [(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]\nassert find_combinations([(-1, -2), (-3, -4), (-5, -6)]) == [(-4, -6), (-5, -5), (-6, -8), (-7, -9), (-8, -10), (-9, -11)]\nassert find_combinations([(10, 20), (30, 40), (50, 60)]) == [(40, 60), (50, 70), (60, 80), (70, 90), (80, 100), (90, 110)]\nassert find_combinations([]) == []",
+      "key_differs": true,
+      "text": "```python\nassert test_duplicate(([1,2,3,4,5]))==False\nassert test_duplicate(([1,2,3,4,5,6]))==False\nassert test_duplicate(([1,2,3,4,5,6,7]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1",
+      "quality": 0.0,
+      "final_key": "from itertools import combinations\n\ndef find_combinations(tup_list):\n    result = []\n    for combo in combinations(tup_list, 2):\n        if sum(combo) % 2 != 0:\n            result.append(combo)\n    return result\n\n# Test cases\nassert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\nassert find_combinations([(3, 5), (7, 8), (6, 2), (7, 11)]) == [(10, 13), (9, 7), (10, 16), (13, 10), (14, 19), (13, 13)]\nassert find_combinations([(4, 6), (8, 9), (7, 3), (8, 12)]) == [(12, 15), (11, 9), (12, 18), (15, 12), (16, 21), (15, 15)]\nassert test_duplicate(([1,2,3,4,5]))==False\nassert test_duplicate(([1,2,3,4,5,6]))==False\nassert test_duplicate(([1,2,3,4,5,6,7]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12]))==False",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\nfrom itertools import combinations\n\ndef find_combinations(tup_list):\n    result = []\n    for combo in combinations(tup_list, 2):\n        if sum(combo) % 2 != 0:\n            result.append(combo)\n    return result\n\n# Test cases\nassert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\nassert find_combinations([(3, 5), (7, 8), (6, 2), (7, 11)]) == [(10, 13), (9, 7), (10, 16), (13, 10), (14, 19), (13, 13)]\nassert find_combinations([(4, 6), (8, 9), (7, 3), (8, 12)]) == [(12, 15), (11, 9), (12, 18), (15, 12), (16, 21), (15, 15)]\nassert test_duplicate(([1,2,3,4,5]))==False\nassert test_duplicate(([1,2,3,4,5,6]))==False\nassert test_duplicate(([1,2,3,4,5,6,7]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12]))==False\n```",
+        "fixer": "```python\nfrom itertools import combinations\n\ndef find_combinations(tup_list):\n    result = []\n    for combo in combinations(tup_list, 2):\n        if sum(combo) % 2 != 0:\n            result.append(combo)\n    return result\n\n# Test cases\nassert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\nassert find_combinations([(3, 5), (7, 8), (6, 2), (7, 11)]) == [(10, 13), (9, 7), (10, 16), (13, 10), (14, 19), (13, 13)]\nassert find_combinations([(4, 6), (8, 9), (7, 3), (8, 12)]) == [(12, 15), (11, 9), (12, 18), (15, 12), (16, 21), (15, 15)]\nassert test_duplicate(([1,2,3,4,5]))==False\nassert test_duplicate(([1,2,3,4,5,6]))==False\nassert test_duplicate(([1,2,3,4,5,6,7]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11]))==False\nassert test_duplicate(([1,2,3,4,5,6,7,8,9,10,11,12]))==False\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "assert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\nassert find_combinations([]) == []\nassert find_combinations([(-1, -2), (-3, -4)]) == [(-4, -3), (-3, -2), (-2, -1), (-1, -2)]\nassert find_combinations([(0, 0), (0, 0), (0, 0)]) == [(0, 0), (0, 0), (0, 0)]\nassert find_combinations([(1, 1), (1, 1), (1, 1), (1, 1)])",
+  "sample_keys": [
+    "assert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\nassert find_combinations([]) == []\nassert find_combinations([()] == [(0)]\nassert find_combinations([(-1, -1), (-1, 0), (0, -1)]) == [(-1, -1), (-1, 0), (0, -1)]\nassert find_combinations([(0, 0)]) == [(0, 0)]",
+    "from itertools import combinations\n\ndef find_combinations(tuple_list):\n    combinations_list = []\n    for r in range(1, len(tuple_list) + 1):\n        combs = combinations(tuple_list, r)\n        for combo in combs:\n            total = sum(combo)\n            tuples_with_sum = [tup for tup in tuple_list if sum(tup) == total]\n            if tuples_with_sum:\n                combinations_list.append((total, *tuples_with_sum))\n    return sorted(combinations_list, key=lambda x: x[0])\n\n# Test cases\nassert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\nassert find_combinations([]) == []\nassert find_combinations([(1,)]) == [(1,)]\nassert find_combinations([(1, 1)]) == [(2,)]\nassert find_combinations([(1, 2, 3)]) == [(3, 1, 2)]\n\nprint(\"All tests passed!\")",
+    "assert find_combinations([]) == []\nassert find_combinations([(-2, -3), (-1, -1)]) == [(-3, -2), (-2, -1), (-2, -1), (-3, -1)]\nassert find_combinations([(2, -3), (1, 1)]) == []\nassert find_combinations([(3), (4, 1), (1)]) == [(4, 1), (3, 1), (4, 1), (3, 1), (3, 1)]\nassert find_combinations([(1, 1, 1)]) == [(1, 1, 1)]",
+    "from itertools import combinations\n\ndef find_combinations(tup_list):\n    result = []\n    for combo in combinations(tup_list, 2):\n        if sum(combo) % 2 == 0:\n            result.append(combo)\n    return result\n\n# Test cases\nassert find_combinations([(2, 4), (6, 7), (5, 1), (6, 10)]) == [(8, 11), (7, 5), (8, 14), (11, 8), (12, 17), (11, 11)]\nassert find_combinations([]) == []\nassert find_combinations([3]) == []\nassert find_combinations([(10, 9, 8)]) == [(18, 17)]\nassert find_combinations([(-2, -1, 0, 1, 2)]) == [(-2, -1), (-2, 0), (-2, 1), (-2, 2), (-1, 0), (-1, 1), (-1, 2), (0, 1), (0, 2), (1, 2)]",
+    "assert find_combinations([]) == []\nassert find_combinations([(1, 2), (3, 4)]) == [(5, 6)]\nassert find_combinations([(0, 0), (1, 1), (2, 2)]) == [(0, 0), (1, 1), (2, 2), (1, 0), (0, 1), (0, 2)]\nassert find_combinations([(-1, -1), (-2, -2)]) == [(-3, -3), (-2, -1), (-1, -2)]\nassert find_combinations([(5, 5), (7, 7), (9, 9)]) == [(14, 14), (11, 12), (7, 10), (12, 11), (14, 13), (10, 11)]"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 2925.0,
+    "small_out": 531.0,
+    "small_s": 10.977626794978278
+  },
+  "calls_plus": {
+    "small_in": 2960.0,
+    "small_out": 365.0,
+    "small_s": 7.258353139972314,
+    "large_in": 212.0,
+    "large_out": 275.0,
+    "large_s": 6.037127237999812
+  },
+  "calls_samples": {
+    "small_in": 1060.0,
+    "small_out": 1031.0,
+    "small_s": 16.6823830610374
+  }
+}

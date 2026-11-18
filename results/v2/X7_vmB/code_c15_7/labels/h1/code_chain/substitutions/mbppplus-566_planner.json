@@ -1,0 +1,104 @@
+{
+  "task_id": "mbppplus-566",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Define a function named `sum_digits` that takes one parameter, `n`, which is the non-negative integer whose digits will be summed.\n2. Initialize a variable `total_sum` to 0. This variable will hold the cumulative sum of the digits.\n3. Use a loop to iterate through each digit in the number `n`. You can do this by repeatedly taking the remainder when `n` is divided by 10 (to get the last digit) and then dividing `n` by 10 (to remove the last digit).\n4. Inside the loop, add the current digit to `total_sum`.\n5. Once all digits have been processed, return the value of `total_sum`.",
+  "reference_key": null,
+  "final_key_plus": null,
+  "q_plus": 0.0,
+  "q_minus": 0.3333333333333333,
+  "consequence": -0.3333333333333333,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "tester": "```python\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(1000000000) == 1\n```",
+    "coder": "```python\ndef sum_digits(n):\n    total_sum = 0\n    while n > 0:\n        total_sum += n % 10\n        n //= 10\n    return total_sum\n```",
+    "verifier": "PICK: B",
+    "fixer": "```python\ndef sum_digits(n):\n    total_sum = 0\n    while n > 0:\n        total_sum += n % 10\n        n //= 10\n    return total_sum\n\n# Test cases\nassert sum_digits(345) == 12\nassert sum_digits(12) == 3\nassert sum_digits(97) == 16\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(1000000000) == 1\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `return_sum` that takes one parameter: a dictionary.\n2. Initialize a variable `total` to zero.\n3. Iterate over each key-value pair in the dictionary using a for loop.\n4. For each key-value pair, add the value (the second element) to the `total`.\n5. After iterating through all key-value pairs, return the `total`.\n\nThis approach ensures that the function correctly sums up all values in the dictionary.",
+      "quality": 1.0,
+      "final_key": "def sum_digits(number):\n    if number < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total = 0\n    while number > 0:\n        total += number % 10\n        number //= 10\n    return total",
+      "final_differs": true,
+      "descendants": {
+        "tester": "```python\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(-12345) == 15\n```",
+        "coder": "```python\ndef return_sum(dictionary):\n    total = 0\n    for key, value in dictionary.items():\n        total += value\n    return total\n```",
+        "verifier": "PICK: B\n\n```python\ndef sum_digits(number):\n    if number < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total = 0\n    while number > 0:\n        total += number % 10\n        number //= 10\n    return total\n```",
+        "fixer": "```python\ndef sum_digits(number):\n    if number < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total = 0\n    while number > 0:\n        total += number % 10\n        number //= 10\n    return total\n```"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `sum_digits` that takes one parameter, `n`, which is the non-negative integer whose digits will be summed.\n2. Initialize a variable `total_sum` to 0. This variable will hold the cumulative sum of the digits.\n3. Use a while loop to iterate until `n` becomes 0. In each iteration, extract the last digit of `n` using the modulus operator `%` and add it to `total_sum`. Then, remove the last digit from `n` by integer division `/`.\n4. Once the loop finishes, return the value of `total_sum`.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(1000000000) == 1\n```",
+        "coder": "```python\ndef sum_digits(n):\n    total_sum = 0\n    while n > 0:\n        total_sum += n % 10\n        n //= 10\n    return total_sum\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef sum_digits(n):\n    total_sum = 0\n    while n > 0:\n        total_sum += n % 10\n        n //= 10\n    return total_sum\n\n# Test cases\nassert sum_digits(345) == 12\nassert sum_digits(12) == 3\nassert sum_digits(97) == 16\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(999999999) == 45\nassert sum_digits(1000000000) == 1\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Define a function named `count_Set_Bits` that takes one parameter, `num`.\n2. Initialize a variable `count` to zero.\n3. Use a while loop to iterate as long as `num` is greater than zero.\n4. Inside the loop, use bitwise AND operation (`&`) between `num` and 1 to check if the least significant bit is set (i.e., equal to 1).\n5. If the result is 1, increment the `count` by 1.\n6. Right shift `num` by 1 bit using the right shift operator (`>>`) to process the next bit.\n7. Continue the loop until `num` becomes zero.\n8. Return the `count`.\n\nThis approach ensures that all set bits in the input number are counted efficiently.",
+      "quality": 0.0,
+      "final_key": null,
+      "final_differs": false,
+      "descendants": {
+        "tester": "```python\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(1111111111) == 11\nassert sum_digits(9999999999) == 45\n```",
+        "coder": "```python\ndef count_Set_Bits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n```",
+        "verifier": "PICK: B",
+        "fixer": "```python\ndef sum_digits(num):\n    count = 0\n    while num > 0:\n        count += num & 1\n        num >>= 1\n    return count\n\n# Test cases\nassert sum_digits(345) == 12\nassert sum_digits(12) == 3\nassert sum_digits(97) == 16\nassert sum_digits(98765) == 25\nassert sum_digits(0) == 0\nassert sum_digits(123456789) == 45\nassert sum_digits(1111111111) == 11\nassert sum_digits(9999999999) == 45\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "def sum_digits(num):\n    if num < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    total_sum = 0\n    while num > 0:\n        total_sum += num % 10\n        num //= 10\n    return total_sum",
+  "sample_keys": [
+    "def sum_digits(n):\n    if n < 0:\n        raise ValueError(\"invalid literal for int() with base 10: '-'\")\n    sum = 0\n    for char in str(n):\n        sum += int(char)\n    return sum",
+    null,
+    null
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": -0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1336.0,
+    "small_out": 510.0,
+    "small_s": 10.223199604981346
+  },
+  "calls_plus": {
+    "large_in": 105.0,
+    "large_out": 148.0,
+    "large_s": 3.2212894310068805,
+    "small_in": 1240.0,
+    "small_out": 306.0,
+    "small_s": 5.933207179012243
+  },
+  "calls_samples": {
+    "small_in": 4130.0,
+    "small_out": 1361.0,
+    "small_s": 25.605431660980685
+  }
+}

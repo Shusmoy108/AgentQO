@@ -1,0 +1,97 @@
+{
+  "task_id": "mbppplus-68",
+  "node_id": "tester",
+  "role": "researcher",
+  "reference": "```python\nassert is_Monotonic([1, 2, 3, 4, 5]) == True\nassert is_Monotonic([5, 4, 3, 2, 1]) == True\nassert is_Monotonic([1, 2, 2, 3, 4]) == True\nassert is_Monotonic([4, 3, 3, 2, 1]) == True\nassert is_Monotonic([1, 3, 2]) == False\n```",
+  "reference_key": "assert is_Monotonic([1, 2, 3, 4, 5]) == True\nassert is_Monotonic([5, 4, 3, 2, 1]) == True\nassert is_Monotonic([1, 2, 2, 3, 4]) == True\nassert is_Monotonic([4, 3, 3, 2, 1]) == True\nassert is_Monotonic([1, 3, 2]) == False",
+  "final_key_plus": "def is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 1.0,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "PICK: A\n\n```python\ndef is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n```",
+    "fixer": "```python\ndef is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n```"
+  },
+  "corruptions": [
+    {
+      "strategy": "resample_disagree",
+      "key": "assert is_Monotonic([]) == True, 'Edge case: empty array'\nassert is_Monotonic([1]) == True, 'Edge case: single element array'\nassert is_Monotonic([8, 8, 8, 8]) == True, 'All equal elements'\nassert is_Monotonic([-1, -2, -3, -4]) == True, 'Descending monotonic array'\nassert is_Monotonic([4, 3, 2, 1]) == True, 'Ascending monotonic array'",
+      "reference_key": "assert is_Monotonic([1, 2, 3, 4, 5]) == True\nassert is_Monotonic([5, 4, 3, 2, 1]) == True\nassert is_Monotonic([1, 2, 2, 3, 4]) == True\nassert is_Monotonic([4, 3, 3, 2, 1]) == True\nassert is_Monotonic([1, 3, 2]) == False",
+      "key_differs": true,
+      "text": "```python\nassert is_Monotonic([]) == True, 'Edge case: empty array'\nassert is_Monotonic([1]) == True, 'Edge case: single element array'\nassert is_Monotonic([8, 8, 8, 8]) == True, 'All equal elements'\nassert is_Monotonic([-1, -2, -3, -4]) == True, 'Descending monotonic array'\nassert is_Monotonic([4, 3, 2, 1]) == True, 'Ascending monotonic array'\n```",
+      "quality": 1.0,
+      "final_key": "def is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\ndef is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n```"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "import unittest\n\nclass TestIsMonotonic(unittest.TestCase):\n    def test_monotonic_array(self):\n        self.assertTrue(is_Monotonic([10, 20, 30]))  # expected output - true\n        self.assertFalse(is_Monotonic([30, 10]))      # expected output - false\n        self.assertTrue(is_Monotonic([-5, -4, -3, -2]))  # expected output - true\n        self.assertFalse(is_Monotonic([-5, 4, 3, 2]))     # expected output - false\n        self.assertTrue(is_Monotonic([7]))            # expected output - true\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)",
+      "reference_key": "assert is_Monotonic([1, 2, 3, 4, 5]) == True\nassert is_Monotonic([5, 4, 3, 2, 1]) == True\nassert is_Monotonic([1, 2, 2, 3, 4]) == True\nassert is_Monotonic([4, 3, 3, 2, 1]) == True\nassert is_Monotonic([1, 3, 2]) == False",
+      "key_differs": true,
+      "text": "```python\nimport unittest\n\nclass TestIsMonotonic(unittest.TestCase):\n    def test_monotonic_array(self):\n        self.assertTrue(is_Monotonic([10, 20, 30]))  # expected output - true\n        self.assertFalse(is_Monotonic([30, 10]))      # expected output - false\n        self.assertTrue(is_Monotonic([-5, -4, -3, -2]))  # expected output - true\n        self.assertFalse(is_Monotonic([-5, 4, 3, 2]))     # expected output - false\n        self.assertTrue(is_Monotonic([7]))            # expected output - true\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], exit=False)\n```",
+      "quality": 1.0,
+      "final_key": "def is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "PICK: A\n\n```python\ndef is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n```",
+        "fixer": "```python\ndef is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n```"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "assert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\nassert all_characters_same(\"aa\") == True\nassert all_characters_same(\"ab\") == False\nassert all_characters_same(\"aaa\") == True",
+      "reference_key": "assert is_Monotonic([1, 2, 3, 4, 5]) == True\nassert is_Monotonic([5, 4, 3, 2, 1]) == True\nassert is_Monotonic([1, 2, 2, 3, 4]) == True\nassert is_Monotonic([4, 3, 3, 2, 1]) == True\nassert is_Monotonic([1, 3, 2]) == False",
+      "key_differs": true,
+      "text": "```python\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\nassert all_characters_same(\"aa\") == True\nassert all_characters_same(\"ab\") == False\nassert all_characters_same(\"aaa\") == True\n```",
+      "quality": 0.0,
+      "final_key": "def is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n\n# Test cases\nassert is_Monotonic([6, 5, 4, 4]) == True\nassert is_Monotonic([1, 2, 2, 3]) == True\nassert is_Monotonic([1, 3, 2]) == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\nassert all_characters_same(\"aa\") == True\nassert all_characters_same(\"ab\") == False\nassert all_characters_same(\"aaa\") == True",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "PICK: B\n\n```python\ndef is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n\n# Test cases\nassert is_Monotonic([6, 5, 4, 4]) == True\nassert is_Monotonic([1, 2, 2, 3]) == True\nassert is_Monotonic([1, 3, 2]) == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\nassert all_characters_same(\"aa\") == True\nassert all_characters_same(\"ab\") == False\nassert all_characters_same(\"aaa\") == True\n```",
+        "fixer": "```python\ndef is_Monotonic(arr):\n    # Check if the array is sorted in ascending order\n    if arr == sorted(arr):\n        return True\n    # Check if the array is sorted in descending order\n    elif arr == sorted(arr, reverse=True):\n        return True\n    else:\n        return False\n\n# Test cases\nassert is_Monotonic([6, 5, 4, 4]) == True\nassert is_Monotonic([1, 2, 2, 3]) == True\nassert is_Monotonic([1, 3, 2]) == False\nassert all_characters_same(\"\") == True\nassert all_characters_same(\"a\") == True\nassert all_characters_same(\"aa\") == True\nassert all_characters_same(\"ab\") == False\nassert all_characters_same(\"aaa\") == True\n```"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "assert is_Monotonic([1, 2, 3, 4, 5]) == True\nassert is_Monotonic([5, 4, 3, 2, 1]) == True\nassert is_Monotonic([1, 3, 2, 4, 5]) == False\nassert is_Monotonic([1, 2, 2, 3, 4]) == True\nassert is_Monotonic([]) == True",
+  "sample_keys": [
+    "assert is_Monotonic([]) == True\nassert is_Monotonic([1]) == True\nassert is_Monotonic([3, 2, 1]) == True\nassert is_Monotonic([1, 3, 2, 4]) == True\nassert is_Monotonic([3, 1, 2, 4]) == False",
+    null,
+    "assert is_Monotonic([10, 20, 30, 40]) == True\nassert is_Monotonic([10, 20, 40, 30]) == False\nassert is_Monotonic([-1, -2, -3, -4]) == True\nassert is_Monotonic([1, 2, 2, 3]) == True\nassert is_Monotonic([]) == True  # Edge case: An empty list is considered monotonic",
+    "# Edge case: empty list\nassert is_Monotonic([]) == True\n\n# Edge case: single element array\nassert is_Monotonic([1]) == True\n\n# Edge case: all elements are equal\nassert is_Monotonic([1, 1, 1, 1]) == True\n\n# Typical case: increasing sequence\nassert is_Monotonic([1, 2, 3, 4, 5]) == True\n\n# Typical case: decreasing sequence\nassert is_Monotonic([5, 4, 3, 2, 1]) == True\n\n# Edge case: mixed sequence (increasing then decreasing)\nassert is_Monotonic([1, 3, 2, 4, 5]) == False\n\n# Edge case: mixed sequence (decreasing then increasing)\nassert is_Monotonic([5, 4, 1, 3, 2]) == False",
+    "assert is_Monotonic([1, 2, 3, 4, 5]) == True\nassert is_Monotonic([1, 3, 2, 4, 5]) == False\nassert is_Monotonic([1, 1, 1, 1, 1]) == True\nassert is_Monotonic([]) == True\nassert is_Monotonic([7, 8, 9, 9, 8, 7]) == True\nassert is_Monotonic([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == False"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1526.0,
+    "small_out": 405.0,
+    "small_s": 8.741327324038139
+  },
+  "calls_plus": {
+    "small_in": 1350.0,
+    "small_out": 293.0,
+    "small_s": 5.888563193031587,
+    "large_in": 197.0,
+    "large_out": 119.0,
+    "large_s": 2.6261193880054634
+  },
+  "calls_samples": {
+    "small_in": 985.0,
+    "small_out": 1082.0,
+    "small_s": 19.35165536898421
+  }
+}
