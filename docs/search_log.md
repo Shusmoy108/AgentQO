@@ -129,3 +129,10 @@ Times UTC. Choices made without asking, as instructed.
   matched ~15 lines of the log's top-plan table (accuracies 0.95-0.97). No S6 code, method or decision rule changed;
   s6.py / methods.py / surrogates.py are as at search-prereg-s6-20261118T0054Z apart from changes logged above.
 - X7 code_c15_7 plans landed in the same merge; X6 math_q7_32 has labels only. X8 not landed.
+- S6(a) run (s6.py x3, seeds 0-29, B = 15/36/73): FAILED, 0 of 3 cells pass. Active-learning NSGA-II beats
+  abacus_nextbest at every budget but by 0.0062 / 0.0056 / 0.0027 HV ratio, all below tau = 0.0134. Strict HV
+  (reported, not decisive) favours active by 0.076 / 0.069 / 0.034. Both methods are near-deterministic across seeds
+  on this space (seed SD <= 0.0001), so the CIs are seed spread only, not problem-sampling uncertainty.
+- Bug fixed in s6.py (reporting only): re-reading S6.md keyed each part by its whole first line, so running one part
+  dropped the other. Key is now the "## S6(x)" prefix. S6(b) regenerated from the unchanged s6b_sweep CSV;
+  text identical to the committed one.

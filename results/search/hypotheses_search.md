@@ -188,7 +188,15 @@ Caveat: retention > 1 means the X2 problems score higher for the same plans
 ## S6 (confirmatory; docs/search_prereg_s6.md)
 
 
-### S6(a) X3 cross-family: PENDING (X3 plans not landed)
+### S6(a) X3 cross-family (729 plans, 200 problems): FAILED
+
+Decision: PASS if the paired 95% CI lower bound of (active - abacus_nextbest) > tau = 0.0134.
+
+| budget_frac | B | active | abacus_nextbest | diff | ci_low | ci_high | decision | strict_active | strict_abacus | strict_diff | strict_ci_low | strict_ci_high |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0.0200 | 15 | 0.9849 | 0.9788 | 0.0062 | 0.0062 | 0.0062 | fail | 0.8134 | 0.7371 | 0.0763 | 0.0763 | 0.0763 |
+| 0.0500 | 36 | 0.9881 | 0.9826 | 0.0056 | 0.0056 | 0.0056 | fail | 0.8532 | 0.7843 | 0.0688 | 0.0688 | 0.0688 |
+| 0.1000 | 73 | 0.9884 | 0.9857 | 0.0027 | 0.0027 | 0.0028 | fail | 0.8567 | 0.8227 | 0.0340 | 0.0337 | 0.0343 |
 
 
 ### S6(b) simulated, seeds 1000-1029: PARTIAL

@@ -95,7 +95,7 @@ def main():
     what = sys.argv[1] if len(sys.argv) > 1 else "sim"
     md_path = OUT / "S6.md"
     parts = md_path.read_text().split("\n<!-- part -->\n") if md_path.exists() else []
-    keep = {p.split("\n", 1)[0]: p for p in parts if p.startswith("## S6(")}
+    keep = {p[:8]: p for p in parts if p.startswith("## S6(")}  # key "## S6(a)" / "## S6(b)"
     if what == "sim":
         t, v = part_b()
         keep["## S6(b)"] = "\n".join([f"## S6(b) simulated, seeds 1000-1029: {v}", "",
