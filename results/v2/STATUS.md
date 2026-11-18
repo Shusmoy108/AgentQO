@@ -275,3 +275,6 @@ RuntimeError: Engine core initialization failed. See root cause above. Failed co
 2026-11-18T04:28:22Z VM-A GATE X6-math_q7_32-labels: math_q7_32: labels done; plans INCOMPLETE
 2026-11-18T04:28:46Z VM-B GATE X7-smoke: code_c15_7: labels INCOMPLETE; plans INCOMPLETE; smoke all_small=0.60 all_large=0.40
 2026-11-18T04:45:48Z VM-B GATE X7-plans: code_c15_7: labels INCOMPLETE; 32 plans, small 0.483 large 0.758 best 0.758; smoke all_small=0.60 all_large=0.40
+2026-11-18T04:54:17Z TIME LEFT after X7 labels: 19.1 h to 2026-11-19T00:00Z
+2026-11-18T04:54:19Z TIME LEFT after X7 plans: 19.1 h to 2026-11-19T00:00Z
+2026-11-18T04:56:47Z VM-A GATE X6-math_q7_32-plans: hotpot_q7_32: labels INCOMPLETE | math_q7_32: labels done; 64 plans, small 0.820 large 0.930 best 0.940
