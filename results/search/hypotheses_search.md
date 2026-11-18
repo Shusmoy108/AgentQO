@@ -99,6 +99,7 @@ verified front's plans with X2 accuracy / with eval accuracy (eval API cost). Ru
 | hotpot_iso_q15_7 | 4 | 1.0387 | 0.8658 | 4.0 |
 | hotpot_q15_7 | 4 | 1.0427 | 0.9506 | 4.0 |
 | math_granite | 6 | 1.0295 | 0.9565 | 5.0 |
+| math_phi | 6 | 1.0253 | 0.9778 | 3.0 |
 | math_q15_7 | 6 | 1.0299 | 0.9376 | 4.0 |
 
 All methods (supplementary; TRUE_EVAL_FRONT = the true eval front's plans re-scored):
@@ -150,6 +151,21 @@ All methods (supplementary; TRUE_EVAL_FRONT = the true eval front's plans re-sco
 | math_granite | rule_confident_uv | 1.0392 | 0.9780 |
 | math_granite | rule_output | 1.0354 | 0.9698 |
 | math_granite | rule_structural | 1.0238 | 0.8866 |
+| math_phi | TRUE_EVAL_FRONT | 1.0064 | 1.0000 |
+| math_phi | abacus | 1.0122 | 0.9869 |
+| math_phi | gde3_pairwise_m3 | 1.0253 | 0.9778 |
+| math_phi | greedy_uv | 1.0118 | 0.9804 |
+| math_phi | mopso_pairwise_m3 | 1.0253 | 0.9778 |
+| math_phi | nsga2_active_m3 | 1.0253 | 0.9778 |
+| math_phi | nsga2_indep_add | 1.0122 | 0.9869 |
+| math_phi | nsga2_indep_mult | 1.0122 | 0.9869 |
+| math_phi | nsga2_logit_add | 1.0117 | 0.9861 |
+| math_phi | nsga2_pairwise_m3 | 1.0253 | 0.9778 |
+| math_phi | nsga2_pairwise_m5 | 1.0253 | 0.9778 |
+| math_phi | random | 1.0102 | 0.7012 |
+| math_phi | rule_confident_uv | 1.0169 | 0.9936 |
+| math_phi | rule_output | 1.0178 | 0.9936 |
+| math_phi | rule_structural | 1.0881 | 0.9158 |
 | math_q15_7 | TRUE_EVAL_FRONT | 0.9906 | 0.9727 |
 | math_q15_7 | abacus | 0.9937 | 0.9479 |
 | math_q15_7 | gde3_pairwise_m3 | 1.0299 | 0.9376 |
