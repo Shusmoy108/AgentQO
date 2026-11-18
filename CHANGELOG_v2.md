@@ -586,3 +586,5 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T06:57:21Z TIMING_LOCK X6-latency: no X3/non-timing GPU job running on VM-A (confirmed)
 - 2026-11-18T06:57:23Z TIMING_LOCK created on VM-B by X6-latency
 - 2026-11-18T06:57:23Z TIMING_LOCK X6-latency: no X3/non-timing GPU job running on VM-B (confirmed)
+- 2026-11-18T07:08:47Z TIMING_LOCK released on VM-A by X6-latency
+- 2026-11-18T07:08:49Z TIMING_LOCK released on VM-B by X6-latency
