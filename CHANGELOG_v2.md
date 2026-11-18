@@ -603,3 +603,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T15:12:41Z X12 prep VM-A: x clone 75da2c83;  8 passed in 1.06s ; /mnt/data 30G free
 - 2026-11-18T15:16:15Z X12 math_q15_7 done: eval all_small 0.5075 x2 all_small 0.5146036161335188 
 - 2026-11-18T15:20:04Z X12 math_granite done: eval all_small 0.4625 x2 all_small 0.5312934631432545 
+- 15:23Z X12 done; H6b NOT HELD (router cost 92% / 79% of fixed; Granite also -1.39 points).
