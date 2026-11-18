@@ -1,0 +1,108 @@
+{
+  "task_id": "gsm8k-test-1028",
+  "node_id": "planner",
+  "role": "planner",
+  "reference": "PLAN:\n1. Calculate the remaining amount Tom needs to pay after selling his old bedroom set by subtracting $1000 from $3000.\n2. Determine the monthly payment rate by calculating 10% of the remaining amount from step 1.\n3. The result from step 2 is the monthly payment Tom has to make.",
+  "reference_key": null,
+  "final_key_plus": "200",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_2": "RESULT: 200",
+    "aggregator": "Tom initially pays $3000 for the bedroom set but uses $1000 from selling his old one, reducing the amount to $2000. With a 10% monthly interest rate, he needs to pay $200 per month. #### 200",
+    "step_3": "RESULT: 200",
+    "step_1": "RESULT: 2000",
+    "verifier": "The initial calculation of the reduced price is correct. However, the application of the 10% monthly interest rate to the remaining $2000 is not correctly interpreted as $200 per month. The correct computation should be 10% of $2000, which is $200. \n\nFinal answer: 200"
+  },
+  "corruptions": [
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Determine the number of silver coins by subtracting 30 from the number of gold coins (70 - 30).\n2. Calculate the total number of coins by adding the number of gold coins to the number of silver coins.\n3. State the total number of coins without performing the final addition step.",
+      "quality": 0.0,
+      "final_key": "110",
+      "final_differs": true,
+      "descendants": {
+        "step_2": "RESULT: 110",
+        "aggregator": "Tom first pays $2000 ($3000 - $1000) upfront for the bedroom set. With a 10% monthly interest, he needs to calculate the monthly payment on this remaining amount. The monthly payment is $2000 / 10 = $200. However, since the step result provided indicates a different calculation leading to $110, we will use that as the basis for the final answer.\n\nTherefore, Tom has to pay $110 per month. #### 110",
+        "step_3": "RESULT: 110",
+        "step_1": "RESULT: 40",
+        "verifier": "Tom first pays $2000 ($3000 - $1000) upfront for the bedroom set. With a 10% monthly interest on the remaining amount, the correct monthly payment is calculated by considering the remaining principal over time. The initial calculation of dividing the principal by 10 is incorrect because it does not account for compound interest. The correct approach would be to use the formula for calculating monthly payments on a loan, which involves the principal, the interest rate, and the term of the loan. Given the problem's context and the need to simplify, the provided answer of $110 seems to be derived from a simplified or specific context not detailed here.\n\nFinal answer: 110"
+      }
+    },
+    {
+      "strategy": "llm_subtle_wrong",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the remaining amount Tom needs to pay after selling his old bedroom set by subtracting $1000 from $3000.\n2. Determine the monthly payment rate by calculating 15% of the remaining amount from step 1.\n3. The result from step 2 is the monthly payment Tom has to make.",
+      "quality": 1.0,
+      "final_key": "200",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "RESULT: 200",
+        "aggregator": "Tom initially pays $3000 for the bedroom set but uses $1000 from selling his old one, reducing the amount to $2000. With a 10% monthly interest rate, he needs to pay $200 per month. #### 200",
+        "step_3": "RESULT: 200",
+        "step_1": "RESULT: 2000",
+        "verifier": "The initial calculation of the reduced price is correct. However, the application of the 10% monthly interest rate to the remaining $2000 is not correctly interpreted as $200 per month. The correct computation should be 10% of $2000, which is $200. \n\nFinal answer: 200"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": null,
+      "reference_key": null,
+      "key_differs": null,
+      "text": "PLAN:\n1. Calculate the distance James swims initially (60% of 20 miles).\n2. Determine the time taken to swim this distance (distance / speed).\n3. Compute the rest and final swim times, then sum all times.",
+      "quality": 1.0,
+      "final_key": "200",
+      "final_differs": false,
+      "descendants": {
+        "step_2": "RESULT: 2.4",
+        "aggregator": "Tom initially pays $3000 - $1000 = $2000 after using the proceeds from selling his old bedroom set. With a 10% monthly interest rate, he has to pay $2000 * 10% = $200 per month. #### 200",
+        "step_3": "RESULT: 2.4",
+        "step_1": "RESULT: 12",
+        "verifier": "The initial calculation to determine how much Tom pays after using the proceeds from selling his old bedroom set is correct: $3000 - $1000 = $2000. However, the computation for the monthly payment should consider that the 10% is applied to the remaining balance each month, not just once. The correct monthly payment would be based on the remaining balance decreasing each month by paying 10% of the current balance.\n\nTo clarify, the first month's payment is indeed $200 (10% of $2000), but the following months' calculations need to account for the reduction in the balance after each payment. For simplicity, if we assume the 10% is applied to the initial balance without reducing the principal each month, the monthly payment remains $200 as calculated.\n\nFinal answer: 200"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "200",
+  "sample_keys": [
+    "200",
+    "200",
+    "200"
+  ],
+  "consequence_by_strategy": {
+    "swap_other_task": 0.5,
+    "llm_subtle_wrong": 0.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1141.0,
+    "small_out": 232.0,
+    "small_s": 2.836838838973108
+  },
+  "calls_plus": {
+    "large_in": 136.0,
+    "large_out": 73.0,
+    "large_s": 2.4400304169976152,
+    "small_in": 1005.0,
+    "small_out": 159.0,
+    "small_s": 1.5477472970087547
+  },
+  "calls_samples": {
+    "small_in": 3549.0,
+    "small_out": 753.0,
+    "small_s": 7.016801211051643
+  }
+}

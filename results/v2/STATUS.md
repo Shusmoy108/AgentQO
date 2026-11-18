@@ -250,3 +250,28 @@ RuntimeError: Engine core initialization failed. See root cause above. Failed co
 (EngineCore pid=729113) INFO 11-18 02:03:39 [core.py:395] init engine (profile, create kv cache, warmup model) took 10.80 s (compilation: 0.15 s)
 88679 MiB, 95830 MiB
 2026-11-18T02:08:47Z X6 schedule: X6 quality waits for X3 to complete on VM-B (X3 holds :8003 with Phi-4 and 0.92 of VM-B's GPU; X6 needs Qwen 7B on :8003). X3 restarted 02:07Z (~2 h of plans left), so X6 quality starts ~04:20Z; VM-A idles until then (moving X7 to VM-A instead would end later). tools/stage4b_orch.sh replaces stage 4 after X5.
+2026-11-18T03:37:13Z X8 START on VM-A (search-prereg-s5b tag on origin; VM-A idle before X6)
+2026-11-18T03:37:46Z X8 scheduled (L2-X8 registered 1981d1e4 before any X8 data): /mnt/data/x8.sh A-x8 (x clone c1bb8338, V2_DEVIATION=D-L2-X-code; complex_q15_7, all 1,024 plans, eval_x2[:200], same flags as P2c: max_tokens 256, cautious verifier, servers 0.25/0.55; P2c labels reused). tools/stage4c_orch.sh (replaces stage4b) starts X8 on VM-A once search-prereg-s5b-* is on origin (not there at 03:35Z), pauses it when X3 completes (X6 priority), resumes it from the cache after X6.
+2026-11-18T04:13:30Z X7 START on VM-B: 19.8 h left before 2026-11-19T00:00Z (X5/X6 run on VM-A in parallel)
+2026-11-18T04:13:44Z TIME LEFT after X3: 25.8 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T04:13:44Z X4 not run as a seed replicate: redefined (721e6cf8) and done early; see X4/
+2026-11-18T04:14:09Z X8 PAUSED on VM-A for X6 (X3 complete; resumes from the cache after X6)
+2026-11-18T04:14:09Z X6 quality starts: X3 complete on VM-B
+2026-11-18T04:13:19Z X3 COMPLETE on VM-B
+2026-11-18T04:13:36Z X7 prep VM-B: x clone at 88e9d762; system python3 numpy 1.21.5
+2026-11-18T04:13:42Z X7 STOPPED: sandbox tests failed or skipped on VM-B (X7/sandbox_tests_vmB.txt)
+2026-11-18T04:14:41Z X7 STOPPED at prep (sandbox tests)
+2026-11-18T04:15:42Z X7 START on VM-B: 19.7 h left before 2026-11-19T00:00Z (X5/X6 run on VM-A in parallel)
+2026-11-18T04:15:55Z X7 prep on VM-B stopped at 04:13Z: 1 of 13 sandbox tests failed, a test bug, not a sandbox failure. test_sandbox_hides_repo_caches_and_mnt_data asserted the word 'secret' was absent from the output, but the probe prints 'HIDDEN <path>' and the canary was named secret.txt; the canary itself was HIDDEN. (The Mac suite skips these Linux-only tests, so this was their first Linux run.) Fix aececaa1 on v2-lease2-x (test only: the canary's content token is checked instead; agentqo/tasks/sandbox.py unchanged). On VM-B at aececaa1: 13 passed. /proc/1 inside the sandbox is the sandboxed python itself (PID namespace), environ only PATH=/usr/bin:/bin HOME=/mnt. x.sh x7prep now pins aececaa1; the failed test output moved to X7/superseded_test_bug_0413Z; X7_STOP renamed X7_STOP.superseded_testfix_0420Z; stage 5 restarted from x7prep (04:21Z).
+2026-11-18T04:15:46Z X7 prep VM-B: x clone at aececaa1; system python3 numpy 1.21.5
+2026-11-18T04:16:58Z VM-B GATE X3-plans: no settings
+2026-11-18T04:17:17Z VM-B GATE X3: no settings
+2026-11-18T04:18:54Z X7 STOPPED at prep
+2026-11-18T04:19:42Z X7 START on VM-B: 19.7 h left before 2026-11-19T00:00Z (X5/X6 run on VM-A in parallel)
+2026-11-18T04:19:46Z X7 prep VM-B: x clone at aececaa1; system python3 numpy 1.21.5
+2026-11-18T04:21:54Z X7 prep VM-B: sandbox tests ============================== 13 passed in 5.22s ==============================; full suite ======================= 221 passed in 120.45s (0:02:00) ========================
+2026-11-18T04:25:39Z X7 SMOKE PASSED: X7 smoke {'all_small': 0.6, 'all_large': 0.4}
+2026-11-18T04:26:26Z X7 prep (2nd stop, 04:17Z): sandbox 13/13 at aececaa1, full suite 1 failed / 220 passed: test_package_commits_text_only_and_never_forces fails only because lq.sh exports V2_PUSH=0 (VM blocks never commit); confirmed on VM-B (fails with V2_PUSH=0, passes without). x.sh x7prep now runs the full suite under env -u V2_PUSH (run-script change only). Outputs moved to X7/superseded_env_V2_PUSH_0417Z; stage 5 restarted 04:19:38Z. Correction: the first stage 5 restart was 04:15:42Z, not 04:21Z as written above. X7 prep passed 04:21:54Z (sandbox 13 passed; full suite 221 passed); Coder 1.5B/7B downloaded; X7 servers up (Coder 7B :8002 0.45, Coder 1.5B :8001 0.15, Qwen 7B :8003 0.30 for X6). X7 SMOKE PASSED 04:25:39Z (5 problems: all_small 0.6, all_large 0.4); the failing cases are model errors, e.g. all_large mbppplus-721 uses @lru_cache without importing it.
+2026-11-18T04:28:22Z VM-A GATE X6-math_q7_32-labels: math_q7_32: labels done; plans INCOMPLETE
+2026-11-18T04:28:46Z VM-B GATE X7-smoke: code_c15_7: labels INCOMPLETE; plans INCOMPLETE; smoke all_small=0.60 all_large=0.40
+2026-11-18T04:45:48Z VM-B GATE X7-plans: code_c15_7: labels INCOMPLETE; 32 plans, small 0.483 large 0.758 best 0.758; smoke all_small=0.60 all_large=0.40

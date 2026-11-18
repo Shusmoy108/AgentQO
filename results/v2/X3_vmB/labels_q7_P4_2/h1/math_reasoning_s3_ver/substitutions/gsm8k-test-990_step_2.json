@@ -1,0 +1,102 @@
+{
+  "task_id": "gsm8k-test-990",
+  "node_id": "step_2",
+  "role": "researcher",
+  "reference": "To calculate the temperature change during the next 4 hours on high:\n\nCooling effect = 4 hours * 3 degrees/hour = 12 degrees\n\nRESULT: 12",
+  "reference_key": "12",
+  "final_key_plus": "14",
+  "q_plus": 1.0,
+  "q_minus": 1.0,
+  "consequence": 0.0,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "step_3": "Cooling effect = 2 hours * -2 degrees/hour = -4 degrees\n\nRESULT: -4",
+    "aggregator": "The air conditioner ran on low for 3 hours, cooling the room by \\(3 \\text{ hours} \\times -2 \\text{ degrees/hour} = -6 \\text{ degrees}\\).\n\nThen it was set to high for 4 hours, cooling the room by \\(4 \\text{ hours} \\times -3 \\text{ degrees/hour} = -12 \\text{ degrees}\\).\n\nAfter being turned off for 2 hours, the room warmed up by \\(2 \\text{ hours} \\times 2 \\text{ degrees/hour} = 4 \\text{ degrees}\\).\n\nSo, the total change in temperature is \\(-6 \\text{ degrees} + (-12 \\text{ degrees}) + 4 \\text{ degrees} = -14 \\text{ degrees}\\).\n\nThe final temperature is 14 degrees lower than the starting temperature.\n\n#### 14",
+    "verifier": "Let's recompute the temperature changes step-by-step:\n\n- The air conditioner ran on low for 3 hours, cooling the room by \\(3 \\text{ hours} \\times -2 \\text{ degrees/hour} = -6 \\text{ degrees}\\).\n- Then it was set to high for 4 hours, cooling the room by \\(4 \\text{ hours} \\times -3 \\text{ degrees/hour} = -12 \\text{ degrees}\\).\n- After being turned off for 2 hours, the room warmed up by \\(2 \\text{ hours} \\times 2 \\text{ degrees/hour} = 4 \\text{ degrees}\\).\n\nSo, the total change in temperature is \\(-6 \\text{ degrees} + (-12 \\text{ degrees}) + 4 \\text{ degrees} = -14 \\text{ degrees}\\).\n\nThe final temperature is 14 degrees lower than the starting temperature.\n\nFinal answer: 14"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "13",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "To calculate the temperature change during the next 4 hours on high:\n\nCooling effect = 4 hours * 3 degrees/hour = 12 degrees\n\nRESULT: 13",
+      "quality": 1.0,
+      "final_key": "14",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "The air conditioner is turned off for 2 hours, and the room warms up at a rate of 2 degrees per hour.\n\nWarming effect = 2 hours * 2 degrees/hour = 4 degrees\n\nRESULT: -4",
+        "aggregator": "The air conditioner ran on low for 3 hours, cooling the room at a rate of 2 degrees per hour.\n\nCooling effect (low) = 3 hours * 2 degrees/hour = 6 degrees\n\nThen, the air conditioner was turned up to high for 4 hours, cooling the room at a rate of 3 degrees per hour.\n\nCooling effect (high) = 4 hours * 3 degrees/hour = 12 degrees\n\nAfterward, the air conditioner was turned off for 2 hours, and the room warmed up at a rate of 2 degrees per hour.\n\nWarming effect = 2 hours * 2 degrees/hour = 4 degrees\n\nNet change in temperature = Cooling effect (low) + Cooling effect (high) - Warming effect\n= 6 degrees + 12 degrees - 4 degrees\n= 14 degrees\n\nThe final temperature is 14 degrees lower than the starting temperature.\n\n#### 14",
+        "verifier": "Recomputing the answer:\n\n- Cooling effect (low) = 3 hours * 2 degrees/hour = 6 degrees\n- Cooling effect (high) = 4 hours * 3 degrees/hour = 12 degrees\n- Warming effect = 2 hours * 2 degrees/hour = 4 degrees\n\nNet change in temperature = 6 degrees + 12 degrees - 4 degrees = 14 degrees\n\nThere is no specific arithmetic or reading mistake in the provided solution.\n\nFinal answer: 14"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "300",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 300",
+      "quality": 1.0,
+      "final_key": "14",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "The air conditioner runs on high for 4 hours, cooling the room at a rate of 3 degrees per hour.\n\nCooling effect = 4 hours * 3 degrees/hour = 12 degrees\n\nRESULT: 18\nCarry out step 3: The air conditioner is turned off for 2 hours, and the room warms up at a rate of 2 degrees per hour.\n\nWarming effect = 2 hours * 2 degrees/hour = 4 degrees\n\nFinal temperature change = 6 (from low) + 12 (from high) - 4 (from warming) = 14 degrees\n\nRESULT: 14",
+        "aggregator": "The final temperature was 14 degrees lower than the starting temperature. #### 14",
+        "verifier": "Let's break down the cooling process step by step:\n\n1. **Low setting for 3 hours**: The air conditioner cools the room at 2 degrees per hour.\n   - Total cooling effect: \\(3 \\text{ hours} \\times 2 \\text{ degrees/hour} = 6 \\text{ degrees}\\).\n\n2. **High setting for 4 hours**: The air conditioner cools the room at 3 degrees per hour.\n   - Total cooling effect: \\(4 \\text{ hours} \\times 3 \\text{ degrees/hour} = 12 \\text{ degrees}\\).\n\n3. **No air conditioning for 2 hours**: The room warms up at 2 degrees per hour.\n   - Total warming effect: \\(2 \\text{ hours} \\times 2 \\text{ degrees/hour} = 4 \\text{ degrees}\\).\n\nNow, summing up the net cooling effect:\n- Net cooling effect: \\(6 \\text{ degrees} + 12 \\text{ degrees} - 4 \\text{ degrees} = 14 \\text{ degrees}\\).\n\nThe proposed answer of 14 degrees is correct.\n\nFinal answer: 14"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "5",
+      "reference_key": "12",
+      "key_differs": true,
+      "text": "RESULT: 5",
+      "quality": 1.0,
+      "final_key": "14",
+      "final_differs": false,
+      "descendants": {
+        "step_3": "The air conditioner runs on high for 4 hours, cooling the room at a rate of 3 degrees per hour.\n\nCooling effect = 4 hours * 3 degrees/hour = 12 degrees\n\nNow, add the cooling effects and subtract the warming effect:\n\nTotal cooling effect = 6 degrees (low) + 12 degrees (high) = 18 degrees\nWarming effect = 2 hours * 2 degrees/hour = 4 degrees\n\nFinal temperature change = Total cooling effect - Warming effect = 18 degrees - 4 degrees = 14 degrees\n\nRESULT: 14",
+        "aggregator": "The final temperature was 14 degrees lower than the starting temperature. #### 14",
+        "verifier": "Let's break down the cooling process step by step:\n\n1. **Low setting for 3 hours**: The air conditioner cools the room at 2 degrees per hour.\n   - Total cooling effect: \\(3 \\text{ hours} \\times 2 \\text{ degrees/hour} = 6 \\text{ degrees}\\).\n\n2. **High setting for 4 hours**: The air conditioner cools the room at 3 degrees per hour.\n   - Total cooling effect: \\(4 \\text{ hours} \\times 3 \\text{ degrees/hour} = 12 \\text{ degrees}\\).\n\n3. **No air conditioning for 2 hours**: The room warms up at 2 degrees per hour.\n   - Total warming effect: \\(2 \\text{ hours} \\times 2 \\text{ degrees/hour} = 4 \\text{ degrees}\\).\n\nNow, summing up the net cooling effect:\n- Net cooling effect: \\(6 \\text{ degrees} + 12 \\text{ degrees} - 4 \\text{ degrees} = 14 \\text{ degrees}\\).\n\nThe proposed answer of 14 degrees is correct.\n\nFinal answer: 14"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "12",
+  "sample_keys": [
+    "12",
+    "12",
+    "12",
+    "12",
+    "12"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": null,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1519.0,
+    "small_out": 509.0,
+    "small_s": 4.629879587002506
+  },
+  "calls_plus": {
+    "small_in": 1215.0,
+    "small_out": 512.0,
+    "small_s": 11.043377916997997,
+    "large_in": 250.0,
+    "large_out": 37.0,
+    "large_s": 1.128662164999696
+  },
+  "calls_samples": {
+    "small_in": 1260.0,
+    "small_out": 245.0,
+    "small_s": 5.445106367002154
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "task_id": "gsm8k-test-960",
+  "node_id": "aggregator",
+  "role": "aggregator",
+  "reference": "The total number of holes dug by the end of the first day was 10. By the end of the fourth day, there were four times this amount, which equals 40 holes. However, we know that by the end of the third day, they had dug a total of 10 + 13 + 8 = 31 holes but then filled in 2 holes, leaving them with 29 holes. To reach the total of 40 holes by the end of the fourth day, they must have dug 40 - 29 = 11 holes on the fourth day before finding the treasure.\n\n#### 11",
+  "reference_key": "11",
+  "final_key_plus": "11",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.8,
+  "baseline_agrees": false,
+  "descendants_plus": {
+    "verifier": "The initial computation of the total number of holes by the end of the first day (10) and the target number of holes by the end of the fourth day (40) is correct. The calculation of the total number of holes dug up to the end of the third day (31) minus the 2 holes filled in (29) is also correct. The conclusion that they dug 11 holes on the fourth day before finding the treasure is accurate.\n\nFinal answer: 11"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "12",
+      "reference_key": "11",
+      "key_differs": true,
+      "text": "The total number of holes dug by the end of the first day was 10. By the end of the fourth day, there were four times this amount, which equals 40 holes. However, we know that by the end of the third day, they had dug a total of 10 + 13 + 8 = 31 holes but then filled in 2 holes, leaving them with 29 holes. To reach the total of 40 holes by the end of the fourth day, they must have dug 40 - 29 = 11 holes on the fourth day before finding the treasure.\n\n#### 12",
+      "quality": 1.0,
+      "final_key": "11",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "The initial computation of holes dug each day and the total by the end of the third day is correct. However, the final calculation to determine how many holes were dug on the fourth day seems to have overlooked the fact that the total number of holes by the end of the fourth day includes both new holes dug and the existing ones, minus the ones filled in.\n\nRe-evaluating:\n- Holes by the end of the first day: 10\n- Holes by the end of the second day: 10 + 13 = 23\n- Holes by the end of the third day (before filling): 23 + 8 = 31\n- Holes by the end of the third day (after filling 2): 31 - 2 = 29\n- Total holes by the end of the fourth day: 40\n\nTo find out how many holes were dug on the fourth day:\n\\[ \\text{Holes dug on the fourth day} = 40 - 29 = 11 \\]\n\nFinal answer: 11"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "21",
+      "reference_key": "11",
+      "key_differs": true,
+      "text": "On the first day, the pirates dug 10 holes. By the end of the third day, they dug a total of 13 (second day) + 8 (third day) - 2 (filled in) = 19 holes. The island had four times as many holes as it did at the end of the first day by the end of the fourth day, which means 4 * 10 = 40 holes. Therefore, on the fourth day, before finding the treasure, they dug 40 (total by end of fourth day) - 19 (total by end of third day) = 21 holes.\n\n#### 21",
+      "quality": 1.0,
+      "final_key": "11",
+      "final_differs": false,
+      "descendants": {
+        "verifier": "Let's recompute the number of holes dug each day and the total by the end of the fourth day:\n\n- First day: 10 holes.\n- Second day: 13 holes.\n- Third day: 8 holes, but 2 were filled in, so effectively 6 new holes were dug that day.\n- Total by the end of the third day: 10 (first day) + 13 (second day) + 6 (third day) = 29 holes.\n\nThe problem states that by the end of the fourth day, the island had four times as many holes as it did at the end of the first day. At the end of the first day, there were 10 holes, so four times this amount is 4 * 10 = 40 holes.\n\nTherefore, on the fourth day, the pirates dug 40 (total by end of fourth day) - 29 (total by end of third day) = 11 holes.\n\nFinal answer: 11"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "100",
+      "reference_key": "11",
+      "key_differs": true,
+      "text": "The cost of the haircut is calculated by the difference in hair length times the price per inch. The difference in hair length is 10 - 8 = 2 inches. At $30 per inch, the haircut cost is 2 * $30 = $60. Adding the color cost of $40, the total cost is $60 + $40 = $100.\n\n#### 100",
+      "quality": 0.0,
+      "final_key": "87",
+      "final_differs": true,
+      "descendants": {
+        "verifier": "The proposed solution misinterprets the given problem. The problem states that the number of holes on the fourth day was four times the number of holes at the end of the first day, not related to the cost of a haircut.\n\nFirst, calculate the number of holes at the end of the first day:\n- First day: 10 holes\n- Second day: 13 holes (total: 10 + 13 = 23 holes)\n- Third day: 8 holes (total: 23 + 8 = 31 holes, but 2 were filled, so 31 - 2 = 29 holes)\n\nBy the end of the third day, there were 29 holes. On the fourth day, the number of holes was four times this amount:\n- Fourth day: 4 * 29 = 116 holes\n\nSince they found the treasure on the fourth day after digging, the number of holes dug on the fourth day would be the final count minus the initial count at the start of the fourth day:\n- Holes dug on the fourth day: 116 - 29 = 87 holes\n\nFinal answer: 87"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 0.0,
+  "base_key": "9",
+  "sample_keys": [
+    "11",
+    "3",
+    "4",
+    "116",
+    "10"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 1.0
+  },
+  "consequence_real": 0.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1742.0,
+    "small_out": 492.0,
+    "small_s": 4.9658379620086635
+  },
+  "calls_plus": {
+    "small_in": 1486.0,
+    "small_out": 258.0,
+    "small_s": 2.8142982810240937,
+    "large_in": 181.0,
+    "large_out": 137.0,
+    "large_s": 4.499626606004313
+  },
+  "calls_samples": {
+    "small_in": 905.0,
+    "small_out": 1028.0,
+    "small_s": 11.809714744013036
+  }
+}

@@ -555,3 +555,18 @@ were replaced by exact busy-set matches. Final X1c (b) plans (none in X1 math_ti
   planner=xl+step_1=large+step_2=large+step_3=large+aggregator=large+verifier=large
 - all three: step_2=large+verifier=xl; planner=xl+aggregator=large; planner=large+step_1=xl (replaces
   step_1=large+step_3=xl+verifier=large)
+
+### L2-X8: held-out problems for the largest search space, registered 2026-11-18 03:36:05 UTC, before any X8 data
+
+Status: EXPLORATORY under L2-X (own folder results/v2/X8, V2_DEVIATION=D-L2-X-code, code v2-lease2-x c1bb8338
+from the x clone, included in results_v2_UPLOAD.zip, FINAL/data_check.md and P6/search_ground_truth.md).
+Reason: held-out problems for the largest search space. complex_q15_7 (A17, 1,024 plans) is the largest plan
+space; X8 gives a second, disjoint set of problems on which every plan is measured, so search results can be
+checked on problems the search never saw.
+What: complex_q15_7 (complex_r2_s2_ver, Qwen2.5-1.5B/7B-Instruct, AGENTQO_VERIFIER=cautious, max_tokens 256,
+servers 0.25 / 0.55 on one GPU), ALL 1,024 plans (run_real_h3.py --plans all_subsets) on 200 GSM8K problems from
+eval_x2: the first 200 in its fixed order (none in label 200 or eval_ext 400). No new labels: X8 reuses P2c's
+labels (results/v2/P2c/complex_q15_7/labels). Lease cache. Output results/v2/X8/complex_q15_7/plans. Accuracy only.
+When: on VM-A's idle time, only after the search session's tag search-prereg-s5b-* exists on origin. X6 has
+priority: if X3 finishes first, X8 waits; if X8 is running when X6 starts, it is paused and resumed from the
+cache after X6 (including X6 latency) is complete. Never under a TIMING_LOCK. A gate and push when done.
