@@ -164,3 +164,89 @@ X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 
 2026-11-18T00:52:01Z X5 SMOKE PASSED
 2026-11-18T00:54:02Z VM-A GATE X4: hotpot_q15_7: 32 plans, small 0.312 large 0.512 best 0.512 | math_q15_7: 64 plans, small 0.482 large 0.805 best 0.828
 2026-11-18T00:54:06Z VM-A GATE X5-smoke: math500_q15_7: labels INCOMPLETE; smoke all_small=0.20 all_large=1.00
+2026-11-18T01:22:13Z VM-A GATE X5-labels: math500_q15_7: labels done; plans INCOMPLETE; smoke all_small=0.20 all_large=1.00
+2026-11-18T01:59:58Z TIME LEFT after X5: 22.0 h to the 2026-11-19T00:00Z stop for new X work (06:00Z GPU cutoff)
+2026-11-18T02:01:37Z VM-A GATE X5-plans: math500_q15_7: labels done; 64 plans, small 0.410 large 0.650 best 0.693; smoke all_small=0.20 all_large=1.00
+2026-11-18T02:01:43Z VM-A GATE X5: math500_q15_7: labels done; 64 plans, small 0.410 large 0.650 best 0.693; smoke all_small=0.20 all_large=1.00
+2026-11-18T02:04:06Z X6 shared feasibility (7B+32B on one 94 GB H100):
+== 2026-11-18T02:01:20Z Qwen/Qwen2.5-32B-Instruct --gpu-memory-utilization 0.50: NOT UP
+(EngineCore pid=726154) ERROR 11-18 02:01:12 [core.py:1510]     raise ValueError(
+(EngineCore pid=726154) ERROR 11-18 02:01:12 [core.py:1510] ValueError: No available memory for the cache blocks. Try increasing `gpu_memory_utilization` when initializing the engine (this flag also controls CPU memory reservation on the CPU backend, despite its name). See https://docs.vllm.ai/en/latest/configuration/conserving_memory/ for more details.
+    _check_enough_kv_cache_memory(
+  File "/mnt/data/venv/lib/python3.12/site-packages/vllm/v1/core/kv_cache_utils.py", line 1010, in _check_enough_kv_cache_memory
+    raise ValueError(
+ValueError: No available memory for the cache blocks. Try increasing `gpu_memory_utilization` when initializing the engine (this flag also controls CPU memory reservation on the CPU backend, despite its name). See https://docs.vllm.ai/en/latest/configuration/conserving_memory/ for more details.
+    raise RuntimeError(
+RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+== 2026-11-18T02:02:00Z Qwen/Qwen2.5-7B-Instruct --gpu-memory-utilization 0.45: UP
+(EngineCore pid=727154) INFO 11-18 02:01:44 [model_runner.py:424] Model loading took 14.29 GiB memory and 5.659589 seconds
+(EngineCore pid=727154) INFO 11-18 02:01:44 [utils.py:347] Using LBNHC KV cache layout.
+(EngineCore pid=727154) INFO 11-18 02:01:50 [gpu_worker.py:759] Available KV cache memory: 24.73 GiB
+(EngineCore pid=727154) INFO 11-18 02:01:50 [gpu_worker.py:774] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.4500 is equivalent to --gpu-memory-utilization=0.4401 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.4599. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=727154) INFO 11-18 02:01:50 [kv_cache_utils.py:2327] GPU KV cache size: 463,088 tokens, Maximum concurrency for 8,192 tokens per request: 56.53x
+(EngineCore pid=727154) INFO 11-18 02:01:54 [gpu_worker.py:971] CUDA graph pool memory: 0.59 GiB (actual), 0.92 GiB (estimated), difference: 0.34 GiB (57.7%).
+(EngineCore pid=727154) INFO 11-18 02:01:54 [gpu_worker.py:1034] Free memory on device (92.6/93.12 GiB) on startup. Desired GPU memory utilization is (0.45, 41.9 GiB). Actual usage is 15.2 GiB for consumed memory (weights + non-torch), 1.97 GiB for peak activation, and 0.59 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=25769346970` (24.0 GiB) to fit into requested memory, or `--kv-cache-memory=80208834048` (74.7 GiB) to fully utilize gpu memory. Current kv cache memory in use is 24.73 GiB.
+(EngineCore pid=727154) INFO 11-18 02:01:55 [core.py:395] init engine (profile, create kv cache, warmup model) took 11.04 s (compilation: 0.14 s)
+42316 MiB, 95830 MiB
+== 2026-11-18T02:03:06Z Qwen/Qwen2.5-32B-Instruct --gpu-memory-utilization 0.75: UP
+(EngineCore pid=728268) INFO 11-18 02:02:39 [model_runner.py:424] Model loading took 61.04 GiB memory and 15.720745 seconds
+(EngineCore pid=728268) INFO 11-18 02:02:39 [utils.py:347] Using LBNHC KV cache layout.
+(EngineCore pid=728268) INFO 11-18 02:02:50 [gpu_worker.py:759] Available KV cache memory: 4.58 GiB
+(EngineCore pid=728268) INFO 11-18 02:02:50 [gpu_worker.py:774] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.7500 is equivalent to --gpu-memory-utilization=0.7306 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.7694. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=728268) INFO 11-18 02:02:50 [kv_cache_utils.py:2327] GPU KV cache size: 18,768 tokens, Maximum concurrency for 8,192 tokens per request: 2.29x
+(EngineCore pid=728268) INFO 11-18 02:03:02 [gpu_worker.py:971] CUDA graph pool memory: 0.87 GiB (actual), 1.81 GiB (estimated), difference: 0.94 GiB (108.1%).
+(EngineCore pid=728268) INFO 11-18 02:03:02 [gpu_worker.py:1034] Free memory on device (92.6/93.12 GiB) on startup. Desired GPU memory utilization is (0.75, 69.84 GiB). Actual usage is 61.95 GiB for consumed memory (weights + non-torch), 3.31 GiB for peak activation, and 0.87 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=3830050304` (3.57 GiB) to fit into requested memory, or `--kv-cache-memory=28274961920` (26.33 GiB) to fully utilize gpu memory. Current kv cache memory in use is 4.58 GiB.
+(EngineCore pid=728268) INFO 11-18 02:03:02 [core.py:395] init engine (profile, create kv cache, warmup model) took 23.04 s (compilation: 0.18 s)
+== 2026-11-18T02:03:41Z Qwen/Qwen2.5-7B-Instruct --gpu-memory-utilization 0.20: UP
+(EngineCore pid=729113) INFO 11-18 02:03:28 [model_runner.py:424] Model loading took 14.29 GiB memory and 5.051966 seconds
+(EngineCore pid=729113) INFO 11-18 02:03:28 [utils.py:347] Using LBNHC KV cache layout.
+(EngineCore pid=729113) INFO 11-18 02:03:34 [gpu_worker.py:759] Available KV cache memory: 1.45 GiB
+(EngineCore pid=729113) INFO 11-18 02:03:34 [gpu_worker.py:774] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.2000 is equivalent to --gpu-memory-utilization=0.1901 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.2099. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=729113) INFO 11-18 02:03:34 [kv_cache_utils.py:2327] GPU KV cache size: 27,200 tokens, Maximum concurrency for 8,192 tokens per request: 3.32x
+(EngineCore pid=729113) INFO 11-18 02:03:38 [gpu_worker.py:971] CUDA graph pool memory: 0.59 GiB (actual), 0.92 GiB (estimated), difference: 0.34 GiB (57.7%).
+(EngineCore pid=729113) INFO 11-18 02:03:38 [gpu_worker.py:1034] Free memory on device (24.05/93.12 GiB) on startup. Desired GPU memory utilization is (0.2, 18.62 GiB). Actual usage is 15.2 GiB for consumed memory (weights + non-torch), 1.97 GiB for peak activation, and 0.59 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=773867418` (0.72 GiB) to fit into requested memory, or `--kv-cache-memory=6597160448` (6.14 GiB) to fully utilize gpu memory. Current kv cache memory in use is 1.45 GiB.
+(EngineCore pid=729113) INFO 11-18 02:03:39 [core.py:395] init engine (profile, create kv cache, warmup model) took 10.80 s (compilation: 0.15 s)
+88679 MiB, 95830 MiB
+2026-11-18T02:07:37Z VM-B GATE X2-math_phi: math_granite: 64 plans, small 0.523 large 0.751 best 0.758 | math_phi: 64 plans, small 0.818 large 0.930 best 0.942
+2026-11-18T02:07:43Z TIME LEFT after X2 (VM-B part): 27.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T02:07:47Z X3 STARTED/RESUMED on VM-B (resumes from the lease cache)
+2026-11-18T02:08:32Z X6 shared feasibility (7B+32B on one 94 GB H100):
+== 2026-11-18T02:01:20Z Qwen/Qwen2.5-32B-Instruct --gpu-memory-utilization 0.50: NOT UP
+(EngineCore pid=726154) ERROR 11-18 02:01:12 [core.py:1510]     raise ValueError(
+(EngineCore pid=726154) ERROR 11-18 02:01:12 [core.py:1510] ValueError: No available memory for the cache blocks. Try increasing `gpu_memory_utilization` when initializing the engine (this flag also controls CPU memory reservation on the CPU backend, despite its name). See https://docs.vllm.ai/en/latest/configuration/conserving_memory/ for more details.
+    _check_enough_kv_cache_memory(
+  File "/mnt/data/venv/lib/python3.12/site-packages/vllm/v1/core/kv_cache_utils.py", line 1010, in _check_enough_kv_cache_memory
+    raise ValueError(
+ValueError: No available memory for the cache blocks. Try increasing `gpu_memory_utilization` when initializing the engine (this flag also controls CPU memory reservation on the CPU backend, despite its name). See https://docs.vllm.ai/en/latest/configuration/conserving_memory/ for more details.
+    raise RuntimeError(
+RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+== 2026-11-18T02:02:00Z Qwen/Qwen2.5-7B-Instruct --gpu-memory-utilization 0.45: UP
+(EngineCore pid=727154) INFO 11-18 02:01:44 [model_runner.py:424] Model loading took 14.29 GiB memory and 5.659589 seconds
+(EngineCore pid=727154) INFO 11-18 02:01:44 [utils.py:347] Using LBNHC KV cache layout.
+(EngineCore pid=727154) INFO 11-18 02:01:50 [gpu_worker.py:759] Available KV cache memory: 24.73 GiB
+(EngineCore pid=727154) INFO 11-18 02:01:50 [gpu_worker.py:774] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.4500 is equivalent to --gpu-memory-utilization=0.4401 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.4599. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=727154) INFO 11-18 02:01:50 [kv_cache_utils.py:2327] GPU KV cache size: 463,088 tokens, Maximum concurrency for 8,192 tokens per request: 56.53x
+(EngineCore pid=727154) INFO 11-18 02:01:54 [gpu_worker.py:971] CUDA graph pool memory: 0.59 GiB (actual), 0.92 GiB (estimated), difference: 0.34 GiB (57.7%).
+(EngineCore pid=727154) INFO 11-18 02:01:54 [gpu_worker.py:1034] Free memory on device (92.6/93.12 GiB) on startup. Desired GPU memory utilization is (0.45, 41.9 GiB). Actual usage is 15.2 GiB for consumed memory (weights + non-torch), 1.97 GiB for peak activation, and 0.59 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=25769346970` (24.0 GiB) to fit into requested memory, or `--kv-cache-memory=80208834048` (74.7 GiB) to fully utilize gpu memory. Current kv cache memory in use is 24.73 GiB.
+(EngineCore pid=727154) INFO 11-18 02:01:55 [core.py:395] init engine (profile, create kv cache, warmup model) took 11.04 s (compilation: 0.14 s)
+42316 MiB, 95830 MiB
+== 2026-11-18T02:03:06Z Qwen/Qwen2.5-32B-Instruct --gpu-memory-utilization 0.75: UP
+(EngineCore pid=728268) INFO 11-18 02:02:39 [model_runner.py:424] Model loading took 61.04 GiB memory and 15.720745 seconds
+(EngineCore pid=728268) INFO 11-18 02:02:39 [utils.py:347] Using LBNHC KV cache layout.
+(EngineCore pid=728268) INFO 11-18 02:02:50 [gpu_worker.py:759] Available KV cache memory: 4.58 GiB
+(EngineCore pid=728268) INFO 11-18 02:02:50 [gpu_worker.py:774] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.7500 is equivalent to --gpu-memory-utilization=0.7306 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.7694. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=728268) INFO 11-18 02:02:50 [kv_cache_utils.py:2327] GPU KV cache size: 18,768 tokens, Maximum concurrency for 8,192 tokens per request: 2.29x
+(EngineCore pid=728268) INFO 11-18 02:03:02 [gpu_worker.py:971] CUDA graph pool memory: 0.87 GiB (actual), 1.81 GiB (estimated), difference: 0.94 GiB (108.1%).
+(EngineCore pid=728268) INFO 11-18 02:03:02 [gpu_worker.py:1034] Free memory on device (92.6/93.12 GiB) on startup. Desired GPU memory utilization is (0.75, 69.84 GiB). Actual usage is 61.95 GiB for consumed memory (weights + non-torch), 3.31 GiB for peak activation, and 0.87 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=3830050304` (3.57 GiB) to fit into requested memory, or `--kv-cache-memory=28274961920` (26.33 GiB) to fully utilize gpu memory. Current kv cache memory in use is 4.58 GiB.
+(EngineCore pid=728268) INFO 11-18 02:03:02 [core.py:395] init engine (profile, create kv cache, warmup model) took 23.04 s (compilation: 0.18 s)
+== 2026-11-18T02:03:41Z Qwen/Qwen2.5-7B-Instruct --gpu-memory-utilization 0.20: UP
+(EngineCore pid=729113) INFO 11-18 02:03:28 [model_runner.py:424] Model loading took 14.29 GiB memory and 5.051966 seconds
+(EngineCore pid=729113) INFO 11-18 02:03:28 [utils.py:347] Using LBNHC KV cache layout.
+(EngineCore pid=729113) INFO 11-18 02:03:34 [gpu_worker.py:759] Available KV cache memory: 1.45 GiB
+(EngineCore pid=729113) INFO 11-18 02:03:34 [gpu_worker.py:774] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.2000 is equivalent to --gpu-memory-utilization=0.1901 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.2099. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=729113) INFO 11-18 02:03:34 [kv_cache_utils.py:2327] GPU KV cache size: 27,200 tokens, Maximum concurrency for 8,192 tokens per request: 3.32x
+(EngineCore pid=729113) INFO 11-18 02:03:38 [gpu_worker.py:971] CUDA graph pool memory: 0.59 GiB (actual), 0.92 GiB (estimated), difference: 0.34 GiB (57.7%).
+(EngineCore pid=729113) INFO 11-18 02:03:38 [gpu_worker.py:1034] Free memory on device (24.05/93.12 GiB) on startup. Desired GPU memory utilization is (0.2, 18.62 GiB). Actual usage is 15.2 GiB for consumed memory (weights + non-torch), 1.97 GiB for peak activation, and 0.59 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=773867418` (0.72 GiB) to fit into requested memory, or `--kv-cache-memory=6597160448` (6.14 GiB) to fully utilize gpu memory. Current kv cache memory in use is 1.45 GiB.
+(EngineCore pid=729113) INFO 11-18 02:03:39 [core.py:395] init engine (profile, create kv cache, warmup model) took 10.80 s (compilation: 0.15 s)
+88679 MiB, 95830 MiB
+2026-11-18T02:08:47Z X6 schedule: X6 quality waits for X3 to complete on VM-B (X3 holds :8003 with Phi-4 and 0.92 of VM-B's GPU; X6 needs Qwen 7B on :8003). X3 restarted 02:07Z (~2 h of plans left), so X6 quality starts ~04:20Z; VM-A idles until then (moving X7 to VM-A instead would end later). tools/stage4b_orch.sh replaces stage 4 after X5.
