@@ -252,3 +252,14 @@ RuntimeError: Engine core initialization failed. See root cause above. Failed co
 2026-11-18T02:08:47Z X6 schedule: X6 quality waits for X3 to complete on VM-B (X3 holds :8003 with Phi-4 and 0.92 of VM-B's GPU; X6 needs Qwen 7B on :8003). X3 restarted 02:07Z (~2 h of plans left), so X6 quality starts ~04:20Z; VM-A idles until then (moving X7 to VM-A instead would end later). tools/stage4b_orch.sh replaces stage 4 after X5.
 2026-11-18T03:37:13Z X8 START on VM-A (search-prereg-s5b tag on origin; VM-A idle before X6)
 2026-11-18T03:37:46Z X8 scheduled (L2-X8 registered 1981d1e4 before any X8 data): /mnt/data/x8.sh A-x8 (x clone c1bb8338, V2_DEVIATION=D-L2-X-code; complex_q15_7, all 1,024 plans, eval_x2[:200], same flags as P2c: max_tokens 256, cautious verifier, servers 0.25/0.55; P2c labels reused). tools/stage4c_orch.sh (replaces stage4b) starts X8 on VM-A once search-prereg-s5b-* is on origin (not there at 03:35Z), pauses it when X3 completes (X6 priority), resumes it from the cache after X6.
+2026-11-18T04:13:30Z X7 START on VM-B: 19.8 h left before 2026-11-19T00:00Z (X5/X6 run on VM-A in parallel)
+2026-11-18T04:13:44Z TIME LEFT after X3: 25.8 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T04:13:44Z X4 not run as a seed replicate: redefined (721e6cf8) and done early; see X4/
+2026-11-18T04:14:09Z X8 PAUSED on VM-A for X6 (X3 complete; resumes from the cache after X6)
+2026-11-18T04:14:09Z X6 quality starts: X3 complete on VM-B
+2026-11-18T04:13:19Z X3 COMPLETE on VM-B
+2026-11-18T04:13:36Z X7 prep VM-B: x clone at 88e9d762; system python3 numpy 1.21.5
+2026-11-18T04:13:42Z X7 STOPPED: sandbox tests failed or skipped on VM-B (X7/sandbox_tests_vmB.txt)
+2026-11-18T04:14:41Z X7 STOPPED at prep (sandbox tests)
+2026-11-18T04:15:42Z X7 START on VM-B: 19.7 h left before 2026-11-19T00:00Z (X5/X6 run on VM-A in parallel)
+2026-11-18T04:15:55Z X7 prep on VM-B stopped at 04:13Z: 1 of 13 sandbox tests failed, a test bug, not a sandbox failure. test_sandbox_hides_repo_caches_and_mnt_data asserted the word 'secret' was absent from the output, but the probe prints 'HIDDEN <path>' and the canary was named secret.txt; the canary itself was HIDDEN. (The Mac suite skips these Linux-only tests, so this was their first Linux run.) Fix aececaa1 on v2-lease2-x (test only: the canary's content token is checked instead; agentqo/tasks/sandbox.py unchanged). On VM-B at aececaa1: 13 passed. /proc/1 inside the sandbox is the sandboxed python itself (PID namespace), environ only PATH=/usr/bin:/bin HOME=/mnt. x.sh x7prep now pins aececaa1; the failed test output moved to X7/superseded_test_bug_0413Z; X7_STOP renamed X7_STOP.superseded_testfix_0420Z; stage 5 restarted from x7prep (04:21Z).

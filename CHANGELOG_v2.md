@@ -572,3 +572,7 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T02:07:47Z X3 STARTED/RESUMED on VM-B (resumes from the lease cache)
 - 02:15Z X5 done (labels: verifier UV 0.265, aggregator 0.135; plans: small 0.410, large 0.650, best 0.693; unscorable 4.6%). X2 done on both VMs. X6 quality now waits for X3 to complete on VM-B (port/GPU conflict); stage4b_orch.sh.
 - 03:45Z L2-X8 registered (1981d1e4); X8 scheduled on VM-A idle time behind the search-prereg-s5b tag, X6 priority (stage4c_orch.sh).
+- 2026-11-18T04:13:19Z X3 COMPLETE on VM-B
+- 2026-11-18T04:13:36Z X7 prep VM-B: x clone at 88e9d762; system python3 numpy 1.21.5
+- 2026-11-18T04:13:42Z X7 STOPPED: sandbox tests failed or skipped on VM-B (X7/sandbox_tests_vmB.txt)
+- 04:25Z X3 done (04:13Z), stage 3 done. X8 at 192/200 paused for X6 (04:14Z); X6 quality running on VM-A. X7 prep stopped on a sandbox test bug (path word, not a leak); test-only fix aececaa1, 13/13 on VM-B, X7 restarted.
