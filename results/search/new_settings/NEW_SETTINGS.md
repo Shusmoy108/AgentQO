@@ -104,6 +104,42 @@ S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0
 
 S3 quantities: independence MAE 0.0773, gap (pairwise m3 minus indep) -0.0053.
 
+### math500_q7_32 (64 plans)
+
+Mean HV ratio over 30 seeds; B = 4/4/4/6/13 (1/2/5/10/20%; equal B values repeat one
+experiment, so a W or L there counts more than once).
+
+| method | 1% | 2% | 5% | 10% | 20% |
+|---|---|---|---|---|---|
+| nsga2_pairwise_m3 | 0.962 | 0.962 | 0.962 | 0.962 | 0.980 |
+| nsga2_pairwise_m5 | 0.962 | 0.962 | 0.962 | 0.962 | 0.969 |
+| nsga2_indep_add | 0.934 | 0.934 | 0.934 | 0.957 | 0.961 |
+| nsga2_indep_mult | 0.934 | 0.934 | 0.934 | 0.957 | 0.961 |
+| nsga2_logit_add | 0.934 | 0.934 | 0.934 | 0.957 | 0.961 |
+| mopso_pairwise_m3 | 0.962 | 0.962 | 0.962 | 0.962 | 0.980 |
+| gde3_pairwise_m3 | 0.962 | 0.962 | 0.962 | 0.962 | 0.980 |
+| nsga2_active_m3 | 0.949 | 0.949 | 0.949 | 0.949 | 0.977 |
+| abacus | 0.934 | 0.934 | 0.934 | 0.957 | 0.961 |
+| random | 0.714 | 0.714 | 0.714 | 0.744 | 0.871 |
+| greedy_uv | 0.964 | 0.964 | 0.964 | 0.969 | 0.969 |
+| rule_structural | 0.914 | 0.914 | 0.914 | 0.948 | 0.949 |
+| rule_output | 0.958 | 0.958 | 0.958 | 0.967 | 0.973 |
+| rule_confident_uv | 0.914 | 0.914 | 0.914 | 0.948 | 0.949 |
+
+S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0134):
+
+| comparator | W | T | L | per budget |
+|---|---|---|---|---|
+| (a) nsga2_indep_add | 4 | 1 | 0 | W(+0.029) W(+0.029) W(+0.029) T(+0.005) W(+0.019) |
+| (b) abacus | 4 | 1 | 0 | W(+0.029) W(+0.029) W(+0.029) T(+0.005) W(+0.019) |
+| (c) random | 5 | 0 | 0 | W(+0.248) W(+0.248) W(+0.248) W(+0.218) W(+0.108) |
+| (d) greedy_uv | 0 | 5 | 0 | T(-0.002) T(-0.002) T(-0.002) T(-0.007) T(+0.010) |
+| (e) rule_structural | 5 | 0 | 0 | W(+0.049) W(+0.049) W(+0.049) W(+0.014) W(+0.030) |
+| (e) rule_output | 0 | 5 | 0 | T(+0.004) T(+0.004) T(+0.004) T(-0.005) T(+0.007) |
+| (e) rule_confident_uv | 5 | 0 | 0 | W(+0.049) W(+0.049) W(+0.049) W(+0.014) W(+0.030) |
+
+S3 quantities: independence MAE 0.0284, gap (pairwise m3 minus indep) +0.0220.
+
 ### math_q7_32 (64 plans)
 
 Mean HV ratio over 30 seeds; B = 4/4/4/6/13 (1/2/5/10/20%; equal B values repeat one
@@ -176,5 +212,5 @@ S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0
 
 S3 quantities: independence MAE 0.0349, gap (pairwise m3 minus indep) +0.0007.
 
-S3 rho recomputed with the new settings (16 settings, supplementary): -0.106 (p = 0.696).
+S3 rho recomputed with the new settings (17 settings, supplementary): -0.140 (p = 0.593).
 

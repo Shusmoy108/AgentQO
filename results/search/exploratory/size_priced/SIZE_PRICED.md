@@ -14,6 +14,7 @@ Accuracy is unchanged; only cost, hence the fronts, budgets' targets and HV, cha
 |---|---|---|---|---|
 | x3_cross_family | small: Qwen2.5-7B-Instruct (1); large: granite-3.1-8b-instruct (1.14); xl: phi-4 (2) | 61.9 -> 3.09 | 11 -> 10 | 9 |
 | math_q7_32 | small: Qwen2.5-7B-Instruct (1); large: Qwen2.5-32B-Instruct (4.57) | 23.4 -> 5.35 | 7 -> 6 | 6 |
+| math500_q7_32 | small: Qwen2.5-7B-Instruct (1); large: Qwen2.5-32B-Instruct (4.57) | 21.7 -> 4.95 | 10 -> 11 | 10 |
 | hotpot_q7_32 | small: Qwen2.5-7B-Instruct (1); large: Qwen2.5-32B-Instruct (4.57) | 20.6 -> 4.71 | 3 -> 3 | 3 |
 | code_c15_7 | small: Qwen2.5-Coder-1.5B-Instruct (0.214); large: Qwen2.5-Coder-7B-Instruct (1) | 18.5 -> 4.33 | 7 -> 7 | 7 |
 
@@ -80,6 +81,37 @@ nsga2_pairwise_m3 minus comparator, W/T/L over the distinct budgets (tau = 0.013
 | (e) rule_structural | 3/0/0 | 3/0/0 |
 | (e) rule_output | 0/3/0 | 0/3/0 |
 | (e) rule_confident_uv | 1/2/0 | 1/2/0 |
+
+### math500_q7_32
+
+| method | B=4 | B=6 | B=13 |
+|---|---|---|---|
+| nsga2_pairwise_m3 | 0.962 -> 0.963 | 0.962 -> 0.963 | 0.980 -> 0.980 |
+| nsga2_pairwise_m5 | 0.962 -> 0.963 | 0.962 -> 0.963 | 0.969 -> 0.970 |
+| nsga2_indep_add | 0.934 -> 0.933 | 0.957 -> 0.956 | 0.961 -> 0.959 |
+| nsga2_indep_mult | 0.934 -> 0.933 | 0.957 -> 0.956 | 0.961 -> 0.959 |
+| nsga2_logit_add | 0.934 -> 0.933 | 0.957 -> 0.956 | 0.961 -> 0.959 |
+| mopso_pairwise_m3 | 0.962 -> 0.963 | 0.962 -> 0.963 | 0.980 -> 0.980 |
+| gde3_pairwise_m3 | 0.962 -> 0.963 | 0.962 -> 0.963 | 0.980 -> 0.980 |
+| nsga2_active_m3 | 0.949 -> 0.948 | 0.949 -> 0.948 | 0.977 -> 0.977 |
+| abacus | 0.934 -> 0.933 | 0.957 -> 0.956 | 0.961 -> 0.959 |
+| random | 0.714 -> 0.715 | 0.744 -> 0.748 | 0.871 -> 0.874 |
+| greedy_uv | 0.964 -> 0.965 | 0.969 -> 0.971 | 0.969 -> 0.971 |
+| rule_structural | 0.914 -> 0.912 | 0.948 -> 0.947 | 0.949 -> 0.948 |
+| rule_output | 0.958 -> 0.960 | 0.967 -> 0.968 | 0.973 -> 0.974 |
+| rule_confident_uv | 0.914 -> 0.912 | 0.948 -> 0.947 | 0.949 -> 0.948 |
+
+nsga2_pairwise_m3 minus comparator, W/T/L over the distinct budgets (tau = 0.0134), tier -> size:
+
+| comparator | tier | size |
+|---|---|---|
+| (a) nsga2_indep_add | 2/1/0 | 2/1/0 |
+| (b) abacus | 2/1/0 | 2/1/0 |
+| (c) random | 3/0/0 | 3/0/0 |
+| (d) greedy_uv | 0/3/0 | 0/3/0 |
+| (e) rule_structural | 3/0/0 | 3/0/0 |
+| (e) rule_output | 0/3/0 | 0/3/0 |
+| (e) rule_confident_uv | 3/0/0 | 3/0/0 |
 
 ### hotpot_q7_32
 

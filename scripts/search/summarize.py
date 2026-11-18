@@ -212,8 +212,9 @@ def main():
     md += ["## Completeness", "", "Registered settings (S1-S4): " + ", ".join(settings) + ".",
            "S5 uses X2, complete for all five settings (math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_granite, math_phi).",
            "Landed after the registered run, reported below under New settings: X5 MATH-500 (math500_q15_7), X6 7B/32B",
-           "(math_q7_32, hotpot_q7_32), X7 coding (code_c15_7; no fixed-rule methods, the code workflow graph is not on",
-           "this branch). X3 cross-family 729 is S6(a). Pending: X6 math500_q7_32 plans, X8 (S5b), laptop q4.", ""]
+           "(math_q7_32, math500_q7_32, hotpot_q7_32), X7 coding (code_c15_7; no fixed-rule methods, the code workflow",
+           "graph is not on this branch), X3 cross-family (x3_cross_family; confirmatory test is S6(a)).",
+           "Pending: X8 (S5b), laptop q4.", ""]
     if (OUT / "new_settings" / "NEW_SETTINGS.md").exists():  # scripts/search/new_settings.py
         md += [(OUT / "new_settings" / "NEW_SETTINGS.md").read_text()]
     md += ["", "---", "", "# Exploratory, not registered", "",

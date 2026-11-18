@@ -25,7 +25,7 @@ from scripts.search import s6  # noqa: E402
 from scripts.search.summarize import COMPARATORS, MAIN, OUT, paired, wtl  # noqa: E402
 
 EX = OUT / "exploratory" / "size_priced"
-SETS = ["x3_cross_family", "math_q7_32", "hotpot_q7_32", "code_c15_7"]
+SETS = ["x3_cross_family", "math_q7_32", "math500_q7_32", "hotpot_q7_32", "code_c15_7"]
 KEY = ["nsga2_pairwise_m3", "nsga2_active_m3", "nsga2_indep_add", "abacus", "greedy_uv", "random"]
 
 

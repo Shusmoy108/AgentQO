@@ -231,8 +231,9 @@ Synthetic 3-tier workflows; gains, label errors and pair interactions sampled fr
 Registered settings (S1-S4): math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_q3_14, math_granite, hotpot_granite, hotpot_iso_granite, math_phi, hotpot_phi, complex_q15_7, math_tiers.
 S5 uses X2, complete for all five settings (math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_granite, math_phi).
 Landed after the registered run, reported below under New settings: X5 MATH-500 (math500_q15_7), X6 7B/32B
-(math_q7_32, hotpot_q7_32), X7 coding (code_c15_7; no fixed-rule methods, the code workflow graph is not on
-this branch). X3 cross-family 729 is S6(a). Pending: X6 math500_q7_32 plans, X8 (S5b), laptop q4.
+(math_q7_32, math500_q7_32, hotpot_q7_32), X7 coding (code_c15_7; no fixed-rule methods, the code workflow
+graph is not on this branch), X3 cross-family (x3_cross_family; confirmatory test is S6(a)).
+Pending: X8 (S5b), laptop q4.
 
 ## New settings (landed after the registered run; not part of the S1-S4 verdicts)
 
@@ -340,6 +341,42 @@ S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0
 
 S3 quantities: independence MAE 0.0773, gap (pairwise m3 minus indep) -0.0053.
 
+### math500_q7_32 (64 plans)
+
+Mean HV ratio over 30 seeds; B = 4/4/4/6/13 (1/2/5/10/20%; equal B values repeat one
+experiment, so a W or L there counts more than once).
+
+| method | 1% | 2% | 5% | 10% | 20% |
+|---|---|---|---|---|---|
+| nsga2_pairwise_m3 | 0.962 | 0.962 | 0.962 | 0.962 | 0.980 |
+| nsga2_pairwise_m5 | 0.962 | 0.962 | 0.962 | 0.962 | 0.969 |
+| nsga2_indep_add | 0.934 | 0.934 | 0.934 | 0.957 | 0.961 |
+| nsga2_indep_mult | 0.934 | 0.934 | 0.934 | 0.957 | 0.961 |
+| nsga2_logit_add | 0.934 | 0.934 | 0.934 | 0.957 | 0.961 |
+| mopso_pairwise_m3 | 0.962 | 0.962 | 0.962 | 0.962 | 0.980 |
+| gde3_pairwise_m3 | 0.962 | 0.962 | 0.962 | 0.962 | 0.980 |
+| nsga2_active_m3 | 0.949 | 0.949 | 0.949 | 0.949 | 0.977 |
+| abacus | 0.934 | 0.934 | 0.934 | 0.957 | 0.961 |
+| random | 0.714 | 0.714 | 0.714 | 0.744 | 0.871 |
+| greedy_uv | 0.964 | 0.964 | 0.964 | 0.969 | 0.969 |
+| rule_structural | 0.914 | 0.914 | 0.914 | 0.948 | 0.949 |
+| rule_output | 0.958 | 0.958 | 0.958 | 0.967 | 0.973 |
+| rule_confident_uv | 0.914 | 0.914 | 0.914 | 0.948 | 0.949 |
+
+S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0134):
+
+| comparator | W | T | L | per budget |
+|---|---|---|---|---|
+| (a) nsga2_indep_add | 4 | 1 | 0 | W(+0.029) W(+0.029) W(+0.029) T(+0.005) W(+0.019) |
+| (b) abacus | 4 | 1 | 0 | W(+0.029) W(+0.029) W(+0.029) T(+0.005) W(+0.019) |
+| (c) random | 5 | 0 | 0 | W(+0.248) W(+0.248) W(+0.248) W(+0.218) W(+0.108) |
+| (d) greedy_uv | 0 | 5 | 0 | T(-0.002) T(-0.002) T(-0.002) T(-0.007) T(+0.010) |
+| (e) rule_structural | 5 | 0 | 0 | W(+0.049) W(+0.049) W(+0.049) W(+0.014) W(+0.030) |
+| (e) rule_output | 0 | 5 | 0 | T(+0.004) T(+0.004) T(+0.004) T(-0.005) T(+0.007) |
+| (e) rule_confident_uv | 5 | 0 | 0 | W(+0.049) W(+0.049) W(+0.049) W(+0.014) W(+0.030) |
+
+S3 quantities: independence MAE 0.0284, gap (pairwise m3 minus indep) +0.0220.
+
 ### math_q7_32 (64 plans)
 
 Mean HV ratio over 30 seeds; B = 4/4/4/6/13 (1/2/5/10/20%; equal B values repeat one
@@ -412,7 +449,7 @@ S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0
 
 S3 quantities: independence MAE 0.0349, gap (pairwise m3 minus indep) +0.0007.
 
-S3 rho recomputed with the new settings (16 settings, supplementary): -0.106 (p = 0.696).
+S3 rho recomputed with the new settings (17 settings, supplementary): -0.140 (p = 0.593).
 
 
 
@@ -1079,6 +1116,7 @@ Accuracy is unchanged; only cost, hence the fronts, budgets' targets and HV, cha
 |---|---|---|---|---|
 | x3_cross_family | small: Qwen2.5-7B-Instruct (1); large: granite-3.1-8b-instruct (1.14); xl: phi-4 (2) | 61.9 -> 3.09 | 11 -> 10 | 9 |
 | math_q7_32 | small: Qwen2.5-7B-Instruct (1); large: Qwen2.5-32B-Instruct (4.57) | 23.4 -> 5.35 | 7 -> 6 | 6 |
+| math500_q7_32 | small: Qwen2.5-7B-Instruct (1); large: Qwen2.5-32B-Instruct (4.57) | 21.7 -> 4.95 | 10 -> 11 | 10 |
 | hotpot_q7_32 | small: Qwen2.5-7B-Instruct (1); large: Qwen2.5-32B-Instruct (4.57) | 20.6 -> 4.71 | 3 -> 3 | 3 |
 | code_c15_7 | small: Qwen2.5-Coder-1.5B-Instruct (0.214); large: Qwen2.5-Coder-7B-Instruct (1) | 18.5 -> 4.33 | 7 -> 7 | 7 |
 
@@ -1145,6 +1183,37 @@ nsga2_pairwise_m3 minus comparator, W/T/L over the distinct budgets (tau = 0.013
 | (e) rule_structural | 3/0/0 | 3/0/0 |
 | (e) rule_output | 0/3/0 | 0/3/0 |
 | (e) rule_confident_uv | 1/2/0 | 1/2/0 |
+
+#### math500_q7_32
+
+| method | B=4 | B=6 | B=13 |
+|---|---|---|---|
+| nsga2_pairwise_m3 | 0.962 -> 0.963 | 0.962 -> 0.963 | 0.980 -> 0.980 |
+| nsga2_pairwise_m5 | 0.962 -> 0.963 | 0.962 -> 0.963 | 0.969 -> 0.970 |
+| nsga2_indep_add | 0.934 -> 0.933 | 0.957 -> 0.956 | 0.961 -> 0.959 |
+| nsga2_indep_mult | 0.934 -> 0.933 | 0.957 -> 0.956 | 0.961 -> 0.959 |
+| nsga2_logit_add | 0.934 -> 0.933 | 0.957 -> 0.956 | 0.961 -> 0.959 |
+| mopso_pairwise_m3 | 0.962 -> 0.963 | 0.962 -> 0.963 | 0.980 -> 0.980 |
+| gde3_pairwise_m3 | 0.962 -> 0.963 | 0.962 -> 0.963 | 0.980 -> 0.980 |
+| nsga2_active_m3 | 0.949 -> 0.948 | 0.949 -> 0.948 | 0.977 -> 0.977 |
+| abacus | 0.934 -> 0.933 | 0.957 -> 0.956 | 0.961 -> 0.959 |
+| random | 0.714 -> 0.715 | 0.744 -> 0.748 | 0.871 -> 0.874 |
+| greedy_uv | 0.964 -> 0.965 | 0.969 -> 0.971 | 0.969 -> 0.971 |
+| rule_structural | 0.914 -> 0.912 | 0.948 -> 0.947 | 0.949 -> 0.948 |
+| rule_output | 0.958 -> 0.960 | 0.967 -> 0.968 | 0.973 -> 0.974 |
+| rule_confident_uv | 0.914 -> 0.912 | 0.948 -> 0.947 | 0.949 -> 0.948 |
+
+nsga2_pairwise_m3 minus comparator, W/T/L over the distinct budgets (tau = 0.0134), tier -> size:
+
+| comparator | tier | size |
+|---|---|---|
+| (a) nsga2_indep_add | 2/1/0 | 2/1/0 |
+| (b) abacus | 2/1/0 | 2/1/0 |
+| (c) random | 3/0/0 | 3/0/0 |
+| (d) greedy_uv | 0/3/0 | 0/3/0 |
+| (e) rule_structural | 3/0/0 | 3/0/0 |
+| (e) rule_output | 0/3/0 | 0/3/0 |
+| (e) rule_confident_uv | 3/0/0 | 3/0/0 |
 
 #### hotpot_q7_32
 

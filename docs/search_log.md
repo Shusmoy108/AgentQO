@@ -163,3 +163,8 @@ Times UTC. Choices made without asking, as instructed.
 - Tier-priced X3 (all 14 methods via run_search) added to results/search/new_settings (it had only S6(a) before).
 - Results: results/search/exploratory/size_priced/ (SIZE_PRICED.md, results.csv, s6a_*.csv), labelled
   "exploratory: size-priced".
+
+## 2026-11-18 ~07:10Z: X6 math500_q7_32 added (merge 613abcd2)
+- EXTRA setting math500_q7_32 (X6, Qwen2.5 7B -> 32B, MATH-500, 64 plans, 300 problems), tier-priced under New
+  settings and size-priced (32/7) under the exploratory size-priced section. X6/latency also landed; not used
+  (latency truth stays X1 + latsim for the 11 registered settings; no latsim prediction exists for X6).
