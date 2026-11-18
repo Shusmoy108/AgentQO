@@ -256,9 +256,10 @@ def default_placement(sur: Surrogate, rows: Sequence[int]) -> List[int]:
 
 # ------------------------------------------------------------------ methods
 def run_surrogate_search(s: Setting, budget: int, rng, kind: str, engine: str = "nsga2",
-                         placement: bool = False, terms=None, gens: Optional[int] = None) -> Verifier:
+                         placement: bool = False, terms=None, gens: Optional[int] = None,
+                         pair_cap=None) -> Verifier:
     V = Verifier(budget)
-    sur = make_surrogate(kind, s, budget, terms)
+    sur = make_surrogate(kind, s, budget, terms, **({"pair_cap": pair_cap} if pair_cap else {}))
     for r in sur.verified[:budget]:
         V(r, 0 if placement else None)  # pair plans are timed at placement 0 (separate)
     G, F = ENGINES[engine](cards(s, placement), objectives(sur, placement), rng, gens or HP["generations"])
@@ -384,8 +385,35 @@ METHODS_2D: Dict[str, Callable] = {
        for name, r in RULES.items()},
 }
 
+# EXPLORATORY, not registered: pair plans capped at 25% of B (registered cap: floor(B/2) - 1).
+from agentqo.search.surrogates import adaptive_pairs  # noqa: E402
+
+METHODS_EXPLORATORY: Dict[str, Callable] = {
+    "nsga2_pairwise_m3_adapt25": lambda s, b, rng, **kw: run_surrogate_search(
+        s, b, rng, "pairwise_corrected_m3", pair_cap=adaptive_pairs, **kw),
+    "nsga2_pairwise_m5_adapt25": lambda s, b, rng, **kw: run_surrogate_search(
+        s, b, rng, "pairwise_corrected_m5", pair_cap=adaptive_pairs, **kw),
+}
+
 METHODS_3D: Dict[str, Callable] = {
     "joint_nsga2_pairwise_m3": lambda s, b, rng, **kw: run_surrogate_search(s, b, rng, "pairwise_corrected_m3", placement=True, **kw),
     "plan_first_nsga2_pairwise_m3": lambda s, b, rng, **kw: run_plan_first(s, b, rng, **kw),
     "random_3d": lambda s, b, rng, **kw: run_random(s, b, rng, placement=True),
 }
+
+
+# EXPLORATORY S4 redesign (not registered): the budget counts PLANS only (accuracy is placement-independent);
+# every verified plan gets both placements' latency from the latsim frozen predictions at no budget cost.
+def run_s4_plans_only(s: Setting, budget: int, rng, mode: str, terms=None) -> List[int]:
+    if mode == "plan_first":
+        return run_surrogate_search(s, budget, rng, "pairwise_corrected_m3", terms=terms).rows
+    V = Verifier(budget)
+    sur = make_surrogate("pairwise_corrected_m3", s, budget, terms)
+    for r in sur.verified[:budget]:
+        V(r)
+    G, F = nsga2(cards(s, True), objectives(sur, True), rng, HP["generations"])
+    for i in pick(F, len(G)):  # 3-objective surrogate order (fronts, spread along cost)
+        if V.left == 0:
+            break
+        V(_row(s, G[i]))
+    return V.rows

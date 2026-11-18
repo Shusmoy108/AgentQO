@@ -113,3 +113,24 @@ def test_every_method_respects_budget_on_real_setting():
         for name, fn in METHODS_2D.items():
             V = fn(s, b, np.random.default_rng(0), terms=terms)
             assert len(set(V.rows)) == len(V.rows) <= b, name
+
+
+def test_adaptive_pair_cap_exploratory():
+    from agentqo.search.surrogates import adaptive_pairs, max_pairs
+    s, terms = toy(interaction=True)
+    assert [adaptive_pairs(b) for b in (4, 6, 13, 73)] == [1, 1, 3, 18]
+    assert [max_pairs(b) for b in (4, 6, 13, 73)] == [1, 2, 5, 35]
+    sur = make_surrogate("pairwise_corrected_m3", s, 8, terms, pair_cap=adaptive_pairs)
+    assert len(sur.verified) == 1 + 2
+
+
+@pytest.mark.skipif(not (V2 / "P2" / "math_q15_7").exists(), reason="lease results not present")
+def test_s4_redesign_budget_counts_plans_only():
+    from agentqo.search.ground_truth import load_setting
+    from agentqo.search.methods import run_s4_plans_only
+    from agentqo.search.surrogates import label_terms
+    s = load_setting("math_q15_7")
+    t = label_terms(s)
+    for mode in ("joint", "plan_first"):
+        rows = run_s4_plans_only(s, 6, np.random.default_rng(0), mode, terms=t)
+        assert len(rows) == len(set(rows)) == 6

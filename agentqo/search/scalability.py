@@ -57,7 +57,7 @@ def measured_pools():
 
 
 class Synthetic:
-    def __init__(self, n: int, pools, rng):
+    def __init__(self, n: int, pools, rng, scale: float = 1.0):
         self.n, sc = n, REF_N / n
         self.base = rng.choice(pools["base"])
         gL = rng.choice(pools["gL"], n) * sc
@@ -72,7 +72,7 @@ class Synthetic:
             if rng.random() < p:
                 for ti in (1, 2):
                     for tj in (1, 2):
-                        self.pairs[((i, ti), (j, tj))] = rng.choice(pools["pair"])
+                        self.pairs[((i, ti), (j, tj))] = scale * rng.choice(pools["pair"])
         self.cmax = 1 + self.dcost[:, 2].sum()
 
     def _pairsum(self, G, table):
@@ -157,13 +157,120 @@ def one(args):
     return rows
 
 
+# ------------------------------------------------------------------ EXPLORATORY, not registered
+SCALES = (0.0, 0.5, 1.0, 2.0, 4.0)
+BUDGETS = (50, 100, 200)
+
+
+def _pick_new(F, G, k, seen):
+    """Up to k genomes from candidates G (surrogate order) not already in `seen`."""
+    out = []
+    for i in pick(F, min(len(G), k + len(seen))):
+        key = tuple(G[i])
+        if key not in seen:
+            seen.add(key); out.append(G[i])
+        if len(out) >= k:
+            break
+    return out
+
+
+def run_active_syn(sy, budget, seed, rounds=HP["active_rounds"], lam=1.0):
+    """NSGA-II with pairwise m 3, re-fitting a ridge model of pair residuals on all verified plans per round."""
+    f0, ver = surrogate(sy, "pairwise")
+    seen = {tuple(g) for g in ver}
+    chosen = list(ver)
+    opts = [(i, t) for i in range(sy.n) for t in (1, 2)]
+    P = [(a, b) for a, b in combinations(opts, 2) if a[0] != b[0]]
+    I = np.array([[a[0], a[1], b[0], b[1]] for a, b in P])
+    feat = lambda G: ((G[:, I[:, 0]] == I[:, 1]) & (G[:, I[:, 2]] == I[:, 3])).astype(float)
+    w = None
+    rng = np.random.default_rng(seed)
+
+    def f(G):
+        F = f0(G)
+        if w is not None:
+            F[:, 1] = -np.clip(-F[:, 1] + feat(np.asarray(G)) @ w, 0, 1)
+        return F
+    for k in range(rounds):
+        left = budget - len(chosen)
+        if left <= 0:
+            break
+        G, F = nsga2(np.full(sy.n, 3), f, rng, HP["generations"])
+        chosen += _pick_new(F, G, int(np.ceil(left / (rounds - k))), seen)
+        Gv = np.array(chosen)
+        X = feat(Gv)
+        y = sy.acc(Gv) - (-f0(Gv)[:, 1])
+        w = X.T @ np.linalg.solve(X @ X.T + lam * np.eye(len(X)), y)   # ridge, dual form
+    return np.array(chosen)
+
+
+def greedy_syn(sy, budget):
+    g = np.zeros(sy.n, dtype=int)
+    out = [g.copy()]
+    while len(out) < budget:
+        moves = [(i, g[i] + 1) for i in range(sy.n) if g[i] < 2]
+        if not moves:
+            break
+        i, t = max(moves, key=lambda m: (sy.label_gain[m] - sy.label_gain[m[0], g[m[0]]])
+                   / max(sy.dcost[m] - sy.dcost[m[0], g[m[0]]], 1e-12))
+        g[i] = t
+        out.append(g.copy())
+    return np.array(out)
+
+
+def sweep_one(args):
+    """One synthetic instance (n, seed) at every interaction scale and budget."""
+    import time
+    n, seed, pools = args
+    rows = []
+    for scale in SCALES:
+        sy = Synthetic(n, pools, np.random.default_rng(10_000 + 100 * n + seed), scale)
+        card = np.full(n, 3)
+        t0 = time.time(); GA, FA = abacus_dp(sy); t_dp = time.time() - t0
+        sur = {k: surrogate(sy, k) for k in ("pairwise", "independence")}
+        arch = {k: nsga2(card, f, np.random.default_rng(seed), HP["generations"]) for k, (f, _) in sur.items()}
+        found = {}
+        for b in BUDGETS:
+            for k, (f, ver) in sur.items():
+                seen = {tuple(g) for g in ver}
+                found[(f"nsga2_{k}", b)] = np.array(list(ver) + _pick_new(arch[k][1], arch[k][0], b - len(ver), seen))
+            take = pick(FA, b)
+            rest = b - len(take)
+            found[("abacus", b)] = np.r_[GA[take], np.random.default_rng(seed).integers(0, 3, (rest, n))] if rest > 0 else GA[take]
+            found[("greedy_uv", b)] = greedy_syn(sy, b)
+            found[("random", b)] = np.random.default_rng(seed + 1).integers(0, 3, (b, n))
+            found[("nsga2_active", b)] = run_active_syn(sy, b, seed)
+        OG, OF = nsga2(card, lambda X: np.c_[sy.cost(X), -sy.acc(X)], np.random.default_rng(seed),
+                       ORACLE["generations"], pop=ORACLE["pop"])
+        ref_hv = hv(sy, np.r_[OG[pareto_mask(OF)], *found.values()])
+        indep_err = float(np.abs(sy._pairsum(OG, sy.pairs)).mean())  # mean |interaction| over oracle archive plans
+        for (m, b), G_ in found.items():
+            rows.append({"n_agents": n, "interaction_scale": scale, "seed": seed, "method": m, "budget": b,
+                         "verified": len(np.unique(G_, axis=0)), "hv_ratio": hv(sy, G_) / ref_hv,
+                         "abacus_front_size": len(GA), "abacus_dp_s": t_dp, "abacus_options_per_agent": 3,
+                         "n_interacting_pairs": len(sy.pairs) // 4, "mean_abs_interaction": indep_err,
+                         "simulated": True, "registered": False})
+    print(f"sweep n={n} seed={seed} done", flush=True)
+    return rows
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--interaction-sweep", action="store_true", help="EXPLORATORY sweep (not registered)")
     ap.add_argument("--seeds", type=int, default=30)
     ap.add_argument("--workers", type=int, default=9)
     ap.add_argument("--out", default=str(ROOT / "results" / "search" / "scalability_SIMULATED.csv"))
     a = ap.parse_args()
     pools = measured_pools()
+    if a.interaction_sweep:
+        out = ROOT / "results" / "search" / "exploratory" / "scalability_interaction_SIMULATED.csv"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        with Pool(a.workers) as p:
+            rows = [r for rs in p.map(sweep_one, [(n, s, pools) for n in SIZES for s in range(a.seeds)]) for r in rs]
+        with open(out, "w", newline="") as f:
+            w = csv.DictWriter(f, list(rows[0])); w.writeheader(); w.writerows(rows)
+        print(f"wrote {len(rows)} rows to {out}")
+        return
     with Pool(a.workers) as p:
         rows = [r for rs in p.map(one, [(n, s, pools) for n in SIZES for s in range(a.seeds)]) for r in rs]
     with open(a.out, "w", newline="") as f:

@@ -131,7 +131,13 @@ def max_pairs(budget: int) -> int:
     return max(0, budget // 2 - 1)
 
 
-def make_surrogate(kind: str, s: Setting, budget: int, terms: Optional[LabelTerms] = None) -> Surrogate:
+def adaptive_pairs(budget: int) -> int:
+    """EXPLORATORY variant (not registered): pair plans capped at 25% of the budget."""
+    return int(0.25 * budget)
+
+
+def make_surrogate(kind: str, s: Setting, budget: int, terms: Optional[LabelTerms] = None,
+                   pair_cap=max_pairs) -> Surrogate:
     terms = terms or label_terms(s)
     sur = Surrogate(kind, s, terms)
     if kind.startswith("pairwise_corrected") or kind == "active":
@@ -140,7 +146,7 @@ def make_surrogate(kind: str, s: Setting, budget: int, terms: Optional[LabelTerm
         r0 = s.row(zero)
         sur.verified.append(r0)
         sur.base = float(s.acc[r0])
-        for (i, ti), (j, tj) in pair_plan_order(terms, s, m)[: max_pairs(budget)]:
+        for (i, ti), (j, tj) in pair_plan_order(terms, s, m)[: pair_cap(budget)]:
             g = zero.copy()
             g[i], g[j] = ti, tj
             r = s.row(g)

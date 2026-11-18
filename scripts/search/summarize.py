@@ -121,6 +121,21 @@ def main():
     md += ["", f"Beats {nb} of {len(beats)} comparators. Other surrogates and engines (exploratory, same budget, mean HV",
            "ratio over all cells): " + ", ".join(f"{m} {d2[d2.method == m].hv_ratio.mean():.3f}" for m in METHODS_2D), ""]
 
+    # registered methods by budget, effective B (presentation; no verdict depends on it)
+    md += ["### All registered 2-objective methods by budget (mean HV ratio over 30 seeds)", "",
+           "Effective budget B per setting: " + "; ".join(
+               f"{s} " + "/".join(str(budget_for(load_setting(s, with_latency=False).size, f)) for f in (0.01, 0.02, 0.05, 0.10, 0.20))
+               for s in settings) + " (1/2/5/10/20%). On the 32- and 64-plan spaces 1%, 2% and 5% are all the 4-plan",
+           "minimum, so those columns repeat one experiment. Pair plans used by pairwise_corrected per budget:",
+           "results/search/exploratory/pair_plan_budget.csv.", "",
+           "| method | all settings 1/2/5/10/20% | >=256 plans 1/2/5/10/20% | engine vs nsga2_pairwise_m3 W/T/L |", "|---|---|---|---|"]
+    for m in METHODS_2D:
+        a = s2[s2.method == m].groupby("budget_frac").hv_ratio_mean.mean()
+        b = s2[(s2.method == m) & (s2.n_plans >= 256)].groupby("budget_frac").hv_ratio_mean.mean()
+        eng = "/".join(map(str, wtl(paired(d2, "hv_ratio", m, MAIN)))) if m in ("mopso_pairwise_m3", "gde3_pairwise_m3") else ""
+        md.append(f"| {m} | " + " / ".join(f"{v:.3f}" for v in a) + " | " + " / ".join(f"{v:.3f}" for v in b) + f" | {eng} |")
+    md.append("")
+
     # ---- S3
     rows3 = []
     for s in settings:
@@ -191,6 +206,11 @@ def main():
     md += ["## Completeness", "", "Settings in this run: " + ", ".join(settings) + ".",
            "Pending (not yet on origin/v2-lease1 as complete plan sets): X2 (S5), X3 cross-family 729 (40/200 problems when",
            "last checked), X5 MATH-500, X6 7B/32B, X7 coding, laptop q4."]
+    md += ["", "---", "", "# Exploratory, not registered", "",
+           "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 pending).", ""]
+    for f in ("exploratory/EXPLORATORY.md", "exploratory/SCALABILITY_INTERACTION.md"):
+        if (OUT / f).exists():
+            md += [f"(from results/search/{f})", "", "\n".join(("#" + ln if ln.startswith("#") else ln) for ln in (OUT / f).read_text().splitlines()), ""]
     (OUT / "hypotheses_search.md").write_text("\n".join(md) + "\n")
     plot_hv_vs_budget(s2, settings)
     plot_fronts(d2)
@@ -198,22 +218,56 @@ def main():
     print("\n".join(md))
 
 
+STYLE = {  # method: (color, linestyle, marker, markersize, linewidth, zorder); drawn in this order
+    "abacus": ("#1baf7a", "--", None, 0, 4.0, 1),
+    "nsga2_indep_add": ("#eb6834", "-", "s", 8, 1.5, 2),
+    "random": ("#e34948", "-", "o", 3, 1.5, 2),
+    "greedy_uv": ("#eda100", "-", "^", 6, 1.5, 2),
+    "rule_confident_uv": ("#e87ba4", "-", "D", 5, 1.5, 2),
+    MAIN: ("#2a78d6", "-", "o", 5, 2.5, 3),
+    "mopso_pairwise_m3": ("#6250d6", ":", "x", 8, 2.0, 4),
+    "gde3_pairwise_m3": ("#008300", "-.", "+", 10, 1.5, 5),
+}
+
+
+def identical_to(s2, m, others, eps=5e-4):
+    """Methods whose mean HV-ratio curve equals m's (within eps) in every setting."""
+    out = []
+    for o in others:
+        if o == m:
+            continue
+        a = s2[s2.method == m].set_index(["setting", "budget_frac"]).hv_ratio_mean
+        b = s2[s2.method == o].set_index(["setting", "budget_frac"]).hv_ratio_mean
+        if (a - b).abs().max() < eps:
+            out.append(o)
+    return out
+
+
 def plot_hv_vs_budget(s2, settings):
-    meth = [MAIN, "nsga2_indep_add", "abacus", "greedy_uv", "rule_confident_uv", "random"]
-    fig, axes = plt.subplots(3, 4, figsize=(15, 10), sharey=True)
+    fig, axes = plt.subplots(3, 4, figsize=(16, 11.5), sharey=True)
     for ax, s in zip(axes.flat, settings):
-        for c, m in zip(COLORS, meth):
+        for m, (c, ls, mk, ms, lw, z) in STYLE.items():
             g = s2[(s2.setting == s) & (s2.method == m)].sort_values("budget_frac")
-            ax.plot(g.budget_frac * 100, g.hv_ratio_mean, color=c, lw=2, marker="o", ms=4,
-                    ls="--" if m == "abacus" else "-", label=m + (" (= indep_add on these spaces)" if m == "abacus" else ""))
-            ax.fill_between(g.budget_frac * 100, g.hv_ratio_ci_low, g.hv_ratio_ci_high, color=c, alpha=0.15, lw=0)
-        ax.set_title(f"{s} ({g.n_plans.iloc[0]} plans)", fontsize=9)
+            ax.plot(g.budget_frac * 100, g.hv_ratio_mean, color=c, ls=ls, marker=mk, ms=ms, lw=lw, zorder=z,
+                    mfc="none" if mk in ("s", "D", "^") else c, label=m)
+            if m == "random":
+                ax.fill_between(g.budget_frac * 100, g.hv_ratio_ci_low, g.hv_ratio_ci_high, color=c, alpha=0.12, lw=0)
+        n = g.n_plans.iloc[0]
+        at_min = [f for f in (1, 2, 5, 10, 20) if budget_for(n, f / 100) == 4 and round(f / 100 * n) < 4]
+        ax.set_title(f"{s} ({n} plans)" + (f"\n{'/'.join(map(str, at_min))}% all = 4-plan minimum" if at_min else ""), fontsize=9)
         ax.axhline(0.95, color="#888", lw=0.8, ls=":")
-        ax.set_xscale("log"); ax.set_xticks([1, 2, 5, 10, 20]); ax.set_xticklabels(["1", "2", "5", "10", "20"])
-        ax.grid(alpha=0.2)
+        ax.set_xscale("log"); ax.set_xticks([1, 2, 5, 10, 20])
+        ax.set_xticklabels([f"{f}%\nB={budget_for(n, f / 100)}" for f in (1, 2, 5, 10, 20)], fontsize=7)
+        ax.minorticks_off(); ax.grid(alpha=0.2)
     axes.flat[-1].axis("off")
-    axes.flat[-1].legend(*axes.flat[0].get_legend_handles_labels(), loc="center")
-    fig.supxlabel("verification budget (% of plans)"); fig.supylabel("hypervolume ratio (found / true)")
+    h, l = axes.flat[0].get_legend_handles_labels()
+    lab = []
+    for m in l:
+        same = identical_to(s2, m, STYLE)
+        lab.append(m + (f"\n  (same curve as {', '.join(same)} in all 11)" if same else ""))
+    axes.flat[-1].legend(h, lab, loc="center", fontsize=8)
+    fig.supxlabel("verification budget (% of plans; B = effective number of verified plans)")
+    fig.supylabel("hypervolume ratio (found / true), mean of 30 seeds")
     fig.tight_layout(); fig.savefig(FIG / "hv_ratio_vs_budget.png", dpi=130); plt.close(fig)
 
 

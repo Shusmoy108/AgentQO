@@ -52,3 +52,32 @@ Times UTC. Choices made without asking, as instructed.
 - Status 2026-11-17T21:5xZ: complete for the 11 lease settings. Not yet available: X2 (S5), X3 (729 cross-family,
   partial), X5, X6, X7, laptop q4. Re-run: run_search.py --settings <new> and summarize.py (SETTINGS dict needs
   the new setting's label/plan folders added).
+
+## 2026-11-18 (UTC) review round; registered verdicts unchanged
+
+- TIE THRESHOLD TIMING (stated plainly): tau = 0.0134 HV ratio was set AFTER I had seen the per-method mean
+  HV-ratio pivot over all settings (printed when the full run finished), but BEFORE any S2-S4 paired test,
+  W/T/L count or S3 correlation was computed. Why it had to be set then: the registration states the tie rule
+  in accuracy points per plan (X4 |delta| up to ~3.75 points), while S1-S4 are judged on hypervolume ratios,
+  so a translation into HV units was needed and had not been written down. I chose the empirical translation
+  (replay X4's re-run plan accuracies through the same HV: 0.66% math_q15_7, 1.34% hotpot_q15_7; took the larger)
+  rather than the worst-case bound (every plan shifted 3.75 points, ~5-9% HV), because X4 is the measured noise.
+  The pivot I had seen showed pairwise m3 below independence on average, so a larger tau would have turned more
+  S2 losses into ties; the smaller, data-driven tau was not chosen to favour the registered hypothesis.
+- X1c (new on origin/v2-lease1 at 00:01Z: Phi grid and a 9-plan A16 three-model shared run) is a different
+  server configuration from X1, so it is not mixed into the latency truth. X1/X1_vmB unchanged; registered
+  S4 inputs unchanged.
+- Figure 1 review: nsga2_indep_add was drawn but hidden under abacus (identical curves on all 11 settings).
+  Redrawn with distinct styles (abacus thick dashed underneath, indep_add hollow squares), MOPSO and GDE3
+  added, x labels show the effective B, and the legend states which curves coincide.
+- Exploratory runs (all labeled "exploratory, not registered", outputs under results/search/exploratory/):
+  strict HV (reference accuracy = all_small) + IGD + regret on complex_q15_7 and math_tiers; pair cap 25% of B
+  variant on the 32/64-plan spaces; S4 redesign (budget = plans, both placements from latsim at no cost);
+  active learning on real settings (registered exploratory variant) and in the simulation; simulated
+  interaction-strength sweep (pair interactions x0, 0.5, 1, 2, 4; budgets 50/100/200; 10-30 agents). In the
+  sweep the scale-1 instance is identical to the registered scalability instance (same rng seed); scaling
+  multiplies the sampled pair magnitudes only, so gains, costs and label noise are the same across scales.
+- 2026-11-18T00:2xZ Exploratory round finished (results/search/exploratory/, appended to hypotheses_search.md under
+  "Exploratory, not registered"). Registered files unchanged: results.csv, scalability_SIMULATED.csv,
+  search_prereg.md, and every registered verdict. Active-learning variant in the simulation uses the same 4-round
+  ridge refit as on the real settings, with features = every cross-agent option pair. X2 still absent at 00:09Z.
