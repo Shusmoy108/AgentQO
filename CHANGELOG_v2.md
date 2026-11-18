@@ -591,3 +591,5 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 08:05Z X8 complete on git (99cec392; the 07:36Z gate push had a truncated h3_calls.csv from a reset pull); mac_sync now pushes a gate only after a complete pull. FINAL data check tool (tools_lease/final_check.py): 0 missing. VM-A's P3 copy has 2 truncated files; P6 verified unaffected.
 - 08:25Z FINAL orchestrator built, dry-run OK, scheduled for 2026-11-19T06:00Z.
 - 13:52Z Nov 18: operational schedule change (lease ends 2026-11-19 22:38Z): new GPU work until 14:00Z, FINAL 16:00-20:00Z, nothing after 21:00Z. FINAL orchestrator restarted for 16:00Z, guard updated, backup taken now. No measurement changes.
+- 2026-11-18T13:56:32Z X9/X10 prep VM-B: x clone 18b3d7a0; ============================== 7 passed in 1.57s ===============================; Qwen 1.5B downloaded (nothing deleted); /mnt/data 41G free
+- 14:10Z X9/X10 registered (2104fad2) and running on VM-B (stage6_orch.sh); eval_x2b split 18b3d7a0.
