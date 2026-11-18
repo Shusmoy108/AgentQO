@@ -153,3 +153,4 @@ X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 
 2026-11-18T00:05:09Z VM-A GATE X1c-phi_fit: no settings
 2026-11-18T00:05:34Z VM-B GATE X1b: no settings
 2026-11-18T00:14:14Z BACKUP: first compressed cycle after the X1/X1b/X1c locks. VM-B ok (00:13Z, 272 MB, sha256 verified). VM-A: the copy of backup_v2_lease1.sqlite.zst was cut off by a network reset (00:07Z WARN); finished by hand with resumable retries: VM-A 20261118T0005Z holds backup_v2_lease1.sqlite.zst (277 MB, sha256 55c727c3..., decompresses to the backup's sha256 efc6357f...) and backup_x4_seed1.sqlite.zst (36 MB, sha256 ccd648f3...), both verified on VM and Mac; temporary uncompressed backups removed on VM-A. mac_sync now retries the .zst copy 5 times (rsync --partial).
+2026-11-18T00:14:28Z VM-A GATE X1c: no settings
