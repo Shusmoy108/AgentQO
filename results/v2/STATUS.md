@@ -342,3 +342,6 @@ RuntimeError: Engine core initialization failed. See root cause above. Failed co
 2026-11-18T15:12:37Z X12 START on VM-A (X11 complete)
 2026-11-18T15:12:41Z X12 prep VM-A: x clone 75da2c83;  8 passed in 1.06s ; /mnt/data 30G free
 2026-11-18T15:17:00Z VM-A GATE X12-math_q15_7: no settings
+2026-11-18T15:16:15Z X12 math_q15_7 done: eval all_small 0.5075 x2 all_small 0.5146036161335188 
+2026-11-18T15:20:04Z X12 math_granite done: eval all_small 0.4625 x2 all_small 0.5312934631432545 
+2026-11-18T15:22:38Z VM-A GATE X12-math_granite: no settings
