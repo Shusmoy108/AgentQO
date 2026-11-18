@@ -597,3 +597,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 14:36Z L2-X11 (6d853cdb) + H5c (7a67f064) + H1d (d488d333) registered before any X11 model call; X11 splits n = 200 / 200, overlap 0 / 0; X11a started 14:34Z on VM-A. X9 running on VM-B.
 - 14:39Z L2-X12 + H6b registered (5cc73094); code 75da2c83; X12 queued on VM-A after X11 (stage8_orch.sh).
 - 14:42Z lq.sh cutoffs on both VMs moved to the new schedule (V2_LEASE_END 16:00Z, reserve 2 h -> 14:00Z; step() GPU cutoff 14:00Z); no block interrupted.
+- 2026-11-18T14:52:52Z X11a math500_q15_7 vs X5: {"spearman": 0.909, "ref_best": ["planner+step_1+aggregator+verifier", 0.6933333333333334], "x11_best": ["all_large", 0.74], "x11_best_minus_all_large": 0.0, "ref_cheapest": "step_1+step_3+verifier", "x11_cheapest": "all_large"}; unscorable 
