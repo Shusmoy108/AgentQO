@@ -290,3 +290,4 @@ RuntimeError: Engine core initialization failed. See root cause above. Failed co
 2026-11-18T06:57:23Z TIMING_LOCK created on VM-B by X6-latency
 2026-11-18T06:57:23Z TIMING_LOCK X6-latency: no X3/non-timing GPU job running on VM-B (confirmed)
 2026-11-18T07:02:26Z VM-A GATE X6-math500_q7_32-plans: hotpot_q7_32: labels done; 32 plans, small 0.490 large 0.502 best 0.540 | math500_q7_32: labels done; 64 plans, small 0.650 large 0.770 best 0.777 | math_q7_32: labels done; 64 plans, small 0.820 large 0.930 best 0.940
+2026-11-18T07:08:08Z VM-A GATE X6-latency: hotpot_q7_32: labels done; 32 plans, small 0.490 large 0.502 best 0.540 | math500_q7_32: labels done; 64 plans, small 0.650 large 0.770 best 0.777 | math_q7_32: labels done; 64 plans, small 0.820 large 0.930 best 0.940
