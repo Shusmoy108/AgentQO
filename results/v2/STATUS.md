@@ -125,3 +125,42 @@
 2026-11-17T20:00:38Z VM-A GATE X1b-hotpot_q15_7_shared: no settings
 2026-11-17T20:12:19Z VM-B GATE X1b-math_granite_shared: no settings
 2026-11-17T20:40:32Z VM-A GATE X1b-math_q15_7_shared_mps: no settings
+2026-11-17T20:41:27Z X1c (a) Phi shared grid started early on VM-A (20:41Z) under the held X1 lock, while VM-B runs X1b math_phi shared on its own GPU; stage3d skips it if done.
+2026-11-17T21:09:53Z TIME LEFT after X1 (locks kept for X1b): 32.8 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-17T21:09:53Z X1b START: full sweep (projected X7 start 2026-11-18T10:15Z, before 2026-11-18T14:00Z)
+2026-11-17T21:41:53Z X1b START: full sweep (projected X7 start 2026-11-18T10:47Z, before 2026-11-18T14:00Z)
+2026-11-17T21:43:38Z VM-A GATE X1c-phi_shared: no settings
+2026-11-17T21:52:32Z INCIDENT (my orchestrator bug): stage3e (started ~21:00Z to make X1c wait for the early A-x1cshared block) replayed the X1b separate loop, which started VM-B's large-model server BEFORE checking that the block was done. At 21:09:40-21:13Z it restarted VM-B's servers three times (B-serve Q7 4096, Q7 8192, G8 4096) while VM-B was running X1b math_phi shared under the held lock. Effect: the K=4 run in progress was killed and not saved; later K=4/K=8 attempts hit Granite on :8002 (HTTP 404) and failed. Clean data kept: the 24 K=4 run files written before 21:09:40 (last at 21:08:50). Superseded: shared_k8 (2 all_small runs written 21:38 with Granite idle on :8002 instead of Phi-4) -> X1b/math_phi/superseded_server_swap_2109Z/. Fix: the loop now checks 'done' before any server start (stage3f_orch.sh); VM-B's block restarted 21:41Z with the correct servers (Phi-4 :8002, Phi-3.5-mini :8001) and resumed K=4 from the clean runs. VM-B's TIMING_LOCK stayed held throughout; VM-A (X1c phi shared, done 21:43Z) and all other X1b blocks were not affected.
+2026-11-17T22:40:17Z X1c (b) A16 three-model runs started early on VM-A under the held X1 lock (VM-A otherwise idle while VM-B finishes X1b math_phi shared).
+2026-11-17T22:40:35Z X1b START: full sweep (projected X7 start 2026-11-18T11:46Z, before 2026-11-18T14:00Z)
+2026-11-17T22:56:09Z VM-A GATE X1c-a16_shared: no settings
+2026-11-17T23:16:16Z X1c phi separate: first try stopped at the VM-A -> VM-B netcheck (23:15Z; VM-B had no server: the orchestrator assumed Phi-4 was still up from X1, but X1b's shared block stopped its servers). Nothing was measured. stage3h always serves Phi-4 on VM-B before X1c separate; locks held throughout.
+2026-11-17T23:16:22Z X1b START: full sweep (projected X7 start 2026-11-18T12:22Z, before 2026-11-18T14:00Z)
+2026-11-17T23:18:53Z VM-B GATE X1b-math_phi_shared: no settings
+2026-11-17T23:58:41Z VM-A GATE X1c-phi_separate: no settings
+2026-11-18T00:01:52Z TIMING_LOCK released on VM-A by X1
+2026-11-18T00:01:50Z TIMING_LOCK released on VM-B by X1
+X6 prep VM-A: 2026-11-18T00:02:28Z DELETED microsoft/phi-4: 21 blobs, 29.3 GB (0 shared blobs kept)
+X6 prep VM-A: 2026-11-18T00:02:30Z DELETED Qwen/Qwen2.5-1.5B-Instruct-AWQ: 10 blobs, 1.6 GB (0 shared blobs kept)
+X6 prep VM-A: 2026-11-18T00:02:30Z DELETED Qwen/Qwen2.5-7B-Instruct-AWQ: 12 blobs, 5.6 GB (0 shared blobs kept)
+X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 29.6 GB (0 shared blobs kept)
+2026-11-18T00:02:34Z X6 prep VM-A: /mnt/data free now 112G (expected ~51 GB after the 32B); Qwen2.5-32B-Instruct download started
+2026-11-18T00:05:00Z VM-A GATE X1: no settings
+2026-11-18T00:05:05Z VM-A GATE X1b: no settings
+2026-11-18T00:05:06Z TIME LEFT after X1: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:05:06Z TIME LEFT after X1b: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:05:06Z TIME LEFT after X1c: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:05:09Z VM-A GATE X1c-phi_fit: no settings
+2026-11-18T00:05:34Z VM-B GATE X1b: no settings
+2026-11-18T00:14:14Z BACKUP: first compressed cycle after the X1/X1b/X1c locks. VM-B ok (00:13Z, 272 MB, sha256 verified). VM-A: the copy of backup_v2_lease1.sqlite.zst was cut off by a network reset (00:07Z WARN); finished by hand with resumable retries: VM-A 20261118T0005Z holds backup_v2_lease1.sqlite.zst (277 MB, sha256 55c727c3..., decompresses to the backup's sha256 efc6357f...) and backup_x4_seed1.sqlite.zst (36 MB, sha256 ccd648f3...), both verified on VM and Mac; temporary uncompressed backups removed on VM-A. mac_sync now retries the .zst copy 5 times (rsync --partial).
+2026-11-18T00:14:28Z VM-A GATE X1c: no settings
+2026-11-18T00:36:44Z VM-A GATE X2-math_q15_7: hotpot_q15_7: plans INCOMPLETE | math_q15_7: 64 plans, small 0.503 large 0.825 best 0.843
+2026-11-18T00:42:27Z VM-A GATE X2-hotpot_q15_7: hotpot_iso_q15_7: plans INCOMPLETE | hotpot_q15_7: 32 plans, small 0.340 large 0.507 best 0.532 | math_q15_7: 64 plans, small 0.503 large 0.825 best 0.843
+2026-11-18T00:48:08Z VM-A GATE X2-hotpot_iso_q15_7: hotpot_iso_q15_7: 32 plans, small 0.290 large 0.522 best 0.522 | hotpot_q15_7: 32 plans, small 0.340 large 0.507 best 0.532 | math_q15_7: 64 plans, small 0.503 large 0.825 best 0.843
+2026-11-18T00:48:34Z VM-B GATE X2-math_granite: math_granite: 64 plans, small 0.523 large 0.751 best 0.758 | math_phi: plans INCOMPLETE
+2026-11-18T00:49:15Z TIME LEFT after X2 (VM-A part): 29.2 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:49:32Z TIME LEFT after X1-X4: 23.2 h to the 2026-11-19T00:00Z stop for new X work (06:00Z GPU cutoff)
+2026-11-18T00:50:19Z TIME LEFT after X4: 29.2 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:52:01Z X5 SMOKE PASSED
+2026-11-18T00:54:02Z VM-A GATE X4: hotpot_q15_7: 32 plans, small 0.312 large 0.512 best 0.512 | math_q15_7: 64 plans, small 0.482 large 0.805 best 0.828
+2026-11-18T00:54:06Z VM-A GATE X5-smoke: math500_q15_7: labels INCOMPLETE; smoke all_small=0.20 all_large=1.00
