@@ -593,3 +593,5 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 13:52Z Nov 18: operational schedule change (lease ends 2026-11-19 22:38Z): new GPU work until 14:00Z, FINAL 16:00-20:00Z, nothing after 21:00Z. FINAL orchestrator restarted for 16:00Z, guard updated, backup taken now. No measurement changes.
 - 2026-11-18T13:56:32Z X9/X10 prep VM-B: x clone 18b3d7a0; ============================== 7 passed in 1.57s ===============================; Qwen 1.5B downloaded (nothing deleted); /mnt/data 41G free
 - 14:10Z X9/X10 registered (2104fad2) and running on VM-B (stage6_orch.sh); eval_x2b split 18b3d7a0.
+- 2026-11-18T14:29:00Z X11 prep VM-A: x clone 18b3d7a0; sandbox  13 passed in 5.19s ; full suite  222 passed in 119.40s (0:01:59) ; Coder 1.5B/7B downloaded (nothing deleted); /mnt/data 31G free; math500_q15_7 n=200 sha256=dfa024369adda89d overlap=0; code_c15_7 n=200 sha256=05b900e306041f6b overlap=0; 
+- 14:36Z L2-X11 (6d853cdb) + H5c (7a67f064) + H1d (d488d333) registered before any X11 model call; X11 splits n = 200 / 200, overlap 0 / 0; X11a started 14:34Z on VM-A. X9 running on VM-B.

@@ -61,7 +61,21 @@ XS = [("X2_math_q15_7", "A", "X2/math_q15_7/plans", "held-out problems (eval_x2)
       ("X6_hotpot_q7_32", "A", "X6/hotpot_q7_32/plans", "HotpotQA chain, Qwen 7B/32B"),
       ("X6_math500_q7_32", "A", "X6/math500_q7_32/plans", "MATH-500, Qwen 7B/32B"),
       ("X7_code_c15_7", "B", "X7/code_c15_7/plans", "MBPP+ code chain, Qwen Coder 1.5B/7B"),
-      ("X8_complex_q15_7", "A", "X8/complex_q15_7/plans", "held-out problems (eval_x2[:200]) for complex_q15_7")]
+      ("X8_complex_q15_7", "A", "X8/complex_q15_7/plans", "held-out problems (eval_x2[:200]) for complex_q15_7"),
+      ("X9_math_tiers", "B", "X9/math_tiers/plans", "held-out problems (eval_x2[200:400]) for A16 math_tiers"),
+      ("X10_math_granite", "B", "X10/math_granite/plans", "run-to-run replicate of math_granite"),
+      ("X10_math_phi", "B", "X10/math_phi/plans", "run-to-run replicate of math_phi"),
+      ("X11_math500_q15_7", "A", "X11/math500_q15_7/plans", "held-out MATH-500 problems (X5 label 200) for X5"),
+      ("X11_code_c15_7", "A", "X11/code_c15_7/plans", "held-out MBPP+ problems (X7 label 200) for X7")]
+import subprocess
+def xcost(s, plans_dir):  # derived/X_cost/<s>/plan_costs.csv, computed once with the tag's cost_report.py (no model calls)
+    dst = f"{M}/derived/X_cost/{s}"
+    if not os.path.exists(f"{dst}/plan_costs.csv"):
+        wt = os.path.expanduser("~/AgentQO_lease"); os.makedirs(f"{M}/derived/X_cost", exist_ok=True)
+        if not os.path.exists(f"{M}/derived/X_cost/configs"): os.symlink(f"{wt}/configs", f"{M}/derived/X_cost/configs")
+        subprocess.run([sys.executable, f"{wt}/scripts/v2/cost_report.py", "--calls", f"{plans_dir}/h3_calls.csv", "--output-dir", dst],
+                       cwd=f"{M}/derived/X_cost", env={**os.environ, "PYTHONPATH": wt}, check=True, capture_output=True)
+    return f"{dst}/plan_costs.csv"
 out += ["", "## Exploratory settings (L2-X; never change a registered verdict)", "",
         "Same front and hypervolume definitions. API cost: cost_report.py on each setting's own h3_calls.csv with the same tier",
         "price table (small/large/xl), written to derived/X_cost/<setting>/plan_costs.csv at FINAL prep (no model calls).", "",
@@ -70,8 +84,10 @@ out += ["", "## Exploratory settings (L2-X; never change a registered verdict)",
 xfiles = ["", "### Files (paths under results/v2/; VM-B folders are <phase>_vmB in git)", ""]
 for s, vm, d, what in XS:
     base = f"{M}/vm-{vm}/results/v2"
+    if not os.path.exists(f"{base}/{d}/DONE"):
+        out.append(f"| {s} | {what} | - | - | - | - | - | not finished | no |"); continue
     acc = {r["plan"]: float(r["accuracy"]) for r in rd(f"{base}/{d}/h3_plans.csv")}
-    cost = {r["plan"]: float(r["api_usd"]) for r in rd(f"{M}/derived/X_cost/{s}/plan_costs.csv")}
+    cost = {r["plan"]: float(r["api_usd"]) for r in rd(xcost(s, f"{base}/{d}"))}
     pp_rows = rd(f"{base}/{d}/h3_per_problem.csv")
     probs = {r["task_id"] for r in pp_rows}; pairs = {(r["plan"], r["task_id"]) for r in pp_rows}
     complete = len(pairs) == len(acc) * len(probs) and set(acc) == set(cost)

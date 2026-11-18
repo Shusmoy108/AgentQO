@@ -64,8 +64,10 @@ for p in $(ls $R/vm-B/results/v2); do
   case $p in P3|P4|P4b) d=$p ;; GATES) d=GATES_vmB ;; *) d=${p}_vmB ;; esac
   mkdir -p $S/results/v2/$d; rsync -a $X $R/vm-B/results/v2/$p/ $S/results/v2/$d/
 done
-mkdir -p $S/results/v2/P6_X $S/logs; rsync -a $WT/results/v2/P6_X/ $S/results/v2/P6_X/
-python3 $T/search_gt.py $S/results/v2/P6/search_ground_truth.md > /dev/null || warn "search_gt.py failed"
+mkdir -p $S/results/v2/P6_X $S/logs
+python3 $T/search_gt.py $S/results/v2/P6/search_ground_truth.md > /dev/null || warn "search_gt.py failed"   # also prices any new X setting
+for d in $R/derived/X_cost/X*/; do n=$(basename $d); mkdir -p $S/results/v2/P6_X/$n; cp $d/plan_costs.csv $d/cost_summary.json $d/run_config.v2.json $S/results/v2/P6_X/$n/ 2>/dev/null; done
+cp $WT/results/v2/P6_X/README.md $S/results/v2/P6_X/
 cp $OUT/results/v2/FINAL/data_check.md $S/results/v2/FINAL/ 2>/dev/null || { mkdir -p $S/results/v2/FINAL; cp $OUT/results/v2/FINAL/data_check.md $S/results/v2/FINAL/; }
 for v in A B; do rsync -a --exclude='.*' $R/vm-$v/logs/ $S/logs/vm$v/; done
 cp $ST $EV $S/; cp -r $WT/prereg $S/; cp $WT/CHANGELOG_v2.md $WT/PLAN_v2_times.md $S/ 2>/dev/null
@@ -123,8 +125,9 @@ if [ $DRY != 1 ]; then
   git -C $WT fetch -q origin v2-lease1 && git -C $WT merge -q --ff-only origin/v2-lease1
   mkdir -p $WT/results/v2/FINAL; cp $S/results/v2/FINAL/data_check.md $WT/results/v2/FINAL/
   cp $S/results/v2/P6/search_ground_truth.md $WT/results/v2/P6/; cp $OUT/CHECKSUMS.txt $WT/results/v2/FINAL/
+  rsync -a $S/results/v2/P6_X/ $WT/results/v2/P6_X/
   cp $ST $WT/results/v2/STATUS.md; cp $EV $WT/results/v2/FINAL/events.log
-  git -C $WT add -f results/v2/FINAL results/v2/P6/search_ground_truth.md results/v2/STATUS.md CHANGELOG_v2.md
+  git -C $WT add -f results/v2/FINAL results/v2/P6/search_ground_truth.md results/v2/P6_X results/v2/STATUS.md CHANGELOG_v2.md
   git -C $WT commit -q -m "Lease 2: FINAL (data check, search ground truth, checksums)
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
