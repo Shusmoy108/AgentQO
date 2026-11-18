@@ -196,6 +196,24 @@ def main():
                "seed spread only, not problem-sampling uncertainty.", ""]
     else:
         md += ["## S5b: PENDING", "", "X8 has not landed (docs/search_prereg_s5b.md).", ""]
+    if (OUT / "s5c" / "S5c.md").exists():  # docs/search_prereg_s5c.md, scripts/search/s5c.py
+        md += [(OUT / "s5c" / "S5c.md").read_text(),
+               "Supplementary (not in the decision): the true eval front re-scored on X9 keeps 0.986 of its HV (0.981 of the",
+               "best X9 front); X9 is slightly easier (mean plan accuracy 0.755 -> 0.787); Spearman eval vs X9 0.890.", ""]
+    else:
+        md += ["## S5c: PENDING", "", "X9 has not landed (docs/search_prereg_s5c.md).", ""]
+    if (OUT / "s5d" / "S5d.md").exists():  # docs/search_prereg_s5d.md, scripts/search/s5d.py
+        md += ["\n".join((OUT / "s5d" / "S5d.md").read_text().split("\n")[:11]),
+               "(all methods and budgets: results/search/s5d/S5d.md)", "",
+               "Supplementary (not in the decision): code_c15_7's X11 problems are harder (mean plan accuracy 0.646 -> 0.584,",
+               "all_small 0.483 -> 0.415) while the plan ranking holds (Spearman 0.960). Retention is an absolute-HV ratio, so",
+               "a uniform drop lowers it: even the true eval front keeps only 0.889 on X11, and every method is 0.87-0.90 at",
+               "B = 4/6, so no method could have passed; the ratio to the best X11 front (0.919; true eval front 0.981) is",
+               "the cleaner generalization measure. math500_q15_7: true eval front retention 0.961, Spearman 0.909.",
+               "Caveat (from the L2-X11 amendment): X11's problems are X5's / X7's 200 LABEL problems, so they are held out",
+               "from plan evaluation but not from the per-agent labels the surrogates and Abacus-style use.", ""]
+    else:
+        md += ["## S5d: PENDING", "", "X11 has not landed (docs/search_prereg_s5d.md).", ""]
     if (OUT / "s6" / "S6.md").exists():  # confirmatory S6 (docs/search_prereg_s6.md), written by scripts/search/s6.py
         md += ["\n".join(("#" + ln if ln.startswith("#") else ln) for ln in
                           (OUT / "s6" / "S6.md").read_text().replace("<!-- part -->", "").splitlines()), ""]
@@ -222,11 +240,12 @@ def main():
            "Landed after the registered run, reported below under New settings: X5 MATH-500 (math500_q15_7), X6 7B/32B",
            "(math_q7_32, math500_q7_32, hotpot_q7_32), X7 coding (code_c15_7; no fixed-rule methods, the code workflow",
            "graph is not on this branch), X3 cross-family (x3_cross_family; confirmatory test is S6(a)).",
-           "X8 (complex_q15_7 on 200 new GSM8K problems) is S5b. Pending: laptop q4.", ""]
+           "Held-out re-scoring: X8 (complex_q15_7) is S5b, X9 (math_tiers) is S5c, X11 (math500_q15_7, code_c15_7) is S5d.",
+           "Pending: laptop q4.", ""]
     if (OUT / "new_settings" / "NEW_SETTINGS.md").exists():  # scripts/search/new_settings.py
         md += [(OUT / "new_settings" / "NEW_SETTINGS.md").read_text()]
     md += ["", "---", "", "# Exploratory, not registered", "",
-           "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 HELD, S5b HELD, S6(a) FAILED, S6(b) PARTIAL).", ""]
+           "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 HELD, S5b HELD, S5c HELD, S5d PARTIAL, S6(a) FAILED, S6(b) PARTIAL).", ""]
     for f in ("exploratory/EXPLORATORY.md", "exploratory/SCALABILITY_INTERACTION.md", "exploratory/FAIRNESS_NEXTBEST.md",
               "exploratory/size_priced/SIZE_PRICED.md"):
         if (OUT / f).exists():

@@ -187,3 +187,14 @@ Times UTC. Choices made without asking, as instructed.
   30 seeds) per setting; all registered methods and budgets are re-scored and reported. X11 path registered as the
   glob results/v2/X11*/<setting>/plans/h3_plans.csv since no amendment names it yet.
 - scripts/search/s5d.py refuses to read X11 without the tag. One dry run on the eval files (retention 1.0) checked it.
+
+## 2026-11-18 ~16:10Z: X9 and X11 landed (merge a4cabc67); S5c and S5d run once each
+- X9 at results/v2/X9_vmB/math_tiers (the amendment says X9/; the registered glob X9* covers both, no path change).
+  X11 at results/v2/X11/<setting>/plans as registered. All plans scored (729; 64; 32).
+- s5c.py, s5d.py and agentqo/search unchanged since their tags. Each result cross-checked by running the tagged code
+  from a scratch worktree on the same files: identical per-run rows.
+- S5c HELD: retention 0.9842 (pairwise) and 0.9834 (active); ratio to best X9 front 0.970 / 0.977.
+- S5d PARTIAL: math500_q15_7 0.9702 (pass), code_c15_7 0.8808 (fail). Context: X11 code problems are harder (mean
+  plan accuracy -6.2 points) while the ranking holds (Spearman 0.96); the true eval front itself keeps only 0.889.
+- Caveat found in the L2-X11 amendment (registered after S5d): X11's problems are X5/X7's 200 label problems, used for
+  the per-agent labels that the surrogates use; held out from plan evaluation only. Reported with the result.
