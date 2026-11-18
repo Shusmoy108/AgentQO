@@ -3,7 +3,7 @@
 usage: final_check.py [out.md]   (default: print). Exit 0 always; MISSING rows are listed in the report."""
 import csv, glob, os, sys
 csv.field_size_limit(1 << 30)
-M = os.path.expanduser("~/AgentQO_results/v2")
+M = os.environ.get("FINALCHECK_ROOT") or os.path.expanduser("~/AgentQO_results/v2")   # FINAL-early: the archive copy
 A, B = f"{M}/vm-A/results/v2", f"{M}/vm-B/results/v2"
 AGENTS = {"math": ["planner", "step_1", "step_2", "step_3", "aggregator", "verifier"],
           "code": ["planner", "coder", "tester", "fixer", "verifier"]}
