@@ -2,15 +2,15 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-17 23:35 UTC:
+Data status at 2026-11-18 00:30 UTC:
 - **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
   The lease logged "TIME LEFT after X1" at 15:54Z.
 - **X1b complete** (last block, math_phi shared, landed 23:18Z): all 9 blocks, every listed plan, 2 repeats each,
   402 points at K = 4/8/32, plus math_q15_7 K=1 (4 plans x separate/shared, 32 problems, 1 repeat). VM-B's
   21:09Z server-swap incident runs sit in `X1b_vmB/math_phi/superseded_server_swap_2109Z/` and are left out.
   Results below.
-- **X1c**: the A16 three-model runs are in (22:56Z); the Phi grid fit (`X1c/phi/fit`) is not yet. rev2 code is
-  committed (d1909fb5), not tagged or scored; it is tagged and pushed before any rev2 score.
+- **X1c complete** (lease head ee868ef7, ~00:06Z): Phi grid + fit and the A16 three-model runs. rev2 was fitted on
+  it, tagged `latsim-rev2-20261118T000620Z` and pushed before any rev2 prediction or score; results below.
 - **X6 latency: not present, and its 32B model cannot be predicted** (no 32B fit data).
 
 Generated tables: `report_tables.md`, `compare/{X1,X1b}_by_setting.csv`, `compare/{X1,X1b}_bootstrap.csv`,
@@ -22,11 +22,12 @@ Generated tables: `report_tables.md`, `compare/{X1,X1b}_by_setting.csv`, `compar
 |---|---|---|---|---|
 | latsim frozen | `latsim-frozen-20261117T133315Z` | 04c5bbde | simulator + parameters + full prediction grid, before any X1 file was opened | P5 + P5/h4grid |
 | latsim rev1 | `latsim-rev1-20261117T134155Z` | 2009dcd1 | the fit leaves out cold-prefix-cache P5 runs, so it predicts warm steady state. Made after scoring the frozen version on X1, prompted by its failure analysis; uses no X1 value | P5 + P5/h4grid |
+| latsim rev2 | `latsim-rev2-20261118T000620Z` | b3d0bdd6 | rev1 with measured instead of borrowed interference factors: the Phi-3.5-mini/Phi-4 pair (X1c Phi grid, h4_fit p50) and the four Qwen 14B pairs on a three-model GPU (fitted on the X1c A16 runs); every other parameter as rev1 | rev1's + X1c only |
 | H3c-fair, mean_sum-fair | `h3cfair-frozen-20261117T140740Z` | 30f7cf66 | registered formulas with latsim's fit data as input, plus the comparison/bootstrap code, frozen before any of their scores | P5 + P5/h4grid |
 
 Strict held-out claims (PI decision): latsim frozen on X1; latsim rev1 on X1b (rev1 was made after X1 was opened, so
-its X1 numbers are shown but are not held out). Planned rev2 (after X1c: Phi and three-model interference factors
-measured instead of borrowed, fitted on X1c only) will be shown as a labelled revision, not a held-out claim on X1.
+its X1 numbers are shown but are not held out). rev2 (Phi and three-model interference factors measured instead of
+borrowed, fitted on X1c only) is a labelled revision, not a held-out claim on X1 or X1b (both were open).
 X1b K=1 (32 problems) is scored only against re-runs of the tagged frozen / rev1 code on those same 32 problems.
 
 The registered H3c (column `h3c`; P6 value 0.492 on P5) is kept exactly as registered. H3c-fair is an added,
@@ -200,6 +201,40 @@ H3c's level is far off (median p95 error ~+100%) but its order within a group is
 | math_q15_7 | shared_mps | 8 | 16 | 0.75 / 0.75 / 0.44 / 0.38 | 0.07 / 0.10 | 0.78 / 0.75 | **+0.31 [+0.06, +0.56]** |
 | math_q15_7 | shared_mps | 32 | 16 | 0.56 / 0.50 / 0.25 / 0.19 | 0.11 / 0.21 | 0.58 / 0.53 | +0.25 [-0.06, +0.56] |
 
+## rev2: with measured instead of borrowed interference factors (labelled revision, not held out)
+
+Fitted on X1c only, tagged `latsim-rev2-20261118T000620Z` (b3d0bdd6) before any rev2 prediction or score. rev2's
+predictions differ from rev1's only where a borrowed factor was replaced (checked): math_tiers shared (2,656 grid rows),
+math_phi and hotpot_phi shared / shared_mps (248 + 248 + 120 + 120); every other row is identical to rev1's.
+
+| | interference factor | borrowed (rev1) | measured (rev2) |
+|---|---|---|---|
+| Phi, shared | Phi-4 → Phi-3.5-mini / reverse | 2.148 / 1.052 (Qwen 3B/14B grid) | 1.896 / 1.164 (X1c Phi grid) |
+| Phi, MPS | Phi-4 → Phi-3.5-mini / reverse | Qwen 3B/14B MPS | 1.572 / 0.567 |
+| three models, shared | 14B → 1.5B / 1.5B → 14B | 2.225 / 0.908 (Qwen 1.5B/7B grid) | 2.594 / 0.861 (X1c A16 fit) |
+| three models, shared | 14B → 7B / 7B → 14B | 2.148 / 1.052 (Qwen 3B/14B grid) | 1.764 / 1.122 (X1c A16 fit) |
+
+Pooled (within 10% / within 20% / MAPE p50 / MAPE p95 / τ):
+
+| test | frozen | rev1 | rev2 |
+|---|---|---|---|
+| X1 (938) | 0.708 / 0.925 / 0.063 / 0.079 / 0.927 | 0.783 / 0.979 / 0.049 / 0.063 / 0.930 | 0.793 / 0.981 / 0.046 / 0.062 / 0.931 |
+| X1b (402) | 0.649 / 0.883 / 0.079 / 0.097 / 0.908 | 0.669 / 0.928 / 0.062 / 0.083 / 0.918 | 0.679 / 0.933 / 0.059 / 0.082 / 0.918 |
+
+rev2 − H3c-fair, within 10% (stratified bootstrap, its own seed-0 stream so the frozen / rev1 draws are unchanged):
+X1 +0.343 [0.307, 0.380], significantly ahead in 12 of 14 groups, behind in none; X1b +0.226 [0.167, 0.286], ahead in
+6 of 27, behind in none.
+
+Where it changed (median error, rev1 → rev2):
+- **math_tiers shared, plans with the 14B** (X1, 102 plans): within 10% 0.50 → 0.65, p95 +9.6% → +6.9%, p50 +6.8% →
+  +5.7%. All math_tiers shared: 0.54 → 0.68 (vs H3c-fair 0.22; rev2 − H3c-fair +0.46 [0.35, 0.56]). Still high, so
+  the borrowed factors were only part of failure 3.
+- **math_phi shared**: X1b within 10% 0.63 → 0.71 (p50 +10.5% → +7.8%, p95 +4.4% → +3.3%), but X1 0.73 → 0.66 (p50
+  +10.5% → +9.3%, p95 +5.4% → +6.3%). The measured Phi factors shrink the p50 error by only 1–3 points, so the +8–9%
+  Phi shared p50 error is mostly not an interference-factor error (failure 4 needs another explanation).
+- Pooled the change is small (+0.01 within 10% on X1 and X1b): the replaced factors touch 2 of X1's 14 groups and 3 of
+  X1b's 27.
+
 ## In-sample (P5, fit data)
 
 - Share of P5 (plan, placement, K) points with p95 within 10% / 20%, mean over repeats: latsim frozen 0.831 / 0.964.
@@ -225,11 +260,13 @@ H3c's level is far off (median p95 error ~+100%) but its order within a group is
      3B/14B for both, see the prereg erratum).
    - Summing two betas when both other servers are busy likely overstates the slowdown. X1c's A16 three-model runs
      now exist; rev2 fits the four 14B factors on them (fitted vs borrowed: 14B→1.5B 2.59 vs 2.23, 1.5B→14B 0.86 vs
-     0.91, 14B→7B 1.76 vs 2.15, 7B→14B 1.12 vs 1.05; per-call log RMSE on A16 0.137 → 0.111).
+     0.91, 14B→7B 1.76 vs 2.15, 7B→14B 1.12 vs 1.05; per-call log RMSE on A16 0.137 → 0.111). rev2 raises
+     within 10% on these plans to 0.65 (bias +7%); see the rev2 section.
 4. **math_phi shared**: p50 +11%, p95 +5%. In separate placement Phi is on target (p50 +1%, p95 −1%), so the error
-   sits in the borrowed Phi betas, which rev2 will replace with X1c's measured ones. X1b repeats it at every load
+   was attributed to the borrowed Phi betas. X1b repeats it at every load
    (rev1 median p50 error +12% / +12% / +8%, p95 +4% / +8% / +3% at K = 4 / 8 / 32; within 10% 0.63 each), while
-   math_phi separate stays on target (within 20% 1.00 at every K).
+   math_phi separate stays on target (within 20% 1.00 at every K). rev2's measured Phi factors cut the p50 error by
+   only 1–3 points (X1 +9%, X1b +8%), so the borrowed betas were not the main cause; not yet explained.
 5. **Ranking within a setting** is weaker than the pooled τ: 0.64–0.91 per setting, against 0.93 pooled, which mostly
    reflects differences between settings. Still, it is above every baseline's within-setting τ in 11 of 14 groups
    (frozen) and 12 of 14 (rev1).
@@ -252,6 +289,9 @@ H3c's level is far off (median p95 error ~+100%) but its order within a group is
 python3 -m agentqo.latsim.fit --out results/latsim/rev1/params.json            # P5 + h4grid only (~10 min, CPU)
 python3 -m agentqo.latsim.predict --params results/latsim/rev1/params.json \
     --out results/latsim/rev1/predictions.csv --p5-out results/latsim/rev1/p5_insample.csv
+python3 -m agentqo.latsim.rev2 --out results/latsim/rev2/params.json          # rev1 + X1c factors (~15 s)
+python3 -m agentqo.latsim.predict --params results/latsim/rev2/params.json \
+    --out results/latsim/rev2/predictions.csv --p5-out results/latsim/rev2/p5_insample.csv
 python3 -m agentqo.latsim.h3cfair                                               # H3c-fair / mean_sum-fair grid
 python3 -m agentqo.latsim.report                                                # registered metrics, every version
 python3 -m agentqo.latsim.compare --name X1 \

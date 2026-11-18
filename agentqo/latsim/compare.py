@@ -4,7 +4,7 @@
         --measured 'results/v2/X1/*/*/placement_summary.csv,results/v2/X1_vm*/*/*/placement_summary.csv'
 
 Predictors: latsim_frozen and h3c (registered) from results/latsim/predictions.csv,
-latsim_rev1 from results/latsim/rev1/predictions.csv, h3cfair and mean_sum_fair from
+latsim_rev1 / latsim_rev2 from results/latsim/rev{1,2}/predictions.csv, h3cfair and mean_sum_fair from
 results/latsim/h3cfair/predictions.csv. Measured = mean over repeats (evaluate.load_measured).
 Per group: n plans, share with p95 within 10% / 20%, MAPE p95, Kendall tau of the p95 ranking
 within the group. Bootstrap: 5,000 resamples (numpy default_rng(0)) of the group's plans with
@@ -29,6 +29,7 @@ from agentqo.latsim.evaluate import load_measured, write_csv
 SOURCES = {  # predictor -> (file, p50 column, p95 column)
     "latsim_frozen": ("results/latsim/predictions.csv", "pred_p50", "pred_p95"),
     "latsim_rev1": ("results/latsim/rev1/predictions.csv", "pred_p50", "pred_p95"),
+    "latsim_rev2": ("results/latsim/rev2/predictions.csv", "pred_p50", "pred_p95"),
     "h3c": ("results/latsim/predictions.csv", "h3c_p50", "h3c_p95"),
     "h3cfair": ("results/latsim/h3cfair/predictions.csv", "h3cfair_p50", "h3cfair_p95"),
     "mean_sum_fair": ("results/latsim/h3cfair/predictions.csv", "mean_sum_fair_p50", "mean_sum_fair_p95"),
@@ -90,6 +91,7 @@ def main() -> None:
             by[(m["setting"], m["placement"], m["k"])].append({**m, **p})
     rows, boot_rows, hit_groups = [], [], []
     rng = np.random.default_rng(SEED)
+    rng2 = np.random.default_rng(SEED)  # rev2 on its own stream, so frozen / rev1 draws are as first reported
     for key, rs in sorted(by.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2])):
         meas = np.array([r["meas_p95"] for r in rs])
         row = {"setting": key[0], "placement": key[1], "k": key[2], "n_plans": len(rs)}
@@ -97,10 +99,10 @@ def main() -> None:
             for mk, v in group_metrics(np.array([r[name] for r in rs]), meas).items():
                 row[f"{name}_{mk}"] = v
         rows.append(row)
-        hits = {name: within10(np.array([r[name] for r in rs]), meas) for name in ("latsim_frozen", "latsim_rev1", "h3cfair")}
+        hits = {name: within10(np.array([r[name] for r in rs]), meas) for name in ("latsim_frozen", "latsim_rev1", "latsim_rev2", "h3cfair")}
         hit_groups.append(hits)
-        for a in ("latsim_frozen", "latsim_rev1"):
-            d = bootstrap([hits], a, "h3cfair", rng)
+        for a in ("latsim_frozen", "latsim_rev1", "latsim_rev2"):
+            d = bootstrap([hits], a, "h3cfair", rng2 if a == "latsim_rev2" else rng)
             boot_rows.append({"setting": key[0], "placement": key[1], "k": key[2], "n_plans": len(rs),
                               "comparison": f"{a} - h3cfair", "diff_w10": float(hits[a].mean() - hits["h3cfair"].mean()),
                               "ci_low": float(np.percentile(d, 2.5)), "ci_high": float(np.percentile(d, 97.5))})
@@ -111,8 +113,8 @@ def main() -> None:
         for mk, v in group_metrics(pv, allm).items():
             pooled[f"{name}_{mk}"] = v
     rows.append(pooled)
-    for a in ("latsim_frozen", "latsim_rev1"):
-        d = bootstrap(hit_groups, a, "h3cfair", rng)
+    for a in ("latsim_frozen", "latsim_rev1", "latsim_rev2"):
+        d = bootstrap(hit_groups, a, "h3cfair", rng2 if a == "latsim_rev2" else rng)
         diff = float(np.concatenate([g[a] for g in hit_groups]).mean() - np.concatenate([g["h3cfair"] for g in hit_groups]).mean())
         boot_rows.append({"setting": "ALL (stratified)", "placement": "all", "k": "all", "n_plans": len(allm),
                           "comparison": f"{a} - h3cfair", "diff_w10": diff,
