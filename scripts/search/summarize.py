@@ -209,11 +209,14 @@ def main():
         md.append("")
         plot_scalability(ss)
 
-    md += ["## Completeness", "", "Settings in this run: " + ", ".join(settings) + ".",
-           "S5 uses X2 (math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_granite). Pending: X3 cross-family 729 (S6(a)),",
-           "X5 MATH-500, X6 7B/32B, X7 coding, laptop q4."]
+    md += ["## Completeness", "", "Registered settings (S1-S4): " + ", ".join(settings) + ".",
+           "S5 uses X2, complete for all five settings (math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_granite, math_phi).",
+           "X5 MATH-500 (math500_q15_7) landed after the registered run: reported below under New settings.",
+           "Pending: X3 cross-family 729 (S6(a)), X6 7B/32B, X7 coding, laptop q4.", ""]
+    if (OUT / "new_settings" / "NEW_SETTINGS.md").exists():  # scripts/search/new_settings.py
+        md += [(OUT / "new_settings" / "NEW_SETTINGS.md").read_text()]
     md += ["", "---", "", "# Exploratory, not registered", "",
-           "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 pending).", ""]
+           "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 HELD).", ""]
     for f in ("exploratory/EXPLORATORY.md", "exploratory/SCALABILITY_INTERACTION.md", "exploratory/FAIRNESS_NEXTBEST.md"):
         if (OUT / f).exists():
             md += [f"(from results/search/{f})", "", "\n".join(("#" + ln if ln.startswith("#") else ln) for ln in (OUT / f).read_text().splitlines()), ""]

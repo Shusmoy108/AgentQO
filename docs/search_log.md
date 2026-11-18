@@ -104,3 +104,13 @@ Times UTC. Choices made without asking, as instructed.
   interactions (x0-x0.5) and is worse at x2-x4. Existing method rows are unchanged from the first sweep
   (same seeds); only the reference front now also includes abacus_nextbest's plans.
 - Watcher (git ls-tree names only, every 5 min) waits for X2_vmB/math_phi and X3_vmB/plans/h3_plans.csv.
+
+## 2026-11-18: X2 math_phi and X5 landed (merge 5c5e651c)
+- S5 re-run with all five X2 settings: HELD (math_phi retention 1.025, X2 HV / true X2 front 0.978). No X3 file came in this merge.
+- X5 MATH-500 (math500_q15_7, 64 plans, 300 problems) added as EXTRA setting: labels X5/math500_q15_7/labels, plans
+  X5/math500_q15_7/plans, API cost priced from h3_calls with price_plans (checked: reproduces P6 plan_costs on P2
+  math_q15_7 exactly). Rule orders use the math workflow (run_config says workflow=math).
+- Choice: the registered S1-S4 verdicts stay on the 11 original settings (round-2 instruction to keep them as they
+  are). X5 is run with the same 14 methods, budgets, 30 seeds and metrics (2 objectives; no latency truth, so no 3D
+  runs) into results/search/new_settings/results.csv and reported in NEW_SETTINGS.md as "New settings", with S3's rho
+  recomputed over 12 settings as supplementary.

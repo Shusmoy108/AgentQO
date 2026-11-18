@@ -32,13 +32,14 @@ COLS = ["setting", "n_plans", "objectives", "method", "budget_frac", "budget", "
 
 def job(args):
     name, seeds = args  # seeds: list of seed ints
-    s = load_setting(name)
+    s = load_setting(name, with_latency=name in SETTINGS)  # EXTRA settings have no latency truth: 2D only
     t = label_terms(s)
-    meas = {p: int((~s.lat_predicted[p]).sum()) for p in PLACEMENTS}
-    src = ("measured" if all(v == s.size for v in meas.values())
-           else "predicted" if not any(meas.values()) else
-           "mixed(" + ",".join(f"{p}:{v}/{s.size}" for p, v in meas.items()) + ")")
-    hv3t = true_hv3(s)
+    if s.latency:
+        meas = {p: int((~s.lat_predicted[p]).sum()) for p in PLACEMENTS}
+        src = ("measured" if all(v == s.size for v in meas.values())
+               else "predicted" if not any(meas.values()) else
+               "mixed(" + ",".join(f"{p}:{v}/{s.size}" for p, v in meas.items()) + ")")
+        hv3t = true_hv3(s)
     rows = []
     for frac in BUDGET_FRACS:
         b = budget_for(s.size, frac)
@@ -49,7 +50,7 @@ def job(args):
                 rows.append({"setting": name, "n_plans": s.size, "objectives": "acc_cost", "method": m,
                              "budget_frac": frac, "budget": b, "seed": seed, "wall_s": time.time() - t0,
                              **metrics_2d(s, V.rows, getattr(V, "surrogate", None)), "latency_source": ""})
-            for m, fn in METHODS_3D.items():
+            for m, fn in (METHODS_3D.items() if s.latency else ()):
                 t0 = time.time()
                 V = fn(s, b, np.random.default_rng(seed), terms=t)
                 rows.append({"setting": name, "n_plans": s.size, "objectives": "acc_cost_p95", "method": m,
