@@ -70,6 +70,19 @@ def test_eval_x2_split(tmp_path):
     assert [p["qid"] for p in extended_eval_x2(10, tmp_path)] == ids[:10]       # fixed order
 
 
+# X9: eval_x2b = eval_x2[200:400], disjoint from X8's eval_x2[:200], same fixed order
+def test_eval_x2b_split(tmp_path, monkeypatch):
+    import argparse
+    from agentqo.tasks import datasets
+    import scripts.run_real_pipeline as rp
+    rows = [{"question": f"q{i}", "answer": f"#### {i}"} for i in range(1319)]
+    (tmp_path / "gsm8k_test.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
+    x2 = [p["qid"] for p in extended_eval_x2(cache_dir=tmp_path)]
+    monkeypatch.setattr(rp, "extended_eval_x2", lambda n=None: datasets.extended_eval_x2(n, tmp_path))
+    got = [p["qid"] for p in rp.load_problems(argparse.Namespace(dataset="gsm8k", split="eval_x2b", n_tasks=200))]
+    assert got == x2[200:400] and not set(got) & set(x2[:200])
+
+
 # X2: HotpotQA "extra" = 600 dev rows outside the frozen label/eval split
 def test_hotpot_extra_split(tmp_path):
     rows = [{"id": f"id{i:05d}", "question": f"q{i}", "answer": f"a{i}", "context": [["T", ["s."]]]}

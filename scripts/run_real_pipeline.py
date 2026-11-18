@@ -103,6 +103,8 @@ def load_problems(args) -> List[Dict[str, str]]:
         return extended_eval(args.n_tasks)
     if args.split == "eval_x2":  # L2-X X2: GSM8K test problems in neither label 200 nor eval_ext 400
         return extended_eval_x2(args.n_tasks)
+    if args.split == "eval_x2b":  # L2-X X9: eval_x2[200:200+n], the problems after X8's eval_x2[:200]
+        return extended_eval_x2()[200:200 + args.n_tasks]
     if args.split == "label":  # GSM8K: the Session 1 LABEL order (100 dev first), disjoint from eval_ext
         return extended_label(args.n_tasks)
     working = load_gsm8k(n=300, seed=0)
@@ -204,7 +206,7 @@ def main() -> None:
                     help="YAML of flag values (e.g. configs/phase_b.yaml); explicit flags win")
     ap.add_argument("--backend", choices=["fake", "ollama", "vllm"], default="fake")
     ap.add_argument("--n-tasks", type=int, default=10)
-    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "eval_ext", "eval_x2", "extra"], default="dev",
+    ap.add_argument("--split", choices=["dev", "eval", "all", "label", "eval_ext", "eval_x2", "eval_x2b", "extra"], default="dev",
                     help="label: HotpotQA only; eval_ext: GSM8K eval then fresh test problems")
     ap.add_argument("--dataset", choices=["gsm8k", "hotpotqa", "math500", "mbppplus"], default="gsm8k")
     ap.add_argument("--realistic", action="store_true",
