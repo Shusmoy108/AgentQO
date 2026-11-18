@@ -46,6 +46,9 @@ def main():
         x2 = {r["plan"]: float(r["accuracy"]) for r in csv.DictReader(open(f))}
         terms = label_terms(s)
         b = budget_for(s.size, a.budget_frac)
+        assert set(x2) == set(s.names), f"{name}: X2 plan set differs from eval"
+        xa = np.array([x2[n] for n in s.names])
+        hv_x2_true = hv2(xa, s.cost, s.cost.max())
         for m, fn in METHODS_2D.items():
             for seed in range(a.seeds):
                 rows = sorted(set(fn(s, b, np.random.default_rng(seed), terms=terms).rows))
@@ -55,12 +58,38 @@ def main():
                 hx = hv2(np.array([x2[s.names[r]] for r in have]), s.cost[have], s.cost.max())
                 out.append({"setting": name, "x2_file": str(f.relative_to(ROOT)), "method": m, "budget": b, "seed": seed,
                             "front_plans": len(front), "missing_in_x2": len(front) - len(have),
-                            "hv_eval": he, "hv_x2": hx, "retention": hx / he if he else float("nan")})
+                            "hv_eval": he, "hv_x2": hx, "retention": hx / he if he else float("nan"),
+                            "x2_vs_true_x2_front": hx / hv_x2_true})
+        # supplementary: the true eval front re-scored on X2
+        tf = [r for r in np.flatnonzero(pareto_mask(np.c_[s.cost, -s.acc])) if s.names[r] in x2]
+        out.append({"setting": name, "x2_file": str(f.relative_to(ROOT)), "method": "TRUE_EVAL_FRONT", "budget": s.size,
+                    "seed": -1, "front_plans": len(tf), "missing_in_x2": 0,
+                    "hv_eval": hv2(s.acc[tf], s.cost[tf], s.cost.max()),
+                    "hv_x2": hv2(np.array([x2[s.names[r]] for r in tf]), s.cost[tf], s.cost.max()),
+                    "retention": hv2(np.array([x2[s.names[r]] for r in tf]), s.cost[tf], s.cost.max()) / hv2(s.acc[tf], s.cost[tf], s.cost.max()),
+                    "x2_vs_true_x2_front": hv2(np.array([x2[s.names[r]] for r in tf]), s.cost[tf], s.cost.max()) / hv_x2_true})
     p = ROOT / "results" / "search" / "s5_x2_rescore.csv"
     with open(p, "w", newline="") as fh:
         w = csv.DictWriter(fh, list(out[0]))
         w.writeheader(); w.writerows(out)
     print(f"wrote {len(out)} rows to {p}")
+    import pandas as pd
+    d = pd.DataFrame(out)
+    g = d.groupby(["setting", "method"])[["retention", "x2_vs_true_x2_front", "front_plans"]].mean().round(4)
+    main = g.xs("nsga2_pairwise_m3", level="method")
+    ok = (main.retention >= 0.95)
+    verdict = "HELD" if ok.all() else "PARTIAL" if ok.any() else "FAILED"
+    md = [f"## S5: {verdict}", "", f"nsga2_pairwise_m3 at {int(a.budget_frac*100)}% budget, mean over {a.seeds} seeds. Retention = HV of the",
+          "verified front's plans with X2 accuracy / with eval accuracy (eval API cost). Rule in docs/search_log.md.", "",
+          "| setting | B | retention | X2 HV / true X2 front HV | front plans |", "|---|---|---|---|---|"]
+    for sname, r in main.iterrows():
+        md.append(f"| {sname} | {budget_for(load_setting(sname, with_latency=False).size, a.budget_frac)} | {r.retention:.4f} | "
+                  f"{r.x2_vs_true_x2_front:.4f} | {r.front_plans:.1f} |")
+    md += ["", "All methods (supplementary; TRUE_EVAL_FRONT = the true eval front's plans re-scored):", "",
+           "| setting | method | retention | X2 HV / true X2 front HV |", "|---|---|---|---|"]
+    md += [f"| {s_} | {m_} | {r.retention:.4f} | {r.x2_vs_true_x2_front:.4f} |" for (s_, m_), r in g.iterrows()]
+    (ROOT / "results" / "search" / "S5.md").write_text("\n".join(md) + "\n")
+    print("\n".join(md))
 
 
 if __name__ == "__main__":

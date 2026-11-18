@@ -183,8 +183,14 @@ def main():
            "differ only in how they spend budget along the latency axis.", ""]
 
     # ---- S5
-    md += ["## S5: PENDING", "", "X2 held-out data (eval_x2 / HotpotQA extra) has not landed on origin/v2-lease1. It will be",
-           "opened only after the registration tag (already pushed). Re-run scripts/search/s5_rescore.py when it lands.", ""]
+    if (OUT / "S5.md").exists():  # written by scripts/search/s5_rescore.py
+        md += [(OUT / "S5.md").read_text(), "Caveat: retention > 1 means the X2 problems score higher for the same plans",
+               "(easier draw); the stricter column divides by the best possible front on X2 itself.", ""]
+    else:
+        md += ["## S5: PENDING", "", "X2 held-out data has not landed. Re-run scripts/search/s5_rescore.py when it lands.", ""]
+    if (OUT / "s6" / "S6.md").exists():  # confirmatory S6 (docs/search_prereg_s6.md), written by scripts/search/s6.py
+        md += ["\n".join(("#" + ln if ln.startswith("#") else ln) for ln in
+                          (OUT / "s6" / "S6.md").read_text().replace("<!-- part -->", "").splitlines()), ""]
 
     # ---- scalability
     sc_path = OUT / "scalability_SIMULATED.csv"
@@ -204,8 +210,8 @@ def main():
         plot_scalability(ss)
 
     md += ["## Completeness", "", "Settings in this run: " + ", ".join(settings) + ".",
-           "Pending (not yet on origin/v2-lease1 as complete plan sets): X2 (S5), X3 cross-family 729 (40/200 problems when",
-           "last checked), X5 MATH-500, X6 7B/32B, X7 coding, laptop q4."]
+           "S5 uses X2 (math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_granite). Pending: X3 cross-family 729 (S6(a)),",
+           "X5 MATH-500, X6 7B/32B, X7 coding, laptop q4."]
     md += ["", "---", "", "# Exploratory, not registered", "",
            "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 pending).", ""]
     for f in ("exploratory/EXPLORATORY.md", "exploratory/SCALABILITY_INTERACTION.md"):

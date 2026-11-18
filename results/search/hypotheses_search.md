@@ -89,10 +89,106 @@ over 55 cells; mean diff -0.0167. By latency source:
 Placement changes only latency (accuracy and API cost are placement-independent), so the two searches
 differ only in how they spend budget along the latency axis.
 
-## S5: PENDING
+## S5: HELD
 
-X2 held-out data (eval_x2 / HotpotQA extra) has not landed on origin/v2-lease1. It will be
-opened only after the registration tag (already pushed). Re-run scripts/search/s5_rescore.py when it lands.
+nsga2_pairwise_m3 at 10% budget, mean over 30 seeds. Retention = HV of the
+verified front's plans with X2 accuracy / with eval accuracy (eval API cost). Rule in docs/search_log.md.
+
+| setting | B | retention | X2 HV / true X2 front HV | front plans |
+|---|---|---|---|---|
+| hotpot_iso_q15_7 | 4 | 1.0387 | 0.8658 | 4.0 |
+| hotpot_q15_7 | 4 | 1.0427 | 0.9506 | 4.0 |
+| math_granite | 6 | 1.0295 | 0.9565 | 5.0 |
+| math_q15_7 | 6 | 1.0299 | 0.9376 | 4.0 |
+
+All methods (supplementary; TRUE_EVAL_FRONT = the true eval front's plans re-scored):
+
+| setting | method | retention | X2 HV / true X2 front HV |
+|---|---|---|---|
+| hotpot_iso_q15_7 | TRUE_EVAL_FRONT | 1.0639 | 1.0000 |
+| hotpot_iso_q15_7 | abacus | 1.0494 | 0.9488 |
+| hotpot_iso_q15_7 | gde3_pairwise_m3 | 1.0387 | 0.8658 |
+| hotpot_iso_q15_7 | greedy_uv | 1.0052 | 0.8108 |
+| hotpot_iso_q15_7 | mopso_pairwise_m3 | 1.0387 | 0.8658 |
+| hotpot_iso_q15_7 | nsga2_active_m3 | 1.0024 | 0.7803 |
+| hotpot_iso_q15_7 | nsga2_indep_add | 1.0494 | 0.9488 |
+| hotpot_iso_q15_7 | nsga2_indep_mult | 1.0494 | 0.9488 |
+| hotpot_iso_q15_7 | nsga2_logit_add | 1.0494 | 0.9488 |
+| hotpot_iso_q15_7 | nsga2_pairwise_m3 | 1.0387 | 0.8658 |
+| hotpot_iso_q15_7 | nsga2_pairwise_m5 | 1.0387 | 0.8658 |
+| hotpot_iso_q15_7 | random | 1.0095 | 0.6833 |
+| hotpot_iso_q15_7 | rule_confident_uv | 0.9940 | 0.7302 |
+| hotpot_iso_q15_7 | rule_output | 1.0654 | 0.9636 |
+| hotpot_iso_q15_7 | rule_structural | 0.9976 | 0.7073 |
+| hotpot_q15_7 | TRUE_EVAL_FRONT | 1.0234 | 0.9822 |
+| hotpot_q15_7 | abacus | 1.0278 | 0.9818 |
+| hotpot_q15_7 | gde3_pairwise_m3 | 1.0427 | 0.9506 |
+| hotpot_q15_7 | greedy_uv | 1.0250 | 0.9728 |
+| hotpot_q15_7 | mopso_pairwise_m3 | 1.0427 | 0.9506 |
+| hotpot_q15_7 | nsga2_active_m3 | 1.0322 | 0.9415 |
+| hotpot_q15_7 | nsga2_indep_add | 1.0278 | 0.9818 |
+| hotpot_q15_7 | nsga2_indep_mult | 1.0278 | 0.9818 |
+| hotpot_q15_7 | nsga2_logit_add | 1.0278 | 0.9818 |
+| hotpot_q15_7 | nsga2_pairwise_m3 | 1.0427 | 0.9506 |
+| hotpot_q15_7 | nsga2_pairwise_m5 | 1.0427 | 0.9506 |
+| hotpot_q15_7 | random | 1.0543 | 0.7340 |
+| hotpot_q15_7 | rule_confident_uv | 1.0339 | 0.9303 |
+| hotpot_q15_7 | rule_output | 1.0339 | 0.9303 |
+| hotpot_q15_7 | rule_structural | 1.0884 | 0.8113 |
+| math_granite | TRUE_EVAL_FRONT | 1.0232 | 0.9931 |
+| math_granite | abacus | 1.0320 | 0.9813 |
+| math_granite | gde3_pairwise_m3 | 1.0295 | 0.9565 |
+| math_granite | greedy_uv | 1.0482 | 0.9935 |
+| math_granite | mopso_pairwise_m3 | 1.0295 | 0.9565 |
+| math_granite | nsga2_active_m3 | 1.0301 | 0.9565 |
+| math_granite | nsga2_indep_add | 1.0320 | 0.9813 |
+| math_granite | nsga2_indep_mult | 1.0320 | 0.9813 |
+| math_granite | nsga2_logit_add | 1.0320 | 0.9813 |
+| math_granite | nsga2_pairwise_m3 | 1.0295 | 0.9565 |
+| math_granite | nsga2_pairwise_m5 | 1.0295 | 0.9565 |
+| math_granite | random | 1.0183 | 0.6984 |
+| math_granite | rule_confident_uv | 1.0392 | 0.9780 |
+| math_granite | rule_output | 1.0354 | 0.9698 |
+| math_granite | rule_structural | 1.0238 | 0.8866 |
+| math_q15_7 | TRUE_EVAL_FRONT | 0.9906 | 0.9727 |
+| math_q15_7 | abacus | 0.9937 | 0.9479 |
+| math_q15_7 | gde3_pairwise_m3 | 1.0299 | 0.9376 |
+| math_q15_7 | greedy_uv | 1.0284 | 0.9532 |
+| math_q15_7 | mopso_pairwise_m3 | 1.0299 | 0.9376 |
+| math_q15_7 | nsga2_active_m3 | 1.0250 | 0.8894 |
+| math_q15_7 | nsga2_indep_add | 0.9937 | 0.9479 |
+| math_q15_7 | nsga2_indep_mult | 0.9816 | 0.9168 |
+| math_q15_7 | nsga2_logit_add | 1.0327 | 0.9612 |
+| math_q15_7 | nsga2_pairwise_m3 | 1.0299 | 0.9376 |
+| math_q15_7 | nsga2_pairwise_m5 | 1.0299 | 0.9376 |
+| math_q15_7 | random | 1.0298 | 0.7063 |
+| math_q15_7 | rule_confident_uv | 1.0259 | 0.9509 |
+| math_q15_7 | rule_output | 1.0311 | 0.9539 |
+| math_q15_7 | rule_structural | 1.0582 | 0.8102 |
+
+Caveat: retention > 1 means the X2 problems score higher for the same plans
+(easier draw); the stricter column divides by the best possible front on X2 itself.
+
+## S6 (confirmatory; docs/search_prereg_s6.md)
+
+
+### S6(a) X3 cross-family: PENDING (X3 plans not landed)
+
+
+### S6(b) simulated, seeds 1000-1029: PARTIAL
+
+Decision: PASS if the paired 95% CI lower bound of (active - abacus_nextbest) > tau = 0.0134.
+
+| n_agents | scale | B | active | abacus_nextbest | diff | ci_low | ci_high | decision | strict_active | strict_abacus | strict_diff | strict_ci_low | strict_ci_high |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 20 | 1.0000 | 100 | 0.8855 | 0.8607 | 0.0248 | 0.0095 | 0.0401 | fail | 0.7824 | 0.7371 | 0.0453 | 0.0170 | 0.0737 |
+| 20 | 1.0000 | 200 | 0.9150 | 0.8717 | 0.0432 | 0.0252 | 0.0613 | PASS | 0.8396 | 0.7588 | 0.0808 | 0.0469 | 0.1147 |
+| 20 | 2.0000 | 100 | 0.8507 | 0.8116 | 0.0391 | 0.0193 | 0.0589 | PASS | 0.7421 | 0.6710 | 0.0711 | 0.0386 | 0.1036 |
+| 20 | 2.0000 | 200 | 0.8885 | 0.8278 | 0.0607 | 0.0371 | 0.0843 | PASS | 0.8078 | 0.7000 | 0.1078 | 0.0699 | 0.1458 |
+| 30 | 1.0000 | 100 | 0.8551 | 0.8507 | 0.0044 | -0.0109 | 0.0196 | fail | 0.7015 | 0.6938 | 0.0076 | -0.0241 | 0.0393 |
+| 30 | 1.0000 | 200 | 0.9064 | 0.8559 | 0.0505 | 0.0308 | 0.0703 | PASS | 0.8112 | 0.7045 | 0.1067 | 0.0637 | 0.1496 |
+| 30 | 2.0000 | 100 | 0.8211 | 0.7981 | 0.0229 | 0.0050 | 0.0409 | fail | 0.6585 | 0.6135 | 0.0450 | 0.0099 | 0.0800 |
+| 30 | 2.0000 | 200 | 0.8907 | 0.8060 | 0.0847 | 0.0579 | 0.1116 | PASS | 0.7976 | 0.6287 | 0.1689 | 0.1143 | 0.2234 |
 
 ## Scalability (SIMULATED, not measured)
 
@@ -109,8 +205,8 @@ Synthetic 3-tier workflows; gains, label errors and pair interactions sampled fr
 ## Completeness
 
 Settings in this run: math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_q3_14, math_granite, hotpot_granite, hotpot_iso_granite, math_phi, hotpot_phi, complex_q15_7, math_tiers.
-Pending (not yet on origin/v2-lease1 as complete plan sets): X2 (S5), X3 cross-family 729 (40/200 problems when
-last checked), X5 MATH-500, X6 7B/32B, X7 coding, laptop q4.
+S5 uses X2 (math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_granite). Pending: X3 cross-family 729 (S6(a)),
+X5 MATH-500, X6 7B/32B, X7 coding, laptop q4.
 
 ---
 

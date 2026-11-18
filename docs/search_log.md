@@ -81,3 +81,19 @@ Times UTC. Choices made without asking, as instructed.
   "Exploratory, not registered"). Registered files unchanged: results.csv, scalability_SIMULATED.csv,
   search_prereg.md, and every registered verdict. Active-learning variant in the simulation uses the same 4-round
   ridge refit as on the real settings, with features = every cross-agent option pair. X2 still absent at 00:09Z.
+
+## 2026-11-18 S6 registration, fairness check, S5
+
+- 00:54Z S6 registered and tagged (search-prereg-s6-20261118T0054Z, docs/search_prereg_s6.md) before any X3 plan
+  accuracy existed or was opened; then the confirmatory sweep (b) and the exploratory next-best fairness sweep
+  were started (in that order).
+- X2 landed on origin/v2-lease1 (X2: math_q15_7, hotpot_q15_7, hotpot_iso_q15_7; X2_vmB: math_granite; all plans,
+  719 GSM8K / 600 HotpotQA problems). Merged origin/v2-lease1 into v2-search at ~00:58Z; the merge changed no
+  ground-truth input (P1-P6, X1 placement files, configs, code unchanged; only X1 manifest/summary added).
+- S5 operationalization, written BEFORE running s5_rescore.py on X2 (the script's docstring, written before X2
+  existed, says "HELD if >= 0.95 everywhere" without naming the method/budget): the registered main method
+  nsga2_pairwise_m3 at the 10% budget (script default); for each X2 setting, retention = HV of its verified
+  front's plans with X2 accuracy / HV of the same plans with eval accuracy (same eval API cost; cost is a plan
+  property). S5 HELD if mean retention over 30 seeds >= 0.95 in every X2 setting; PARTIAL if in some; FAILED if
+  none. Reported alongside (not deciding): every other method; the true eval front re-scored on X2; and the
+  chosen front's X2 HV divided by the true X2 front's HV.
