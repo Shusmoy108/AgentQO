@@ -138,3 +138,11 @@
 2026-11-17T23:16:22Z X1b START: full sweep (projected X7 start 2026-11-18T12:22Z, before 2026-11-18T14:00Z)
 2026-11-17T23:18:53Z VM-B GATE X1b-math_phi_shared: no settings
 2026-11-17T23:58:41Z VM-A GATE X1c-phi_separate: no settings
+2026-11-18T00:01:52Z TIMING_LOCK released on VM-A by X1
+2026-11-18T00:01:50Z TIMING_LOCK released on VM-B by X1
+X6 prep VM-A: 2026-11-18T00:02:28Z DELETED microsoft/phi-4: 21 blobs, 29.3 GB (0 shared blobs kept)
+X6 prep VM-A: 2026-11-18T00:02:30Z DELETED Qwen/Qwen2.5-1.5B-Instruct-AWQ: 10 blobs, 1.6 GB (0 shared blobs kept)
+X6 prep VM-A: 2026-11-18T00:02:30Z DELETED Qwen/Qwen2.5-7B-Instruct-AWQ: 12 blobs, 5.6 GB (0 shared blobs kept)
+X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 29.6 GB (0 shared blobs kept)
+2026-11-18T00:02:34Z X6 prep VM-A: /mnt/data free now 112G (expected ~51 GB after the 32B); Qwen2.5-32B-Instruct download started
+2026-11-18T00:05:00Z VM-A GATE X1: no settings
