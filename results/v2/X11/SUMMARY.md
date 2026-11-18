@@ -1,12 +1,30 @@
 # Phase X11
 
-Generated 2026-11-18 14:52 UTC, backend `vllm`.
+Generated 2026-11-18 15:10 UTC, backend `vllm`.
 
 Code run: `18b3d7a0414a1079fb68ba0f14526e2d0e0417ba`; packaged at `252a12bfb53acc15c4530509b778daeba2a5dd19`.
 
 | step | status |
 |---|---|
+| code_c15_7/plans | finished |
 | math500_q15_7/plans | finished |
+
+## code_c15_7/plans
+
+### h3_plans.csv
+
+| plan | upgraded | accuracy | cost_units | large_calls | latency_s | tier_planner | tier_coder | tier_tester | tier_fixer | tier_verifier | gain_vs_small | gain_ci_low | gain_ci_high | share_of_full_gain | share_of_full_extra_cost |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| all_large | all | 0.705 | 20 | 5 | 7.751 | large | large | large | large | large | 0.29 | 0.22 | 0.36 | 1 | 1 |
+| planner+coder+tester+verifier | coder,planner,tester,verifier | 0.695 | 17 | 4 | 7.389 | large | large | large | small | large | 0.28 | 0.205 | 0.355 | 0.966 | 0.8 |
+| planner+coder+verifier | coder,planner,verifier | 0.685 | 14 | 3 | 6.753 | large | large | small | small | large | 0.27 | 0.195 | 0.345 | 0.931 | 0.6 |
+| planner+coder+fixer+verifier | coder,fixer,planner,verifier | 0.68 | 17 | 4 | 7.084 | large | large | small | large | large | 0.265 | 0.19 | 0.34 | 0.914 | 0.8 |
+| planner+tester+fixer+verifier | fixer,planner,tester,verifier | 0.675 | 17 | 4 | 7.135 | large | small | large | large | large | 0.26 | 0.19 | 0.33 | 0.897 | 0.8 |
+| planner+tester+verifier | planner,tester,verifier | 0.67 | 14 | 3 | 6.732 | large | small | large | small | large | 0.255 | 0.185 | 0.325 | 0.879 | 0.6 |
+| planner+verifier | planner,verifier | 0.665 | 11 | 2 | 6.169 | large | small | small | small | large | 0.25 | 0.18 | 0.32 | 0.862 | 0.4 |
+| planner+coder+tester+fixer | coder,fixer,planner,tester | 0.665 | 17 | 4 | 7.119 | large | large | large | large | small | 0.25 | 0.175 | 0.325 | 0.862 | 0.8 |
+
+8 of 32 rows shown.
 
 ## math500_q15_7/plans
 

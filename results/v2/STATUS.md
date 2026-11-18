@@ -335,3 +335,6 @@ RuntimeError: Engine core initialization failed. See root cause above. Failed co
 2026-11-18T14:52:52Z X11a math500_q15_7 vs X5: {"spearman": 0.909, "ref_best": ["planner+step_1+aggregator+verifier", 0.6933333333333334], "x11_best": ["all_large", 0.74], "x11_best_minus_all_large": 0.0, "ref_cheapest": "step_1+step_3+verifier", "x11_cheapest": "all_large"}; unscorable 
 2026-11-18T14:53:22Z TIME LEFT after X11a: 23.1 h to 2026-11-19 14:00Z
 2026-11-18T14:54:40Z VM-A GATE X11-math500_q15_7: math500_q15_7: 64 plans, small 0.375 large 0.740 best 0.740
+2026-11-18T15:10:42Z TIME LEFT after X11b: 22.8 h to 2026-11-19 14:00Z
+2026-11-18T15:10:37Z X11b code_c15_7 vs X7: {"spearman": 0.96, "ref_best": ["planner+coder+fixer+verifier", 0.7584269662921348], "x11_best": ["all_large", 0.705], "x11_best_minus_all_large": 0.0, "ref_cheapest": "planner+coder+fixer+verifier", "x11_cheapest": "planner+coder+tester+verifier"}; no code 
+2026-11-18T15:11:19Z VM-A GATE X11-code_c15_7: code_c15_7: 32 plans, small 0.415 large 0.705 best 0.705 | math500_q15_7: 64 plans, small 0.375 large 0.740 best 0.740
