@@ -576,3 +576,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T04:13:36Z X7 prep VM-B: x clone at 88e9d762; system python3 numpy 1.21.5
 - 2026-11-18T04:13:42Z X7 STOPPED: sandbox tests failed or skipped on VM-B (X7/sandbox_tests_vmB.txt)
 - 04:25Z X3 done (04:13Z), stage 3 done. X8 at 192/200 paused for X6 (04:14Z); X6 quality running on VM-A. X7 prep stopped on a sandbox test bug (path word, not a leak); test-only fix aececaa1, 13/13 on VM-B, X7 restarted.
+- 2026-11-18T04:15:46Z X7 prep VM-B: x clone at aececaa1; system python3 numpy 1.21.5

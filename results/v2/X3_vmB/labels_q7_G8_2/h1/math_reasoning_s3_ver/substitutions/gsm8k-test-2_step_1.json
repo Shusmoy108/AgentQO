@@ -1,0 +1,106 @@
+{
+  "task_id": "gsm8k-test-2",
+  "node_id": "step_1",
+  "role": "researcher",
+  "reference": "RESULT: $80,000 (purchase price) + $50,000 (repairs) = $130,000 (total cost)",
+  "reference_key": "130000",
+  "final_key_plus": "70000",
+  "q_plus": 1.0,
+  "q_minus": 0.6666666666666666,
+  "consequence": 0.33333333333333337,
+  "p_err": 0.0,
+  "baseline_agrees": true,
+  "descendants_plus": {
+    "aggregator": "Josh initially spent $80,000 on buying the house and $50,000 on repairs, totaling $130,000. The house's value increased by 150%, so the new value is the original value plus 150% of the original value. If we assume the original value was $80,000, then the new value is $80,000 + 150% * $80,000 = $80,000 + $120,000 = $200,000. The profit is the selling price minus the total cost, which is $200,000 - $130,000 = $70,000.\n\n#### 70000",
+    "verifier": "The original answer correctly states that Josh's initial cost was $130,000 and the new value of the house after the increase is $200,000. The calculation for the profit is correct as well, being $200,000 - $130,000 = $70,000.\n\nFinal answer: 70000",
+    "step_2": "RESULT: $200,000",
+    "step_3": "RESULT: $70,000"
+  },
+  "corruptions": [
+    {
+      "strategy": "numeric_perturb",
+      "key": "130000",
+      "reference_key": "130000",
+      "key_differs": false,
+      "text": "RESULT: 130001 (purchase price) + $50,000 (repairs) = $130,000 (total cost)",
+      "quality": 1.0,
+      "final_key": "70000",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "Josh sold the house for $195,000. To calculate his profit, we subtract the initial cost and the repair costs from the selling price.\n\n\\[ \\text{Profit} = \\text{Selling Price} - (\\text{Purchase Price} + \\text{Repair Costs}) \\]\n\\[ \\text{Profit} = 195,000 - (80,000 + 50,000) \\]\n\\[ \\text{Profit} = 195,000 - 130,000 \\]\n\\[ \\text{Profit} = 65,000 \\]\n\n#### 65000",
+        "verifier": "The proposed solution states that Josh sold the house for $195,000, which is based on a 150% increase in value from the purchase price of $80,000. However, a 150% increase means the new value is 250% of the original price, not just 150% more. Therefore, the correct selling price should be calculated as follows:\n\n\\[ \\text{New Value} = \\text{Original Price} \\times (1 + \\text{Increase Percentage}) \\]\n\\[ \\text{New Value} = 80,000 \\times 2.5 = 200,000 \\]\n\nSo, the correct selling price is $200,000, not $195,000.\n\nRecomputing the profit with the correct selling price:\n\n\\[ \\text{Profit} = 200,000 - (80,000 + 50,000) \\]\n\\[ \\text{Profit} = 200,000 - 130,000 \\]\n\\[ \\text{Profit} = 70,000 \\]\n\nFinal answer: 70000",
+        "step_2": "RESULT: 130000 * 2.5 = $325,000 (new value)",
+        "step_3": "RESULT: $195,000"
+      }
+    },
+    {
+      "strategy": "resample_disagree",
+      "key": "150000",
+      "reference_key": "130000",
+      "key_differs": true,
+      "text": "RESULT: 150000",
+      "quality": 0.0,
+      "final_key": "195000",
+      "final_differs": true,
+      "descendants": {
+        "aggregator": "First, calculate the new value of the house after the increase. The original purchase price plus repair costs is $80,000 + $50,000 = $130,000. A 150% increase on the $130,000 means the house's value becomes $130,000 * 2.5 = $325,000. \n\nTo find the profit, subtract the total cost ($130,000) from the new value ($325,000), which gives $325,000 - $130,000 = $195,000.\n\n#### 195000",
+        "verifier": "The calculation provided in the aggregator's solution seems correct based on the given problem statement. The house's value after a 150% increase is indeed $325,000, and the profit is correctly calculated as $195,000.\n\nFinal answer: 195000",
+        "step_2": "step_2: RESULT: 200000",
+        "step_3": "RESULT: 50000"
+      }
+    },
+    {
+      "strategy": "swap_other_task",
+      "key": "30",
+      "reference_key": "130000",
+      "key_differs": true,
+      "text": "RESULT: 30",
+      "quality": 1.0,
+      "final_key": "70000",
+      "final_differs": false,
+      "descendants": {
+        "aggregator": "Josh initially bought the house for $80,000 and spent $50,000 on repairs, making the total cost $130,000. The house's value increased by 150%, so the new value is $80,000 * 2.5 = $200,000. His profit is the selling price minus the total cost, which is $200,000 - $130,000 = $70,000. #### 70000",
+        "verifier": "Josh initially bought the house for $80,000 and spent $50,000 on repairs, making the total cost $130,000. The house's value increased by 150%, so the new value is $80,000 * 2.5 = $200,000. His profit is the selling price minus the total cost, which is $200,000 - $130,000 = $70,000. The original answer correctly identified that the house's value increased to $200,000 but did not mention the calculation error in the increase percentage application.\n\nFinal answer: 70000",
+        "step_2": "step_2: The original value of the house is $80,000. After repairs, the value increased by 150% of $80,000. So, the increase in value is $80,000 * 1.5 = $120,000. Therefore, the new value of the house is $80,000 + $120,000 = $200,000.\n\nRESULT: 200000",
+        "step_3": "RESULT: 120000"
+      }
+    }
+  ],
+  "invariant_violations": [],
+  "outputs_identical": false,
+  "q_base": 1.0,
+  "base_key": "130000",
+  "sample_keys": [
+    "130000",
+    "130000",
+    "130000",
+    "130000",
+    "130000"
+  ],
+  "consequence_by_strategy": {
+    "numeric_perturb": 0.0,
+    "swap_other_task": 0.0
+  },
+  "consequence_real": 1.0,
+  "skipped_plus": false,
+  "has_descendants": true,
+  "code_node": false,
+  "calls_base": {
+    "small_in": 1217.0,
+    "small_out": 550.0,
+    "small_s": 5.009271549999539
+  },
+  "calls_plus": {
+    "small_in": 1029.0,
+    "small_out": 331.0,
+    "small_s": 7.535400420994847,
+    "large_in": 187.0,
+    "large_out": 39.0,
+    "large_s": 0.741172963000281
+  },
+  "calls_samples": {
+    "small_in": 840.0,
+    "small_out": 137.0,
+    "small_s": 3.2344666520039027
+  }
+}
