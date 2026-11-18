@@ -589,3 +589,18 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T07:08:47Z TIMING_LOCK released on VM-A by X6-latency
 - 2026-11-18T07:08:49Z TIMING_LOCK released on VM-B by X6-latency
 - 08:05Z X8 complete on git (99cec392; the 07:36Z gate push had a truncated h3_calls.csv from a reset pull); mac_sync now pushes a gate only after a complete pull. FINAL data check tool (tools_lease/final_check.py): 0 missing. VM-A's P3 copy has 2 truncated files; P6 verified unaffected.
+- 08:25Z FINAL orchestrator built, dry-run OK, scheduled for 2026-11-19T06:00Z.
+- 13:52Z Nov 18: operational schedule change (lease ends 2026-11-19 22:38Z): new GPU work until 14:00Z, FINAL 16:00-20:00Z, nothing after 21:00Z. FINAL orchestrator restarted for 16:00Z, guard updated, backup taken now. No measurement changes.
+- 2026-11-18T13:56:32Z X9/X10 prep VM-B: x clone 18b3d7a0; ============================== 7 passed in 1.57s ===============================; Qwen 1.5B downloaded (nothing deleted); /mnt/data 41G free
+- 14:10Z X9/X10 registered (2104fad2) and running on VM-B (stage6_orch.sh); eval_x2b split 18b3d7a0.
+- 2026-11-18T14:29:00Z X11 prep VM-A: x clone 18b3d7a0; sandbox  13 passed in 5.19s ; full suite  222 passed in 119.40s (0:01:59) ; Coder 1.5B/7B downloaded (nothing deleted); /mnt/data 31G free; math500_q15_7 n=200 sha256=dfa024369adda89d overlap=0; code_c15_7 n=200 sha256=05b900e306041f6b overlap=0; 
+- 14:36Z L2-X11 (6d853cdb) + H5c (7a67f064) + H1d (d488d333) registered before any X11 model call; X11 splits n = 200 / 200, overlap 0 / 0; X11a started 14:34Z on VM-A. X9 running on VM-B.
+- 14:39Z L2-X12 + H6b registered (5cc73094); code 75da2c83; X12 queued on VM-A after X11 (stage8_orch.sh).
+- 14:42Z lq.sh cutoffs on both VMs moved to the new schedule (V2_LEASE_END 16:00Z, reserve 2 h -> 14:00Z; step() GPU cutoff 14:00Z); no block interrupted.
+- 2026-11-18T14:52:52Z X11a math500_q15_7 vs X5: {"spearman": 0.909, "ref_best": ["planner+step_1+aggregator+verifier", 0.6933333333333334], "x11_best": ["all_large", 0.74], "x11_best_minus_all_large": 0.0, "ref_cheapest": "step_1+step_3+verifier", "x11_cheapest": "all_large"}; unscorable 
+- 2026-11-18T15:10:37Z X11b code_c15_7 vs X7: {"spearman": 0.96, "ref_best": ["planner+coder+fixer+verifier", 0.7584269662921348], "x11_best": ["all_large", 0.705], "x11_best_minus_all_large": 0.0, "ref_cheapest": "planner+coder+fixer+verifier", "x11_cheapest": "planner+coder+tester+verifier"}; no code 
+- 15:12Z X11 done; H1d HELD, H5c NOT HELD (racing > 40% evaluations), H5c-b2 HELD.
+- 2026-11-18T15:12:41Z X12 prep VM-A: x clone 75da2c83;  8 passed in 1.06s ; /mnt/data 30G free
+- 2026-11-18T15:16:15Z X12 math_q15_7 done: eval all_small 0.5075 x2 all_small 0.5146036161335188 
+- 2026-11-18T15:20:04Z X12 math_granite done: eval all_small 0.4625 x2 all_small 0.5312934631432545 
+- 15:23Z X12 done; H6b NOT HELD (router cost 92% / 79% of fixed; Granite also -1.39 points).

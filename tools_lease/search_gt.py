@@ -46,6 +46,71 @@ for s, lp, pp, vm in SET:
     calls = f"{pp}/{s}/plans/h3_calls.csv" + (".gz" if os.path.exists(f"{base}/{pp}/{s}/plans/h3_calls.csv.gz") else "")
     files.append(f"- **{s}**: plans {pp}/{s}/plans/h3_plans.csv; per problem {pp}/{s}/plans/h3_per_problem.csv; per call {calls}; "
                  f"API cost {cfile}; labels {lp}/{s}/labels/labels_v2.csv and labels_v2_per_problem.csv; front: {', '.join(fr)}")
-out += files + ["", "X1-X7 (exploratory) are added to this file as they finish."]
+# Exploratory (L2-X): never change a registered verdict. API cost from derived/X_cost/<name>/plan_costs.csv (cost_report.py
+# on the setting's own h3_calls.csv, same tier price table; computed on the Mac at FINAL prep, no model calls).
+XS = [("X2_math_q15_7", "A", "X2/math_q15_7/plans", "held-out problems (eval_x2) for math_q15_7"),
+      ("X2_hotpot_q15_7", "A", "X2/hotpot_q15_7/plans", "held-out problems (extra) for hotpot_q15_7"),
+      ("X2_hotpot_iso_q15_7", "A", "X2/hotpot_iso_q15_7/plans", "held-out problems (extra) for hotpot_iso_q15_7"),
+      ("X2_math_granite", "B", "X2/math_granite/plans", "held-out problems (eval_x2) for math_granite"),
+      ("X2_math_phi", "B", "X2/math_phi/plans", "held-out problems (eval_x2) for math_phi"),
+      ("X3_math_xfamily", "B", "X3/plans_2", "3 families per agent: small Qwen 7B, large Granite 8B, xl Phi-4"),
+      ("X4_math_q15_7", "A", "X4/math_q15_7/plans", "run-to-run replicate of math_q15_7"),
+      ("X4_hotpot_q15_7", "A", "X4/hotpot_q15_7/plans", "run-to-run replicate of hotpot_q15_7"),
+      ("X5_math500_q15_7", "A", "X5/math500_q15_7/plans", "MATH-500, Qwen 1.5B/7B"),
+      ("X6_math_q7_32", "A", "X6/math_q7_32/plans", "GSM8K, Qwen 7B/32B"),
+      ("X6_hotpot_q7_32", "A", "X6/hotpot_q7_32/plans", "HotpotQA chain, Qwen 7B/32B"),
+      ("X6_math500_q7_32", "A", "X6/math500_q7_32/plans", "MATH-500, Qwen 7B/32B"),
+      ("X7_code_c15_7", "B", "X7/code_c15_7/plans", "MBPP+ code chain, Qwen Coder 1.5B/7B"),
+      ("X8_complex_q15_7", "A", "X8/complex_q15_7/plans", "held-out problems (eval_x2[:200]) for complex_q15_7"),
+      ("X9_math_tiers", "B", "X9/math_tiers/plans", "held-out problems (eval_x2[200:400]) for A16 math_tiers"),
+      ("X10_math_granite", "B", "X10/math_granite/plans", "run-to-run replicate of math_granite"),
+      ("X10_math_phi", "B", "X10/math_phi/plans", "run-to-run replicate of math_phi"),
+      ("X11_math500_q15_7", "A", "X11/math500_q15_7/plans", "held-out MATH-500 problems (X5 label 200) for X5"),
+      ("X11_code_c15_7", "A", "X11/code_c15_7/plans", "held-out MBPP+ problems (X7 label 200) for X7")]
+import subprocess
+def xcost(s, plans_dir):  # derived/X_cost/<s>/plan_costs.csv, computed once with the tag's cost_report.py (no model calls)
+    dst = f"{M}/derived/X_cost/{s}"
+    if not os.path.exists(f"{dst}/plan_costs.csv"):
+        wt = os.path.expanduser("~/AgentQO_lease"); os.makedirs(f"{M}/derived/X_cost", exist_ok=True)
+        if not os.path.exists(f"{M}/derived/X_cost/configs"): os.symlink(f"{wt}/configs", f"{M}/derived/X_cost/configs")
+        subprocess.run([sys.executable, f"{wt}/scripts/v2/cost_report.py", "--calls", f"{plans_dir}/h3_calls.csv", "--output-dir", dst],
+                       cwd=f"{M}/derived/X_cost", env={**os.environ, "PYTHONPATH": wt}, check=True, capture_output=True)
+    return f"{dst}/plan_costs.csv"
+out += ["", "## Exploratory settings (L2-X; never change a registered verdict)", "",
+        "Same front and hypervolume definitions. API cost: cost_report.py on each setting's own h3_calls.csv with the same tier",
+        "price table (small/large/xl), written to derived/X_cost/<setting>/plan_costs.csv at FINAL prep (no model calls).", "",
+        "| setting | what | plans | eval problems | on true front | front share | hypervolume | per-problem complete | usable for search |",
+        "|---|---|---|---|---|---|---|---|---|"]
+xfiles = ["", "### Files (paths under results/v2/; VM-B folders are <phase>_vmB in git)", ""]
+for s, vm, d, what in XS:
+    base = f"{M}/vm-{vm}/results/v2"
+    if not os.path.exists(f"{base}/{d}/DONE"):
+        out.append(f"| {s} | {what} | - | - | - | - | - | not finished | no |"); continue
+    acc = {r["plan"]: float(r["accuracy"]) for r in rd(f"{base}/{d}/h3_plans.csv")}
+    cost = {r["plan"]: float(r["api_usd"]) for r in rd(xcost(s, f"{base}/{d}"))}
+    pp_rows = rd(f"{base}/{d}/h3_per_problem.csv")
+    probs = {r["task_id"] for r in pp_rows}; pairs = {(r["plan"], r["task_id"]) for r in pp_rows}
+    complete = len(pairs) == len(acc) * len(probs) and set(acc) == set(cost)
+    fr, hv = front_hv(acc, cost)
+    out.append(f"| {s} | {what} | {len(acc)} | {len(probs)} | {len(fr)} | {len(fr)/len(acc):.3f} | {hv:.4f} | "
+               f"{'yes' if complete else 'NO'} ({len(pairs)} of {len(acc)*len(probs)}) | {'yes' if complete else 'not usable for search'} |")
+    gd = d.split("/", 1); gd = f"{gd[0]}_vmB/{gd[1]}" if vm == "B" else d
+    calls = f"{gd}/h3_calls.csv" + (".gz" if os.path.getsize(f"{base}/{d}/h3_calls.csv") > 95e6 else "")
+    xfiles.append(f"- **{s}**: plans {gd}/h3_plans.csv; per problem {gd}/h3_per_problem.csv; per call {calls}; "
+                  f"API cost P6_X/{s}/plan_costs.csv; front: {', '.join(fr)}")
+out += xfiles + ["", "## Latency ground truth (X1, X1b, X1c; exploratory)", "",
+    "Fresh requests (no cache hits), per-request start/end timestamps (request_start_s, request_end_s) and power logs.",
+    "X1: every plan of math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_q3_14, math_granite, math_phi (separate and shared,",
+    "K=16, 64 problems, 2 repeats) and A16 math_tiers / A17 complex_q15_7 (shared; Pareto-front plans plus 100 random plans,",
+    "seed 0). X1b: load sweep K = 1 (math_q15_7), 4, 8, 32 for math_q15_7, hotpot_q15_7, math_granite, math_phi (separate,",
+    "shared, shared_mps for math_q15_7). X1c: Phi-3.5-mini/Phi-4 interference grid and fit; A16 three-model shared runs.", ""]
+for x in ("X1", "X1b", "X1c"):
+    for vm in ("A", "B"):
+        base = f"{M}/vm-{vm}/results/v2/{x}"
+        if not os.path.isdir(base): continue
+        for st in sorted(e for e in os.listdir(base) if os.path.isdir(f"{base}/{e}")):
+            sub = sorted(e for e in os.listdir(f"{base}/{st}") if os.path.isdir(f"{base}/{st}/{e}") and "superseded" not in e)
+            g = f"{x}_vmB" if vm == "B" else x
+            out.append(f"- {g}/{st}/: {', '.join(sub) if sub else '(files directly in the folder)'}")
 open(sys.argv[1], "w").write("\n".join(out) + "\n")
 print("\n".join(out[:20]))
