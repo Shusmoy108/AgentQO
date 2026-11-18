@@ -19,18 +19,69 @@ algorithm was implemented or run during the lease.
 | complex_q15_7 | 1024 | 200 | 12 | 0.012 | 0.7175 | yes (204800 of 204800) | yes |
 | math_tiers | 729 | 200 | 14 | 0.019 | 0.8178 | yes (145800 of 145800) | yes |
 
-## Files a search evaluation needs (paths under results/v2/)
+## Exploratory settings (L2-X; never change a registered verdict)
 
-- **math_q15_7**: plans P2/math_q15_7/plans/h3_plans.csv; per problem P2/math_q15_7/plans/h3_per_problem.csv; per call P2/math_q15_7/plans/h3_calls.csv; API cost P6/math_q15_7/cost/plan_costs.csv; labels P1/math_q15_7/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_step_2, only_planner, only_aggregator, step_2+aggregator, only_verifier, step_2+verifier, planner+step_1+step_3+aggregator+verifier
-- **hotpot_q15_7**: plans P2/hotpot_q15_7/plans/h3_plans.csv; per problem P2/hotpot_q15_7/plans/h3_per_problem.csv; per call P2/hotpot_q15_7/plans/h3_calls.csv; API cost P6/hotpot_q15_7/cost/plan_costs.csv; labels P1/hotpot_q15_7/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_hop_2, only_planner, only_aggregator, only_verifier, hop_1+aggregator, aggregator+verifier, planner+hop_1+aggregator+verifier
-- **hotpot_iso_q15_7**: plans P2/hotpot_iso_q15_7/plans/h3_plans.csv; per problem P2/hotpot_iso_q15_7/plans/h3_per_problem.csv; per call P2/hotpot_iso_q15_7/plans/h3_calls.csv; API cost P6/hotpot_iso_q15_7/cost/plan_costs.csv; labels P1/hotpot_iso_q15_7/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_aggregator, only_verifier, aggregator+verifier, only_hop_1, hop_2+aggregator, hop_2+verifier, hop_2+aggregator+verifier, planner+hop_2+aggregator+verifier, hop_1+hop_2+aggregator+verifier, all_large
-- **math_q3_14**: plans P3/math_q3_14/plans/h3_plans.csv; per problem P3/math_q3_14/plans/h3_per_problem.csv; per call P3/math_q3_14/plans/h3_calls.csv; API cost P6/math_q3_14/cost/plan_costs.csv; labels P3/math_q3_14/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_aggregator, only_step_1, planner+aggregator, step_2+aggregator, only_verifier, planner+verifier, step_1+aggregator+verifier, step_1+step_2+step_3+aggregator+verifier
-- **math_granite**: plans P4/math_granite/plans/h3_plans.csv; per problem P4/math_granite/plans/h3_per_problem.csv; per call P4/math_granite/plans/h3_calls.csv; API cost P6/math_granite/cost/plan_costs.csv; labels P4/math_granite/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_aggregator, only_verifier, aggregator+verifier, step_1+aggregator+verifier, planner+verifier, planner+step_1+verifier, planner+step_1+aggregator+verifier, planner+step_2+step_3+aggregator+verifier
-- **hotpot_granite**: plans P4/hotpot_granite/plans/h3_plans.csv; per problem P4/hotpot_granite/plans/h3_per_problem.csv; per call P4/hotpot_granite/plans/h3_calls.csv; API cost P6/hotpot_granite/cost/plan_costs.csv; labels P4/hotpot_granite/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_aggregator, only_hop_2, hop_2+aggregator, hop_2+aggregator+verifier
-- **hotpot_iso_granite**: plans P4/hotpot_iso_granite/plans/h3_plans.csv; per problem P4/hotpot_iso_granite/plans/h3_per_problem.csv; per call P4/hotpot_iso_granite/plans/h3_calls.csv; API cost P6/hotpot_iso_granite/cost/plan_costs.csv; labels P4/hotpot_iso_granite/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_aggregator, aggregator+verifier, hop_1+aggregator+verifier, hop_2+aggregator+verifier, planner+hop_1+aggregator+verifier, all_large
-- **math_phi**: plans P4b/math_phi/plans/h3_plans.csv; per problem P4b/math_phi/plans/h3_per_problem.csv; per call P4b/math_phi/plans/h3_calls.csv; API cost P6/math_phi/cost/plan_costs.csv; labels P4b/math_phi/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_planner, only_aggregator, only_verifier, planner+verifier, step_3+verifier, step_2+step_3+verifier, planner+step_1+step_2+step_3+verifier
-- **hotpot_phi**: plans P4b/hotpot_phi/plans/h3_plans.csv; per problem P4b/hotpot_phi/plans/h3_per_problem.csv; per call P4b/hotpot_phi/plans/h3_calls.csv; API cost P6/hotpot_phi/cost/plan_costs.csv; labels P4b/hotpot_phi/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_verifier, only_aggregator, planner+verifier
-- **complex_q15_7**: plans P2c/complex_q15_7/plans/h3_plans.csv; per problem P2c/complex_q15_7/plans/h3_per_problem.csv; per call P2c/complex_q15_7/plans/h3_calls.csv; API cost P6/complex_q15_7/cost/plan_costs.csv; labels P2c/complex_q15_7/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, only_step_1_1, only_aggregator, researcher_1+aggregator, step_1_1+aggregator, researcher_1+step_1_1+aggregator, researcher_1+step_1_2+aggregator, planner+aggregator, only_verifier, researcher_1+aggregator+verifier, planner+step_1_1+verifier, planner+researcher_1+step_1_1+step_2_1+verifier
-- **math_tiers**: plans P2b/math_tiers/plans/h3_plans.csv; per problem P2b/math_tiers/plans/h3_per_problem.csv; per call P2b/math_tiers/plans/h3_calls.csv; API cost P6/math_tiers/tiers/tier_pareto.csv; labels P2b/math_tiers/labels/labels_v2.csv and labels_v2_per_problem.csv; front: all_small, step_1=large, step_2=large, aggregator=large, step_2=large+aggregator=large, verifier=large, step_2=large+verifier=large, verifier=xl, aggregator=large+verifier=xl, aggregator=xl+verifier=xl, planner=large+aggregator=large+verifier=xl, planner=large+step_1=large+step_3=large+verifier=xl, step_1=large+step_2=xl+aggregator=large+verifier=xl, planner=large+step_3=xl+verifier=xl
+Same front and hypervolume definitions. API cost: cost_report.py on each setting's own h3_calls.csv with the same tier
+price table (small/large/xl), written to derived/X_cost/<setting>/plan_costs.csv at FINAL prep (no model calls).
 
-X1-X7 (exploratory) are added to this file as they finish.
+| setting | what | plans | eval problems | on true front | front share | hypervolume | per-problem complete | usable for search |
+|---|---|---|---|---|---|---|---|---|
+| X2_math_q15_7 | held-out problems (eval_x2) for math_q15_7 | 64 | 719 | 10 | 0.156 | 0.6905 | yes (46016 of 46016) | yes |
+| X2_hotpot_q15_7 | held-out problems (extra) for hotpot_q15_7 | 32 | 600 | 8 | 0.250 | 0.4413 | yes (19200 of 19200) | yes |
+| X2_hotpot_iso_q15_7 | held-out problems (extra) for hotpot_iso_q15_7 | 32 | 600 | 10 | 0.312 | 0.4209 | yes (19200 of 19200) | yes |
+| X2_math_granite | held-out problems (eval_x2) for math_granite | 64 | 719 | 8 | 0.125 | 0.6477 | yes (46016 of 46016) | yes |
+| X2_math_phi | held-out problems (eval_x2) for math_phi | 64 | 719 | 4 | 0.062 | 0.8706 | yes (46016 of 46016) | yes |
+| X3_math_xfamily | 3 families per agent: small Qwen 7B, large Granite 8B, xl Phi-4 | 729 | 200 | 11 | 0.015 | 0.9312 | yes (145800 of 145800) | yes |
+| X4_math_q15_7 | run-to-run replicate of math_q15_7 | 64 | 400 | 8 | 0.125 | 0.6749 | yes (25600 of 25600) | yes |
+| X4_hotpot_q15_7 | run-to-run replicate of hotpot_q15_7 | 32 | 400 | 11 | 0.344 | 0.4179 | yes (12800 of 12800) | yes |
+| X5_math500_q15_7 | MATH-500, Qwen 1.5B/7B | 64 | 300 | 9 | 0.141 | 0.5762 | yes (19200 of 19200) | yes |
+| X6_math_q7_32 | GSM8K, Qwen 7B/32B | 64 | 400 | 7 | 0.109 | 0.8692 | yes (25600 of 25600) | yes |
+| X6_hotpot_q7_32 | HotpotQA chain, Qwen 7B/32B | 32 | 400 | 3 | 0.094 | 0.5029 | yes (12800 of 12800) | yes |
+| X6_math500_q7_32 | MATH-500, Qwen 7B/32B | 64 | 300 | 10 | 0.156 | 0.6942 | yes (19200 of 19200) | yes |
+| X7_code_c15_7 | MBPP+ code chain, Qwen Coder 1.5B/7B | 32 | 178 | 7 | 0.219 | 0.6405 | yes (5696 of 5696) | yes |
+| X8_complex_q15_7 | held-out problems (eval_x2[:200]) for complex_q15_7 | 1024 | 200 | 11 | 0.011 | 0.7241 | yes (204800 of 204800) | yes |
+
+### Files (paths under results/v2/; VM-B folders are <phase>_vmB in git)
+
+- **X2_math_q15_7**: plans X2/math_q15_7/plans/h3_plans.csv; per problem X2/math_q15_7/plans/h3_per_problem.csv; per call X2/math_q15_7/plans/h3_calls.csv; API cost P6_X/X2_math_q15_7/plan_costs.csv; front: all_small, only_step_3, only_planner, only_aggregator, step_1+aggregator, planner+aggregator, step_3+aggregator, only_verifier, aggregator+verifier, step_1+aggregator+verifier
+- **X2_hotpot_q15_7**: plans X2/hotpot_q15_7/plans/h3_plans.csv; per problem X2/hotpot_q15_7/plans/h3_per_problem.csv; per call X2/hotpot_q15_7/plans/h3_calls.csv; API cost P6_X/X2_hotpot_q15_7/plan_costs.csv; front: all_small, only_hop_2, only_aggregator, hop_2+aggregator, aggregator+verifier, hop_2+aggregator+verifier, hop_1+aggregator+verifier, hop_1+hop_2+aggregator+verifier
+- **X2_hotpot_iso_q15_7**: plans X2/hotpot_iso_q15_7/plans/h3_plans.csv; per problem X2/hotpot_iso_q15_7/plans/h3_per_problem.csv; per call X2/hotpot_iso_q15_7/plans/h3_calls.csv; API cost P6_X/X2_hotpot_iso_q15_7/plan_costs.csv; front: all_small, only_aggregator, only_verifier, aggregator+verifier, hop_2+aggregator, hop_2+verifier, hop_2+aggregator+verifier, planner+hop_2+aggregator+verifier, hop_1+hop_2+aggregator+verifier, all_large
+- **X2_math_granite**: plans X2_vmB/math_granite/plans/h3_plans.csv; per problem X2_vmB/math_granite/plans/h3_per_problem.csv; per call X2_vmB/math_granite/plans/h3_calls.csv; API cost P6_X/X2_math_granite/plan_costs.csv; front: all_small, only_aggregator, only_verifier, aggregator+verifier, planner+verifier, planner+aggregator+verifier, planner+step_1+aggregator+verifier, planner+step_3+aggregator+verifier
+- **X2_math_phi**: plans X2_vmB/math_phi/plans/h3_plans.csv; per problem X2_vmB/math_phi/plans/h3_per_problem.csv; per call X2_vmB/math_phi/plans/h3_calls.csv; API cost P6_X/X2_math_phi/plan_costs.csv; front: all_small, only_planner, only_aggregator, only_verifier
+- **X3_math_xfamily**: plans X3_vmB/plans_2/h3_plans.csv; per problem X3_vmB/plans_2/h3_per_problem.csv; per call X3_vmB/plans_2/h3_calls.csv.gz; API cost P6_X/X3_math_xfamily/plan_costs.csv; front: all_small, step_1=large, step_1=large+step_2=large, step_3=large+aggregator=xl, planner=xl+step_3=large, aggregator=xl, verifier=xl, step_3=large+aggregator=large+verifier=xl, step_2=large+step_3=large+aggregator=large+verifier=xl, step_3=xl+aggregator=large+verifier=xl, planner=large+step_1=large+step_2=large+verifier=xl
+- **X4_math_q15_7**: plans X4/math_q15_7/plans/h3_plans.csv; per problem X4/math_q15_7/plans/h3_per_problem.csv; per call X4/math_q15_7/plans/h3_calls.csv; API cost P6_X/X4_math_q15_7/plan_costs.csv; front: all_small, only_planner, only_aggregator, step_2+aggregator, step_3+aggregator, only_verifier, step_2+verifier, planner+step_1+step_2+step_3+verifier
+- **X4_hotpot_q15_7**: plans X4/hotpot_q15_7/plans/h3_plans.csv; per problem X4/hotpot_q15_7/plans/h3_per_problem.csv; per call X4/hotpot_q15_7/plans/h3_calls.csv; API cost P6_X/X4_hotpot_q15_7/plan_costs.csv; front: all_small, only_hop_2, only_planner, only_aggregator, only_verifier, hop_2+verifier, aggregator+verifier, hop_1+aggregator+verifier, hop_1+hop_2+aggregator+verifier, planner+hop_1+aggregator+verifier, all_large
+- **X5_math500_q15_7**: plans X5/math500_q15_7/plans/h3_plans.csv; per problem X5/math500_q15_7/plans/h3_per_problem.csv; per call X5/math500_q15_7/plans/h3_calls.csv; API cost P6_X/X5_math500_q15_7/plan_costs.csv; front: all_small, only_planner, only_aggregator, step_1+aggregator, only_verifier, planner+verifier, aggregator+verifier, step_1+step_3+verifier, planner+step_1+aggregator+verifier
+- **X6_math_q7_32**: plans X6/math_q7_32/plans/h3_plans.csv; per problem X6/math_q7_32/plans/h3_per_problem.csv; per call X6/math_q7_32/plans/h3_calls.csv; API cost P6_X/X6_math_q7_32/plan_costs.csv; front: all_small, only_planner, step_1+aggregator, only_verifier, aggregator+verifier, step_3+verifier, step_3+aggregator+verifier
+- **X6_hotpot_q7_32**: plans X6/hotpot_q7_32/plans/h3_plans.csv; per problem X6/hotpot_q7_32/plans/h3_per_problem.csv; per call X6/hotpot_q7_32/plans/h3_calls.csv; API cost P6_X/X6_hotpot_q7_32/plan_costs.csv; front: all_small, only_aggregator, planner+aggregator
+- **X6_math500_q7_32**: plans X6/math500_q7_32/plans/h3_plans.csv; per problem X6/math500_q7_32/plans/h3_per_problem.csv; per call X6/math500_q7_32/plans/h3_calls.csv; API cost P6_X/X6_math500_q7_32/plan_costs.csv; front: all_small, only_planner, planner+aggregator, planner+verifier, planner+aggregator+verifier, step_3+aggregator+verifier, planner+step_3+verifier, step_1+step_2+aggregator+verifier, planner+step_1+step_2+aggregator+verifier, planner+step_1+step_2+step_3+verifier
+- **X7_code_c15_7**: plans X7_vmB/code_c15_7/plans/h3_plans.csv; per problem X7_vmB/code_c15_7/plans/h3_per_problem.csv; per call X7_vmB/code_c15_7/plans/h3_calls.csv; API cost P6_X/X7_code_c15_7/plan_costs.csv; front: all_small, only_coder, only_planner, planner+coder, planner+fixer, planner+coder+fixer, planner+coder+fixer+verifier
+- **X8_complex_q15_7**: plans X8/complex_q15_7/plans/h3_plans.csv; per problem X8/complex_q15_7/plans/h3_per_problem.csv; per call X8/complex_q15_7/plans/h3_calls.csv.gz; API cost P6_X/X8_complex_q15_7/plan_costs.csv; front: all_small, only_step_1_1, only_aggregator, step_1_2+aggregator, step_2_2+aggregator, only_verifier, researcher_1+verifier, researcher_1+researcher_2+verifier, researcher_1+researcher_2+step_2_1+verifier, planner+researcher_1+verifier, step_1_1+step_2_1+step_2_2+aggregator+verifier
+
+## Latency ground truth (X1, X1b, X1c; exploratory)
+
+Fresh requests (no cache hits), per-request start/end timestamps (request_start_s, request_end_s) and power logs.
+X1: every plan of math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_q3_14, math_granite, math_phi (separate and shared,
+K=16, 64 problems, 2 repeats) and A16 math_tiers / A17 complex_q15_7 (shared; Pareto-front plans plus 100 random plans,
+seed 0). X1b: load sweep K = 1 (math_q15_7), 4, 8, 32 for math_q15_7, hotpot_q15_7, math_granite, math_phi (separate,
+shared, shared_mps for math_q15_7). X1c: Phi-3.5-mini/Phi-4 interference grid and fit; A16 three-model shared runs.
+
+- X1/complex_q15_7/: shared
+- X1/hotpot_iso_q15_7/: separate, shared
+- X1/hotpot_q15_7/: separate, shared
+- X1/math_granite/: separate
+- X1/math_phi/: separate
+- X1/math_q15_7/: separate, shared
+- X1/math_q3_14/: separate
+- X1/math_tiers/: shared
+- X1_vmB/math_granite/: shared
+- X1_vmB/math_phi/: shared
+- X1_vmB/math_q3_14/: shared
+- X1b/hotpot_q15_7/: separate_k32, separate_k4, separate_k8, shared_k32, shared_k4, shared_k8
+- X1b/math_granite/: separate_k32, separate_k4, separate_k8
+- X1b/math_phi/: separate_k32, separate_k4, separate_k8
+- X1b/math_q15_7/: separate_k1, separate_k32, separate_k4, separate_k8, shared_k1, shared_k32, shared_k4, shared_k8, shared_mps_k32, shared_mps_k4, shared_mps_k8
+- X1b_vmB/math_granite/: shared_k32, shared_k4, shared_k8
+- X1b_vmB/math_phi/: shared_k32, shared_k4, shared_k8
+- X1c/a16_three_model/: shared
+- X1c/phi/: fit, grid, p2
