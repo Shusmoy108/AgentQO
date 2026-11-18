@@ -175,3 +175,8 @@ Times UTC. Choices made without asking, as instructed.
   ground_truth/surrogates changes since the tag only touch EXTRA and "@size" settings (prices None for complex_q15_7).
 - Result: retention 0.9751 for both nsga2_pairwise_m3 and nsga2_active_m3 (>= 0.95: HELD); X8 HV / best X8 front HV
   0.9542. Cross-check: the tagged code, run from a scratch worktree on the same X8 file, gave identical per-run rows.
+
+## 20261118T1353Z: S5c registered (docs/search_prereg_s5c.md, tag search-prereg-s5c-20261118T1353Z)
+- Written and tagged before any X9 file exists on v2-lease1 or locally. scripts/search/s5c.py is s5b.py with the
+  setting (math_tiers), data folder (X9) and labels changed; s5b.py itself untouched. It refuses to read X9 without
+  the tag. One dry run on the eval file (retention 1.0) checked the pipeline.
