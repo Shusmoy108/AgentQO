@@ -749,3 +749,20 @@ accuracy over all plans minus the pick's; comparator = the eval-exhaustive pick.
 held-out regret of (b2) over the 30 seeds is within tau = 0.0134 of the exhaustive pick's regret, at <= 40% of the exhaustive
 plan x problem evaluations. H5c and H5c-b2 are reported side by side; neither replaces the other. Offline analysis only;
 results in results/v2/X11/H5c/ (both).
+
+### L2-X10r: corrected greedy replicate at P4/P4b's max-model-len, registered 2026-11-18 17:46:54 UTC, before any X10r data
+
+Status: EXPLORATORY under L2-X (own folder results/v2/X10r, V2_DEVIATION=D-L2-X-code, x clone 18b3d7a0 on VM-B as X10;
+included in results_v2_UPLOAD.zip and FINAL/data_check.md; a gate and push each). Reason: X10 (L2-X10) used vLLM
+max-model-len 4096, but P4 and P4b ran their servers at 8192 (queue_B.log, 2026-11-16: Granite from 13:59Z, Phi from
+15:05Z), an error in the X10 registration. X10 is therefore a replicate plus a context-length change; X10 is kept as is
+and reported as such. X10r repeats X10 exactly with max-model-len 8192.
+What: math_granite (Granite-3.1-2B/8B) and math_phi (Phi-3.5-mini/Phi-4), all 64 plans x the same 400 eval_ext problems,
+math workflow, max_tokens 512, cautious verifier, seed 42, servers large 0.55 / small 0.25 at max-model-len 8192, fresh
+separate cache data/cache/x10r_vmB.sqlite (no call reused), AGENTQO_SEED_SALT=1 as in X4/X10 (no effect under greedy).
+Before the first model call of each setting the block confirms max-model-len = 8192 for both servers from the server log
+(the "up (mem ..., len 8192)" line written at this start) and from the live server (/v1/models max_model_len); any other
+value stops X10r. Reported per setting: (1) X10r vs P4 / P4b (the pure run-to-run replicate): per-plan accuracy change,
+flip share, plans with any flip, Pareto-front changes (accuracy vs cost_units, reference cost per plan), as in X4/X10;
+(2) X10 (4096) vs X10r (8192) on the same plans and problems, same measures, isolating the context-length effect.
+VM-B only; no block starts after 2026-11-19 14:00Z; nothing deleted.
