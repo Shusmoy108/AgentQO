@@ -585,3 +585,32 @@ labels (results/v2/P2c/complex_q15_7/labels). Lease cache. Output results/v2/X8/
 When: on VM-A's idle time, only after the search session's tag search-prereg-s5b-* exists on origin. X6 has
 priority: if X3 finishes first, X8 waits; if X8 is running when X6 starts, it is paused and resumed from the
 cache after X6 (including X6 latency) is complete. Never under a TIMING_LOCK. A gate and push when done.
+
+### L2-X9 and L2-X10, registered 2026-11-18 13:55:13 UTC, before any X9 or X10 data
+
+Status: EXPLORATORY under L2-X (own folders results/v2/X9 and results/v2/X10, V2_DEVIATION=D-L2-X-code, run from the
+x clone at v2-lease2-x 18b3d7a0 (= aececaa1 + the eval_x2b split below, unit test added, Mac suite 206 passed / 16
+skipped), included in results_v2_UPLOAD.zip, FINAL/data_check.md and P6/search_ground_truth.md; a gate and push each).
+Both run on VM-B (the only VM that still has Qwen 14B, Granite and Phi weights); new GPU work may start until
+2026-11-19 14:00 UTC, and both finish before then or are cut and logged.
+
+L2-X9 (held-out problems for A16, the 3-tier space). Reason: a second, disjoint problem set on which every A16 plan is
+measured, so tier-search results can be checked on problems the search never saw. What: math_tiers (A16: Qwen2.5-1.5B /
+7B / 14B-Instruct as small / large / xl, math workflow, max_tokens 256, cautious verifier, servers 14B 0.45 / 7B 0.30 /
+1.5B 0.15 on one GPU as in P2b), ALL 729 plans (run_real_h3.py --plans all_subsets, V2_TIERS=small,large,xl) on 200 GSM8K
+problems: split eval_x2b = eval_x2[200:400] in its fixed order, i.e. the next 200 after X8's eval_x2[:200] (code change
+18b3d7a0: scripts/run_real_pipeline.py load_problems + the --split choices of both scripts; test_eval_x2b_split checks
+eval_x2b == eval_x2[200:400] and that it is disjoint from eval_x2[:200]). No new labels: P2b's labels are reused
+(results/v2/P2b/math_tiers/labels). Lease cache. Qwen2.5-1.5B-Instruct is downloaded on VM-B (about 3 GB; nothing is
+deleted; /mnt/data stays above 25 GB free). Started only after the search session's tag search-prereg-s5c-* exists on
+origin (search-prereg-s5c-20261118T1353Z was there at registration). Output results/v2/X9/math_tiers/plans. Accuracy only.
+
+L2-X10 (greedy run-to-run replicate for two more model families). Reason: X4 measured run-to-run variation under greedy
+decoding for Qwen only; X10 measures it for Granite and Phi. What: math_granite (Granite-3.1-2B/8B) and math_phi
+(Phi-3.5-mini/Phi-4), all 64 plans x the same 400 problems as P4 / P4b (split eval_ext, n 400), the same settings as
+P4 / P4b (math workflow, max_tokens 512, cautious verifier, servers large 0.55 / small 0.25, max-model-len 4096, seed 42),
+with a fresh separate cache (data/cache/x10_vmB.sqlite on VM-B, so no call is reused; AGENTQO_SEED_SALT=1 as in X4, which
+has no effect under greedy decoding). Reported per setting, as in X4, against P4 / P4b: per-plan accuracy change, the
+share of flipped (plan, problem) cells, plans with any flip, and Pareto-front changes (accuracy vs cost_units, both runs
+costed with the reference run's cost per plan). Output results/v2/X10/<setting>/plans and x10_vs_ref_*.
+Order on VM-B: X9, then X10 math_granite, then X10 math_phi; never under a TIMING_LOCK (none is planned).
