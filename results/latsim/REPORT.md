@@ -2,7 +2,7 @@
 
 Branch `v2-latsim` (cut from origin/v2-lease1 a0abe77c). Pre-registration and every freeze: `docs/latsim_prereg.md`.
 
-Data status at 2026-11-18 00:30 UTC:
+Data status at 2026-11-18 07:30 UTC:
 - **X1 complete**: all 14 blocks, every listed plan, 2 repeats each (938 points; coverage in `X1_coverage.csv`).
   The lease logged "TIME LEFT after X1" at 15:54Z.
 - **X1b complete** (last block, math_phi shared, landed 23:18Z): all 9 blocks, every listed plan, 2 repeats each,
@@ -11,7 +11,14 @@ Data status at 2026-11-18 00:30 UTC:
   Results below.
 - **X1c complete** (lease head ee868ef7, ~00:06Z): Phi grid + fit and the A16 three-model runs. rev2 was fitted on
   it, tagged `latsim-rev2-20261118T000620Z` and pushed before any rev2 prediction or score; results below.
-- **X6 latency: not present, and its 32B model cannot be predicted** (no 32B fit data).
+- **X6 latency complete, not scored** (lease commit ea1f3adb, 07:08Z 2026-11-18): math (gsm8k), Qwen2.5-7B on VM-B
+  and Qwen2.5-32B on VM-A, separate placement only, K = 16, 7 plans x 2 repeats. There is no shared block:
+  the 7B + 32B pair does not fit usefully on one H100 (32B at 0.50 fails to start; at 0.75 it has 18,768 KV tokens,
+  about 2.3 concurrent requests; `results/v2/X6/shared_feasibility/summary.txt`). As registered (prereg held-out
+  test 3), X6 is not predictable: latsim has no 32B parameters, and the frozen file has no X6 setting, so the 7B-only
+  plan (all_small) is not predicted either. Measured p95 (mean of repeats), for the record only: all_small 5.07 s,
+  only_planner 7.77, only_aggregator 7.62, only_verifier 10.15, planner+verifier 12.74, aggregator+verifier 11.03,
+  all_large 20.93.
 
 Generated tables: `report_tables.md`, `compare/{X1,X1b}_by_setting.csv`, `compare/{X1,X1b}_bootstrap.csv`,
 `matched/X1b_k1_*`. Per-plan CSVs: `{X1,X1b}_per_plan.csv` (frozen), `rev1/{X1,X1b}_per_plan.csv`.
