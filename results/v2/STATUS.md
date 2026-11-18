@@ -156,3 +156,4 @@ X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 
 2026-11-18T00:14:28Z VM-A GATE X1c: no settings
 2026-11-18T00:36:44Z VM-A GATE X2-math_q15_7: hotpot_q15_7: plans INCOMPLETE | math_q15_7: 64 plans, small 0.503 large 0.825 best 0.843
 2026-11-18T00:42:27Z VM-A GATE X2-hotpot_q15_7: hotpot_iso_q15_7: plans INCOMPLETE | hotpot_q15_7: 32 plans, small 0.340 large 0.507 best 0.532 | math_q15_7: 64 plans, small 0.503 large 0.825 best 0.843
+2026-11-18T00:48:08Z VM-A GATE X2-hotpot_iso_q15_7: hotpot_iso_q15_7: 32 plans, small 0.290 large 0.522 best 0.522 | hotpot_q15_7: 32 plans, small 0.340 large 0.507 best 0.532 | math_q15_7: 64 plans, small 0.503 large 0.825 best 0.843
