@@ -63,8 +63,10 @@ XS = [("X2_math_q15_7", "A", "X2/math_q15_7/plans", "held-out problems (eval_x2)
       ("X7_code_c15_7", "B", "X7/code_c15_7/plans", "MBPP+ code chain, Qwen Coder 1.5B/7B"),
       ("X8_complex_q15_7", "A", "X8/complex_q15_7/plans", "held-out problems (eval_x2[:200]) for complex_q15_7"),
       ("X9_math_tiers", "B", "X9/math_tiers/plans", "held-out problems (eval_x2[200:400]) for A16 math_tiers"),
-      ("X10_math_granite", "B", "X10/math_granite/plans", "run-to-run replicate of math_granite"),
-      ("X10_math_phi", "B", "X10/math_phi/plans", "run-to-run replicate of math_phi"),
+      ("X10_math_granite", "B", "X10/math_granite/plans", "math_granite rerun at max-model-len 4096 (P4: 8192)"),
+      ("X10_math_phi", "B", "X10/math_phi/plans", "math_phi rerun at max-model-len 4096 (P4b: 8192); not a pure replicate"),
+      ("X10r_math_granite", "B", "X10r/math_granite/plans", "run-to-run replicate of math_granite at P4's max-model-len 8192"),
+      ("X10r_math_phi", "B", "X10r/math_phi/plans", "run-to-run replicate of math_phi at P4b's max-model-len 8192"),
       ("X11_math500_q15_7", "A", "X11/math500_q15_7/plans", "held-out MATH-500 problems (X5 label 200) for X5"),
       ("X11_code_c15_7", "A", "X11/code_c15_7/plans", "held-out MBPP+ problems (X7 label 200) for X7")]
 import subprocess

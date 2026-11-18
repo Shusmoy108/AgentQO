@@ -40,12 +40,14 @@ S = [
  ("X10 math_phi", "X10", f"{B}/X10/math_phi/plans", 64, 400, "P4b (reused)", None),
  ("X11 math500_q15_7", "X11", f"{A}/X11/math500_q15_7/plans", 64, 200, "X5 (reused)", None),
  ("X11 code_c15_7", "X11", f"{A}/X11/code_c15_7/plans", 32, 200, "X7 (reused)", None),
+ ("X10r math_granite", "X10r", f"{B}/X10r/math_granite/plans", 64, 400, "P4 (reused)", None),
+ ("X10r math_phi", "X10r", f"{B}/X10r/math_phi/plans", 64, 400, "P4b (reused)", None),
  ("X12 math_q15_7 eval", "X12", f"{A}/X12/math_q15_7/eval", 1, 400, "n/a (all_small only)", None),
  ("X12 math_q15_7 x2", "X12", f"{A}/X12/math_q15_7/x2", 1, 719, "n/a (all_small only)", None),
  ("X12 math_granite eval", "X12", f"{A}/X12/math_granite/eval", 1, 400, "n/a (all_small only)", None),
  ("X12 math_granite x2", "X12", f"{A}/X12/math_granite/x2", 1, 719, "n/a (all_small only)", None),
 ]
-LATE = {"X9", "X10", "X11", "X12"}
+LATE = {"X9", "X10", "X10r", "X11", "X12"}
 def rows(p):
     with open(p, newline="") as fh: return list(csv.DictReader(fh))
 def check_setting(name, d, n_plans, n_prob, lab, cost):
