@@ -688,3 +688,41 @@ k = 1 pick by construction (both are the best single-upgrade plan on the eval pr
 eval-exhaustive by tau" condition is only informative at k = 2; the regret <= 0.02 condition applies at k = 1 and k = 2.
 k = 3 is reported for all rankings (exploratory, no criterion). Offline analysis only (no extra
 model calls), computed after X11 finishes; results in results/v2/X11/H1d/.
+
+### L2-X12: all_small rerun with per-call logprobs, and H6b, registered 2026-11-18 14:38:00 UTC, before any X12 data
+
+Status: EXPLORATORY under L2-X (own folder results/v2/X12, V2_DEVIATION=D-L2-X-code; included in results_v2_UPLOAD.zip,
+FINAL/data_check.md and search ground truth notes). Optional: runs on VM-A only, after X11 completes, and only if it can start
+before 2026-11-19 08:00Z; no block starts after 2026-11-19 14:00Z; VM-B is never touched. Accuracy-only (no TIMING_LOCK).
+Nothing is deleted.
+Code: v2-lease2-x 75da2c83 (= 18b3d7a0 + agentqo/backends/vllm_http.py _logprob_stats, agentqo/tasks/answers.py
+gsm8k_answer_span, scripts/run_real_h3.py --logprob-columns; test_x12_logprob_stats; Mac suite 207 passed / 16 skipped).
+The backend already requests logprobs on every call (logprobs=true, top_logprobs=1); X12 stores per call: mean_logprob (mean
+token logprob of the completion), answer_text (the final numeric answer, same precedence as extract_gsm8k_number), and
+answer_logprob / answer_first_logprob (mean / first logprob of the tokens overlapping that answer).
+What: ONLY plan all_small (run_real_h3.py --plans all_small --logprob-columns), same models, prompts, max_tokens and cautious
+verifier as the stored runs, greedy, with a fresh separate cache (data/cache/x12_vmA.sqlite on VM-A, so every call is new):
+- math_q15_7 (Qwen2.5-1.5B-Instruct; max_tokens 256): eval_ext 400 (the P2 eval problems) and eval_x2 719 (the X2 problems);
+- math_granite (granite-3.1-2b-instruct; max_tokens 512): eval_ext 400 (the P4 eval problems) and eval_x2 719 (X2).
+Output results/v2/X12/<setting>/<eval|x2>/. Reported: the share of problems whose X12 final answer matches the stored
+all_small answer (P2 / P4 / X2 traces), and X12 all_small accuracy vs the stored all_small accuracy.
+
+H6b (RQ6, exploratory-confirmatory; next free label: H6 exists, H6b does not). A per-problem router that decides, after the
+all_small run, whether to upgrade the verifier. Per setting:
+- Outcomes (PI): small baseline = the X12 rerun's own all_small correctness (a rerun need not reproduce the stored answers;
+  X4: ~6-10% of cells flip); upgraded outcome = the stored only_verifier correctness (P2 / P4 on eval, X2 on the held-out
+  problems).
+- Features (from the X12 all_small calls of the problem): answer agreement = share of the agents with a numeric answer whose
+  answer equals the verifier's, aggregator answer == verifier answer (0/1), number of distinct answers; logprob features =
+  verifier mean_logprob, verifier answer_logprob, aggregator answer_logprob, the minimum answer_logprob over agents, the mean
+  of mean_logprob over agents (a missing value is replaced by the training mean).
+- Model: L2-regularised logistic regression (C = 1, features standardised on the training set) predicting
+  P(all_small wrong), trained on the eval problems (400).
+- Decision: upgrade when P >= t. Cost per problem (API cost, registered tier prices small 0.10/0.50, large 2/10 USD per 1M
+  input/output tokens): router = the X12 all_small cost + (if upgraded) the large verifier call of the stored only_verifier
+  run (its tokens at large prices); fixed upgrade = the stored only_verifier plan's cost.
+- Threshold t: on the eval problems, the candidate t (every distinct predicted P, plus 0 and 1.01) with the lowest mean router
+  cost among those whose eval accuracy >= the fixed upgrade's eval accuracy - 0.01; if none qualifies, t = 0 (always upgrade).
+- Test on the X2 problems (719): HELD if, in both settings, router accuracy >= fixed upgrade accuracy - 0.0134 AND router mean
+  API cost <= 0.70 x the fixed upgrade's mean API cost. Otherwise NOT HELD (each condition reported). Offline analysis only
+  (no model calls beyond the X12 reruns); results in results/v2/X12/H6b/.
