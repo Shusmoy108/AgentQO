@@ -164,3 +164,4 @@ X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 
 2026-11-18T00:52:01Z X5 SMOKE PASSED
 2026-11-18T00:54:02Z VM-A GATE X4: hotpot_q15_7: 32 plans, small 0.312 large 0.512 best 0.512 | math_q15_7: 64 plans, small 0.482 large 0.805 best 0.828
 2026-11-18T00:54:06Z VM-A GATE X5-smoke: math500_q15_7: labels INCOMPLETE; smoke all_small=0.20 all_large=1.00
+2026-11-18T01:22:13Z VM-A GATE X5-labels: math500_q15_7: labels done; plans INCOMPLETE; smoke all_small=0.20 all_large=1.00
