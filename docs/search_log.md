@@ -146,3 +146,7 @@ Times UTC. Choices made without asking, as instructed.
   this session does not touch). Every other method runs.
 - Same reporting as X5: results/search/new_settings/, not part of the registered S1-S4 verdicts.
 - On 32 plans, budgets 1/2/5/10% all equal the 4-plan minimum (B = 4/4/4/4/6).
+
+## 2026-11-18 ~05:25Z: X6 hotpot_q7_32 added (merge 46492c6a)
+- EXTRA setting hotpot_q7_32 (X6, Qwen2.5 7B -> 32B, hotpot workflow, 5 agents, 32 plans, 400 eval problems), priced
+  by tier name like the other X settings. All 14 methods run. Reported under New settings.

@@ -55,6 +55,7 @@ EXTRA: Dict[str, Dict[str, object]] = {
     "math500_q15_7": {"labels": {"large": "X5/math500_q15_7"}, "plans": "X5/math500_q15_7/plans"},
     # X6 Qwen2.5 7B -> 32B, math workflow, 400 eval_ext problems; X7 MBPP+ code workflow, Qwen2.5-Coder 1.5B -> 7B.
     "math_q7_32": {"labels": {"large": "X6/math_q7_32"}, "plans": "X6/math_q7_32/plans"},
+    "hotpot_q7_32": {"labels": {"large": "X6/hotpot_q7_32"}, "plans": "X6/hotpot_q7_32/plans"},
     "code_c15_7": {"labels": {"large": "X7_vmB/code_c15_7"}, "plans": "X7_vmB/code_c15_7/plans"},
 }
 
