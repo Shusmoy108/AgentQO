@@ -599,3 +599,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 14:42Z lq.sh cutoffs on both VMs moved to the new schedule (V2_LEASE_END 16:00Z, reserve 2 h -> 14:00Z; step() GPU cutoff 14:00Z); no block interrupted.
 - 2026-11-18T14:52:52Z X11a math500_q15_7 vs X5: {"spearman": 0.909, "ref_best": ["planner+step_1+aggregator+verifier", 0.6933333333333334], "x11_best": ["all_large", 0.74], "x11_best_minus_all_large": 0.0, "ref_cheapest": "step_1+step_3+verifier", "x11_cheapest": "all_large"}; unscorable 
 - 2026-11-18T15:10:37Z X11b code_c15_7 vs X7: {"spearman": 0.96, "ref_best": ["planner+coder+fixer+verifier", 0.7584269662921348], "x11_best": ["all_large", 0.705], "x11_best_minus_all_large": 0.0, "ref_cheapest": "planner+coder+fixer+verifier", "x11_cheapest": "planner+coder+tester+verifier"}; no code 
+- 15:12Z X11 done; H1d HELD, H5c NOT HELD (racing > 40% evaluations), H5c-b2 HELD.
