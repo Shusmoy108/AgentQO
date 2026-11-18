@@ -180,3 +180,10 @@ Times UTC. Choices made without asking, as instructed.
 - Written and tagged before any X9 file exists on v2-lease1 or locally. scripts/search/s5c.py is s5b.py with the
   setting (math_tiers), data folder (X9) and labels changed; s5b.py itself untouched. It refuses to read X9 without
   the tag. One dry run on the eval file (retention 1.0) checked the pipeline.
+
+## 20261118T1418Z: S5d registered (docs/search_prereg_s5d.md, tag search-prereg-s5d-20261118T1418Z)
+- Written and tagged before any X11 file or X11 amendment exists on v2-lease1 or locally.
+- Choice: "HELD if retention >= 0.95 in both" read as in S5: the decision cell is nsga2_pairwise_m3 at 10% (mean over
+  30 seeds) per setting; all registered methods and budgets are re-scored and reported. X11 path registered as the
+  glob results/v2/X11*/<setting>/plans/h3_plans.csv since no amendment names it yet.
+- scripts/search/s5d.py refuses to read X11 without the tag. One dry run on the eval files (retention 1.0) checked it.
