@@ -118,3 +118,14 @@ Times UTC. Choices made without asking, as instructed.
 ## 20261118T0336Z: S5b registered (docs/search_prereg_s5b.md, tag search-prereg-s5b-20261118T0336Z)
 - Written and tagged before any X8 file exists on v2-lease1 or locally. scripts/search/s5b.py is frozen at the tag;
   it refuses to read X8 without the tag. One dry run on the eval file (retention 1.0) checked the pipeline.
+
+## 2026-11-18 ~04:50Z: X3 landed (merge 3a99966c); S6(a) path change, logged before running
+- The completed X3 plans are in results/v2/X3_vmB/plans_2 (X3_vmB/plans holds only a run_config). x3_run_note.txt
+  shows restarts; the restart wrote to new folders (labels_q7_G8_2, labels_q7_P4_2, plans_2). The _2 label files are
+  byte-identical to labels_q7_G8 / labels_q7_P4 (labels_v2.csv, per_problem, by_strategy) and the plans run_config
+  differs from the frozen one only in the cache path. Per docs/search_prereg_s6.md, only the path changed:
+  EXTRA x3_cross_family plans "X3_vmB/plans" -> "X3_vmB/plans_2". Labels path unchanged (identical files).
+- Disclosure: while grepping run_B-x3.log.txt for the reason for the _2 folders (after the S6 tag), the grep also
+  matched ~15 lines of the log's top-plan table (accuracies 0.95-0.97). No S6 code, method or decision rule changed;
+  s6.py / methods.py / surrogates.py are as at search-prereg-s6-20261118T0054Z apart from changes logged above.
+- X7 code_c15_7 plans landed in the same merge; X6 math_q7_32 has labels only. X8 not landed.

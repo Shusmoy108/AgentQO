@@ -50,7 +50,7 @@ SETTINGS: Dict[str, Tuple[Dict[str, str], str]] = {
 # x3_cross_family (L2-X3): small = Qwen2.5-7B, large = Granite 8B, xl = Phi-4; tiers priced by tier name.
 EXTRA: Dict[str, Dict[str, object]] = {
     "x3_cross_family": {"labels": {"large": "X3_vmB/labels_q7_G8", "xl": "X3_vmB/labels_q7_P4"},
-                        "plans": "X3_vmB/plans"},
+                        "plans": "X3_vmB/plans_2"},
     # X5 MATH-500 (Qwen2.5 1.5B -> 7B, 6-agent math workflow, 300 eval problems); no latency truth.
     "math500_q15_7": {"labels": {"large": "X5/math500_q15_7"}, "plans": "X5/math500_q15_7/plans"},
 }
