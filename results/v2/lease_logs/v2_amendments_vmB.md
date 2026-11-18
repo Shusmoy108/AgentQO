@@ -206,6 +206,21 @@ L2 (lease structure, given with A16/A17): Lease 1 runs 2026-11-16 12:00 UTC to 2
 | P0 | `math_tiers` (plans all_small, all_large, all_xl) and `complex_q15_7` join the P0 smoke test (V2_P0=tiers, complex), same rule as A13-A15. | `P0/math_tiers/`, `P0/complex_q15_7/` |
 | L2 | Before a cuttable setting starts on a VM, `run_phase.sh` compares its 10x-rule hours from PLAN_v2_times.md (Phi hotpot 11, Phi math 16.5, A17 23 at 200 / 12.5 at 100, A16 19, Granite isolated 5.5) with the hours left to 2026-11-19 12:00 UTC minus a 4 h reserve (P5, P5 cal, P6, final). On each VM the later cuttable settings come earlier in the cut order, so a setting needs only its own hours; a setting cut for time also cuts the not-yet-started settings before it in the order on its VM. A17 drops to the first 100 eval problems if 200 does not fit and 100 does. Each cut or reduction is written to `results/v2/P0/skips.tsv` or `reduced.tsv`, FAILURES.md and this file (`D-P0-<setting>`, `D-P0-complex_q15_7-n100`). E1 and the P5 K=1 runs are not run by `run_phase.sh` and are cut by hand at their place in the order. A setting moved to the other VM is recorded with `smoke_check.py moved` (skips file only; not a deviation). The check sees one VM's clock, not the other VM's queue; across VMs the operator keeps the order. | `results/v2/P0/`, FAILURES.md |
 
+## Lease-time deviation D-L2-h4grid (2026-11-16 13:30:14 UTC)
+
+lease-time deviation. Time: 2026-11-16 13:30:14 UTC. Id: D-L2-h4grid. Affected phase: P5 (adds data only).
+Reason: P5's run_placement.py output has per-problem start/end times and per-call latency, but not the
+per-request start/end timing that scripts/h4_fit.py needs to refit the directed interference model
+(AgentIconq betas). The refit therefore uses the Session 1 grid tool scripts/placement_test.py, unchanged
+at the tag v2-lease1-start (no code change, so V2_DEVIATION is not needed to run it).
+What runs: after P5's main placement blocks, for each model pair in V2_P5_CAL (Qwen 1.5B/7B for the main
+sweep, plus qwen_hotpot's pair = Qwen 1.5B/7B, qwen3_14_math = Qwen 3B/14B, granite_math = Granite 2B/8B),
+placement_test.py per-request grids in separate placement (L_iso) and in shared and shared_mps
+placements, then h4_fit.py fit (and fit-mps for shared_mps) per model pair, compared with Session 1
+(shared 2.392 / 0.991, MPS 2.072 / 0.332). Separate-placement grid cells are run only as the L_iso
+baseline h4_fit requires. This adds data; it does not replace any P5 measurement, does not change the
+H3c hold-out split (P6/hypotheses/h3c_split.json), and its fits are not used by any registered verdict.
+
 ## L2-X: lease-time exploratory extensions, registered 2026-11-16 18:16:57 UTC, before any X data exists
 
 Status: EXPLORATORY. No X result changes, replaces or enters any registered verdict (H1-H6, A1-A17,
@@ -570,3 +585,167 @@ labels (results/v2/P2c/complex_q15_7/labels). Lease cache. Output results/v2/X8/
 When: on VM-A's idle time, only after the search session's tag search-prereg-s5b-* exists on origin. X6 has
 priority: if X3 finishes first, X8 waits; if X8 is running when X6 starts, it is paused and resumed from the
 cache after X6 (including X6 latency) is complete. Never under a TIMING_LOCK. A gate and push when done.
+
+### L2-X9 and L2-X10, registered 2026-11-18 13:55:13 UTC, before any X9 or X10 data
+
+Status: EXPLORATORY under L2-X (own folders results/v2/X9 and results/v2/X10, V2_DEVIATION=D-L2-X-code, run from the
+x clone at v2-lease2-x 18b3d7a0 (= aececaa1 + the eval_x2b split below, unit test added, Mac suite 206 passed / 16
+skipped), included in results_v2_UPLOAD.zip, FINAL/data_check.md and P6/search_ground_truth.md; a gate and push each).
+Both run on VM-B (the only VM that still has Qwen 14B, Granite and Phi weights); new GPU work may start until
+2026-11-19 14:00 UTC, and both finish before then or are cut and logged.
+
+L2-X9 (held-out problems for A16, the 3-tier space). Reason: a second, disjoint problem set on which every A16 plan is
+measured, so tier-search results can be checked on problems the search never saw. What: math_tiers (A16: Qwen2.5-1.5B /
+7B / 14B-Instruct as small / large / xl, math workflow, max_tokens 256, cautious verifier, servers 14B 0.45 / 7B 0.30 /
+1.5B 0.15 on one GPU as in P2b), ALL 729 plans (run_real_h3.py --plans all_subsets, V2_TIERS=small,large,xl) on 200 GSM8K
+problems: split eval_x2b = eval_x2[200:400] in its fixed order, i.e. the next 200 after X8's eval_x2[:200] (code change
+18b3d7a0: scripts/run_real_pipeline.py load_problems + the --split choices of both scripts; test_eval_x2b_split checks
+eval_x2b == eval_x2[200:400] and that it is disjoint from eval_x2[:200]). No new labels: P2b's labels are reused
+(results/v2/P2b/math_tiers/labels). Lease cache. Qwen2.5-1.5B-Instruct is downloaded on VM-B (about 3 GB; nothing is
+deleted; /mnt/data stays above 25 GB free). Started only after the search session's tag search-prereg-s5c-* exists on
+origin (search-prereg-s5c-20261118T1353Z was there at registration). Output results/v2/X9/math_tiers/plans. Accuracy only.
+
+L2-X10 (greedy run-to-run replicate for two more model families). Reason: X4 measured run-to-run variation under greedy
+decoding for Qwen only; X10 measures it for Granite and Phi. What: math_granite (Granite-3.1-2B/8B) and math_phi
+(Phi-3.5-mini/Phi-4), all 64 plans x the same 400 problems as P4 / P4b (split eval_ext, n 400), the same settings as
+P4 / P4b (math workflow, max_tokens 512, cautious verifier, servers large 0.55 / small 0.25, max-model-len 4096, seed 42),
+with a fresh separate cache (data/cache/x10_vmB.sqlite on VM-B, so no call is reused; AGENTQO_SEED_SALT=1 as in X4, which
+has no effect under greedy decoding). Reported per setting, as in X4, against P4 / P4b: per-plan accuracy change, the
+share of flipped (plan, problem) cells, plans with any flip, and Pareto-front changes (accuracy vs cost_units, both runs
+costed with the reference run's cost per plan). Output results/v2/X10/<setting>/plans and x10_vs_ref_*.
+Order on VM-B: X9, then X10 math_granite, then X10 math_phi; never under a TIMING_LOCK (none is planned).
+
+### L2-X11: held-out replication on MATH-500 and MBPP+, registered 2026-11-18 14:16:52 UTC, before any X11 data
+
+Status: EXPLORATORY under L2-X (own folder results/v2/X11, V2_DEVIATION=D-L2-X-code, run on VM-A only from the x clone at
+v2-lease2-x 18b3d7a0, which contains the X5 and X7 code unchanged; no new code is needed: the "label" split of both loaders
+already returns exactly the problems below). Included in results_v2_UPLOAD.zip, FINAL/data_check.md (required if finished)
+and P6/search_ground_truth.md. A gate and push after each block. Accuracy only (no TIMING_LOCK; never started while VM-A
+holds one). Nothing is deleted.
+Purpose: held-out replication: do the plan ranking, the cheapest good plan, and best-vs-all-large hold on new problems?
+Problem sets. MATH-500 has 500 problems and MBPP+ 378; X5 used 200 for labels + 300 for plan evaluation and X7 used 200 for
+labels + 178 for plan evaluation, so no problem is untouched by X5/X7. The problems NOT in X5's / X7's plan evaluation are
+exactly their 200 label problems; they were used only for the per-agent labels (H1 substitution runs), never for plan
+evaluation. Therefore:
+- X11a: math500_q15_7 (X5 setting: Qwen2.5-1.5B/7B-Instruct, math workflow, max_tokens 1024, max-model-len 8192, servers
+  7B 0.60 / 1.5B 0.20, boxed-answer scorer of X5), ALL 64 plans on the MATH-500 split "label" (n = 200).
+- X11b: code_c15_7 (X7 setting: Qwen2.5-Coder-1.5B/7B-Instruct, code workflow, max_tokens 512, max-model-len 8192, servers
+  Coder 7B 0.45 / Coder 1.5B 0.15, X7 sandbox and MBPP+ base+plus tests), ALL 32 plans on the MBPP+ split "label" (n = 200,
+  all MBPP+ problems not in X7's plan evaluation).
+Greedy decoding, cautious verifier, lease cache (VM-A). Note: X5's label runs used VM-A's lease cache, so X11a calls whose
+prompt is identical to an X5 label-run call (e.g. parts of all_small) are cache hits with the same greedy output; X7 ran on
+VM-B, so X11b calls on VM-A are all fresh. The Coder 1.5B/7B weights are downloaded on VM-A (about 18 GB; /mnt/data stays
+above 25 GB free). Before any model call, X11 writes split files (problem ids, the sha256 of the sorted id list) to
+results/v2/X11/<setting>/split.json and asserts zero overlap with the X5 / X7 plan-evaluation ids (from their split and from
+their h3_per_problem.csv); a non-empty overlap stops X11. VM-A runs the X7 sandbox tests and the full suite (V2_PUSH unset)
+before X11b. Order: prep (no model calls) -> wait for the search session's tag search-prereg-s5d-* on origin -> X11a -> X11b.
+No block starts after 2026-11-19 14:00Z; final_guard rules unchanged. A restart moves a partial run to superseded_* and logs
+it. Reported: per plan accuracy, unscorable (X11a) / no-code (X11b) rates, and vs X5 / X7: Spearman rank correlation of plan
+accuracy, the cheapest plan within 1 point of the best, and best plan vs all_large.
+
+#### L2-X11 addendum: H5c (RQ5, confirmatory on X11), registered 2026-11-18 14:27:33 UTC, before any X11 model call (no X11 data exists:
+results/v2/X11 is absent on VM-A; only x11prep, which makes no model calls, has run)
+
+H5c. Data for the search: the existing X5 / X7 plan-evaluation per-problem data (results/v2/X5/math500_q15_7/plans,
+64 plans x 300 MATH-500 eval problems; results/v2/X7/code_c15_7/plans, 32 plans x 178 MBPP+ eval problems). Two searches,
+each run over 30 seeded problem orders (seeds 0-29; the seed permutes the eval problems):
+(a) paired successive halving: round 1 scores every plan on the first n0 = 25 problems of the order; keep the top 1/3 of the
+    plans by accuracy (ceil; ties broken by lower cost_units, then plan name), and triple the number of problems per round
+    (25, 75, 225, ... capped at all eval problems; each round uses the first n_r problems of the same order, so comparisons
+    are paired); stop when one plan is left or the problems are exhausted (then the best remaining plan by accuracy on all
+    problems used, same tie-break).
+(b) paired eps-racing: eps = 0.0134; every live plan is scored on the first 25 problems of the order, then 25 more per step;
+    after each step the leader is the live plan with the highest accuracy on the problems seen; a plan is dropped when the
+    upper end of the 95% normal CI (mean +/- 1.96 sd / sqrt(n)) of its per-problem paired difference to the leader is below
+    -eps; stop when one plan is left or the problems are exhausted (then the leader).
+Evaluations counted = plan x problem cells scored. Comparator: the eval-exhaustive pick = the plan with the best accuracy on
+all eval problems (same tie-break); its cost = all plans x all eval problems. Scoring: each pick's accuracy on the X11
+held-out problems (X11a: 200 MATH-500 problems; X11b: 200 MBPP+ problems), regret = best held-out accuracy over all plans
+minus the pick's held-out accuracy. HELD if, in both settings, the mean held-out regret (over the 30 seeds) of (a) and of
+(b) is within tau = 0.0134 of the exhaustive pick's held-out regret, and the mean number of evaluations of (a) and of (b)
+is <= 40% of the exhaustive count. Otherwise NOT HELD (each condition reported separately). Offline analysis only (no
+extra model calls), computed after X11 finishes; results in results/v2/X11/H5c/.
+
+#### L2-X11 addendum: H1d (RQ1, confirmatory on X11), registered 2026-11-18 14:33:36 UTC, before any X11 model call (no X11 model output exists; results/v2/X11 holds only the two split.json files from x11prep)
+
+Ranking source (PI decision at registration): the X5 / X7 per-agent labels were computed on the "label" split, i.e. on
+exactly the 200 problems X11 scores on, and no labels exist on the eval problems; ranking by them would select and score on
+the same problems. H1d therefore ranks agents from the X5 / X7 plan-evaluation per-problem data (math500_q15_7: 64 plans x
+300 eval problems; code_c15_7: 32 plans x 178 eval problems), which is disjoint from the X11 problems.
+- plain UV of agent a = accuracy(only_a) - accuracy(all_small) on the eval problems (point estimate); agents ranked by UV,
+  ties in structural order (agentqo.policies.v2_rules.structural_order).
+- confident_uv: agents whose 95% bootstrap CI lower bound (percentile; 2,000 paired resamples of eval problems, seed 0) of
+  the per-problem difference correct(only_a) - correct(all_small) is > 0, ordered by UV; the rest in structural order.
+- structural_topk: structural_order(workflow), as in the registered rules.
+- ec_real_topk: dropped (it needs label-run resamples, which exist only on the X11 problems).
+- eval-exhaustive: the plan with <= k upgrades with the best eval accuracy (ties: lower cost_units, then plan name).
+Pick for a ranking at budget k: the plan that upgrades exactly its top-k agents (only_<a> for k = 1).
+Scoring on X11 (X11a: 200 MATH-500, X11b: 200 MBPP+ held-out problems): regret_k = best X11 accuracy among all plans with
+<= k upgrades minus the pick's X11 accuracy. HELD if, in both settings, the UV pick's regret is <= 0.02 at k = 1 and at
+k = 2, AND at both k the UV regret exceeds the eval-exhaustive pick's regret by at most tau = 0.0134. Otherwise NOT HELD
+(each condition reported). Note (PI): with plan-data UV the k = 1 UV pick (only_<top agent>) equals the eval-exhaustive
+k = 1 pick by construction (both are the best single-upgrade plan on the eval problems, up to ties), so the "not worse than
+eval-exhaustive by tau" condition is only informative at k = 2; the regret <= 0.02 condition applies at k = 1 and k = 2.
+k = 3 is reported for all rankings (exploratory, no criterion). Offline analysis only (no extra
+model calls), computed after X11 finishes; results in results/v2/X11/H1d/.
+
+### L2-X12: all_small rerun with per-call logprobs, and H6b, registered 2026-11-18 14:38:00 UTC, before any X12 data
+
+Status: EXPLORATORY under L2-X (own folder results/v2/X12, V2_DEVIATION=D-L2-X-code; included in results_v2_UPLOAD.zip,
+FINAL/data_check.md and search ground truth notes). Optional: runs on VM-A only, after X11 completes, and only if it can start
+before 2026-11-19 08:00Z; no block starts after 2026-11-19 14:00Z; VM-B is never touched. Accuracy-only (no TIMING_LOCK).
+Nothing is deleted.
+Code: v2-lease2-x 75da2c83 (= 18b3d7a0 + agentqo/backends/vllm_http.py _logprob_stats, agentqo/tasks/answers.py
+gsm8k_answer_span, scripts/run_real_h3.py --logprob-columns; test_x12_logprob_stats; Mac suite 207 passed / 16 skipped).
+The backend already requests logprobs on every call (logprobs=true, top_logprobs=1); X12 stores per call: mean_logprob (mean
+token logprob of the completion), answer_text (the final numeric answer, same precedence as extract_gsm8k_number), and
+answer_logprob / answer_first_logprob (mean / first logprob of the tokens overlapping that answer).
+What: ONLY plan all_small (run_real_h3.py --plans all_small --logprob-columns), same models, prompts, max_tokens and cautious
+verifier as the stored runs, greedy, with a fresh separate cache (data/cache/x12_vmA.sqlite on VM-A, so every call is new):
+- math_q15_7 (Qwen2.5-1.5B-Instruct; max_tokens 256): eval_ext 400 (the P2 eval problems) and eval_x2 719 (the X2 problems);
+- math_granite (granite-3.1-2b-instruct; max_tokens 512): eval_ext 400 (the P4 eval problems) and eval_x2 719 (X2).
+Output results/v2/X12/<setting>/<eval|x2>/. Reported: the share of problems whose X12 final answer matches the stored
+all_small answer (P2 / P4 / X2 traces), and X12 all_small accuracy vs the stored all_small accuracy.
+
+H6b (RQ6, exploratory-confirmatory; next free label: H6 exists, H6b does not). A per-problem router that decides, after the
+all_small run, whether to upgrade the verifier. Per setting:
+- Outcomes (PI): small baseline = the X12 rerun's own all_small correctness (a rerun need not reproduce the stored answers;
+  X4: ~6-10% of cells flip); upgraded outcome = the stored only_verifier correctness (P2 / P4 on eval, X2 on the held-out
+  problems).
+- Features (from the X12 all_small calls of the problem): answer agreement = share of the agents with a numeric answer whose
+  answer equals the verifier's, aggregator answer == verifier answer (0/1), number of distinct answers; logprob features =
+  verifier mean_logprob, verifier answer_logprob, aggregator answer_logprob, the minimum answer_logprob over agents, the mean
+  of mean_logprob over agents (a missing value is replaced by the training mean).
+- Model: L2-regularised logistic regression (C = 1, features standardised on the training set) predicting
+  P(all_small wrong), trained on the eval problems (400).
+- Decision: upgrade when P >= t. Cost per problem (API cost, registered tier prices small 0.10/0.50, large 2/10 USD per 1M
+  input/output tokens): router = the X12 all_small cost + (if upgraded) the large verifier call of the stored only_verifier
+  run (its tokens at large prices); fixed upgrade = the stored only_verifier plan's cost.
+- Threshold t: on the eval problems, the candidate t (every distinct predicted P, plus 0 and 1.01) with the lowest mean router
+  cost among those whose eval accuracy >= the fixed upgrade's eval accuracy - 0.01; if none qualifies, t = 0 (always upgrade).
+- Test on the X2 problems (719): HELD if, in both settings, router accuracy >= fixed upgrade accuracy - 0.0134 AND router mean
+  API cost <= 0.70 x the fixed upgrade's mean API cost. Otherwise NOT HELD (each condition reported). Offline analysis only
+  (no model calls beyond the X12 reruns); results in results/v2/X12/H6b/.
+
+#### L2-X11 addendum: H5c-b2 (RQ5 variant, confirmatory on X11), registered 2026-11-18 14:43:00 UTC AFTER X11 model calls started (14:34:01Z) but BEFORE any X11 output was read or analysed
+
+Evidence at registration (checked on VM-A at 2026-11-18T14:42:44Z by file listing, row count and checksum only):
+X11 per-problem rows existing on VM-A: 0 (no h3_per_problem.csv exists yet; X11a writes its outputs when the run ends).
+Files in results/v2/X11 (4): code_c15_7/split.json (3,844 B), math500_q15_7/split.json (7,540 B),
+math500_q15_7/plans/run_config.v2.json (471 B), provenance.jsonl (217 B). sha256 of results/v2/X11 as it stands (sha256 of
+the sorted per-file sha256 list): c60c2a9e5a1b47bad76c6af8dbba6de76b64c892206d030377fad32deb320e76. No X11 analysis script has
+run and no X11 output file has been opened. The Mac sync loop was paused at 14:42Z until this amendment is pushed; the Mac
+mirror holds the same 4 files (no outputs).
+H5c is unchanged and stays registered as is; H5c-b2 is a variant with only the racing rule changed ("good-enough" stopping).
+(a) successive halving is not repeated.
+(b2) paired eps-racing, eps = 0.0134, on the same X5 / X7 eval per-problem data, the same 30 seeded problem orders (seeds
+0-29), 25 problems per step, the same tie-break as H5c (higher accuracy, then lower cost_units, then plan name). After each
+step: leader = the live plan with the highest accuracy on the problems seen. For every other live plan p: d = correct(p) -
+correct(leader) per problem, 95% normal CI mean +/- 1.96 sd / sqrt(n) (if sd = 0, use sd = 0.5). Drop p if its upper bound
+< 0. STOP when every remaining non-leader plan has upper bound <= eps (no plan can beat the leader by more than eps), or when
+one plan is left, or when the problems are exhausted; the pick is the leader.
+Same scoring, comparator and criterion as H5c: each pick's accuracy on the X11 held-out problems; regret = best held-out
+accuracy over all plans minus the pick's; comparator = the eval-exhaustive pick. HELD if, in both X11 settings, the mean
+held-out regret of (b2) over the 30 seeds is within tau = 0.0134 of the exhaustive pick's regret, at <= 40% of the exhaustive
+plan x problem evaluations. H5c and H5c-b2 are reported side by side; neither replaces the other. Offline analysis only;
+results in results/v2/X11/H5c/ (both).
