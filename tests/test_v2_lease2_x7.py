@@ -54,8 +54,8 @@ def test_sandbox_blocks_writes_outside_temp_dir(tmp_path):
 
 @linux
 def test_sandbox_hides_repo_caches_and_mnt_data(tmp_path):
-    canary = tmp_path / "secret.txt"
-    canary.write_text("secret")
+    canary = tmp_path / "canary.txt"
+    canary.write_text("X7CANARYCONTENT")   # content token, not a word in any path the probe prints
     repo_file = str(Path(__file__).resolve())
     code = ("import os\n"
             f"for p in [{str(canary)!r}, {repo_file!r}, '/mnt/data', os.path.expanduser('~/.ssh'), '/proc/1/environ']:\n"
@@ -64,7 +64,7 @@ def test_sandbox_hides_repo_caches_and_mnt_data(tmp_path):
             "    except OSError:\n"
             "        print('HIDDEN', p)\n")
     r = sandbox.run_python(code)
-    assert r.ok and "secret" not in r.stdout
+    assert r.ok and "X7CANARY" not in r.stdout
     assert f"HIDDEN {canary}" in r.stdout and f"HIDDEN {repo_file}" in r.stdout and "HIDDEN /mnt/data" in r.stdout
 
 
