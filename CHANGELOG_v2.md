@@ -565,3 +565,5 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 14:05Z L2-X1c registered before data (5aa62e79); X1c scheduled after X1b under the same locks (stage3d_orch.sh, x1c.sh). (b) uses run_placement tier plans by busy-model set because placement_test.py drives only two endpoints (a synthetic three-model grid would need a code change).
 - 14:25Z X1c (b) plans now exclude every plan X1 math_tiers timed (L2-X1c amendment 3b74e6f3, before any X1c data): 2 of 9 replaced by same-busy-set unused plans (seed 2); x1c.sh updated on both VMs; overlap with X1/math_tiers/plans.txt re-checked: none.
 - 21:55Z Incident: stage3e restarted VM-B servers during X1b math_phi shared (21:09-21:13Z). Clean K=4 runs kept; K=8 attempts superseded; fixed (check done before serving; stage3f) and math_phi shared resumed with the right servers.
+- 2026-11-18T00:01:52Z TIMING_LOCK released on VM-A by X1
+- 2026-11-18T00:01:50Z TIMING_LOCK released on VM-B by X1

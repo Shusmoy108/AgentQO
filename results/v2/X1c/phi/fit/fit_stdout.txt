@@ -1,0 +1,56 @@
+/mnt/data/venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3860: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/mnt/data/venv/lib/python3.12/site-packages/numpy/_core/_methods.py:144: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+cells: 144 total, 72 shared-GPU cells with L_iso, 54 used for fitting
+
+separate placement, p50 at concurrency 64 / p50 at concurrency 1 (median over repeats):
+  large  share=0.25  max_tokens=32   ratio=1.233
+  large  share=0.25  max_tokens=128  ratio=1.107
+  large  share=0.25  max_tokens=512  ratio=1.160
+  large  share=0.5   max_tokens=32   ratio=1.126
+  large  share=0.5   max_tokens=128  ratio=1.101
+  large  share=0.5   max_tokens=512  ratio=1.123
+  large  share=0.75  max_tokens=32   ratio=1.081
+  large  share=0.75  max_tokens=128  ratio=1.056
+  large  share=0.75  max_tokens=512  ratio=1.068
+  small  share=0.25  max_tokens=32   ratio=1.181
+  small  share=0.25  max_tokens=128  ratio=1.151
+  small  share=0.25  max_tokens=512  ratio=1.232
+  small  share=0.5   max_tokens=32   ratio=1.257
+  small  share=0.5   max_tokens=128  ratio=1.217
+  small  share=0.5   max_tokens=512  ratio=1.325
+  small  share=0.75  max_tokens=32   ratio=1.458
+  small  share=0.75  max_tokens=128  ratio=1.436
+  small  share=0.75  max_tokens=512  ratio=1.649
+
+fitted on all shared cells (concurrency > 1), 95% bootstrap CIs (1000 resamples of cells):
+  p50 B1          a=0.032 [0.026,0.043]
+  p50 B2          s=1.399 [1.272,1.533]
+  p50 AgentIconq  beta_large_to_small=1.896 [1.812,2.018]  beta_small_to_large=1.164 [1.095,1.232]
+  p95 B1          a=0.032 [0.026,0.044]
+  p95 B2          s=1.476 [1.372,1.593]
+  p95 AgentIconq  beta_large_to_small=1.874 [1.783,2.013]  beta_small_to_large=1.293 [1.215,1.397]
+
+Test A: fit small_share 0.25,0.75 -> predict 0.50   train cells 36, held-out cells 24
+  model        MAPE p50  MAPE p95  dir acc (c>=4)  dir acc (all)  params p50
+  B0              0.416     0.421        0.00 (9)       0.00 (12)  
+  B1              0.301     0.311        0.00 (9)       0.00 (12)  0.032
+  B2              0.119     0.109        0.00 (9)       0.00 (12)  1.398
+  AgentIconq      0.038     0.033        1.00 (9)       0.75 (12)  1.941 1.153
+
+Test B: fit max_tokens 32,128 -> predict 512   train cells 36, held-out cells 24
+  model        MAPE p50  MAPE p95  dir acc (c>=4)  dir acc (all)  params p50
+  B0              0.399     0.420        0.00 (9)       0.00 (12)  
+  B1              0.290     0.306        0.00 (9)       0.00 (12)  0.032
+  B2              0.138     0.104        0.00 (9)       0.00 (12)  1.401
+  AgentIconq      0.065     0.058        1.00 (9)       0.75 (12)  1.917 1.155
+
+Test C: fit repeat 0 -> predict repeats 1,2   train cells 54, held-out cells 0
+  model        MAPE p50  MAPE p95  dir acc (c>=4)  dir acc (all)  params p50
+  B0                nan       nan         nan (0)        nan (0)  
+  B1                nan       nan         nan (0)        nan (0)  0.032
+  B2                nan       nan         nan (0)        nan (0)  1.399
+  AgentIconq        nan       nan         nan (0)        nan (0)  1.896 1.164
+
+wrote /mnt/data/AgentQO/results/v2/X1c/phi/fit/cells.csv, fit_results.json, tests.csv, pred_vs_measured_test*.png

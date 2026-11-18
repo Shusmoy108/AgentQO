@@ -137,3 +137,18 @@
 2026-11-17T23:16:16Z X1c phi separate: first try stopped at the VM-A -> VM-B netcheck (23:15Z; VM-B had no server: the orchestrator assumed Phi-4 was still up from X1, but X1b's shared block stopped its servers). Nothing was measured. stage3h always serves Phi-4 on VM-B before X1c separate; locks held throughout.
 2026-11-17T23:16:22Z X1b START: full sweep (projected X7 start 2026-11-18T12:22Z, before 2026-11-18T14:00Z)
 2026-11-17T23:18:53Z VM-B GATE X1b-math_phi_shared: no settings
+2026-11-17T23:58:41Z VM-A GATE X1c-phi_separate: no settings
+2026-11-18T00:01:52Z TIMING_LOCK released on VM-A by X1
+2026-11-18T00:01:50Z TIMING_LOCK released on VM-B by X1
+X6 prep VM-A: 2026-11-18T00:02:28Z DELETED microsoft/phi-4: 21 blobs, 29.3 GB (0 shared blobs kept)
+X6 prep VM-A: 2026-11-18T00:02:30Z DELETED Qwen/Qwen2.5-1.5B-Instruct-AWQ: 10 blobs, 1.6 GB (0 shared blobs kept)
+X6 prep VM-A: 2026-11-18T00:02:30Z DELETED Qwen/Qwen2.5-7B-Instruct-AWQ: 12 blobs, 5.6 GB (0 shared blobs kept)
+X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 29.6 GB (0 shared blobs kept)
+2026-11-18T00:02:34Z X6 prep VM-A: /mnt/data free now 112G (expected ~51 GB after the 32B); Qwen2.5-32B-Instruct download started
+2026-11-18T00:05:00Z VM-A GATE X1: no settings
+2026-11-18T00:05:05Z VM-A GATE X1b: no settings
+2026-11-18T00:05:06Z TIME LEFT after X1: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:05:06Z TIME LEFT after X1b: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:05:06Z TIME LEFT after X1c: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:05:09Z VM-A GATE X1c-phi_fit: no settings
+2026-11-18T00:05:34Z VM-B GATE X1b: no settings
