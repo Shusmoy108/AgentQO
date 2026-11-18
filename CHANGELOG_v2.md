@@ -569,3 +569,5 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T00:01:50Z TIMING_LOCK released on VM-B by X1
 - 00:15Z Backups after the lock release: VM-B ok; VM-A's .zst copy hit a network reset, completed by hand and verified (both VM-A caches); mac_sync copy now retried 5x.
 - 2026-11-18T00:52:01Z X5 SMOKE PASSED
+- 2026-11-18T02:07:47Z X3 STARTED/RESUMED on VM-B (resumes from the lease cache)
+- 02:15Z X5 done (labels: verifier UV 0.265, aggregator 0.135; plans: small 0.410, large 0.650, best 0.693; unscorable 4.6%). X2 done on both VMs. X6 quality now waits for X3 to complete on VM-B (port/GPU conflict); stage4b_orch.sh.
