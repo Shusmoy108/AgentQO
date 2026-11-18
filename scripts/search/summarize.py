@@ -218,7 +218,8 @@ def main():
         md += [(OUT / "new_settings" / "NEW_SETTINGS.md").read_text()]
     md += ["", "---", "", "# Exploratory, not registered", "",
            "Nothing below changes a registered verdict above (S1 HELD, S2 PARTIAL, S3 FAILED, S4 FAILED, S5 HELD).", ""]
-    for f in ("exploratory/EXPLORATORY.md", "exploratory/SCALABILITY_INTERACTION.md", "exploratory/FAIRNESS_NEXTBEST.md"):
+    for f in ("exploratory/EXPLORATORY.md", "exploratory/SCALABILITY_INTERACTION.md", "exploratory/FAIRNESS_NEXTBEST.md",
+              "exploratory/size_priced/SIZE_PRICED.md"):
         if (OUT / f).exists():
             md += [f"(from results/search/{f})", "", "\n".join(("#" + ln if ln.startswith("#") else ln) for ln in (OUT / f).read_text().splitlines()), ""]
     (OUT / "hypotheses_search.md").write_text("\n".join(md) + "\n")

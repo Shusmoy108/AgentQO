@@ -150,3 +150,16 @@ Times UTC. Choices made without asking, as instructed.
 ## 2026-11-18 ~05:25Z: X6 hotpot_q7_32 added (merge 46492c6a)
 - EXTRA setting hotpot_q7_32 (X6, Qwen2.5 7B -> 32B, hotpot workflow, 5 agents, 32 plans, 400 eval problems), priced
   by tier name like the other X settings. All 14 methods run. Reported under New settings.
+
+## 2026-11-18: exploratory size-priced variant (X3, X6, X7); registered S6(a) untouched
+- Request: X3's tiers are different families (Qwen2.5-7B / Granite-3.1-8B / Phi-4 14B), so tier-name pricing makes
+  Granite ~20x Qwen 7B. Variant "<setting>@size": per-token rate = main-table large rate x params / 7 (Qwen 7B =
+  large; Granite 8/7; Phi-4 14/7; Qwen 32B 32/7; Coder 1.5B 1.5/7; Coder 7B 1). Each tier runs exactly one model in
+  each setting (asserted from h3_calls), so it is a per-tier price table, used for both the plan costs (h3_calls)
+  and the surrogates' label cost terms (label_terms reads Setting.prices), so the methods see the same cost model.
+- Phi-4's size (14B) is not in its model id; SIZE_B lists all six model sizes explicitly (unknown model = KeyError).
+- Refactor check: calls_cost now returns (costs, prices) and s6.part_a takes (name, out) with the registered values
+  as defaults. Re-running the registered S6(a) after the refactor reproduced s6a_cells.csv byte-identically.
+- Tier-priced X3 (all 14 methods via run_search) added to results/search/new_settings (it had only S6(a) before).
+- Results: results/search/exploratory/size_priced/ (SIZE_PRICED.md, results.csv, s6a_*.csv), labelled
+  "exploratory: size-priced".

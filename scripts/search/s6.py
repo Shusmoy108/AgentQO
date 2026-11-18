@@ -57,8 +57,9 @@ def part_b():
     return t, verdict(t.decision.tolist())
 
 
-def part_a():
-    s = load_setting("x3_cross_family", with_latency=False)
+def part_a(name="x3_cross_family", out=OUT):
+    """Registered call: defaults. Exploratory size-priced call: name="x3_cross_family@size", own folder."""
+    s = load_setting(name, with_latency=False)
     terms = label_terms(s)
     base = s.acc[s.row(np.zeros(s.n, dtype=int))]
     strict = lambda rows: hv2(np.maximum(s.acc[rows] - base, 0), s.cost[rows], s.cost.max())
@@ -78,9 +79,9 @@ def part_a():
         rows.append({"budget_frac": f, "B": b, "active": g.active.mean(), "abacus_nextbest": g.abacus_nextbest.mean(),
                      "diff": m, "ci_low": lo, "ci_high": hi, "decision": res, "strict_active": g.strict_active.mean(),
                      "strict_abacus": g.strict_abacus.mean(), "strict_diff": sm, "strict_ci_low": slo, "strict_ci_high": shi})
-    pd.DataFrame(runs).to_csv(OUT / "s6a_runs.csv", index=False)
+    pd.DataFrame(runs).to_csv(out / "s6a_runs.csv", index=False)
     t = pd.DataFrame(rows)
-    t.to_csv(OUT / "s6a_cells.csv", index=False)
+    t.to_csv(out / "s6a_cells.csv", index=False)
     return t, verdict(t.decision.tolist()), s
 
 

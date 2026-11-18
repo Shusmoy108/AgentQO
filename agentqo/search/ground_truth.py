@@ -60,17 +60,47 @@ EXTRA: Dict[str, Dict[str, object]] = {
 }
 
 
-def calls_cost(plans_dir: Path) -> Dict[str, float]:
+# EXPLORATORY "size-priced" variant (name suffix "@size"): each tier's per-token rate = the main table's "large"
+# rate x (parameter count of the model that tier runs / 7B), anchored at Qwen 7B = "large". Each tier runs exactly
+# one model in every EXTRA setting (checked from h3_calls), so this is a per-tier price table.
+SIZE_B = {"Qwen/Qwen2.5-7B-Instruct": 7, "ibm-granite/granite-3.1-8b-instruct": 8, "microsoft/phi-4": 14,
+          "Qwen/Qwen2.5-32B-Instruct": 32, "Qwen/Qwen2.5-Coder-1.5B-Instruct": 1.5, "Qwen/Qwen2.5-Coder-7B-Instruct": 7}
+SIZE = "@size"
+
+
+def _calls(plans_dir: Path) -> List[Dict[str, str]]:
     import gzip
-    from agentqo.metrics.cost_model import load_prices, price_plans
     f = plans_dir / "h3_calls.csv"
     fh = open(f) if f.exists() else gzip.open(str(f) + ".gz", "rt")
     with fh:
-        rows = price_plans(csv.DictReader(fh), load_prices(ROOT / "configs" / "v2_prices.yaml"))
-    return {r["plan"]: float(r["api_usd"]) for r in rows}
+        return list(csv.DictReader(fh))
+
+
+def size_prices(calls) -> dict:
+    """Main price table with each tier's api rate replaced by large x (model params / 7)."""
+    import copy
+    from agentqo.metrics.cost_model import load_prices
+    prices = copy.deepcopy(load_prices(ROOT / "configs" / "v2_prices.yaml"))
+    tier_model = {}
+    for c in calls:
+        tier_model.setdefault(c["fidelity"], set()).add(c["model"])
+    large = prices["api_usd_per_million"]["large"]
+    for tier, ms in tier_model.items():
+        assert len(ms) == 1, f"tier {tier} runs several models: {ms}"
+        k = SIZE_B[ms.pop()] / 7
+        prices["api_usd_per_million"][tier] = {"input": large["input"] * k, "output": large["output"] * k}
+    return prices
+
+
+def calls_cost(plans_dir: Path, size: bool = False) -> Tuple[Dict[str, float], Optional[dict]]:
+    from agentqo.metrics.cost_model import load_prices, price_plans
+    calls = _calls(plans_dir)
+    prices = size_prices(calls) if size else load_prices(ROOT / "configs" / "v2_prices.yaml")
+    return {r["plan"]: float(r["api_usd"]) for r in price_plans(calls, prices)}, (prices if size else None)
 
 
 def available(name: str) -> bool:
+    name = name.removesuffix(SIZE)
     if name in EXTRA:
         return (V2 / str(EXTRA[name]["plans"]) / "h3_plans.csv").exists()
     return (V2 / SETTINGS[name][1] / name / "plans" / "h3_plans.csv").exists()
@@ -96,6 +126,7 @@ class Setting:
     latency: Dict[str, np.ndarray] = field(default_factory=dict)   # placement -> (P,) p95 s
     lat_predicted: Dict[str, np.ndarray] = field(default_factory=dict)  # placement -> (P,) bool
     index: Dict[Tuple[int, ...], int] = field(default_factory=dict)
+    prices: Optional[dict] = None     # set for "@size" settings; None = configs/v2_prices.yaml
 
     def __post_init__(self):
         self.index = {tuple(int(x) for x in g): i for i, g in enumerate(self.genomes)}
@@ -140,8 +171,10 @@ def measured_latency(setting: str, placement: str) -> Dict[str, float]:
 
 
 def load_setting(name: str, with_latency: bool = True) -> Setting:
-    if name in EXTRA:
-        label_dirs, pdir = dict(EXTRA[name]["labels"]), V2 / str(EXTRA[name]["plans"])
+    base, size = name.removesuffix(SIZE), name.endswith(SIZE)
+    assert not size or base in EXTRA, "size pricing is defined for the EXTRA settings only"
+    if base in EXTRA:
+        label_dirs, pdir = dict(EXTRA[base]["labels"]), V2 / str(EXTRA[base]["plans"])
     else:
         label_dirs, phase = SETTINGS[name]
         pdir = V2 / phase / name / "plans"
@@ -151,8 +184,9 @@ def load_setting(name: str, with_latency: bool = True) -> Setting:
     names = [r["plan"] for r in rows]
     genomes = np.array([[tiers.index(r[f"tier_{a}"]) for a in agents] for r in rows], dtype=np.int8)
     acc = np.array([float(r["accuracy"]) for r in rows])
-    if name in EXTRA:
-        cmap = calls_cost(pdir)
+    prices = None
+    if base in EXTRA:
+        cmap, prices = calls_cost(pdir, size)
     else:
         cfile = (V2 / "P6/math_tiers/tiers/tier_pareto.csv" if name == "math_tiers"
                  else V2 / "P6" / name / "cost" / "plan_costs.csv")
@@ -164,7 +198,7 @@ def load_setting(name: str, with_latency: bool = True) -> Setting:
     per = np.full((len(names), len(problems)), np.nan)
     for r in pp:
         per[ni[r["plan"]], pi[r["task_id"]]] = float(r["correct"])
-    s = Setting(name, agents, tiers, names, genomes, acc, cost, per, problems, label_dirs)
+    s = Setting(name, agents, tiers, names, genomes, acc, cost, per, problems, label_dirs, prices=prices)
     if with_latency:
         attach_latency(s)
     return s

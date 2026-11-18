@@ -140,5 +140,41 @@ S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0
 
 S3 quantities: independence MAE 0.0162, gap (pairwise m3 minus indep) -0.0018.
 
-S3 rho recomputed with the new settings (15 settings, supplementary): -0.075 (p = 0.791).
+### x3_cross_family (729 plans)
+
+Mean HV ratio over 30 seeds; B = 7/15/36/73/146 (1/2/5/10/20%; equal B values repeat one
+experiment, so a W or L there counts more than once).
+
+| method | 1% | 2% | 5% | 10% | 20% |
+|---|---|---|---|---|---|
+| nsga2_pairwise_m3 | 0.970 | 0.983 | 0.988 | 0.988 | 0.988 |
+| nsga2_pairwise_m5 | 0.970 | 0.986 | 0.986 | 0.988 | 0.999 |
+| nsga2_indep_add | 0.979 | 0.979 | 0.983 | 0.986 | 0.989 |
+| nsga2_indep_mult | 0.979 | 0.979 | 0.983 | 0.986 | 0.990 |
+| nsga2_logit_add | 0.970 | 0.979 | 0.982 | 0.984 | 0.989 |
+| mopso_pairwise_m3 | 0.970 | 0.983 | 0.988 | 0.988 | 0.990 |
+| gde3_pairwise_m3 | 0.971 | 0.983 | 0.986 | 0.987 | 0.993 |
+| nsga2_active_m3 | 0.964 | 0.985 | 0.988 | 0.988 | 0.995 |
+| abacus | 0.979 | 0.979 | 0.983 | 0.986 | 0.989 |
+| random | 0.744 | 0.801 | 0.846 | 0.898 | 0.930 |
+| greedy_uv | 0.941 | 0.942 | 0.942 | 0.942 | 0.942 |
+| rule_structural | 0.935 | 0.940 | 0.940 | 0.940 | 0.940 |
+| rule_output | 0.950 | 0.974 | 0.974 | 0.974 | 0.974 |
+| rule_confident_uv | 0.949 | 0.968 | 0.968 | 0.968 | 0.968 |
+
+S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0134):
+
+| comparator | W | T | L | per budget |
+|---|---|---|---|---|
+| (a) nsga2_indep_add | 0 | 5 | 0 | T(-0.008) T(+0.004) T(+0.005) T(+0.003) T(-0.000) |
+| (b) abacus | 0 | 5 | 0 | T(-0.008) T(+0.004) T(+0.005) T(+0.003) T(-0.000) |
+| (c) random | 5 | 0 | 0 | W(+0.226) W(+0.182) W(+0.142) W(+0.090) W(+0.059) |
+| (d) greedy_uv | 5 | 0 | 0 | W(+0.029) W(+0.041) W(+0.046) W(+0.047) W(+0.047) |
+| (e) rule_structural | 5 | 0 | 0 | W(+0.035) W(+0.043) W(+0.048) W(+0.049) W(+0.049) |
+| (e) rule_output | 4 | 1 | 0 | W(+0.020) T(+0.009) W(+0.014) W(+0.015) W(+0.015) |
+| (e) rule_confident_uv | 5 | 0 | 0 | W(+0.022) W(+0.015) W(+0.020) W(+0.020) W(+0.020) |
+
+S3 quantities: independence MAE 0.0349, gap (pairwise m3 minus indep) +0.0007.
+
+S3 rho recomputed with the new settings (16 settings, supplementary): -0.106 (p = 0.696).
 

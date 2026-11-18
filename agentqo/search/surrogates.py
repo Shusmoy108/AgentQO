@@ -32,7 +32,7 @@ class LabelTerms:
 
 
 def label_terms(s: Setting) -> LabelTerms:
-    prices = load_prices(ROOT / "configs" / "v2_prices.yaml")
+    prices = s.prices or load_prices(ROOT / "configs" / "v2_prices.yaml")  # "@size" settings: size-priced table
     n, T = s.n, len(s.tiers)
     gain, dcost, low = np.zeros((n, T)), np.zeros((n, T)), np.zeros((n, T))
     base_acc = base_cost = None

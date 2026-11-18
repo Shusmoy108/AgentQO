@@ -134,3 +134,15 @@ def test_s4_redesign_budget_counts_plans_only():
     for mode in ("joint", "plan_first"):
         rows = run_s4_plans_only(s, 6, np.random.default_rng(0), mode, terms=t)
         assert len(rows) == len(set(rows)) == 6
+
+
+def test_size_prices_proportional_to_params():
+    from agentqo.search.ground_truth import size_prices
+    calls = [{"fidelity": "small", "model": "Qwen/Qwen2.5-7B-Instruct"},
+             {"fidelity": "large", "model": "ibm-granite/granite-3.1-8b-instruct"},
+             {"fidelity": "xl", "model": "microsoft/phi-4"}]
+    r = size_prices(calls)["api_usd_per_million"]
+    assert r["small"] == {"input": 2.0, "output": 10.0}  # Qwen 7B = the main table's large rate
+    assert r["large"]["output"] == pytest.approx(10.0 * 8 / 7) and r["xl"]["input"] == pytest.approx(4.0)
+    with pytest.raises(AssertionError):
+        size_prices(calls + [{"fidelity": "small", "model": "microsoft/phi-4"}])  # one model per tier
