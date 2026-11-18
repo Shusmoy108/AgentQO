@@ -146,3 +146,7 @@ X6 prep VM-A: 2026-11-18T00:02:30Z DELETED Qwen/Qwen2.5-7B-Instruct-AWQ: 12 blob
 X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 29.6 GB (0 shared blobs kept)
 2026-11-18T00:02:34Z X6 prep VM-A: /mnt/data free now 112G (expected ~51 GB after the 32B); Qwen2.5-32B-Instruct download started
 2026-11-18T00:05:00Z VM-A GATE X1: no settings
+2026-11-18T00:05:05Z VM-A GATE X1b: no settings
+2026-11-18T00:05:06Z TIME LEFT after X1: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:05:06Z TIME LEFT after X1b: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:05:06Z TIME LEFT after X1c: 29.9 h to the 2026-11-19T06:00Z new-GPU-work cutoff
