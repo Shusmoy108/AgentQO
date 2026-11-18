@@ -588,3 +588,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T06:57:23Z TIMING_LOCK X6-latency: no X3/non-timing GPU job running on VM-B (confirmed)
 - 2026-11-18T07:08:47Z TIMING_LOCK released on VM-A by X6-latency
 - 2026-11-18T07:08:49Z TIMING_LOCK released on VM-B by X6-latency
+- 08:05Z X8 complete on git (99cec392; the 07:36Z gate push had a truncated h3_calls.csv from a reset pull); mac_sync now pushes a gate only after a complete pull. FINAL data check tool (tools_lease/final_check.py): 0 missing. VM-A's P3 copy has 2 truncated files; P6 verified unaffected.
