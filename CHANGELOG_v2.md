@@ -567,3 +567,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 21:55Z Incident: stage3e restarted VM-B servers during X1b math_phi shared (21:09-21:13Z). Clean K=4 runs kept; K=8 attempts superseded; fixed (check done before serving; stage3f) and math_phi shared resumed with the right servers.
 - 2026-11-18T00:01:52Z TIMING_LOCK released on VM-A by X1
 - 2026-11-18T00:01:50Z TIMING_LOCK released on VM-B by X1
+- 00:15Z Backups after the lock release: VM-B ok; VM-A's .zst copy hit a network reset, completed by hand and verified (both VM-A caches); mac_sync copy now retried 5x.
