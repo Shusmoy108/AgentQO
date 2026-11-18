@@ -136,3 +136,13 @@ Times UTC. Choices made without asking, as instructed.
 - Bug fixed in s6.py (reporting only): re-reading S6.md keyed each part by its whole first line, so running one part
   dropped the other. Key is now the "## S6(x)" prefix. S6(b) regenerated from the unchanged s6b_sweep CSV;
   text identical to the committed one.
+
+## 2026-11-18 ~05:00Z: X6 math_q7_32 and X7 code_c15_7 added (merge 8c533aa3)
+- EXTRA settings: math_q7_32 (X6, Qwen2.5 7B -> 32B, math workflow, 64 plans, 400 eval_ext problems) and code_c15_7
+  (X7_vmB, MBPP+, Qwen2.5-Coder 1.5B -> 7B, 5 agents, 32 plans, 178 problems). API cost priced from h3_calls by
+  tier name (small/large prices of configs/v2_prices.yaml), the same choice as X3; it scales relative costs only.
+- Choice: code_c15_7 runs without the three fixed-rule methods. They need the workflow graph (WORKFLOWS in
+  scripts/run_real_pipeline.py), and the code workflow is not on this branch (it lives in the lease's x clone, which
+  this session does not touch). Every other method runs.
+- Same reporting as X5: results/search/new_settings/, not part of the registered S1-S4 verdicts.
+- On 32 plans, budgets 1/2/5/10% all equal the 4-plan minimum (B = 4/4/4/4/6).

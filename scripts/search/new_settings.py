@@ -52,10 +52,10 @@ def main():
                "experiment, so a W or L there counts more than once).", "",
                "| method | " + " | ".join(f"{int(f*100)}%" for f in fr) + " |", "|---|" + "---|" * len(fr)]
         piv = g.groupby(["method", "budget_frac"]).hv_ratio.mean().unstack()
-        md += [f"| {m} | " + " | ".join(f"{piv.loc[m, f]:.3f}" for f in fr) + " |" for m in METHODS_2D]
+        md += [f"| {m} | " + " | ".join(f"{piv.loc[m, f]:.3f}" for f in fr) + " |" for m in METHODS_2D if m in piv.index]
         md += ["", f"S2 comparisons ({MAIN} minus comparator, paired per budget, tau = 0.0134):", "",
                "| comparator | W | T | L | per budget |", "|---|---|---|---|---|"]
-        for k, v in COMPARATORS.items():
+        for k, v in ((k, v) for k, v in COMPARATORS.items() if v in set(g.method)):
             p = paired(g, "hv_ratio", MAIN, v).sort_values("budget_frac")
             md.append(f"| {k} | " + " | ".join(map(str, wtl(p))) + " | " + " ".join(f"{r.res}({r.diff:+.3f})" for r in p.itertuples()) + " |")
         gap = g[g.method == MAIN].hv_ratio.mean() - g[g.method == "nsga2_indep_add"].hv_ratio.mean()

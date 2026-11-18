@@ -230,12 +230,43 @@ Synthetic 3-tier workflows; gains, label errors and pair interactions sampled fr
 
 Registered settings (S1-S4): math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_q3_14, math_granite, hotpot_granite, hotpot_iso_granite, math_phi, hotpot_phi, complex_q15_7, math_tiers.
 S5 uses X2, complete for all five settings (math_q15_7, hotpot_q15_7, hotpot_iso_q15_7, math_granite, math_phi).
-X5 MATH-500 (math500_q15_7) landed after the registered run: reported below under New settings.
-Pending: X3 cross-family 729 (S6(a)), X6 7B/32B, X7 coding, laptop q4.
+Landed after the registered run, reported below under New settings: X5 MATH-500 (math500_q15_7), X6 7B/32B
+(math_q7_32), X7 coding (code_c15_7; no fixed-rule methods, the code workflow graph is not on this branch).
+X3 cross-family 729 is S6(a). Pending: X6 hotpot_q7_32 plans, X8 (S5b), laptop q4.
 
 ## New settings (landed after the registered run; not part of the S1-S4 verdicts)
 
 Same 14 methods, 5 budgets, 30 seeds and metrics as the registered run. 2 objectives only (no latency truth).
+
+### code_c15_7 (32 plans)
+
+Mean HV ratio over 30 seeds; B = 4/4/4/4/6 (1/2/5/10/20%; equal B values repeat one
+experiment, so a W or L there counts more than once).
+
+| method | 1% | 2% | 5% | 10% | 20% |
+|---|---|---|---|---|---|
+| nsga2_pairwise_m3 | 0.946 | 0.946 | 0.946 | 0.946 | 0.965 |
+| nsga2_pairwise_m5 | 0.946 | 0.946 | 0.946 | 0.946 | 0.965 |
+| nsga2_indep_add | 0.903 | 0.903 | 0.903 | 0.903 | 0.962 |
+| nsga2_indep_mult | 0.903 | 0.903 | 0.903 | 0.903 | 0.962 |
+| nsga2_logit_add | 0.903 | 0.903 | 0.903 | 0.903 | 0.962 |
+| mopso_pairwise_m3 | 0.946 | 0.946 | 0.946 | 0.946 | 0.965 |
+| gde3_pairwise_m3 | 0.946 | 0.946 | 0.946 | 0.946 | 0.965 |
+| nsga2_active_m3 | 0.974 | 0.974 | 0.974 | 0.974 | 0.974 |
+| abacus | 0.903 | 0.903 | 0.903 | 0.903 | 0.962 |
+| random | 0.754 | 0.754 | 0.754 | 0.754 | 0.815 |
+| greedy_uv | 0.978 | 0.978 | 0.978 | 0.978 | 0.979 |
+
+S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0134):
+
+| comparator | W | T | L | per budget |
+|---|---|---|---|---|
+| (a) nsga2_indep_add | 4 | 1 | 0 | W(+0.042) W(+0.042) W(+0.042) W(+0.042) T(+0.003) |
+| (b) abacus | 4 | 1 | 0 | W(+0.042) W(+0.042) W(+0.042) W(+0.042) T(+0.003) |
+| (c) random | 5 | 0 | 0 | W(+0.192) W(+0.192) W(+0.192) W(+0.192) W(+0.150) |
+| (d) greedy_uv | 0 | 0 | 5 | L(-0.032) L(-0.032) L(-0.032) L(-0.032) L(-0.014) |
+
+S3 quantities: independence MAE 0.0314, gap (pairwise m3 minus indep) +0.0345.
 
 ### math500_q15_7 (64 plans)
 
@@ -273,7 +304,43 @@ S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0
 
 S3 quantities: independence MAE 0.0773, gap (pairwise m3 minus indep) -0.0053.
 
-S3 rho recomputed with the new settings (12 settings, supplementary): 0.035 (p = 0.914).
+### math_q7_32 (64 plans)
+
+Mean HV ratio over 30 seeds; B = 4/4/4/6/13 (1/2/5/10/20%; equal B values repeat one
+experiment, so a W or L there counts more than once).
+
+| method | 1% | 2% | 5% | 10% | 20% |
+|---|---|---|---|---|---|
+| nsga2_pairwise_m3 | 0.985 | 0.985 | 0.985 | 0.990 | 0.995 |
+| nsga2_pairwise_m5 | 0.985 | 0.985 | 0.985 | 0.990 | 0.995 |
+| nsga2_indep_add | 0.985 | 0.985 | 0.985 | 0.995 | 0.999 |
+| nsga2_indep_mult | 0.985 | 0.985 | 0.985 | 0.995 | 0.999 |
+| nsga2_logit_add | 0.985 | 0.985 | 0.985 | 0.995 | 0.999 |
+| mopso_pairwise_m3 | 0.985 | 0.985 | 0.985 | 0.990 | 0.995 |
+| gde3_pairwise_m3 | 0.985 | 0.985 | 0.985 | 0.990 | 0.995 |
+| nsga2_active_m3 | 0.963 | 0.963 | 0.963 | 0.974 | 0.990 |
+| abacus | 0.985 | 0.985 | 0.985 | 0.995 | 0.999 |
+| random | 0.683 | 0.683 | 0.683 | 0.723 | 0.874 |
+| greedy_uv | 0.986 | 0.986 | 0.986 | 0.988 | 0.988 |
+| rule_structural | 0.925 | 0.925 | 0.925 | 0.925 | 0.929 |
+| rule_output | 0.982 | 0.982 | 0.982 | 0.995 | 0.999 |
+| rule_confident_uv | 0.965 | 0.965 | 0.965 | 0.987 | 0.987 |
+
+S2 comparisons (nsga2_pairwise_m3 minus comparator, paired per budget, tau = 0.0134):
+
+| comparator | W | T | L | per budget |
+|---|---|---|---|---|
+| (a) nsga2_indep_add | 0 | 5 | 0 | T(+0.000) T(+0.000) T(+0.000) T(-0.006) T(-0.003) |
+| (b) abacus | 0 | 5 | 0 | T(+0.000) T(+0.000) T(+0.000) T(-0.006) T(-0.003) |
+| (c) random | 5 | 0 | 0 | W(+0.301) W(+0.301) W(+0.301) W(+0.266) W(+0.122) |
+| (d) greedy_uv | 0 | 5 | 0 | T(-0.001) T(-0.001) T(-0.001) T(+0.001) T(+0.007) |
+| (e) rule_structural | 5 | 0 | 0 | W(+0.060) W(+0.060) W(+0.060) W(+0.065) W(+0.066) |
+| (e) rule_output | 0 | 5 | 0 | T(+0.002) T(+0.002) T(+0.002) T(-0.005) T(-0.004) |
+| (e) rule_confident_uv | 3 | 2 | 0 | W(+0.020) W(+0.020) W(+0.020) T(+0.003) T(+0.009) |
+
+S3 quantities: independence MAE 0.0162, gap (pairwise m3 minus indep) -0.0018.
+
+S3 rho recomputed with the new settings (14 settings, supplementary): -0.095 (p = 0.748).
 
 
 

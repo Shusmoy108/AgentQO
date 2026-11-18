@@ -45,6 +45,8 @@ def job(args):
         b = budget_for(s.size, frac)
         for seed in seeds:
             for m, fn in METHODS_2D.items():
+                if m.startswith("rule_") and name.startswith("code"):
+                    continue  # no code workflow graph on this branch for the fixed rules (docs/search_log.md)
                 t0 = time.time()
                 V = fn(s, b, np.random.default_rng(seed), terms=t)
                 rows.append({"setting": name, "n_plans": s.size, "objectives": "acc_cost", "method": m,

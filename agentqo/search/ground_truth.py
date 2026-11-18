@@ -53,6 +53,9 @@ EXTRA: Dict[str, Dict[str, object]] = {
                         "plans": "X3_vmB/plans_2"},
     # X5 MATH-500 (Qwen2.5 1.5B -> 7B, 6-agent math workflow, 300 eval problems); no latency truth.
     "math500_q15_7": {"labels": {"large": "X5/math500_q15_7"}, "plans": "X5/math500_q15_7/plans"},
+    # X6 Qwen2.5 7B -> 32B, math workflow, 400 eval_ext problems; X7 MBPP+ code workflow, Qwen2.5-Coder 1.5B -> 7B.
+    "math_q7_32": {"labels": {"large": "X6/math_q7_32"}, "plans": "X6/math_q7_32/plans"},
+    "code_c15_7": {"labels": {"large": "X7_vmB/code_c15_7"}, "plans": "X7_vmB/code_c15_7/plans"},
 }
 
 
