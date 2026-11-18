@@ -614,3 +614,31 @@ has no effect under greedy decoding). Reported per setting, as in X4, against P4
 share of flipped (plan, problem) cells, plans with any flip, and Pareto-front changes (accuracy vs cost_units, both runs
 costed with the reference run's cost per plan). Output results/v2/X10/<setting>/plans and x10_vs_ref_*.
 Order on VM-B: X9, then X10 math_granite, then X10 math_phi; never under a TIMING_LOCK (none is planned).
+
+### L2-X11: held-out replication on MATH-500 and MBPP+, registered 2026-11-18 14:16:52 UTC, before any X11 data
+
+Status: EXPLORATORY under L2-X (own folder results/v2/X11, V2_DEVIATION=D-L2-X-code, run on VM-A only from the x clone at
+v2-lease2-x 18b3d7a0, which contains the X5 and X7 code unchanged; no new code is needed: the "label" split of both loaders
+already returns exactly the problems below). Included in results_v2_UPLOAD.zip, FINAL/data_check.md (required if finished)
+and P6/search_ground_truth.md. A gate and push after each block. Accuracy only (no TIMING_LOCK; never started while VM-A
+holds one). Nothing is deleted.
+Purpose: held-out replication: do the plan ranking, the cheapest good plan, and best-vs-all-large hold on new problems?
+Problem sets. MATH-500 has 500 problems and MBPP+ 378; X5 used 200 for labels + 300 for plan evaluation and X7 used 200 for
+labels + 178 for plan evaluation, so no problem is untouched by X5/X7. The problems NOT in X5's / X7's plan evaluation are
+exactly their 200 label problems; they were used only for the per-agent labels (H1 substitution runs), never for plan
+evaluation. Therefore:
+- X11a: math500_q15_7 (X5 setting: Qwen2.5-1.5B/7B-Instruct, math workflow, max_tokens 1024, max-model-len 8192, servers
+  7B 0.60 / 1.5B 0.20, boxed-answer scorer of X5), ALL 64 plans on the MATH-500 split "label" (n = 200).
+- X11b: code_c15_7 (X7 setting: Qwen2.5-Coder-1.5B/7B-Instruct, code workflow, max_tokens 512, max-model-len 8192, servers
+  Coder 7B 0.45 / Coder 1.5B 0.15, X7 sandbox and MBPP+ base+plus tests), ALL 32 plans on the MBPP+ split "label" (n = 200,
+  all MBPP+ problems not in X7's plan evaluation).
+Greedy decoding, cautious verifier, lease cache (VM-A). Note: X5's label runs used VM-A's lease cache, so X11a calls whose
+prompt is identical to an X5 label-run call (e.g. parts of all_small) are cache hits with the same greedy output; X7 ran on
+VM-B, so X11b calls on VM-A are all fresh. The Coder 1.5B/7B weights are downloaded on VM-A (about 18 GB; /mnt/data stays
+above 25 GB free). Before any model call, X11 writes split files (problem ids, the sha256 of the sorted id list) to
+results/v2/X11/<setting>/split.json and asserts zero overlap with the X5 / X7 plan-evaluation ids (from their split and from
+their h3_per_problem.csv); a non-empty overlap stops X11. VM-A runs the X7 sandbox tests and the full suite (V2_PUSH unset)
+before X11b. Order: prep (no model calls) -> wait for the search session's tag search-prereg-s5d-* on origin -> X11a -> X11b.
+No block starts after 2026-11-19 14:00Z; final_guard rules unchanged. A restart moves a partial run to superseded_* and logs
+it. Reported: per plan accuracy, unscorable (X11a) / no-code (X11b) rates, and vs X5 / X7: Spearman rank correlation of plan
+accuracy, the cheapest plan within 1 point of the best, and best plan vs all_large.
