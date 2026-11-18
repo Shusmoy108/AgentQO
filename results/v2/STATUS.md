@@ -158,3 +158,8 @@ X6 prep VM-A: 2026-11-18T00:02:31Z DELETED Qwen/Qwen2.5-14B-Instruct: 18 blobs, 
 2026-11-18T00:42:27Z VM-A GATE X2-hotpot_q15_7: hotpot_iso_q15_7: plans INCOMPLETE | hotpot_q15_7: 32 plans, small 0.340 large 0.507 best 0.532 | math_q15_7: 64 plans, small 0.503 large 0.825 best 0.843
 2026-11-18T00:48:08Z VM-A GATE X2-hotpot_iso_q15_7: hotpot_iso_q15_7: 32 plans, small 0.290 large 0.522 best 0.522 | hotpot_q15_7: 32 plans, small 0.340 large 0.507 best 0.532 | math_q15_7: 64 plans, small 0.503 large 0.825 best 0.843
 2026-11-18T00:48:34Z VM-B GATE X2-math_granite: math_granite: 64 plans, small 0.523 large 0.751 best 0.758 | math_phi: plans INCOMPLETE
+2026-11-18T00:49:15Z TIME LEFT after X2 (VM-A part): 29.2 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:49:32Z TIME LEFT after X1-X4: 23.2 h to the 2026-11-19T00:00Z stop for new X work (06:00Z GPU cutoff)
+2026-11-18T00:50:19Z TIME LEFT after X4: 29.2 h to the 2026-11-19T06:00Z new-GPU-work cutoff
+2026-11-18T00:52:01Z X5 SMOKE PASSED
+2026-11-18T00:54:02Z VM-A GATE X4: hotpot_q15_7: 32 plans, small 0.312 large 0.512 best 0.512 | math_q15_7: 64 plans, small 0.482 large 0.805 best 0.828

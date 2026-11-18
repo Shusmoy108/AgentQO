@@ -568,3 +568,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T00:01:52Z TIMING_LOCK released on VM-A by X1
 - 2026-11-18T00:01:50Z TIMING_LOCK released on VM-B by X1
 - 00:15Z Backups after the lock release: VM-B ok; VM-A's .zst copy hit a network reset, completed by hand and verified (both VM-A caches); mac_sync copy now retried 5x.
+- 2026-11-18T00:52:01Z X5 SMOKE PASSED
