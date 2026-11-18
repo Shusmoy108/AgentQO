@@ -178,6 +178,8 @@ def main() -> None:
     ap.add_argument("--output-dir", default="data/ollama/h3_math")
     ap.add_argument("--max-tokens", type=int, default=256)
     ap.add_argument("--allow-missing-logprobs", action="store_true")
+    ap.add_argument("--logprob-columns", action="store_true",
+                    help="L2-X12: add mean_logprob, answer_logprob, answer_first_logprob, answer_text to h3_calls.csv")
     ap.add_argument("--seed", type=int, default=42)
     # Accepted so build_backend/make_probe see the attributes they expect.
     ap.add_argument("--probe", default="placeholder")
@@ -241,7 +243,9 @@ def main() -> None:
             calls.append({"plan": name, "task_id": task.task_id, "node_id": nid, "model": r.metadata.get("model"),
                           "fidelity": fid.name, "prompt_tokens": r.metadata.get("prompt_tokens", 0),
                           "completion_tokens": r.metadata.get("completion_tokens", 0),
-                          "latency_s": r.metadata.get("latency_s", 0.0), "cache_hit": r.metadata.get("cache_hit")})
+                          "latency_s": r.metadata.get("latency_s", 0.0), "cache_hit": r.metadata.get("cache_hit"),
+                          **({k: r.metadata.get(k) for k in ("mean_logprob", "answer_logprob", "answer_first_logprob", "answer_text")}
+                             if args.logprob_columns else {})})
         answer = _output_as_text(rec.node_results[answer_node(workflow, rec.node_results)].output)
         return {
             "correct": float(rec.final_quality), "units": units, "n_large": n_large, "lat": lat, "calls": calls,

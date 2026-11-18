@@ -45,6 +45,21 @@ def extract_gsm8k_number(text: str) -> Optional[str]:
     return None
 
 
+def gsm8k_answer_span(text: str) -> Optional[tuple]:
+    """L2-X12: (start, end) character span of the answer extract_gsm8k_number returns, else None."""
+    if not text:
+        return None
+    for pattern in (_HASH, _BOXED, _ANY):
+        found = list(pattern.finditer(text))
+        if found:
+            m = found[-1]
+            a, b = m.span(1) if m.groups() else m.span(0)
+            while a < b and text[a].isspace(): a += 1      # the number pattern may include surrounding blanks
+            while b > a and text[b - 1].isspace(): b -= 1
+            return a, b
+    return None
+
+
 def extract_hotpot_answer(text: str) -> Optional[str]:
     """Normalized short answer: last "Final answer:", else "####", else "FINDING:", else last line."""
     if not text or not text.strip():

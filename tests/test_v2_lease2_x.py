@@ -112,3 +112,19 @@ def test_seed_salt(monkeypatch):
     assert salted != base and salted == VLLMHTTPBackend._seed(node, ctx)
     monkeypatch.setenv("AGENTQO_SEED_SALT", "2")
     assert VLLMHTTPBackend._seed(node, ctx) not in (base, salted)
+
+
+# X12: per-call logprob stats (mean, and the tokens of the final GSM8K answer)
+def test_x12_logprob_stats():
+    from agentqo.backends.vllm_http import _logprob_stats
+    from agentqo.tasks.answers import gsm8k_answer_span, extract_gsm8k_number
+    toks = [("So", -0.1), (" 3", -0.2), (" +", -0.1), (" 4", -0.3), (" =", -0.1), (" ", -0.2), ("4", -0.5), ("2", -1.5), (".", -0.1)]
+    text = "".join(t for t, _ in toks)
+    data = {"choices": [{"logprobs": {"content": [{"token": t, "logprob": l} for t, l in toks]}}]}
+    st = _logprob_stats(data, text)
+    assert extract_gsm8k_number(text) == "42" and text[slice(*gsm8k_answer_span(text))] == "42"
+    assert abs(st["mean_logprob"] - sum(l for _, l in toks) / len(toks)) < 1e-9
+    assert st["answer_text"] == "42" and abs(st["answer_logprob"] - (-1.0)) < 1e-9 and st["answer_first_logprob"] == -0.5
+    assert _logprob_stats({"choices": [{}]}, text)["mean_logprob"] is None          # no logprobs
+    assert _logprob_stats(data, "no number")["answer_logprob"] is None              # no answer in the text
+    assert gsm8k_answer_span("#### 7 and 9")[0] == 5                                # #### n wins over the last number

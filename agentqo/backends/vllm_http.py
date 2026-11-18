@@ -222,6 +222,7 @@ class VLLMHTTPBackend:
                 "completion_tokens": int(usage.get("completion_tokens") or 0),
                 "confidence_source": "logprobs" if has_logprobs else "missing",
                 "cache_hit": cache_hit,
+                **_logprob_stats(data, text),   # L2-X12
             },
         )
 
@@ -445,6 +446,32 @@ def _confidence_from_logprobs(data: Dict[str, Any]) -> float:
     if not probs:
         return 0.5
     return float(np.clip(float(np.mean(probs)), 0.01, 0.99))
+
+
+def _logprob_stats(data: Dict[str, Any], text: str) -> Dict[str, Any]:
+    """L2-X12: mean token logprob of the completion, and the mean / first-token logprob of the tokens that overlap the
+    final numeric answer (gsm8k_answer_span on the completion text). None where logprobs or an answer are missing."""
+    from agentqo.tasks.answers import gsm8k_answer_span
+    out: Dict[str, Any] = {"mean_logprob": None, "answer_logprob": None, "answer_first_logprob": None, "answer_text": None}
+    choices = data.get("choices") or []
+    lp = choices[0].get("logprobs") if choices else None
+    content = lp.get("content") if isinstance(lp, dict) else None
+    items = [i for i in (content or []) if isinstance(i, dict) and "logprob" in i]
+    if not items:
+        return out
+    out["mean_logprob"] = float(np.mean([float(i["logprob"]) for i in items]))
+    span = gsm8k_answer_span(text or "")
+    if span is None:
+        return out
+    out["answer_text"] = (text or "")[span[0]:span[1]]
+    pos, hit = 0, []
+    for i in items:   # token strings concatenate to the completion text
+        tok = str(i.get("token", "")); start, pos = pos, pos + len(tok)
+        if start < span[1] and pos > span[0]:
+            hit.append(float(i["logprob"]))
+    if hit:
+        out["answer_logprob"], out["answer_first_logprob"] = float(np.mean(hit)), hit[0]
+    return out
 
 
 def _placeholder_embedding(text: str, dim: int) -> np.ndarray:
