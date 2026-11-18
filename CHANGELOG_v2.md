@@ -582,3 +582,7 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 2026-11-18T04:25:39Z X7 SMOKE PASSED: X7 smoke {'all_small': 0.6, 'all_large': 0.4}
 - 04:28Z X7 prep passed on the 3rd try (2nd stop: V2_PUSH=0 env leaked into the full suite; run-script fix). X7 smoke passed (all_small 0.6, all_large 0.4 on 5); labels and plans running on VM-B.
 - 07:00Z X6 quality done (GSM8K: 0.820/0.930/0.940; HotpotQA 0.490/0.502/0.540; MATH-500 plans done); block-end failure was an in-place script swap (data complete). X6 latency running under TIMING_LOCK.
+- 2026-11-18T06:57:21Z TIMING_LOCK created on VM-A by X6-latency
+- 2026-11-18T06:57:21Z TIMING_LOCK X6-latency: no X3/non-timing GPU job running on VM-A (confirmed)
+- 2026-11-18T06:57:23Z TIMING_LOCK created on VM-B by X6-latency
+- 2026-11-18T06:57:23Z TIMING_LOCK X6-latency: no X3/non-timing GPU job running on VM-B (confirmed)
