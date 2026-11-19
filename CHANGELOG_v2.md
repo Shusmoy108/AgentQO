@@ -617,3 +617,4 @@ Operational choices made during the lease (no code change; the tag is what runs)
 - 19:04Z X10r: Granite noise ~1.5 pts/plan, no context-length effect; Phi noise ~0.7 pts/plan, but Phi-3.5-mini all_small +7.7 pts at max-model-len 4096 vs 8192.
 - 22:05Z FINAL-early archive built and verified (FINAL_early_20261118T2145Z); 0 MISSING; small files pushed.
 - 22:12Z final_check.py: X12 finished test fixed (no DONE marker); FINAL_early/data_check_v2.md pushed.
+- 04:32Z Nov 19: PI ended Lease 2 early; FINAL cancelled; authoritative archive FINAL_early_20261118T2145Z.
